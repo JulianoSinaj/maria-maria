@@ -1,0 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+:root{--font-playfair:"Playfair Display",Georgia,serif;--font-montserrat:"Montserrat",system-ui,sans-serif;}
+html{scroll-behavior:smooth}
+body{background:#f7f4ef;color:#1b1b1b;font-family:var(--font-montserrat)}
+.overflow-x-auto::-webkit-scrollbar{height:6px}
+.overflow-x-auto::-webkit-scrollbar-thumb{background:#d9d2c4;border-radius:999px}

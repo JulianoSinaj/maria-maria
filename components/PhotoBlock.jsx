@@ -123,7 +123,7 @@ export default function PhotoBlock({
       )}
       {!showImg && motif && <Motif scene={sc} color={mColor} />}
       {/* subtle vignette */}
-      <div className="pointer-events-none absolute inset-0" style={{ boxShadow: "inset 0 0 60px rgba(60,40,30,0.14)" }} />
+      <div className="pointer-events-none absolute inset-0" style={{ boxShadow: "inset 0 0 40px rgba(60,40,30,0.06)" }} />
       {overlay && <div className="pointer-events-none absolute inset-0" style={{ background: OVERLAY[overlay] }} />}
       {children != null && <div className="relative h-full w-full">{children}</div>}
     </div>

@@ -1,7 +1,7 @@
 "use client";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import Bottle from "@/components/Bottle";
-import { Cart, Plus } from "@/components/Icons";
+import { Cart, Plus, Grapes } from "@/components/Icons";
 import { Minus } from "./ShopIcons";
 import { fmtPrice } from "@/components/data";
 import { useCart } from "./CartContext";
@@ -72,6 +72,12 @@ export default function ShopCard({ wine, className = "" }) {
           <span className="shrink-0 text-[11px] tabular-nums text-charcoal/60">{wine.year}</span>
         </div>
         <p className="mt-1.5 text-[12px] leading-relaxed text-charcoal/65">{wine.notes}</p>
+        {meta.edition && (
+          <p className="mt-2.5 inline-flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-bordeaux/80">
+            <Grapes className="h-3.5 w-3.5 text-champagne" />
+            Limitierte Auflage · {meta.edition}
+          </p>
+        )}
         <p className="mt-2.5 flex items-center gap-1.5 text-[11px] text-charcoal/60">
           <span className="inline-block h-2 w-2 rounded-full ring-1 ring-black/10" style={{ background: wine.dot }} />
           {wine.type} · Trocken

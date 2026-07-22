@@ -7,11 +7,13 @@ import { WINES } from "@/components/data";
 export const FREE_SHIPPING_FROM = 69;
 export const SHIPPING_COST = 4.9;
 
-/* merchandising accents, keyed by catalogue name */
+/* merchandising accents, keyed by catalogue name.
+   edition = real production numbers from the winery. */
 export const WINE_META = {
-  "Primitivo 14,5": { badge: "Bestseller" },
+  "Primitivo 14,5": { badge: "Bestseller", edition: "18.000 Flaschen" },
+  "Primitivo 15,5": { badge: "Limitiert", edition: "12.000 Flaschen" },
   Lugana: { badge: "Beliebt" },
-  "Greco di Tufo D.O.C.G.": { badge: "Limitiert", scarce: true },
+  "Greco di Tufo D.O.C.G.": { scarce: true },
   "Il Rosso – Aglianico": { scarce: true },
   "Rosato Puglia": { badge: "Sommerwein" },
 };

@@ -5,9 +5,9 @@ import TiltCard from "@/components/motion/TiltCard";
 import { Reveal, Stagger, StaggerItem } from "@/components/motion/Reveal";
 import Button from "@/components/ui/Button";
 import Bottle from "@/components/Bottle";
-import { SectionTitle, Eyebrow, GrapeRule, IconChip } from "@/components/Deco";
-import { Arrow, Check } from "@/components/Icons";
-import { Truck, Shield, Package, Gift } from "@/components/shop/ShopIcons";
+import { SectionTitle, Eyebrow, GrapeRule, GoldRule, IconChip } from "@/components/Deco";
+import { Arrow, Check, Grapes, Vineyard } from "@/components/Icons";
+import { Truck, Shield, Package, Gift, Amphora } from "@/components/shop/ShopIcons";
 import { WINES, REGION_COUNT } from "@/components/data";
 import { BUNDLES } from "@/components/shop/shopData";
 import { CartProvider } from "@/components/shop/CartContext";
@@ -20,7 +20,7 @@ import Link from "next/link";
 export const metadata = {
   title: "Shop — Maria Maria",
   description:
-    "Der offizielle Maria Maria Online-Shop: Italienische Boutique-Weine und Probierpakete bequem online bestellen – ab 69 € versandkostenfrei, in 1–3 Werktagen bei Ihnen.",
+    "Italian wine, personal selection, share the pleasure – der offizielle Maria Maria Online-Shop. Boutique-Weine in limitierter Auflage und Probierpakete, ab 69 € versandkostenfrei.",
 };
 
 const USPS = [
@@ -84,7 +84,7 @@ export default function ShopPage() {
               <h1 className="mt-6 font-playfair text-[clamp(2.6rem,5.4vw,4.1rem)] leading-[1.06] text-charcoal">
                 <SplitText text="Enoteca Maria Maria" className="block" delay={0.12} />
                 <SplitText
-                  text="Italien für Zuhause."
+                  text="Share the pleasure."
                   className="block bg-gradient-to-r from-bordeaux via-wine to-champagne bg-clip-text italic text-transparent"
                   delay={0.3}
                 />
@@ -92,8 +92,9 @@ export default function ShopPage() {
               <Reveal delay={0.5} y={16}>
                 <GrapeRule className="mt-7" />
                 <p className="mt-6 max-w-md text-[15px] leading-relaxed text-charcoal/75">
-                  Handverlesene Boutique-Weine kleiner Familienweingüter – sorgfältig verpackt und in
-                  wenigen Tagen bei Ihnen. Ab 69 € liefern wir versandkostenfrei.
+                  Italienischer Wein, persönlich ausgewählt: Boutique-Weine in limitierter Auflage,
+                  entstanden in direkter Zusammenarbeit mit lokalen Familien und Önologen. Ab 69 €
+                  liefern wir versandkostenfrei.
                 </p>
               </Reveal>
               <Reveal delay={0.62} y={16}>
@@ -230,13 +231,128 @@ export default function ShopPage() {
             <SectionTitle
               align="left"
               eyebrow="Das Sortiment"
-              description="Neun Charaktere aus vier Regionen – jeder Wein handverlesen, jede Flasche eine Einladung."
+              description="Wählen Sie nach Charakter – corposo, elegante oder fresco – oder entdecken Sie die ganze Selection. Jede Flasche eine persönliche Auswahl."
             >
-              Alle Weine im Shop
+              Die Maria Maria <span className="italic text-bordeaux">Selection</span>
             </SectionTitle>
             <div className="mt-12">
               <ShopExplorer />
             </div>
+          </div>
+        </section>
+
+        {/* ============ LE ORIGINI (Markengeschichte) ============ */}
+        <section className="relative overflow-hidden">
+          <Atmosphere variant="olive" />
+          <GhostWord className="right-[-3vw] top-10 text-[11vw]">Due anime</GhostWord>
+          <div className="relative mx-auto max-w-content px-6 pb-24 lg:px-10">
+            <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
+              {/* story */}
+              <div>
+                <Reveal>
+                  <Eyebrow>Le Origini</Eyebrow>
+                  <h2 className="mt-4 text-balance font-playfair text-[clamp(1.75rem,3.4vw,2.6rem)] leading-[1.12] text-charcoal">
+                    Zwei Seelen, <span className="italic text-bordeaux">ein Name</span>
+                  </h2>
+                  <p className="mt-5 max-w-lg text-[13.5px] leading-relaxed text-charcoal/70">
+                    Maria Maria beginnt im Salento, im Sommer 2019 – zwischen Kindheitserinnerungen
+                    und alten Rebzeilen wurde aus einem Moment eine Erleuchtung: Wein ist für uns kein
+                    Getränk, sondern ein Katalysator für Emotionen.
+                  </p>
+                  <p className="mt-4 max-w-lg text-[13.5px] leading-relaxed text-charcoal/70">
+                    Der Name trägt zwei Frauen in sich – die Gegenwart und den Ursprung. Jede Flasche
+                    verbindet beide Seelen zu einem eigenen Charakter.
+                  </p>
+                </Reveal>
+                <Reveal delay={0.15}>
+                  <div className="mt-8 flex items-center gap-3">
+                    <GoldRule className="w-12" />
+                    <p className="font-playfair text-[19px] italic leading-snug text-bordeaux">
+                      «Italian wine, personal selection, share the pleasure.»
+                    </p>
+                  </div>
+                </Reveal>
+              </div>
+
+              {/* the double soul */}
+              <div className="relative">
+                <Stagger className="grid grid-cols-1 gap-5 sm:grid-cols-2" gap={0.12}>
+                  {[
+                    {
+                      name: "Maria Pia",
+                      tag: "Die Gegenwart",
+                      traits: ["Moderne", "Unabhängigkeit", "Pure Ästhetik"],
+                    },
+                    {
+                      name: "Maria",
+                      tag: "Der Ursprung",
+                      traits: ["Wurzeln", "Familie", "Wärme geteilter Momente"],
+                    },
+                  ].map((s) => (
+                    <StaggerItem key={s.name} className="h-full">
+                      <TiltCard className="group h-full" max={5} radius="rounded-card-lg">
+                        <div className="ring-hairline relative flex h-full flex-col overflow-hidden rounded-card-lg border border-stone/40 bg-white/70 p-7 shadow-luxe transition-[box-shadow,border-color] duration-500 group-hover:border-champagne/60 group-hover:shadow-lift">
+                          <span
+                            aria-hidden="true"
+                            className="pointer-events-none absolute -right-3 -top-6 select-none font-playfair text-[6.5rem] italic leading-none text-bordeaux/[0.06]"
+                          >
+                            M
+                          </span>
+                          <p className="text-[10px] uppercase tracking-[0.22em] text-champagne">{s.tag}</p>
+                          <h3 className="mt-2 font-playfair text-[24px] text-charcoal">{s.name}</h3>
+                          <ul className="mt-4 flex flex-wrap gap-1.5">
+                            {s.traits.map((t) => (
+                              <li
+                                key={t}
+                                className="rounded-full border border-stone/60 bg-cream/80 px-3 py-1.5 text-[9.5px] font-semibold uppercase tracking-[0.14em] text-charcoal/65"
+                              >
+                                {t}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      </TiltCard>
+                    </StaggerItem>
+                  ))}
+                </Stagger>
+                {/* the union of both souls */}
+                <span
+                  aria-hidden="true"
+                  className="glass absolute left-1/2 top-1/2 hidden h-12 w-12 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full font-playfair text-[22px] italic text-bordeaux shadow-glass sm:flex"
+                >
+                  &amp;
+                </span>
+              </div>
+            </div>
+
+            {/* craft facts */}
+            <Stagger className="mt-16 grid grid-cols-1 gap-6 md:grid-cols-3">
+              {[
+                {
+                  icon: <Amphora className="h-7 w-7" />,
+                  title: "Terrakotta-Amphoren",
+                  text: "Ausbau nach traditioneller Handwerkskunst – Wein, der in Terrakotta-Amphoren reift, gewinnt Tiefe und Charakter.",
+                },
+                {
+                  icon: <Vineyard className="h-7 w-7" />,
+                  title: "Direkte Zusammenarbeit",
+                  text: "Keine große Distribution: Unsere Weine entstehen gemeinsam mit lokalen Familien und Önologen vor Ort.",
+                },
+                {
+                  icon: <Grapes className="h-7 w-7" />,
+                  title: "Limitierte Auflagen",
+                  text: "Vom Primitivo 14,5 existieren nur 18.000 Flaschen, vom Primitivo 15,5 sogar nur 12.000 – Exklusivität ab dem Weinberg.",
+                },
+              ].map((c) => (
+                <StaggerItem key={c.title} className="h-full">
+                  <div className="ring-hairline flex h-full flex-col rounded-card-lg border border-stone/40 bg-white/70 p-8 shadow-luxe transition-[box-shadow,border-color] duration-500 hover:border-champagne/60 hover:shadow-lift">
+                    <IconChip>{c.icon}</IconChip>
+                    <h3 className="mt-6 font-playfair text-[19px] text-charcoal">{c.title}</h3>
+                    <p className="mt-3 text-[13px] leading-relaxed text-charcoal/70">{c.text}</p>
+                  </div>
+                </StaggerItem>
+              ))}
+            </Stagger>
           </div>
         </section>
 
@@ -345,14 +461,15 @@ export default function ShopPage() {
             <div className="relative mx-auto max-w-3xl px-6 py-24 text-center lg:py-28">
               <Reveal>
                 <Eyebrow light className="justify-center">
-                  Noch unentschlossen?
+                  Die sensorische Reise
                 </Eyebrow>
                 <h2 className="mt-4 text-balance font-playfair text-[clamp(2rem,4.2vw,3.2rem)] leading-[1.1] text-ivory">
-                  Jeder Wein erzählt <span className="italic text-champagne">eine Geschichte</span>
+                  Vom Salento bis zum <span className="italic text-champagne">Gardasee</span>
                 </h2>
                 <p className="mx-auto mt-5 max-w-md text-[13.5px] leading-relaxed text-ivory/70">
-                  Lernen Sie die Weingüter, Rebsorten und Regionen hinter unserem Sortiment kennen –
-                  und kehren Sie mit Ihrem Favoriten zurück.
+                  Unsere Selection zeichnet eine Reise durch Italien – vom sonnigen Süden Apuliens
+                  über Kampanien und die Basilikata hinauf ans Ufer des Gardasees. Jedes Glas eine
+                  Station, jede Flasche eine Geschichte.
                 </p>
               </Reveal>
               <Reveal delay={0.18}>

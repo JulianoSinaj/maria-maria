@@ -2,39 +2,60 @@
 import { useMemo, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import ShopCard from "./ShopCard";
+import Bottle from "@/components/Bottle";
 import Button from "@/components/ui/Button";
+import { Check } from "@/components/Icons";
 import { WINES } from "@/components/data";
 
-/* Sortiment explorer — the WineExplorer interaction language applied to
-   commerce: spring-sliding type pill, sort chips, live count and a
-   layout-animated grid of purchasable cards. */
+/* Maria Maria Selection — the client's character taxonomy as the filter:
+   three tactile character cards (Corposo / Elegante / Fresco) with food
+   pairings, sort chips, live count and a layout-animated grid. Tapping the
+   active character again returns to the whole Selection. */
 
-const TYPES = ["Alle Weine", "Rotwein", "Weißwein", "Roséwein"];
+const CHARACTERS = [
+  {
+    type: "Rotwein",
+    name: "Corposo",
+    sub: "Kraftvoll & vollmundig",
+    pairing: "zu Gegrilltem, Pasta und gereiftem Käse",
+    variant: "red",
+  },
+  {
+    type: "Weißwein",
+    name: "Elegante",
+    sub: "Fein & mineralisch",
+    pairing: "zu Fisch, Meeresfrüchten und Antipasti",
+    variant: "white",
+  },
+  {
+    type: "Roséwein",
+    name: "Fresco",
+    sub: "Frisch & lebendig",
+    pairing: "zum Aperitivo und zur leichten Sommerküche",
+    variant: "rose",
+  },
+];
+
 const SORTS = [
   { id: "empfohlen", label: "Empfohlen" },
   { id: "preis-auf", label: "Preis aufsteigend" },
   { id: "preis-ab", label: "Preis absteigend" },
 ];
 
-const PILL_SPRING = { type: "spring", stiffness: 350, damping: 30 };
+const TAP_SPRING = { type: "spring", stiffness: 400, damping: 22 };
 const GRID_SPRING = { type: "spring", stiffness: 300, damping: 30 };
 
 export default function ShopExplorer() {
   const reduced = useReducedMotion();
-  const [type, setType] = useState(TYPES[0]);
+  const [type, setType] = useState(null); // null = die ganze Selection
   const [sort, setSort] = useState(SORTS[0].id);
 
   const wines = useMemo(() => {
-    const list = WINES.filter((w) => type === "Alle Weine" || w.type === type);
+    const list = WINES.filter((w) => !type || w.type === type);
     if (sort === "preis-auf") return [...list].sort((a, b) => a.price - b.price);
     if (sort === "preis-ab") return [...list].sort((a, b) => b.price - a.price);
     return list;
   }, [type, sort]);
-
-  const reset = () => {
-    setType(TYPES[0]);
-    setSort(SORTS[0].id);
-  };
 
   const itemMotion = reduced
     ? {}
@@ -48,69 +69,86 @@ export default function ShopExplorer() {
 
   return (
     <div>
-      {/* ---- filter head ---- */}
-      <div className="flex flex-wrap items-end justify-between gap-x-10 gap-y-6">
-        <div className="min-w-0">
-          {/* type tabs — sliding active pill */}
-          <div
-            role="group"
-            aria-label="Sortiment nach Weinart filtern"
-            className="no-scrollbar -mx-6 overflow-x-auto px-6 lg:mx-0 lg:px-0"
-          >
-            <div className="inline-flex items-center gap-1 rounded-full border border-stone/60 bg-white/70 p-1.5 shadow-luxe">
-              {TYPES.map((t) => {
-                const active = t === type;
-                return (
-                  <button
-                    key={t}
-                    type="button"
-                    onClick={() => setType(t)}
-                    aria-pressed={active}
-                    className={`relative h-11 shrink-0 select-none rounded-full px-4 text-[11.5px] font-semibold uppercase tracking-[0.14em] transition-colors duration-300 sm:px-5 ${
-                      active ? "text-ivory" : "text-charcoal/60 hover:text-bordeaux"
-                    }`}
-                  >
-                    {active && (
-                      <motion.span
-                        layoutId="shop-type-pill"
-                        aria-hidden="true"
-                        transition={reduced ? { duration: 0 } : PILL_SPRING}
-                        className="absolute inset-0 rounded-full bg-gradient-to-br from-bordeaux to-wine shadow-chip"
-                        style={{ willChange: "transform" }}
-                      />
-                    )}
-                    <span className="relative z-10">{t}</span>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
+      {/* ---- character cards ---- */}
+      <div role="group" aria-label="Weine nach Charakter wählen" className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+        {CHARACTERS.map((c) => {
+          const active = type === c.type;
+          const count = WINES.filter((w) => w.type === c.type).length;
+          return (
+            <motion.button
+              key={c.type}
+              type="button"
+              onClick={() => setType(active ? null : c.type)}
+              aria-pressed={active}
+              whileTap={reduced ? undefined : { scale: 0.97 }}
+              transition={TAP_SPRING}
+              className={`group relative flex items-center gap-4 overflow-hidden rounded-card border p-4 pr-10 text-left shadow-luxe transition-[border-color,box-shadow,background-color] duration-500 hover:shadow-lift ${
+                active
+                  ? "border-bordeaux bg-gradient-to-br from-champagne-light/45 to-white/85"
+                  : "border-stone/50 bg-white/70 hover:border-champagne/70"
+              }`}
+            >
+              {/* selection check */}
+              <span
+                aria-hidden="true"
+                className={`absolute right-3 top-3 flex h-6 w-6 items-center justify-center rounded-full bg-bordeaux text-ivory shadow-chip transition-transform duration-400 ease-out-expo ${
+                  active ? "scale-100" : "scale-0"
+                }`}
+              >
+                <Check className="h-3.5 w-3.5" />
+              </span>
 
-          {/* sort chips */}
-          <div role="group" aria-label="Sortiment sortieren" className="mt-4 flex flex-wrap items-center gap-2">
-            <span className="mr-1 text-[10.5px] uppercase tracking-[0.18em] text-charcoal/45">Sortieren</span>
-            {SORTS.map((s) => {
-              const active = s.id === sort;
-              return (
-                <button
-                  key={s.id}
-                  type="button"
-                  onClick={() => setSort(s.id)}
-                  aria-pressed={active}
-                  className={`h-11 select-none rounded-full border px-4 text-[10.5px] font-semibold uppercase tracking-[0.16em] transition-colors duration-300 ${
-                    active
-                      ? "border-bordeaux bg-bordeaux text-ivory shadow-chip"
-                      : "border-stone/70 bg-white/50 text-charcoal/60 hover:border-champagne/70 hover:text-bordeaux"
-                  }`}
-                >
-                  {s.label}
-                </button>
-              );
-            })}
-          </div>
+              {/* mini stage */}
+              <span className="relative flex h-20 w-14 shrink-0 items-end justify-center overflow-hidden rounded-2xl bg-gradient-to-b from-cream to-champagne-light/30 ring-1 ring-stone/50">
+                <span
+                  aria-hidden="true"
+                  className="absolute left-1/2 top-1/2 h-[150%] w-[150%] -translate-x-1/2 -translate-y-1/2 rounded-full"
+                  style={{ background: "radial-gradient(closest-side, rgba(200,183,122,0.32), transparent 72%)" }}
+                />
+                <Bottle
+                  variant={c.variant}
+                  className="relative h-14 pb-0 will-transform transition-transform duration-500 ease-out-expo group-hover:-translate-y-1 group-hover:rotate-[-2deg]"
+                />
+              </span>
+
+              <span className="min-w-0">
+                <span className="font-playfair text-[19px] italic leading-none text-bordeaux">{c.name}</span>
+                <span className="mt-1 block text-[10px] uppercase tracking-[0.16em] text-charcoal/55">
+                  {c.type} · {count} {count === 1 ? "Wein" : "Weine"}
+                </span>
+                <span className="mt-1.5 block text-[11.5px] leading-snug text-charcoal/65">
+                  {c.sub} – {c.pairing}
+                </span>
+              </span>
+            </motion.button>
+          );
+        })}
+      </div>
+
+      {/* ---- sort + live count ---- */}
+      <div className="mt-6 flex flex-wrap items-end justify-between gap-x-10 gap-y-5">
+        <div role="group" aria-label="Sortiment sortieren" className="flex flex-wrap items-center gap-2">
+          <span className="mr-1 text-[10.5px] uppercase tracking-[0.18em] text-charcoal/45">Sortieren</span>
+          {SORTS.map((s) => {
+            const active = s.id === sort;
+            return (
+              <button
+                key={s.id}
+                type="button"
+                onClick={() => setSort(s.id)}
+                aria-pressed={active}
+                className={`h-11 select-none rounded-full border px-4 text-[10.5px] font-semibold uppercase tracking-[0.16em] transition-colors duration-300 ${
+                  active
+                    ? "border-bordeaux bg-bordeaux text-ivory shadow-chip"
+                    : "border-stone/70 bg-white/50 text-charcoal/60 hover:border-champagne/70 hover:text-bordeaux"
+                }`}
+              >
+                {s.label}
+              </button>
+            );
+          })}
         </div>
 
-        {/* live count */}
         <div className="text-right">
           <p aria-live="polite" className="text-[11px] uppercase tracking-[0.18em] text-charcoal/55">
             <span className="mr-1.5 font-playfair text-[24px] normal-case tabular-nums tracking-normal text-bordeaux">
@@ -118,7 +156,20 @@ export default function ShopExplorer() {
             </span>
             {wines.length === 1 ? "Wein" : "Weine"}
           </p>
-          <p className="mt-1 text-[10.5px] text-charcoal/45">Alle Preise inkl. MwSt., zzgl. Versand</p>
+          {/* fixed-height slot so the reset link never shifts layout */}
+          <p className="mt-1 flex h-4 items-center justify-end text-[10.5px] text-charcoal/45">
+            {type ? (
+              <button
+                type="button"
+                onClick={() => setType(null)}
+                className="font-medium text-bordeaux underline-offset-4 hover:underline"
+              >
+                Ganze Selection anzeigen
+              </button>
+            ) : (
+              "Alle Preise inkl. MwSt., zzgl. Versand"
+            )}
+          </p>
         </div>
       </div>
 
@@ -133,7 +184,7 @@ export default function ShopExplorer() {
         </AnimatePresence>
       </div>
 
-      {/* ---- empty state ---- */}
+      {/* ---- empty state (safety net) ---- */}
       {wines.length === 0 && (
         <motion.div
           initial={reduced ? false : { opacity: 0, y: 14 }}
@@ -145,8 +196,8 @@ export default function ShopExplorer() {
             Für diese Auswahl führen wir <span className="italic text-bordeaux">derzeit keinen Wein.</span>
           </p>
           <div className="mt-7 flex justify-center">
-            <Button variant="outline" size="sm" iconType="none" onClick={reset}>
-              Filter zurücksetzen
+            <Button variant="outline" size="sm" iconType="none" onClick={() => setType(null)}>
+              Ganze Selection anzeigen
             </Button>
           </div>
         </motion.div>

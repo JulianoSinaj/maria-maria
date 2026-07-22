@@ -1,18 +1,22 @@
 "use client";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import Link from "next/link";
+import { motion, useReducedMotion } from "motion/react";
 import Bottle from "@/components/Bottle";
-import { Cart, Plus, Grapes } from "@/components/Icons";
-import { Minus } from "./ShopIcons";
-import { fmtPrice } from "@/components/data";
-import { useCart } from "./CartContext";
-import { WINE_META, wineId } from "./shopData";
+import { Arrow, Grapes } from "@/components/Icons";
+import { fmtPrice, detailHref } from "@/components/data";
+import AddToCart from "./AddToCart";
+import { WINE_META } from "./shopData";
 
 /* Shop product card — the boutique WineCard silhouette with real commerce:
-   merchandising badge, scarcity note and an add-to-cart control that morphs
-   into a quantity stepper. The control lives in a fixed-size slot, so the
-   morph never shifts layout. */
+   merchandising badge, scarcity note and the shared AddToCart control.
 
-const SPRING = { type: "spring", stiffness: 320, damping: 24 };
+   Wines with real photography (wine.photos in data.js) show the packshot;
+   hovering the card turns the bottle around to its back label. The white
+   studio background dissolves into the card via mix-blend-multiply.
+
+   Has the wine a live landing page, the whole card is a stretched link to it
+   (via the name's ::after overlay); the cart control sits above on z-10, so
+   add-to-cart never triggers navigation. */
 
 function Stage({ wine }) {
   return (
@@ -29,10 +33,30 @@ function Stage({ wine }) {
         {wine.region.charAt(0)}
       </span>
       <div className="relative flex flex-col items-center pb-5">
-        <Bottle
-          variant={wine.variant}
-          className="h-44 will-transform transition-transform duration-500 ease-out-expo group-hover:-translate-y-2.5 group-hover:rotate-[-2deg]"
-        />
+        {wine.photos ? (
+          /* multiply sitzt auf dem Wrapper: will-change isoliert sonst den
+             Blend-Kontext und der weiße Studiohintergrund bliebe sichtbar */
+          <div className="relative h-44 mix-blend-multiply will-transform transition-transform duration-500 ease-out-expo group-hover:-translate-y-2.5 group-hover:rotate-[-2deg]">
+            <img
+              src={wine.photos.front}
+              alt={`Flasche ${wine.name}`}
+              draggable={false}
+              className="h-full w-auto select-none object-contain transition-opacity duration-500 ease-out-expo group-hover:opacity-0"
+            />
+            <img
+              src={wine.photos.back}
+              alt=""
+              aria-hidden="true"
+              draggable={false}
+              className="absolute left-1/2 top-0 h-full w-auto max-w-none -translate-x-1/2 select-none object-contain opacity-0 transition-opacity duration-500 ease-out-expo group-hover:opacity-100"
+            />
+          </div>
+        ) : (
+          <Bottle
+            variant={wine.variant}
+            className="h-44 will-transform transition-transform duration-500 ease-out-expo group-hover:-translate-y-2.5 group-hover:rotate-[-2deg]"
+          />
+        )}
         <span
           aria-hidden="true"
           className="mt-1 h-2 w-20 rounded-full bg-charcoal/20 blur-[5px] transition-all duration-500 ease-out-expo group-hover:scale-x-75 group-hover:opacity-60"
@@ -44,10 +68,8 @@ function Stage({ wine }) {
 
 export default function ShopCard({ wine, className = "" }) {
   const reduced = useReducedMotion();
-  const { add, decrement, qtyOf } = useCart();
-  const id = wineId(wine);
-  const qty = qtyOf(id);
   const meta = WINE_META[wine.name] || {};
+  const detail = detailHref(wine);
   const lift = reduced ? {} : { whileHover: { y: -6 }, transition: { type: "spring", stiffness: 260, damping: 24 } };
 
   return (
@@ -68,10 +90,28 @@ export default function ShopCard({ wine, className = "" }) {
 
       <div className="flex flex-1 flex-col border-t border-stone/40 px-5 pb-5 pt-4">
         <div className="flex items-baseline justify-between gap-3">
-          <h3 className="font-playfair text-[17px] leading-snug text-charcoal">{wine.name}</h3>
+          <h3 className="font-playfair text-[17px] leading-snug text-charcoal">
+            {detail ? (
+              <Link
+                href={detail}
+                aria-label={`${wine.name} — Details ansehen`}
+                className="outline-none transition-colors duration-300 after:absolute after:inset-0 hover:text-bordeaux"
+              >
+                {wine.name}
+              </Link>
+            ) : (
+              wine.name
+            )}
+          </h3>
           <span className="shrink-0 text-[11px] tabular-nums text-charcoal/60">{wine.year}</span>
         </div>
         <p className="mt-1.5 text-[12px] leading-relaxed text-charcoal/65">{wine.notes}</p>
+        {detail && (
+          <p className="pointer-events-none mt-2 inline-flex items-center gap-1.5 text-[11px] font-medium text-bordeaux/70 transition-colors duration-300 group-hover:text-bordeaux">
+            Details ansehen
+            <Arrow className="h-3 w-3 transition-transform duration-400 ease-out-expo group-hover:translate-x-0.5" />
+          </p>
+        )}
         {meta.edition && (
           <p className="mt-2.5 inline-flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-bordeaux/80">
             <Grapes className="h-3.5 w-3.5 text-champagne" />
@@ -97,67 +137,7 @@ export default function ShopCard({ wine, className = "" }) {
             <span className="ml-1.5 text-[10px] font-normal text-charcoal/60">/ 0,75 l</span>
           </p>
 
-          {/* fixed-size slot: circular add button ⇄ quantity stepper */}
-          <div className="relative h-11 w-[118px] shrink-0">
-            <AnimatePresence initial={false}>
-              {qty === 0 ? (
-                <motion.button
-                  key="add"
-                  type="button"
-                  onClick={() => add(id)}
-                  aria-label={`${wine.name} in den Warenkorb legen`}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.8 }}
-                  transition={SPRING}
-                  whileTap={{ scale: 0.9 }}
-                  className="absolute right-0 top-0 flex h-11 w-11 items-center justify-center rounded-full bg-bordeaux text-ivory shadow-chip transition-colors duration-300 hover:bg-bordeaux-deep"
-                >
-                  <Cart className="h-[18px] w-[18px]" />
-                </motion.button>
-              ) : (
-                <motion.div
-                  key="stepper"
-                  initial={{ opacity: 0, scale: 0.85 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.85 }}
-                  transition={SPRING}
-                  className="absolute inset-0 flex items-center justify-between rounded-full bg-bordeaux px-1 text-ivory shadow-chip"
-                >
-                  <motion.button
-                    type="button"
-                    onClick={() => decrement(id)}
-                    aria-label={`Eine Flasche ${wine.name} entfernen`}
-                    whileTap={{ scale: 0.85 }}
-                    transition={SPRING}
-                    className="flex h-9 w-9 items-center justify-center rounded-full transition-colors duration-300 hover:bg-white/10"
-                  >
-                    <Minus className="h-4 w-4" />
-                  </motion.button>
-                  <motion.span
-                    key={qty}
-                    initial={reduced ? false : { y: 8, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    transition={SPRING}
-                    aria-live="polite"
-                    className="text-[13px] font-semibold tabular-nums"
-                  >
-                    {qty}
-                  </motion.span>
-                  <motion.button
-                    type="button"
-                    onClick={() => add(id)}
-                    aria-label={`Eine weitere Flasche ${wine.name} hinzufügen`}
-                    whileTap={{ scale: 0.85 }}
-                    transition={SPRING}
-                    className="flex h-9 w-9 items-center justify-center rounded-full transition-colors duration-300 hover:bg-white/10"
-                  >
-                    <Plus className="h-4 w-4" />
-                  </motion.button>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
+          <AddToCart wine={wine} />
         </div>
       </div>
     </motion.article>

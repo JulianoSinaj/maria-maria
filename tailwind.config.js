@@ -14,6 +14,14 @@ module.exports = {
         stone: "#D9D2C4",
         charcoal: "#1B1B1B",
         espresso: "#211511",
+        /* Falanghina label accent — teal family from the checkered etiquette */
+        "acqua-light": "#C9E8E1",
+        acqua: "#45B3A2",
+        "acqua-deep": "#23786B",
+        "acqua-ink": "#12403A",
+        /* wine-in-glass tones for white-wine colour chapters */
+        straw: "#E8DC9A",
+        "straw-deep": "#D3C56E",
       },
       fontFamily: {
         playfair: ["var(--font-playfair)", "serif"],

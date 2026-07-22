@@ -10,10 +10,8 @@ import { Arrow, Check, Grapes, Vineyard } from "@/components/Icons";
 import { Truck, Shield, Package, Gift, Amphora } from "@/components/shop/ShopIcons";
 import { WINES, REGION_COUNT } from "@/components/data";
 import { BUNDLES } from "@/components/shop/shopData";
-import { CartProvider } from "@/components/shop/CartContext";
 import BundleCard from "@/components/shop/BundleCard";
 import ShopExplorer from "@/components/shop/ShopExplorer";
-import CartDrawer from "@/components/shop/CartDrawer";
 import Atmosphere, { Aura, GhostWord, Vines } from "@/components/Atmosphere";
 import Link from "next/link";
 
@@ -68,7 +66,6 @@ const HERO_BOTTLES = [
 
 export default function ShopPage() {
   return (
-    <CartProvider>
       <div className="relative min-h-screen">
         {/* ============ HERO ============ */}
         <section className="grain relative overflow-hidden">
@@ -486,9 +483,6 @@ export default function ShopPage() {
           </div>
         </section>
 
-        {/* cart drawer + floating pill */}
-        <CartDrawer />
       </div>
-    </CartProvider>
   );
 }

@@ -219,7 +219,7 @@ export default function RegionenPage() {
                     <Stagger gap={0.06} className="flex w-max gap-4 pb-3 pt-1">
                       {WINES.filter((w) => r.dataRegions.includes(w.region)).map((w) => (
                         <StaggerItem key={w.name} className="snap-start">
-                          <WineCard wine={w} variant="mini" href="/weine" />
+                          <WineCard wine={w} variant="mini" />
                         </StaggerItem>
                       ))}
                     </Stagger>

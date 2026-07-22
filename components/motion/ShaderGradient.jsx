@@ -12,12 +12,15 @@ const PALETTES = {
   wine: ["#2A070D", "#54101B", "#8A2B2F", "#C8B77A"],
   // olive vineyard greens with golden light
   vigna: ["#EFEAD8", "#CFC79A", "#8E9A63", "#5F6F43"],
+  // ivory → mint → deep teal, the Falanghina label accent (light heroes/bands)
+  mare: ["#F2F6F1", "#D3E9E1", "#8FCDBD", "#35907F"],
 };
 
 const FALLBACK = {
   dawn: "linear-gradient(120deg,#F7F2E7 0%,#EAD9B0 38%,#D8A97E 68%,#B47560 100%)",
   wine: "linear-gradient(130deg,#2A070D 0%,#54101B 42%,#8A2B2F 74%,#5E3A2A 100%)",
   vigna: "linear-gradient(150deg,#EFEAD8 0%,#CFC79A 40%,#8E9A63 72%,#5F6F43 100%)",
+  mare: "linear-gradient(140deg,#F2F6F1 0%,#D3E9E1 38%,#8FCDBD 70%,#35907F 100%)",
 };
 
 const VERT = `

@@ -2,6 +2,8 @@ import "./globals.css";
 import { Playfair_Display, Montserrat } from "next/font/google";
 import SmoothScroll from "@/components/motion/SmoothScroll";
 import { MagneticRouteProvider } from "@/components/motion/MagneticContext";
+import { CartProvider } from "@/components/shop/CartContext";
+import CartDrawer from "@/components/shop/CartDrawer";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { AmbientBackdrop } from "@/components/Atmosphere";
@@ -37,6 +39,7 @@ export default function RootLayout({ children }) {
       <body className="font-montserrat">
         <SmoothScroll>
           <MagneticRouteProvider>
+          <CartProvider>
           <AmbientBackdrop />
           <a
             href="#main"
@@ -47,6 +50,9 @@ export default function RootLayout({ children }) {
           <Header />
           <main id="main">{children}</main>
           <Footer />
+          {/* site-wide cart: slide-over + floating pill, appears once something is added */}
+          <CartDrawer />
+          </CartProvider>
           </MagneticRouteProvider>
         </SmoothScroll>
       </body>

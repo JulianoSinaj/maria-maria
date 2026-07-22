@@ -3,11 +3,13 @@ import Link from "next/link";
 import { motion, useReducedMotion } from "motion/react";
 import Bottle from "./Bottle";
 import { Arrow } from "./Icons";
-import { fmtPrice } from "./data";
+import { fmtPrice, wineHref, detailHref } from "./data";
+import AddToCart from "./shop/AddToCart";
 
 /* E-commerce product card. Two variants:
    - "default": vertical boutique card — glowing stage, lifting bottle,
-     region chip, price row with circular CTA.
+     region chip, price row with add-to-cart control; the whole card is a
+     stretched link to the wine's landing page (shop as fallback).
    - "mini": compact horizontal card for carousels and region rails. */
 
 function Stage({ wine, className = "", bottleClass = "h-40" }) {
@@ -41,8 +43,10 @@ function Stage({ wine, className = "", bottleClass = "h-40" }) {
   );
 }
 
-export default function WineCard({ wine, variant = "default", className = "", href = "#" }) {
+export default function WineCard({ wine, variant = "default", className = "", href }) {
   const reduced = useReducedMotion();
+  // Landingpage des Weins, sonst Shop — explizites href gewinnt.
+  const link = href ?? wineHref(wine);
   const lift = reduced ? {} : { whileHover: { y: -6 }, transition: { type: "spring", stiffness: 260, damping: 24 } };
 
   if (variant === "mini") {
@@ -54,7 +58,7 @@ export default function WineCard({ wine, variant = "default", className = "", hr
         <Stage wine={wine} className="h-40 pt-4" bottleClass="h-32" />
         <div className="flex flex-1 flex-col px-4 pb-4">
           <h3 className="font-playfair text-[15px] leading-snug text-charcoal">
-            <Link href={href} className="outline-none after:absolute after:inset-0" aria-label={`${wine.name} — Details ansehen`}>
+            <Link href={link} className="outline-none after:absolute after:inset-0" aria-label={`${wine.name} — Details ansehen`}>
               {wine.name}
             </Link>
           </h3>
@@ -85,13 +89,19 @@ export default function WineCard({ wine, variant = "default", className = "", hr
       <div className="flex flex-1 flex-col border-t border-stone/40 px-5 pb-5 pt-4">
         <div className="flex items-baseline justify-between gap-3">
           <h3 className="font-playfair text-[17px] leading-snug text-charcoal">
-            <Link href={href} className="outline-none after:absolute after:inset-0" aria-label={`${wine.name} — Details ansehen`}>
+            <Link href={link} className="outline-none after:absolute after:inset-0" aria-label={`${wine.name} — Details ansehen`}>
               {wine.name}
             </Link>
           </h3>
           <span className="shrink-0 text-[11px] tabular-nums text-charcoal/60">{wine.year}</span>
         </div>
         <p className="mt-1.5 text-[12px] leading-relaxed text-charcoal/65">{wine.notes}</p>
+        {detailHref(wine) && (
+          <p className="pointer-events-none mt-2 inline-flex items-center gap-1.5 text-[11px] font-medium text-bordeaux/70 transition-colors duration-300 group-hover:text-bordeaux">
+            Details ansehen
+            <Arrow className="h-3 w-3 transition-transform duration-400 ease-out-expo group-hover:translate-x-0.5" />
+          </p>
+        )}
         <p className="mt-2.5 flex items-center gap-1.5 text-[11px] text-charcoal/60">
           <span className="inline-block h-2 w-2 rounded-full ring-1 ring-black/10" style={{ background: wine.dot }} />
           {wine.type} · Trocken
@@ -101,9 +111,7 @@ export default function WineCard({ wine, variant = "default", className = "", hr
             {fmtPrice(wine.price)}
             <span className="ml-1.5 text-[10px] font-normal text-charcoal/60">/ 0,75 l</span>
           </p>
-          <span className="pointer-events-none relative z-10 flex h-10 w-10 items-center justify-center rounded-full bg-bordeaux text-ivory shadow-chip transition-all duration-400 ease-out-expo group-hover:scale-105 group-hover:bg-bordeaux-deep">
-            <Arrow className="h-4 w-4 transition-transform duration-400 ease-out-expo group-hover:translate-x-0.5" />
-          </span>
+          <AddToCart wine={wine} />
         </div>
       </div>
     </motion.article>

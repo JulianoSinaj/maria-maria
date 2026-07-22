@@ -104,17 +104,23 @@ export default function WeinePage() {
               </div>
             </Reveal>
             <Reveal delay={0.78} y={12}>
-              <dl className="mt-14 flex max-w-md items-center">
+              <dl className="mt-14 flex max-w-md items-start">
                 {[
-                  [`${WINES.length}`, "Boutique-Weine"],
-                  [`${REGION_COUNT}`, "Regionen Italiens"],
-                  ["3", "Weinarten"],
+                  [`${WINES.length}`, "Ausgewählte Weine"],
+                  [`${REGION_COUNT}`, "Regionen aus Italien"],
+                  ["seit 2019", "Für bewusste Genussmomente"],
                 ].map(([num, label], i) => (
                   <div key={label} className={`flex-1 ${i > 0 ? "border-l border-charcoal/10 pl-6" : ""}`}>
                     <dt className="sr-only">{label}</dt>
                     <dd>
-                      <span className="font-playfair text-[26px] text-bordeaux">{num}</span>
-                      <span className="mt-0.5 block text-[10.5px] uppercase tracking-[0.14em] text-charcoal/55">
+                      <span
+                        className={`font-playfair text-bordeaux ${
+                          /^\d+$/.test(num) ? "text-[26px]" : "text-[19px] italic"
+                        }`}
+                      >
+                        {num}
+                      </span>
+                      <span className="mt-0.5 block text-[10.5px] uppercase leading-[1.5] tracking-[0.14em] text-charcoal/55">
                         {label}
                       </span>
                     </dd>

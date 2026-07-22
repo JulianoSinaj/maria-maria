@@ -262,19 +262,10 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ============ SHOP CTA (photo band) ============ */}
+      {/* ============ SHOP CTA (shader band) ============ */}
       <section className="px-4 py-10 lg:px-8">
         <div className="grain relative overflow-hidden rounded-card-lg">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/img/stilllife.jpg"
-            alt=""
-            className="absolute inset-0 h-full w-full object-cover"
-          />
-          <div
-            aria-hidden="true"
-            className="absolute inset-0 bg-gradient-to-b from-espresso/60 via-espresso/50 to-espresso/75"
-          />
+          <ShaderGradient palette="wine" />
           <div className="relative mx-auto max-w-3xl px-6 py-24 text-center lg:py-28">
             <Reveal>
               <Eyebrow light className="justify-center">

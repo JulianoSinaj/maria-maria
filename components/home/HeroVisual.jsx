@@ -38,7 +38,7 @@ export default function HeroVisual() {
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/img/hero.jpg"
-            alt="Weingläser im Abendlicht über den Hügeln Italiens"
+            alt="Maria-Maria-Flasche auf Steinplatte im warmen Licht eines Weinkellers"
             className="h-full w-full object-cover"
           />
         </Parallax>

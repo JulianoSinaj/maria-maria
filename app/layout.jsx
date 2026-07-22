@@ -1,6 +1,7 @@
 import "./globals.css";
 import { Playfair_Display, Montserrat } from "next/font/google";
 import SmoothScroll from "@/components/motion/SmoothScroll";
+import { MagneticRouteProvider } from "@/components/motion/MagneticContext";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { AmbientBackdrop } from "@/components/Atmosphere";
@@ -35,6 +36,7 @@ export default function RootLayout({ children }) {
     <html lang="de" className={`${playfair.variable} ${montserrat.variable}`}>
       <body className="font-montserrat">
         <SmoothScroll>
+          <MagneticRouteProvider>
           <AmbientBackdrop />
           <a
             href="#main"
@@ -45,6 +47,7 @@ export default function RootLayout({ children }) {
           <Header />
           <main id="main">{children}</main>
           <Footer />
+          </MagneticRouteProvider>
         </SmoothScroll>
       </body>
     </html>

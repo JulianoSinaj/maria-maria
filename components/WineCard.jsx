@@ -49,7 +49,7 @@ export default function WineCard({ wine, variant = "default", className = "", hr
     return (
       <motion.article
         {...lift}
-        className={`group relative flex w-[228px] shrink-0 snap-start flex-col overflow-hidden rounded-card border border-stone/50 bg-gradient-to-b from-white/90 to-cream shadow-luxe transition-[box-shadow,border-color] duration-500 hover:border-champagne/70 hover:shadow-lift ${className}`}
+        className={`group relative flex flex-col overflow-hidden rounded-card border border-stone/50 bg-gradient-to-b from-white/90 to-cream shadow-luxe transition-[box-shadow,border-color] duration-500 hover:border-champagne/70 hover:shadow-lift ${className || "w-[228px] shrink-0 snap-start"}`}
       >
         <Stage wine={wine} className="h-40 pt-4" bottleClass="h-32" />
         <div className="flex flex-1 flex-col px-4 pb-4">

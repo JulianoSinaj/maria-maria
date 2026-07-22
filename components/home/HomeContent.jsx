@@ -119,7 +119,7 @@ export default function HomeContent() {
                 <Button href="/weine" size="lg">
                   Weine entdecken
                 </Button>
-                <Button href="#" external variant="outline" size="lg" iconType="up-right">
+                <Button href="/shop" variant="outline" size="lg">
                   Zum Shop
                 </Button>
               </div>
@@ -283,7 +283,7 @@ export default function HomeContent() {
             </Reveal>
             <Reveal delay={0.18}>
               <div className="mt-9 flex flex-wrap items-center justify-center gap-4">
-                <Button href="#" external variant="light" size="lg" iconType="up-right">
+                <Button href="/shop" variant="light" size="lg">
                   Zum Shop
                 </Button>
                 <Button href="/kontakt" variant="glass" size="lg">

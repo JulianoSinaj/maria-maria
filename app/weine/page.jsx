@@ -98,7 +98,7 @@ export default function WeinePage() {
                 <Button href="#kollektion" size="lg">
                   Zur Kollektion
                 </Button>
-                <Button href="#" external variant="outline" size="lg" iconType="up-right">
+                <Button href="/shop" variant="outline" size="lg">
                   Zum Shop
                 </Button>
               </div>

@@ -146,10 +146,8 @@ export default function Footer() {
             <p className="mt-5 max-w-[220px] text-[12.5px] leading-relaxed text-ivory/65">
               Entdecken und bestellen Sie unsere Weine direkt im Maria Maria Shop.
             </p>
-            <a
-              href="#"
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              href="/shop"
               className="group mt-5 inline-flex items-center gap-2 text-[13px] font-medium text-champagne"
             >
               <span className="relative">
@@ -157,7 +155,7 @@ export default function Footer() {
                 <span className="absolute -bottom-1 left-0 right-0 h-px origin-left scale-x-0 bg-champagne transition-transform duration-400 ease-out-expo group-hover:scale-x-100" />
               </span>
               <Arrow className="h-4 w-4 transition-transform duration-500 ease-out-expo group-hover:translate-x-1" />
-            </a>
+            </Link>
           </StaggerItem>
         </Stagger>
       </div>

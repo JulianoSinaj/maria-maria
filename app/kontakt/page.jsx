@@ -248,7 +248,7 @@ export default function KontaktPage() {
                   Entdecken Sie unsere Weine und bestellen Sie bequem online im offiziellen Shop.
                 </p>
                 <div className="mt-8">
-                  <Button href="#" external variant="light" iconType="up-right">
+                  <Button href="/shop" variant="light">
                     Zum Shop
                   </Button>
                 </div>

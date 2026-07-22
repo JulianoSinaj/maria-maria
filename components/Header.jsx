@@ -136,7 +136,7 @@ export default function Header() {
 
           <div className="flex items-center gap-3">
             <div className="hidden md:block">
-              <Button href="#" external size="sm" iconType="up-right">
+              <Button href="/shop" size="sm">
                 Zum Shop
               </Button>
             </div>
@@ -182,7 +182,7 @@ export default function Header() {
               </button>
             </div>
             <nav className="flex flex-1 flex-col justify-center gap-1 px-8" aria-label="Mobile Navigation">
-              {NAV.map((item, i) => (
+              {[...NAV, { label: "Zum Shop", href: "/shop" }].map((item, i) => (
                 <motion.div
                   key={item.href}
                   initial={{ opacity: 0, y: 32 }}

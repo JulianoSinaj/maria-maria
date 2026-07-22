@@ -1,188 +1,329 @@
 import Link from "next/link";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import PhotoBlock from "@/components/PhotoBlock";
-import { GoldRule } from "@/components/Deco";
-import { Arrow, GrapeVine, Plate, Mountains, Book, Sun, MailCircle } from "@/components/Icons";
+import SplitText from "@/components/motion/SplitText";
+import Parallax from "@/components/motion/Parallax";
+import TiltCard from "@/components/motion/TiltCard";
+import { Reveal, Stagger, StaggerItem } from "@/components/motion/Reveal";
+import Button from "@/components/ui/Button";
+import { SectionTitle, Eyebrow, GoldRule, GrapeRule } from "@/components/Deco";
+import { Arrow, Clock, GrapeVine, Plate, Mountains, Book, Sun } from "@/components/Icons";
+import FilterPanel from "@/components/magazin/FilterPanel";
+import NewsletterCard from "@/components/magazin/NewsletterCard";
+import { Aura, GhostWord } from "@/components/Atmosphere";
 
-const Clock = (p) => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" {...p}>
-    <circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 2" />
-  </svg>
-);
+export const metadata = {
+  title: "Magazin — Maria Maria",
+  description:
+    "Weinwissen, Food Pairing, Regionen und Geschichten aus der Welt von Maria Maria — Inspiration für den nächsten Genussmoment.",
+};
+
+const FEATURED = {
+  cat: "Geschichten",
+  title: "Der Maria-Moment zuhause",
+  min: "5 Min. Lesedauer",
+  excerpt: "Warum die besonderen Momente oft ganz einfach sind – und wie Wein sie noch schöner macht.",
+  img: "/img/stilllife.jpg",
+};
 
 const THEMES = [
-  { cat: "Weinwissen", sub: "Wissen vertiefen", icon: GrapeVine, variant: "feast", scene: "table", img: "/img/tasting.jpg" },
-  { cat: "Food Pairing", sub: "Perfekt kombiniert", icon: Plate, variant: "terracotta", scene: "still", img: "/img/food.jpg" },
-  { cat: "Regionen", sub: "Italien entdecken", icon: Mountains, variant: "vineyard", scene: "vines", img: "/img/vineyard.jpg" },
-  { cat: "Geschichten", sub: "Hinter den Kulissen", icon: Book, variant: "sunset", scene: "hills", img: "/img/stilllife.jpg" },
-  { cat: "Genussmomente", sub: "Inspiration genießen", icon: Sun, variant: "feast", scene: "table", img: "/img/dinner.jpg" },
+  { cat: "Weinwissen", sub: "Wissen vertiefen", icon: GrapeVine, img: "/img/tasting.jpg" },
+  { cat: "Food Pairing", sub: "Perfekt kombiniert", icon: Plate, img: "/img/food.jpg" },
+  { cat: "Regionen", sub: "Italien entdecken", icon: Mountains, img: "/img/vineyard.jpg" },
+  { cat: "Geschichten", sub: "Hinter den Kulissen", icon: Book, img: "/img/stilllife.jpg" },
+  { cat: "Genussmomente", sub: "Inspiration genießen", icon: Sun, img: "/img/dinner.jpg" },
 ];
 
 const LATEST = [
-  { cat: "Weinwissen", title: "Was passt zu Primitivo?", min: "4 Min. Lesedauer", excerpt: "Tipps für harmonische Kombinationen mit Aromen, die begeistern.", variant: "feast", scene: "table", img: "/img/food.jpg" },
-  { cat: "Food Pairing", title: "Lugana und Fisch – eine elegante Kombination", min: "4 Min. Lesedauer", excerpt: "Frische, Mineralität und feine Aromen im perfekten Zusammenspiel.", variant: "sea", scene: "lake", img: "/img/aperitivo.jpg" },
-  { cat: "Regionen", title: "Apulien: Sonne, Reben, Charakter", min: "6 Min. Lesedauer", excerpt: "Eine Reise in das Herz Süditaliens und seine unverwechselbaren Weine.", variant: "vineyard", scene: "vines", img: "/img/region-apulien.jpg" },
-  { cat: "Geschichten", title: "Der Maria-Moment zuhause", min: "5 Min. Lesedauer", excerpt: "Wie kleine Rituale mit einem guten Glas Wein besonders werden.", variant: "feast", scene: "table", img: "/img/stilllife.jpg" },
-  { cat: "Genussmomente", title: "Sommerabend auf Italienisch", min: "3 Min. Lesedauer", excerpt: "Leichte Gerichte, gute Gespräche und der richtige Wein dazu.", variant: "terracotta", scene: "still", img: "/img/dinner.jpg" },
+  {
+    cat: "Weinwissen",
+    title: "Was passt zu Primitivo?",
+    min: "4 Min. Lesedauer",
+    excerpt: "Tipps für harmonische Kombinationen mit Aromen, die begeistern.",
+    img: "/img/food.jpg",
+  },
+  {
+    cat: "Food Pairing",
+    title: "Lugana und Fisch – eine elegante Kombination",
+    min: "4 Min. Lesedauer",
+    excerpt: "Frische, Mineralität und feine Aromen im perfekten Zusammenspiel.",
+    img: "/img/aperitivo.jpg",
+  },
+  {
+    cat: "Regionen",
+    title: "Apulien: Sonne, Reben, Charakter",
+    min: "6 Min. Lesedauer",
+    excerpt: "Eine Reise in das Herz Süditaliens und seine unverwechselbaren Weine.",
+    img: "/img/region-apulien.jpg",
+  },
+  {
+    cat: "Geschichten",
+    title: "Der Maria-Moment zuhause",
+    min: "5 Min. Lesedauer",
+    excerpt: "Warum die besonderen Momente oft ganz einfach sind – und wie Wein sie noch schöner macht.",
+    img: "/img/stilllife.jpg",
+  },
+  {
+    cat: "Genussmomente",
+    title: "Sommerabend auf Italienisch",
+    min: "3 Min. Lesedauer",
+    excerpt: "Leichte Gerichte, gute Gespräche und der richtige Wein dazu.",
+    img: "/img/dinner.jpg",
+  },
 ];
 
 const KATEGORIE = ["Alle Themen", "Weinwissen", "Food Pairing", "Regionen", "Geschichten", "Genussmomente"];
 const LESEDAUER = ["Alle", "1–3 Min.", "4–6 Min.", "7+ Min."];
+
 const POPULAR = [
-  { title: "Falanghina entdecken", min: "5 Min. Lesedauer", variant: "vineyard", img: "/img/vineyard.jpg" },
-  { title: "Primitivo 101 – Alles über die Rebsorte", min: "6 Min. Lesedauer", variant: "feast", img: "/img/region-apulien.jpg" },
-  { title: "Die Kunst der Weinverkostung", min: "4 Min. Lesedauer", variant: "terracotta", img: "/img/tasting.jpg" },
-  { title: "Wein & Käse – Klassiker neu gedacht", min: "5 Min. Lesedauer", variant: "feast", img: "/img/food.jpg" },
+  { title: "Falanghina entdecken", min: "5 Min. Lesedauer", img: "/img/vineyard.jpg" },
+  { title: "Primitivo 101 – Alles über die Rebsorte", min: "6 Min. Lesedauer", img: "/img/region-apulien.jpg" },
+  { title: "Die Kunst der Weinverkostung", min: "4 Min. Lesedauer", img: "/img/tasting.jpg" },
+  { title: "Wein & Käse – Klassiker neu gedacht", min: "5 Min. Lesedauer", img: "/img/food.jpg" },
 ];
 
 export default function MagazinPage() {
   return (
-    <div className="min-h-screen bg-ivory">
-      <Header active="Magazin" />
+    <div className="relative min-h-screen">
+      <section className="relative overflow-hidden">
+        {/* cream wash settling into the page colour — no big hero on this page */}
+        <div
+          aria-hidden="true"
+          className="absolute inset-x-0 top-0 h-[30rem] bg-gradient-to-b from-cream via-cream/60 to-transparent"
+        />
+        {/* faint editorial watermark */}
+        <p
+          aria-hidden="true"
+          className="pointer-events-none absolute right-[-2vw] top-20 hidden select-none whitespace-nowrap font-playfair text-[9vw] italic leading-none text-charcoal/[0.035] xl:block"
+        >
+          Il piacere del vino
+        </p>
+        {/* ambient colour fields along the whole page */}
+        <Aura tint="gold" className="-left-56 top-24 h-[38rem] w-[38rem]" />
+        <Aura tint="blush" drift={2} className="-right-56 top-[26%] h-[34rem] w-[34rem]" />
+        <Aura tint="olive" className="-left-48 top-[55%] h-[32rem] w-[32rem]" />
+        <Aura tint="terracotta" drift={2} className="-right-48 bottom-[4%] h-[34rem] w-[34rem]" />
+        <GhostWord className="left-[-2vw] top-[46%] text-[11vw]">Storie</GhostWord>
+        <GhostWord className="right-[-2vw] bottom-[2%] text-[10vw]">Sapori</GhostWord>
 
-      <div className="mx-auto max-w-content px-6 py-12 lg:px-10">
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1fr_20rem]">
-          {/* ================= MAIN ================= */}
-          <main>
-            {/* intro + featured */}
-            <div className="grid grid-cols-1 gap-8 lg:grid-cols-[0.85fr_1.4fr]">
-              <div>
-                <h1 className="font-playfair text-[2.6rem] leading-tight text-charcoal lg:text-[3rem]">Magazin</h1>
-                <p className="mt-5 text-[13.5px] leading-relaxed text-charcoal/75">
-                  Unser Magazin teilt Wissen über Wein, Inspiration für Genussmomente, kreative Food Pairing-Ideen, spannende Regionen und Geschichten aus der Welt von Maria Maria.
-                </p>
-                <Link href="#" className="mt-6 inline-flex items-center gap-1.5 text-[12.5px] text-bordeaux hover:underline">
-                  Mehr über unsere Philosophie <Arrow className="h-3.5 w-3.5" />
-                </Link>
-              </div>
-
-              <PhotoBlock variant="terracotta" scene="still" overlay="ivory-left" img="/img/stilllife.jpg" imgPos="right" className="min-h-[300px]">
-                <div className="flex h-full flex-col justify-center p-7">
-                  <span className="text-[10.5px] uppercase tracking-[0.16em] text-charcoal/55">Geschichten</span>
-                  <h2 className="mt-2 max-w-[70%] font-playfair text-[26px] leading-tight text-charcoal">Der Maria-Moment zuhause</h2>
-                  <p className="mt-2 flex items-center gap-1.5 text-[11px] text-charcoal/60"><Clock className="h-3.5 w-3.5" /> 5 Min. Lesedauer</p>
-                  <p className="mt-3 max-w-[62%] text-[12.5px] leading-relaxed text-charcoal/75">
-                    Warum die besonderen Momente oft ganz einfach sind – und wie Wein sie noch schöner macht.
-                  </p>
-                  <Link href="#" className="mt-4 inline-flex items-center gap-1.5 text-[12.5px] text-bordeaux hover:underline">
-                    Artikel lesen <Arrow className="h-3.5 w-3.5" />
-                  </Link>
-                </div>
-              </PhotoBlock>
-            </div>
-
-            {/* Entdecken nach Themen */}
-            <section className="mt-14">
-              <h3 className="font-playfair text-[20px] text-charcoal">Entdecken nach Themen</h3>
-              <GoldRule className="mt-3 w-full" />
-              <div className="mt-5 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
-                {THEMES.map((t) => {
-                  const Icon = t.icon;
-                  return (
-                    <Link key={t.cat} href="#" className="group block overflow-hidden border border-stone/60 bg-white/40">
-                      <PhotoBlock variant={t.variant} scene={t.scene} img={t.img} className="h-24" />
-                      <div className="p-3">
-                        <Icon className="h-6 w-6 text-champagne" />
-                        <p className="mt-2 text-[9.5px] uppercase tracking-[0.12em] text-charcoal/55">{t.cat}</p>
-                        <p className="text-[12px] text-charcoal group-hover:text-bordeaux">{t.sub}</p>
-                      </div>
+        <div className="relative mx-auto max-w-content px-6 pb-24 pt-32 lg:px-10 lg:pt-36">
+          <div className="grid grid-cols-1 gap-10 lg:grid-cols-[1fr_20rem]">
+            {/* ================= MAIN ================= */}
+            <div>
+              {/* ---- intro + featured ---- */}
+              <div className="grid grid-cols-1 items-stretch gap-10 lg:grid-cols-[0.85fr_1.15fr]">
+                <div className="flex flex-col justify-center">
+                  <Reveal y={18} delay={0.05}>
+                    <Eyebrow>Geschichten &amp; Weinwissen</Eyebrow>
+                  </Reveal>
+                  <h1 className="mt-5 font-playfair text-[clamp(2.6rem,5vw,3.8rem)] leading-[1.05] text-charcoal">
+                    <SplitText text="Magazin" delay={0.12} />
+                  </h1>
+                  <Reveal delay={0.38} y={16}>
+                    <GrapeRule className="mt-6" />
+                    <p className="mt-6 max-w-md text-[14px] leading-relaxed text-charcoal/75">
+                      Unser Magazin teilt Wissen über Wein, Inspiration für Genussmomente, kreative Food
+                      Pairing-Ideen, spannende Regionen und Geschichten aus der Welt von Maria Maria.
+                    </p>
+                  </Reveal>
+                  <Reveal delay={0.5} y={14}>
+                    <Link
+                      href="/"
+                      className="group mt-6 inline-flex min-h-[44px] items-center gap-1.5 text-[12px] font-medium text-bordeaux"
+                    >
+                      Mehr über unsere Philosophie
+                      <Arrow className="h-3.5 w-3.5 transition-transform duration-500 ease-out-expo group-hover:translate-x-1" />
                     </Link>
-                  );
-                })}
-              </div>
-            </section>
+                  </Reveal>
+                </div>
 
-            {/* Neueste Artikel */}
-            <section className="mt-12">
-              <div className="flex items-center justify-between">
-                <h3 className="font-playfair text-[20px] text-charcoal">Neueste Artikel</h3>
-                <Link href="#" className="inline-flex items-center gap-1.5 text-[12px] text-champagne hover:text-bordeaux">
-                  Alle Artikel anzeigen <Arrow className="h-3.5 w-3.5" />
-                </Link>
+                {/* featured article */}
+                <Reveal delay={0.2} y={24}>
+                  <TiltCard className="group h-full" max={4} radius="rounded-card-lg">
+                    <article className="relative h-[400px] overflow-hidden rounded-card-lg shadow-luxe transition-shadow duration-500 group-hover:shadow-lift sm:h-[430px]">
+                      <Parallax speed={0.08} overscan className="absolute inset-0">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={FEATURED.img}
+                          alt="Stillleben mit Wein, Gläsern und mediterranen Zutaten"
+                          className="h-full w-full object-cover transition-transform duration-700 ease-out-expo group-hover:scale-[1.05]"
+                        />
+                      </Parallax>
+                      <div
+                        aria-hidden="true"
+                        className="absolute inset-0 bg-gradient-to-t from-espresso/90 via-espresso/35 to-transparent"
+                      />
+                      <span className="glass absolute left-5 top-5 rounded-full px-3 py-1.5 text-[9.5px] font-semibold uppercase tracking-[0.16em] text-charcoal/70">
+                        {FEATURED.cat}
+                      </span>
+                      <div className="absolute inset-x-0 bottom-0 p-7">
+                        <p className="text-[10px] uppercase tracking-[0.22em] text-champagne-light">Im Fokus</p>
+                        <h2 className="mt-1.5 font-playfair text-[clamp(1.6rem,2.6vw,2.1rem)] leading-tight text-ivory">
+                          {FEATURED.title}
+                        </h2>
+                        <p className="mt-2 inline-flex items-center gap-1.5 text-[11.5px] text-ivory/70">
+                          <Clock className="h-3.5 w-3.5" /> {FEATURED.min}
+                        </p>
+                        <p className="mt-2.5 max-w-md text-[12.5px] leading-relaxed text-ivory/80">
+                          {FEATURED.excerpt}
+                        </p>
+                        <div className="mt-5">
+                          <Button href="#" variant="glass" size="sm" magnetic={false}>
+                            Artikel lesen
+                          </Button>
+                        </div>
+                      </div>
+                    </article>
+                  </TiltCard>
+                </Reveal>
               </div>
-              <GoldRule className="mt-3 w-full" />
-              <div className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-5">
-                {LATEST.map((a) => (
-                  <article key={a.title} className="flex flex-col">
-                    <PhotoBlock variant={a.variant} scene={a.scene} img={a.img} className="h-28" />
-                    <p className="mt-3 text-[9.5px] uppercase tracking-[0.12em] text-charcoal/55">{a.cat}</p>
-                    <h4 className="mt-1 font-playfair text-[14px] leading-snug text-charcoal">{a.title}</h4>
-                    <p className="mt-1.5 flex items-center gap-1.5 text-[10px] text-charcoal/55"><Clock className="h-3 w-3" /> {a.min}</p>
-                    <p className="mt-2 text-[11px] leading-snug text-charcoal/65">{a.excerpt}</p>
-                  </article>
-                ))}
-              </div>
-            </section>
-          </main>
 
-          {/* ================= SIDEBAR ================= */}
-          <aside className="lg:pt-1">
-            <div className="border border-stone/60 bg-white/40 p-6">
-              <h3 className="text-[13px] font-semibold tracking-wide text-charcoal">THEMEN &amp; FILTER</h3>
-              <GoldRule className="mt-3 w-full" />
+              {/* ---- Entdecken nach Themen ---- */}
+              <section className="mt-20">
+                <SectionTitle
+                  align="left"
+                  eyebrow="Themenwelten"
+                  description="Fünf Wege durch unser Magazin – finden Sie Ihre Inspiration."
+                >
+                  Entdecken nach Themen
+                </SectionTitle>
+                <Stagger className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5" gap={0.07}>
+                  {THEMES.map((t) => {
+                    const Icon = t.icon;
+                    return (
+                      <StaggerItem key={t.cat} className="h-full">
+                        <Link href="#" className="group block h-full">
+                          <article className="flex h-full flex-col overflow-hidden rounded-card border border-stone/50 bg-white/70 shadow-luxe transition-all duration-500 ease-out-expo hover:-translate-y-1.5 hover:border-champagne/60 hover:shadow-lift">
+                            <div className="relative h-24 overflow-hidden">
+                              {/* eslint-disable-next-line @next/next/no-img-element */}
+                              <img
+                                src={t.img}
+                                alt=""
+                                className="h-full w-full object-cover transition-transform duration-700 ease-out-expo group-hover:scale-[1.08]"
+                              />
+                              <div
+                                aria-hidden="true"
+                                className="absolute inset-0 bg-gradient-to-t from-espresso/25 to-transparent"
+                              />
+                            </div>
+                            <div className="flex flex-1 flex-col p-4">
+                              <Icon className="h-6 w-6 text-champagne transition-colors duration-300 group-hover:text-bordeaux" />
+                              <p className="mt-2.5 text-[9.5px] uppercase tracking-[0.14em] text-charcoal/50">
+                                {t.cat}
+                              </p>
+                              <p className="mt-0.5 text-[12.5px] font-medium text-charcoal transition-colors duration-300 group-hover:text-bordeaux">
+                                {t.sub}
+                              </p>
+                            </div>
+                          </article>
+                        </Link>
+                      </StaggerItem>
+                    );
+                  })}
+                </Stagger>
+              </section>
 
-              <p className="mt-5 text-[10.5px] uppercase tracking-[0.14em] text-charcoal/55">Kategorie</p>
-              <div className="mt-3 flex flex-wrap gap-2">
-                {KATEGORIE.map((k, i) => (
-                  <button
-                    key={k}
-                    className={`px-3 py-1.5 text-[11px] tracking-wide transition-colors ${
-                      i === 0 ? "bg-bordeaux text-ivory" : "border border-stone bg-ivory text-charcoal/75 hover:border-champagne"
-                    }`}
+              {/* ---- Neueste Artikel ---- */}
+              <section className="mt-20">
+                <div className="flex flex-wrap items-end justify-between gap-6">
+                  <SectionTitle
+                    align="left"
+                    eyebrow="Frisch veröffentlicht"
+                    description="Geschichten und Wissen für den nächsten Genussmoment."
                   >
-                    {k}
-                  </button>
-                ))}
-              </div>
-
-              <p className="mt-6 text-[10.5px] uppercase tracking-[0.14em] text-charcoal/55">Lesedauer</p>
-              <div className="mt-3 flex flex-wrap gap-2">
-                {LESEDAUER.map((l) => (
-                  <button key={l} className="border border-stone bg-ivory px-3 py-1.5 text-[11px] tracking-wide text-charcoal/75 hover:border-champagne">
-                    {l}
-                  </button>
-                ))}
-              </div>
-
-              {/* newsletter */}
-              <div className="mt-6 border border-stone/70 p-5 text-center">
-                <MailCircle className="mx-auto h-8 w-8 text-champagne" />
-                <h4 className="mt-3 font-playfair text-[17px] text-charcoal">Bleiben Sie inspiriert</h4>
-                <p className="mt-2 text-[11px] leading-relaxed text-charcoal/65">
-                  Erhalten Sie regelmäßig neue Artikel, Weinwissen und exklusive Empfehlungen.
-                </p>
-                <input className="mt-4 w-full border border-stone bg-ivory px-3 py-2 text-[11.5px] outline-none focus:border-champagne" placeholder="E-Mail-Adresse eingeben" />
-                <button className="mt-3 w-full bg-bordeaux px-4 py-2.5 text-[12px] tracking-wide text-ivory transition-colors hover:bg-bordeaux/90">
-                  Jetzt anmelden
-                </button>
-              </div>
+                    Neueste Artikel
+                  </SectionTitle>
+                  <Reveal delay={0.15}>
+                    <Button href="#" variant="outline" size="sm">
+                      Alle Artikel anzeigen
+                    </Button>
+                  </Reveal>
+                </div>
+                <Stagger className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2">
+                  {LATEST.map((a) => (
+                    <StaggerItem key={a.title} className="h-full">
+                      <Link href="#" className="group block h-full">
+                        <article className="flex h-full flex-col overflow-hidden rounded-card border border-stone/50 bg-white/70 shadow-luxe transition-all duration-500 ease-out-expo hover:-translate-y-1.5 hover:border-champagne/60 hover:shadow-lift">
+                          <div className="relative h-44 overflow-hidden">
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img
+                              src={a.img}
+                              alt=""
+                              className="h-full w-full object-cover transition-transform duration-700 ease-out-expo group-hover:scale-[1.06]"
+                            />
+                            <span className="glass absolute left-4 top-4 rounded-full px-3 py-1.5 text-[9.5px] font-semibold uppercase tracking-[0.16em] text-charcoal/70">
+                              {a.cat}
+                            </span>
+                          </div>
+                          <div className="flex flex-1 flex-col p-6">
+                            <h3 className="font-playfair text-[19px] leading-snug text-charcoal transition-colors duration-300 group-hover:text-bordeaux">
+                              {a.title}
+                            </h3>
+                            <p className="mt-2 inline-flex items-center gap-1.5 text-[11px] text-charcoal/50">
+                              <Clock className="h-3.5 w-3.5" /> {a.min}
+                            </p>
+                            <p className="mt-2.5 text-[12.5px] leading-relaxed text-charcoal/65">{a.excerpt}</p>
+                            <div className="mt-auto pt-5">
+                              <span className="inline-flex items-center gap-1.5 text-[12px] font-medium text-bordeaux">
+                                Mehr lesen
+                                <Arrow className="h-3.5 w-3.5 transition-transform duration-500 ease-out-expo group-hover:translate-x-1" />
+                              </span>
+                            </div>
+                          </div>
+                        </article>
+                      </Link>
+                    </StaggerItem>
+                  ))}
+                </Stagger>
+              </section>
             </div>
 
-            {/* popular */}
-            <div className="mt-8">
-              <h3 className="text-[13px] font-semibold tracking-wide text-charcoal">BELIEBTE ARTIKEL</h3>
-              <GoldRule className="mt-3 w-full" />
-              <div className="mt-4 space-y-4">
-                {POPULAR.map((p) => (
-                  <Link key={p.title} href="#" className="group flex items-center gap-3">
-                    <PhotoBlock variant={p.variant} img={p.img} className="h-12 w-16 shrink-0" />
-                    <div>
-                      <p className="text-[12px] font-medium leading-snug text-charcoal group-hover:text-bordeaux">{p.title}</p>
-                      <p className="mt-0.5 flex items-center gap-1 text-[10px] text-charcoal/55"><Clock className="h-2.5 w-2.5" /> {p.min}</p>
-                    </div>
-                  </Link>
-                ))}
-              </div>
-              <Link href="#" className="mt-6 flex items-center justify-center gap-2 border border-stone px-4 py-2.5 text-[12px] tracking-wide text-charcoal transition-colors hover:border-champagne hover:text-bordeaux">
-                Alle Artikel anzeigen <Arrow className="h-3.5 w-3.5" />
-              </Link>
-            </div>
-          </aside>
+            {/* ================= SIDEBAR ================= */}
+            <aside className="space-y-8">
+              <Reveal delay={0.1} y={22}>
+                <FilterPanel categories={KATEGORIE} durations={LESEDAUER} />
+              </Reveal>
+
+              <Reveal delay={0.16} y={22}>
+                <NewsletterCard />
+              </Reveal>
+
+              {/* popular */}
+              <Reveal delay={0.22} y={22}>
+                <div className="rounded-card-lg border border-stone/50 bg-white/70 p-6 shadow-luxe">
+                  <h2 className="font-playfair text-[19px] text-charcoal">Beliebte Artikel</h2>
+                  <GoldRule className="mt-3 w-full" />
+                  <div className="mt-5 space-y-5">
+                    {POPULAR.map((p) => (
+                      <Link key={p.title} href="#" className="group flex items-center gap-3.5">
+                        <span className="relative h-14 w-20 shrink-0 overflow-hidden rounded-xl">
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img
+                            src={p.img}
+                            alt=""
+                            className="h-full w-full object-cover transition-transform duration-700 ease-out-expo group-hover:scale-[1.1]"
+                          />
+                        </span>
+                        <span className="min-w-0">
+                          <span className="block text-[12.5px] font-medium leading-snug text-charcoal transition-colors duration-300 group-hover:text-bordeaux">
+                            {p.title}
+                          </span>
+                          <span className="mt-1 flex items-center gap-1.5 text-[10.5px] text-charcoal/50">
+                            <Clock className="h-3 w-3" /> {p.min}
+                          </span>
+                        </span>
+                      </Link>
+                    ))}
+                  </div>
+                  <div className="mt-6">
+                    <Button href="#" variant="outline" size="sm" magnetic={false} className="w-full">
+                      Alle Artikel anzeigen
+                    </Button>
+                  </div>
+                </div>
+              </Reveal>
+            </aside>
+          </div>
         </div>
-      </div>
-
-      <Footer />
+      </section>
     </div>
   );
 }

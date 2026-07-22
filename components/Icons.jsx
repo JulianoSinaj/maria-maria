@@ -7,6 +7,27 @@ const F = { fill: "none", stroke: "currentColor", strokeWidth: 1.3, strokeLineca
 export const Arrow = (p) => (
   <svg viewBox="0 0 24 24" {...S} {...p}><path d="M5 12h14" /><path d="M13 6l6 6-6 6" /></svg>
 );
+export const ArrowUpRight = (p) => (
+  <svg viewBox="0 0 24 24" {...S} {...p}><path d="M7 17L17 7" /><path d="M8 7h9v9" /></svg>
+);
+export const Menu = (p) => (
+  <svg viewBox="0 0 24 24" {...S} strokeWidth="1.6" {...p}><path d="M4 8h16" /><path d="M4 16h16" /></svg>
+);
+export const Close = (p) => (
+  <svg viewBox="0 0 24 24" {...S} strokeWidth="1.6" {...p}><path d="M6 6l12 12" /><path d="M18 6L6 18" /></svg>
+);
+export const Plus = (p) => (
+  <svg viewBox="0 0 24 24" {...S} strokeWidth="1.6" {...p}><path d="M12 5v14" /><path d="M5 12h14" /></svg>
+);
+export const Check = (p) => (
+  <svg viewBox="0 0 24 24" {...S} strokeWidth="1.8" {...p}><path d="M5 12.5l4.5 4.5L19 7.5" /></svg>
+);
+export const Star = (p) => (
+  <svg viewBox="0 0 24 24" {...S} strokeWidth="1.4" {...p}><path d="M12 3.5l2.6 5.4 5.9.8-4.3 4.1 1 5.9-5.2-2.8-5.2 2.8 1-5.9L3.5 9.7l5.9-.8z" /></svg>
+);
+export const Clock = (p) => (
+  <svg viewBox="0 0 24 24" {...S} strokeWidth="1.6" {...p}><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 2" /></svg>
+);
 export const ChevronRight = (p) => (
   <svg viewBox="0 0 24 24" {...S} strokeWidth="1.8" {...p}><path d="M9 6l6 6-6 6" /></svg>
 );

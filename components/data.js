@@ -16,7 +16,15 @@ export const byName = (n) => WINES.find((w) => w.name === n);
 /* Slugs, für die bereits eine Landingpage unter app/weine/<slug>/ existiert.
    Geht eine neue Weinseite live, den Slug hier ergänzen — alle Karten
    verlinken dann automatisch dorthin. */
-const DETAIL_PAGES = new Set(["falanghina"]);
+const DETAIL_PAGES = new Set([
+  "falanghina",
+  "greco-di-tufo",
+  "il-bianco-greco-cuvee",
+  "primitivo-14-5",
+  "primitivo-15-5",
+  "primitivo-salento",
+  "rosato-puglia",
+]);
 
 export const detailHref = (w) => (DETAIL_PAGES.has(w.slug) ? `/weine/${w.slug}` : null);
 

@@ -304,7 +304,7 @@ export default function TasteStory({ wine }) {
         <div className="mx-auto max-w-content px-6 lg:px-10">
           <SectionTitle
             eyebrow="Der Geschmack"
-            description="Drei Kapitel, ein Charakter: Was die Falanghina im Glas erzählt."
+            description={`Drei Kapitel, ein Charakter: Was ${wine.shortNameNom ?? "die Falanghina"} im Glas erzählt.`}
           >
             Was Sie <span className="italic text-acqua-deep">erwartet.</span>
           </SectionTitle>
@@ -341,7 +341,7 @@ export default function TasteStory({ wine }) {
         <div className="relative mx-auto flex h-full max-w-content flex-col px-6 lg:px-10">
           <div className="pt-24 text-center lg:pt-16">
             <Eyebrow className="justify-center">Der Geschmack</Eyebrow>
-            <h2 className="sr-only">Der Geschmack der Falanghina</h2>
+            <h2 className="sr-only">Der Geschmack {wine.shortNameGen ?? "der Falanghina"}</h2>
           </div>
 
           <div className="grid min-h-0 flex-1 grid-rows-[0.85fr_1.15fr] items-center gap-2 lg:grid-cols-2 lg:grid-rows-1 lg:gap-10">

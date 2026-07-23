@@ -14,6 +14,10 @@ export const FALANGHINA = {
   catalogName: "Falanghina", // key into components/data.js WINES via byName()
 
   name: "Beneventano Falanghina IGP",
+  /* Kurzform für Fließtext — Nominativ und Genitiv, damit die geteilten
+     Sektionen ohne hartcodierten Weinnamen auskommen */
+  shortNameNom: "die Falanghina",
+  shortNameGen: "der Falanghina",
   eyebrow: "Italienische Boutique-Weine",
   heroTitle: ["Beneventano", "Falanghina IGP"],
   lede:

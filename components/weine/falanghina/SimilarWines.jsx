@@ -19,7 +19,12 @@ export default function SimilarWines({ wine }) {
           eyebrow={wine.similar.kicker}
           description="Drei Weißweine aus unserer Kollektion, die denselben Ton treffen: hell, frisch, mediterran."
         >
-          Wenn Ihnen die <span className="italic text-bordeaux">{wine.catalogName}</span> gefällt
+          {wine.similar.title ?? (
+            <>
+              Wenn Ihnen die{" "}
+              <span className="italic text-bordeaux">{wine.catalogName}</span> gefällt
+            </>
+          )}
         </SectionTitle>
 
         <Stagger className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3" gap={0.09}>

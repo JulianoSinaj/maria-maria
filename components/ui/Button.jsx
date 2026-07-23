@@ -57,7 +57,7 @@ export default function Button({
   size = "md",
   icon = true,
   iconType = "arrow", // "arrow" | "up-right" | "none"
-  magnetic = true,
+  magnetic = false,
   className = "",
   children,
   ...rest
@@ -99,11 +99,10 @@ export default function Button({
       {icon && iconType !== "none" && (
         <span className={`relative z-10 transition-colors duration-300 ${cfg.iconHover}`}>
           <Icon
-            className={`h-4 w-4 transition-transform duration-500 ease-out-expo ${
-              iconType === "up-right"
+            className={`h-4 w-4 transition-transform duration-500 ease-out-expo ${iconType === "up-right"
                 ? "group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
                 : "group-hover:translate-x-1"
-            }`}
+              }`}
           />
         </span>
       )}

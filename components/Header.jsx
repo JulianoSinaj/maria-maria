@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { AnimatePresence, motion, useScroll, useSpring } from "motion/react";
 import Logo from "./Logo";
 import Button from "./ui/Button";
-import Magnetic from "./motion/Magnetic";
+import WineMenu from "./WineMenu";
 import { useLenis } from "./motion/SmoothScroll";
 import { Close, Menu, Grapes } from "./Icons";
 
@@ -15,6 +15,12 @@ const NAV = [
   { label: "Regionen", href: "/regionen" },
   { label: "Magazin", href: "/magazin" },
   { label: "Kontakt", href: "/kontakt" },
+];
+
+const WINE_ARTEN = [
+  { label: "Rotweine", art: "rot" },
+  { label: "Weißweine", art: "weiss" },
+  { label: "Roséweine", art: "rose" },
 ];
 
 export default function Header() {
@@ -95,29 +101,26 @@ export default function Header() {
 
       <div className={`transition-all duration-500 ease-out-expo ${scrolled ? "px-3 pt-3 lg:px-6" : ""}`}>
         <div
-          className={`mx-auto flex items-center justify-between transition-all duration-500 ease-out-expo ${
-            scrolled
+          className={`mx-auto flex items-center justify-between transition-all duration-500 ease-out-expo ${scrolled
               ? "glass h-16 max-w-[1060px] rounded-full px-4 shadow-glass sm:px-6"
               : "h-20 max-w-content bg-transparent px-6 lg:h-24 lg:px-10"
-          }`}
+            }`}
         >
-          <Magnetic strength={0.18}>
-            <Link href="/" aria-label="Maria Maria — Startseite" className="block">
-              <Logo className={`h-auto transition-all duration-500 ease-out-expo ${scrolled ? "w-[76px]" : "w-[96px]"}`} />
-            </Link>
-          </Magnetic>
+          <Link href="/" aria-label="Maria Maria — Startseite" className="block">
+            <Logo className={`h-auto transition-all duration-500 ease-out-expo ${scrolled ? "w-[76px]" : "w-[96px]"}`} />
+          </Link>
 
           <nav className="hidden items-center gap-8 md:flex" aria-label="Hauptnavigation">
             {NAV.map((item) => {
               const active = isActive(item.href);
+              if (item.href === "/weine") return <WineMenu key={item.href} active={active} />;
               return (
                 <Link
                   key={item.href}
                   href={item.href}
                   aria-current={active ? "page" : undefined}
-                  className={`group relative py-2 text-[12.5px] tracking-[0.08em] transition-colors duration-300 ${
-                    active ? "font-semibold text-bordeaux" : "text-charcoal/75 hover:text-bordeaux"
-                  }`}
+                  className={`group relative py-2 text-[12.5px] tracking-[0.08em] transition-colors duration-300 ${active ? "font-semibold text-bordeaux" : "text-charcoal/75 hover:text-bordeaux"
+                    }`}
                 >
                   {item.label}
                   {active ? (
@@ -191,12 +194,24 @@ export default function Header() {
                 >
                   <Link
                     href={item.href}
-                    className={`block py-3 font-playfair text-[2.1rem] leading-tight transition-colors ${
-                      isActive(item.href) ? "italic text-champagne" : "text-ivory hover:text-champagne"
-                    }`}
+                    className={`block py-3 font-playfair text-[2.1rem] leading-tight transition-colors ${isActive(item.href) ? "italic text-champagne" : "text-ivory hover:text-champagne"
+                      }`}
                   >
                     {item.label}
                   </Link>
+                  {item.href === "/weine" && (
+                    <div className="mb-2 flex flex-wrap gap-2">
+                      {WINE_ARTEN.map((a) => (
+                        <Link
+                          key={a.art}
+                          href={`/weine?art=${a.art}#kollektion`}
+                          className="rounded-full border border-ivory/20 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-ivory/70 transition-colors hover:border-champagne hover:text-champagne"
+                        >
+                          {a.label}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
                 </motion.div>
               ))}
             </nav>

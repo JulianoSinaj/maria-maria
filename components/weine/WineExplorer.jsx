@@ -1,5 +1,6 @@
 "use client";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import WineCard from "@/components/WineCard";
 import Button from "@/components/ui/Button";
@@ -11,6 +12,8 @@ import { WINES } from "@/components/data";
    inside the controls themselves. */
 
 const TYPES = ["Alle Weine", "Rotwein", "Weißwein", "Roséwein"];
+/* ?art=… deep-links from the header dropdown straight into a filtered view */
+export const ART_PARAM = { rot: "Rotwein", weiss: "Weißwein", rose: "Roséwein" };
 // derived from the catalogue so a chip can never point at zero wines
 const REGIONS = ["Alle Regionen", ...new Set(WINES.map((w) => w.region))];
 
@@ -19,8 +22,15 @@ const GRID_SPRING = { type: "spring", stiffness: 300, damping: 30 };
 
 export default function WineExplorer() {
   const reduced = useReducedMotion();
+  const params = useSearchParams();
+  const art = params.get("art");
   const [type, setType] = useState(TYPES[0]);
   const [region, setRegion] = useState(REGIONS[0]);
+
+  // follow the header dropdown when it deep-links a wine type
+  useEffect(() => {
+    if (art && ART_PARAM[art]) setType(ART_PARAM[art]);
+  }, [art]);
 
   const wines = useMemo(
     () =>

@@ -2,7 +2,6 @@
 import { useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import WineCard from "./WineCard";
-import Magnetic from "./motion/Magnetic";
 import { ChevronRight } from "./Icons";
 
 /* Paged carousel of product cards — exactly PER_PAGE cards per page.
@@ -32,15 +31,13 @@ export default function WineRail({ wines, className = "" }) {
   };
 
   const paddle = (step, label) => (
-    <Magnetic strength={0.25}>
-      <button
-        onClick={() => go(step)}
-        aria-label={label}
-        className="flex h-11 w-11 items-center justify-center rounded-full border border-stone bg-white/70 text-charcoal/70 shadow-luxe transition-all duration-300 hover:border-champagne hover:text-bordeaux active:scale-95"
-      >
-        <ChevronRight className={`h-4 w-4 ${step < 0 ? "rotate-180" : ""}`} />
-      </button>
-    </Magnetic>
+    <button
+      onClick={() => go(step)}
+      aria-label={label}
+      className="flex h-11 w-11 items-center justify-center rounded-full border border-stone bg-white/70 text-charcoal/70 shadow-luxe transition-all duration-300 hover:border-champagne hover:text-bordeaux active:scale-95"
+    >
+      <ChevronRight className={`h-4 w-4 ${step < 0 ? "rotate-180" : ""}`} />
+    </button>
   );
 
   return (

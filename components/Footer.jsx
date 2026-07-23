@@ -2,7 +2,6 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Reveal, Stagger, StaggerItem } from "./motion/Reveal";
-import Magnetic from "./motion/Magnetic";
 import Button from "./ui/Button";
 import { GoldRule } from "./Deco";
 import { Instagram, Facebook, Mail, Arrow, Check, Grapes } from "./Icons";
@@ -74,11 +73,9 @@ export default function Footer() {
                 placeholder="E-Mail-Adresse eingeben"
                 className="h-11 min-w-0 flex-1 bg-transparent px-4 text-[13px] text-ivory outline-none placeholder:text-ivory/40"
               />
-              <Magnetic strength={0.2}>
-                <Button type="submit" magnetic={false} className="shrink-0">
-                  Anmelden
-                </Button>
-              </Magnetic>
+              <Button type="submit" className="shrink-0">
+                Anmelden
+              </Button>
             </form>
           )}
         </Reveal>
@@ -96,15 +93,14 @@ export default function Footer() {
             </p>
             <div className="mt-6 flex items-center gap-3">
               {SOCIALS.map(({ label, href, Icon }) => (
-                <Magnetic key={label} strength={0.3}>
-                  <a
-                    href={href}
-                    aria-label={label}
-                    className="flex h-11 w-11 items-center justify-center rounded-full border border-ivory/15 text-ivory/75 transition-colors duration-300 hover:border-champagne hover:text-champagne"
-                  >
-                    <Icon className="h-[18px] w-[18px]" />
-                  </a>
-                </Magnetic>
+                <a
+                  key={label}
+                  href={href}
+                  aria-label={label}
+                  className="flex h-11 w-11 items-center justify-center rounded-full border border-ivory/15 text-ivory/75 transition-colors duration-300 hover:border-champagne hover:text-champagne"
+                >
+                  <Icon className="h-[18px] w-[18px]" />
+                </a>
               ))}
             </div>
           </StaggerItem>

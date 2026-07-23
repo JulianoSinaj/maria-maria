@@ -3,7 +3,6 @@ import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import Bottle from "@/components/Bottle";
 import Button from "@/components/ui/Button";
-import Magnetic from "@/components/motion/Magnetic";
 import { useLenis } from "@/components/motion/SmoothScroll";
 import { IconChip } from "@/components/Deco";
 import { Cart, Close, Check, Plus, Grapes } from "@/components/Icons";
@@ -37,9 +36,8 @@ function ItemRow({ item }) {
             <Bottle
               key={`${v}${i}`}
               variant={v}
-              className={`h-14 ${i > 0 ? "-ml-3" : ""} ${
-                product.variants.length > 1 ? (i === 0 ? "-rotate-6" : i === 2 ? "rotate-6" : "") : ""
-              }`}
+              className={`h-14 ${i > 0 ? "-ml-3" : ""} ${product.variants.length > 1 ? (i === 0 ? "-rotate-6" : i === 2 ? "rotate-6" : "") : ""
+                }`}
             />
           ))}
         </div>
@@ -172,7 +170,7 @@ export default function CartDrawer() {
             transition={{ type: "spring", stiffness: 260, damping: 26 }}
             className="pointer-events-none fixed inset-x-0 bottom-5 z-40 flex justify-center px-4"
           >
-            <Magnetic strength={0.16}>
+            <div className="inline-block">
               <button
                 type="button"
                 onClick={openCart}
@@ -197,7 +195,7 @@ export default function CartDrawer() {
                   Warenkorb
                 </span>
               </button>
-            </Magnetic>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

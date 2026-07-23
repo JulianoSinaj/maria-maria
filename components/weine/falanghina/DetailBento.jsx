@@ -61,7 +61,7 @@ export default function DetailBento({ wine }) {
       <div className="relative mx-auto max-w-content px-6 lg:px-10">
         <SectionTitle
           eyebrow="Im Detail"
-          description="Das technische Datenblatt der Falanghina — klar, präzise, ohne Geheimnisse."
+          description={`Das technische Datenblatt ${wine.shortNameGen ?? "der Falanghina"} — klar, präzise, ohne Geheimnisse.`}
         >
           Alles Wesentliche. <span className="italic text-acqua-deep">Auf einen Blick.</span>
         </SectionTitle>

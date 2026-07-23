@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import Link from "next/link";
 import ShaderGradient from "@/components/motion/ShaderGradient";
 import SplitText from "@/components/motion/SplitText";
@@ -159,7 +160,9 @@ export default function WeinePage() {
         <GhostWord className="right-[-2vw] top-4 text-[11vw]">La Cantina</GhostWord>
         <div className="relative mx-auto max-w-content px-6 pb-24 pt-2 lg:px-10">
           <h2 className="sr-only">Die Kollektion</h2>
-          <WineExplorer />
+          <Suspense fallback={null}>
+            <WineExplorer />
+          </Suspense>
         </div>
       </section>
 

@@ -155,6 +155,51 @@ export const PRIMITIVO_155 = {
     ],
   },
 
+  /* ---- Servieren & Genießen + Der Maria-Moment ---- */
+  moment: {
+    title: "So schmeckt der Primitivo 15,5 am besten",
+    accent: { base: "#A8452F", deep: "#6B2114", light: "#EBD0BD" },
+    serve: {
+      title: "Servieren & Genießen",
+      items: [
+        { icon: "thermometer", title: "Serviertemperatur", text: "16–18 °C — im großen Rotweinglas" },
+        /* [BESTÄTIGEN] Trinkfenster nicht im Datenblatt — Struktur und 15,5 % vol. tragen weiter als der 14,5er */
+        { icon: "hourglass", title: "Trinkfenster", text: "Jetzt genießen oder innerhalb von 4–6 Jahren" },
+        { icon: "decanter", title: "Das Ritual", text: "Eine gute Stunde vorher öffnen — dann entfalten sich Frucht und Würze voll" },
+      ],
+    },
+    maria: {
+      text: "Kein Wein für nebenbei — einer für den langen Abend, den vollen Teller und das Gespräch danach.",
+      link: { label: "Mehr entdecken", href: "/shop" },
+    },
+    essence: [
+      {
+        icon: "glass",
+        kicker: "Geschmack",
+        title: "Körperreich, warm, komplex",
+        text: "Erdbeere und Waldbeeren in der Nase, am Gaumen entschieden, trocken und intensiv — bis in den langen Nachhall.",
+        tone: "#8C2230",
+        toneDeep: "#5C0D18",
+      },
+      {
+        icon: "italy",
+        kicker: "Herkunft",
+        title: "Torricella & Maruggio",
+        text: "Alberello-Weingärten nur wenige Kilometer vom Ionischen Meer — die Brise hebt Duft und Struktur.",
+        tone: "#A8452F",
+        toneDeep: "#6B2114",
+      },
+      {
+        icon: "grapes",
+        kicker: "Rebsorte",
+        title: "Primitivo di Manduria",
+        text: "100 % Primitivo, zwölf Monate in antiken Terrakotta-Giare — den capasoni — gereift.",
+        tone: "#D8A97E",
+        toneDeep: "#8A5A2E",
+      },
+    ],
+  },
+
   /* ---- Häufige Fragen ---- */
   faq: [
     {
@@ -202,6 +247,7 @@ export const PRIMITIVO_155 = {
     { label: "Überblick", href: "#ueberblick" },
     { label: "Geschmack", href: "#geschmack" },
     { label: "Herkunft", href: "#herkunft" },
+    { label: "Genießen", href: "#geniessen" },
     { label: "Details", href: "#details" },
     { label: "Fragen", href: "#fragen" },
   ],

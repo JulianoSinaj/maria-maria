@@ -32,9 +32,19 @@ import FalanghinaBottle from "./FalanghinaBottle";
 
 const SPRING = { stiffness: 60, damping: 19, mass: 0.9 };
 
+/* Alle Scroll-Opacities laufen durch useSpring: nicht nur für den Feder-Look —
+   ein reines useTransform(scrollYProgress) würde Framer als ScrollTimeline-
+   Animation an den Browser delegieren, und die projiziert bei target-basiertem
+   useScroll auf die gesamte Seitenhöhe statt auf die Pin-Strecke (Akt 1 blieb
+   dadurch den ganzen Hero über sichtbar). Die Feder erzwingt JS-getriebene
+   Frames mit korrektem Fortschritt. */
+
 function Act2Word({ progress, word, index, light = false }) {
   const start = 0.4 + index * 0.09;
-  const opacity = useTransform(progress, [start, start + 0.09, 0.84, 0.94], [0, 1, 1, 0]);
+  const opacity = useSpring(
+    useTransform(progress, [start, start + 0.09, 0.84, 0.94], [0, 1, 1, 0]),
+    SPRING
+  );
   const y = useSpring(useTransform(progress, [start, start + 0.12], [44, 0]), SPRING);
   return (
     <motion.span
@@ -60,7 +70,7 @@ export default function FalanghinaHero({ wine }) {
   });
 
   /* Akt 1 verabschiedet sich nach etwa einem Drittel der Pin-Strecke */
-  const act1Opacity = useTransform(scrollYProgress, [0, 0.26], [1, 0]);
+  const act1Opacity = useSpring(useTransform(scrollYProgress, [0, 0.26], [1, 0]), SPRING);
   const act1Y = useSpring(useTransform(scrollYProgress, [0, 0.3], [0, -70]), SPRING);
   const act1Pointer = useTransform(scrollYProgress, (v) => (v > 0.22 ? "none" : "auto"));
 
@@ -68,9 +78,12 @@ export default function FalanghinaHero({ wine }) {
   const photoScale = useSpring(useTransform(scrollYProgress, [0, 1], [1.04, 1.17]), SPRING);
   const photoY = useSpring(useTransform(scrollYProgress, [0, 1], [0, -28]), SPRING);
   /* Der Elfenbein-Schleier hebt sich, sobald Akt 1 abtritt */
-  const veilOpacity = useTransform(scrollYProgress, [0, 0.3], [1, 0]);
+  const veilOpacity = useSpring(useTransform(scrollYProgress, [0, 0.3], [1, 0]), SPRING);
   /* Kino-Abdunklung für Akt 2 — und Aufhellen zum Ausstieg */
-  const dimOpacity = useTransform(scrollYProgress, [0.3, 0.46, 0.86, 0.96], [0, 1, 1, 0]);
+  const dimOpacity = useSpring(
+    useTransform(scrollYProgress, [0.3, 0.46, 0.86, 0.96], [0, 1, 1, 0]),
+    SPRING
+  );
 
   /* Flaschen-Choreografie (Fallback) — Federn statt roher Scroll-Koordinaten */
   const rotateY = useSpring(useTransform(scrollYProgress, [0, 1], [-9, 16]), SPRING);
@@ -78,7 +91,7 @@ export default function FalanghinaHero({ wine }) {
   const bottleY = useSpring(useTransform(scrollYProgress, [0, 1], [26, -44]), SPRING);
   const bottleScale = useSpring(useTransform(scrollYProgress, [0, 1], [1.02, 0.94]), SPRING);
 
-  const cueOpacity = useTransform(scrollYProgress, [0, 0.08], [1, 0]);
+  const cueOpacity = useSpring(useTransform(scrollYProgress, [0, 0.08], [1, 0]), SPRING);
 
   const act1Content = (
     <>
@@ -106,7 +119,10 @@ export default function FalanghinaHero({ wine }) {
         <SplitText text={wine.heroTitle[0]} className="block" delay={0.12} />
         <SplitText
           text={wine.heroTitle[1]}
-          className="block bg-gradient-to-r from-acqua-deep via-[#5E8F53] to-champagne bg-clip-text italic text-transparent"
+          className="block italic"
+          wordClassName={`bg-gradient-to-r bg-clip-text text-transparent ${
+            wine.titleGradient ?? "from-acqua-deep via-[#5E8F53] to-champagne"
+          }`}
           delay={0.3}
         />
       </h1>

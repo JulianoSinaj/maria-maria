@@ -12,6 +12,7 @@ import DetailBento from "@/components/weine/falanghina/DetailBento";
 import WineFaq from "@/components/weine/falanghina/WineFaq";
 import SimilarWines from "@/components/weine/falanghina/SimilarWines";
 import CtaBand from "@/components/weine/falanghina/CtaBand";
+import MariaMoment from "@/components/weine/falanghina/MariaMoment";
 
 /* Produkt-Landingpage im Apple-Stil für die Beneventano Falanghina IGP.
    Prototyp und zugleich Vorlage: Sektionen sind wine-Prop-getrieben, eine
@@ -62,6 +63,7 @@ export default function FalanghinaPage() {
       <StorySection wine={wine} />
       <PlaceSection wine={wine} />
       <PairingSection wine={wine} />
+      <MariaMoment wine={wine} />
       <DetailBento wine={wine} />
       <WineFaq wine={wine} />
       <SimilarWines wine={wine} />

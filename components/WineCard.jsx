@@ -47,13 +47,21 @@ export default function WineCard({ wine, variant = "default", className = "", hr
   const reduced = useReducedMotion();
   // Landingpage des Weins, sonst Shop — explizites href gewinnt.
   const link = href ?? wineHref(wine);
-  const lift = reduced ? {} : { whileHover: { y: -6 }, transition: { type: "spring", stiffness: 260, damping: 24 } };
+  // Hover wird auf einem unbewegten Wrapper erkannt; nur die innere Karte hebt
+  // sich. Wäre die angehobene Karte selbst das Hover-Ziel, würde ein Zeiger an
+  // ihrer Kante (oder Scrollen unter ruhendem Cursor) enter/leave im Loop
+  // auslösen und die Karte zittern lassen.
+  const hover = reduced ? {} : { initial: "rest", whileHover: "hover", animate: "rest" };
+  const lift = reduced ? undefined : { rest: { y: 0 }, hover: { y: -6 } };
+  const spring = { type: "spring", stiffness: 260, damping: 24 };
 
   if (variant === "mini") {
     return (
+      <motion.div {...hover} className={`group relative ${className || "w-[228px] shrink-0 snap-start"}`}>
       <motion.article
-        {...lift}
-        className={`group relative flex flex-col overflow-hidden rounded-card border border-stone/50 bg-gradient-to-b from-white/90 to-cream shadow-luxe transition-[box-shadow,border-color] duration-500 hover:border-champagne/70 hover:shadow-lift ${className || "w-[228px] shrink-0 snap-start"}`}
+        variants={lift}
+        transition={spring}
+        className="relative flex h-full flex-col overflow-hidden rounded-card border border-stone/50 bg-gradient-to-b from-white/90 to-cream shadow-luxe transition-[box-shadow,border-color] duration-500 group-hover:border-champagne/70 group-hover:shadow-lift"
       >
         <Stage wine={wine} className="h-40 pt-4" bottleClass="h-32" />
         <div className="flex flex-1 flex-col px-4 pb-4">
@@ -71,13 +79,16 @@ export default function WineCard({ wine, variant = "default", className = "", hr
           </div>
         </div>
       </motion.article>
+      </motion.div>
     );
   }
 
   return (
+    <motion.div {...hover} className={`group relative ${className}`}>
     <motion.article
-      {...lift}
-      className={`group relative flex flex-col overflow-hidden rounded-card border border-stone/50 bg-gradient-to-b from-white/90 to-cream shadow-luxe transition-[box-shadow,border-color] duration-500 hover:border-champagne/70 hover:shadow-lift ${className}`}
+      variants={lift}
+      transition={spring}
+      className="relative flex h-full flex-col overflow-hidden rounded-card border border-stone/50 bg-gradient-to-b from-white/90 to-cream shadow-luxe transition-[box-shadow,border-color] duration-500 group-hover:border-champagne/70 group-hover:shadow-lift"
     >
       {/* region chip */}
       <span className="glass pointer-events-none absolute left-4 top-4 z-10 rounded-full px-3 py-1.5 text-[9.5px] font-semibold uppercase tracking-[0.16em] text-charcoal/70">
@@ -115,5 +126,6 @@ export default function WineCard({ wine, variant = "default", className = "", hr
         </div>
       </div>
     </motion.article>
+    </motion.div>
   );
 }

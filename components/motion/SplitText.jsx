@@ -7,6 +7,12 @@ import { motion, useReducedMotion } from "motion/react";
 export default function SplitText({
   text,
   className = "",
+  /* Klassen pro Wort-Span — nötig für bg-clip-text-Gradients, die auf dem
+     äußeren Wrapper nicht durch die overflow-clip-Spans hindurchmalen */
+  wordClassName = "",
+  /* Inline-Style pro Wort-Span — für laufzeitdynamische Gradients (z. B.
+     weinspezifische Töne), die Tailwind-JIT nicht sehen kann */
+  wordStyle,
   delay = 0,
   stagger = 0.05,
   once = true,
@@ -28,7 +34,8 @@ export default function SplitText({
           className="inline-block overflow-hidden pb-[0.12em] -mb-[0.12em] align-bottom"
         >
           <motion.span
-            className="inline-block will-transform"
+            className={`inline-block will-transform ${wordClassName}`}
+            style={wordStyle}
             initial={{ y: "112%", rotate: 2.5 }}
             whileInView={{ y: "0%", rotate: 0 }}
             viewport={{ once }}

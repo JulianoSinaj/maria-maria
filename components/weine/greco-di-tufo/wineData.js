@@ -159,6 +159,51 @@ export const GRECO_DI_TUFO = {
     ],
   },
 
+  /* ---- Servieren & Genießen + Der Maria-Moment ---- */
+  moment: {
+    title: "So schmeckt der Greco am besten",
+    accent: { base: "#D2AE55", deep: "#8F6B1F", light: "#EFE3BC" },
+    serve: {
+      title: "Servieren & Genießen",
+      items: [
+        { icon: "thermometer", title: "Serviertemperatur", text: "ca. 10 °C — im Weißweinglas" },
+        /* [BESTÄTIGEN] Trinkfenster nicht im Datenblatt — der vulkanische Boden gibt dem Greco Langlebigkeit */
+        { icon: "hourglass", title: "Trinkfenster", text: "Jetzt genießen oder innerhalb von 3–5 Jahren" },
+        { icon: "glasses", title: "Der Auftakt", text: "Kurz vor dem Servieren aus dem Kühlschrank nehmen" },
+      ],
+    },
+    maria: {
+      text: "Für Abende, an denen niemand auf die Uhr schaut — ein Glas Greco, gute Gespräche und Zeit, die stehen bleibt.",
+      link: { label: "Mehr entdecken", href: "/shop" },
+    },
+    essence: [
+      {
+        icon: "glass",
+        kicker: "Geschmack",
+        title: "Frisch, zart und verführerisch",
+        text: "Gelbe Steinfrucht, Zitrusschale und ein feiner mineralischer Zug — ein Weißwein mit Struktur, der leise verführt.",
+        tone: "#D2AE55",
+        toneDeep: "#8F6B1F",
+      },
+      {
+        icon: "italy",
+        kicker: "Herkunft",
+        title: "Tufo, Irpinien",
+        text: "Weinberge auf vulkanischem Tuffgestein im bergigen Hinterland Kampaniens — Höhenlage und kühle Nächte geben Spannung.",
+        tone: "#A8452F",
+        toneDeep: "#6B2114",
+      },
+      {
+        icon: "grapes",
+        kicker: "Rebsorte",
+        title: "Greco",
+        text: "Mit griechischen Siedlern nach Süditalien gekommen — heute einer der wenigen Weißweine Italiens mit D.O.C.G.-Status.",
+        tone: "#8F9A63",
+        toneDeep: "#5C6638",
+      },
+    ],
+  },
+
   /* ---- Häufige Fragen ---- */
   faq: [
     {
@@ -202,6 +247,7 @@ export const GRECO_DI_TUFO = {
     { label: "Überblick", href: "#ueberblick" },
     { label: "Geschmack", href: "#geschmack" },
     { label: "Herkunft", href: "#herkunft" },
+    { label: "Genießen", href: "#geniessen" },
     { label: "Details", href: "#details" },
     { label: "Fragen", href: "#fragen" },
   ],

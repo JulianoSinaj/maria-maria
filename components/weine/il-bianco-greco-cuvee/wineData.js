@@ -157,6 +157,51 @@ export const IL_BIANCO = {
     ],
   },
 
+  /* ---- Servieren & Genießen + Der Maria-Moment ---- */
+  moment: {
+    title: "So schmeckt der Bianco am besten",
+    accent: { base: "#DCCB86", deep: "#8F7A33", light: "#F1E9C6" },
+    serve: {
+      title: "Servieren & Genießen",
+      items: [
+        { icon: "thermometer", title: "Serviertemperatur", text: "ca. 10 °C — nicht zu kalt, sonst verschließt sich das Bouquet" },
+        /* [BESTÄTIGEN] Trinkfenster nicht im Datenblatt — der Bianco reift bereits 2 Jahre im Stahl */
+        { icon: "hourglass", title: "Trinkfenster", text: "Bereits gereift — jetzt genießen oder innerhalb von 2–3 Jahren" },
+        { icon: "glasses", title: "Das Glas", text: "Im bauchigen Weißweinglas entfaltet sich das intensive Bouquet am schönsten" },
+      ],
+    },
+    maria: {
+      text: "Für ruhige Abende, an denen es nichts zu beweisen gibt — ein Wein, der leise geworden ist und genau deshalb bleibt.",
+      link: { label: "Mehr entdecken", href: "/shop" },
+    },
+    essence: [
+      {
+        icon: "glass",
+        kicker: "Geschmack",
+        title: "Zart und verführerisch",
+        text: "Ein sehr intensives Bouquet, am Gaumen delikat und zurückhaltend — ein Wein, der nicht drängt, sondern einlädt.",
+        tone: "#DCCB86",
+        toneDeep: "#8F7A33",
+      },
+      {
+        icon: "italy",
+        kicker: "Herkunft",
+        title: "Kampanien",
+        text: "Sonne, Meer und vulkanische Böden — eine Region, deren weiße Reben Frucht und Frische zugleich halten.",
+        tone: "#7BA0A0",
+        toneDeep: "#44625F",
+      },
+      {
+        icon: "grapes",
+        kicker: "Rebsorte",
+        title: "Greco Cuvée",
+        text: "Ausgewählte weiße Rebsorten Kampaniens, deren Zusammensetzung dem Jahrgang folgt — zwei Jahre im Stahl vereint.",
+        tone: "#C8B77A",
+        toneDeep: "#7C6A22",
+      },
+    ],
+  },
+
   /* ---- Häufige Fragen ---- */
   faq: [
     {
@@ -202,6 +247,7 @@ export const IL_BIANCO = {
     { label: "Überblick", href: "#ueberblick" },
     { label: "Geschmack", href: "#geschmack" },
     { label: "Herkunft", href: "#herkunft" },
+    { label: "Genießen", href: "#geniessen" },
     { label: "Details", href: "#details" },
     { label: "Fragen", href: "#fragen" },
   ],

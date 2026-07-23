@@ -1,45 +1,61 @@
 "use client";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   motion,
-  AnimatePresence,
   useScroll,
   useTransform,
   useSpring,
+  useVelocity,
+  useMotionTemplate,
   useMotionValueEvent,
   useReducedMotion,
 } from "motion/react";
 import { Eyebrow, SectionTitle, GoldRule } from "@/components/Deco";
 import { useLenis } from "@/components/motion/SmoothScroll";
+import ShaderGradient from "@/components/motion/ShaderGradient";
 import { WINE_ICON } from "./WineIcons";
 import WineGlassGL from "./WineGlassGL";
 
-/* „Der Geschmack" — das gepinnte Scrollytelling-Herzstück im Apple-Stil.
-   Drei Kapitel (Farbe · Duft · Geschmack) scrollen durch einen fixierten
-   Viewport: links ein Weinglas, das sich füllt, duftet und schwingt; rechts
-   wechseln die Kapiteltexte im Crossfade. Eine klickbare Kapitel-Leiste
-   zeigt den Fortschritt. Reduced motion erhält die drei Kapitel gestapelt. */
+/* „Der Geschmack" — das gepinnte Scrollytelling-Herzstück im Kino-Stil.
+   Drei Kapitel (Farbe · Duft · Geschmack) als choreografierter Dialog
+   zwischen Glas und Text auf einer Bühne:
 
-const SPRING = { type: "spring", stiffness: 90, damping: 20, mass: 1 };
+   · Kapitel 1 — Glas links, Text tritt von rechts ein und geht nach rechts ab
+   · Kapitel 2 — Glas wandert nach rechts, Text kommt von links, geht links ab
+   · Kapitel 3 — Glas wandert zurück nach links, Text von rechts, ab nach rechts
+   · Finale    — während der letzte Text abgeht, fährt das Glas in die Mitte
+                 und die Kamera dollyt heran (u_zoom im Shader), dann löst
+                 sich der Pin und die Seite läuft weiter
 
-/* Rotwein-Palette: von hellem Rubin am Rand bis zu dunklem Granat im Kern.
-   Die Kapitel verschieben den Ton nur leicht — Rotwein bleibt Rotwein. */
-const WINE_REDS = ["#7B1220", "#6E0F1D", "#5C0C18"];
+   Alles ist scroll-gescrubbt (rückwärts scrollen spult die Szene zurück) und
+   läuft durch Federn — Glasposition, Texteintritte, Blur und Neigung. Hinter
+   der Bühne atmet ein ShaderGradient in Pastelltönen der Kapitelfarben.
+   Reduced motion erhält die drei Kapitel ruhig gestapelt. */
 
-/* ---- Weinglas mit animiertem Inhalt ---- */
-function WineGlass({ progress, active, tones, reduced }) {
-  /* Füllstand steigt im ersten Kapitel, Farbton wandert mit den Kapiteln */
+/* Anteil des Scrollwegs, der dem Finale (Mitte + Zoom) gehört */
+const FINALE = 0.18;
+const X_SPRING = { stiffness: 60, damping: 19, mass: 1.1 };
+const TEXT_SPRING = { stiffness: 90, damping: 22, mass: 0.9 };
+
+/* Hex-Mischung für abgeleitete Töne (Pastell-Bühne, SVG-Fallback-Schatten) */
+const mixHex = (a, b, t) => {
+  const pa = parseInt(a.slice(1), 16);
+  const pb = parseInt(b.slice(1), 16);
+  const ch = (sh) => Math.round(((pa >> sh) & 255) * (1 - t) + ((pb >> sh) & 255) * t);
+  return `#${((ch(16) << 16) | (ch(8) << 8) | ch(0)).toString(16).padStart(6, "0")}`;
+};
+
+/* ---- SVG-Fallback: Weinglas mit animiertem Inhalt (ohne WebGL) ---- */
+function WineGlass({ progress, active, tint, reduced }) {
+  const deep = mixHex(tint, "#000000", 0.42);
+  const light = mixHex(tint, "#FFFFFF", 0.4);
+  /* Füllstand steigt im ersten Kapitel */
   const level = useSpring(useTransform(progress, [0.02, 0.3], [196, 118]), {
     stiffness: 70,
     damping: 22,
   });
-  /* Farbverlauf über die Kapitel — Stützstellen aus der Tönungsanzahl
-     abgeleitet, damit sie immer streng aufsteigend sind. */
-  const reds = tones.map((_, i) => WINE_REDS[Math.min(i, WINE_REDS.length - 1)]);
-  const fillStops = tones.map((_, i) => 0.1 + (i * 0.75) / Math.max(1, tones.length - 1));
-  const fill = useTransform(progress, fillStops, reds);
   /* Der Wein wirkt beim Einlaufen dünner und deckt erst mit Füllhöhe voll */
-  const bodyOpacity = useTransform(progress, [0.02, 0.16, 0.3], [0.62, 0.85, 0.94]);
+  const bodyOpacity = useTransform(progress, [0.02, 0.16, 0.3], [0.55, 0.8, 0.92]);
 
   return (
     <svg viewBox="0 0 220 300" className="h-full w-auto" aria-hidden="true">
@@ -48,19 +64,20 @@ function WineGlass({ progress, active, tones, reduced }) {
           {/* Innenraum des Kelchs */}
           <path d="M66 44 C66 108 74 138 96 154 C102 158 118 158 124 154 C146 138 154 108 154 44 Z" />
         </clipPath>
-        {/* Tiefe: an den Rändern lichtdurchlässig, im Kern granatdunkel */}
+        {/* Tiefe: an den Silhouettenkanten dunkler (längerer Lichtweg),
+            farbneutral — funktioniert für Weiß-, Rosé- und Rotweine */}
         <linearGradient id="tst-wine-depth" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0%" stopColor="#000000" stopOpacity="0.28" />
-          <stop offset="18%" stopColor="#B4243A" stopOpacity="0.22" />
-          <stop offset="50%" stopColor="#2E040C" stopOpacity="0.45" />
-          <stop offset="84%" stopColor="#4A0812" stopOpacity="0.3" />
-          <stop offset="100%" stopColor="#000000" stopOpacity="0.34" />
+          <stop offset="0%" stopColor="#000000" stopOpacity="0.26" />
+          <stop offset="18%" stopColor="#FFFFFF" stopOpacity="0.10" />
+          <stop offset="50%" stopColor="#000000" stopOpacity="0.22" />
+          <stop offset="84%" stopColor="#000000" stopOpacity="0.10" />
+          <stop offset="100%" stopColor="#000000" stopOpacity="0.30" />
         </linearGradient>
-        {/* Vertikaler Verlauf: dichter Bodensatz, transparenter Meniskus */}
+        {/* Vertikaler Verlauf: heller Meniskus, dichter Bodensatz */}
         <linearGradient id="tst-wine-vert" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#C0304A" stopOpacity="0.34" />
-          <stop offset="26%" stopColor="#7A1122" stopOpacity="0.08" />
-          <stop offset="100%" stopColor="#2A050B" stopOpacity="0.5" />
+          <stop offset="0%" stopColor="#FFFFFF" stopOpacity="0.22" />
+          <stop offset="26%" stopColor="#000000" stopOpacity="0.05" />
+          <stop offset="100%" stopColor="#000000" stopOpacity="0.36" />
         </linearGradient>
       </defs>
 
@@ -68,7 +85,7 @@ function WineGlass({ progress, active, tones, reduced }) {
       <g clipPath="url(#tst-bowl)">
         {reduced ? (
           <>
-            <rect x="60" y="128" width="100" height="80" fill={WINE_REDS[0]} />
+            <rect x="60" y="128" width="100" height="80" fill={tint} />
             <rect x="60" y="128" width="100" height="80" fill="url(#tst-wine-depth)" />
           </>
         ) : (
@@ -76,9 +93,10 @@ function WineGlass({ progress, active, tones, reduced }) {
             {/* Grundfarbe */}
             <motion.rect
               x="60"
-              style={{ y: level, fill, opacity: bodyOpacity }}
+              style={{ y: level, opacity: bodyOpacity }}
               width="100"
               height="180"
+              fill={tint}
             />
             {/* Volumen- und Tiefenschichten wandern mit dem Füllstand */}
             <motion.rect
@@ -97,7 +115,7 @@ function WineGlass({ progress, active, tones, reduced }) {
             />
           </>
         )}
-        {/* Meniskus: heller Rubinrand direkt an der Oberfläche */}
+        {/* Meniskus: heller Farbsaum direkt an der Oberfläche */}
         {!reduced && (
           <>
             <motion.ellipse
@@ -105,8 +123,8 @@ function WineGlass({ progress, active, tones, reduced }) {
               style={{ cy: level }}
               rx="44"
               ry="5.5"
-              fill="#8E1B2C"
-              opacity="0.9"
+              fill={deep}
+              opacity="0.85"
             />
             <motion.ellipse
               cx="110"
@@ -114,9 +132,9 @@ function WineGlass({ progress, active, tones, reduced }) {
               rx="44"
               ry="5.5"
               fill="none"
-              stroke="#D4526A"
+              stroke={light}
               strokeWidth="1.1"
-              opacity="0.55"
+              opacity="0.6"
             />
             {/* Reflexstreifen auf der Weinoberfläche */}
             <motion.ellipse
@@ -125,7 +143,7 @@ function WineGlass({ progress, active, tones, reduced }) {
               rx="16"
               ry="2"
               fill="#FFFFFF"
-              opacity="0.16"
+              opacity="0.2"
             />
           </>
         )}
@@ -138,7 +156,7 @@ function WineGlass({ progress, active, tones, reduced }) {
                 cx={cx}
                 cy="150"
                 r={2.2 + i * 0.4}
-                fill="#D4526A"
+                fill={light}
                 initial={{ opacity: 0 }}
                 animate={{ cy: [150, 118], opacity: [0, 0.75, 0] }}
                 transition={{
@@ -161,7 +179,7 @@ function WineGlass({ progress, active, tones, reduced }) {
           rx="30"
           ry="4"
           fill="none"
-          stroke="#8E1B2C"
+          stroke={deep}
           strokeWidth="1.2"
           initial={{ opacity: 0 }}
           animate={{ rx: [30, 52], opacity: [0.7, 0] }}
@@ -191,29 +209,19 @@ function WineGlass({ progress, active, tones, reduced }) {
   );
 }
 
-/* ---- Hintergrund-Tönung pro Kapitel ---- */
-function ToneLayer({ progress, index, count, color }) {
-  /* Ein- und Ausblendung relativ zur Kapitelbreite — feste Randwerte würden
-     sich bei mehreren Kapiteln überlappen und die Offsets absteigend machen,
-     was die WAAPI ablehnt. Alles bleibt monoton steigend in [0, 1]. */
-  const span = 1 / count;
+/* ---- Hintergrund-Tönung pro Kapitel — folgt der Glasseite ---- */
+function ToneLayer({ progress, start, end, color, glassLeft }) {
+  const span = end - start;
   const fade = span * 0.26;
-  const start = index * span;
-  const end = start + span;
   const clamp = (v) => Math.min(1, Math.max(0, v));
-  const stops = [
-    clamp(start - fade),
-    clamp(start + fade),
-    clamp(end - fade),
-    clamp(end + fade),
-  ];
+  const stops = [clamp(start - fade * 0.5), clamp(start + fade), clamp(end - fade), clamp(end + fade * 0.5)];
   const opacity = useTransform(progress, stops, [0, 1, 1, 0]);
   return (
     <motion.div
       aria-hidden="true"
       style={{
         opacity,
-        background: `radial-gradient(60% 70% at 30% 50%, ${color}55, transparent 75%)`,
+        background: `radial-gradient(60% 70% at ${glassLeft ? "30%" : "70%"} 50%, ${color}55, transparent 75%)`,
       }}
       className="absolute inset-0 will-transform"
     />
@@ -221,8 +229,8 @@ function ToneLayer({ progress, index, count, color }) {
 }
 
 /* ---- Fortschritts-Segment der Kapitel-Leiste ---- */
-function SegmentFill({ progress, index, count }) {
-  const scaleX = useTransform(progress, [index / count, (index + 1) / count], [0, 1]);
+function SegmentFill({ progress, index, span }) {
+  const scaleX = useTransform(progress, [index * span, (index + 1) * span], [0, 1]);
   return (
     <motion.span
       style={{ scaleX }}
@@ -254,37 +262,128 @@ function ChapterPanel({ chapter, index }) {
   );
 }
 
+/* ---- Ein Kapiteltext auf der Bühne: tritt seitlich ein und geht zur selben
+   Seite wieder ab, scroll-gescrubbt durch Federn (Position, Blur, 3D-Kippe).
+   side = +1 → rechte Bühnenhälfte (Eintritt von rechts), -1 → linke. ---- */
+function ChapterSlide({ chapter, index, side, start, end, progress, first }) {
+  const span = end - start;
+  const in0 = first ? 0.0001 : start + span * 0.05;
+  const in1 = first ? span * 0.24 : start + span * 0.34;
+  const out0 = end - span * 0.3;
+  const out1 = end - span * 0.02;
+
+  const opacity = useSpring(useTransform(progress, [in0, in1, out0, out1], [0, 1, 1, 0]), TEXT_SPRING);
+  const xs = useSpring(
+    useTransform(progress, [in0, in1, out0, out1], [side * 13, 0, 0, side * 15]),
+    TEXT_SPRING
+  );
+  const x = useMotionTemplate`${xs}vw`;
+  const blur = useSpring(useTransform(progress, [in0, in1, out0, out1], [12, 0, 0, 14]), TEXT_SPRING);
+  const filter = useMotionTemplate`blur(${blur}px)`;
+  const rotateY = useSpring(
+    useTransform(progress, [in0, in1, out0, out1], [side * -16, 0, 0, side * -10]),
+    TEXT_SPRING
+  );
+
+  return (
+    <motion.div
+      style={{ x, opacity, filter, rotateY, transformPerspective: 1200, willChange: "transform, filter" }}
+      className={[
+        "pointer-events-none absolute inset-x-0 bottom-2 z-20 flex justify-center px-2",
+        "lg:inset-y-0 lg:items-center",
+        side === 1 ? "lg:left-[52%] lg:right-0 lg:justify-start lg:pl-4" : "lg:left-0 lg:right-[52%] lg:justify-end lg:pr-4",
+      ].join(" ")}
+    >
+      <ChapterPanel chapter={chapter} index={index} />
+    </motion.div>
+  );
+}
+
 export default function TasteStory({ wine }) {
   const sectionRef = useRef(null);
   const reduced = useReducedMotion();
   const lenis = useLenis();
   const [active, setActive] = useState(0);
   const [glFailed, setGlFailed] = useState(false);
+  /* Reiseweite des Glases in vw — auf schmalen Viewports kürzer */
+  const [amp, setAmp] = useState(22);
   const handleGlFail = useCallback(() => setGlFailed(true), []);
   const chapters = wine.taste;
-  const tones = chapters.map((c) => c.tone);
+  const n = chapters.length;
+  const span = (1 - FINALE) / n;
+
+  /* Farbe des Weins im Glas: explizit (glassColor) oder aus dem ersten
+     Kapitelton — Strohgold bei der Falanghina, Granat beim Primitivo. */
+  const liquid = wine.glassColor ?? chapters[0]?.tone ?? "#6E0F1D";
+
+  /* Bühne in Pastell: Kapiteltöne weit Richtung Ivory gemischt, damit auch
+     dunkle Rotwein-Töne als heller Kinohintergrund lesbar bleiben. */
+  const bgColors = useMemo(() => {
+    const ivory = "#F6F2E8";
+    const t = (i) => chapters[i % n]?.tone ?? "#E8DC9A";
+    return [ivory, mixHex(t(0), ivory, 0.5), mixHex(t(1), ivory, 0.55), mixHex(t(2), ivory, 0.6)];
+  }, [chapters, n]);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 1024px)");
+    const set = () => setAmp(mq.matches ? 22 : 13);
+    set();
+    mq.addEventListener("change", set);
+    return () => mq.removeEventListener("change", set);
+  }, []);
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start start", "end end"],
   });
 
-  /* Uniform-Treiber für das WebGL-Glas: der Füllstand läuft linear über die
-     komplette Sektion — derselbe Scroll, der die drei Kapitel durchliest,
-     füllt auch das Glas. Es steht damit an keiner Stelle still und ist erst
-     am Ende des letzten Kapitels voll. Beides bleibt als MotionValue außer-
-     halb des React-Renderzyklus — der Shader liest die Werte im RAF. */
-  const glFill = useTransform(scrollYProgress, [0, 1], [0, 1]);
-  /* Stützstellen in [0, 1] halten und streng aufsteigend: bei nur einem
-     Kapitel läge der Einblendbeginn sonst im Negativen, was die WAAPI
-     mit „Offsets must be monotonically non-decreasing" ablehnt. */
-  const swirlStart = (chapters.length - 1) / chapters.length;
-  const swirlFrom = Math.max(0, swirlStart - 0.06);
-  const swirlTo = Math.min(1, Math.max(swirlFrom + 0.02, swirlStart + 0.06));
-  const glSwirl = useTransform(scrollYProgress, [swirlFrom, swirlTo, 1], [0, 1, 1]);
+  /* ---- Glas-Choreografie: links → rechts → links → Mitte ---- */
+  const { xStops, xVals } = useMemo(() => {
+    const stops = [];
+    const vals = [];
+    for (let i = 0; i < n; i += 1) {
+      const s0 = i * span;
+      const s1 = (i + 1) * span;
+      const rest = i % 2 === 0 ? -amp : amp;
+      /* Rastpunkte pro Kapitel; die Übergänge dazwischen überlappen den
+         Textabgang — Glas und Text wechseln die Seiten im selben Atemzug */
+      stops.push(i === 0 ? 0 : s0 + span * 0.2, s1 - span * 0.2);
+      vals.push(rest, rest);
+    }
+    stops.push(Math.min(1 - FINALE + FINALE * 0.5, 0.99), 1);
+    vals.push(0, 0);
+    return { xStops: stops, xVals: vals };
+  }, [n, span, amp]);
+
+  const glassX = useSpring(useTransform(scrollYProgress, xStops, xVals), X_SPRING);
+  const glassXvw = useMotionTemplate`${glassX}vw`;
+  /* Trägheits-Neigung: das Glas lehnt sich leicht gegen die Reiserichtung */
+  const lean = useSpring(useTransform(useVelocity(glassX), [-60, 60], [5, -5], { clamp: true }), {
+    stiffness: 110,
+    damping: 17,
+  });
+  /* Die Kamera im Shader umkreist das Glas dezent, während es wandert */
+  const yaw = useTransform(glassX, (v) => (amp ? -v / amp : 0));
+  /* Finale: Dolly-Zoom im Shader + sanfte Container-Skalierung */
+  const zoom = useSpring(useTransform(scrollYProgress, [1 - FINALE + 0.03, 0.97], [0, 1]), {
+    stiffness: 55,
+    damping: 18,
+  });
+  const glassScale = useTransform(zoom, [0, 1], [1, 1.18]);
+
+  /* Uniform-Treiber für das WebGL-Glas: der Füllstand läuft über die drei
+     Kapitel und ist voll, wenn das Finale beginnt. Alles bleibt als
+     MotionValue außerhalb des React-Renderzyklus — der Shader liest im RAF. */
+  const glFill = useTransform(scrollYProgress, [0.02, 1 - FINALE + 0.05], [0, 1]);
+  const swirlFrom = (n - 1) * span;
+  const glSwirl = useTransform(
+    scrollYProgress,
+    [swirlFrom, Math.min(swirlFrom + span * 0.35, 0.99), 1],
+    [0, 1, 1]
+  );
 
   useMotionValueEvent(scrollYProgress, "change", (v) => {
-    const idx = Math.min(chapters.length - 1, Math.max(0, Math.floor(v * chapters.length)));
+    const idx = Math.min(n - 1, Math.max(0, Math.floor(v / span)));
     if (idx !== active) setActive(idx);
   });
 
@@ -292,7 +391,7 @@ export default function TasteStory({ wine }) {
     const el = sectionRef.current;
     if (!el) return;
     const pinDistance = el.offsetHeight - window.innerHeight;
-    const top = el.offsetTop + ((i + 0.5) / chapters.length) * pinDistance;
+    const top = el.offsetTop + (i + 0.5) * span * pinDistance;
     if (lenis?.current) lenis.current.scrollTo(top);
     else window.scrollTo({ top, behavior: "smooth" });
   };
@@ -325,16 +424,21 @@ export default function TasteStory({ wine }) {
       id="geschmack"
       ref={sectionRef}
       className="relative scroll-mt-14"
-      style={{ height: `${chapters.length * 110 + 30}vh` }}
+      style={{ height: `${n * 120 + 80}vh` }}
     >
       <div className="sticky top-0 h-[100svh] overflow-hidden bg-gradient-to-b from-ivory via-cream to-ivory">
+        {/* Kino-Rückwand: scroll-reaktives Shader-Feld in den Pastelltönen
+            der Kapitel, darüber ein leichter Schleier für die Lesbarkeit */}
+        <ShaderGradient colors={bgColors} speed={0.8} className="opacity-80" />
+        <div aria-hidden="true" className="absolute inset-0 bg-white/30" />
         {chapters.map((c, i) => (
           <ToneLayer
             key={c.key}
             progress={scrollYProgress}
-            index={i}
-            count={chapters.length}
+            start={i * span}
+            end={(i + 1) * span}
             color={c.tone}
+            glassLeft={i % 2 === 0}
           />
         ))}
 
@@ -344,53 +448,56 @@ export default function TasteStory({ wine }) {
             <h2 className="sr-only">Der Geschmack {wine.shortNameGen ?? "der Falanghina"}</h2>
           </div>
 
-          <div className="grid min-h-0 flex-1 grid-rows-[0.85fr_1.15fr] items-center gap-2 lg:grid-cols-2 lg:grid-rows-1 lg:gap-10">
-            {/* Glas-Bühne */}
-            <div className="relative flex h-full min-h-0 items-center justify-center py-2">
-              <div
-                aria-hidden="true"
-                className="absolute left-1/2 top-1/2 h-[70%] w-[70%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/40 blur-3xl"
-              />
-              {glFailed ? (
-                <div className="relative h-full max-h-[30svh] lg:max-h-[52svh]">
-                  <WineGlass
-                    progress={scrollYProgress}
-                    active={active}
-                    tones={tones}
-                    reduced={false}
-                  />
-                </div>
-              ) : (
-                /* Das Canvas hat kein intrinsisches Seitenverhältnis wie das
-                   SVG — die Bühne bekommt daher eine eigene feste Höhe.
-                   Bewusst ohne will-transform: das Canvas ist bereits
-                   GPU-gebunden, und die zusätzliche Compositing-Ebene kostet
-                   auf manchen Treibern die Darstellung komplett. */
-                <div className="relative h-[30svh] w-[22svh] lg:h-[52svh] lg:w-[39svh]">
-                  <WineGlassGL fill={glFill} swirl={glSwirl} onFail={handleGlFail} />
-                </div>
-              )}
-            </div>
+          {/* Bühne */}
+          <div className="relative min-h-0 flex-1" style={{ perspective: 1400 }}>
+            {/* Glas-Rig: wandert über die Bühne, lehnt sich in die Bewegung,
+                Finale mit Dolly-Zoom in der Mitte */}
+            <motion.div
+              style={{ x: glassXvw, rotate: lean, scale: glassScale, willChange: "transform" }}
+              className="absolute left-1/2 top-[34%] z-10 lg:top-1/2"
+            >
+              <div className="relative -translate-x-1/2 -translate-y-1/2">
+                <div
+                  aria-hidden="true"
+                  className="absolute left-1/2 top-1/2 h-[120%] w-[120%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/45 blur-3xl"
+                />
+                {glFailed ? (
+                  <div className="relative h-[30svh] lg:h-[52svh]">
+                    <WineGlass progress={scrollYProgress} active={active} tint={liquid} reduced={false} />
+                  </div>
+                ) : (
+                  /* Das Canvas hat kein intrinsisches Seitenverhältnis wie das
+                     SVG — die Bühne bekommt daher eine eigene feste Höhe.
+                     Bewusst ohne will-transform auf dem Canvas selbst: es ist
+                     bereits GPU-gebunden, und die zusätzliche Compositing-
+                     Ebene kostet auf manchen Treibern die Darstellung. */
+                  <div className="relative h-[32svh] w-[24svh] lg:h-[56svh] lg:w-[42svh]">
+                    <WineGlassGL
+                      fill={glFill}
+                      swirl={glSwirl}
+                      zoom={zoom}
+                      yaw={yaw}
+                      wine={liquid}
+                      onFail={handleGlFail}
+                    />
+                  </div>
+                )}
+              </div>
+            </motion.div>
 
-            {/* Kapitel-Texte im Crossfade */}
-            <div className="relative flex items-start justify-center pb-6 lg:items-center lg:pb-0">
-              <AnimatePresence mode="wait" initial={false}>
-                <motion.div
-                  key={chapters[active].key}
-                  initial={{ opacity: 0, y: 26, filter: "blur(6px)" }}
-                  animate={{
-                    opacity: 1,
-                    y: 0,
-                    filter: "blur(0px)",
-                    transition: { ...SPRING, opacity: { duration: 0.4 } },
-                  }}
-                  exit={{ opacity: 0, y: -16, transition: { duration: 0.22, ease: "easeIn" } }}
-                  className="will-transform"
-                >
-                  <ChapterPanel chapter={chapters[active]} index={active} />
-                </motion.div>
-              </AnimatePresence>
-            </div>
+            {/* Kapiteltexte: 01 rechts · 02 links · 03 rechts */}
+            {chapters.map((c, i) => (
+              <ChapterSlide
+                key={c.key}
+                chapter={c}
+                index={i}
+                side={i % 2 === 0 ? 1 : -1}
+                start={i * span}
+                end={(i + 1) * span}
+                progress={scrollYProgress}
+                first={i === 0}
+              />
+            ))}
           </div>
 
           {/* Kapitel-Leiste */}
@@ -405,7 +512,7 @@ export default function TasteStory({ wine }) {
                 className="group flex h-11 items-center px-1"
               >
                 <span className="relative block h-[3px] w-14 overflow-hidden rounded-full bg-stone/80 transition-colors duration-300 group-hover:bg-stone sm:w-20">
-                  <SegmentFill progress={scrollYProgress} index={i} count={chapters.length} />
+                  <SegmentFill progress={scrollYProgress} index={i} span={span} />
                 </span>
               </button>
             ))}

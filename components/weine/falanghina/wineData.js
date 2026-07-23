@@ -40,6 +40,13 @@ export const FALANGHINA = {
     hero: "/img/wines/falanghina/hero.jpg",
   },
 
+  /* Akzentfarben der Sektionen (Teal-Familie vom karierten Etikett) */
+  accent: { base: "#45B3A2", deep: "#23786B", light: "#C9E8E1" },
+
+  /* Farbton des Weins im WebGL-Glas (TasteStory) — Strohgold mit grünem
+     Reflex. Ohne dieses Feld fällt das Glas auf taste[0].tone zurück. */
+  glassColor: "#E9DC8F",
+
   /* ---- Schnellfakten (Icon-Leiste unter dem Hero) ---- */
   facts: [
     { icon: "pin", label: "Herkunft", value: "Kampanien – Beneventano" },
@@ -154,6 +161,50 @@ export const FALANGHINA = {
     ],
   },
 
+  /* ---- Servieren & Genießen + Der Maria-Moment ---- */
+  moment: {
+    title: "So schmeckt die Falanghina am besten",
+    serve: {
+      title: "Servieren & Genießen",
+      items: [
+        { icon: "thermometer", title: "Serviertemperatur", text: "ca. 10 °C — gut gekühlt im Weißweinglas" },
+        /* [BESTÄTIGEN] Trinkfenster nicht im Datenblatt — rebsortentypisch für frische Weißweine */
+        { icon: "hourglass", title: "Trinkfenster", text: "Jetzt genießen oder innerhalb von 2–3 Jahren" },
+        { icon: "glasses", title: "Der Auftakt", text: "Kurz vor dem Servieren aus dem Kühlschrank nehmen" },
+      ],
+    },
+    maria: {
+      text: "Für lange Mittage im Freien, frische Küche und ehrliche Gespräche — die Falanghina ist der Wein für die hellen Momente.",
+      link: { label: "Mehr entdecken", href: "/shop" },
+    },
+    essence: [
+      {
+        icon: "glass",
+        kicker: "Geschmack",
+        title: "Weich, harmonisch, frisch",
+        text: "Weiße Blüten, Birne und ein Hauch Zitrus — sehr weich und zugleich harmonisch und anhaltend.",
+        tone: "#45B3A2",
+        toneDeep: "#23786B",
+      },
+      {
+        icon: "italy",
+        kicker: "Herkunft",
+        title: "Beneventano, Kampanien",
+        text: "Sanfte Hügel zwischen Apennin und Küste. Warme Tage und kühle Nächte bewahren Frische und Spannung.",
+        tone: "#D3C56E",
+        toneDeep: "#7C6A22",
+      },
+      {
+        icon: "grapes",
+        kicker: "Rebsorte",
+        title: "Falanghina",
+        text: "Eine der ältesten Rebsorten Kampaniens — ihr Name geht auf die Holzpfähle der Römerzeit zurück. 100 % rebsortenrein.",
+        tone: "#23786B",
+        toneDeep: "#12403A",
+      },
+    ],
+  },
+
   /* ---- Häufige Fragen ---- */
   faq: [
     {
@@ -197,6 +248,7 @@ export const FALANGHINA = {
     { label: "Überblick", href: "#ueberblick" },
     { label: "Geschmack", href: "#geschmack" },
     { label: "Herkunft", href: "#herkunft" },
+    { label: "Genießen", href: "#geniessen" },
     { label: "Details", href: "#details" },
     { label: "Fragen", href: "#fragen" },
   ],

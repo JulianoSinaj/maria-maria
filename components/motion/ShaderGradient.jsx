@@ -85,9 +85,16 @@ const hex2rgb = (h) => {
   return [((n >> 16) & 255) / 255, ((n >> 8) & 255) / 255, (n & 255) / 255];
 };
 
-export default function ShaderGradient({ palette = "dawn", speed = 1, className = "" }) {
+export default function ShaderGradient({ palette = "dawn", colors: custom, speed = 1, className = "" }) {
   const canvasRef = useRef(null);
-  const colors = PALETTES[palette] || PALETTES.dawn;
+  /* `colors` erlaubt Bühnen, die im Ton eines Weins atmen (4 Hex-Werte,
+     hell → dunkel); ohne eigenes Set greift die benannte Palette. */
+  const colors = Array.isArray(custom) && custom.length === 4 ? custom : PALETTES[palette] || PALETTES.dawn;
+  const colorKey = colors.join(",");
+  const fallback =
+    Array.isArray(custom) && custom.length === 4
+      ? `linear-gradient(135deg, ${custom[0]} 0%, ${custom[1]} 38%, ${custom[2]} 70%, ${custom[3]} 100%)`
+      : FALLBACK[palette] || FALLBACK.dawn;
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -183,11 +190,11 @@ export default function ShaderGradient({ palette = "dawn", speed = 1, className 
       ro.disconnect();
       gl.getExtension("WEBGL_lose_context")?.loseContext();
     };
-  }, [palette, speed]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [colorKey, speed]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div className={`pointer-events-none absolute inset-0 overflow-hidden ${className}`} aria-hidden="true">
-      <div className="absolute inset-0" style={{ background: FALLBACK[palette] || FALLBACK.dawn }} />
+      <div className="absolute inset-0" style={{ background: fallback }} />
       <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" />
     </div>
   );

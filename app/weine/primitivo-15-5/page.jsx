@@ -12,6 +12,7 @@ import DetailBento from "@/components/weine/falanghina/DetailBento";
 import WineFaq from "@/components/weine/falanghina/WineFaq";
 import SimilarWines from "@/components/weine/falanghina/SimilarWines";
 import CtaBand from "@/components/weine/falanghina/CtaBand";
+import MariaMoment from "@/components/weine/falanghina/MariaMoment";
 
 /* Produkt-Landingpage im Apple-Stil für den Primitivo di Manduria DOP 15.50.
    Nutzt exakt dieselben Sektionen wie die Falanghina-Seite — nur die
@@ -62,6 +63,7 @@ export default function Primitivo155Page() {
       <StorySection wine={wine} />
       <PlaceSection wine={wine} />
       <PairingSection wine={wine} />
+      <MariaMoment wine={wine} />
       <DetailBento wine={wine} />
       <WineFaq wine={wine} />
       <SimilarWines wine={wine} />

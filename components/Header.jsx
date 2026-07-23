@@ -113,7 +113,7 @@ export default function Header() {
           <nav className="hidden items-center gap-8 md:flex" aria-label="Hauptnavigation">
             {NAV.map((item) => {
               const active = isActive(item.href);
-              if (item.href === "/weine") return <WineMenu key={item.href} active={active} />;
+              if (item.href === "/weine") return <WineMenu key={item.href} active={active} scrolled={scrolled} />;
               return (
                 <Link
                   key={item.href}

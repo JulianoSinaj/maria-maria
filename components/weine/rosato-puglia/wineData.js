@@ -155,6 +155,51 @@ export const ROSATO_NEGROAMARO = {
     ],
   },
 
+  /* ---- Servieren & Genießen + Der Maria-Moment ---- */
+  moment: {
+    title: "So schmeckt der Rosato am besten",
+    accent: { base: "#D98A76", deep: "#A34A38", light: "#F4CDBB" },
+    serve: {
+      title: "Servieren & Genießen",
+      items: [
+        { icon: "thermometer", title: "Serviertemperatur", text: "12–14 °C — gut gekühlt" },
+        /* [BESTÄTIGEN] Trinkfenster nicht im Datenblatt — Rosé lebt von seiner Jugend */
+        { icon: "hourglass", title: "Trinkfenster", text: "Jung genießen — am schönsten innerhalb von 1–2 Jahren" },
+        { icon: "glasses", title: "Der Auftakt", text: "Kurz vor dem Servieren aus dem Kühlschrank nehmen — die Frische ist sein Charakter" },
+      ],
+    },
+    maria: {
+      text: "Für Sommerabende auf der Terrasse — wenn der Tag noch nachhallt, das Licht warm wird und das Essen leicht bleibt.",
+      link: { label: "Mehr entdecken", href: "/shop" },
+    },
+    essence: [
+      {
+        icon: "glass",
+        kicker: "Geschmack",
+        title: "Frisch, ausgewogen, elegant",
+        text: "Feine florale Noten, delikat und anhaltend — eine Frucht, die elegant bleibt statt süß zu werden.",
+        tone: "#D98A76",
+        toneDeep: "#A34A38",
+      },
+      {
+        icon: "italy",
+        kicker: "Herkunft",
+        title: "Salento, Apulien",
+        text: "Alberello-Weinberge von Torricella und Maruggio — vier Stunden auf der Schale, mehr braucht es nicht.",
+        tone: "#D8A97E",
+        toneDeep: "#8A5A2E",
+      },
+      {
+        icon: "grapes",
+        kicker: "Rebsorte",
+        title: "Negroamaro",
+        text: "Die dunkle Rebe des Salento — ihr Name trägt das Schwarz schon in sich. Hier zeigt sie ihre zarte Seite.",
+        tone: "#C67F78",
+        toneDeep: "#8A4340",
+      },
+    ],
+  },
+
   /* ---- Häufige Fragen ---- */
   faq: [
     {
@@ -202,6 +247,7 @@ export const ROSATO_NEGROAMARO = {
     { label: "Überblick", href: "#ueberblick" },
     { label: "Geschmack", href: "#geschmack" },
     { label: "Herkunft", href: "#herkunft" },
+    { label: "Genießen", href: "#geniessen" },
     { label: "Details", href: "#details" },
     { label: "Fragen", href: "#fragen" },
   ],

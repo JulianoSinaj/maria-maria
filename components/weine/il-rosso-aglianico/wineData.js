@@ -155,6 +155,51 @@ export const IL_ROSSO = {
     ],
   },
 
+  /* ---- Servieren & Genießen + Der Maria-Moment ---- */
+  moment: {
+    title: "So schmeckt der Rosso am besten",
+    accent: { base: "#8C2230", deep: "#6B0F1A", light: "#E3CDB8" },
+    serve: {
+      title: "Servieren & Genießen",
+      items: [
+        { icon: "thermometer", title: "Serviertemperatur", text: "ca. 16–18 °C — im Rotweinglas" },
+        /* [BESTÄTIGEN] Trinkfenster nicht im Datenblatt — die 6 Monate Eiche geben Reifepotenzial */
+        { icon: "hourglass", title: "Trinkfenster", text: "Jetzt genießen oder innerhalb von 3–5 Jahren" },
+        { icon: "decanter", title: "Das Ritual", text: "Eine knappe Stunde vorher öffnen — Frucht und Gewürz treten deutlicher hervor" },
+      ],
+    },
+    maria: {
+      text: "La poesia in bottiglia — für lange Abende, volle Tische und Gespräche, die nicht enden wollen.",
+      link: { label: "Mehr entdecken", href: "/shop" },
+    },
+    essence: [
+      {
+        icon: "glass",
+        kicker: "Geschmack",
+        title: "Würzig, warm, fruchtig",
+        text: "Amarena, Brombeere und getrocknete Pflaume, getragen von süßen Gewürznoten aus der französischen Eiche.",
+        tone: "#8C2230",
+        toneDeep: "#6B0F1A",
+      },
+      {
+        icon: "italy",
+        kicker: "Herkunft",
+        title: "Kampanien",
+        text: "Vulkanische Böden, warme Tage und die Nähe des Mittelmeers — Kraft ohne Schwere.",
+        tone: "#A8452F",
+        toneDeep: "#6B2114",
+      },
+      {
+        icon: "grapes",
+        kicker: "Rebsorte",
+        title: "Aglianico, Piedirosso & Primitivo",
+        text: "Drei süditalienische Reben, ein Charakter: Rückgrat, Duft und reife Frucht — Ende Oktober von Hand gelesen.",
+        tone: "#7A2A55",
+        toneDeep: "#41102A",
+      },
+    ],
+  },
+
   /* ---- Häufige Fragen ---- */
   faq: [
     {
@@ -202,6 +247,7 @@ export const IL_ROSSO = {
     { label: "Überblick", href: "#ueberblick" },
     { label: "Geschmack", href: "#geschmack" },
     { label: "Herkunft", href: "#herkunft" },
+    { label: "Genießen", href: "#geniessen" },
     { label: "Details", href: "#details" },
     { label: "Fragen", href: "#fragen" },
   ],

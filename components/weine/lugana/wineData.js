@@ -159,6 +159,51 @@ export const LUGANA = {
     ],
   },
 
+  /* ---- Servieren & Genießen + Der Maria-Moment ---- */
+  moment: {
+    title: "So schmeckt der Lugana am besten",
+    accent: { base: "#C9C06E", deep: "#7C7433", light: "#EAE5BE" },
+    serve: {
+      title: "Servieren & Genießen",
+      items: [
+        { icon: "thermometer", title: "Serviertemperatur", text: "8–10 °C — im Weißweinglas" },
+        /* [BESTÄTIGEN] Trinkfenster nicht im Datenblatt — Lugana auf der Feinhefe reift gut nach */
+        { icon: "hourglass", title: "Trinkfenster", text: "Jetzt genießen oder innerhalb von 2–4 Jahren" },
+        { icon: "glasses", title: "Das Ritual", text: "Ein Moment Luft im Glas öffnet Duft und Fülle" },
+      ],
+    },
+    maria: {
+      text: "Für weite Abende am Wasser — wenn der Tisch draußen steht und der See im Glas liegt: weit, warm und ruhig.",
+      link: { label: "Mehr entdecken", href: "/shop" },
+    },
+    essence: [
+      {
+        icon: "glass",
+        kicker: "Geschmack",
+        title: "Voll, warm und weich",
+        text: "Maiglöckchen, Weißdorn, reife Frucht und feines Gebäck — umhüllend, mit langem, aromatischem Nachhall.",
+        tone: "#DCC96A",
+        toneDeep: "#7C7433",
+      },
+      {
+        icon: "italy",
+        kicker: "Herkunft",
+        title: "Südufer des Gardasees",
+        text: "Kiesige Moränenböden zwischen Desenzano und Pozzolengo — der See mildert das Klima, der magere Boden konzentriert.",
+        tone: "#7BA0A0",
+        toneDeep: "#44625F",
+      },
+      {
+        icon: "grapes",
+        kicker: "Rebsorte",
+        title: "Turbiana",
+        text: "Trebbiano di Lugana — die alte weiße Rebe des Sees, auf der Feinhefe bis zur Füllung gereift.",
+        tone: "#8F9A63",
+        toneDeep: "#5C6638",
+      },
+    ],
+  },
+
   /* ---- Häufige Fragen ---- */
   faq: [
     {
@@ -202,6 +247,7 @@ export const LUGANA = {
     { label: "Überblick", href: "#ueberblick" },
     { label: "Geschmack", href: "#geschmack" },
     { label: "Herkunft", href: "#herkunft" },
+    { label: "Genießen", href: "#geniessen" },
     { label: "Details", href: "#details" },
     { label: "Fragen", href: "#fragen" },
   ],

@@ -215,7 +215,7 @@ export default function RegionenPage() {
                   <p className="mt-6 text-[10.5px] font-semibold uppercase tracking-[0.16em] text-charcoal/50">
                     Unsere Weine aus dieser Region
                   </p>
-                  <div data-lenis-prevent className="no-scrollbar -mx-6 mt-4 snap-x overflow-x-auto px-6 lg:mx-0 lg:px-0">
+                  <div data-lenis-prevent-horizontal className="no-scrollbar -mx-6 mt-4 snap-x overflow-x-auto px-6 lg:mx-0 lg:px-0">
                     <Stagger gap={0.06} className="flex w-max gap-4 pb-3 pt-1">
                       {WINES.filter((w) => r.dataRegions.includes(w.region)).map((w) => (
                         <StaggerItem key={w.name} className="snap-start">

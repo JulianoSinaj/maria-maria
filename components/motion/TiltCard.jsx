@@ -34,13 +34,22 @@ export default function TiltCard({ children, className = "", max = 6, glare = tr
     ry.set(0);
   };
 
+  // Pointer tracking and hover sensing live on the stationary perspective
+  // wrapper — sensing on the tilting/lifting card itself would loop
+  // enter/leave at its edges and jitter while scrolling under the cursor.
   return (
-    <div style={{ perspective: 1000 }} className={className}>
+    <motion.div
+      ref={ref}
+      style={{ perspective: 1000 }}
+      className={className}
+      onPointerMove={onMove}
+      onPointerLeave={onLeave}
+      initial="rest"
+      whileHover="hover"
+      animate="rest"
+    >
       <motion.div
-        ref={ref}
-        onPointerMove={onMove}
-        onPointerLeave={onLeave}
-        whileHover={reduced || !lift ? undefined : { y: -6, scale: 1.012 }}
+        variants={reduced || !lift ? undefined : { rest: { y: 0, scale: 1 }, hover: { y: -6, scale: 1.012 } }}
         transition={{ type: "spring", stiffness: 220, damping: 22 }}
         style={{ rotateX: srx, rotateY: sry, transformStyle: "preserve-3d", willChange: "transform" }}
         className={`relative h-full ${radius}`}
@@ -54,6 +63,6 @@ export default function TiltCard({ children, className = "", max = 6, glare = tr
           />
         )}
       </motion.div>
-    </div>
+    </motion.div>
   );
 }

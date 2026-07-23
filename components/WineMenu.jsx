@@ -31,7 +31,7 @@ const OVERVIEW = [
 const PANEL_SPRING = { type: "spring", stiffness: 300, damping: 30, mass: 0.55 };
 const CLOSE_DELAY = 160;
 
-export default function WineMenu({ active }) {
+export default function WineMenu({ active, scrolled = false }) {
   const [open, setOpen] = useState(false);
   const reduced = useReducedMotion();
   const closeTimer = useRef(null);
@@ -55,11 +55,24 @@ export default function WineMenu({ active }) {
     return () => document.removeEventListener("keydown", onKey);
   }, [open]);
 
+  /* Only the trigger may OPEN the menu. The overlay merely holds it open
+     (cancel) and releases it (schedule) — if it could open too, the invisible
+     exiting sheet would resurrect the menu on any stray mouse move. */
   const hoverProps = {
     onPointerEnter: (e) => {
       if (e.pointerType === "touch") return;
       cancelClose();
       setOpen(true);
+    },
+    onPointerLeave: (e) => {
+      if (e.pointerType === "touch") return;
+      scheduleClose();
+    },
+  };
+  const holdProps = {
+    onPointerEnter: (e) => {
+      if (e.pointerType === "touch") return;
+      cancelClose();
     },
     onPointerLeave: (e) => {
       if (e.pointerType === "touch") return;
@@ -113,28 +126,34 @@ export default function WineMenu({ active }) {
         {/* viewport-centred sheet + hover bridge back up to the header */}
         {open && (
           <div
-            {...hoverProps}
-            className="fixed inset-x-0 top-0 z-40 flex h-screen justify-center px-4 pt-[5.5rem] lg:pt-[6.5rem]"
+            {...holdProps}
+            className={`fixed inset-x-0 top-0 z-40 flex h-screen justify-center px-4 ${
+              scrolled ? "pt-[5.125rem]" : "pt-[5.375rem] lg:pt-[6.375rem]"
+            }`}
             style={{ pointerEvents: "none" }}
           >
-            {/* scrim — lifts the sheet off the page without hiding it */}
-            <motion.div
+            {/* bridge — thin strip covering the gap between the nav row and
+                the sheet so crossing it never schedules a close. Sits below
+                the header so other nav links stay clickable. */}
+            <span
               aria-hidden="true"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-              onPointerEnter={scheduleClose}
+              onPointerEnter={cancelClose}
               style={{ pointerEvents: "auto" }}
-              className="absolute inset-0 bg-espresso/25 backdrop-blur-[2px]"
+              className={`absolute inset-x-0 h-[0.625rem] ${
+                scrolled ? "top-[4.625rem]" : "top-[4.875rem] lg:top-[5.875rem]"
+              }`}
             />
               <motion.div
                 initial={reduced ? { opacity: 0 } : { opacity: 0, y: -14, scale: 0.98 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={reduced ? { opacity: 0 } : { opacity: 0, y: -10, scale: 0.985 }}
+                animate={{ opacity: 1, y: 0, scale: 1, pointerEvents: "auto" }}
+                exit={
+                  reduced
+                    ? { opacity: 0, pointerEvents: "none" }
+                    : { opacity: 0, y: -10, scale: 0.985, pointerEvents: "none" }
+                }
                 transition={reduced ? { duration: 0.15 } : PANEL_SPRING}
                 style={{ pointerEvents: "auto", willChange: "transform, opacity", transformOrigin: "top center" }}
-                className="grain relative w-full max-w-[980px] self-start overflow-hidden rounded-card-lg border border-white/70 bg-cream shadow-lift ring-1 ring-espresso/[0.06]"
+                className="grain relative w-full max-w-[980px] self-start overflow-hidden rounded-card-lg border border-white/70 bg-cream shadow-[0_2px_8px_rgba(43,20,14,.08),0_24px_48px_-16px_rgba(43,20,14,.22),0_56px_120px_-32px_rgba(43,20,14,.3)] ring-1 ring-espresso/[0.06]"
               >
                 {/* hairline of house colour along the top edge */}
                 <span

@@ -20,6 +20,8 @@ const DETAIL_PAGES = new Set([
   "falanghina",
   "greco-di-tufo",
   "il-bianco-greco-cuvee",
+  "il-rosso-aglianico",
+  "lugana",
   "primitivo-14-5",
   "primitivo-15-5",
   "primitivo-salento",

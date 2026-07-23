@@ -12,6 +12,7 @@ import DetailBento from "@/components/weine/falanghina/DetailBento";
 import WineFaq from "@/components/weine/falanghina/WineFaq";
 import SimilarWines from "@/components/weine/falanghina/SimilarWines";
 import CtaBand from "@/components/weine/falanghina/CtaBand";
+import MariaMoment from "@/components/weine/falanghina/MariaMoment";
 
 /* Il Bianco — Campania Bianco IGP. Zweite Weinseite auf der Falanghina-Vorlage:
    identische Sektionen, nur ein anderes wineData-Objekt. */
@@ -61,6 +62,7 @@ export default function IlBiancoPage() {
       <StorySection wine={wine} />
       <PlaceSection wine={wine} />
       <PairingSection wine={wine} />
+      <MariaMoment wine={wine} />
       <DetailBento wine={wine} />
       <WineFaq wine={wine} />
       <SimilarWines wine={wine} />

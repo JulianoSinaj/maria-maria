@@ -17,6 +17,10 @@ export const PRIMITIVO_14_5 = {
   name: "Primitivo di Manduria DOP 14,50",
   eyebrow: "Italienische Boutique-Weine",
   heroTitle: ["Primitivo 14,50", "di Manduria DOP"],
+  /* Verlauf der kursiven zweiten Headline-Zeile — Rubinrot statt des
+     Falanghina-Grüns, abgestimmt auf das rote Etikett und das warme
+     Kellerlicht des Heros. */
+  titleGradient: "from-bordeaux via-[#8C2230] to-champagne",
   lede:
     "100 % Primitivo aus Torricella und Lizzano, im Alberello-Buschbau ohne Bewässerung gezogen. Zwölf Monate Stahl, dunkle Brombeere und Pflaume — Struktur, die geschmeidig bleibt.",
   /* Akt 2 des gepinnten Heros — drei Worte, die beim Scrollen erscheinen */
@@ -156,6 +160,51 @@ export const PRIMITIVO_14_5 = {
     ],
   },
 
+  /* ---- Servieren & Genießen + Der Maria-Moment ---- */
+  moment: {
+    title: "So schmeckt der Primitivo am besten",
+    accent: { base: "#8C2230", deep: "#5C0D18", light: "#E8C7BC" },
+    serve: {
+      title: "Servieren & Genießen",
+      items: [
+        { icon: "thermometer", title: "Serviertemperatur", text: "16–18 °C — im großen Rotweinglas" },
+        /* [BESTÄTIGEN] Trinkfenster nicht im Datenblatt — typisch für Primitivo dieser Struktur */
+        { icon: "hourglass", title: "Trinkfenster", text: "Jetzt genießen oder innerhalb von 3–5 Jahren" },
+        { icon: "decanter", title: "Das Ritual", text: "Vor dem Genuss kurz atmen lassen — eine knappe Stunde vorher öffnen" },
+      ],
+    },
+    maria: {
+      text: "Für lange Abende mit guten Gesprächen, ein gemeinsames Essen und den Genuss kleiner, besonderer Momente.",
+      link: { label: "Mehr entdecken", href: "/shop" },
+    },
+    essence: [
+      {
+        icon: "glass",
+        kicker: "Geschmack",
+        title: "Weich, vollmundig, harmonisch",
+        text: "Aromen von Brombeeren und reifen Pflaumen mit einem Hauch von Gewürzen — große Struktur, die geschmeidig bleibt.",
+        tone: "#8C2230",
+        toneDeep: "#5C0D18",
+      },
+      {
+        icon: "italy",
+        kicker: "Herkunft",
+        title: "Manduria, Apulien",
+        text: "Torricella und Lizzano im sonnigen Süden Italiens — warme Tage und kühle Nächte sorgen für reife Trauben und Finesse.",
+        tone: "#A8452F",
+        toneDeep: "#6B2114",
+      },
+      {
+        icon: "grapes",
+        kicker: "Rebsorte",
+        title: "Primitivo",
+        text: "Eine autochthone Rebsorte mit intensivem Charakter und samtigem Abgang — hier im Alberello-Buschbau ohne Bewässerung gezogen.",
+        tone: "#7A2A55",
+        toneDeep: "#41102A",
+      },
+    ],
+  },
+
   /* ---- Häufige Fragen ---- */
   faq: [
     {
@@ -203,6 +252,7 @@ export const PRIMITIVO_14_5 = {
     { label: "Überblick", href: "#ueberblick" },
     { label: "Geschmack", href: "#geschmack" },
     { label: "Herkunft", href: "#herkunft" },
+    { label: "Genießen", href: "#geniessen" },
     { label: "Details", href: "#details" },
     { label: "Fragen", href: "#fragen" },
   ],

@@ -155,6 +155,51 @@ export const PRIMITIVO_SALENTO = {
     ],
   },
 
+  /* ---- Servieren & Genießen + Der Maria-Moment ---- */
+  moment: {
+    title: "So schmeckt der Primitivo am besten",
+    accent: { base: "#8C2230", deep: "#4A0A15", light: "#E6C6B4" },
+    serve: {
+      title: "Servieren & Genießen",
+      items: [
+        { icon: "thermometer", title: "Serviertemperatur", text: "16–18 °C — im Rotweinglas" },
+        /* [BESTÄTIGEN] Trinkfenster nicht im Datenblatt — typisch für Primitivo mit 12 Monaten Stahl */
+        { icon: "hourglass", title: "Trinkfenster", text: "Jetzt genießen oder innerhalb von 3–5 Jahren" },
+        { icon: "decanter", title: "Das Ritual", text: "Vor dem Genuss kurz atmen lassen — die reife Frucht tritt deutlicher hervor" },
+      ],
+    },
+    maria: {
+      text: "Für spontane Abende ohne Anlass — ein unkomplizierter Wein für volle Tische und leere Flaschen.",
+      link: { label: "Mehr entdecken", href: "/shop" },
+    },
+    essence: [
+      {
+        icon: "glass",
+        kicker: "Geschmack",
+        title: "Intensiv, reif, anhaltend",
+        text: "Pflaume und Trockenfrüchte, intensiv und lang anhaltend — dabei angenehm zugänglich und von unkomplizierter Trinkfreude.",
+        tone: "#8C2230",
+        toneDeep: "#4A0A15",
+      },
+      {
+        icon: "italy",
+        kicker: "Herkunft",
+        title: "Salento, Apulien",
+        text: "Torricella und Lizzano zwischen zwei Meeren — heiße, trockene Sommer und kalkhaltige Böden im Absatz des Stiefels.",
+        tone: "#A8452F",
+        toneDeep: "#6B2114",
+      },
+      {
+        icon: "grapes",
+        kicker: "Rebsorte",
+        title: "Primitivo",
+        text: "Die autochthone Rebe des Salento — lange Maischestandzeit, zwölf Monate Stahl, reine dunkle Frucht.",
+        tone: "#7A2A55",
+        toneDeep: "#41102A",
+      },
+    ],
+  },
+
   /* ---- Häufige Fragen ---- */
   faq: [
     {
@@ -206,6 +251,7 @@ export const PRIMITIVO_SALENTO = {
     { label: "Überblick", href: "#ueberblick" },
     { label: "Geschmack", href: "#geschmack" },
     { label: "Herkunft", href: "#herkunft" },
+    { label: "Genießen", href: "#geniessen" },
     { label: "Details", href: "#details" },
     { label: "Fragen", href: "#fragen" },
   ],

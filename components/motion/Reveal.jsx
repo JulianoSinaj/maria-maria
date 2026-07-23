@@ -34,12 +34,13 @@ export function Reveal({
   );
 }
 
-export function Stagger({ children, className = "", delay = 0, gap = 0.09, once = true, amount = 0.18 }) {
+export function Stagger({ children, className = "", style, delay = 0, gap = 0.09, once = true, amount = 0.18 }) {
   const reduced = useReducedMotion();
-  if (reduced) return <div className={className}>{children}</div>;
+  if (reduced) return <div className={className} style={style}>{children}</div>;
   return (
     <motion.div
       className={className}
+      style={style}
       initial="hidden"
       whileInView="visible"
       viewport={{ once, amount, margin: "0px 0px -6% 0px" }}

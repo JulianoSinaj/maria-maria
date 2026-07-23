@@ -1,26 +1,28 @@
 "use client";
-import { useRef, useId } from "react";
+import { useRef } from "react";
 import {
   motion,
   useScroll,
   useTransform,
   useSpring,
   useMotionValue,
+  useMotionTemplate,
   useReducedMotion,
 } from "motion/react";
 import { Reveal } from "@/components/motion/Reveal";
 import SplitText from "@/components/motion/SplitText";
 
-/* „Die Farbe" — kompaktes, realistisches Farb-Kapitel: links die Typo-Bühne,
-   rechts ein fotorealistisch gezeichnetes Weinglas, das sich beim Scrollen
-   federnd mit dem echten Weinton aus dem Datenblatt füllt. Das Glas neigt
-   sich magnetisch zum Cursor — die Weinoberfläche bleibt dabei physikalisch
-   korrekt waagerecht (Gegenrotation um den Glasfuß). Alle Töne (Flüssigkeit,
-   Menisken, Headline-Gradient, Kaustik) werden aus wine.colorMoment.swatches
-   abgeleitet, sodass Weiß-, Rosé- und Rotweine dieselbe Sektion teilen. */
+/* „Die Farbe" — links die Typo-Bühne, rechts eine moderne Glaskarte mit einem
+   Motiv aus der Kunstgeschichte (oder einem Loop-Video), dessen Palette den
+   Weinton spiegelt (wine.colorMoment.artwork). Die Karte schwebt federnd aus
+   der rechten unteren Ecke in die Sektion, treibt beim Scrollen leicht mit
+   (Parallaxe) und neigt sich magnetisch zum Cursor — ein Lichtschimmer wandert
+   dabei über das Motiv. Chips auf dem Bild (Farbton + Serviertemperatur) und
+   die Bildleiste mit den Swatches greifen die Chip-Sprache der Sektion auf. */
 
-const TILT_SPRING = { stiffness: 130, damping: 16, mass: 0.6 };
-const FILL_SPRING = { stiffness: 46, damping: 17 };
+const TILT_SPRING = { stiffness: 120, damping: 15, mass: 0.7 };
+const DRIFT_SPRING = { stiffness: 42, damping: 18 };
+const ENTRY_SPRING = { type: "spring", stiffness: 48, damping: 14.5, mass: 1.05 };
 
 const mixHex = (a, b, t) => {
   const pa = parseInt(a.slice(1), 16);
@@ -29,46 +31,47 @@ const mixHex = (a, b, t) => {
   return `#${((ch(16) << 16) | (ch(8) << 8) | ch(0)).toString(16).padStart(6, "0")}`;
 };
 
-/* Innere Kelchkontur (Tulpe) — dient als ClipPath für die Flüssigkeit */
-const BOWL_INNER =
-  "M105 65 C95 101 87 131 87 165 C87 212 115 244 150 257 C185 244 213 212 213 165 C213 131 205 101 195 65 Z";
-/* Äußere Kelchkontur — Glaskörper, Kontur und Glanz */
-const BOWL_OUTER =
-  "M100 64 C90 100 82 130 82 165 C82 215 112 248 150 263 C188 248 218 215 218 165 C218 130 210 100 200 64";
+const FALLBACK_ARTWORK = {
+  src: "/img/art/farbe-rot-fantin-latour.jpg",
+  alt: "Ölgemälde „Roses in a Bowl“ von Henri Fantin-Latour",
+  title: "Roses in a Bowl",
+  artist: "Henri Fantin-Latour",
+  year: "1883",
+  focus: "50% 40%",
+};
 
 export default function ColorBand({ wine }) {
   const ref = useRef(null);
   const reduced = useReducedMotion();
-  const uid = useId().replace(/[^a-zA-Z0-9]/g, "");
   const c = wine.colorMoment;
+  const art = c.artwork ?? FALLBACK_ARTWORK;
+  const hasVideo = Boolean(art.video) && !reduced;
   const accent = wine.accent ?? { base: "#C8B77A", deep: "#8A2B2F", light: "#E3D9B8" };
   const [s0, s1, s2] = [c.swatches[0], c.swatches[1], c.swatches[2] ?? c.swatches[1]];
 
   /* abgeleitete Töne — funktionieren für helle wie dunkle Weine */
-  const deep = mixHex(s2.hex, "#1B1B1B", 0.4);
-  const meniscus = mixHex(s0.hex, "#FFFFFF", 0.5);
   const inkFrom = mixHex(s2.hex, "#1B1B1B", 0.5);
   const inkTo = mixHex(s2.hex, "#1B1B1B", 0.75);
+  const frameDeep = mixHex(s2.hex, "#1B1B1B", 0.72);
   const tempFact = (wine.facts ?? []).find((f) => f.icon === "thermometer");
 
-  /* Füllstand: Wein steigt federnd, während die Sektion ins Bild scrollt.
-     Oberfläche wandert von y=232 (Einschenkbeginn) auf y=152 (Idealfüllung
-     am breitesten Punkt des Kelchs); der Meniskus wächst mit der Kelchbreite. */
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "center center"] });
-  const surfaceY = useSpring(useTransform(scrollYProgress, [0.18, 0.85], [232, 152]), FILL_SPRING);
-  const surfaceRx = useSpring(useTransform(scrollYProgress, [0.18, 0.85], [40, 63]), FILL_SPRING);
-  const surfaceRy = useTransform(surfaceRx, (v) => v * 0.11);
+  /* Parallaxe: das gerahmte Bild treibt beim Scrollen federnd durch die Sektion */
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
+  const driftY = useSpring(useTransform(scrollYProgress, [0, 1], [64, -46]), DRIFT_SPRING);
 
-  /* Magnetische Neigung: das Glas pendelt um den Fuß zum Cursor; die
-     Flüssigkeit rotiert gegenläufig um denselben Punkt und bleibt waagerecht */
+  /* Magnetische Neigung: der Rahmen kippt zum Cursor, das Gemälde gleitet im
+     Passepartout leicht gegenläufig (Tiefen-Parallaxe), der Firnis-Schimmer folgt */
   const mx = useMotionValue(0);
   const my = useMotionValue(0);
-  const sway = useSpring(useTransform(mx, [-0.5, 0.5], [-4, 4]), TILT_SPRING);
-  const negSway = useTransform(sway, (v) => -v);
-  const rotY = useSpring(useTransform(mx, [-0.5, 0.5], [-7, 7]), TILT_SPRING);
-  const rotX = useSpring(useTransform(my, [-0.5, 0.5], [4, -4]), TILT_SPRING);
-  const magX = useSpring(useTransform(mx, [-0.5, 0.5], [-9, 9]), TILT_SPRING);
-  const magY = useSpring(useTransform(my, [-0.5, 0.5], [-6, 6]), TILT_SPRING);
+  const rotY = useSpring(useTransform(mx, [-0.5, 0.5], [-8, 8]), TILT_SPRING);
+  const rotX = useSpring(useTransform(my, [-0.5, 0.5], [6, -6]), TILT_SPRING);
+  const magX = useSpring(useTransform(mx, [-0.5, 0.5], [-10, 10]), TILT_SPRING);
+  const magY = useSpring(useTransform(my, [-0.5, 0.5], [-7, 7]), TILT_SPRING);
+  const imgX = useSpring(useTransform(mx, [-0.5, 0.5], [12, -12]), TILT_SPRING);
+  const imgY = useSpring(useTransform(my, [-0.5, 0.5], [9, -9]), TILT_SPRING);
+  const shineX = useSpring(useTransform(mx, [-0.5, 0.5], [20, 80]), TILT_SPRING);
+  const shineY = useSpring(useTransform(my, [-0.5, 0.5], [14, 58]), TILT_SPRING);
+  const sheen = useMotionTemplate`radial-gradient(farthest-corner at ${shineX}% ${shineY}%, rgba(255,255,255,0.26) 0%, rgba(255,255,255,0.07) 34%, transparent 62%)`;
 
   const onMove = (e) => {
     const r = e.currentTarget.getBoundingClientRect();
@@ -79,6 +82,26 @@ export default function ColorBand({ wine }) {
     mx.set(0);
     my.set(0);
   };
+
+  /* Auftritt aus der rechten unteren Ecke — federnd, mit leichtem Eindrehen */
+  const entryV = reduced
+    ? {
+        hidden: { opacity: 0 },
+        visible: { opacity: 1, transition: { duration: 0.5 } },
+      }
+    : {
+        hidden: { opacity: 0, x: 140, y: 170, rotate: 7, scale: 0.88 },
+        visible: { opacity: 1, x: 0, y: 0, rotate: 0, scale: 1, transition: ENTRY_SPRING },
+      };
+  const plaqueV = reduced
+    ? {
+        hidden: { opacity: 0 },
+        visible: { opacity: 1, transition: { duration: 0.5, delay: 0.2 } },
+      }
+    : {
+        hidden: { opacity: 0, y: 14 },
+        visible: { opacity: 1, y: 0, transition: { ...ENTRY_SPRING, delay: 0.28 } },
+      };
 
   return (
     <section
@@ -140,153 +163,171 @@ export default function ColorBand({ wine }) {
           )}
         </div>
 
-        {/* ---------- Das Glas ---------- */}
+        {/* ---------- Das Gemälde ---------- */}
         <div
-          className="relative flex items-center justify-center"
-          style={{ perspective: "1100px" }}
+          className="relative flex items-center justify-center pb-4 lg:pb-2"
+          style={{ perspective: "1200px" }}
           onPointerMove={reduced ? undefined : onMove}
           onPointerLeave={reduced ? undefined : onLeave}
         >
-          {/* weiche Lichtaura hinter dem Glas */}
+          {/* weiche Lichtaura hinter dem Rahmen */}
           <div
             aria-hidden="true"
-            className="absolute left-1/2 top-1/2 h-[320px] w-[320px] -translate-x-1/2 -translate-y-1/2 rounded-full blur-3xl"
-            style={{ background: `radial-gradient(closest-side, ${s1.hex}66, transparent 72%)` }}
+            className="absolute left-1/2 top-1/2 h-[340px] w-[340px] -translate-x-1/2 -translate-y-1/2 rounded-full blur-3xl"
+            style={{ background: `radial-gradient(closest-side, ${s1.hex}59, transparent 72%)` }}
           />
-          <motion.div
-            className="relative will-transform"
-            style={
-              reduced
-                ? undefined
-                : {
-                    rotate: sway,
-                    rotateX: rotX,
-                    rotateY: rotY,
-                    x: magX,
-                    y: magY,
-                    transformOrigin: "50% 82%",
-                    transformStyle: "preserve-3d",
-                  }
-            }
-          >
-            <svg
-              viewBox="0 0 300 470"
-              className="h-[340px] w-auto sm:h-[400px] lg:h-[460px]"
-              role="img"
-              aria-label={`Weinfarbe im Glas: ${c.lines.join(" ")}`}
+          <motion.div className="will-transform" style={reduced ? undefined : { y: driftY }}>
+            <motion.figure
+              variants={entryV}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.35 }}
+              className="relative will-transform"
+              style={
+                reduced
+                  ? undefined
+                  : {
+                      rotateX: rotX,
+                      rotateY: rotY,
+                      x: magX,
+                      y: magY,
+                      transformOrigin: "50% 55%",
+                      transformStyle: "preserve-3d",
+                    }
+              }
             >
-              <defs>
-                <clipPath id={`bowl-${uid}`}>
-                  <path d={BOWL_INNER} />
-                </clipPath>
-                {/* Weinkörper: an der Oberfläche hell, zur Kelchmitte dicht */}
-                <linearGradient id={`liquid-${uid}`} x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0" stopColor={s0.hex} />
-                  <stop offset="0.1" stopColor={s0.hex} />
-                  <stop offset="0.22" stopColor={s1.hex} />
-                  <stop offset="0.34" stopColor={s2.hex} />
-                  <stop offset="0.5" stopColor={deep} />
-                  <stop offset="1" stopColor={deep} />
-                </linearGradient>
-                <linearGradient id={`glass-${uid}`} x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0" stopColor="#FFFFFF" stopOpacity="0.5" />
-                  <stop offset="0.3" stopColor="#FFFFFF" stopOpacity="0.12" />
-                  <stop offset="0.7" stopColor="#FFFFFF" stopOpacity="0.06" />
-                  <stop offset="1" stopColor="#FFFFFF" stopOpacity="0.35" />
-                </linearGradient>
-                <linearGradient id={`shine-${uid}`} x1="0" y1="0" x2="1" y2="0">
-                  <stop offset="0" stopColor="#FFFFFF" stopOpacity="0" />
-                  <stop offset="0.5" stopColor="#FFFFFF" stopOpacity="0.5" />
-                  <stop offset="1" stopColor="#FFFFFF" stopOpacity="0" />
-                </linearGradient>
-                <filter id={`blur3-${uid}`} x="-50%" y="-50%" width="200%" height="200%">
-                  <feGaussianBlur stdDeviation="3" />
-                </filter>
-                <filter id={`blur5-${uid}`} x="-50%" y="-50%" width="200%" height="200%">
-                  <feGaussianBlur stdDeviation="5" />
-                </filter>
-              </defs>
-
-              {/* Bodenschatten + Kaustik — das Licht fällt durch den Wein */}
-              <ellipse cx="150" cy="396" rx="64" ry="8" fill="#1B1B1B" opacity="0.1" filter={`url(#blur5-${uid})`} />
-              <ellipse cx="180" cy="392" rx="34" ry="6" fill={s2.hex} opacity="0.45" filter={`url(#blur3-${uid})`} />
-
-              {/* Wein — auf den Kelch beschnitten; bleibt beim Neigen waagerecht */}
-              <g clipPath={`url(#bowl-${uid})`}>
-                <motion.g
-                  style={
-                    reduced
-                      ? undefined
-                      : { rotate: negSway, transformBox: "view-box", transformOrigin: "150px 385px" }
-                  }
-                >
-                  <motion.g className="will-transform" style={{ y: reduced ? 152 : surfaceY }}>
-                    <rect x="62" y="0" width="176" height="290" fill={`url(#liquid-${uid})`} />
-                    {/* Meniskus: Oberflächenlinse + heller Lichtsaum */}
-                    <motion.ellipse
-                      cx="150"
-                      cy="0"
-                      rx={reduced ? 63 : surfaceRx}
-                      ry={reduced ? 7 : surfaceRy}
-                      fill={meniscus}
-                      opacity="0.9"
-                    />
-                    <motion.ellipse
-                      cx="150"
-                      cy="0"
-                      rx={reduced ? 63 : surfaceRx}
-                      ry={reduced ? 7 : surfaceRy}
-                      fill="none"
-                      stroke="#FFFFFF"
-                      strokeOpacity="0.55"
-                      strokeWidth="0.8"
-                    />
-                  </motion.g>
-                  {!reduced && (
-                    <motion.rect
-                      x="70"
-                      y="60"
-                      width="64"
-                      height="210"
-                      fill={`url(#shine-${uid})`}
-                      opacity="0.8"
-                      style={{ mixBlendMode: "soft-light" }}
-                      animate={{ x: [-50, 130] }}
-                      transition={{ duration: 8, ease: "easeInOut", repeat: Infinity, repeatType: "mirror" }}
-                    />
-                  )}
-                </motion.g>
-              </g>
-
-              {/* Glaskörper über dem Wein — Sheen, Kontur, Glanzlichter */}
-              <path d={BOWL_OUTER} fill={`url(#glass-${uid})`} fillOpacity="0.55" />
-              <path d={BOWL_OUTER} fill="none" stroke="#1B1B1B" strokeOpacity="0.16" strokeWidth="2" />
-              <ellipse cx="150" cy="64" rx="50" ry="8" fill="none" stroke="#1B1B1B" strokeOpacity="0.18" strokeWidth="1.6" />
-              <path d="M100 64 A50 8 0 0 1 200 64" fill="none" stroke="#FFFFFF" strokeOpacity="0.7" strokeWidth="1.2" />
-              <path
-                d="M103 88 C95 116 91 142 91 168 C91 196 100 220 116 238"
-                fill="none"
-                stroke="#FFFFFF"
-                strokeOpacity="0.65"
-                strokeWidth="5"
-                strokeLinecap="round"
-                filter={`url(#blur3-${uid})`}
-              />
-              <path
-                d="M199 90 C205 116 208 138 208 162"
-                fill="none"
-                stroke="#FFFFFF"
-                strokeOpacity="0.35"
-                strokeWidth="3"
-                strokeLinecap="round"
-                filter={`url(#blur3-${uid})`}
+              {/* weicher Farbschein hinter der Karte — greift den Weinton auf */}
+              <div
+                aria-hidden="true"
+                className="absolute -bottom-8 -right-8 h-[85%] w-[85%] rounded-[48px] blur-2xl"
+                style={{
+                  background: `linear-gradient(135deg, ${s1.hex}, ${s2.hex})`,
+                  transform: "translateZ(-90px)",
+                  opacity: 0.55,
+                }}
               />
 
-              {/* Stiel + Fuß */}
-              <rect x="146.6" y="262" width="6.8" height="118" rx="3" fill={`url(#glass-${uid})`} stroke="#1B1B1B" strokeOpacity="0.14" strokeWidth="1.4" />
-              <ellipse cx="150" cy="384" rx="58" ry="9.5" fill={`url(#glass-${uid})`} stroke="#1B1B1B" strokeOpacity="0.16" strokeWidth="1.8" />
-              <ellipse cx="150" cy="382" rx="38" ry="4.5" fill="none" stroke="#FFFFFF" strokeOpacity="0.4" strokeWidth="1.2" />
-            </svg>
+              {/* Moderne Glaskarte: Gradient-Haarlinie → frostiges Panel → Bild.
+                  Spricht dieselbe Sprache wie die Chips der Sektion (weißes
+                  Glas, weiche Radien, Weinton-Akzente). */}
+              <div
+                className="relative rounded-[26px] p-[1.5px]"
+                style={{
+                  background: `linear-gradient(140deg, rgba(255,255,255,0.95), ${s1.hex}66 45%, ${s2.hex}99)`,
+                  boxShadow: `0 30px 64px -24px ${s2.hex}73, 0 12px 26px -14px rgba(27,27,27,0.2)`,
+                }}
+              >
+                <div className="rounded-[24.5px] border border-white/50 bg-white/60 p-2.5 backdrop-blur-xl sm:p-3">
+                  <div
+                    className="relative overflow-hidden rounded-[18px]"
+                    style={{ border: `1px solid ${frameDeep}24` }}
+                  >
+                    {/* Bewegte Leinwand: liegt in artwork.video ein Clip (mp4/webm),
+                        läuft er stumm in Endlosschleife im Rahmen — das Gemälde
+                        (artwork.src) bleibt Poster und Reduced-Motion-Fallback */}
+                    {hasVideo ? (
+                      <motion.video
+                        src={art.video}
+                        poster={art.src}
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                        preload="metadata"
+                        aria-label={art.alt}
+                        className="block aspect-[4/5] w-[min(72vw,300px)] object-cover will-transform sm:w-[340px] lg:w-[380px]"
+                        style={{ objectPosition: art.videoFocus ?? art.focus ?? "50% 50%", x: imgX, y: imgY, scale: 1.08 }}
+                      />
+                    ) : (
+                      <motion.img
+                        src={art.src}
+                        alt={art.alt}
+                        loading="lazy"
+                        className="block aspect-[4/5] w-[min(72vw,300px)] object-cover will-transform sm:w-[340px] lg:w-[380px]"
+                        style={
+                          reduced
+                            ? { objectPosition: art.focus ?? "50% 50%" }
+                            : { objectPosition: art.focus ?? "50% 50%", x: imgX, y: imgY, scale: 1.08 }
+                        }
+                      />
+                    )}
+                    {/* Firnis-Schimmer folgt dem Cursor */}
+                    {!reduced && (
+                      <motion.div
+                        aria-hidden="true"
+                        className="pointer-events-none absolute inset-0"
+                        style={{ background: sheen, mixBlendMode: "soft-light" }}
+                      />
+                    )}
+                    {/* Vignette im Weinton verankert das Bild in der Sektion */}
+                    <div
+                      aria-hidden="true"
+                      className="pointer-events-none absolute inset-0"
+                      style={{
+                        background: `linear-gradient(160deg, transparent 55%, ${s2.hex}2E 100%)`,
+                        mixBlendMode: "multiply",
+                      }}
+                    />
+
+                    {/* Farb-Chip — Echo der Kicker/Swatch-Sprache links */}
+                    <span className="absolute left-3 top-3 inline-flex items-center gap-2 rounded-full border border-white/60 bg-white/75 px-3 py-1.5 shadow-chip backdrop-blur-md">
+                      <span
+                        className="h-2.5 w-2.5 rounded-full shadow-sm"
+                        style={{ backgroundColor: s0.hex }}
+                      />
+                      <span className="text-[9px] font-semibold uppercase tracking-[0.2em] text-charcoal/70">
+                        {s0.label}
+                      </span>
+                    </span>
+
+                    {/* Temperatur-Chip — Echo des Serviertemperatur-Chips links */}
+                    {tempFact && (
+                      <span className="absolute right-3 top-3 inline-flex items-center gap-1.5 rounded-full border border-white/60 bg-white/75 px-3 py-1.5 shadow-chip backdrop-blur-md">
+                        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true" style={{ color: accent.deep }}>
+                          <path d="M12 4a2 2 0 0 0-2 2v7.2a4 4 0 1 0 4 0V6a2 2 0 0 0-2-2Z" />
+                          <path d="M12 11v5" strokeLinecap="round" />
+                        </svg>
+                        <span className="text-[10px] font-semibold text-charcoal/80">{tempFact.value}</span>
+                      </span>
+                    )}
+                  </div>
+
+                  {/* Bildleiste — verbindet Motiv und Weinfarbe, sitzt in der Karte */}
+                  <motion.div
+                    variants={plaqueV}
+                    className="flex items-center justify-between gap-3 px-2.5 pb-1 pt-2.5 sm:px-3"
+                  >
+                    <span className="min-w-0 leading-tight">
+                      <span
+                        className="block text-[8.5px] font-semibold uppercase tracking-[0.22em]"
+                        style={{ color: accent.deep }}
+                      >
+                        Farbverwandt · {hasVideo ? "Bewegtbild in Schleife" : art.medium ?? "Öl auf Leinwand"}
+                      </span>
+                      <span className="mt-0.5 block truncate font-playfair text-[13.5px] italic text-charcoal">
+                        „{hasVideo && art.videoTitle ? art.videoTitle : art.title}"{" "}
+                        {!(hasVideo && art.videoTitle) && (
+                          <span className="font-sans text-[10.5px] not-italic text-charcoal/55">
+                            — {art.artist}
+                            {art.year ? `, ${art.year}` : ""}
+                          </span>
+                        )}
+                      </span>
+                    </span>
+                    <span className="flex shrink-0 items-center gap-1.5" aria-label="Die Töne des Weins">
+                      {c.swatches.map((s) => (
+                        <span
+                          key={s.hex}
+                          title={s.label}
+                          className="h-3 w-3 rounded-full border border-white/70 shadow-sm"
+                          style={{ backgroundColor: s.hex }}
+                        />
+                      ))}
+                    </span>
+                  </motion.div>
+                </div>
+              </div>
+            </motion.figure>
           </motion.div>
         </div>
       </div>

@@ -63,6 +63,19 @@ export const PRIMITIVO_14_5 = {
       { hex: "#3B0A14", label: "Dunkle Brombeere" },
       { hex: "#7A2A55", label: "Violetter Reflex" },
     ],
+    artwork: {
+      src: "/img/art/farbe-rot-fantin-latour.jpg",
+      alt: "Ölgemälde „Roses in a Bowl“ von Henri Fantin-Latour: Rosen in Rubin- und Cremetönen vor tiefdunklem Grund",
+      title: "Roses in a Bowl",
+      artist: "Henri Fantin-Latour",
+      year: "1883",
+      focus: "50% 40%",
+      /* Loop-Video im Rahmen — läuft stumm in Endlosschleife, das Gemälde
+         oben bleibt Poster und Reduced-Motion-Fallback */
+      video: "/video/wine-red.mp4",
+      videoFocus: "50% 50%",
+      videoTitle: "Rubinrot im Glas",
+    },
   },
 
   /* ---- Der Geschmack: drei gepinnte Kapitel (Auge / Nase / Gaumen) ---- */

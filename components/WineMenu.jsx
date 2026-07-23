@@ -122,28 +122,29 @@ export default function WineMenu({ active, scrolled = false }) {
         )}
       </Link>
 
+      {/* bridge — sits directly under the trigger, extending down to the
+          panel's top edge, so moving the mouse from the trigger toward the
+          sheet never crosses a dead zone that would schedule a close. Scoped
+          to the trigger's own width so it never covers other nav links. */}
+      {open && (
+        <span
+          aria-hidden="true"
+          {...holdProps}
+          className="absolute inset-x-0 top-full z-40 h-9"
+        />
+      )}
+
       <AnimatePresence>
-        {/* viewport-centred sheet + hover bridge back up to the header */}
+        {/* viewport-centred sheet */}
         {open && (
           <div
-            {...holdProps}
             className={`fixed inset-x-0 top-0 z-40 flex h-screen justify-center px-4 ${
               scrolled ? "pt-[5.125rem]" : "pt-[5.375rem] lg:pt-[6.375rem]"
             }`}
             style={{ pointerEvents: "none" }}
           >
-            {/* bridge — thin strip covering the gap between the nav row and
-                the sheet so crossing it never schedules a close. Sits below
-                the header so other nav links stay clickable. */}
-            <span
-              aria-hidden="true"
-              onPointerEnter={cancelClose}
-              style={{ pointerEvents: "auto" }}
-              className={`absolute inset-x-0 h-[0.625rem] ${
-                scrolled ? "top-[4.625rem]" : "top-[4.875rem] lg:top-[5.875rem]"
-              }`}
-            />
               <motion.div
+                {...holdProps}
                 initial={reduced ? { opacity: 0 } : { opacity: 0, y: -14, scale: 0.98 }}
                 animate={{ opacity: 1, y: 0, scale: 1, pointerEvents: "auto" }}
                 exit={

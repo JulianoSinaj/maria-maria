@@ -43,10 +43,6 @@ export const FALANGHINA = {
   /* Akzentfarben der Sektionen (Teal-Familie vom karierten Etikett) */
   accent: { base: "#45B3A2", deep: "#23786B", light: "#C9E8E1" },
 
-  /* Farbton des Weins im WebGL-Glas (TasteStory) — Strohgold mit grünem
-     Reflex. Ohne dieses Feld fällt das Glas auf taste[0].tone zurück. */
-  glassColor: "#E9DC8F",
-
   /* ---- Schnellfakten (Icon-Leiste unter dem Hero) ---- */
   facts: [
     { icon: "pin", label: "Herkunft", value: "Kampanien – Beneventano" },
@@ -65,9 +61,25 @@ export const FALANGHINA = {
       { hex: "#E8DC9A", label: "Strohgelb" },
       { hex: "#D9D584", label: "Grüner Reflex" },
     ],
+    artwork: {
+      src: "/img/art/farbe-gold-monet.jpg",
+      alt: "Ölgemälde „Getreideschober, Spätsommer“ von Claude Monet: Felder in Stroh- und Goldtönen im Abendlicht",
+      title: "Getreideschober, Spätsommer",
+      artist: "Claude Monet",
+      year: "1891",
+      focus: "72% 52%",
+      /* Loop-Video im Rahmen — läuft stumm in Endlosschleife, das Gemälde
+         oben bleibt Poster und Reduced-Motion-Fallback */
+      video: "/video/wine-white.mp4",
+      videoFocus: "50% 50%",
+      videoTitle: "Strohgelb im Glas",
+    },
   },
 
-  /* ---- Der Geschmack: drei gepinnte Kapitel (Auge / Nase / Gaumen) ---- */
+  /* ---- Der Geschmack: drei gepinnte Kapitel (Auge / Nase / Gaumen) ----
+     Jedes Kapitel zeigt in der „Galerie der Sinne" ein Gemälde. Ohne eigenes
+     `artwork` (src/alt/title/artist/year/focus) greift das kuratierte
+     Fallback-Set in TasteStory — hell/dunkel nach dem Ton des Farbkapitels. */
   taste: [
     {
       key: "farbe",

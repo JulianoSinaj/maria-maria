@@ -59,6 +59,18 @@ export const ROSATO_NEGROAMARO = {
       { hex: "#E8A793", label: "Zartes Rosa" },
       { hex: "#D98A76", label: "Warmer Reflex" },
     ],
+    artwork: {
+      src: "/img/art/farbe-rose-fantin-latour.jpg",
+      alt: "Ölgemälde „Pink and Red Roses“ von Henri Fantin-Latour: zartrosa Rosen mit warmen Reflexen",
+      title: "Pink and Red Roses",
+      artist: "Henri Fantin-Latour",
+      focus: "50% 38%",
+      /* Loop-Video im Rahmen — läuft stumm in Endlosschleife, das Gemälde
+         oben bleibt Poster und Reduced-Motion-Fallback */
+      video: "/video/wine-red.mp4",
+      videoFocus: "50% 50%",
+      videoTitle: "Rosa im Glas",
+    },
   },
 
   /* ---- Der Geschmack: drei gepinnte Kapitel (Auge / Nase / Gaumen) ---- */

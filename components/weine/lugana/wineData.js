@@ -63,6 +63,19 @@ export const LUGANA = {
       { hex: "#E9D98C", label: "Strohgelb" },
       { hex: "#DCC96A", label: "Goldener Glanz" },
     ],
+    artwork: {
+      src: "/img/art/farbe-gold-monet.jpg",
+      alt: "Ölgemälde „Getreideschober, Spätsommer“ von Claude Monet: Felder in Stroh- und Goldtönen im Abendlicht",
+      title: "Getreideschober, Spätsommer",
+      artist: "Claude Monet",
+      year: "1891",
+      focus: "72% 52%",
+      /* Loop-Video im Rahmen — läuft stumm in Endlosschleife, das Gemälde
+         oben bleibt Poster und Reduced-Motion-Fallback */
+      video: "/video/wine-white.mp4",
+      videoFocus: "50% 50%",
+      videoTitle: "Strohgelb im Glas",
+    },
   },
 
   /* ---- Der Geschmack: drei gepinnte Kapitel (Auge / Nase / Gaumen) ---- */

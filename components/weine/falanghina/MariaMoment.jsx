@@ -13,6 +13,7 @@ import { Aura } from "@/components/Atmosphere";
 import { Arrow } from "@/components/Icons";
 import { useTouchDevice } from "@/components/motion/useMediaQuery";
 import { WINE_ICON } from "./WineIcons";
+import EssenceCarousel from "./EssenceCarousel";
 
 /* „Servieren & Genießen" + „Der Maria-Moment" — das Genuss-Kapitel jeder
    Weinseite: links das Ritual (Temperatur, Trinkfenster, Karaffe), rechts der
@@ -232,6 +233,11 @@ export default function MariaMoment({ wine }) {
   if (!moment) return null;
   const accent = moment.accent ?? wine.accent ?? ACCENT_FALLBACK;
 
+  /* Hintergrundbilder für den mobilen Kartenstapel — aus den vorhandenen
+     Wein-Fotos zusammengesetzt (Herkunft / Pairing / Hero), zyklisch auf die
+     Essenz-Karten verteilt. Fehlt alles, greift der Farbverlauf-Fallback. */
+  const carouselBgs = [wine.place?.photo, wine.pairing?.photo, wine.images?.hero].filter(Boolean);
+
   return (
     <section id="geniessen" className="relative scroll-mt-36 overflow-hidden py-16 lg:py-24">
       {/* Ambient-Farbe hinter der ganzen Sektion */}
@@ -308,8 +314,13 @@ export default function MariaMoment({ wine }) {
           </SlideIn>
         </div>
 
-        {/* Essenz-Trio: Geschmack / Herkunft / Rebsorte — Einflug von den Seiten */}
-        <div className="mt-6 grid gap-6 lg:mt-8 lg:grid-cols-3 lg:gap-8">
+        {/* Essenz-Trio: Geschmack / Herkunft / Rebsorte.
+            Mobil: auto-rotierender Kartenstapel. Ab lg: dreispaltiges Grid. */}
+        <div className="mt-8 lg:hidden">
+          <EssenceCarousel items={moment.essence} accent={accent} backgrounds={carouselBgs} />
+        </div>
+
+        <div className="mt-6 hidden gap-6 lg:mt-8 lg:grid lg:grid-cols-3 lg:gap-8">
           {moment.essence.map((item, i) => (
             <SlideIn
               key={item.kicker}

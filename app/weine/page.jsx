@@ -234,7 +234,7 @@ export default function WeinePage() {
           <Stagger className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-3">
             {HELP.map((h) => (
               <StaggerItem key={h.title} className="h-full">
-                <div className="ring-hairline flex h-full flex-col rounded-card-lg border border-stone/40 bg-white/70 p-8 shadow-luxe transition-[box-shadow,border-color] duration-500 hover:border-champagne/60 hover:shadow-lift">
+                <div className="ring-hairline relative z-10 flex h-full flex-col rounded-card-lg border border-stone/40 bg-white p-8 shadow-luxe transition-[box-shadow,border-color] duration-500 hover:border-champagne/60 hover:shadow-lift">
                   <IconChip>{h.icon}</IconChip>
                   <h3 className="mt-6 font-playfair text-[19px] text-charcoal">{h.title}</h3>
                   <p className="mt-3 text-[13px] leading-relaxed text-charcoal/70">{h.text}</p>

@@ -3,10 +3,10 @@ import ShaderGradient from "@/components/motion/ShaderGradient";
 import SplitText from "@/components/motion/SplitText";
 import Parallax from "@/components/motion/Parallax";
 import TiltCard from "@/components/motion/TiltCard";
-import { Reveal, Stagger, StaggerItem } from "@/components/motion/Reveal";
+import { Reveal } from "@/components/motion/Reveal";
 import Button from "@/components/ui/Button";
 import { SectionTitle, Eyebrow, GrapeRule, IconChip } from "@/components/Deco";
-import WineCard from "@/components/WineCard";
+import RegionWineRail from "@/components/RegionWineRail";
 import ItalyMap from "@/components/ItalyMap";
 import { Arrow, Check, Fields } from "@/components/Icons";
 import { WINES, REGION_COUNT } from "@/components/data";
@@ -108,7 +108,7 @@ export default function RegionenPage() {
                   [`${WINES.length}`, "Boutique-Weine"],
                   ["100 %", "Familiengeführt"],
                 ].map(([num, label], i) => (
-                  <div key={label} className={`flex-1 ${i > 0 ? "border-l border-charcoal/10 pl-6" : ""}`}>
+                  <div key={label} className={`flex-1 ${i > 0 ? "border-l border-charcoal/10 pl-4 sm:pl-6" : ""}`}>
                     <dt className="sr-only">{label}</dt>
                     <dd>
                       <span className="font-playfair text-[26px] text-bordeaux">{num}</span>
@@ -159,71 +159,72 @@ export default function RegionenPage() {
           Entdecken Sie unsere Regionen
         </SectionTitle>
 
-        <div className="mt-16 space-y-24 lg:mt-20 lg:space-y-32">
+        <div className="mt-14 lg:mt-20">
           {REGIONS.map((r, i) => {
             const flipped = i % 2 === 1;
             return (
               <article
                 key={r.name}
                 id={r.anchor}
-                className="grid scroll-mt-32 grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-16"
+                className={`scroll-mt-32 ${i > 0 ? "mt-16 border-t border-stone/50 pt-16 lg:mt-24 lg:pt-24" : ""}`}
               >
-                {/* photo side */}
-                <Reveal className={flipped ? "lg:order-2" : ""}>
-                  <TiltCard className="group h-full" max={4} radius="rounded-card-lg">
-                    <div className="relative h-[420px] overflow-hidden rounded-card-lg shadow-luxe transition-shadow duration-500 group-hover:shadow-lift">
-                      <Parallax speed={0.09} overscan className="absolute inset-0">
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img
-                          src={r.img}
-                          alt={`Landschaft der Region ${r.name}`}
-                          className="h-full w-full object-cover transition-transform duration-700 ease-out-expo group-hover:scale-[1.05]"
+                {/* photo + intro */}
+                <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-2 lg:gap-16">
+                  <Reveal className={flipped ? "lg:order-2" : ""}>
+                    <TiltCard className="group h-full" max={4} radius="rounded-card-lg">
+                      <div className="relative h-[280px] overflow-hidden rounded-card-lg shadow-luxe transition-shadow duration-500 group-hover:shadow-lift sm:h-[340px] lg:h-[400px]">
+                        <Parallax speed={0.09} overscan className="absolute inset-0">
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img
+                            src={r.img}
+                            alt={`Landschaft der Region ${r.name}`}
+                            className="h-full w-full object-cover transition-transform duration-700 ease-out-expo group-hover:scale-[1.05]"
+                          />
+                        </Parallax>
+                        <div
+                          aria-hidden="true"
+                          className="absolute inset-0 bg-gradient-to-t from-espresso/90 via-espresso/30 to-transparent"
                         />
-                      </Parallax>
-                      <div
-                        aria-hidden="true"
-                        className="absolute inset-0 bg-gradient-to-t from-espresso/90 via-espresso/30 to-transparent"
-                      />
-                      <div className="glass absolute right-4 top-4 rounded-2xl p-2.5">
-                        <ItalyMap region={r.region} className="w-12" />
+                        <div className="glass absolute right-4 top-4 rounded-2xl p-2.5">
+                          <ItalyMap region={r.region} className="w-10 sm:w-12" />
+                        </div>
+                        <div className="absolute inset-x-0 bottom-0 p-5 sm:p-7">
+                          <p className="text-[10px] uppercase tracking-[0.22em] text-champagne-light">{r.tag}</p>
+                          <h3 className="mt-1.5 font-playfair text-[clamp(1.5rem,2.6vw,2.1rem)] text-ivory">
+                            {r.name}
+                          </h3>
+                        </div>
                       </div>
-                      <div className="absolute inset-x-0 bottom-0 p-7">
-                        <p className="text-[10px] uppercase tracking-[0.22em] text-champagne-light">{r.tag}</p>
-                        <h3 className="mt-1.5 font-playfair text-[clamp(1.7rem,2.6vw,2.1rem)] text-ivory">
-                          {r.name}
-                        </h3>
-                      </div>
+                    </TiltCard>
+                  </Reveal>
+
+                  <Reveal delay={0.12} className={flipped ? "lg:order-1" : ""}>
+                    <span
+                      aria-hidden="true"
+                      className="font-playfair text-[13px] italic tracking-[0.08em] text-bordeaux/45"
+                    >
+                      {String(i + 1).padStart(2, "0")} — {String(REGIONS.length).padStart(2, "0")}
+                    </span>
+                    <div className="mt-3">
+                      <Eyebrow>{r.label}</Eyebrow>
                     </div>
-                  </TiltCard>
-                </Reveal>
+                    <h2 className="mt-4 font-playfair text-[clamp(1.9rem,3.2vw,2.5rem)] leading-[1.12] text-charcoal">
+                      {r.name}
+                    </h2>
+                    <p className="mt-4 max-w-lg text-[13.5px] leading-relaxed text-charcoal/70">{r.desc}</p>
+                    <Link
+                      href="/magazin"
+                      className="group mt-3 inline-flex min-h-[44px] items-center gap-1.5 text-[12px] font-medium text-bordeaux"
+                    >
+                      {r.link}
+                      <Arrow className="h-3.5 w-3.5 transition-transform duration-500 ease-out-expo group-hover:translate-x-1" />
+                    </Link>
+                  </Reveal>
+                </div>
 
-                {/* text + mini rail side */}
-                <Reveal delay={0.12} className={flipped ? "lg:order-1" : ""}>
-                  <Eyebrow>{r.label}</Eyebrow>
-                  <h2 className="mt-4 font-playfair text-[clamp(1.9rem,3.2vw,2.5rem)] leading-[1.12] text-charcoal">
-                    {r.name}
-                  </h2>
-                  <p className="mt-4 max-w-lg text-[13.5px] leading-relaxed text-charcoal/70">{r.desc}</p>
-                  <Link
-                    href="/magazin"
-                    className="group mt-2 inline-flex min-h-[44px] items-center gap-1.5 text-[12px] font-medium text-bordeaux"
-                  >
-                    {r.link}
-                    <Arrow className="h-3.5 w-3.5 transition-transform duration-500 ease-out-expo group-hover:translate-x-1" />
-                  </Link>
-
-                  <p className="mt-6 text-[10.5px] font-semibold uppercase tracking-[0.16em] text-charcoal/50">
-                    Unsere Weine aus dieser Region
-                  </p>
-                  <div data-lenis-prevent-horizontal className="no-scrollbar -mx-6 mt-4 snap-x overflow-x-auto px-6 lg:mx-0 lg:px-0">
-                    <Stagger gap={0.06} className="flex w-max gap-4 pb-3 pt-1">
-                      {WINES.filter((w) => r.dataRegions.includes(w.region)).map((w) => (
-                        <StaggerItem key={w.name} className="snap-start">
-                          <WineCard wine={w} variant="mini" />
-                        </StaggerItem>
-                      ))}
-                    </Stagger>
-                  </div>
+                {/* full-width wine rail for this region */}
+                <Reveal delay={0.2} className="mt-10 lg:mt-12">
+                  <RegionWineRail wines={WINES.filter((w) => r.dataRegions.includes(w.region))} />
                 </Reveal>
               </article>
             );

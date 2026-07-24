@@ -1,12 +1,6 @@
 "use client";
 import { useRef } from "react";
-import {
-  motion,
-  useScroll,
-  useTransform,
-  useSpring,
-  useReducedMotion,
-} from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 import { Reveal } from "@/components/motion/Reveal";
 import SplitText from "@/components/motion/SplitText";
 import { useTouchDevice } from "@/components/motion/useMediaQuery";
@@ -14,12 +8,11 @@ import { useTouchDevice } from "@/components/motion/useMediaQuery";
 /* „Die Farbe" — links die Typo-Bühne, rechts eine moderne Glaskarte mit einem
    Motiv aus der Kunstgeschichte (oder einem Loop-Video), dessen Palette den
    Weinton spiegelt (wine.colorMoment.artwork). Die Karte schwebt federnd aus
-   der rechten unteren Ecke in die Sektion und treibt beim Scrollen leicht mit
-   (Parallaxe) — sie bleibt unter dem Cursor ruhig. Chips auf dem Bild (Farbton
+   der rechten unteren Ecke in die Sektion und bleibt danach ruhig stehen —
+   sie reagiert nicht auf Scroll oder Cursor. Chips auf dem Bild (Farbton
    + Serviertemperatur) und die Bildleiste mit den Swatches greifen die
    Chip-Sprache der Sektion auf. */
 
-const DRIFT_SPRING = { stiffness: 42, damping: 18 };
 const ENTRY_SPRING = { type: "spring", stiffness: 48, damping: 14.5, mass: 1.05 };
 
 const mixHex = (a, b, t) => {
@@ -53,14 +46,6 @@ export default function ColorBand({ wine }) {
   const inkTo = mixHex(s2.hex, "#1B1B1B", 0.75);
   const frameDeep = mixHex(s2.hex, "#1B1B1B", 0.72);
   const tempFact = (wine.facts ?? []).find((f) => f.icon === "thermometer");
-
-  /* Parallaxe: das gerahmte Bild treibt beim Scrollen federnd durch die
-     Sektion — auf dem Telefon mit kürzerem Weg, damit nichts „schwimmt" */
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
-  const driftY = useSpring(
-    useTransform(scrollYProgress, [0, 1], touch ? [26, -18] : [64, -46]),
-    DRIFT_SPRING
-  );
 
   /* Auftritt aus der rechten unteren Ecke — federnd, mit leichtem Eindrehen;
      auf schmalen Screens deutlich kürzer, sonst wirkt der Einflug ruckhaft */
@@ -153,7 +138,7 @@ export default function ColorBand({ wine }) {
             className="absolute left-1/2 top-1/2 h-[340px] w-[340px] -translate-x-1/2 -translate-y-1/2 rounded-full blur-3xl"
             style={{ background: `radial-gradient(closest-side, ${s1.hex}59, transparent 72%)` }}
           />
-          <motion.div className="will-transform" style={reduced ? undefined : { y: driftY }}>
+          <motion.div className="will-transform">
             <motion.figure
               variants={entryV}
               initial="hidden"

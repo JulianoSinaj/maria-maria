@@ -73,6 +73,19 @@ const LATEST = [
 const KATEGORIE = ["Alle Themen", "Weinwissen", "Food Pairing", "Regionen", "Geschichten", "Genussmomente"];
 const LESEDAUER = ["Alle", "1–3 Min.", "4–6 Min.", "7+ Min."];
 
+const TAGS = [
+  "Primitivo",
+  "Falanghina",
+  "Apulien",
+  "Food Pairing",
+  "Verkostung",
+  "Aglianico",
+  "Süditalien",
+  "Aperitivo",
+  "Lugana",
+  "Terroir",
+];
+
 const POPULAR = [
   { title: "Falanghina entdecken", min: "5 Min. Lesedauer", img: "/img/vineyard.jpg" },
   { title: "Primitivo 101 – Alles über die Rebsorte", min: "6 Min. Lesedauer", img: "/img/region-apulien.jpg" },
@@ -104,8 +117,8 @@ export default function MagazinPage() {
         <GhostWord className="left-[-2vw] top-[46%] text-[11vw]">Storie</GhostWord>
         <GhostWord className="right-[-2vw] bottom-[2%] text-[10vw]">Sapori</GhostWord>
 
-        <div className="relative mx-auto max-w-content px-6 pb-24 pt-32 lg:px-10 lg:pt-36">
-          <div className="grid grid-cols-1 gap-10 lg:grid-cols-[1fr_20rem]">
+        <div className="relative mx-auto max-w-[1440px] px-6 pb-24 pt-32 lg:px-12 lg:pt-36 2xl:px-16">
+          <div className="grid grid-cols-1 gap-10 lg:grid-cols-[1fr_21rem] lg:gap-14 xl:grid-cols-[1fr_23rem]">
             {/* ================= MAIN ================= */}
             <div>
               {/* ---- intro + featured ---- */}
@@ -237,47 +250,85 @@ export default function MagazinPage() {
                     </Button>
                   </Reveal>
                 </div>
-                <Stagger className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2">
-                  {LATEST.map((a) => (
-                    <StaggerItem key={a.title} className="h-full">
-                      <Link href="#" className="group block h-full">
-                        <article className="flex h-full flex-col overflow-hidden rounded-card border border-stone/50 bg-white/70 shadow-luxe transition-all duration-500 ease-out-expo hover:-translate-y-1.5 hover:border-champagne/60 hover:shadow-lift">
-                          <div className="relative h-44 overflow-hidden">
-                            {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img
-                              src={a.img}
-                              alt=""
-                              className="h-full w-full object-cover transition-transform duration-700 ease-out-expo group-hover:scale-[1.06]"
-                            />
-                            <span className="glass absolute left-4 top-4 rounded-full px-3 py-1.5 text-[9.5px] font-semibold uppercase tracking-[0.16em] text-charcoal/70">
-                              {a.cat}
+                {/* lead story — wide horizontal row for editorial hierarchy */}
+                <Stagger className="mt-10 space-y-6">
+                  <StaggerItem>
+                    <Link href="#" className="group block">
+                      <article className="grid grid-cols-1 overflow-hidden rounded-card-lg border border-stone/50 bg-white/70 shadow-luxe transition-all duration-500 ease-out-expo hover:-translate-y-1 hover:border-champagne/60 hover:shadow-lift sm:grid-cols-[1.05fr_1fr]">
+                        <div className="relative h-56 overflow-hidden sm:h-full sm:min-h-[280px]">
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img
+                            src={LATEST[0].img}
+                            alt=""
+                            className="h-full w-full object-cover transition-transform duration-700 ease-out-expo group-hover:scale-[1.05]"
+                          />
+                          <span className="glass absolute left-4 top-4 rounded-full px-3 py-1.5 text-[9.5px] font-semibold uppercase tracking-[0.16em] text-charcoal/70">
+                            {LATEST[0].cat}
+                          </span>
+                        </div>
+                        <div className="flex flex-col justify-center p-7 sm:p-9">
+                          <p className="text-[10px] uppercase tracking-[0.22em] text-bordeaux/70">Neu im Magazin</p>
+                          <h3 className="mt-2 font-playfair text-[clamp(1.5rem,2.4vw,1.9rem)] leading-tight text-charcoal transition-colors duration-300 group-hover:text-bordeaux">
+                            {LATEST[0].title}
+                          </h3>
+                          <p className="mt-2.5 inline-flex items-center gap-1.5 text-[11px] text-charcoal/50">
+                            <Clock className="h-3.5 w-3.5" /> {LATEST[0].min}
+                          </p>
+                          <p className="mt-3 text-[13px] leading-relaxed text-charcoal/70">{LATEST[0].excerpt}</p>
+                          <div className="mt-6">
+                            <span className="inline-flex items-center gap-1.5 text-[12px] font-medium text-bordeaux">
+                              Artikel lesen
+                              <Arrow className="h-3.5 w-3.5 transition-transform duration-500 ease-out-expo group-hover:translate-x-1" />
                             </span>
                           </div>
-                          <div className="flex flex-1 flex-col p-6">
-                            <h3 className="font-playfair text-[19px] leading-snug text-charcoal transition-colors duration-300 group-hover:text-bordeaux">
-                              {a.title}
-                            </h3>
-                            <p className="mt-2 inline-flex items-center gap-1.5 text-[11px] text-charcoal/50">
-                              <Clock className="h-3.5 w-3.5" /> {a.min}
-                            </p>
-                            <p className="mt-2.5 text-[12.5px] leading-relaxed text-charcoal/65">{a.excerpt}</p>
-                            <div className="mt-auto pt-5">
-                              <span className="inline-flex items-center gap-1.5 text-[12px] font-medium text-bordeaux">
-                                Mehr lesen
-                                <Arrow className="h-3.5 w-3.5 transition-transform duration-500 ease-out-expo group-hover:translate-x-1" />
+                        </div>
+                      </article>
+                    </Link>
+                  </StaggerItem>
+
+                  {/* remaining stories — balanced grid */}
+                  <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3">
+                    {LATEST.slice(1).map((a) => (
+                      <StaggerItem key={a.title} className="h-full">
+                        <Link href="#" className="group block h-full">
+                          <article className="flex h-full flex-col overflow-hidden rounded-card border border-stone/50 bg-white/70 shadow-luxe transition-all duration-500 ease-out-expo hover:-translate-y-1.5 hover:border-champagne/60 hover:shadow-lift">
+                            <div className="relative h-44 overflow-hidden">
+                              {/* eslint-disable-next-line @next/next/no-img-element */}
+                              <img
+                                src={a.img}
+                                alt=""
+                                className="h-full w-full object-cover transition-transform duration-700 ease-out-expo group-hover:scale-[1.06]"
+                              />
+                              <span className="glass absolute left-4 top-4 rounded-full px-3 py-1.5 text-[9.5px] font-semibold uppercase tracking-[0.16em] text-charcoal/70">
+                                {a.cat}
                               </span>
                             </div>
-                          </div>
-                        </article>
-                      </Link>
-                    </StaggerItem>
-                  ))}
+                            <div className="flex flex-1 flex-col p-6">
+                              <h3 className="font-playfair text-[19px] leading-snug text-charcoal transition-colors duration-300 group-hover:text-bordeaux">
+                                {a.title}
+                              </h3>
+                              <p className="mt-2 inline-flex items-center gap-1.5 text-[11px] text-charcoal/50">
+                                <Clock className="h-3.5 w-3.5" /> {a.min}
+                              </p>
+                              <p className="mt-2.5 text-[12.5px] leading-relaxed text-charcoal/65">{a.excerpt}</p>
+                              <div className="mt-auto pt-5">
+                                <span className="inline-flex items-center gap-1.5 text-[12px] font-medium text-bordeaux">
+                                  Mehr lesen
+                                  <Arrow className="h-3.5 w-3.5 transition-transform duration-500 ease-out-expo group-hover:translate-x-1" />
+                                </span>
+                              </div>
+                            </div>
+                          </article>
+                        </Link>
+                      </StaggerItem>
+                    ))}
+                  </div>
                 </Stagger>
               </section>
             </div>
 
             {/* ================= SIDEBAR ================= */}
-            <aside className="space-y-8">
+            <aside className="space-y-8 lg:sticky lg:top-28 lg:self-start">
               <Reveal delay={0.1} y={22}>
                 <FilterPanel categories={KATEGORIE} durations={LESEDAUER} />
               </Reveal>
@@ -317,6 +368,25 @@ export default function MagazinPage() {
                     <Button href="#" variant="outline" size="sm" magnetic={false} className="w-full">
                       Alle Artikel anzeigen
                     </Button>
+                  </div>
+                </div>
+              </Reveal>
+
+              {/* themen / tag cloud — gives the sidebar length & discovery */}
+              <Reveal delay={0.28} y={22}>
+                <div className="rounded-card-lg border border-stone/50 bg-gradient-to-b from-white/90 to-cream p-6 shadow-luxe">
+                  <h2 className="font-playfair text-[19px] text-charcoal">Beliebte Themen</h2>
+                  <GoldRule className="mt-3 w-full" />
+                  <div className="mt-5 flex flex-wrap gap-2">
+                    {TAGS.map((tag) => (
+                      <Link
+                        key={tag}
+                        href="#"
+                        className="inline-flex items-center rounded-full border border-stone/70 bg-white/60 px-3.5 py-2 text-[11px] font-medium tracking-[0.04em] text-charcoal/70 transition-colors duration-300 hover:border-champagne hover:bg-white hover:text-bordeaux"
+                      >
+                        {tag}
+                      </Link>
+                    ))}
                   </div>
                 </div>
               </Reveal>

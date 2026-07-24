@@ -115,6 +115,10 @@ export const FALANGHINA = {
     { label: "Herkunft", value: "Kampanien, Italien" },
     { label: "Lese", value: "Erste Oktoberhälfte" },
     {
+      label: "Erziehung",
+      value: "Guyot an Holzpfählen — den „falangae“, die der Rebe schon zur Römerzeit ihren Namen gaben.",
+    },
+    {
       label: "Vinifikation",
       value: "Sanfte Pressung ganzer Trauben. Anschließend ruhiger, temperaturkontrollierter Ausbau.",
       span: "wide",

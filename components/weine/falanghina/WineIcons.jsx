@@ -44,12 +44,17 @@ export const Thermometer = (p) => (
 
 export const Tank = (p) => (
   <svg viewBox="0 0 48 48" {...F} {...p}>
-    <ellipse cx="24" cy="11.5" rx="10" ry="3.6" />
-    <path d="M14 11.5v22.5c0 2.6 4.5 4.6 10 4.6s10-2 10-4.6V11.5" />
-    <path d="M14 23h20" strokeOpacity="0.55" />
-    <path d="M17.5 39.5 15.5 44" />
-    <path d="M30.5 39.5l2 4.5" />
-    <path d="M24 38.7V42" strokeOpacity="0.7" />
+    {/* Konischer Edelstahltank mit Kuppeldeckel */}
+    <path d="M24 6c4 0 7 2.4 7 4.8" />
+    <path d="M17 10.8C17 8.4 20 6 24 6" />
+    <ellipse cx="24" cy="11" rx="7" ry="2.4" strokeOpacity="0.55" />
+    <path d="M15 12.5 13 33c0 4 5 6.5 11 6.5s11-2.5 11-6.5L33 12.5" />
+    {/* Auslasshahn */}
+    <path d="M24 39.5v3.5" />
+    <path d="M22 43h4" strokeOpacity="0.7" />
+    {/* Standfüße */}
+    <path d="M16.5 38 14 43" />
+    <path d="M31.5 38 34 43" />
   </svg>
 );
 
@@ -85,11 +90,17 @@ export const Decanter = (p) => (
 /* Sanduhr — Trinkfenster / Reifepotenzial */
 export const Hourglass = (p) => (
   <svg viewBox="0 0 48 48" {...F} {...p}>
-    <path d="M14 8h20M14 40h20" />
-    <path d="M17 8v6.5c0 4.5 7 7 7 9.5s-7 5-7 9.5V40" />
-    <path d="M31 8v6.5c0 4.5-7 7-7 9.5s7 5 7 9.5V40" />
-    <path d="M20.5 36.5c1-1.8 2.2-2.8 3.5-2.8s2.5 1 3.5 2.8" strokeOpacity="0.6" />
-    <path d="M24 20.5v2" strokeOpacity="0.6" />
+    {/* Rahmenplatten oben/unten */}
+    <path d="M13 7h22M13 41h22" />
+    {/* Glaskörper */}
+    <path d="M16.5 7c0 6 7.5 9 7.5 17s-7.5 11-7.5 17" />
+    <path d="M31.5 7c0 6-7.5 9-7.5 17s7.5 11 7.5 17" />
+    {/* Oberer Sandkegel */}
+    <path d="M19 11.5h10l-5 6.5Z" strokeOpacity="0.7" style={{ fill: "currentColor", fillOpacity: 0.18 }} />
+    {/* Rieselnder Sand */}
+    <path d="M24 19v9" strokeOpacity="0.5" />
+    {/* Unterer Sandhügel */}
+    <path d="M18.5 36.5c1.5-3.5 3.5-5.2 5.5-5.2s4 1.7 5.5 5.2Z" strokeOpacity="0.7" style={{ fill: "currentColor", fillOpacity: 0.18 }} />
   </svg>
 );
 

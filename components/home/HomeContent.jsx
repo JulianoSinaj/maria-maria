@@ -1,15 +1,14 @@
 import Link from "next/link";
 import ShaderGradient from "@/components/motion/ShaderGradient";
 import SplitText from "@/components/motion/SplitText";
-import Parallax from "@/components/motion/Parallax";
 import TiltCard from "@/components/motion/TiltCard";
 import Marquee from "@/components/motion/Marquee";
 import { Reveal, Stagger, StaggerItem } from "@/components/motion/Reveal";
 import Button from "@/components/ui/Button";
 import { SectionTitle, Eyebrow, GrapeRule, IconChip } from "@/components/Deco";
 import HeroVisual, { ScrollCue } from "@/components/home/HeroVisual";
+import RegionExplorer from "@/components/home/RegionExplorer";
 import WineRail from "@/components/WineRail";
-import ItalyMap from "@/components/ItalyMap";
 import { Vineyard, Barrel, Glasses, Arrow, Clock } from "@/components/Icons";
 import { WINES, REGION_COUNT } from "@/components/data";
 import Atmosphere, { Aura, GhostWord, Vines } from "@/components/Atmosphere";
@@ -20,18 +19,24 @@ import Atmosphere, { Aura, GhostWord, Vines } from "@/components/Atmosphere";
 const MOMENT = [
   {
     icon: <Vineyard className="h-7 w-7" />,
+    kicker: "Herkunft",
     title: "Ausgewählte Weingüter",
     text: "Wir arbeiten mit kleinen, familiengeführten Weingütern in Italien zusammen – Menschen, die ihre Heimat, ihre Reben und ihre Handwerkskunst mit Leidenschaft pflegen.",
+    note: "Familiengeführt · Italien",
   },
   {
     icon: <Barrel className="h-7 w-7" />,
+    kicker: "Handwerk",
     title: "Limitierte Produktion",
     text: "Unsere Weine entstehen in begrenzten Mengen und spiegeln das Terroir und die Persönlichkeit ihrer Herkunft unverfälscht wider – echt, charakterstark, besonders.",
+    note: "Begrenzte Mengen · Terroir",
   },
   {
     icon: <Glasses className="h-7 w-7" />,
+    kicker: "Haltung",
     title: "Gemeinsam genießen",
     text: "Ein Maria-Moment ist kein Anlass, sondern eine Entscheidung: den Augenblick zu wählen, den Wein zu öffnen und bewusst miteinander zu sein.",
+    note: "Bewusst · Miteinander",
   },
 ];
 
@@ -40,6 +45,8 @@ const REGIONS = [
     name: "Apulien",
     tag: "Das Herz des Südens",
     desc: "Die Sonne des Südens und kraftvolle Aromen.",
+    long: "Zwischen Salento und Gallipoli reifen Primitivo und Negroamaro unter der Sonne des Südens – kraftvolle, warme Weine mit mediterraner Seele.",
+    grapes: ["Primitivo", "Negroamaro", "Rosato"],
     region: "apulien",
     img: "/img/region-apulien.jpg",
   },
@@ -47,6 +54,8 @@ const REGIONS = [
     name: "Kampanien",
     tag: "Zwischen Vulkan und Meer",
     desc: "Vulkanische Böden, ursprüngliche Charaktere.",
+    long: "Rund um Napoli und Salerno prägen die vulkanischen Böden des Vesuv Weine mit Tiefe und Ursprünglichkeit – von Falanghina bis Aglianico.",
+    grapes: ["Falanghina", "Greco di Tufo", "Aglianico"],
     region: "kampanien",
     img: "/img/region-kampanien.jpg",
   },
@@ -54,6 +63,8 @@ const REGIONS = [
     name: "Gardasee / Lugana",
     tag: "Eleganz des Nordens",
     desc: "Eleganz, Frische und mineralische Tiefe.",
+    long: "Am Südufer des Gardasees entsteht Lugana – ein Weißwein von seltener Eleganz, getragen von Frische und mineralischer Tiefe.",
+    grapes: ["Lugana", "Turbiana"],
     region: "garda",
     img: "/img/region-garda.jpg",
   },
@@ -167,14 +178,16 @@ export default function HomeContent() {
         >
           Der Maria-Moment
         </SectionTitle>
-        <Stagger className="mt-10 grid grid-cols-1 gap-6 sm:mt-14 md:grid-cols-3">
-          {MOMENT.map((m) => (
+        <Stagger className="mx-auto mt-10 grid max-w-5xl grid-cols-1 gap-6 sm:mt-14 md:grid-cols-3">
+          {MOMENT.map((m, i) => (
             <StaggerItem key={m.title} className="h-full">
               <TiltCard className="group h-full" max={5} radius="rounded-card-lg">
-                <div className="ring-hairline flex h-full flex-col rounded-card-lg border border-stone/40 bg-white/70 p-8 shadow-luxe transition-[box-shadow,border-color] duration-500 group-hover:border-champagne/60 group-hover:shadow-lift">
-                  <IconChip>{m.icon}</IconChip>
-                  <h3 className="mt-6 font-playfair text-[19px] text-charcoal">{m.title}</h3>
-                  <p className="mt-3 text-[13px] leading-relaxed text-charcoal/70">{m.text}</p>
+                <div className="ring-hairline relative flex h-full flex-col overflow-hidden rounded-card-lg border border-stone/40 bg-white/70 p-6 shadow-luxe transition-[box-shadow,border-color] duration-500 group-hover:border-champagne/60 group-hover:shadow-lift sm:p-8">
+                  <div className="relative flex items-center gap-4 md:block">
+                    <IconChip>{m.icon}</IconChip>
+                    <h3 className="font-playfair text-[19px] text-charcoal md:mt-5">{m.title}</h3>
+                  </div>
+                  <p className="relative mt-4 text-[13px] leading-relaxed text-charcoal/70 md:mt-3">{m.text}</p>
                 </div>
               </TiltCard>
             </StaggerItem>
@@ -220,41 +233,9 @@ export default function HomeContent() {
             </Button>
           </Reveal>
         </div>
-        <Stagger className="mt-10 grid grid-cols-1 gap-6 sm:mt-12 md:grid-cols-3">
-          {REGIONS.map((r) => (
-            <StaggerItem key={r.name} className="h-full">
-              <TiltCard className="group h-full" max={4} radius="rounded-card-lg">
-                <article className="relative h-[430px] overflow-hidden rounded-card-lg shadow-luxe transition-shadow duration-500 group-hover:shadow-lift">
-                  <Parallax speed={0.07} overscan className="absolute inset-0">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={r.img}
-                      alt={`Landschaft der Region ${r.name}`}
-                      className="h-full w-full object-cover transition-transform duration-700 ease-out-expo group-hover:scale-[1.05]"
-                    />
-                  </Parallax>
-                  <div
-                    aria-hidden="true"
-                    className="absolute inset-0 bg-gradient-to-t from-espresso/90 via-espresso/30 to-transparent"
-                  />
-                  <div className="glass absolute right-4 top-4 rounded-2xl p-2.5">
-                    <ItalyMap region={r.region} className="w-11" />
-                  </div>
-                  <div className="absolute inset-x-0 bottom-0 p-6">
-                    <p className="text-[10px] uppercase tracking-[0.22em] text-champagne-light">{r.tag}</p>
-                    <h3 className="mt-1.5 font-playfair text-[26px] text-ivory">{r.name}</h3>
-                    <p className="mt-1.5 max-w-[85%] text-[12.5px] leading-snug text-ivory/80">{r.desc}</p>
-                    <div className="mt-5">
-                      <Button href={`/regionen#${r.region}`} variant="glass" size="sm" magnetic={false}>
-                        Mehr entdecken
-                      </Button>
-                    </div>
-                  </div>
-                </article>
-              </TiltCard>
-            </StaggerItem>
-          ))}
-        </Stagger>
+        <Reveal delay={0.12} className="mt-10 sm:mt-12">
+          <RegionExplorer regions={REGIONS} />
+        </Reveal>
         </div>
       </section>
 

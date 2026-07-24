@@ -71,9 +71,9 @@ function FactTile({ fact, index, accent }) {
         />
       )}
 
-      <div className="relative flex h-full items-center gap-4" style={{ transform: "translateZ(24px)" }}>
+      <div className="relative flex h-full items-center gap-0 sm:gap-4" style={{ transform: "translateZ(24px)" }}>
         <span
-          className="ring-hairline inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border bg-white/60 shadow-chip transition-transform duration-400 ease-out-expo group-hover:-translate-y-0.5 group-hover:scale-105 lg:h-11 lg:w-11"
+          className="ring-hairline hidden h-10 w-10 shrink-0 items-center justify-center rounded-full border bg-white/60 shadow-chip transition-transform duration-400 ease-out-expo group-hover:-translate-y-0.5 group-hover:scale-105 sm:inline-flex lg:h-11 lg:w-11"
           style={{ borderColor: `${accent.base}40`, color: accent.deep }}
         >
           {Icon && <Icon className="h-5 w-5" aria-hidden="true" />}
@@ -92,13 +92,6 @@ function FactTile({ fact, index, accent }) {
             style={{ background: `linear-gradient(90deg, ${accent.base}, transparent)` }}
           />
         </div>
-
-        <span
-          className="pointer-events-none absolute right-0 top-0 font-playfair text-xs italic tabular-nums"
-          style={{ color: `${accent.deep}40` }}
-        >
-          {String(index + 1).padStart(2, "0")}
-        </span>
       </div>
     </motion.div>
   );

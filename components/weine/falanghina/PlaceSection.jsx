@@ -3,10 +3,12 @@ import { Reveal, Stagger, StaggerItem } from "@/components/motion/Reveal";
 import Parallax from "@/components/motion/Parallax";
 import ItalyMap from "@/components/ItalyMap";
 
-/* „Die Herkunft" — ein immersives Panorama statt des alten Teal-Bandes: das
-   Regionsfoto füllt die gesamte Karte, ein warmer Espresso-Verlauf (wie im
-   „Passt zu"-Kapitel) trägt Erzählung, Italien-Silhouette und Kennzahlen.
-   Kein Glas-Chip, kein Leerraum — eine kompakte Bühne, mobil wie am Desktop. */
+/* „Die Herkunft" — ein immersives Kartenkapitel: die Sud-Italia-Landkarte
+   liegt vermattet („glassed") hinter einem warmen Espresso-Verlauf — nur die
+   Ahnung einer Karte, kein lesbares Bild. Darüber Erzählung, Italien-Silhouette
+   und Kennzahlen. Eine Bühne für alle Weinseiten, mobil wie am Desktop. */
+
+const MAP_BG = "/img/map-sud-italia.jpg";
 
 export default function PlaceSection({ wine }) {
   const { place } = wine;
@@ -16,18 +18,21 @@ export default function PlaceSection({ wine }) {
   return (
     <section id="herkunft" className="scroll-mt-36 px-4 py-6">
       <div className="grain relative mx-auto max-w-[1280px] overflow-hidden rounded-card-lg bg-espresso shadow-lift">
-        <Parallax speed={0.08} overscan className="absolute inset-0">
+        <Parallax speed={0.06} overscan className="absolute inset-0">
           <img
-            src={place.photo}
-            alt={place.photoAlt}
-            className="h-full w-full object-cover"
+            src={MAP_BG}
+            alt=""
+            aria-hidden="true"
+            className="h-full w-full scale-110 object-cover blur-[8px] saturate-[0.85]"
             loading="lazy"
           />
         </Parallax>
-        {/* warm scrim — photo breathes above, text sits on solid espresso below */}
+        {/* glassed veil + warm scrim — oben schimmert die Karte, unten trägt
+            solides Espresso den Text */}
+        <div aria-hidden="true" className="absolute inset-0 bg-espresso/45" />
         <div
           aria-hidden="true"
-          className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(33,21,17,0.05)_0%,rgba(33,21,17,0.45)_30%,rgba(33,21,17,0.87)_56%,#211511_82%)] lg:bg-[linear-gradient(to_bottom,rgba(33,21,17,0)_0%,rgba(33,21,17,0.35)_40%,rgba(33,21,17,0.85)_66%,#211511_96%)]"
+          className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(33,21,17,0.08)_0%,rgba(33,21,17,0.45)_30%,rgba(33,21,17,0.87)_56%,#211511_82%)] lg:bg-[linear-gradient(to_bottom,rgba(33,21,17,0)_0%,rgba(33,21,17,0.35)_40%,rgba(33,21,17,0.85)_66%,#211511_96%)]"
         />
 
         <div className="relative px-6 pb-9 pt-44 sm:px-10 sm:pb-11 sm:pt-56 lg:px-14 lg:pb-12 lg:pt-[19rem]">

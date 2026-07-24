@@ -198,7 +198,11 @@ function ChapterSlide({ chapter, index, side, start, end, progress, first, enabl
   );
 
   /* scrubbed blur repaints every frame — desktop only, phones keep the
-     spring travel and stay at 60fps */
+     spring travel and stay at 60fps. Wichtig: auf dem Telefon wird der
+     Filter explizit auf "none" gesetzt statt den Style-Key wegzulassen —
+     der erste Render läuft mit dem Desktop-Default (blur 9px), und Motion
+     räumt entfernte Style-Keys nicht auf. Ohne das friert der Text mobil
+     dauerhaft verschwommen ein. */
   return (
     <motion.div
       style={{
@@ -206,7 +210,8 @@ function ChapterSlide({ chapter, index, side, start, end, progress, first, enabl
         opacity,
         rotateY,
         transformPerspective: 1200,
-        ...(enableBlur ? { filter, willChange: "transform, filter" } : { willChange: "transform" }),
+        filter: enableBlur ? filter : "none",
+        willChange: enableBlur ? "transform, filter" : "transform",
       }}
       className={[
         "pointer-events-none absolute inset-x-0 bottom-2 z-20 flex justify-center px-2",

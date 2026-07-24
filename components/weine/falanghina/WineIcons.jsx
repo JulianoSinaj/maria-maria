@@ -115,13 +115,15 @@ export const WineGlass = (p) => (
   </svg>
 );
 
-/* Italien-Stiefel mit Herkunfts-Pin — Herkunft */
+/* Italien-Stiefel mit Herkunfts-Pin — Herkunft. Silhouette aus derselben
+   realen Geografie wie components/ItalyMap.jsx, auf 48x48 skaliert. */
 export const ItalyBoot = (p) => (
   <svg viewBox="0 0 48 48" {...F} {...p}>
-    <path d="M20 6c2.6 1.6 4.8 1.4 6.4 3.4 1.8 2.2 1 5.6 2.6 8.2 1.4 2.4 4 4 5.4 6.8 1.2 2.6 4.4 3.6 5 6.2.6 2.8-1.6 4.6-3.8 4-2.4-.6-3-3.4-5.2-4.6-2.6-1.6-5.4-2.6-7-5.2-1.8-3-1.4-6.8-3.4-9.6C18.4 12.6 17 10 17.6 8c.4-1.4 1.4-2 2.4-2Z" />
-    <path d="M13.6 34.6c2 .4 3.6 1.6 4.4 3.4.7 1.7-.2 3.6-2 4-2.2.4-3.4-1.2-5.2-1.6-1.4-.4-3-.2-3.6-1.6-.5-1.3.4-2.6 1.6-3.2 1.6-.8 3.2-1.3 4.8-1Z" />
-    <circle cx="30" cy="14.5" r="3.4" strokeOpacity="0.8" />
-    <path d="M30 21.5v-3.6" strokeOpacity="0.6" />
+    <path d="M10.4 16.9 L9 9.6 L17.2 6.9 L22.9 5.1 L26.9 7.2 L27 10.3 L23.7 11.5 L23.1 14.8 L23.9 16 L26.7 17.8 L28.2 21.8 L30.3 23.4 L33 23.7 L33.5 24.3 L32.8 24.9 L35.3 26.5 L38.2 28.2 L39.7 30 L39.3 31.3 L38.3 30.4 L36.3 29.1 L34.3 31.6 L36 34 L34.5 35.2 L34.5 36.2 L33.1 38 L32 37.3 L32.4 35.4 L33.4 34.3 L33.1 32.9 L32 30.4 L31.1 30.5 L30.3 29.3 L28.6 28.5 L28.4 27.6 L26.5 26.3 L22.9 24.4 L19.9 22 L17.8 17.9 L16.6 15.9 L14.2 14.8 Z" />
+    <path d="M31.6 37.2 L30.1 39.9 L30.3 42.9 L26.1 40.8 L23.1 38.9 L25.6 37.5 L30.5 37.4 Z" strokeOpacity="0.75" />
+    <path d="M14.8 26.1 L16.6 28.8 L15.9 33.1 L14.4 34.5 L12.8 34.2 L12.7 29.5 L12.1 27.2 Z" strokeOpacity="0.75" />
+    <circle cx="33.5" cy="12.5" r="3.2" strokeOpacity="0.8" />
+    <path d="M33.5 15.7v3.3" strokeOpacity="0.6" />
   </svg>
 );
 

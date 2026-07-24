@@ -140,7 +140,7 @@ export default function HomeContent() {
                 {[
                   [`${WINES.length}`, "Boutique-Weine"],
                   [`${REGION_COUNT}`, "Regionen Italiens"],
-                  ["250", "Jahre Tradition"],
+                  ["2019", "seit der Gründung"],
                 ].map(([num, label], i) => (
                   <div key={label} className={`flex-1 ${i > 0 ? "border-l border-charcoal/10 pl-6" : ""}`}>
                     <dt className="sr-only">{label}</dt>

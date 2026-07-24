@@ -33,15 +33,11 @@ export const IL_BIANCO = {
   ],
 
   images: {
-    /* Noch kein freigestellter Packshot geliefert — solange null, zeichnet
-       die Seite die illustrierte Flasche. Sobald front.jpg vorliegt, hier
-       auf "/img/wines/il-bianco/front.jpg" setzen. */
-    front: null,
-    back: null,
-    /* Kellerei-Foto der Flasche (orange Kapsel, Korkenzieher, Tuffstein).
-       Sobald es unter public/img/wines/il-bianco-greco-cuvee/hero.jpg liegt,
-       hier eintragen — dann trägt das Foto den kompletten Kino-Hero. */
-    hero: null,
+    /* Studio-Packshot & Rückenetikett (aus Schede tecniche e foto bottiglie) */
+    front: "/img/wines/il-bianco-greco-cuvee/front.jpg",
+    back: "/img/wines/il-bianco-greco-cuvee/back.jpg",
+    /* Kellerei-Foto der Flasche — trägt den kompletten Kino-Hero */
+    hero: "/img/wines/il-bianco-greco-cuvee/hero.jpg",
   },
 
   /* ---- Schnellfakten ---- */
@@ -86,6 +82,14 @@ export const IL_BIANCO = {
       title: "Strohgelb und klar",
       text: "Ein heller, ruhiger Weißwein — strohgelb im Glas, ohne jede Schwere.",
       tone: "#E9DEA0",
+      artwork: {
+        src: "/img/wines/il-bianco-greco-cuvee/front.jpg",
+        alt: "Flasche Il Bianco — Campania Bianco IGP von Maria Maria — Frontansicht des Etiketts",
+        medium: "Die Flasche",
+        title: "Il Bianco — Campania Bianco IGP",
+        artist: "Maria Maria",
+        focus: "50% 50%",
+      },
     },
     {
       key: "duft",
@@ -94,6 +98,14 @@ export const IL_BIANCO = {
       title: "Sehr intensiv und angenehm",
       text: "Das Datenblatt nennt ihn schlicht „profumo molto intenso e gradevole“: ein weit geöffnetes, einnehmendes Bouquet, das den ganzen Raum füllt.",
       tone: "#E4E1BC",
+      artwork: {
+        src: "/img/wines/il-bianco-greco-cuvee/back.jpg",
+        alt: "Rückenetikett der Flasche Il Bianco — Campania Bianco IGP von Maria Maria",
+        medium: "Das Rückenetikett",
+        title: "Il Bianco — Campania Bianco IGP",
+        artist: "Maria Maria",
+        focus: "50% 50%",
+      },
     },
     {
       key: "geschmack",
@@ -102,6 +114,14 @@ export const IL_BIANCO = {
       title: "Zart und verführerisch",
       text: "Am Gaumen delikat und zurückhaltend — ein Wein, der nicht drängt, sondern einlädt. Genau das macht ihn so gefährlich trinkbar.",
       tone: "#D6E3D2",
+      artwork: {
+        src: "/img/wines/il-bianco-greco-cuvee/hero.jpg",
+        alt: "Flasche Il Bianco — Campania Bianco IGP von Maria Maria in der Kellerei",
+        medium: "In der Kellerei",
+        title: "Il Bianco — Campania Bianco IGP",
+        artist: "Maria Maria",
+        focus: "50% 50%",
+      },
     },
   ],
 

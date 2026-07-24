@@ -37,10 +37,10 @@ export const LUGANA = {
   ],
 
   images: {
-    /* Freigestellter Studio-Packshot (noch offen) */
-    front: null,
-    /* Rückenetikett (noch offen) */
-    back: null,
+    /* Studio-Packshot (aus Schede tecniche e foto bottiglie) */
+    front: "/img/wines/lugana/front.jpg",
+    /* Rückenetikett (aus Schede tecniche e foto bottiglie) */
+    back: "/img/wines/lugana/back.jpg",
     /* Kellerei-Stimmungsfoto — trägt den kompletten Kino-Hero */
     hero: "/img/wines/lugana/hero.jpg",
   },
@@ -87,6 +87,14 @@ export const LUGANA = {
       title: "Kräftiges, leuchtendes Strohgelb",
       text: "Ein sattes Gelb mit klarem Glanz – der erste Eindruck im Glas verspricht Fülle statt Leichtigkeit.",
       tone: "#E9D98C",
+      artwork: {
+        src: "/img/wines/lugana/front.jpg",
+        alt: "Flasche Lugana DOC von Maria Maria — Frontansicht des Etiketts",
+        medium: "Die Flasche",
+        title: "Lugana DOC",
+        artist: "Maria Maria",
+        focus: "50% 50%",
+      },
     },
     {
       key: "duft",
@@ -95,6 +103,14 @@ export const LUGANA = {
       title: "Maiglöckchen, Weißdorn und reife Frucht",
       text: "Intensiv und komplex: florale Noten von Maiglöckchen und Weißdorn, gefolgt von reifer Frucht, feinem Gebäck und einem zarten Röstton.",
       tone: "#EFE3C4",
+      artwork: {
+        src: "/img/wines/lugana/back.jpg",
+        alt: "Rückenetikett der Flasche Lugana DOC von Maria Maria",
+        medium: "Das Rückenetikett",
+        title: "Lugana DOC",
+        artist: "Maria Maria",
+        focus: "50% 50%",
+      },
     },
     {
       key: "geschmack",
@@ -103,6 +119,14 @@ export const LUGANA = {
       title: "Voll, warm, weich und umhüllend",
       text: "Am Gaumen breit und samtig, mit guter Persistenz und harmonischen aromatischen Anklängen, die lange nachhallen.",
       tone: "#DCE5D4",
+      artwork: {
+        src: "/img/wines/lugana/hero.jpg",
+        alt: "Flasche Lugana DOC von Maria Maria in der Kellerei",
+        medium: "In der Kellerei",
+        title: "Lugana DOC",
+        artist: "Maria Maria",
+        focus: "50% 50%",
+      },
     },
   ],
 

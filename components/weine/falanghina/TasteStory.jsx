@@ -503,7 +503,7 @@ export default function TasteStory({ wine }) {
                       className="absolute -bottom-8 -left-3 z-10 hidden rounded-xl border border-charcoal/10 bg-white/85 px-4 py-2.5 shadow-chip backdrop-blur-md sm:-left-6 sm:block"
                     >
                       <span className="block text-[9px] font-semibold uppercase tracking-[0.22em] text-charcoal/50">
-                        Öl auf Leinwand
+                        {activeArt.medium ?? "Öl auf Leinwand"}
                       </span>
                       <span className="block max-w-[52vw] font-playfair text-[13px] italic leading-snug text-charcoal sm:max-w-none">
                         „{activeArt.title}“

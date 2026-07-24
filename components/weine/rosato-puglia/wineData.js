@@ -33,10 +33,9 @@ export const ROSATO_NEGROAMARO = {
   ],
 
   images: {
-    /* Packshot & Rückenetikett liegen noch nicht vor — bleiben null, bis die
-       Dateien unter public/img/wines/rosato-puglia/ liegen. */
-    front: null,
-    back: null,
+    /* Studio-Packshot & Rückenetikett (aus Schede tecniche e foto bottiglie) */
+    front: "/img/wines/rosato-puglia/front.jpg",
+    back: "/img/wines/rosato-puglia/back.jpg",
     /* Kellerei-Stimmungsfoto mit der Flasche — trägt den kompletten Kino-Hero */
     hero: "/img/wines/rosato-puglia/hero.jpg",
   },
@@ -82,6 +81,14 @@ export const ROSATO_NEGROAMARO = {
       title: "Rosa Pfirsichfleisch",
       text: "Ein zartes, leuchtendes Rosé — das Ergebnis von nur vier Stunden auf der Schale. Hell im Glas, warm im Licht.",
       tone: "#F4C9B4",
+      artwork: {
+        src: "/img/wines/rosato-puglia/front.jpg",
+        alt: "Flasche Rosato Negroamaro IGP Salento von Maria Maria — Frontansicht des Etiketts",
+        medium: "Die Flasche",
+        title: "Rosato Negroamaro IGP Salento",
+        artist: "Maria Maria",
+        focus: "50% 50%",
+      },
     },
     {
       key: "duft",
@@ -90,6 +97,14 @@ export const ROSATO_NEGROAMARO = {
       title: "Delikat, anhaltend, blumig",
       text: "Feine florale Noten, die nicht laut auftreten, aber lange bleiben. Die kontrollierte Gärtemperatur bewahrt jedes Aroma.",
       tone: "#E8A793",
+      artwork: {
+        src: "/img/wines/rosato-puglia/back.jpg",
+        alt: "Rückenetikett der Flasche Rosato Negroamaro IGP Salento von Maria Maria",
+        medium: "Das Rückenetikett",
+        title: "Rosato Negroamaro IGP Salento",
+        artist: "Maria Maria",
+        focus: "50% 50%",
+      },
     },
     {
       key: "geschmack",
@@ -98,6 +113,14 @@ export const ROSATO_NEGROAMARO = {
       title: "Frisch, ausgewogen, elegant fruchtig",
       text: "Am Gaumen frisch und in sich stimmig — ein Rosé, dessen Frucht elegant bleibt statt süß zu werden.",
       tone: "#D98A76",
+      artwork: {
+        src: "/img/wines/rosato-puglia/hero.jpg",
+        alt: "Flasche Rosato Negroamaro IGP Salento von Maria Maria in der Kellerei",
+        medium: "In der Kellerei",
+        title: "Rosato Negroamaro IGP Salento",
+        artist: "Maria Maria",
+        focus: "50% 50%",
+      },
     },
   ],
 

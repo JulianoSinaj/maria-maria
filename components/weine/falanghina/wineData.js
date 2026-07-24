@@ -88,6 +88,14 @@ export const FALANGHINA = {
       title: "Hell, klar und leuchtend",
       text: "Strohgelb mit grünlichen Reflexen – der erste Eindruck im Glas ist pure Frische.",
       tone: "#E8DC9A",
+      artwork: {
+        src: "/img/wines/falanghina/front.jpg",
+        alt: "Flasche Beneventano Falanghina IGP von Maria Maria — Frontansicht des Etiketts",
+        medium: "Die Flasche",
+        title: "Beneventano Falanghina IGP",
+        artist: "Maria Maria",
+        focus: "50% 50%",
+      },
     },
     {
       key: "duft",
@@ -97,6 +105,14 @@ export const FALANGHINA = {
       /* [BESTÄTIGEN] Aromatik ist rebsortentypisch formuliert, nicht aus dem Datenblatt */
       text: "Ein feines, helles Bouquet: Blüten, gelbe Frucht und mediterrane Leichtigkeit steigen aus dem Glas.",
       tone: "#D9E4C0",
+      artwork: {
+        src: "/img/wines/falanghina/back.jpg",
+        alt: "Rückenetikett der Flasche Beneventano Falanghina IGP von Maria Maria",
+        medium: "Das Rückenetikett",
+        title: "Beneventano Falanghina IGP",
+        artist: "Maria Maria",
+        focus: "50% 50%",
+      },
     },
     {
       key: "geschmack",
@@ -105,6 +121,14 @@ export const FALANGHINA = {
       title: "Charaktervoll, weich und harmonisch",
       text: "Sehr weich und zugleich harmonisch und anhaltend – ein charakterstarker Weißwein, der angenehm zugänglich bleibt.",
       tone: "#CBE3DA",
+      artwork: {
+        src: "/img/wines/falanghina/hero.jpg",
+        alt: "Flasche Beneventano Falanghina IGP von Maria Maria in der Kellerei",
+        medium: "In der Kellerei",
+        title: "Beneventano Falanghina IGP",
+        artist: "Maria Maria",
+        focus: "50% 50%",
+      },
     },
   ],
 

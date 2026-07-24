@@ -35,10 +35,10 @@ export const GRECO_DI_TUFO = {
   ],
 
   images: {
-    /* Freigestellter Studio-Packshot (noch offen) */
-    front: null,
-    /* Rückenetikett (noch offen) */
-    back: null,
+    /* Studio-Packshot (aus Schede tecniche e foto bottiglie) */
+    front: "/img/wines/greco-di-tufo/front.jpg",
+    /* Rückenetikett (aus Schede tecniche e foto bottiglie) */
+    back: "/img/wines/greco-di-tufo/back.jpg",
     /* Kellerei-Stimmungsfoto — trägt den kompletten Kino-Hero */
     hero: "/img/wines/greco-di-tufo/hero.jpg",
   },
@@ -85,6 +85,14 @@ export const GRECO_DI_TUFO = {
       title: "Strohgelb mit goldenen Reflexen",
       text: "Ein warmes, leuchtendes Gelb – der erste Eindruck im Glas verspricht Tiefe statt Leichtgewicht.",
       tone: "#E4CE84",
+      artwork: {
+        src: "/img/wines/greco-di-tufo/front.jpg",
+        alt: "Flasche Greco di Tufo D.O.C.G. von Maria Maria — Frontansicht des Etiketts",
+        medium: "Die Flasche",
+        title: "Greco di Tufo D.O.C.G.",
+        artist: "Maria Maria",
+        focus: "50% 50%",
+      },
     },
     {
       key: "duft",
@@ -95,6 +103,14 @@ export const GRECO_DI_TUFO = {
          nennt nur „intensiv und angenehm“ */
       text: "Ein ausdrucksstarkes Bouquet: gelbe Steinfrucht, Zitrusschale und ein feiner mineralischer Zug aus dem Tuffboden.",
       tone: "#E8DCC2",
+      artwork: {
+        src: "/img/wines/greco-di-tufo/back.jpg",
+        alt: "Rückenetikett der Flasche Greco di Tufo D.O.C.G. von Maria Maria",
+        medium: "Das Rückenetikett",
+        title: "Greco di Tufo D.O.C.G.",
+        artist: "Maria Maria",
+        focus: "50% 50%",
+      },
     },
     {
       key: "geschmack",
@@ -103,6 +119,14 @@ export const GRECO_DI_TUFO = {
       title: "Frisch, zart und verführerisch",
       text: "Am Gaumen frisch und delikat zugleich – ein Weißwein mit Struktur, der leise verführt statt laut zu sein.",
       tone: "#D8E2CE",
+      artwork: {
+        src: "/img/wines/greco-di-tufo/hero.jpg",
+        alt: "Flasche Greco di Tufo D.O.C.G. von Maria Maria in der Kellerei",
+        medium: "In der Kellerei",
+        title: "Greco di Tufo D.O.C.G.",
+        artist: "Maria Maria",
+        focus: "50% 50%",
+      },
     },
   ],
 

@@ -33,10 +33,9 @@ export const PRIMITIVO_155 = {
   ],
 
   images: {
-    /* Packshot & Rückenetikett liegen noch nicht vor — bleiben null, bis die
-       Dateien unter public/img/wines/primitivo-15-5/ liegen. */
-    front: null,
-    back: null,
+    /* Studio-Packshot & Rückenetikett (aus Schede tecniche e foto bottiglie) */
+    front: "/img/wines/primitivo-15-5/front.jpg",
+    back: "/img/wines/primitivo-15-5/back.jpg",
     /* Kellerei-Stimmungsfoto mit der Flasche — trägt den kompletten Kino-Hero */
     hero: "/img/wines/primitivo-15-5/hero.jpg",
   },
@@ -83,6 +82,14 @@ export const PRIMITIVO_155 = {
       title: "Rubinrot mit intensiven violetten Reflexen",
       text: "Ein tiefes, sattes Rubinrot, dessen violette Reflexe die Jugend und Konzentration dieses Weines schon im Glas ankündigen.",
       tone: "#6B0F1A",
+      artwork: {
+        src: "/img/wines/primitivo-15-5/front.jpg",
+        alt: "Flasche Primitivo di Manduria DOP 15,50 von Maria Maria — Frontansicht des Etiketts",
+        medium: "Die Flasche",
+        title: "Primitivo di Manduria DOP 15,50",
+        artist: "Maria Maria",
+        focus: "50% 50%",
+      },
     },
     {
       key: "duft",
@@ -91,6 +98,14 @@ export const PRIMITIVO_155 = {
       title: "Erdbeere und Waldbeeren, fein und zart",
       text: "Fein und delikat in der Nase, mit klaren Anklängen von Erdbeere und Waldfrüchten — überraschend zurückhaltend für einen Wein dieser Kraft.",
       tone: "#8C2230",
+      artwork: {
+        src: "/img/wines/primitivo-15-5/back.jpg",
+        alt: "Rückenetikett der Flasche Primitivo di Manduria DOP 15,50 von Maria Maria",
+        medium: "Das Rückenetikett",
+        title: "Primitivo di Manduria DOP 15,50",
+        artist: "Maria Maria",
+        focus: "50% 50%",
+      },
     },
     {
       key: "geschmack",
@@ -99,6 +114,14 @@ export const PRIMITIVO_155 = {
       title: "Körperreich, warm und komplex",
       text: "Ein körperreicher Wein von bemerkenswerter gusto-olfaktorischer Dichte: entschieden, trocken, warm und komplex — und über den ganzen Nachhall hinweg intensiv.",
       tone: "#A8452F",
+      artwork: {
+        src: "/img/wines/primitivo-15-5/hero.jpg",
+        alt: "Flasche Primitivo di Manduria DOP 15,50 von Maria Maria in der Kellerei",
+        medium: "In der Kellerei",
+        title: "Primitivo di Manduria DOP 15,50",
+        artist: "Maria Maria",
+        focus: "50% 50%",
+      },
     },
   ],
 

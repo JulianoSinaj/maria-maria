@@ -32,10 +32,9 @@ export const IL_ROSSO = {
   ],
 
   images: {
-    /* Packshot & Rückenetikett liegen noch nicht vor — bleiben null, bis die
-       Dateien unter public/img/wines/il-rosso-aglianico/ liegen. */
-    front: null,
-    back: null,
+    /* Studio-Packshot & Rückenetikett (aus Schede tecniche e foto bottiglie) */
+    front: "/img/wines/il-rosso-aglianico/front.jpg",
+    back: "/img/wines/il-rosso-aglianico/back.jpg",
     /* Kellerei-Stimmungsfoto mit der Flasche — trägt den kompletten Kino-Hero */
     hero: "/img/wines/il-rosso-aglianico/hero.jpg",
   },
@@ -83,6 +82,14 @@ export const IL_ROSSO = {
       /* [BESTÄTIGEN] Farbbeschreibung ist rebsortentypisch, nicht im Datenblatt */
       text: "Tiefes Rubinrot mit granatfarbenem Rand — ein Rotwein, der Konzentration schon im Glas zeigt.",
       tone: "#6B0F1A",
+      artwork: {
+        src: "/img/wines/il-rosso-aglianico/front.jpg",
+        alt: "Flasche Il Rosso — Campania Rosso IGP von Maria Maria — Frontansicht des Etiketts",
+        medium: "Die Flasche",
+        title: "Il Rosso — Campania Rosso IGP",
+        artist: "Maria Maria",
+        focus: "50% 50%",
+      },
     },
     {
       key: "duft",
@@ -91,6 +98,14 @@ export const IL_ROSSO = {
       title: "Amarena, Brombeere und getrocknete Pflaume",
       text: "Ein einnehmender Wein mit ausgeprägten Noten von Sauerkirsche, Brombeere und getrockneter Pflaume, begleitet von einem Hauch süßer Gewürze.",
       tone: "#8C2230",
+      artwork: {
+        src: "/img/wines/il-rosso-aglianico/back.jpg",
+        alt: "Rückenetikett der Flasche Il Rosso — Campania Rosso IGP von Maria Maria",
+        medium: "Das Rückenetikett",
+        title: "Il Rosso — Campania Rosso IGP",
+        artist: "Maria Maria",
+        focus: "50% 50%",
+      },
     },
     {
       key: "geschmack",
@@ -99,6 +114,14 @@ export const IL_ROSSO = {
       title: "Würzig, warm und fruchtig im Abgang",
       text: "Die süßen Gewürze aus dem französischen Holz tragen den Wein, bevor er mit einer angenehm konzentrierten Fruchtnote ausklingt.",
       tone: "#A8452F",
+      artwork: {
+        src: "/img/wines/il-rosso-aglianico/hero.jpg",
+        alt: "Flasche Il Rosso — Campania Rosso IGP von Maria Maria in der Kellerei",
+        medium: "In der Kellerei",
+        title: "Il Rosso — Campania Rosso IGP",
+        artist: "Maria Maria",
+        focus: "50% 50%",
+      },
     },
   ],
 

@@ -33,10 +33,9 @@ export const PRIMITIVO_SALENTO = {
   ],
 
   images: {
-    /* Packshot & Rückenetikett liegen noch nicht vor — bleiben null, bis die
-       Dateien unter public/img/wines/primitivo-salento/ liegen. */
-    front: null,
-    back: null,
+    /* Studio-Packshot & Rückenetikett (aus Schede tecniche e foto bottiglie) */
+    front: "/img/wines/primitivo-salento/front.jpg",
+    back: "/img/wines/primitivo-salento/back.jpg",
     /* Kellerei-Stimmungsfoto mit der Flasche — trägt den kompletten Kino-Hero */
     hero: "/img/wines/primitivo-salento/hero.jpg",
   },
@@ -83,6 +82,14 @@ export const PRIMITIVO_SALENTO = {
       title: "Sehr intensives Rubinrot",
       text: "Ein dichtes, sehr intensives Rubinrot — die Farbe eines Weins, der lange auf den Schalen gelegen hat.",
       tone: "#6B0F1A",
+      artwork: {
+        src: "/img/wines/primitivo-salento/front.jpg",
+        alt: "Flasche Primitivo IGP Salento von Maria Maria — Frontansicht des Etiketts",
+        medium: "Die Flasche",
+        title: "Primitivo IGP Salento",
+        artist: "Maria Maria",
+        focus: "50% 50%",
+      },
     },
     {
       key: "duft",
@@ -91,6 +98,14 @@ export const PRIMITIVO_SALENTO = {
       title: "Pflaume und Trockenfrüchte",
       text: "Ein komplexes Bukett mit deutlichen Noten von Pflaume und Trockenfrüchten — die reife Seite des Salento.",
       tone: "#8C2230",
+      artwork: {
+        src: "/img/wines/primitivo-salento/back.jpg",
+        alt: "Rückenetikett der Flasche Primitivo IGP Salento von Maria Maria",
+        medium: "Das Rückenetikett",
+        title: "Primitivo IGP Salento",
+        artist: "Maria Maria",
+        focus: "50% 50%",
+      },
     },
     {
       key: "geschmack",
@@ -99,6 +114,14 @@ export const PRIMITIVO_SALENTO = {
       title: "Intensiv, anhaltend und zugänglich",
       text: "Intensiv und lang anhaltend im Geschmack, dabei angenehm zugänglich und von unkomplizierter Trinkfreude.",
       tone: "#A8452F",
+      artwork: {
+        src: "/img/wines/primitivo-salento/hero.jpg",
+        alt: "Flasche Primitivo IGP Salento von Maria Maria in der Kellerei",
+        medium: "In der Kellerei",
+        title: "Primitivo IGP Salento",
+        artist: "Maria Maria",
+        focus: "50% 50%",
+      },
     },
   ],
 

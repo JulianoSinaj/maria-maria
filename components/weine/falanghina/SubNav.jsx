@@ -30,7 +30,7 @@ export default function SubNav({ wine }) {
   }, [wine]);
 
   return (
-    <div className="sticky top-[84px] z-30 px-4">
+    <div className="sticky top-[calc(84px+env(safe-area-inset-top))] z-30 px-4">
       <motion.nav
         aria-label="Abschnitte dieser Seite"
         initial={reduced ? false : { opacity: 0, y: -10 }}
@@ -44,7 +44,8 @@ export default function SubNav({ wine }) {
         </span>
         <span className="hidden h-5 w-px bg-stone/80 md:block" aria-hidden="true" />
 
-        <ul className="no-scrollbar flex items-center gap-0.5 overflow-x-auto px-1">
+        {/* the fade hints that more chapters wait beyond the edge (phones) */}
+        <ul className="no-scrollbar flex items-center gap-0.5 overflow-x-auto px-1 [mask-image:linear-gradient(to_right,black,black_calc(100%-28px),transparent)] md:[mask-image:none]">
           {wine.subnav.map((link) => {
             const isActive = activeId === link.href.slice(1);
             return (

@@ -94,7 +94,7 @@ export default function HomeContent() {
         {/* settle into the page colour */}
         <div aria-hidden="true" className="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-b from-transparent to-ivory" />
 
-        <div className="relative mx-auto grid min-h-[100svh] max-w-content grid-cols-1 items-center gap-16 px-6 pb-28 pt-32 lg:grid-cols-[1.05fr_0.95fr] lg:px-10 lg:pt-36">
+        <div className="relative mx-auto grid min-h-[100svh] max-w-content grid-cols-1 items-center gap-12 px-6 pb-24 pt-28 sm:gap-16 sm:pb-28 sm:pt-32 lg:grid-cols-[1.05fr_0.95fr] lg:px-10 lg:pt-36">
           <div>
             <Reveal y={18} delay={0.05}>
               <Eyebrow>Italienische Boutique-Weine</Eyebrow>
@@ -115,17 +115,17 @@ export default function HomeContent() {
               </p>
             </Reveal>
             <Reveal delay={0.62} y={16}>
-              <div className="mt-9 flex flex-wrap items-center gap-4">
-                <Button href="/weine" size="lg">
+              <div className="mt-8 flex flex-col items-stretch gap-3 sm:mt-9 sm:flex-row sm:items-center sm:gap-4">
+                <Button href="/weine" size="lg" className="w-full sm:w-auto">
                   Weine entdecken
                 </Button>
-                <Button href="/shop" variant="outline" size="lg">
+                <Button href="/shop" variant="outline" size="lg" className="w-full sm:w-auto">
                   Zum Shop
                 </Button>
               </div>
             </Reveal>
             <Reveal delay={0.78} y={12}>
-              <dl className="mt-14 flex max-w-md items-center">
+              <dl className="mt-10 flex max-w-md items-center sm:mt-14">
                 {[
                   [`${WINES.length}`, "Boutique-Weine"],
                   [`${REGION_COUNT}`, "Regionen Italiens"],
@@ -160,14 +160,14 @@ export default function HomeContent() {
       <section className="relative overflow-hidden">
         <Atmosphere variant="warm" />
         <GhostWord className="right-[-2vw] top-10 text-[12vw]">Momenti</GhostWord>
-        <div className="relative mx-auto max-w-content px-6 py-24 lg:px-10">
+        <div className="relative mx-auto max-w-content px-6 py-16 sm:py-24 lg:px-10">
         <SectionTitle
           eyebrow="Unsere Philosophie"
           description="Drei Überzeugungen, die jede Flasche prägen – vom Weinberg bis ins Glas."
         >
           Der Maria-Moment
         </SectionTitle>
-        <Stagger className="mt-14 grid grid-cols-1 gap-6 md:grid-cols-3">
+        <Stagger className="mt-10 grid grid-cols-1 gap-6 sm:mt-14 md:grid-cols-3">
           {MOMENT.map((m) => (
             <StaggerItem key={m.title} className="h-full">
               <TiltCard className="group h-full" max={5} radius="rounded-card-lg">
@@ -184,7 +184,7 @@ export default function HomeContent() {
       </section>
 
       {/* ============ UNSERE WEINE (rail) ============ */}
-      <section className="relative overflow-hidden border-y border-stone/40 bg-gradient-to-b from-cream via-champagne-light/25 to-ivory py-20 lg:py-24">
+      <section className="relative overflow-hidden border-y border-stone/40 bg-gradient-to-b from-cream via-champagne-light/25 to-ivory py-16 sm:py-20 lg:py-24">
         <Vines className="inset-x-0 bottom-0 h-72 w-full" />
         <Aura tint="bordeaux" className="-right-56 -top-44 h-[34rem] w-[34rem]" />
         <Aura tint="gold" drift={2} className="-left-48 bottom-0 h-[30rem] w-[30rem]" />
@@ -212,7 +212,7 @@ export default function HomeContent() {
       <section className="relative overflow-hidden">
         <Atmosphere variant="olive" />
         <GhostWord className="right-[-3vw] top-14 text-[13vw]">Italia</GhostWord>
-        <div className="relative mx-auto max-w-content px-6 py-24 lg:px-10">
+        <div className="relative mx-auto max-w-content px-6 py-16 sm:py-24 lg:px-10">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <SectionTitle
             align="left"
@@ -227,7 +227,7 @@ export default function HomeContent() {
             </Button>
           </Reveal>
         </div>
-        <Stagger className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-3">
+        <Stagger className="mt-10 grid grid-cols-1 gap-6 sm:mt-12 md:grid-cols-3">
           {REGIONS.map((r) => (
             <StaggerItem key={r.name} className="h-full">
               <TiltCard className="group h-full" max={4} radius="rounded-card-lg">
@@ -269,7 +269,7 @@ export default function HomeContent() {
       <section className="px-4 py-10 lg:px-8">
         <div className="grain relative overflow-hidden rounded-card-lg">
           <ShaderGradient palette="wine" />
-          <div className="relative mx-auto max-w-3xl px-6 py-24 text-center lg:py-28">
+          <div className="relative mx-auto max-w-3xl px-6 py-16 text-center sm:py-24 lg:py-28">
             <Reveal>
               <Eyebrow light className="justify-center">
                 Der offizielle Shop
@@ -282,11 +282,11 @@ export default function HomeContent() {
               </p>
             </Reveal>
             <Reveal delay={0.18}>
-              <div className="mt-9 flex flex-wrap items-center justify-center gap-4">
-                <Button href="/shop" variant="light" size="lg">
+              <div className="mx-auto mt-8 flex max-w-xs flex-col items-stretch gap-3 sm:mt-9 sm:max-w-none sm:flex-row sm:items-center sm:justify-center sm:gap-4">
+                <Button href="/shop" variant="light" size="lg" className="w-full sm:w-auto">
                   Zum Shop
                 </Button>
-                <Button href="/kontakt" variant="glass" size="lg">
+                <Button href="/kontakt" variant="glass" size="lg" className="w-full sm:w-auto">
                   Kontakt aufnehmen
                 </Button>
               </div>
@@ -299,7 +299,7 @@ export default function HomeContent() {
       <section className="relative overflow-hidden">
         <Atmosphere variant="dusk" />
         <GhostWord className="left-[-2vw] bottom-6 text-[12vw]">Storie</GhostWord>
-        <div className="relative mx-auto max-w-content px-6 py-24 lg:px-10">
+        <div className="relative mx-auto max-w-content px-6 py-16 sm:py-24 lg:px-10">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <SectionTitle
             align="left"
@@ -314,7 +314,7 @@ export default function HomeContent() {
             </Button>
           </Reveal>
         </div>
-        <Stagger className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-3">
+        <Stagger className="mt-10 grid grid-cols-1 gap-6 sm:mt-12 md:grid-cols-3">
           {MAGAZINE.map((a) => (
             <StaggerItem key={a.title} className="h-full">
               <Link href="/magazin" className="group block h-full">

@@ -14,7 +14,7 @@ export default function WineFaq({ wine }) {
   const uid = useId();
 
   return (
-    <section id="fragen" className="scroll-mt-36 py-24">
+    <section id="fragen" className="scroll-mt-36 py-16 sm:py-24">
       <div className="mx-auto max-w-3xl px-6">
         <SectionTitle eyebrow="Häufige Fragen">
           Gut zu <span className="italic text-acqua-deep">wissen.</span>
@@ -73,7 +73,7 @@ export default function WineFaq({ wine }) {
                         }}
                         className="overflow-hidden"
                       >
-                        <p className="pb-6 pr-12 text-[13.5px] leading-relaxed text-charcoal/70">
+                        <p className="pb-6 pr-2 text-[13.5px] leading-relaxed text-charcoal/70 sm:pr-12">
                           {item.a}
                         </p>
                       </motion.div>

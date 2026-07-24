@@ -126,9 +126,14 @@ export default function ShopExplorer() {
       </div>
 
       {/* ---- sort + live count ---- */}
-      <div className="mt-6 flex flex-wrap items-end justify-between gap-x-10 gap-y-5">
-        <div role="group" aria-label="Sortiment sortieren" className="flex flex-wrap items-center gap-2">
-          <span className="mr-1 text-[10.5px] uppercase tracking-[0.18em] text-charcoal/45">Sortieren</span>
+      <div className="mt-6 flex flex-wrap items-end justify-between gap-x-10 gap-y-4">
+        {/* on phones the chips glide as one edge-to-edge strip instead of wrapping */}
+        <div
+          role="group"
+          aria-label="Sortiment sortieren"
+          className="no-scrollbar -mx-6 flex items-center gap-2 overflow-x-auto px-6 sm:mx-0 sm:flex-wrap sm:px-0"
+        >
+          <span className="mr-1 shrink-0 text-[10.5px] uppercase tracking-[0.18em] text-charcoal/45">Sortieren</span>
           {SORTS.map((s) => {
             const active = s.id === sort;
             return (
@@ -137,7 +142,7 @@ export default function ShopExplorer() {
                 type="button"
                 onClick={() => setSort(s.id)}
                 aria-pressed={active}
-                className={`h-11 select-none rounded-full border px-4 text-[10.5px] font-semibold uppercase tracking-[0.16em] transition-colors duration-300 ${
+                className={`h-11 shrink-0 select-none whitespace-nowrap rounded-full border px-4 text-[10.5px] font-semibold uppercase tracking-[0.16em] transition-colors duration-300 ${
                   active
                     ? "border-bordeaux bg-bordeaux text-ivory shadow-chip"
                     : "border-stone/70 bg-white/50 text-charcoal/60 hover:border-champagne/70 hover:text-bordeaux"
@@ -149,7 +154,7 @@ export default function ShopExplorer() {
           })}
         </div>
 
-        <div className="text-right">
+        <div className="ml-auto text-right">
           <p aria-live="polite" className="text-[11px] uppercase tracking-[0.18em] text-charcoal/55">
             <span className="mr-1.5 font-playfair text-[24px] normal-case tabular-nums tracking-normal text-bordeaux">
               {wines.length}

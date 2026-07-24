@@ -5,9 +5,10 @@ import { Stagger, StaggerItem, Reveal } from "@/components/motion/Reveal";
 import { Eyebrow, GoldRule } from "@/components/Deco";
 import { WINE_ICON } from "./WineIcons";
 
-/* Schnellfakten unter dem Hero — redaktionelles "Auf einen Blick"-Panel:
-   gerahmte Karte mit nummerierten Fakten, großen Serif-Werten, animierten
-   Haarlinien-Trennern und physikbasiertem Hover (Spotlight + sanfter 3D-Tilt).
+/* Schnellfakten unter dem Hero — schmales "Auf einen Blick"-Band:
+   horizontale Fakten (Icon links, Label + Wert daneben) in einer flachen
+   gerahmten Leiste mit Haarlinien-Trennern und physikbasiertem Hover
+   (Spotlight + sanfter 3D-Tilt).
    Akzentfarbe pro Wein via wine.accent = { base, deep, light } überschreibbar. */
 
 /* Markenneutraler Fallback (Champagner/Bordeaux) für Weine ohne eigenen Akzent */
@@ -29,14 +30,14 @@ function FactTile({ fact, index, accent }) {
   const spotlight = useMotionTemplate`radial-gradient(180px circle at calc(${spotX} * 100%) calc(${spotY} * 100%), ${accent.light}55, transparent 70%)`;
 
   const onMove = (e) => {
-    if (reduced || !ref.current) return;
+    if (reduced || e.pointerType !== "mouse" || !ref.current) return;
     const r = ref.current.getBoundingClientRect();
     const px = (e.clientX - r.left) / r.width;
     const py = (e.clientY - r.top) / r.height;
     mx.set(px);
     my.set(py);
-    rotateX.set((0.5 - py) * 6);
-    rotateY.set((px - 0.5) * 6);
+    rotateX.set((0.5 - py) * 4);
+    rotateY.set((px - 0.5) * 4);
   };
   const onLeave = () => {
     rotateX.set(0);
@@ -56,7 +57,7 @@ function FactTile({ fact, index, accent }) {
           ? undefined
           : { rotateX, rotateY, transformPerspective: 900, transformStyle: "preserve-3d", willChange: "transform" }
       }
-      className="group relative h-full rounded-[1.25rem] px-6 py-8 lg:px-8 lg:py-10"
+      className="group relative h-full rounded-[1.25rem] px-5 py-4 lg:px-6 lg:py-5"
     >
       {/* Hover-Wash + Spotlight — reine Opacity/Transform, kein Layout-Shift */}
       <div
@@ -70,35 +71,34 @@ function FactTile({ fact, index, accent }) {
         />
       )}
 
-      <div className="relative flex h-full flex-col" style={{ transform: "translateZ(24px)" }}>
-        <div className="flex items-start justify-between">
-          <span
-            className="ring-hairline inline-flex h-14 w-14 items-center justify-center rounded-full border bg-white/60 shadow-chip transition-transform duration-400 ease-out-expo group-hover:-translate-y-1 group-hover:scale-105"
-            style={{ borderColor: `${accent.base}40`, color: accent.deep }}
-          >
-            {Icon && <Icon className="h-7 w-7" aria-hidden="true" />}
-          </span>
-          <span
-            className="font-playfair text-sm italic tabular-nums transition-colors duration-400"
-            style={{ color: `${accent.deep}59` }}
-          >
-            {String(index + 1).padStart(2, "0")}
-          </span>
-        </div>
+      <div className="relative flex h-full items-center gap-4" style={{ transform: "translateZ(24px)" }}>
+        <span
+          className="ring-hairline inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border bg-white/60 shadow-chip transition-transform duration-400 ease-out-expo group-hover:-translate-y-0.5 group-hover:scale-105 lg:h-11 lg:w-11"
+          style={{ borderColor: `${accent.base}40`, color: accent.deep }}
+        >
+          {Icon && <Icon className="h-5 w-5" aria-hidden="true" />}
+        </span>
 
-        <div className="mt-auto pt-8">
-          <p className="text-[10.5px] font-semibold uppercase tracking-[0.24em] text-charcoal/45">
+        <div className="min-w-0">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-charcoal/45">
             {fact.label}
           </p>
-          <p className="mt-2 font-playfair text-xl leading-snug text-charcoal lg:text-[1.45rem]">
+          <p className="mt-1 font-playfair text-[1.02rem] leading-snug text-charcoal lg:text-[1.1rem]">
             {fact.value}
           </p>
           {/* Unterstrich zeichnet sich beim Hover — feste Höhe, nur scaleX */}
           <span
-            className="mt-4 block h-px w-full origin-left scale-x-0 transition-transform duration-400 ease-out-expo group-hover:scale-x-100"
+            className="mt-2 block h-px w-full origin-left scale-x-0 transition-transform duration-400 ease-out-expo group-hover:scale-x-100"
             style={{ background: `linear-gradient(90deg, ${accent.base}, transparent)` }}
           />
         </div>
+
+        <span
+          className="pointer-events-none absolute right-0 top-0 font-playfair text-xs italic tabular-nums"
+          style={{ color: `${accent.deep}40` }}
+        >
+          {String(index + 1).padStart(2, "0")}
+        </span>
       </div>
     </motion.div>
   );
@@ -109,8 +109,8 @@ export default function FactStrip({ wine }) {
 
   return (
     <section id="ueberblick" className="scroll-mt-36">
-      <div className="mx-auto max-w-content px-6 py-16 lg:px-10 lg:py-24">
-        <Reveal className="mb-10 flex items-end justify-between gap-6 lg:mb-12">
+      <div className="mx-auto max-w-content px-6 py-12 lg:px-10 lg:py-16">
+        <Reveal className="mb-8 flex items-end justify-between gap-6 lg:mb-10">
           <div>
             <Eyebrow>Auf einen Blick</Eyebrow>
             <h2 className="mt-3 font-playfair text-[clamp(1.6rem,3vw,2.3rem)] leading-tight text-charcoal">
@@ -149,7 +149,7 @@ export default function FactStrip({ wine }) {
           </Stagger>
         </div>
 
-        <GoldRule className="mx-auto mt-16 max-w-3xl" />
+        <GoldRule className="mx-auto mt-12 max-w-3xl" />
       </div>
     </section>
   );

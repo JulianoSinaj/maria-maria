@@ -36,6 +36,9 @@ body {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   overflow-x: hidden;
+  /* the grey tap flash reads as cheap — press feedback comes from the
+     whileTap spring compressions instead */
+  -webkit-tap-highlight-color: transparent;
 }
 
 ::selection {
@@ -60,6 +63,16 @@ a,
 [role="button"] {
   cursor: pointer;
   touch-action: manipulation;
+}
+
+/* iOS zooms the page onto any focused input under 16px — keep the desktop
+   type scale but never trigger the zoom on touch devices */
+@media (hover: none) and (pointer: coarse) {
+  input:not([type="checkbox"]):not([type="radio"]),
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
 }
 
 /* ---------- utilities ---------- */

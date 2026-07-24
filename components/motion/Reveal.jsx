@@ -1,7 +1,10 @@
 "use client";
 import { motion, useReducedMotion } from "motion/react";
+import { useTouchDevice } from "./useMediaQuery";
 
-/* Scroll-reveal primitives — physics springs, subtle blur-in, viewport-once. */
+/* Scroll-reveal primitives — physics springs, subtle blur-in, viewport-once.
+   On touch devices the animated blur is dropped (it forces expensive repaints
+   on mobile GPUs) and travel is shortened, so reveals stay crisp mid-scroll. */
 
 const SPRING = { type: "spring", stiffness: 90, damping: 20, mass: 1 };
 
@@ -15,11 +18,14 @@ export function Reveal({
   amount = 0.25,
 }) {
   const reduced = useReducedMotion();
+  const touch = useTouchDevice();
   if (reduced) return <div className={className}>{children}</div>;
+  const useBlur = blur && !touch;
+  const travel = touch ? Math.min(y, 20) : y;
   return (
     <motion.div
       className={className}
-      initial={{ opacity: 0, y, filter: blur ? "blur(8px)" : "blur(0px)" }}
+      initial={{ opacity: 0, y: travel, filter: useBlur ? "blur(8px)" : "blur(0px)" }}
       whileInView={{ opacity: 1, y: 0, filter: "blur(0px)", transitionEnd: { filter: "none" } }}
       viewport={{ once, amount, margin: "0px 0px -8% 0px" }}
       transition={{
@@ -53,12 +59,14 @@ export function Stagger({ children, className = "", style, delay = 0, gap = 0.09
 
 export function StaggerItem({ children, className = "", y = 26 }) {
   const reduced = useReducedMotion();
+  const touch = useTouchDevice();
   if (reduced) return <div className={className}>{children}</div>;
+  const blurFrom = touch ? "blur(0px)" : "blur(6px)";
   return (
     <motion.div
       className={className}
       variants={{
-        hidden: { opacity: 0, y, filter: "blur(6px)" },
+        hidden: { opacity: 0, y: touch ? Math.min(y, 20) : y, filter: blurFrom },
         visible: {
           opacity: 1,
           y: 0,

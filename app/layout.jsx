@@ -31,6 +31,9 @@ export const viewport = {
   width: "device-width",
   initialScale: 1,
   themeColor: "#F7F4EF",
+  /* lets env(safe-area-inset-*) work on notched phones — the floating cart
+     pill, cart summary and mobile menu pad themselves off the home indicator */
+  viewportFit: "cover",
 };
 
 export default function RootLayout({ children }) {

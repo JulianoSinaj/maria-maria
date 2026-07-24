@@ -12,7 +12,7 @@ export default function SimilarWines({ wine }) {
   const wines = wine.similar.names.map((n) => byName(n)).filter(Boolean);
 
   return (
-    <section className="relative overflow-hidden py-24">
+    <section className="relative overflow-hidden py-16 sm:py-24">
       <Atmosphere variant="rose" />
       <div className="relative mx-auto max-w-content px-6 lg:px-10">
         <SectionTitle
@@ -27,7 +27,7 @@ export default function SimilarWines({ wine }) {
           )}
         </SectionTitle>
 
-        <Stagger className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3" gap={0.09}>
+        <Stagger className="mt-10 grid gap-6 sm:mt-14 sm:grid-cols-2 lg:grid-cols-3" gap={0.09}>
           {wines.map((w) => (
             <StaggerItem key={w.name} className="h-full">
               <WineCard wine={w} className="h-full" />

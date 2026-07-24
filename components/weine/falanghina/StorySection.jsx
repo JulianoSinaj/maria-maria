@@ -13,7 +13,7 @@ export default function StorySection({ wine }) {
   const lastWord = titleWords.pop();
 
   return (
-    <section className="relative overflow-hidden py-24 lg:py-32">
+    <section className="relative overflow-hidden py-16 sm:py-24 lg:py-32">
       <Atmosphere variant="warm" />
       <GhostWord className="left-[-2vw] top-10 text-[13vw]">La Storia</GhostWord>
 

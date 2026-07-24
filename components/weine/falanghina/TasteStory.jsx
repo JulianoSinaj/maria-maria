@@ -156,18 +156,18 @@ function ChapterPanel({ chapter, index }) {
       <p className="text-[13px] font-semibold tabular-nums tracking-[0.2em] text-charcoal/40">
         0{index + 1}
       </p>
-      <div className="mt-3 inline-flex items-center gap-3">
-        <span className="ring-hairline inline-flex h-12 w-12 items-center justify-center rounded-full bg-acqua-light/30 text-acqua-deep">
-          {Icon && <Icon className="h-6 w-6" aria-hidden="true" />}
+      <div className="mt-2 inline-flex items-center gap-3 sm:mt-3">
+        <span className="ring-hairline inline-flex h-10 w-10 items-center justify-center rounded-full bg-acqua-light/30 text-acqua-deep sm:h-12 sm:w-12">
+          {Icon && <Icon className="h-5 w-5 sm:h-6 sm:w-6" aria-hidden="true" />}
         </span>
-        <span className="text-[12px] font-semibold uppercase tracking-[0.3em] text-acqua-deep">
+        <span className="text-[11px] font-semibold uppercase tracking-[0.3em] text-acqua-deep sm:text-[12px]">
           {chapter.kicker}
         </span>
       </div>
-      <h3 className="mt-5 text-balance font-playfair text-[clamp(1.9rem,3.4vw,2.8rem)] leading-[1.1] text-charcoal">
+      <h3 className="mt-3 text-balance font-playfair text-[clamp(1.55rem,3.4vw,2.8rem)] leading-[1.1] text-charcoal sm:mt-5">
         {chapter.title}
       </h3>
-      <p className="mt-5 text-[15px] leading-relaxed text-charcoal/70">{chapter.text}</p>
+      <p className="mt-3 text-[14px] leading-relaxed text-charcoal/70 sm:mt-5 sm:text-[15px]">{chapter.text}</p>
     </div>
   );
 }
@@ -177,7 +177,7 @@ function ChapterPanel({ chapter, index }) {
    Der Text steht früh scharf (24 % des Kapitels) und bleibt lange lesbar
    (bis 84 %) — das klare Plateau trägt gut 60 % des Kapitelwegs.
    side = +1 → rechte Bühnenhälfte (Eintritt von rechts), -1 → linke. ---- */
-function ChapterSlide({ chapter, index, side, start, end, progress, first }) {
+function ChapterSlide({ chapter, index, side, start, end, progress, first, enableBlur }) {
   const span = end - start;
   const in0 = first ? 0.0001 : start + span * 0.04;
   const in1 = first ? span * 0.16 : start + span * 0.24;
@@ -197,9 +197,17 @@ function ChapterSlide({ chapter, index, side, start, end, progress, first }) {
     TEXT_SPRING
   );
 
+  /* scrubbed blur repaints every frame — desktop only, phones keep the
+     spring travel and stay at 60fps */
   return (
     <motion.div
-      style={{ x, opacity, filter, rotateY, transformPerspective: 1200, willChange: "transform, filter" }}
+      style={{
+        x,
+        opacity,
+        rotateY,
+        transformPerspective: 1200,
+        ...(enableBlur ? { filter, willChange: "transform, filter" } : { willChange: "transform" }),
+      }}
       className={[
         "pointer-events-none absolute inset-x-0 bottom-2 z-20 flex justify-center px-2",
         "lg:inset-y-0 lg:items-center",
@@ -268,8 +276,9 @@ export default function TasteStory({ wine }) {
   const reduced = useReducedMotion();
   const lenis = useLenis();
   const [active, setActive] = useState(0);
-  /* Reiseweite des Rahmens in vw — auf schmalen Viewports kürzer */
-  const [amp, setAmp] = useState(22);
+  /* Desktop vs. Telefon steuert Reiseweite (vw), Pin-Länge und Blur */
+  const [isDesktop, setIsDesktop] = useState(true);
+  const amp = isDesktop ? 22 : 13;
   const chapters = wine.taste;
   const n = chapters.length;
   const span = (1 - FINALE) / n;
@@ -291,7 +300,7 @@ export default function TasteStory({ wine }) {
 
   useEffect(() => {
     const mq = window.matchMedia("(min-width: 1024px)");
-    const set = () => setAmp(mq.matches ? 22 : 13);
+    const set = () => setIsDesktop(mq.matches);
     set();
     mq.addEventListener("change", set);
     return () => mq.removeEventListener("change", set);
@@ -389,7 +398,9 @@ export default function TasteStory({ wine }) {
       id="geschmack"
       ref={sectionRef}
       className="relative scroll-mt-14"
-      style={{ height: `${n * 145 + 80}vh` }}
+      /* kürzerer Pin auf dem Telefon — die Geschichte bleibt komplett,
+         verlangt aber weniger Daumenweg pro Kapitel */
+      style={{ height: `${n * (isDesktop ? 145 : 118) + (isDesktop ? 80 : 50)}vh` }}
     >
       <div className="sticky top-0 h-[100svh] overflow-hidden bg-gradient-to-b from-ivory via-cream to-ivory">
         {/* Kino-Rückwand: scroll-reaktives Shader-Feld in den Pastelltönen
@@ -484,7 +495,7 @@ export default function TasteStory({ wine }) {
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       exit={{ opacity: 0, y: -10, scale: 0.98 }}
                       transition={{ duration: 0.32, ease: [0.32, 0.72, 0, 1] }}
-                      className="absolute -bottom-8 -left-3 z-10 rounded-xl border border-charcoal/10 bg-white/85 px-4 py-2.5 shadow-chip backdrop-blur-md sm:-left-6"
+                      className="absolute -bottom-8 -left-3 z-10 hidden rounded-xl border border-charcoal/10 bg-white/85 px-4 py-2.5 shadow-chip backdrop-blur-md sm:-left-6 sm:block"
                     >
                       <span className="block text-[9px] font-semibold uppercase tracking-[0.22em] text-charcoal/50">
                         Öl auf Leinwand
@@ -513,6 +524,7 @@ export default function TasteStory({ wine }) {
                 end={(i + 1) * span}
                 progress={scrollYProgress}
                 first={i === 0}
+                enableBlur={isDesktop}
               />
             ))}
           </div>

@@ -4,9 +4,11 @@ import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import WineCard from "./WineCard";
 import { ChevronRight } from "./Icons";
 
-/* Paged carousel of product cards — exactly PER_PAGE cards per page.
-   Paddles swap the whole visible set for the next/previous page,
-   sliding the group in with a physics-driven spring. */
+/* Product-card rail.
+   - Phones: one native swipe carousel — every wine in a scroll-snap strip that
+     bleeds to the screen edges, no paddles (thumbs beat buttons on touch).
+   - sm and up: paged grid of exactly PER_PAGE cards; paddles swap the whole
+     visible set, sliding the group in with a physics-driven spring. */
 
 const PER_PAGE = 5;
 
@@ -42,27 +44,39 @@ export default function WineRail({ wines, className = "" }) {
 
   return (
     <div className={className}>
-      <div className="relative overflow-hidden">
-        <AnimatePresence mode="wait" custom={dir} initial={false}>
-          <motion.div
-            key={page}
-            custom={dir}
-            variants={variants}
-            initial="enter"
-            animate="center"
-            exit="exit"
-            transition={spring}
-            className="grid grid-cols-1 gap-5 pb-4 pt-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5"
-          >
-            {current.map((w) => (
-              <WineCard key={w.name} wine={w} variant="mini" className="w-full" />
-            ))}
-          </motion.div>
-        </AnimatePresence>
+      {/* ---- phone: swipeable snap rail over the full collection ---- */}
+      <div className="no-scrollbar -mx-6 snap-x snap-mandatory overflow-x-auto scroll-px-6 px-6 sm:hidden">
+        <div className="flex gap-4 pb-4 pt-2">
+          {wines.map((w) => (
+            <WineCard key={w.name} wine={w} variant="mini" />
+          ))}
+        </div>
       </div>
-      <div className="mt-2 flex items-center justify-end gap-3">
-        {paddle(-1, "Vorherige Weine")}
-        {paddle(1, "Nächste Weine")}
+
+      {/* ---- sm+: paged grid with paddles ---- */}
+      <div className="hidden sm:block">
+        <div className="relative overflow-hidden">
+          <AnimatePresence mode="wait" custom={dir} initial={false}>
+            <motion.div
+              key={page}
+              custom={dir}
+              variants={variants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              transition={spring}
+              className="grid grid-cols-2 gap-5 pb-4 pt-2 md:grid-cols-3 lg:grid-cols-5"
+            >
+              {current.map((w) => (
+                <WineCard key={w.name} wine={w} variant="mini" className="w-full" />
+              ))}
+            </motion.div>
+          </AnimatePresence>
+        </div>
+        <div className="mt-2 flex items-center justify-end gap-3">
+          {paddle(-1, "Vorherige Weine")}
+          {paddle(1, "Nächste Weine")}
+        </div>
       </div>
     </div>
   );

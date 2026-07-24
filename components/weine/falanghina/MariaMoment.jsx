@@ -11,6 +11,7 @@ import {
 import { Eyebrow, GoldRule } from "@/components/Deco";
 import { Aura } from "@/components/Atmosphere";
 import { Arrow } from "@/components/Icons";
+import { useTouchDevice } from "@/components/motion/useMediaQuery";
 import { WINE_ICON } from "./WineIcons";
 
 /* „Servieren & Genießen" + „Der Maria-Moment" — das Genuss-Kapitel jeder
@@ -30,14 +31,21 @@ const TRUST = [
   { icon: "heart", title: "Für bewusste", text: "Genussmomente" },
 ];
 
-/* Seiteneinflug — Karten kommen federgedämpft von links/rechts/unten */
+/* Seiteneinflug — Karten kommen federgedämpft von links/rechts/unten.
+   Auf Touch-Geräten stattdessen ein ruhiger Aufstieg ohne Blur: seitliche
+   64px-Einflüge wirken auf schmalen Screens ruckhaft, animierter Blur kostet
+   mobile GPUs zu viel. */
 function SlideIn({ children, x = 0, y = 0, delay = 0, className = "" }) {
   const reduced = useReducedMotion();
+  const touch = useTouchDevice();
   if (reduced) return <div className={className}>{children}</div>;
+  const from = touch
+    ? { opacity: 0, x: 0, y: 22, filter: "blur(0px)" }
+    : { opacity: 0, x, y, filter: "blur(10px)" };
   return (
     <motion.div
       className={className}
-      initial={{ opacity: 0, x, y, filter: "blur(10px)" }}
+      initial={from}
       whileInView={{ opacity: 1, x: 0, y: 0, filter: "blur(0px)", transitionEnd: { filter: "none" } }}
       viewport={{ once: true, amount: 0.2, margin: "0px 0px -8% 0px" }}
       transition={{
@@ -61,7 +69,7 @@ function MagneticCta({ href, children, accent }) {
   const y = useSpring(0, { stiffness: 200, damping: 18, mass: 0.4 });
 
   const onMove = (e) => {
-    if (reduced || !ref.current) return;
+    if (reduced || e.pointerType !== "mouse" || !ref.current) return;
     const r = ref.current.getBoundingClientRect();
     x.set((e.clientX - (r.left + r.width / 2)) * 0.28);
     y.set((e.clientY - (r.top + r.height / 2)) * 0.34);
@@ -148,7 +156,7 @@ function EssenceCard({ item, accent }) {
   const spotlight = useMotionTemplate`radial-gradient(220px circle at calc(${spotX} * 100%) calc(${spotY} * 100%), ${tone}30, transparent 70%)`;
 
   const onMove = (e) => {
-    if (reduced || !ref.current) return;
+    if (reduced || e.pointerType !== "mouse" || !ref.current) return;
     const r = ref.current.getBoundingClientRect();
     const px = (e.clientX - r.left) / r.width;
     const py = (e.clientY - r.top) / r.height;

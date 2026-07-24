@@ -1,9 +1,10 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { AnimatePresence, motion, useDragControls, useReducedMotion } from "motion/react";
 import Bottle from "@/components/Bottle";
 import Button from "@/components/ui/Button";
 import { useLenis } from "@/components/motion/SmoothScroll";
+import useMediaQuery from "@/components/motion/useMediaQuery";
 import { IconChip } from "@/components/Deco";
 import { Cart, Close, Check, Plus, Grapes } from "@/components/Icons";
 import { Minus, Shield } from "./ShopIcons";
@@ -11,9 +12,10 @@ import { fmtPrice } from "@/components/data";
 import { useCart } from "./CartContext";
 import { PRODUCTS } from "./shopData";
 
-/* Warenkorb — a spring slide-over with a free-shipping progress bar and a
-   floating glass pill that follows the visitor while the cart is filled.
-   Focus is trapped while open, Escape closes, Lenis pauses underneath. */
+/* Warenkorb — on desktop a spring slide-over from the right; on phones a
+   bottom sheet with a grab handle that can be flicked shut. A floating glass
+   pill follows the visitor while the cart is filled. Focus is trapped while
+   open, Escape closes, Lenis pauses underneath. */
 
 const SPRING = { type: "spring", stiffness: 300, damping: 32 };
 
@@ -87,6 +89,10 @@ function ItemRow({ item }) {
 export default function CartDrawer() {
   const reduced = useReducedMotion();
   const lenisRef = useLenis();
+  /* below sm the drawer becomes a bottom sheet — the natural cart shape
+     for one-handed use on a phone */
+  const isSheet = useMediaQuery("(max-width: 639px)");
+  const dragControls = useDragControls();
   const {
     items,
     count,
@@ -168,7 +174,7 @@ export default function CartDrawer() {
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 90, opacity: 0 }}
             transition={{ type: "spring", stiffness: 260, damping: 26 }}
-            className="pointer-events-none fixed inset-x-0 bottom-5 z-40 flex justify-center px-4"
+            className="pointer-events-none fixed inset-x-0 bottom-[calc(1.25rem+env(safe-area-inset-bottom))] z-40 flex justify-center px-4"
           >
             <div className="inline-block">
               <button
@@ -221,14 +227,33 @@ export default function CartDrawer() {
               aria-modal="true"
               aria-label="Warenkorb"
               data-lenis-prevent
-              initial={reduced ? { opacity: 0 } : { x: "104%" }}
-              animate={reduced ? { opacity: 1 } : { x: 0 }}
-              exit={reduced ? { opacity: 0 } : { x: "104%" }}
+              initial={reduced ? { opacity: 0 } : isSheet ? { y: "104%" } : { x: "104%" }}
+              animate={reduced ? { opacity: 1 } : isSheet ? { y: 0 } : { x: 0 }}
+              exit={reduced ? { opacity: 0 } : isSheet ? { y: "104%" } : { x: "104%" }}
               transition={SPRING}
-              className="fixed bottom-0 right-0 top-0 z-[75] flex w-full max-w-[430px] flex-col bg-ivory shadow-lift will-transform sm:rounded-l-card-lg"
+              drag={isSheet && !reduced ? "y" : false}
+              dragListener={false}
+              dragControls={dragControls}
+              dragConstraints={{ top: 0, bottom: 0 }}
+              dragElastic={{ top: 0, bottom: 0.55 }}
+              onDragEnd={(_, info) => {
+                if (info.offset.y > 90 || info.velocity.y > 600) closeCart();
+              }}
+              className="fixed inset-x-0 bottom-0 z-[75] flex max-h-[86svh] w-full flex-col rounded-t-[2rem] bg-ivory shadow-lift will-transform sm:inset-x-auto sm:inset-y-0 sm:right-0 sm:max-h-none sm:max-w-[430px] sm:rounded-t-none sm:rounded-l-card-lg"
             >
+              {/* grab handle — drag or flick the sheet shut (phones only) */}
+              <div
+                className="flex shrink-0 cursor-grab justify-center pb-1 pt-3 active:cursor-grabbing sm:hidden"
+                style={{ touchAction: "none" }}
+                onPointerDown={(e) => {
+                  if (isSheet && !reduced) dragControls.start(e);
+                }}
+              >
+                <span aria-hidden="true" className="h-1.5 w-12 rounded-full bg-charcoal/15" />
+              </div>
+
               {/* head */}
-              <div className="flex items-center justify-between border-b border-stone/50 px-6 py-5">
+              <div className="flex items-center justify-between border-b border-stone/50 px-6 py-3.5 sm:py-5">
                 <p className="font-playfair text-[21px] text-charcoal">
                   Ihr Warenkorb
                   {count > 0 && (
@@ -250,7 +275,7 @@ export default function CartDrawer() {
 
               {order ? (
                 /* ---------- checkout success ---------- */
-                <div className="flex flex-1 flex-col items-center justify-center px-8 text-center">
+                <div className="flex flex-1 flex-col items-center justify-center px-8 pb-[calc(3rem+env(safe-area-inset-bottom))] pt-10 text-center sm:py-0">
                   <motion.div
                     initial={reduced ? false : { scale: 0.6, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
@@ -277,7 +302,7 @@ export default function CartDrawer() {
                 </div>
               ) : count === 0 ? (
                 /* ---------- empty state ---------- */
-                <div className="flex flex-1 flex-col items-center justify-center px-8 text-center">
+                <div className="flex flex-1 flex-col items-center justify-center px-8 pb-[calc(3rem+env(safe-area-inset-bottom))] pt-10 text-center sm:py-0">
                   <Grapes className="h-10 w-10 text-champagne" />
                   <h3 className="mt-5 font-playfair text-[22px] text-charcoal">
                     Noch ganz <span className="italic text-bordeaux">leer.</span>
@@ -337,7 +362,7 @@ export default function CartDrawer() {
                   </div>
 
                   {/* summary */}
-                  <div className="border-t border-stone/50 bg-cream/80 px-6 pb-6 pt-5">
+                  <div className="border-t border-stone/50 bg-cream/80 px-6 pb-[calc(1.25rem+env(safe-area-inset-bottom))] pt-5 sm:pb-6">
                     <dl className="space-y-1.5 text-[12.5px] text-charcoal/75">
                       <div className="flex items-center justify-between">
                         <dt>Zwischensumme</dt>

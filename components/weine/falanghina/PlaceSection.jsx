@@ -20,7 +20,7 @@ export default function PlaceSection({ wine }) {
         <Aura tint="olive" drift={2} className="bottom-[-20%] right-[-10%] h-[30rem] w-[30rem] opacity-30" />
         <Vines className="absolute inset-x-0 bottom-0 h-64 w-full opacity-[0.13]" stroke="#C9E8E1" />
 
-        <div className="relative grid items-center gap-12 p-8 sm:p-12 lg:grid-cols-[0.95fr_1.05fr] lg:gap-16 lg:p-16">
+        <div className="relative grid items-center gap-10 p-6 py-10 sm:gap-12 sm:p-12 lg:grid-cols-[0.95fr_1.05fr] lg:gap-16 lg:p-16">
           <div>
             <Reveal>
               <Eyebrow light>{place.kicker}</Eyebrow>

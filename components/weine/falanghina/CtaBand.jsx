@@ -18,8 +18,8 @@ export default function CtaBand({ wine }) {
         />
         <Vines className="absolute inset-x-0 bottom-0 h-56 w-full opacity-[0.12]" stroke="#C8B77A" />
 
-        <div className="relative px-6 py-20 text-center lg:py-24">
-          <h2 className="font-playfair text-[clamp(2.2rem,4.5vw,3.4rem)] leading-[1.06] text-ivory">
+        <div className="relative px-6 py-16 text-center sm:py-20 lg:py-24">
+          <h2 className="font-playfair text-[clamp(2rem,4.5vw,3.4rem)] leading-[1.06] text-ivory">
             <SplitText text={wine.cta.title} delay={0.05} />
           </h2>
           <Reveal delay={0.15}>
@@ -28,11 +28,11 @@ export default function CtaBand({ wine }) {
             </p>
           </Reveal>
           <Reveal delay={0.25}>
-            <div className="mt-9 flex flex-wrap items-center justify-center gap-3.5">
-              <Button href={wine.cta.button.href} variant="light" size="lg">
+            <div className="mx-auto mt-8 flex max-w-xs flex-col items-stretch gap-3 sm:mt-9 sm:max-w-none sm:flex-row sm:items-center sm:justify-center sm:gap-3.5">
+              <Button href={wine.cta.button.href} variant="light" size="lg" className="w-full sm:w-auto">
                 {wine.cta.button.label}
               </Button>
-              <Button href="/weine" variant="glass" size="lg" iconType="none">
+              <Button href="/weine" variant="glass" size="lg" iconType="none" className="w-full sm:w-auto">
                 Alle Weine ansehen
               </Button>
             </div>

@@ -5,22 +5,20 @@ import {
   useScroll,
   useTransform,
   useSpring,
-  useMotionValue,
-  useMotionTemplate,
   useReducedMotion,
 } from "motion/react";
 import { Reveal } from "@/components/motion/Reveal";
 import SplitText from "@/components/motion/SplitText";
+import { useTouchDevice } from "@/components/motion/useMediaQuery";
 
 /* „Die Farbe" — links die Typo-Bühne, rechts eine moderne Glaskarte mit einem
    Motiv aus der Kunstgeschichte (oder einem Loop-Video), dessen Palette den
    Weinton spiegelt (wine.colorMoment.artwork). Die Karte schwebt federnd aus
-   der rechten unteren Ecke in die Sektion, treibt beim Scrollen leicht mit
-   (Parallaxe) und neigt sich magnetisch zum Cursor — ein Lichtschimmer wandert
-   dabei über das Motiv. Chips auf dem Bild (Farbton + Serviertemperatur) und
-   die Bildleiste mit den Swatches greifen die Chip-Sprache der Sektion auf. */
+   der rechten unteren Ecke in die Sektion und treibt beim Scrollen leicht mit
+   (Parallaxe) — sie bleibt unter dem Cursor ruhig. Chips auf dem Bild (Farbton
+   + Serviertemperatur) und die Bildleiste mit den Swatches greifen die
+   Chip-Sprache der Sektion auf. */
 
-const TILT_SPRING = { stiffness: 120, damping: 15, mass: 0.7 };
 const DRIFT_SPRING = { stiffness: 42, damping: 18 };
 const ENTRY_SPRING = { type: "spring", stiffness: 48, damping: 14.5, mass: 1.05 };
 
@@ -43,6 +41,7 @@ const FALLBACK_ARTWORK = {
 export default function ColorBand({ wine }) {
   const ref = useRef(null);
   const reduced = useReducedMotion();
+  const touch = useTouchDevice();
   const c = wine.colorMoment;
   const art = c.artwork ?? FALLBACK_ARTWORK;
   const hasVideo = Boolean(art.video) && !reduced;
@@ -55,42 +54,25 @@ export default function ColorBand({ wine }) {
   const frameDeep = mixHex(s2.hex, "#1B1B1B", 0.72);
   const tempFact = (wine.facts ?? []).find((f) => f.icon === "thermometer");
 
-  /* Parallaxe: das gerahmte Bild treibt beim Scrollen federnd durch die Sektion */
+  /* Parallaxe: das gerahmte Bild treibt beim Scrollen federnd durch die
+     Sektion — auf dem Telefon mit kürzerem Weg, damit nichts „schwimmt" */
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
-  const driftY = useSpring(useTransform(scrollYProgress, [0, 1], [64, -46]), DRIFT_SPRING);
+  const driftY = useSpring(
+    useTransform(scrollYProgress, [0, 1], touch ? [26, -18] : [64, -46]),
+    DRIFT_SPRING
+  );
 
-  /* Magnetische Neigung: der Rahmen kippt zum Cursor, das Gemälde gleitet im
-     Passepartout leicht gegenläufig (Tiefen-Parallaxe), der Firnis-Schimmer folgt */
-  const mx = useMotionValue(0);
-  const my = useMotionValue(0);
-  const rotY = useSpring(useTransform(mx, [-0.5, 0.5], [-8, 8]), TILT_SPRING);
-  const rotX = useSpring(useTransform(my, [-0.5, 0.5], [6, -6]), TILT_SPRING);
-  const magX = useSpring(useTransform(mx, [-0.5, 0.5], [-10, 10]), TILT_SPRING);
-  const magY = useSpring(useTransform(my, [-0.5, 0.5], [-7, 7]), TILT_SPRING);
-  const imgX = useSpring(useTransform(mx, [-0.5, 0.5], [12, -12]), TILT_SPRING);
-  const imgY = useSpring(useTransform(my, [-0.5, 0.5], [9, -9]), TILT_SPRING);
-  const shineX = useSpring(useTransform(mx, [-0.5, 0.5], [20, 80]), TILT_SPRING);
-  const shineY = useSpring(useTransform(my, [-0.5, 0.5], [14, 58]), TILT_SPRING);
-  const sheen = useMotionTemplate`radial-gradient(farthest-corner at ${shineX}% ${shineY}%, rgba(255,255,255,0.26) 0%, rgba(255,255,255,0.07) 34%, transparent 62%)`;
-
-  const onMove = (e) => {
-    const r = e.currentTarget.getBoundingClientRect();
-    mx.set((e.clientX - r.left) / r.width - 0.5);
-    my.set((e.clientY - r.top) / r.height - 0.5);
-  };
-  const onLeave = () => {
-    mx.set(0);
-    my.set(0);
-  };
-
-  /* Auftritt aus der rechten unteren Ecke — federnd, mit leichtem Eindrehen */
+  /* Auftritt aus der rechten unteren Ecke — federnd, mit leichtem Eindrehen;
+     auf schmalen Screens deutlich kürzer, sonst wirkt der Einflug ruckhaft */
   const entryV = reduced
     ? {
         hidden: { opacity: 0 },
         visible: { opacity: 1, transition: { duration: 0.5 } },
       }
     : {
-        hidden: { opacity: 0, x: 140, y: 170, rotate: 7, scale: 0.88 },
+        hidden: touch
+          ? { opacity: 0, x: 44, y: 84, rotate: 4, scale: 0.94 }
+          : { opacity: 0, x: 140, y: 170, rotate: 7, scale: 0.88 },
         visible: { opacity: 1, x: 0, y: 0, rotate: 0, scale: 1, transition: ENTRY_SPRING },
       };
   const plaqueV = reduced
@@ -164,12 +146,7 @@ export default function ColorBand({ wine }) {
         </div>
 
         {/* ---------- Das Gemälde ---------- */}
-        <div
-          className="relative flex items-center justify-center pb-4 lg:pb-2"
-          style={{ perspective: "1200px" }}
-          onPointerMove={reduced ? undefined : onMove}
-          onPointerLeave={reduced ? undefined : onLeave}
-        >
+        <div className="relative flex items-center justify-center pb-4 lg:pb-2">
           {/* weiche Lichtaura hinter dem Rahmen */}
           <div
             aria-hidden="true"
@@ -183,18 +160,6 @@ export default function ColorBand({ wine }) {
               whileInView="visible"
               viewport={{ once: true, amount: 0.35 }}
               className="relative will-transform"
-              style={
-                reduced
-                  ? undefined
-                  : {
-                      rotateX: rotX,
-                      rotateY: rotY,
-                      x: magX,
-                      y: magY,
-                      transformOrigin: "50% 55%",
-                      transformStyle: "preserve-3d",
-                    }
-              }
             >
               {/* weicher Farbschein hinter der Karte — greift den Weinton auf */}
               <div
@@ -202,7 +167,6 @@ export default function ColorBand({ wine }) {
                 className="absolute -bottom-8 -right-8 h-[85%] w-[85%] rounded-[48px] blur-2xl"
                 style={{
                   background: `linear-gradient(135deg, ${s1.hex}, ${s2.hex})`,
-                  transform: "translateZ(-90px)",
                   opacity: 0.55,
                 }}
               />
@@ -226,7 +190,7 @@ export default function ColorBand({ wine }) {
                         läuft er stumm in Endlosschleife im Rahmen — das Gemälde
                         (artwork.src) bleibt Poster und Reduced-Motion-Fallback */}
                     {hasVideo ? (
-                      <motion.video
+                      <video
                         src={art.video}
                         poster={art.src}
                         autoPlay
@@ -235,28 +199,16 @@ export default function ColorBand({ wine }) {
                         playsInline
                         preload="metadata"
                         aria-label={art.alt}
-                        className="block aspect-[4/5] w-[min(72vw,300px)] object-cover will-transform sm:w-[340px] lg:w-[380px]"
-                        style={{ objectPosition: art.videoFocus ?? art.focus ?? "50% 50%", x: imgX, y: imgY, scale: 1.08 }}
+                        className="block aspect-[4/5] w-[min(72vw,300px)] object-cover sm:w-[340px] lg:w-[380px]"
+                        style={{ objectPosition: art.videoFocus ?? art.focus ?? "50% 50%" }}
                       />
                     ) : (
-                      <motion.img
+                      <img
                         src={art.src}
                         alt={art.alt}
                         loading="lazy"
-                        className="block aspect-[4/5] w-[min(72vw,300px)] object-cover will-transform sm:w-[340px] lg:w-[380px]"
-                        style={
-                          reduced
-                            ? { objectPosition: art.focus ?? "50% 50%" }
-                            : { objectPosition: art.focus ?? "50% 50%", x: imgX, y: imgY, scale: 1.08 }
-                        }
-                      />
-                    )}
-                    {/* Firnis-Schimmer folgt dem Cursor */}
-                    {!reduced && (
-                      <motion.div
-                        aria-hidden="true"
-                        className="pointer-events-none absolute inset-0"
-                        style={{ background: sheen, mixBlendMode: "soft-light" }}
+                        className="block aspect-[4/5] w-[min(72vw,300px)] object-cover sm:w-[340px] lg:w-[380px]"
+                        style={{ objectPosition: art.focus ?? "50% 50%" }}
                       />
                     )}
                     {/* Vignette im Weinton verankert das Bild in der Sektion */}

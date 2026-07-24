@@ -115,7 +115,7 @@ export default function FalanghinaHero({ wine }) {
       </nav>
 
       <Eyebrow>{wine.eyebrow}</Eyebrow>
-      <h1 className="mt-5 font-playfair text-[clamp(2.7rem,5.6vw,4.4rem)] leading-[1.05] text-charcoal">
+      <h1 className="mt-5 font-playfair text-[clamp(2.4rem,5.6vw,4.4rem)] leading-[1.05] text-charcoal">
         <SplitText text={wine.heroTitle[0]} className="block" delay={0.12} />
         <SplitText
           text={wine.heroTitle[1]}
@@ -130,11 +130,11 @@ export default function FalanghinaHero({ wine }) {
       <p className="mt-5 max-w-md text-[14px] leading-relaxed text-charcoal/75 sm:mt-6 sm:text-[15px]">
         {wine.lede}
       </p>
-      <div className="mt-9 flex flex-wrap items-center gap-3.5">
-        <Button href="/shop" size="lg">
+      <div className="mt-8 flex flex-col items-stretch gap-3 sm:mt-9 sm:flex-row sm:items-center sm:gap-3.5">
+        <Button href="/shop" size="lg" className="w-full sm:w-auto">
           Im offiziellen Shop entdecken
         </Button>
-        <Button href="#geschmack" variant="outline" size="lg" iconType="none">
+        <Button href="#geschmack" variant="outline" size="lg" iconType="none" className="w-full sm:w-auto">
           Den Wein kennenlernen
         </Button>
       </div>

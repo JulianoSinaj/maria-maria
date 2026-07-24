@@ -91,7 +91,7 @@ export default function Header() {
   const isActive = (href) => (href === "/" ? pathname === "/" : pathname.startsWith(href));
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50">
+    <header className="fixed inset-x-0 top-0 z-50 pt-[env(safe-area-inset-top)]">
       {/* reading progress */}
       <motion.div
         aria-hidden="true"
@@ -167,7 +167,7 @@ export default function Header() {
             aria-modal="true"
             aria-label="Menü"
             data-lenis-prevent
-            className="grain fixed inset-0 z-[60] flex flex-col overflow-y-auto overscroll-contain bg-gradient-to-b from-bordeaux-deep via-[#33080e] to-espresso md:hidden"
+            className="grain fixed inset-0 z-[60] flex flex-col overflow-y-auto overscroll-contain bg-gradient-to-b from-bordeaux-deep via-[#33080e] to-espresso pt-[env(safe-area-inset-top)] md:hidden"
             initial={{ opacity: 0, clipPath: "inset(0 0 100% 0)" }}
             animate={{ opacity: 1, clipPath: "inset(0 0 0% 0)" }}
             exit={{ opacity: 0, clipPath: "inset(0 0 100% 0)" }}
@@ -216,7 +216,7 @@ export default function Header() {
               ))}
             </nav>
             <motion.div
-              className="px-8 pb-10"
+              className="px-8 pb-[calc(2.5rem+env(safe-area-inset-bottom))]"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.45 }}

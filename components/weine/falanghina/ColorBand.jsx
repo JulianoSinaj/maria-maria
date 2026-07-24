@@ -174,8 +174,12 @@ export default function ColorBand({ wine }) {
               {/* Moderne Glaskarte: Gradient-Haarlinie → frostiges Panel → Bild.
                   Spricht dieselbe Sprache wie die Chips der Sektion (weißes
                   Glas, weiche Radien, Weinton-Akzente). */}
+              {/* Die Karte trägt die Breite; Video/Bild füllen sie mit w-full.
+                  Läge die Breite auf dem Medium, könnte die Bildleiste die
+                  Karte auf schmalen Screens breiter drücken als das Video —
+                  rechts bliebe ein leerer Streifen. */}
               <div
-                className="relative rounded-[26px] p-[1.5px]"
+                className="relative w-[min(88vw,352px)] max-w-full rounded-[26px] p-[1.5px] sm:w-[367px] lg:w-[407px]"
                 style={{
                   background: `linear-gradient(140deg, rgba(255,255,255,0.95), ${s1.hex}66 45%, ${s2.hex}99)`,
                   boxShadow: `0 30px 64px -24px ${s2.hex}73, 0 12px 26px -14px rgba(27,27,27,0.2)`,
@@ -199,7 +203,7 @@ export default function ColorBand({ wine }) {
                         playsInline
                         preload="metadata"
                         aria-label={art.alt}
-                        className="block aspect-[4/5] w-[min(72vw,300px)] object-cover sm:w-[340px] lg:w-[380px]"
+                        className="block aspect-[4/5] w-full object-cover"
                         style={{ objectPosition: art.videoFocus ?? art.focus ?? "50% 50%" }}
                       />
                     ) : (
@@ -207,7 +211,7 @@ export default function ColorBand({ wine }) {
                         src={art.src}
                         alt={art.alt}
                         loading="lazy"
-                        className="block aspect-[4/5] w-[min(72vw,300px)] object-cover sm:w-[340px] lg:w-[380px]"
+                        className="block aspect-[4/5] w-full object-cover"
                         style={{ objectPosition: art.focus ?? "50% 50%" }}
                       />
                     )}

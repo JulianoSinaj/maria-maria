@@ -190,21 +190,14 @@ export default function HomeContent() {
         <Aura tint="gold" drift={2} className="-left-48 bottom-0 h-[30rem] w-[30rem]" />
         <GhostWord className="left-[-1vw] top-6 text-[11vw]">Vini d&apos;Italia</GhostWord>
         <div className="relative mx-auto max-w-content px-6 lg:px-10">
-          <div className="flex flex-wrap items-end justify-between gap-6">
-            <SectionTitle
-              align="left"
-              eyebrow="Die Kollektion"
-              description="Neun Charaktere aus vier Regionen – jeder mit eigener Geschichte."
-            >
-              Unsere Weine
-            </SectionTitle>
-            <Reveal delay={0.15}>
-              <Button href="/weine" variant="outline" size="sm">
-                Alle Weine
-              </Button>
-            </Reveal>
-          </div>
-          <WineRail wines={WINES} className="mt-10" />
+          <SectionTitle
+            align="left"
+            eyebrow="Die Kollektion"
+            description="Neun Charaktere aus vier Regionen – jeder mit eigener Geschichte."
+          >
+            Unsere Weine
+          </SectionTitle>
+          <WineRail wines={WINES} className="mt-8 sm:mt-10" />
         </div>
       </section>
 

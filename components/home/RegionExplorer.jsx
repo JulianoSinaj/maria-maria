@@ -13,23 +13,31 @@ import Button from "@/components/ui/Button";
 import ItalyMap from "@/components/ItalyMap";
 
 /* Region explorer — one continuous Süditalien map as the stage.
-   The map itself is the hero: a photographic parchment relief of Sud Italia
-   that drifts on a scroll-driven spring (parallax depth) and slowly
-   Ken-Burns-zooms behind whichever panel holds focus.
-   Desktop: vertical panels over the map, separated by hairline dividers.
-   Hovering a panel lets it breathe wider (flex-grow) while a white detail
-   card springs up in 3D; siblings contract, dim and desaturate.
-   Mobile: the same map behind stacked rows; tapping a row expands it
-   vertically into the detail card (height-auto spring).
-   All motion is GPU transform/opacity — panel widths are the only
-   intentional layout motion. */
+   The map drifts on a scroll-driven spring (parallax depth) and sits behind
+   vertical panels; the panel under the cursor grows while its siblings dim.
 
-const SPRING = { type: "spring", stiffness: 240, damping: 26, mass: 0.9 };
+   Motion contract — one clock for the whole swap, so nothing ever stacks:
+     phase 1 (0 → OUT)      outgoing card + incoming title fade OUT
+     phase 2 (OUT → OUT+IN) incoming card + outgoing title fade IN
+   Background layers (bloom, dim, gradient) and the flex-grow of the panel
+   cross-fade across the full OUT+IN window on the same cubic-bezier, so the
+   map highlight and the foreground card land together.
+   Cards stay mounted and are driven by `animate` (no AnimatePresence on the
+   desktop stage) — enter/exit overlap was what produced the ghost text. */
+
+const EASE = [0.4, 0, 0.2, 1]; // cubic-bezier(0.4, 0, 0.2, 1)
+const OUT = 0.16; // s — outgoing content clears first
+const IN = 0.26; // s — incoming content follows
+const SWAP_MS = 420; // (OUT + IN) * 1000 — CSS-driven layers use the same window
 const GROW = 2.4; // hovered panel weight vs. 1 for the rest
+
+const FADE_OUT = { duration: OUT, ease: EASE };
+const FADE_IN = { duration: IN, delay: OUT, ease: EASE };
+const INSTANT = { duration: 0 };
 
 function DetailCard({ region, compact = false }) {
   return (
-    <div className={`rounded-card bg-ivory/95 shadow-lift ring-1 ring-stone/60 backdrop-blur-sm ${compact ? "p-5" : "p-6"}`}>
+    <div className={`rounded-card bg-ivory shadow-lift ring-1 ring-stone/60 ${compact ? "p-5" : "p-6"}`}>
       <div className="flex items-start justify-between gap-4">
         <div className="min-w-0">
           <p className="text-[10px] uppercase tracking-[0.22em] text-bordeaux">{region.tag}</p>
@@ -65,7 +73,6 @@ export default function RegionExplorer({ regions, mapSrc = "/img/map-sud-italia.
   const [active, setActive] = useState(null); // desktop hovered/focused panel
   const [open, setOpen] = useState(null); // mobile expanded row
   const reduced = useReducedMotion();
-  const spring = reduced ? { duration: 0 } : SPRING;
 
   // Scroll-driven parallax for the map behind the desktop stage.
   const stageRef = useRef(null);
@@ -73,11 +80,11 @@ export default function RegionExplorer({ regions, mapSrc = "/img/map-sud-italia.
     target: stageRef,
     offset: ["start end", "end start"],
   });
-  // raw progress → gentle vertical drift, smoothed through a physics spring
+  // raw progress → gentle vertical drift, smoothed through a physics spring.
+  // Scale is held constant: an second, independently timed zoom loop only added
+  // repaint churn behind the cards.
   const driftRaw = useTransform(scrollYProgress, [0, 1], ["-6%", "6%"]);
-  const scaleRaw = useTransform(scrollYProgress, [0, 0.5, 1], [1.12, 1.06, 1.12]);
   const drift = useSpring(driftRaw, { stiffness: 120, damping: 30, mass: 0.6 });
-  const scale = useSpring(scaleRaw, { stiffness: 120, damping: 30, mass: 0.6 });
 
   const mapLayer = (parallax = false) => (
     <>
@@ -87,7 +94,7 @@ export default function RegionExplorer({ regions, mapSrc = "/img/map-sud-italia.
         alt="Karte Süditaliens mit den Weinregionen"
         style={
           parallax && !reduced
-            ? { y: drift, scale, willChange: "transform" }
+            ? { y: drift, scale: 1.12, willChange: "transform" }
             : { scale: 1.04 }
         }
         className="pointer-events-none absolute inset-0 h-full w-full object-cover"
@@ -103,7 +110,6 @@ export default function RegionExplorer({ regions, mapSrc = "/img/map-sud-italia.
       <div
         ref={stageRef}
         className="relative hidden overflow-hidden rounded-card-lg bg-espresso shadow-luxe md:block"
-        style={{ perspective: 1400 }}
       >
         {mapLayer(true)}
         <div className="relative flex h-[540px] lg:h-[600px]" onMouseLeave={() => setActive(null)}>
@@ -117,72 +123,66 @@ export default function RegionExplorer({ regions, mapSrc = "/img/map-sud-italia.
                 onMouseEnter={() => setActive(i)}
                 onFocus={() => setActive(i)}
                 onClick={() => setActive(i)}
-                style={{ flexGrow: isActive ? GROW : 1, willChange: "flex-grow" }}
-                className={`group relative min-w-0 basis-0 outline-none transition-[flex-grow] duration-[600ms] ease-out-expo ${
+                style={{
+                  flexGrow: isActive ? GROW : 1,
+                  transition: `flex-grow ${SWAP_MS}ms cubic-bezier(0.4, 0, 0.2, 1)`,
+                  willChange: "flex-grow",
+                }}
+                className={`group relative min-w-0 basis-0 outline-none ${
                   i > 0 ? "border-l border-ivory/25" : ""
                 }`}
               >
-                {/* Ken-Burns light bloom — a warm sheen breathes across the active slice */}
-                <motion.div
-                  aria-hidden="true"
-                  initial={false}
-                  animate={
-                    reduced
-                      ? { opacity: isActive ? 0.6 : 0 }
-                      : {
-                          opacity: isActive ? 0.75 : 0,
-                          scale: isActive ? 1.25 : 1,
-                        }
-                  }
-                  transition={
-                    reduced
-                      ? { duration: 0 }
-                      : { opacity: { duration: 0.5 }, scale: { duration: 6, ease: "linear" } }
-                  }
-                  style={{ willChange: "transform, opacity" }}
-                  className="pointer-events-none absolute inset-0 bg-[radial-gradient(120%_90%_at_50%_18%,theme(colors.champagne/25),transparent_60%)]"
-                />
-
-                {/* dim + desaturate siblings while one panel holds the stage */}
+                {/* map highlight — a warm bloom marks the region under focus.
+                    Opacity only: the old 6s scale loop restarted on every switch
+                    and flickered whenever two panels overlapped mid-swap. */}
                 <div
                   aria-hidden="true"
-                  className={`pointer-events-none absolute inset-0 bg-espresso/55 backdrop-saturate-[.55] transition-opacity duration-[600ms] ease-out-expo ${
+                  className={`pointer-events-none absolute inset-0 bg-[radial-gradient(120%_90%_at_50%_18%,theme(colors.champagne/25),transparent_60%)] transition-opacity duration-[420ms] ease-standard ${
+                    isActive ? "opacity-75" : "opacity-0"
+                  }`}
+                />
+
+                {/* dim siblings while one panel holds the stage (no backdrop
+                    filter — it recomposited the whole map on every swap) */}
+                <div
+                  aria-hidden="true"
+                  className={`pointer-events-none absolute inset-0 bg-espresso/55 transition-opacity duration-[420ms] ease-standard ${
                     dimmed ? "opacity-100" : "opacity-0"
                   }`}
                 />
                 {/* readability gradient behind the resting title */}
                 <div
                   aria-hidden="true"
-                  className={`pointer-events-none absolute inset-x-0 bottom-0 h-56 bg-gradient-to-t from-espresso/90 via-espresso/40 to-transparent transition-opacity duration-500 ${
+                  className={`pointer-events-none absolute inset-x-0 bottom-0 h-56 bg-gradient-to-t from-espresso/90 via-espresso/40 to-transparent transition-opacity duration-[420ms] ease-standard ${
                     isActive ? "opacity-30" : "opacity-100"
                   }`}
                 />
 
-                {/* resting state — region name near the bottom */}
-                <div
-                  className={`absolute inset-x-0 bottom-0 p-6 transition-[opacity,transform] duration-[400ms] ease-out-expo ${
-                    isActive ? "-translate-y-3 opacity-0" : "translate-y-0 opacity-100"
-                  }`}
+                {/* resting state — region name near the bottom.
+                    Clears out before the card arrives, returns after it leaves. */}
+                <motion.div
+                  initial={false}
+                  animate={{ opacity: isActive ? 0 : 1, y: isActive ? -8 : 0 }}
+                  transition={reduced ? INSTANT : isActive ? FADE_OUT : FADE_IN}
+                  style={{ willChange: "transform, opacity" }}
+                  className="pointer-events-none absolute inset-x-0 bottom-0 p-6"
                 >
                   <p className="truncate text-[10px] uppercase tracking-[0.22em] text-champagne-light">{r.tag}</p>
                   <h3 className="mt-1 truncate font-playfair text-[24px] text-ivory lg:text-[27px]">{r.name}</h3>
-                </div>
+                </motion.div>
 
-                {/* hover state — white detail card lifts up in 3D */}
-                <AnimatePresence>
-                  {isActive && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 34, scale: 0.94, rotateX: -12 }}
-                      animate={{ opacity: 1, y: 0, scale: 1, rotateX: 0 }}
-                      exit={{ opacity: 0, y: 18, scale: 0.97, rotateX: -6, transition: { duration: 0.24, ease: [0.16, 1, 0.3, 1] } }}
-                      transition={spring}
-                      style={{ willChange: "transform", transformPerspective: 1000 }}
-                      className="absolute inset-x-5 bottom-5 lg:inset-x-7 lg:bottom-7"
-                    >
-                      <DetailCard region={r} />
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                {/* focus state — detail card. Fixed width so the panel's
+                    flex-grow never reflows the text mid-transition. */}
+                <motion.div
+                  initial={false}
+                  animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 12 }}
+                  transition={reduced ? INSTANT : isActive ? FADE_IN : FADE_OUT}
+                  inert={isActive ? undefined : ""}
+                  style={{ willChange: "transform, opacity", pointerEvents: isActive ? "auto" : "none" }}
+                  className="absolute bottom-5 left-5 w-[17rem] lg:bottom-7 lg:left-7 lg:w-[19rem]"
+                >
+                  <DetailCard region={r} />
+                </motion.div>
               </div>
             );
           })}
@@ -222,7 +222,7 @@ export default function RegionExplorer({ regions, mapSrc = "/img/map-sud-italia.
                     >
                       <span className="absolute h-[1.5px] w-3.5 rounded-full bg-charcoal/80" />
                       <span
-                        className={`absolute h-[1.5px] w-3.5 rounded-full bg-charcoal/80 transition-transform duration-400 ease-out-expo ${
+                        className={`absolute h-[1.5px] w-3.5 rounded-full bg-charcoal/80 transition-transform duration-[420ms] ease-standard ${
                           isOpen ? "rotate-0" : "rotate-90"
                         }`}
                       />
@@ -230,24 +230,32 @@ export default function RegionExplorer({ regions, mapSrc = "/img/map-sud-italia.
                   </span>
                 </button>
 
+                {/* one row is open at a time: the closing row and the opening
+                    row share the same height curve, and the card only fades in
+                    once the outgoing one has gone. */}
                 <AnimatePresence initial={false}>
                   {isOpen && (
                     <motion.div
                       initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={reduced ? { duration: 0 } : { ...SPRING, opacity: { duration: 0.3 } }}
-                      className="relative overflow-hidden"
+                      animate={{
+                        height: "auto",
+                        opacity: 1,
+                        transition: reduced
+                          ? INSTANT
+                          : { height: { duration: 0.34, ease: EASE }, opacity: FADE_IN },
+                      }}
+                      exit={{
+                        height: 0,
+                        opacity: 0,
+                        transition: reduced
+                          ? INSTANT
+                          : { height: { duration: 0.34, ease: EASE }, opacity: FADE_OUT },
+                      }}
+                      className="overflow-hidden"
                     >
-                      <motion.div
-                        initial={{ y: 18, scale: 0.97 }}
-                        animate={{ y: 0, scale: 1 }}
-                        exit={{ y: 12, scale: 0.98 }}
-                        transition={spring}
-                        className="px-4 pb-5"
-                      >
+                      <div className="px-4 pb-5">
                         <DetailCard region={r} compact />
-                      </motion.div>
+                      </div>
                     </motion.div>
                   )}
                 </AnimatePresence>

@@ -1,6 +1,8 @@
 import { IL_ROSSO } from "@/components/weine/il-rosso-aglianico/wineData";
 import { byName } from "@/components/data";
 import FalanghinaHero from "@/components/weine/falanghina/FalanghinaHero";
+import HeroPhoto from "@/components/weine/falanghina/HeroPhoto";
+import HeroPreload from "@/components/weine/falanghina/HeroPreload";
 import SubNav from "@/components/weine/falanghina/SubNav";
 import FactStrip from "@/components/weine/falanghina/FactStrip";
 import ColorBand from "@/components/weine/falanghina/ColorBand";
@@ -55,7 +57,8 @@ export default function IlRossoPage() {
   return (
     <>
       <ProductJsonLd />
-      <FalanghinaHero wine={wine} />
+      <HeroPreload wine={wine} />
+      <FalanghinaHero wine={wine} photo={<HeroPhoto wine={wine} />} />
       <SubNav wine={wine} />
       <FactStrip wine={wine} />
       <ColorBand wine={wine} />

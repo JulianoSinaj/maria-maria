@@ -35,6 +35,7 @@ export function SectionTitle({
   mark = true,
   light = false,
   className = "",
+  titleGap = "mt-3",
 }) {
   const centered = align === "center";
   return (
@@ -53,7 +54,7 @@ export function SectionTitle({
       <h2
         className={`text-balance font-playfair text-[clamp(1.75rem,3.4vw,2.6rem)] leading-[1.12] ${
           light ? "text-ivory" : "text-charcoal"
-        } ${eyebrow ? "mt-3" : ""}`}
+        } ${eyebrow ? titleGap : ""}`}
       >
         {children}
       </h2>

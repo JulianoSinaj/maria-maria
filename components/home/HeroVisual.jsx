@@ -1,16 +1,12 @@
 "use client";
 import { motion, useReducedMotion } from "motion/react";
 import Parallax from "../motion/Parallax";
-import Bottle from "../Bottle";
-import { byName, fmtPrice } from "../data";
-import { Star } from "../Icons";
 
-/* Hero composition — arched photo frame with parallax, a floating glass
-   product teaser and the slowly turning 250-years seal. */
+/* Hero composition — arched photo frame with parallax and the slowly
+   turning 250-years seal. */
 
 export default function HeroVisual() {
   const reduced = useReducedMotion();
-  const featured = byName("Primitivo Salento IGP");
 
   const float = (delay = 0, dist = 10) =>
     reduced
@@ -47,23 +43,6 @@ export default function HeroVisual() {
           className="pointer-events-none absolute inset-0 bg-gradient-to-t from-espresso/25 via-transparent to-transparent"
         />
       </div>
-
-      {/* floating product teaser */}
-      <motion.div {...float(0.4)} className="absolute -left-6 bottom-12 sm:-left-14">
-        <div className="glass flex w-[230px] items-center gap-3.5 rounded-card p-4 shadow-glass">
-          <Bottle variant={featured.variant} className="h-[74px]" />
-          <div className="min-w-0">
-            <div className="flex items-center gap-0.5 text-champagne" role="img" aria-label="5 von 5 Sternen">
-              {[...Array(5)].map((_, i) => (
-                <Star key={i} className="h-3 w-3" />
-              ))}
-            </div>
-            <p className="mt-1 truncate font-playfair text-[13.5px] leading-tight text-charcoal">{featured.name}</p>
-            <p className="mt-0.5 text-[10px] uppercase tracking-[0.14em] text-charcoal/50">{featured.region}</p>
-            <p className="mt-1 text-[13px] font-semibold tabular-nums text-bordeaux">{fmtPrice(featured.price)}</p>
-          </div>
-        </div>
-      </motion.div>
 
       {/* turning anniversary seal */}
       <motion.div {...float(1.6, 8)} className="absolute -right-3 top-14 sm:-right-8">

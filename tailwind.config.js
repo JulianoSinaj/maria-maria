@@ -40,13 +40,14 @@ module.exports = {
         "card-lg": "2rem",
       },
       boxShadow: {
-        luxe: "0 1px 2px rgba(43,20,14,.04), 0 24px 60px -28px rgba(43,20,14,.22)",
-        lift: "0 2px 6px rgba(43,20,14,.06), 0 36px 80px -28px rgba(43,20,14,.34)",
+        luxe: "0 1px 1px rgba(43,20,14,.03), 0 8px 20px -14px rgba(43,20,14,.14)",
+        lift: "0 2px 4px rgba(43,20,14,.05), 0 20px 40px -22px rgba(43,20,14,.22)",
         glass: "inset 0 1px 0 rgba(255,255,255,.65), 0 20px 50px -20px rgba(43,20,14,.28)",
         chip: "inset 0 1px 0 rgba(255,255,255,.7), 0 10px 24px -12px rgba(107,15,26,.28)",
       },
       transitionTimingFunction: {
         "out-expo": "cubic-bezier(0.16, 1, 0.3, 1)",
+        standard: "cubic-bezier(0.4, 0, 0.2, 1)",
       },
       transitionDuration: {
         400: "400ms",

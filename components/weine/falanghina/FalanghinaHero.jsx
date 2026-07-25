@@ -58,7 +58,11 @@ function Act2Word({ progress, word, index, light = false }) {
   );
 }
 
-export default function FalanghinaHero({ wine }) {
+/* `photo` kommt als Server-gerendertes <picture> von der Seite herein (siehe
+   HeroPhoto). Als children-Prop über die Client-Grenze gereicht, bleibt es im
+   initialen HTML — der Preload-Scanner findet das Hero-Foto sofort, statt auf
+   die Hydration zu warten. Der Zoom läuft über den motion.div-Wrapper. */
+export default function FalanghinaHero({ wine, photo }) {
   const sectionRef = useRef(null);
   const reduced = useReducedMotion();
   const catalog = byName(wine.catalogName);
@@ -150,8 +154,6 @@ export default function FalanghinaHero({ wine }) {
 
   /* ================= Foto-Modus: das echte Kellerfoto als Kino-Bühne ================= */
   if (hasPhoto) {
-    const photoAlt = `${wine.name} – Flasche in der Kellerei`;
-
     /* Schleier für Lesbarkeit: mobil von unten, ab lg von links */
     const veilLayers = (
       <>
@@ -172,12 +174,7 @@ export default function FalanghinaHero({ wine }) {
     if (reduced) {
       return (
         <section className="grain relative overflow-hidden">
-          <img
-            src={wine.images.hero}
-            alt={photoAlt}
-            draggable={false}
-            className="absolute inset-0 h-full w-full select-none object-cover object-[50%_42%]"
-          />
+          {photo}
           <div className="pointer-events-none absolute inset-0" aria-hidden="true">
             {veilLayers}
           </div>
@@ -193,15 +190,15 @@ export default function FalanghinaHero({ wine }) {
     return (
       <section ref={sectionRef} className="relative h-[210vh]">
         <div className="grain sticky top-0 h-[100svh] overflow-hidden">
-          {/* Die Bühne: echtes Foto, langsamer Feder-Zoom in die Szene */}
-          <motion.img
-            src={wine.images.hero}
-            alt={photoAlt}
-            fetchPriority="high"
-            draggable={false}
+          {/* Die Bühne: echtes Foto, langsamer Feder-Zoom in die Szene.
+              Der Zoom sitzt auf diesem Wrapper, nicht auf dem <img> selbst —
+              so bleibt das Foto server-gerendert und trotzdem animiert. */}
+          <motion.div
             style={{ scale: photoScale, y: photoY }}
-            className="absolute inset-0 h-full w-full select-none object-cover object-[50%_42%] will-transform"
-          />
+            className="absolute inset-0 will-transform"
+          >
+            {photo}
+          </motion.div>
 
           {/* Akt 1 — Elfenbein-Schleier, hebt sich mit der Headline */}
           <motion.div

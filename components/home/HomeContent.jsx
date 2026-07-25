@@ -6,15 +6,16 @@ import Marquee from "@/components/motion/Marquee";
 import { Reveal, Stagger, StaggerItem } from "@/components/motion/Reveal";
 import Button from "@/components/ui/Button";
 import { SectionTitle, Eyebrow, GrapeRule, IconChip } from "@/components/Deco";
-import HeroVisual, { ScrollCue } from "@/components/home/HeroVisual";
+import HeroVisual from "@/components/home/HeroVisual";
+import OriginsSection from "@/components/home/OriginsSection";
 import RegionExplorer from "@/components/home/RegionExplorer";
 import WineRail from "@/components/WineRail";
 import { Vineyard, Barrel, Glasses, Arrow, Clock } from "@/components/Icons";
 import { WINES, REGION_COUNT } from "@/components/data";
 import Atmosphere, { Aura, GhostWord, Vines } from "@/components/Atmosphere";
 
-/* Shared home page — rendered by /, /index1 (static buttons) and /index2
-   (magnetic buttons). The variant itself is decided by MagneticRouteProvider. */
+/* Die Startseite — Hero, Philosophie, Origins, Weine-Rail, Regionen,
+   Shop-CTA und Magazin-Teaser. */
 
 const MOMENT = [
   {
@@ -110,33 +111,38 @@ export default function HomeContent() {
             <Reveal y={18} delay={0.05}>
               <Eyebrow>Italienische Boutique-Weine</Eyebrow>
             </Reveal>
-            <h1 className="mt-6 font-playfair text-[clamp(2.8rem,6vw,4.6rem)] leading-[1.05] text-charcoal">
+            <h1 className="mt-6 font-playfair text-[clamp(2.8rem,6vw,4.6rem)] leading-[1.05] tracking-[-0.015em] text-charcoal">
               <SplitText text="Maria Maria" className="block" delay={0.12} />
               <SplitText
                 text="Il piacere del vino."
-                className="block bg-gradient-to-r from-bordeaux via-wine to-bordeaux bg-clip-text italic text-transparent"
+                className="block italic"
+                /* Gradient muss pro Wort liegen – der äußere Wrapper malt nicht
+                   durch die overflow-clip-Spans von SplitText hindurch */
+                wordClassName="bg-gradient-to-r from-bordeaux via-wine to-bordeaux bg-clip-text text-transparent"
                 delay={0.3}
               />
             </h1>
             <Reveal delay={0.5} y={16}>
-              <GrapeRule className="mt-7" />
-              <p className="mt-6 max-w-md text-[15px] leading-relaxed text-charcoal/75">
+              <GrapeRule className="mt-6" />
+              <p className="mt-5 max-w-md text-[15px] leading-relaxed text-charcoal/75">
                 Handverlesene Weine kleiner Familienweingüter – für bewusst gewählte Genussmomente,
                 vom Aperitivo bis zum großen Abend.
               </p>
             </Reveal>
             <Reveal delay={0.62} y={16}>
-              <div className="mt-8 flex flex-col items-stretch gap-3 sm:mt-9 sm:flex-row sm:items-center sm:gap-4">
-                <Button href="/weine" size="lg" className="w-full sm:w-auto">
+              {/* CTAs gestapelt: eine ruhige vertikale Achse unter dem Text –
+                  gleiche Breite, damit die Kanten eine Linie bilden */}
+              <div className="mt-7 flex w-full max-w-[17.5rem] flex-col items-stretch gap-2.5 sm:mt-8">
+                <Button href="/weine" size="lg">
                   Weine entdecken
                 </Button>
-                <Button href="/shop" variant="outline" size="lg" className="w-full sm:w-auto">
+                <Button href="/shop" variant="outline" size="lg">
                   Zum Shop
                 </Button>
               </div>
             </Reveal>
             <Reveal delay={0.78} y={12}>
-              <dl className="mt-10 flex max-w-md items-center sm:mt-14">
+              <dl className="mt-9 flex max-w-md items-center sm:mt-11">
                 {[
                   [`${WINES.length}`, "Boutique-Weine"],
                   [`${REGION_COUNT}`, "Regionen Italiens"],
@@ -157,10 +163,6 @@ export default function HomeContent() {
           </div>
 
           <HeroVisual />
-        </div>
-
-        <div className="absolute bottom-7 left-1/2 hidden -translate-x-1/2 lg:block">
-          <ScrollCue />
         </div>
       </section>
 
@@ -195,6 +197,9 @@ export default function HomeContent() {
         </Stagger>
         </div>
       </section>
+
+      {/* ============ LE ORIGINI (Markengeschichte) ============ */}
+      <OriginsSection />
 
       {/* ============ UNSERE WEINE (rail) ============ */}
       <section className="relative overflow-hidden border-y border-stone/40 bg-gradient-to-b from-cream via-champagne-light/25 to-ivory py-16 sm:py-20 lg:py-24">

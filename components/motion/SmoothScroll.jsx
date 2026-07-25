@@ -13,27 +13,41 @@ export default function SmoothScroll({ children }) {
   const lenisRef = useRef(null);
 
   useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let raf = null;
 
-    const lenis = new Lenis({
-      lerp: 0.105,
-      smoothWheel: true,
-      wheelMultiplier: 1,
-      touchMultiplier: 1.4,
-    });
-    lenisRef.current = lenis;
-
-    let raf;
-    const loop = (time) => {
-      lenis.raf(time);
+    const start = () => {
+      if (lenisRef.current) return;
+      const lenis = new Lenis({
+        lerp: 0.105,
+        smoothWheel: true,
+        wheelMultiplier: 1,
+        touchMultiplier: 1.4,
+      });
+      lenisRef.current = lenis;
+      const loop = (time) => {
+        lenis.raf(time);
+        raf = requestAnimationFrame(loop);
+      };
       raf = requestAnimationFrame(loop);
     };
-    raf = requestAnimationFrame(loop);
+
+    const stop = () => {
+      if (raf !== null) cancelAnimationFrame(raf);
+      raf = null;
+      lenisRef.current?.destroy();
+      lenisRef.current = null;
+    };
+
+    /* auf Änderungen der OS-Einstellung reagieren — nicht nur beim Mount:
+       wer Reduced Motion einschaltet, bekommt sofort natives Scrollen */
+    const sync = () => (mq.matches ? stop() : start());
+    sync();
+    mq.addEventListener("change", sync);
 
     return () => {
-      cancelAnimationFrame(raf);
-      lenis.destroy();
-      lenisRef.current = null;
+      mq.removeEventListener("change", sync);
+      stop();
     };
   }, []);
 

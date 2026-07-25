@@ -79,7 +79,8 @@ export default function RegionenPage() {
               <SplitText text="Regionen" className="block" delay={0.12} />
               <SplitText
                 text="Italiens."
-                className="block bg-gradient-to-r from-bordeaux via-wine to-champagne bg-clip-text italic text-transparent"
+                className="block italic"
+                wordClassName="bg-gradient-to-r from-bordeaux via-wine to-bordeaux bg-clip-text text-transparent"
                 delay={0.28}
               />
             </h1>

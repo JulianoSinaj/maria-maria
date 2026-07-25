@@ -8,8 +8,8 @@ import { Plus } from "@/components/Icons";
 
 const ITEMS = [
   {
-    q: "Wie kann ich eine Weinverkostung buchen?",
-    a: "Senden Sie uns einfach über das Kontaktformular oder per E-Mail Ihren Wunschtermin und die Anzahl der Gäste. Wir melden uns innerhalb von 1–2 Werktagen mit einem persönlichen Vorschlag zurück. Verkostungen sind privat ebenso wie für Firmenanlässe möglich.",
+    q: "Wie kann ich eine Weinverkostung in Düsseldorf buchen?",
+    a: "Wählen Sie im Kontaktformular einfach „Verkostungsanfrage“ – dann können Sie Wunschtermin und Gästezahl direkt angeben. Wir melden uns innerhalb von 1–2 Werktagen mit einem persönlichen Vorschlag zurück. Verkostungen finden in Düsseldorf & Umgebung statt, privat ebenso wie für Firmenanlässe.",
   },
   {
     q: "Bieten Sie internationalen Versand an?",

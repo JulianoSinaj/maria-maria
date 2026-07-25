@@ -73,13 +73,25 @@ export default function BundleCard({ bundle, className = "" }) {
             {bundle.name}
           </span>
           <div className="relative flex items-end pb-6">
-            {wines.map((w, i) => (
-              <Bottle
-                key={w.name}
-                variant={w.variant}
-                className={`${wines.length > 3 ? "h-32" : "h-40"} origin-bottom will-transform transition-transform duration-500 ease-out-expo ${fan[i] || ""}`}
-              />
-            ))}
+            {wines.map((w, i) =>
+              w.photos ? (
+                <img
+                  key={w.name}
+                  src={w.photos.front}
+                  alt={`Flasche ${w.name}`}
+                  draggable={false}
+                  loading="lazy"
+                  decoding="async"
+                  className={`${wines.length > 3 ? "h-32" : "h-40"} relative w-auto select-none object-contain origin-bottom will-transform transition-transform duration-500 ease-out-expo ${fan[i] || ""}`}
+                />
+              ) : (
+                <Bottle
+                  key={w.name}
+                  variant={w.variant}
+                  className={`${wines.length > 3 ? "h-32" : "h-40"} origin-bottom will-transform transition-transform duration-500 ease-out-expo ${fan[i] || ""}`}
+                />
+              )
+            )}
           </div>
         </div>
 

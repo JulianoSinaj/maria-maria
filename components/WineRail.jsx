@@ -31,9 +31,14 @@ export default function WineRail({ wines, className = "" }) {
 
   const list = filter ? wines.filter((w) => w.type === filter) : wines;
   const count = list.length;
-  const active = list[Math.min(index, count - 1)];
+  /* Guard gegen leere Filterergebnisse: ohne ihn wäre `active` undefined
+     (Crash in WineCard) und `% 0` ergäbe NaN */
+  const active = count > 0 ? list[Math.min(index, count - 1)] : null;
 
-  const go = (step) => setIndex(([i]) => [(i + step + count) % count, step]);
+  const go = (step) => {
+    if (count < 1) return;
+    setIndex(([i]) => [(i + step + count) % count, step]);
+  };
   const pick = (type) => {
     setFilter(type);
     setIndex([0, 0]);
@@ -149,6 +154,7 @@ export default function WineRail({ wines, className = "" }) {
               section never jumps in height mid-transition */}
           <div className="grid">
             <AnimatePresence initial={false} custom={dir}>
+              {active && (
               <motion.div
                 key={`${filter ?? "alle"}-${active.slug}`}
                 custom={dir}
@@ -161,6 +167,7 @@ export default function WineRail({ wines, className = "" }) {
               >
                 <WineCard wine={active} className="w-full" />
               </motion.div>
+              )}
             </AnimatePresence>
           </div>
         </div>

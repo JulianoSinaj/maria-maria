@@ -16,6 +16,18 @@
 
   --radius-card: 1.5rem;
   --ease-luxe: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* TasteStory pin length — via media query statt JS-State, damit Server und
+     Client dieselbe Sektionshöhe rendern (kein Hydration-Layout-Sprung) */
+  --taste-chapter-vh: 118vh;
+  --taste-extra-vh: 50vh;
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --taste-chapter-vh: 145vh;
+    --taste-extra-vh: 80vh;
+  }
 }
 
 html.lenis,

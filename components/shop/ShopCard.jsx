@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { motion, useReducedMotion } from "motion/react";
 import Bottle from "@/components/Bottle";
+import WinePhotos from "@/components/WinePhotos";
 import { Arrow, Grapes } from "@/components/Icons";
 import { fmtPrice, detailHref } from "@/components/data";
 import AddToCart from "./AddToCart";
@@ -10,13 +11,12 @@ import { WINE_META } from "./shopData";
 /* Shop product card — the boutique WineCard silhouette with real commerce:
    merchandising badge, scarcity note and the shared AddToCart control.
 
-   Wines with real photography (wine.photos in data.js) show the packshot;
-   hovering the card turns the bottle around to its back label. The white
-   studio background dissolves into the card via mix-blend-multiply.
+   The stage shows the real packshots (WinePhotos): a swipe or tap on the
+   photo turns the bottle to its back label.
 
    Has the wine a live landing page, the whole card is a stretched link to it
-   (via the name's ::after overlay); the cart control sits above on z-10, so
-   add-to-cart never triggers navigation. */
+   (via the name's ::after overlay); the cart control and the photo stage sit
+   above on z-10, so add-to-cart and swiping never trigger navigation. */
 
 function Stage({ wine }) {
   return (
@@ -32,36 +32,17 @@ function Stage({ wine }) {
       >
         {wine.region.charAt(0)}
       </span>
-      <div className="relative flex flex-col items-center pb-5">
-        {wine.photos ? (
-          /* multiply sitzt auf dem Wrapper: will-change isoliert sonst den
-             Blend-Kontext und der weiße Studiohintergrund bliebe sichtbar */
-          <div className="relative h-44 mix-blend-multiply will-transform transition-transform duration-500 ease-out-expo group-hover:-translate-y-2.5 group-hover:rotate-[-2deg]">
-            <img
-              src={wine.photos.front}
-              alt={`Flasche ${wine.name}`}
-              draggable={false}
-              className="h-full w-auto select-none object-contain transition-opacity duration-500 ease-out-expo group-hover:opacity-0"
-            />
-            <img
-              src={wine.photos.back}
-              alt=""
-              aria-hidden="true"
-              draggable={false}
-              className="absolute left-1/2 top-0 h-full w-auto max-w-none -translate-x-1/2 select-none object-contain opacity-0 transition-opacity duration-500 ease-out-expo group-hover:opacity-100"
-            />
-          </div>
-        ) : (
+      {wine.photos ? (
+        <WinePhotos wine={wine} imgClass="h-44" className="pb-3" />
+      ) : (
+        <div className="relative flex flex-col items-center pb-5">
           <Bottle
             variant={wine.variant}
             className="h-44 will-transform transition-transform duration-500 ease-out-expo group-hover:-translate-y-2.5 group-hover:rotate-[-2deg]"
           />
-        )}
-        <span
-          aria-hidden="true"
-          className="mt-1 h-2 w-20 rounded-full bg-charcoal/20 blur-[5px] transition-all duration-500 ease-out-expo group-hover:scale-x-75 group-hover:opacity-60"
-        />
-      </div>
+          <span aria-hidden="true" className="mt-1 h-2 w-20" />
+        </div>
+      )}
     </div>
   );
 }
@@ -70,12 +51,21 @@ export default function ShopCard({ wine, className = "" }) {
   const reduced = useReducedMotion();
   const meta = WINE_META[wine.name] || {};
   const detail = detailHref(wine);
-  const lift = reduced ? {} : { whileHover: { y: -6 }, transition: { type: "spring", stiffness: 260, damping: 24 } };
 
+  /* Hover-Sensorik auf dem stillstehenden Wrapper, der Lift auf der inneren
+     Karte — dasselbe Muster wie WineCard: hebt die Karte selbst ab, wandert
+     sie unter dem Cursor weg und enter/leave flattert an der Kante. */
   return (
+    <motion.div
+      initial="rest"
+      whileHover="hover"
+      animate="rest"
+      className={`group relative h-full ${className}`}
+    >
     <motion.article
-      {...lift}
-      className={`group relative flex flex-col overflow-hidden rounded-card border border-stone/50 bg-gradient-to-b from-white/90 to-cream shadow-luxe transition-[box-shadow,border-color] duration-500 hover:border-champagne/70 hover:shadow-lift ${className}`}
+      variants={reduced ? undefined : { rest: { y: 0 }, hover: { y: -6 } }}
+      transition={{ type: "spring", stiffness: 260, damping: 24 }}
+      className="relative flex h-full flex-col overflow-hidden rounded-card border border-stone/50 bg-gradient-to-b from-white/90 to-cream shadow-luxe transition-[box-shadow,border-color] duration-500 group-hover:border-champagne/70 group-hover:shadow-lift"
     >
       <span className="glass pointer-events-none absolute left-4 top-4 z-10 rounded-full px-3 py-1.5 text-[9.5px] font-semibold uppercase tracking-[0.16em] text-charcoal/70">
         {wine.region}
@@ -141,5 +131,6 @@ export default function ShopCard({ wine, className = "" }) {
         </div>
       </div>
     </motion.article>
+    </motion.div>
   );
 }

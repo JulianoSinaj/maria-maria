@@ -59,22 +59,3 @@ export default function HeroVisual() {
     </motion.div>
   );
 }
-
-/* animated scroll invitation, hero bottom-center */
-export function ScrollCue() {
-  const reduced = useReducedMotion();
-  return (
-    <div className="pointer-events-none flex flex-col items-center gap-3" aria-hidden="true">
-      <span className="text-[10px] uppercase tracking-[0.3em] text-charcoal/50">Scrollen</span>
-      <span className="relative block h-14 w-px overflow-hidden bg-charcoal/15">
-        {!reduced && (
-          <motion.span
-            className="absolute left-0 top-0 h-6 w-px bg-gradient-to-b from-transparent via-bordeaux to-bordeaux"
-            animate={{ y: [-24, 56] }}
-            transition={{ duration: 1.8, repeat: Infinity, ease: [0.45, 0, 0.55, 1] }}
-          />
-        )}
-      </span>
-    </div>
-  );
-}

@@ -60,6 +60,11 @@ export function CartProvider({ children }) {
 
   const clear = useCallback(() => setItems([]), []);
   const qtyOf = useCallback((id) => items.find((i) => i.id === id)?.qty ?? 0, [items]);
+  /* stabile Identitäten — CartDrawer hängt seinen keydown-Listener an
+     closeCart; inline im useMemo würde er bei jeder Warenkorb-Änderung
+     ab- und wieder angemeldet */
+  const openCart = useCallback(() => setOpen(true), []);
+  const closeCart = useCallback(() => setOpen(false), []);
 
   const value = useMemo(() => {
     const count = items.reduce((s, i) => s + i.qty, 0);
@@ -79,10 +84,10 @@ export function CartProvider({ children }) {
       clear,
       qtyOf,
       open,
-      openCart: () => setOpen(true),
-      closeCart: () => setOpen(false),
+      openCart,
+      closeCart,
     };
-  }, [items, open, add, decrement, remove, clear, qtyOf]);
+  }, [items, open, add, decrement, remove, clear, qtyOf, openCart, closeCart]);
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 }

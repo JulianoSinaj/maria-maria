@@ -12,7 +12,7 @@ import Atmosphere, { Aura, GhostWord, Vines } from "@/components/Atmosphere";
 export const metadata = {
   title: "Kontakt — Maria Maria",
   description:
-    "Wir freuen uns auf Ihre Nachricht – ob Fragen zu unseren Weinen, Verkostungsanfragen, Partnerschaften oder Händleranfragen.",
+    "Wir freuen uns auf Ihre Nachricht – Weinverkostungen in Düsseldorf, Fragen zu unseren Weinen, Partnerschaften oder Händleranfragen.",
 };
 
 /* lokale Feature-Icons (48er-Viewbox, gleicher Strichstil wie Icons.jsx) */
@@ -49,8 +49,8 @@ const QuestionIcon = (p) => (
 
 const HELP = [
   {
-    title: "Verkostungen",
-    text: "Sie möchten unsere Weine verkosten? Hier erfahren Sie, wie es geht.",
+    title: "Verkostungen in Düsseldorf",
+    text: "Erleben Sie unsere Weine persönlich – privat oder mit Ihrem Team, in Düsseldorf & Umgebung.",
     icon: <TastingIcon className="h-7 w-7" />,
   },
   {
@@ -72,14 +72,14 @@ const HELP = [
 
 const CONTACT = [
   { label: "E-Mail", value: "info@maria-maria.wine", href: "mailto:info@maria-maria.wine", Icon: Mail },
-  { label: "Telefon", value: "+39 0471 123456", href: "tel:+390471123456", Icon: Phone },
-  { label: "Adresse", value: "Maria Maria Wines · Südtirol, Italien", Icon: Pin },
+  { label: "Telefon", value: "+49 211 976 420", href: "tel:+49211976420", Icon: Phone },
+  { label: "Adresse", value: "Maria Maria Wines · Düsseldorf, Deutschland", Icon: Pin },
 ];
 
 const SOCIALS = [
-  { label: "Instagram", href: "#", Icon: Instagram },
-  { label: "Facebook", href: "#", Icon: Facebook },
-  { label: "LinkedIn", href: "#", Icon: LinkedIn },
+  { label: "Instagram", href: "https://www.instagram.com/mariamaria.wine", Icon: Instagram },
+  { label: "Facebook", href: "https://www.facebook.com/mariamaria.wine", Icon: Facebook },
+  { label: "LinkedIn", href: "https://www.linkedin.com/company/mariamaria-wine", Icon: LinkedIn },
 ];
 
 export default function KontaktPage() {
@@ -101,15 +101,16 @@ export default function KontaktPage() {
               <SplitText text="Kontakt" className="block" delay={0.12} />
               <SplitText
                 text="Parliamo di vino."
-                className="block bg-gradient-to-r from-bordeaux via-wine to-champagne bg-clip-text italic text-transparent"
+                className="block italic"
+                wordClassName="bg-gradient-to-r from-bordeaux via-wine to-bordeaux bg-clip-text text-transparent"
                 delay={0.26}
               />
             </h1>
             <Reveal delay={0.45} y={16}>
               <GrapeRule className="mt-7" />
               <p className="mt-6 max-w-md text-[15px] leading-relaxed text-charcoal/75">
-                Wir freuen uns auf Ihre Nachricht! Ob Fragen zu unseren Weinen, Verkostungsanfragen,
-                Partnerschaften, Händleranfragen oder besondere Momente – wir sind gerne für Sie da.
+                Wir freuen uns auf Ihre Nachricht! Ob eine Verkostung in Düsseldorf, Fragen zu
+                unseren Weinen, Partnerschaften oder Händleranfragen – wir sind gerne für Sie da.
               </p>
             </Reveal>
 
@@ -226,10 +227,10 @@ export default function KontaktPage() {
             <Reveal delay={0.12}>
               <Faq className="mt-8" />
               <a
-                href="#"
+                href="#kontakt-formular"
                 className="group mt-4 inline-flex min-h-[44px] items-center gap-1.5 text-[12px] font-medium text-bordeaux"
               >
-                Alle FAQs ansehen
+                Frage nicht dabei? Schreiben Sie uns
                 <Arrow className="h-3.5 w-3.5 transition-transform duration-500 ease-out-expo group-hover:translate-x-1" />
               </a>
             </Reveal>

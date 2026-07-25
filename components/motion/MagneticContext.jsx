@@ -1,10 +1,11 @@
 "use client";
 import { createContext, useContext } from "react";
-import { usePathname } from "next/navigation";
 
-/* Site variant switch — under /index1 every Magnetic wrapper goes inert:
-   buttons hold their position and only the CSS hover layers (fill rise,
-   label roll, shine) respond. Everywhere else cursor tracking stays on. */
+/* Globaler Schalter für magnetisches Hover. Früher steuerte er die
+   A/B-Varianten /index1 (statisch) vs. /index2 (magnetisch) — die Routen
+   sind entfernt, magnetisches Tracking ist jetzt überall aktiv. Der Context
+   bleibt als API erhalten, damit sich Magnetismus bei Bedarf (Tests,
+   Kampagnen-Seiten) weiterhin zentral abschalten lässt. */
 
 const MagneticContext = createContext(true);
 
@@ -13,7 +14,5 @@ export function useMagneticEnabled() {
 }
 
 export function MagneticRouteProvider({ children }) {
-  const pathname = usePathname() || "";
-  const enabled = !(pathname === "/index1" || pathname.startsWith("/index1/"));
-  return <MagneticContext.Provider value={enabled}>{children}</MagneticContext.Provider>;
+  return <MagneticContext.Provider value={true}>{children}</MagneticContext.Provider>;
 }

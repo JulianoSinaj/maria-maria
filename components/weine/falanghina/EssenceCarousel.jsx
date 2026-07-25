@@ -36,25 +36,32 @@ export default function EssenceCarousel({ items, accent, backgrounds = [] }) {
     [count]
   );
 
-  /* Auto-Rotation — läuft nur, wenn nicht pausiert und mehr als eine Karte */
+  /* Auto-Rotation — läuft nur, wenn nicht pausiert und mehr als eine Karte.
+     `index` in den Deps startet den Countdown bei jedem Kartenwechsel neu:
+     nach manuellem Vor/Zurück folgt kein sofortiger Auto-Advance mehr. */
   useEffect(() => {
     if (paused || reduced || count < 2) return undefined;
-    timer.current = setInterval(() => {
+    const id = setInterval(() => {
       setDir(1);
       setIndex((i) => (i + 1) % count);
     }, AUTO_MS);
-    return () => clearInterval(timer.current);
-  }, [paused, reduced, count]);
+    timer.current = id;
+    return () => clearInterval(id);
+  }, [paused, reduced, count, index]);
 
   if (!count) return null;
 
   return (
     <div
       className="relative select-none"
-      onPointerEnter={() => setPaused(true)}
+      /* Nur Pointer-Events: Touch-Handler parallel dazu ließen `paused`
+         nach einem Tap hängen (pointerenter ohne passendes leave). Maus
+         pausiert beim Hover, Touch nur solange der Finger aufliegt. */
+      onPointerEnter={(e) => e.pointerType === "mouse" && setPaused(true)}
       onPointerLeave={() => setPaused(false)}
-      onTouchStart={() => setPaused(true)}
-      onTouchEnd={() => setPaused(false)}
+      onPointerDown={() => setPaused(true)}
+      onPointerUp={(e) => e.pointerType !== "mouse" && setPaused(false)}
+      onPointerCancel={() => setPaused(false)}
       style={{ perspective: 1400 }}
       role="group"
       aria-roledescription="Karussell"
@@ -174,22 +181,26 @@ export default function EssenceCarousel({ items, accent, backgrounds = [] }) {
       {/* Steuerung — Vor/Zurück + Punkt-Indikator */}
       <div className="mt-6 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <button
+          <motion.button
             type="button"
             onClick={() => go(-1)}
             aria-label="Vorherige Karte"
-            className="ring-hairline inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/70 text-charcoal shadow-chip transition-transform duration-300 ease-out-expo active:scale-90"
+            whileTap={{ scale: 0.9 }}
+            transition={{ type: "spring", stiffness: 400, damping: 22 }}
+            className="ring-hairline inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/70 text-charcoal shadow-chip"
           >
             <ChevronRight className="h-5 w-5 rotate-180" aria-hidden="true" />
-          </button>
-          <button
+          </motion.button>
+          <motion.button
             type="button"
             onClick={() => go(1)}
             aria-label="Nächste Karte"
-            className="ring-hairline inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/70 text-charcoal shadow-chip transition-transform duration-300 ease-out-expo active:scale-90"
+            whileTap={{ scale: 0.9 }}
+            transition={{ type: "spring", stiffness: 400, damping: 22 }}
+            className="ring-hairline inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/70 text-charcoal shadow-chip"
           >
             <ChevronRight className="h-5 w-5" aria-hidden="true" />
-          </button>
+          </motion.button>
         </div>
 
         <div className="flex items-center gap-2" role="tablist" aria-label="Karten">

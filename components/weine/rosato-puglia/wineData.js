@@ -59,7 +59,7 @@ export const ROSATO_NEGROAMARO = {
       { hex: "#D98A76", label: "Warmer Reflex" },
     ],
     artwork: {
-      src: "/img/art/farbe-rose-fantin-latour.jpg",
+      src: "/img/art/farbe-rose-fantin-latour.webp",
       alt: "Ölgemälde „Pink and Red Roses“ von Henri Fantin-Latour: zartrosa Rosen mit warmen Reflexen",
       title: "Pink and Red Roses",
       artist: "Henri Fantin-Latour",

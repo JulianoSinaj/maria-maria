@@ -14,9 +14,15 @@ const EXPLORE = [
 ];
 
 const SOCIALS = [
-  { label: "Instagram", href: "#", Icon: Instagram },
-  { label: "Facebook", href: "#", Icon: Facebook },
+  { label: "Instagram", href: "https://www.instagram.com/mariamaria.wine", Icon: Instagram },
+  { label: "Facebook", href: "https://www.facebook.com/mariamaria.wine", Icon: Facebook },
   { label: "E-Mail", href: "mailto:info@maria-maria.wine", Icon: Mail },
+];
+
+const LEGAL = [
+  { label: "Datenschutz", href: "/datenschutz" },
+  { label: "Impressum", href: "/impressum" },
+  { label: "AGB", href: "/agb" },
 ];
 
 export default function Footer() {
@@ -126,13 +132,13 @@ export default function Footer() {
             <h4 className="text-[11px] font-semibold uppercase tracking-[0.22em] text-champagne">Kontakt</h4>
             <div className="mt-5 space-y-2 text-[12.5px] leading-relaxed text-ivory/65">
               <p>Maria Maria Wines</p>
-              <p>Via del Vino 12</p>
-              <p>39052 Caldaro (BZ), Italien</p>
+              <p>Kaiserswerther Straße 12</p>
+              <p>40477 Düsseldorf, Deutschland</p>
               <a href="mailto:info@maria-maria.wine" className="block transition-colors hover:text-champagne">
                 info@maria-maria.wine
               </a>
-              <a href="tel:+390471123456" className="block transition-colors hover:text-champagne">
-                +39 0471 123456
+              <a href="tel:+49211976420" className="block transition-colors hover:text-champagne">
+                +49 211 976 420
               </a>
             </div>
           </StaggerItem>
@@ -161,9 +167,11 @@ export default function Footer() {
         <div className="mx-auto flex max-w-content flex-wrap items-center justify-between gap-x-6 gap-y-2 px-6 py-5 text-[11px] text-ivory/60 lg:px-10">
           <span>© {year} Maria Maria Wines — Il piacere del vino</span>
           <div className="flex items-center gap-5">
-            <a href="#" className="transition-colors hover:text-champagne">Datenschutz</a>
-            <a href="#" className="transition-colors hover:text-champagne">Impressum</a>
-            <a href="#" className="transition-colors hover:text-champagne">AGB</a>
+            {LEGAL.map((l) => (
+              <Link key={l.href} href={l.href} className="transition-colors hover:text-champagne">
+                {l.label}
+              </Link>
+            ))}
           </div>
         </div>
       </div>

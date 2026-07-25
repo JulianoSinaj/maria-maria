@@ -10,7 +10,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "optimize:heroes": "node scripts/optimize-heroes.mjs"
+    "optimize:heroes": "node scripts/optimize-heroes.mjs",
+    "optimize:art": "node scripts/optimize-art.mjs",
+    "crop:cards": "node scripts/crop-cards.mjs"
   },
   "dependencies": {
     "lenis": "^1.3.25",

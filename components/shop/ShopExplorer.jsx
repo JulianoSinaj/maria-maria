@@ -12,6 +12,7 @@ import { WINES } from "@/components/data";
    pairings, sort chips, live count and a layout-animated grid. Tapping the
    active character again returns to the whole Selection. */
 
+/* wine = Aushängeschild des Charakters — dessen Packshot steht auf der Karte */
 const CHARACTERS = [
   {
     type: "Rotwein",
@@ -19,6 +20,7 @@ const CHARACTERS = [
     sub: "Kraftvoll & vollmundig",
     pairing: "zu Gegrilltem, Pasta und gereiftem Käse",
     variant: "red",
+    wine: "primitivo-14-5",
   },
   {
     type: "Weißwein",
@@ -26,6 +28,7 @@ const CHARACTERS = [
     sub: "Fein & mineralisch",
     pairing: "zu Fisch, Meeresfrüchten und Antipasti",
     variant: "white",
+    wine: "lugana",
   },
   {
     type: "Roséwein",
@@ -33,8 +36,11 @@ const CHARACTERS = [
     sub: "Frisch & lebendig",
     pairing: "zum Aperitivo und zur leichten Sommerküche",
     variant: "rose",
+    wine: "rosato-puglia",
   },
 ];
+
+const photoFor = (slug) => WINES.find((w) => w.slug === slug)?.photos?.front;
 
 const SORTS = [
   { id: "empfohlen", label: "Empfohlen" },
@@ -105,10 +111,22 @@ export default function ShopExplorer() {
                   className="absolute left-1/2 top-1/2 h-[150%] w-[150%] -translate-x-1/2 -translate-y-1/2 rounded-full"
                   style={{ background: "radial-gradient(closest-side, rgba(200,183,122,0.32), transparent 72%)" }}
                 />
-                <Bottle
-                  variant={c.variant}
-                  className="relative h-14 pb-0 will-transform transition-transform duration-500 ease-out-expo group-hover:-translate-y-1 group-hover:rotate-[-2deg]"
-                />
+                {photoFor(c.wine) ? (
+                  <img
+                    src={photoFor(c.wine)}
+                    alt=""
+                    aria-hidden="true"
+                    draggable={false}
+                    loading="lazy"
+                    decoding="async"
+                    className="relative h-16 w-auto select-none object-contain will-transform transition-transform duration-500 ease-out-expo group-hover:-translate-y-1 group-hover:rotate-[-2deg]"
+                  />
+                ) : (
+                  <Bottle
+                    variant={c.variant}
+                    className="relative h-14 pb-0 will-transform transition-transform duration-500 ease-out-expo group-hover:-translate-y-1 group-hover:rotate-[-2deg]"
+                  />
+                )}
               </span>
 
               <span className="min-w-0">

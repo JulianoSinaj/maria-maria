@@ -14,8 +14,10 @@ export const PRIMITIVO_155 = {
   slug: "primitivo-15-5",
   catalogName: "Primitivo 15,5", // key into components/data.js WINES via byName()
 
-  name: "Primitivo di Manduria DOP 15.50",
+  name: "Primitivo di Manduria DOP 15,50",
   eyebrow: "Italienische Boutique-Weine",
+  /* Limitierte Auflage — als Badge im Hero und als Zeile im Datenblatt */
+  edition: "12.000 Flaschen",
   heroTitle: ["Primitivo 15,5", "di Manduria DOP"],
   lede:
     "100 % Primitivo di Manduria aus Torricella und Maruggio. Zwölf Monate in antiken Terrakotta-Amphoren — den capasoni. Kraftvoll, warm, komplex.",
@@ -29,7 +31,7 @@ export const PRIMITIVO_155 = {
   breadcrumb: [
     { label: "Home", href: "/" },
     { label: "Unsere Weine", href: "/weine" },
-    { label: "Primitivo di Manduria DOP 15.50", href: null },
+    { label: "Primitivo di Manduria DOP 15,50", href: null },
   ],
 
   images: {
@@ -59,7 +61,7 @@ export const PRIMITIVO_155 = {
       { hex: "#8C2230", label: "Granatrand" },
     ],
     artwork: {
-      src: "/img/art/farbe-rot-fantin-latour.jpg",
+      src: "/img/art/farbe-rot-fantin-latour.webp",
       alt: "Ölgemälde „Roses in a Bowl“ von Henri Fantin-Latour: Rosen in Rubin- und Cremetönen vor tiefdunklem Grund",
       title: "Roses in a Bowl",
       artist: "Henri Fantin-Latour",
@@ -139,6 +141,7 @@ export const PRIMITIVO_155 = {
     },
     { label: "Ausbau", value: "12 Monate in antiken Terrakotta-Giare (capasoni) bis zur Füllung" },
     { label: "Alkoholgehalt", value: "15,50 % vol." },
+    { label: "Limitierte Auflage", value: "12.000 Flaschen" },
     { label: "Serviertemperatur", value: "16–18 °C" },
     { label: "Füllmenge", value: "750 ml" },
     { label: "Hinweis", value: "Enthält Sulfite" },
@@ -239,7 +242,7 @@ export const PRIMITIVO_155 = {
   /* ---- Häufige Fragen ---- */
   faq: [
     {
-      q: "Wie schmeckt der Primitivo di Manduria DOP 15.50?",
+      q: "Wie schmeckt der Primitivo di Manduria DOP 15,50?",
       a: "Körperreich und von bemerkenswerter gusto-olfaktorischer Dichte: entschieden, trocken, warm und komplex, dabei durchgehend intensiv. In der Nase fein und delikat mit Anklängen von Erdbeere und Waldfrüchten.",
     },
     {

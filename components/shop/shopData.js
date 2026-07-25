@@ -67,7 +67,8 @@ const slug = (s) =>
 
 export const wineId = (w) => `wein-${slug(w.name)}`;
 
-/* flat lookup: everything the cart can hold */
+/* flat lookup: everything the cart can hold.
+   photos = echte Packshot-Vorderseiten für die Warenkorb-Miniatur. */
 export const PRODUCTS = {};
 WINES.forEach((w) => {
   PRODUCTS[wineId(w)] = {
@@ -77,15 +78,18 @@ WINES.forEach((w) => {
     price: w.price,
     sub: `${w.type} · ${w.region}`,
     variants: [w.variant],
+    photos: w.photos ? [w.photos.front] : null,
   };
 });
 BUNDLES.forEach((b) => {
+  const wines = bundleWines(b);
   PRODUCTS[b.id] = {
     id: b.id,
     kind: "bundle",
     name: b.name,
     price: b.price,
     sub: `Probierpaket · ${b.wines.length} Flaschen`,
-    variants: [...new Set(bundleWines(b).map((w) => w.variant))],
+    variants: [...new Set(wines.map((w) => w.variant))],
+    photos: wines.every((w) => w.photos) ? wines.map((w) => w.photos.front) : null,
   };
 });

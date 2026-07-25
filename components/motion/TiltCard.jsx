@@ -32,6 +32,10 @@ export default function TiltCard({ children, className = "", max = 6, glare = tr
   const onLeave = () => {
     rx.set(0);
     ry.set(0);
+    /* Glare mit zurücksetzen — sonst friert der Schimmer an der letzten
+       Cursorposition ein und springt beim nächsten Hover sichtbar um */
+    gx.set(50);
+    gy.set(50);
   };
 
   // Pointer tracking and hover sensing live on the stationary perspective

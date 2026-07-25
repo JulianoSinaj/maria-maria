@@ -2,14 +2,16 @@
 import Link from "next/link";
 import { motion, useReducedMotion } from "motion/react";
 import Bottle from "./Bottle";
+import WinePhotos from "./WinePhotos";
 import { Arrow } from "./Icons";
 import { fmtPrice, wineHref, detailHref } from "./data";
 import AddToCart from "./shop/AddToCart";
 
 /* E-commerce product card. Two variants:
-   - "default": vertical boutique card — glowing stage, lifting bottle,
-     region chip, price row with add-to-cart control; the whole card is a
-     stretched link to the wine's landing page (shop as fallback).
+   - "default": vertical boutique card — glowing stage, real swipeable
+     packshots (WinePhotos), region chip, price row with add-to-cart control;
+     the whole card is a stretched link to the wine's landing page (shop as
+     fallback). A press on the photo flips the bottle instead of navigating.
    - "mini": compact horizontal card for carousels and region rails. */
 
 function Stage({ wine, className = "", bottleClass = "h-40" }) {
@@ -28,17 +30,18 @@ function Stage({ wine, className = "", bottleClass = "h-40" }) {
       >
         {wine.region.charAt(0)}
       </span>
-      {/* bottle + settling shadow */}
-      <div className="relative flex flex-col items-center pb-5">
-        <Bottle
-          variant={wine.variant}
-          className={`${bottleClass} will-transform transition-transform duration-500 ease-out-expo group-hover:-translate-y-2.5 group-hover:rotate-[-2deg]`}
-        />
-        <span
-          aria-hidden="true"
-          className="mt-1 h-2 w-20 rounded-full bg-charcoal/20 blur-[5px] transition-all duration-500 ease-out-expo group-hover:scale-x-75 group-hover:opacity-60"
-        />
-      </div>
+      {wine.photos ? (
+        <WinePhotos wine={wine} imgClass={bottleClass} className="pb-3" />
+      ) : (
+        /* Fallback ohne Fotos: illustrierte Flasche (Spacer hält die Höhe) */
+        <div className="relative flex flex-col items-center pb-5">
+          <Bottle
+            variant={wine.variant}
+            className={`${bottleClass} will-transform transition-transform duration-500 ease-out-expo group-hover:-translate-y-2.5 group-hover:rotate-[-2deg]`}
+          />
+          <span aria-hidden="true" className="mt-1 h-2 w-20" />
+        </div>
+      )}
     </div>
   );
 }

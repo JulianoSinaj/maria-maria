@@ -58,11 +58,14 @@ const SERVICE = [
   },
 ];
 
+/* Drei echte Packshots als Hero-Still — Rot, Weiß, Rosé */
 const HERO_BOTTLES = [
-  { variant: "red", cls: "h-44 -mr-4 -rotate-[8deg]" },
-  { variant: "white", cls: "z-10 h-56" },
-  { variant: "rose", cls: "h-44 -ml-4 rotate-[8deg]" },
+  { slug: "primitivo-14-5", cls: "h-44 -mr-4 -rotate-[8deg]" },
+  { slug: "lugana", cls: "z-10 h-56" },
+  { slug: "rosato-puglia", cls: "h-44 -ml-4 rotate-[8deg]" },
 ];
+
+const heroWine = (slug) => WINES.find((w) => w.slug === slug);
 
 export default function ShopPage() {
   return (
@@ -78,24 +81,29 @@ export default function ShopPage() {
               <Reveal y={18} delay={0.05}>
                 <Eyebrow>Der offizielle Shop</Eyebrow>
               </Reveal>
-              <h1 className="mt-6 font-playfair text-[clamp(2.6rem,5.4vw,4.1rem)] leading-[1.06] text-charcoal">
+              <h1 className="mt-6 font-playfair text-[clamp(2.6rem,5.4vw,4.1rem)] leading-[1.06] tracking-[-0.015em] text-charcoal">
                 <SplitText text="Enoteca Maria Maria" className="block" delay={0.12} />
                 <SplitText
                   text="Share the pleasure."
-                  className="block bg-gradient-to-r from-bordeaux via-wine to-champagne bg-clip-text italic text-transparent"
+                  className="block italic"
+                  /* Gradient muss pro Wort liegen – der äußere Wrapper malt nicht
+                     durch die overflow-clip-Spans von SplitText hindurch */
+                  wordClassName="bg-gradient-to-r from-bordeaux via-wine to-bordeaux bg-clip-text text-transparent"
                   delay={0.3}
                 />
               </h1>
               <Reveal delay={0.5} y={16}>
-                <GrapeRule className="mt-7" />
-                <p className="mt-6 max-w-md text-[15px] leading-relaxed text-charcoal/75">
+                <GrapeRule className="mt-6" />
+                <p className="mt-5 max-w-md text-[15px] leading-relaxed text-charcoal/75">
                   Italienischer Wein, persönlich ausgewählt: Boutique-Weine in limitierter Auflage,
                   entstanden in direkter Zusammenarbeit mit lokalen Familien und Önologen. Ab 69 €
                   liefern wir versandkostenfrei.
                 </p>
               </Reveal>
               <Reveal delay={0.62} y={16}>
-                <div className="mt-9 flex flex-wrap items-center gap-4">
+                {/* CTAs gestapelt – gleiche Breite, eine vertikale Achse mit
+                    Eyebrow, Titel und Textblock */}
+                <div className="mt-7 flex w-full max-w-[17.5rem] flex-col items-stretch gap-2.5 sm:mt-8">
                   <Button href="#sortiment" size="lg">
                     Jetzt entdecken
                   </Button>
@@ -105,7 +113,7 @@ export default function ShopPage() {
                 </div>
               </Reveal>
               <Reveal delay={0.78} y={12}>
-                <dl className="mt-14 flex max-w-md items-center">
+                <dl className="mt-9 flex max-w-md items-center sm:mt-11">
                   {[
                     [`${WINES.length}`, "Boutique-Weine"],
                     [`${REGION_COUNT}`, "Regionen Italiens"],
@@ -147,13 +155,24 @@ export default function ShopPage() {
                       className="absolute bottom-10 left-1/2 h-24 w-72 -translate-x-1/2 rounded-full opacity-80"
                       style={{ background: "radial-gradient(closest-side, rgba(200,183,122,0.45), transparent 75%)" }}
                     />
-                    {HERO_BOTTLES.map((b) => (
-                      <Bottle
-                        key={b.variant}
-                        variant={b.variant}
-                        className={`${b.cls} origin-bottom will-transform transition-transform duration-700 ease-out-expo group-hover:-translate-y-2`}
-                      />
-                    ))}
+                    {HERO_BOTTLES.map((b) => {
+                      const w = heroWine(b.slug);
+                      return w?.photos ? (
+                        <img
+                          key={b.slug}
+                          src={w.photos.front}
+                          alt={`Flasche ${w.name}`}
+                          draggable={false}
+                          className={`${b.cls} relative w-auto select-none object-contain origin-bottom will-transform transition-transform duration-700 ease-out-expo group-hover:-translate-y-2`}
+                        />
+                      ) : (
+                        <Bottle
+                          key={b.slug}
+                          variant={w?.variant ?? "red"}
+                          className={`${b.cls} origin-bottom will-transform transition-transform duration-700 ease-out-expo group-hover:-translate-y-2`}
+                        />
+                      );
+                    })}
                     <span
                       aria-hidden="true"
                       className="absolute bottom-11 left-1/2 h-2.5 w-60 -translate-x-1/2 rounded-full bg-charcoal/15 blur-[6px]"
@@ -265,7 +284,7 @@ export default function ShopPage() {
                   <div className="mt-8 flex items-center gap-3">
                     <GoldRule className="w-12" />
                     <p className="font-playfair text-[19px] italic leading-snug text-bordeaux">
-                      «Italian wine, personal selection, share the pleasure.»
+                      „Italian wine, personal selection, share the pleasure.“
                     </p>
                   </div>
                 </Reveal>

@@ -5,7 +5,8 @@ import Button from "@/components/ui/Button";
 import { Arrow, Check, ChevronDown } from "@/components/Icons";
 
 /* Kontaktformular — Glaskarte mit sichtbaren Labels, Blur-Validierung und
-   fake-async Versand. Erfolgszustand mit Reset-Link. */
+   echtem Versand an /api/contact. Bei "Verkostungsanfrage" klappen Wunschtermin
+   und Gästezahl auf, damit die Anfrage direkt planbar ankommt. */
 
 const INPUT =
   "w-full rounded-xl border border-white/60 bg-white/50 px-4 py-3 text-[13px] text-charcoal outline-none transition-all duration-200 focus:border-champagne focus:bg-white/70 focus:ring-2 focus:ring-champagne/30 placeholder:text-charcoal/40";
@@ -16,9 +17,20 @@ const TOPICS = ["Verkostungsanfrage", "Händleranfrage", "Presse & Kooperationen
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
-const EMPTY = { name: "", email: "", subject: "", topic: "", message: "", privacy: false };
+const EMPTY = {
+  name: "",
+  email: "",
+  subject: "",
+  topic: "",
+  date: "",
+  guests: "",
+  message: "",
+  privacy: false,
+};
 
-function validateField(field, value) {
+const TASTING = "Verkostungsanfrage";
+
+function validateField(field, value, values) {
   switch (field) {
     case "name":
       return value.trim() ? "" : "Bitte geben Sie Ihren Namen an.";
@@ -29,6 +41,12 @@ function validateField(field, value) {
       return value.trim() ? "" : "Bitte geben Sie einen Betreff an.";
     case "topic":
       return value ? "" : "Bitte wählen Sie ein Anliegen.";
+    case "date":
+      if (values?.topic !== TASTING) return "";
+      return value ? "" : "Bitte wählen Sie einen Wunschtermin.";
+    case "guests":
+      if (values?.topic !== TASTING) return "";
+      return value ? "" : "Bitte geben Sie die Anzahl der Gäste an.";
     case "message":
       return value.trim() ? "" : "Bitte schreiben Sie uns eine kurze Nachricht.";
     case "privacy":
@@ -51,35 +69,65 @@ export default function ContactForm({ className = "" }) {
   const [values, setValues] = useState(EMPTY);
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState("idle"); // idle | sending | sent
+  const [submitError, setSubmitError] = useState("");
 
   const setField = (field, value) => {
     setValues((v) => ({ ...v, [field]: value }));
-    if (errors[field] && !validateField(field, value)) {
+    if (errors[field] && !validateField(field, value, { ...values, [field]: value })) {
       setErrors((e) => ({ ...e, [field]: "" }));
     }
   };
 
   const onBlurField = (field) =>
-    setErrors((e) => ({ ...e, [field]: validateField(field, values[field]) }));
+    setErrors((e) => ({ ...e, [field]: validateField(field, values[field], values) }));
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
     if (status === "sending") return;
     const next = {};
     Object.keys(EMPTY).forEach((f) => {
-      next[f] = validateField(f, values[f]);
+      next[f] = validateField(f, values[f], values);
     });
     setErrors(next);
     if (Object.values(next).some(Boolean)) return;
     setStatus("sending");
-    setTimeout(() => setStatus("sent"), 900);
+    setSubmitError("");
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: values.name,
+          email: values.email,
+          subject: values.subject,
+          topic: values.topic,
+          date: values.date,
+          guests: values.guests,
+          message: values.message,
+        }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok || !data.ok) {
+        throw new Error(data.error || "Die Nachricht konnte nicht gesendet werden.");
+      }
+      setStatus("sent");
+    } catch (err) {
+      setStatus("idle");
+      setSubmitError(
+        err?.message || "Die Nachricht konnte nicht gesendet werden. Bitte versuchen Sie es erneut."
+      );
+    }
   };
 
   const reset = () => {
     setValues(EMPTY);
     setErrors({});
     setStatus("idle");
+    setSubmitError("");
   };
+
+  const isTasting = values.topic === TASTING;
+  const today = new Date().toISOString().slice(0, 10);
 
   const sending = status === "sending";
   const describe = (field) => (errors[field] ? `kf-${field}-error` : undefined);
@@ -225,6 +273,77 @@ export default function ContactForm({ className = "" }) {
                 <FieldError id="kf-topic-error">{errors.topic}</FieldError>
               </div>
 
+              <AnimatePresence initial={false}>
+                {isTasting && (
+                  <motion.div
+                    key="tasting"
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: "auto" }}
+                    exit={{ opacity: 0, height: 0 }}
+                    transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                    className="overflow-hidden"
+                  >
+                    <div className="grid grid-cols-1 gap-4 pb-1 sm:grid-cols-2">
+                      <div>
+                        <label htmlFor="kf-date" className={LABEL}>
+                          Wunschtermin
+                        </label>
+                        <input
+                          id="kf-date"
+                          name="date"
+                          type="date"
+                          min={today}
+                          className={INPUT}
+                          value={values.date}
+                          onChange={(e) => setField("date", e.target.value)}
+                          onBlur={() => onBlurField("date")}
+                          aria-invalid={errors.date ? true : undefined}
+                          aria-describedby={describe("date")}
+                        />
+                        <FieldError id="kf-date-error">{errors.date}</FieldError>
+                      </div>
+                      <div>
+                        <label htmlFor="kf-guests" className={LABEL}>
+                          Anzahl Gäste
+                        </label>
+                        <div className="relative">
+                          <select
+                            id="kf-guests"
+                            name="guests"
+                            className={`${INPUT} cursor-pointer appearance-none pr-11 ${
+                              values.guests ? "" : "text-charcoal/40"
+                            }`}
+                            value={values.guests}
+                            onChange={(e) => setField("guests", e.target.value)}
+                            onBlur={() => onBlurField("guests")}
+                            aria-invalid={errors.guests ? true : undefined}
+                            aria-describedby={describe("guests")}
+                          >
+                            <option value="" disabled>
+                              Gäste wählen
+                            </option>
+                            {["2–4", "5–8", "9–12", "13–20", "Mehr als 20"].map((g) => (
+                              <option key={g} value={g}>
+                                {g} Personen
+                              </option>
+                            ))}
+                          </select>
+                          <ChevronDown
+                            aria-hidden="true"
+                            className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-charcoal/50"
+                          />
+                        </div>
+                        <FieldError id="kf-guests-error">{errors.guests}</FieldError>
+                      </div>
+                      <p className="text-[11.5px] leading-snug text-charcoal/60 sm:col-span-2">
+                        Unsere Verkostungen finden in Düsseldorf &amp; Umgebung statt — privat oder
+                        für Ihr Team, bei Ihnen oder in unserem Verkostungsraum.
+                      </p>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
               <div>
                 <label htmlFor="kf-message" className={LABEL}>
                   Nachricht
@@ -263,7 +382,7 @@ export default function ContactForm({ className = "" }) {
                   <span>
                     Ich habe die{" "}
                     <a
-                      href="#"
+                      href="/datenschutz"
                       className="font-medium text-bordeaux underline decoration-bordeaux/30 underline-offset-2 transition-colors duration-300 hover:decoration-bordeaux"
                     >
                       Datenschutzerklärung
@@ -273,6 +392,15 @@ export default function ContactForm({ className = "" }) {
                 </label>
                 <FieldError id="kf-privacy-error">{errors.privacy}</FieldError>
               </div>
+
+              {submitError && (
+                <p
+                  role="alert"
+                  className="rounded-xl border border-[#B3261E]/25 bg-[#B3261E]/5 px-4 py-3 text-[12px] leading-snug text-[#B3261E]"
+                >
+                  {submitError}
+                </p>
+              )}
 
               <div className="pt-2">
                 <Button

@@ -149,6 +149,12 @@ export default function FalanghinaHero({ wine, photo }) {
           <span className="tabular-nums">{catalog.year}</span>
         </p>
       )}
+      {wine.edition && (
+        <p className="mt-3.5 inline-flex items-center gap-2.5 self-start rounded-full border border-champagne/60 bg-ivory/70 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-charcoal/75 backdrop-blur-sm">
+          <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-bordeaux" />
+          Limitierte Auflage · nur <span className="tabular-nums">{wine.edition}</span>
+        </p>
+      )}
     </>
   );
 

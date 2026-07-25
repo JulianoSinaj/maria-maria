@@ -16,6 +16,8 @@ export const PRIMITIVO_14_5 = {
 
   name: "Primitivo di Manduria DOP 14,50",
   eyebrow: "Italienische Boutique-Weine",
+  /* Limitierte Auflage — als Badge im Hero und als Zeile im Datenblatt */
+  edition: "18.000 Flaschen",
   heroTitle: ["Primitivo 14,50", "di Manduria DOP"],
   /* Verlauf der kursiven zweiten Headline-Zeile — Rubinrot statt des
      Falanghina-Grüns, abgestimmt auf das rote Etikett und das warme
@@ -63,7 +65,7 @@ export const PRIMITIVO_14_5 = {
       { hex: "#7A2A55", label: "Violetter Reflex" },
     ],
     artwork: {
-      src: "/img/art/farbe-rot-fantin-latour.jpg",
+      src: "/img/art/farbe-rot-fantin-latour.webp",
       alt: "Ölgemälde „Roses in a Bowl“ von Henri Fantin-Latour: Rosen in Rubin- und Cremetönen vor tiefdunklem Grund",
       title: "Roses in a Bowl",
       artist: "Henri Fantin-Latour",
@@ -143,6 +145,7 @@ export const PRIMITIVO_14_5 = {
     },
     { label: "Ausbau", value: "12 Monate im Stahltank bis zur Abfüllung" },
     { label: "Alkoholgehalt", value: "14,50 % vol." },
+    { label: "Limitierte Auflage", value: "18.000 Flaschen" },
     { label: "Serviertemperatur", value: "16–18 °C" },
     { label: "Füllmenge", value: "750 ml" },
     { label: "Hinweis", value: "Enthält Sulfite" },

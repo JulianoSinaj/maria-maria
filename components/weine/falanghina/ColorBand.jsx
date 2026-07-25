@@ -1,6 +1,6 @@
 "use client";
 import { useRef } from "react";
-import { motion, useReducedMotion } from "motion/react";
+import { motion, useInView, useReducedMotion } from "motion/react";
 import { Reveal } from "@/components/motion/Reveal";
 import SplitText from "@/components/motion/SplitText";
 import { useTouchDevice } from "@/components/motion/useMediaQuery";
@@ -23,7 +23,7 @@ const mixHex = (a, b, t) => {
 };
 
 const FALLBACK_ARTWORK = {
-  src: "/img/art/farbe-rot-fantin-latour.jpg",
+  src: "/img/art/farbe-rot-fantin-latour.webp",
   alt: "Ölgemälde „Roses in a Bowl“ von Henri Fantin-Latour",
   title: "Roses in a Bowl",
   artist: "Henri Fantin-Latour",
@@ -32,12 +32,16 @@ const FALLBACK_ARTWORK = {
 };
 
 export default function ColorBand({ wine }) {
-  const ref = useRef(null);
   const reduced = useReducedMotion();
   const touch = useTouchDevice();
   const c = wine.colorMoment;
   const art = c.artwork ?? FALLBACK_ARTWORK;
-  const hasVideo = Boolean(art.video) && !reduced;
+  /* Das Loop-Video (~4 MB) erst mounten, wenn die Sektion in Sichtweite ist —
+     sonst lädt jede Weinseite den kompletten Clip schon beim Seitenaufruf.
+     Bis dahin (und bei Reduced Motion) steht das Gemälde als Poster. */
+  const videoRef = useRef(null);
+  const nearView = useInView(videoRef, { once: true, margin: "0px 0px 600px 0px" });
+  const hasVideo = Boolean(art.video) && !reduced && nearView;
   const accent = wine.accent ?? { base: "#C8B77A", deep: "#8A2B2F", light: "#E3D9B8" };
   const [s0, s1, s2] = [c.swatches[0], c.swatches[1], c.swatches[2] ?? c.swatches[1]];
 
@@ -72,7 +76,6 @@ export default function ColorBand({ wine }) {
 
   return (
     <section
-      ref={ref}
       className="relative overflow-hidden"
       style={{
         background: `linear-gradient(180deg, #FBF9F4 0%, ${s0.hex}26 62%, ${s0.hex}45 100%)`,
@@ -138,7 +141,6 @@ export default function ColorBand({ wine }) {
             className="absolute left-1/2 top-1/2 h-[340px] w-[340px] -translate-x-1/2 -translate-y-1/2 rounded-full blur-3xl"
             style={{ background: `radial-gradient(closest-side, ${s1.hex}59, transparent 72%)` }}
           />
-          <motion.div className="will-transform">
             <motion.figure
               variants={entryV}
               initial="hidden"
@@ -172,6 +174,7 @@ export default function ColorBand({ wine }) {
               >
                 <div className="rounded-[24.5px] border border-white/50 bg-white/60 p-2.5 backdrop-blur-xl sm:p-3">
                   <div
+                    ref={videoRef}
                     className="relative overflow-hidden rounded-[18px]"
                     style={{ border: `1px solid ${frameDeep}24` }}
                   >
@@ -233,9 +236,15 @@ export default function ColorBand({ wine }) {
                     )}
                   </div>
 
-                  {/* Bildleiste — verbindet Motiv und Weinfarbe, sitzt in der Karte */}
+                  {/* Bildleiste — verbindet Motiv und Weinfarbe, sitzt in der Karte.
+                      Eigene initial/whileInView-Props statt Variant-Propagation:
+                      die läuft nur über motion-Kinder, und dazwischen liegen
+                      plain <div>s — über die Figure kam der Trigger nie an. */}
                   <motion.div
                     variants={plaqueV}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, amount: 0.35 }}
                     className="flex items-center justify-between gap-3 px-2.5 pb-1 pt-2.5 sm:px-3"
                   >
                     <span className="min-w-0 leading-tight">
@@ -269,7 +278,6 @@ export default function ColorBand({ wine }) {
                 </div>
               </div>
             </motion.figure>
-          </motion.div>
         </div>
       </div>
     </section>

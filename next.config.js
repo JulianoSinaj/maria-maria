@@ -1,17 +1,16 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   async headers() {
+    /* Die Dateinamen unter /img und /video sind NICHT content-gehasht
+       (hero-1280.webp bleibt hero-1280.webp, auch wenn das Motiv wechselt).
+       Ein `immutable`-Jahr würde wiederkehrende Besucher bis zu einem Jahr
+       auf dem alten Bild festnageln — daher ein Tag Frische plus eine Woche
+       stale-while-revalidate: Zweitaufrufe bleiben sofort da, Änderungen
+       kommen trotzdem zeitnah an. */
+    const media = { key: "Cache-Control", value: "public, max-age=86400, stale-while-revalidate=604800" };
     return [
-      {
-        /* Die Wein-Fotos sind content-stabil: ändert sich ein Motiv, wird die
-           Datei ohnehin über scripts/optimize-heroes.mjs neu erzeugt und
-           deployed. Ein Jahr immutable spart bei jedem Zweitaufruf die
-           komplette Revalidierungs-Runde — der Hero steht dann sofort. */
-        source: "/img/wines/:path*",
-        headers: [
-          { key: "Cache-Control", value: "public, max-age=31536000, immutable" },
-        ],
-      },
+      { source: "/img/:path*", headers: [media] },
+      { source: "/video/:path*", headers: [media] },
     ];
   },
 };

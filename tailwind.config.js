@@ -40,8 +40,10 @@ module.exports = {
         "card-lg": "2rem",
       },
       boxShadow: {
-        luxe: "0 1px 1px rgba(43,20,14,.03), 0 8px 20px -14px rgba(43,20,14,.14)",
-        lift: "0 2px 4px rgba(43,20,14,.05), 0 20px 40px -22px rgba(43,20,14,.22)",
+        /* card shadows removed — kept as tokens so every `shadow-luxe` /
+           `shadow-lift` (incl. hover transitions) resolves to a flat surface */
+        luxe: "none",
+        lift: "none",
         glass: "inset 0 1px 0 rgba(255,255,255,.65), 0 20px 50px -20px rgba(43,20,14,.28)",
         chip: "inset 0 1px 0 rgba(255,255,255,.7), 0 10px 24px -12px rgba(107,15,26,.28)",
       },

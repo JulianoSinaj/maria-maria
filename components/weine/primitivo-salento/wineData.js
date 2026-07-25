@@ -59,7 +59,7 @@ export const PRIMITIVO_SALENTO = {
       { hex: "#8C2230", label: "Kirschreflex" },
     ],
     artwork: {
-      src: "/img/art/farbe-rot-fantin-latour.jpg",
+      src: "/img/art/farbe-rot-fantin-latour.webp",
       alt: "Ölgemälde „Roses in a Bowl“ von Henri Fantin-Latour: Rosen in Rubin- und Cremetönen vor tiefdunklem Grund",
       title: "Roses in a Bowl",
       artist: "Henri Fantin-Latour",

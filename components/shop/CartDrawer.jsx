@@ -34,14 +34,31 @@ function ItemRow({ item }) {
           style={{ background: "radial-gradient(closest-side, rgba(200,183,122,0.3), transparent 72%)" }}
         />
         <div className="relative flex items-end pb-2">
-          {product.variants.slice(0, 3).map((v, i) => (
-            <Bottle
-              key={`${v}${i}`}
-              variant={v}
-              className={`h-14 ${i > 0 ? "-ml-3" : ""} ${product.variants.length > 1 ? (i === 0 ? "-rotate-6" : i === 2 ? "rotate-6" : "") : ""
-                }`}
-            />
-          ))}
+          {product.photos
+            ? product.photos.slice(0, 3).map((src, i) => (
+                /* multiply pro Foto: weißer Studiohintergrund löst sich in
+                   die Bühne auf, auch wo sich die Miniaturen überlappen */
+                <img
+                  key={src + i}
+                  src={src}
+                  alt=""
+                  aria-hidden="true"
+                  draggable={false}
+                  loading="lazy"
+                  decoding="async"
+                  className={`h-14 w-auto select-none object-contain ${i > 0 ? "-ml-3" : ""} ${
+                    product.photos.length > 1 ? (i === 0 ? "-rotate-6" : i === 2 ? "rotate-6" : "") : ""
+                  }`}
+                />
+              ))
+            : product.variants.slice(0, 3).map((v, i) => (
+                <Bottle
+                  key={`${v}${i}`}
+                  variant={v}
+                  className={`h-14 ${i > 0 ? "-ml-3" : ""} ${product.variants.length > 1 ? (i === 0 ? "-rotate-6" : i === 2 ? "rotate-6" : "") : ""
+                    }`}
+                />
+              ))}
         </div>
       </div>
 

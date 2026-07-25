@@ -74,27 +74,37 @@ export default function RegionExplorer({ regions, mapSrc = "/img/map-sud-italia.
   const [open, setOpen] = useState(null); // mobile expanded row
   const reduced = useReducedMotion();
 
-  // Scroll-driven parallax for the map behind the desktop stage.
+  // Scroll-driven parallax for the map. Desktop and mobile stages each need
+  // their own target ref: whichever one is display:none has no geometry, so a
+  // shared useScroll would report a dead progress on the other breakpoint.
   const stageRef = useRef(null);
+  const mobileStageRef = useRef(null);
+  const SPRING_CFG = { stiffness: 120, damping: 30, mass: 0.6 };
   const { scrollYProgress } = useScroll({
     target: stageRef,
+    offset: ["start end", "end start"],
+  });
+  const { scrollYProgress: mobileProgress } = useScroll({
+    target: mobileStageRef,
     offset: ["start end", "end start"],
   });
   // raw progress → gentle vertical drift, smoothed through a physics spring.
   // Scale is held constant: an second, independently timed zoom loop only added
   // repaint churn behind the cards.
   const driftRaw = useTransform(scrollYProgress, [0, 1], ["-6%", "6%"]);
-  const drift = useSpring(driftRaw, { stiffness: 120, damping: 30, mass: 0.6 });
+  const drift = useSpring(driftRaw, SPRING_CFG);
+  const mobileDriftRaw = useTransform(mobileProgress, [0, 1], ["-6%", "6%"]);
+  const mobileDrift = useSpring(mobileDriftRaw, SPRING_CFG);
 
-  const mapLayer = (parallax = false) => (
+  const mapLayer = (parallaxDrift = null) => (
     <>
       {/* the photographic Sud-Italia relief — GPU transformed, never a layout shift */}
       <motion.img
         src={mapSrc}
         alt="Karte Süditaliens mit den Weinregionen"
         style={
-          parallax && !reduced
-            ? { y: drift, scale: 1.12, willChange: "transform" }
+          parallaxDrift && !reduced
+            ? { y: parallaxDrift, scale: 1.12, willChange: "transform" }
             : { scale: 1.04 }
         }
         className="pointer-events-none absolute inset-0 h-full w-full object-cover"
@@ -111,7 +121,7 @@ export default function RegionExplorer({ regions, mapSrc = "/img/map-sud-italia.
         ref={stageRef}
         className="relative hidden overflow-hidden rounded-card-lg bg-espresso shadow-luxe md:block"
       >
-        {mapLayer(true)}
+        {mapLayer(drift)}
         <div className="relative flex h-[540px] lg:h-[600px]" onMouseLeave={() => setActive(null)}>
           {regions.map((r, i) => {
             const isActive = active === i;
@@ -171,15 +181,17 @@ export default function RegionExplorer({ regions, mapSrc = "/img/map-sud-italia.
                   <h3 className="mt-1 truncate font-playfair text-[24px] text-ivory lg:text-[27px]">{r.name}</h3>
                 </motion.div>
 
-                {/* focus state — detail card. Fixed width so the panel's
-                    flex-grow never reflows the text mid-transition. */}
+                {/* focus state — detail card, spanning the full width of the
+                    panel. Its fade-in finishes exactly when the panel's
+                    flex-grow settles, so the text re-wrap happens under the
+                    fade instead of after it. */}
                 <motion.div
                   initial={false}
                   animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 12 }}
                   transition={reduced ? INSTANT : isActive ? FADE_IN : FADE_OUT}
                   inert={isActive ? undefined : ""}
                   style={{ willChange: "transform, opacity", pointerEvents: isActive ? "auto" : "none" }}
-                  className="absolute bottom-5 left-5 w-[17rem] lg:bottom-7 lg:left-7 lg:w-[19rem]"
+                  className="absolute inset-x-5 bottom-5 lg:inset-x-7 lg:bottom-7"
                 >
                   <DetailCard region={r} />
                 </motion.div>
@@ -190,13 +202,20 @@ export default function RegionExplorer({ regions, mapSrc = "/img/map-sud-italia.
       </div>
 
       {/* ============ MOBILE — stacked rows, tap to expand ============ */}
-      <div className="relative overflow-hidden rounded-card-lg bg-espresso shadow-luxe md:hidden">
-        {mapLayer(false)}
+      {/* Same motion contract as the desktop stage: the map drifts on its own
+          scroll spring, the open row gets the warm bloom, siblings dim — all
+          layers share the 420ms ease-standard clock of the height swap. */}
+      <div
+        ref={mobileStageRef}
+        className="relative overflow-hidden rounded-card-lg bg-espresso shadow-luxe md:hidden"
+      >
+        {mapLayer(mobileDrift)}
         <div className="relative">
           {regions.map((r, i) => {
             const isOpen = open === i;
+            const dimmed = open !== null && !isOpen;
             return (
-              <div key={r.region} className={i > 0 ? "border-t border-ivory/20" : ""}>
+              <div key={r.region} className={`relative ${i > 0 ? "border-t border-ivory/20" : ""}`}>
                 <button
                   type="button"
                   aria-expanded={isOpen}
@@ -207,6 +226,14 @@ export default function RegionExplorer({ regions, mapSrc = "/img/map-sud-italia.
                   <span
                     aria-hidden="true"
                     className="pointer-events-none absolute inset-0 bg-gradient-to-r from-espresso/80 via-espresso/35 to-transparent"
+                  />
+                  {/* map highlight — the same warm bloom as the desktop panels,
+                      layered between readability gradient and title */}
+                  <span
+                    aria-hidden="true"
+                    className={`pointer-events-none absolute inset-0 bg-[radial-gradient(120%_140%_at_50%_100%,theme(colors.champagne/25),transparent_60%)] transition-opacity duration-[420ms] ease-standard ${
+                      isOpen ? "opacity-75" : "opacity-0"
+                    }`}
                   />
                   <span className="relative flex items-end justify-between gap-4 px-5 pb-4 pt-12">
                     <span className="min-w-0">
@@ -259,6 +286,15 @@ export default function RegionExplorer({ regions, mapSrc = "/img/map-sud-italia.
                     </motion.div>
                   )}
                 </AnimatePresence>
+
+                {/* dim closed rows while one holds the stage — painted last so
+                    it covers the header, taps pass straight through */}
+                <div
+                  aria-hidden="true"
+                  className={`pointer-events-none absolute inset-0 bg-espresso/55 transition-opacity duration-[420ms] ease-standard ${
+                    dimmed ? "opacity-100" : "opacity-0"
+                  }`}
+                />
               </div>
             );
           })}

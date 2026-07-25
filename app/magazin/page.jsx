@@ -8,6 +8,8 @@ import { SectionTitle, Eyebrow, GoldRule, GrapeRule } from "@/components/Deco";
 import { Arrow, Clock, GrapeVine, Plate, Mountains, Book, Sun } from "@/components/Icons";
 import FilterPanel from "@/components/magazin/FilterPanel";
 import NewsletterCard from "@/components/magazin/NewsletterCard";
+import RegionWineRail from "@/components/RegionWineRail";
+import { WINES } from "@/components/data";
 import { Aura, GhostWord } from "@/components/Atmosphere";
 
 export const metadata = {
@@ -69,6 +71,11 @@ const LATEST = [
     img: "/img/dinner.jpg",
   },
 ];
+
+/* Die Flaschen, um die sich die Artikel drehen — als echte Karten zum Stöbern */
+const MAGAZIN_WINES = ["primitivo-14-5", "lugana", "falanghina", "il-rosso-aglianico", "greco-di-tufo"]
+  .map((slug) => WINES.find((w) => w.slug === slug))
+  .filter(Boolean);
 
 const KATEGORIE = ["Alle Themen", "Weinwissen", "Food Pairing", "Regionen", "Geschichten", "Genussmomente"];
 const LESEDAUER = ["Alle", "1–3 Min.", "4–6 Min.", "7+ Min."];
@@ -324,6 +331,20 @@ export default function MagazinPage() {
                     ))}
                   </div>
                 </Stagger>
+              </section>
+
+              {/* ---- Die Weine aus den Geschichten ---- */}
+              <section className="mt-20">
+                <SectionTitle
+                  align="left"
+                  eyebrow="Aus dem Magazin ins Glas"
+                  description="Die Flaschen, um die sich unsere Artikel drehen – wischen Sie über ein Foto, um das Rückenetikett zu sehen."
+                >
+                  Die Weine aus unseren Geschichten
+                </SectionTitle>
+                <div className="mt-10">
+                  <RegionWineRail wines={MAGAZIN_WINES} label="Im Magazin verkostet" />
+                </div>
               </section>
             </div>
 

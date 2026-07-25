@@ -66,7 +66,7 @@ const relLum = (hex) => {
 const TASTE_ART = {
   light: {
     farbe: {
-      src: "/img/art/farbe-weizen-vangogh.jpg",
+      src: "/img/art/farbe-weizen-vangogh.webp",
       alt: "Ölgemälde „Weizenfeld mit Zypressen“ von Vincent van Gogh: goldgelbes Kornfeld unter bewegtem Sommerhimmel",
       title: "Weizenfeld mit Zypressen",
       artist: "Vincent van Gogh",
@@ -76,7 +76,7 @@ const TASTE_ART = {
       origin: "46% 84%",
     },
     duft: {
-      src: "/img/art/duft-bluete-vangogh.jpg",
+      src: "/img/art/duft-bluete-vangogh.webp",
       alt: "Ölgemälde „Mandelblüte“ von Vincent van Gogh: weiße Blüten an knorrigen Zweigen vor türkisblauem Grund",
       title: "Mandelblüte",
       artist: "Vincent van Gogh",
@@ -84,7 +84,7 @@ const TASTE_ART = {
       focus: "48% 42%",
     },
     geschmack: {
-      src: "/img/art/geschmack-stillleben-heda.jpg",
+      src: "/img/art/geschmack-stillleben-heda.webp",
       alt: "Ölgemälde „Stillleben mit vergoldetem Pokal“ von Willem Claesz. Heda: Römer mit Weißwein, Zinn und geschälte Zitrone",
       title: "Stillleben mit vergoldetem Pokal",
       artist: "Willem Claesz. Heda",
@@ -94,7 +94,7 @@ const TASTE_ART = {
   },
   dark: {
     farbe: {
-      src: "/img/art/farbe-kirschen-fantin-latour.jpg",
+      src: "/img/art/farbe-kirschen-fantin-latour.webp",
       alt: "Ölgemälde von Henri Fantin-Latour: Kristallschale mit rubinroten Kirschen neben Weißdornstrauß und Porzellan",
       title: "Weißdorn und Kirschen",
       artist: "Henri Fantin-Latour",
@@ -102,14 +102,14 @@ const TASTE_ART = {
       focus: "36% 72%",
     },
     duft: {
-      src: "/img/art/duft-pflaumen-fantin-latour.jpg",
+      src: "/img/art/duft-pflaumen-fantin-latour.webp",
       alt: "Ölgemälde „Ein Korb Pflaumen“ von Henri Fantin-Latour: dunkelviolette Pflaumen in einem Weidenkorb",
       title: "Ein Korb Pflaumen",
       artist: "Henri Fantin-Latour",
       focus: "50% 46%",
     },
     geschmack: {
-      src: "/img/art/geschmack-fruechte-fantin-latour.jpg",
+      src: "/img/art/geschmack-fruechte-fantin-latour.webp",
       alt: "Ölgemälde „Pfirsiche und Trauben“ von Henri Fantin-Latour: weiche Pfirsiche und Trauben auf einem Teller vor dunklem Grund",
       title: "Pfirsiche und Trauben",
       artist: "Henri Fantin-Latour",
@@ -255,6 +255,13 @@ function ArtLayer({ progress, start, span, art, tone, first }) {
       <motion.img
         src={art.src}
         alt={art.alt ?? `${art.title} — ${art.artist}`}
+        /* lazy + niedrige Priorität: diese Kapitelbilder stehen weit unter dem
+           Fold. Ohne das hebt React 18 (Float) für jedes server-gerenderte
+           <img> einen Preload in den <head> — die Gemälde konkurrierten dann
+           mit dem Hero-Foto um die erste Bandbreite und verzögerten den LCP. */
+        loading="lazy"
+        fetchPriority="low"
+        decoding="async"
         className="h-full w-full object-cover"
         style={{
           objectPosition: art.focus ?? "50% 50%",
@@ -356,14 +363,19 @@ export default function TasteStory({ wine }) {
 
   useMotionValueEvent(scrollYProgress, "change", (v) => {
     const idx = Math.min(n - 1, Math.max(0, Math.floor(v / span)));
-    if (idx !== active) setActive(idx);
+    /* funktionales Update statt Vergleich mit dem Closure-`active` —
+       so bleibt der Guard auch bei gebatchten Re-Renders korrekt */
+    setActive((prev) => (prev === idx ? prev : idx));
   });
 
   const jumpTo = (i) => {
     const el = sectionRef.current;
     if (!el) return;
+    /* getBoundingClientRect statt offsetTop: offsetTop ist relativ zum
+       offsetParent und liegt unter transformierten Vorfahren daneben */
+    const sectionTop = el.getBoundingClientRect().top + window.scrollY;
     const pinDistance = el.offsetHeight - window.innerHeight;
-    const top = el.offsetTop + (i + 0.5) * span * pinDistance;
+    const top = sectionTop + (i + 0.5) * span * pinDistance;
     if (lenis?.current) lenis.current.scrollTo(top);
     else window.scrollTo({ top, behavior: "smooth" });
   };
@@ -404,8 +416,13 @@ export default function TasteStory({ wine }) {
       ref={sectionRef}
       className="relative scroll-mt-14"
       /* kürzerer Pin auf dem Telefon — die Geschichte bleibt komplett,
-         verlangt aber weniger Daumenweg pro Kapitel */
-      style={{ height: `${n * (isDesktop ? 145 : 118) + (isDesktop ? 80 : 50)}vh` }}
+         verlangt aber weniger Daumenweg pro Kapitel. Die Höhe kommt aus
+         CSS-Variablen (globals.css) statt aus isDesktop-State: so rendert
+         der Server dieselbe Höhe wie der Client und die Sektion springt
+         beim Hydratisieren nicht um ~100vh. */
+      style={{
+        height: `calc(${n} * var(--taste-chapter-vh) + var(--taste-extra-vh))`,
+      }}
     >
       <div className="sticky top-0 h-[100svh] overflow-hidden bg-gradient-to-b from-ivory via-cream to-ivory">
         {/* Kino-Rückwand: scroll-reaktives Shader-Feld in den Pastelltönen

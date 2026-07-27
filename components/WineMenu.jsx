@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { WINES, wineHref, fmtPrice } from "./data";
+import { WINES, wineHref } from "./data";
 import { Arrow, ChevronRight, Grapes } from "./Icons";
 
 /* "Unsere Weine" mega-dropdown.
@@ -232,13 +232,10 @@ export default function WineMenu({ active, scrolled = false }) {
                               <Link
                                 href={wineHref(w)}
                                 onClick={close}
-                                className="group/w flex items-baseline justify-between gap-3 rounded-xl px-2.5 py-2 transition-colors duration-300 hover:bg-white"
+                                className="group/w block rounded-xl px-2.5 py-2 transition-colors duration-300 hover:bg-white"
                               >
                                 <span className="min-w-0 text-[12.5px] leading-snug text-charcoal/75 transition-colors duration-300 group-hover/w:text-bordeaux">
                                   {w.name}
-                                </span>
-                                <span className="shrink-0 text-[11px] tabular-nums text-charcoal/35 transition-colors duration-300 group-hover/w:text-champagne">
-                                  {fmtPrice(w.price)}
                                 </span>
                               </Link>
                             </li>

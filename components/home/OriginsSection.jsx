@@ -90,12 +90,6 @@ export default function OriginsSection() {
                 <StaggerItem key={s.name} className="h-full">
                   <TiltCard className="group h-full" max={5} radius="rounded-card-lg">
                     <div className="ring-hairline relative flex h-full flex-col overflow-hidden rounded-card-lg border border-stone/40 bg-white/70 p-7 shadow-luxe transition-[box-shadow,border-color] duration-500 group-hover:border-champagne/60 group-hover:shadow-lift">
-                      <span
-                        aria-hidden="true"
-                        className="pointer-events-none absolute -right-3 -top-6 select-none font-playfair text-[6.5rem] italic leading-none text-bordeaux/[0.06]"
-                      >
-                        M
-                      </span>
                       <p className="text-[10px] uppercase tracking-[0.22em] text-champagne">{s.tag}</p>
                       <h3 className="mt-2 font-playfair text-[24px] text-charcoal">{s.name}</h3>
                       <ul className="mt-4 flex flex-wrap gap-1.5">

@@ -6,11 +6,12 @@ import Marquee from "@/components/motion/Marquee";
 import { Reveal, Stagger, StaggerItem } from "@/components/motion/Reveal";
 import Button from "@/components/ui/Button";
 import { SectionTitle, Eyebrow, GrapeRule, IconChip } from "@/components/Deco";
-import HeroVisual from "@/components/home/HeroVisual";
+import HomeHeroPhoto, { HomeHeroPreload } from "@/components/home/HomeHeroPhoto";
+import HomeHeroFx from "@/components/home/HomeHeroFx";
 import OriginsSection from "@/components/home/OriginsSection";
 import RegionExplorer from "@/components/home/RegionExplorer";
 import WineRail from "@/components/WineRail";
-import { Vineyard, Barrel, Glasses, Arrow, Clock } from "@/components/Icons";
+import { Grapes, Vineyard, Barrel, Glasses, Arrow, Clock } from "@/components/Icons";
 import { WINES, REGION_COUNT } from "@/components/data";
 import Atmosphere, { Aura, GhostWord, Vines } from "@/components/Atmosphere";
 
@@ -18,6 +19,13 @@ import Atmosphere, { Aura, GhostWord, Vines } from "@/components/Atmosphere";
    Shop-CTA und Magazin-Teaser. */
 
 const MOMENT = [
+  {
+    icon: <Grapes className="h-7 w-7" />,
+    kicker: "Auswahl",
+    title: "Handverlesen",
+    text: "Jede Flasche wird persönlich verkostet und ausgewählt – nur Weine, die uns wirklich überzeugen, finden den Weg in unsere Kollektion.",
+    note: "Persönlich verkostet · Kuratiert",
+  },
   {
     icon: <Vineyard className="h-7 w-7" />,
     kicker: "Herkunft",
@@ -101,13 +109,30 @@ export default function HomeContent() {
   return (
     <div className="relative min-h-screen">
       {/* ============ HERO ============ */}
+      <HomeHeroPreload />
       <section className="grain relative overflow-hidden">
-        <ShaderGradient palette="dawn" />
+        {/* Volle Foto-Bühne wie auf den Wein-Landingpages: das Terrassen-Foto
+            trägt den Hero, die Headline steht links im Schleierlicht. */}
+        <HomeHeroFx photo={<HomeHeroPhoto />} />
+
+        {/* Schleier für Lesbarkeit: mobil von unten, ab lg von links */}
+        <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+          <div className="absolute inset-0 bg-gradient-to-t from-ivory via-ivory/60 to-ivory/10 lg:hidden" />
+          <div className="absolute inset-0 hidden bg-gradient-to-r from-ivory via-ivory/55 to-transparent lg:block" />
+        </div>
+
+        {/* Elfenbein-Hauch oben, damit die Navigation über dem Abendhimmel
+            lesbar bleibt */}
+        <div
+          className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-ivory/80 via-ivory/30 to-transparent"
+          aria-hidden="true"
+        />
+
         {/* settle into the page colour */}
         <div aria-hidden="true" className="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-b from-transparent to-ivory" />
 
-        <div className="relative mx-auto grid min-h-[100svh] max-w-content grid-cols-1 items-center gap-12 px-6 pb-24 pt-28 sm:gap-16 sm:pb-28 sm:pt-32 lg:grid-cols-[1.05fr_0.95fr] lg:px-10 lg:pt-36">
-          <div>
+        <div className="relative mx-auto flex min-h-[100svh] max-w-content flex-col justify-end px-6 pb-24 pt-32 lg:justify-center lg:px-10 lg:pb-16">
+          <div className="lg:max-w-xl">
             <Reveal y={18} delay={0.05}>
               <Eyebrow>Italienische Boutique-Weine</Eyebrow>
             </Reveal>
@@ -130,13 +155,11 @@ export default function HomeContent() {
               </p>
             </Reveal>
             <Reveal delay={0.62} y={16}>
-              {/* CTAs gestapelt: eine ruhige vertikale Achse unter dem Text –
-                  gleiche Breite, damit die Kanten eine Linie bilden */}
-              <div className="mt-7 flex w-full max-w-[17.5rem] flex-col items-stretch gap-2.5 sm:mt-8">
-                <Button href="/weine" size="lg">
+              <div className="mt-8 flex flex-col items-stretch gap-3 sm:mt-9 sm:flex-row sm:items-center sm:gap-3.5">
+                <Button href="/weine" size="lg" className="w-full sm:w-auto">
                   Weine entdecken
                 </Button>
-                <Button href="/shop" variant="outline" size="lg">
+                <Button href="/shop" variant="outline" size="lg" className="w-full sm:w-auto">
                   Zum Shop
                 </Button>
               </div>
@@ -161,8 +184,6 @@ export default function HomeContent() {
               </dl>
             </Reveal>
           </div>
-
-          <HeroVisual />
         </div>
       </section>
 
@@ -173,23 +194,23 @@ export default function HomeContent() {
       <section className="relative overflow-hidden">
         <Atmosphere variant="warm" />
         <GhostWord className="right-[-2vw] top-10 text-[12vw]">Momenti</GhostWord>
-        <div className="relative mx-auto max-w-content px-6 py-16 sm:py-24 lg:px-10">
+        <div className="relative mx-auto max-w-content px-6 py-10 sm:py-14 lg:px-10">
         <SectionTitle
           eyebrow="Unsere Philosophie"
-          description="Drei Überzeugungen, die jede Flasche prägen – vom Weinberg bis ins Glas."
+          description="Vier Überzeugungen, die jede Flasche prägen – vom Weinberg bis ins Glas."
         >
           Der Maria-Moment
         </SectionTitle>
-        <Stagger className="mx-auto mt-10 grid max-w-5xl grid-cols-1 gap-6 sm:mt-14 md:grid-cols-3">
+        <Stagger className="mx-auto mt-7 grid w-full grid-cols-1 gap-5 sm:mt-9 sm:grid-cols-2 lg:grid-cols-4">
           {MOMENT.map((m, i) => (
             <StaggerItem key={m.title} className="h-full">
               <TiltCard className="group h-full" max={5} radius="rounded-card-lg">
-                <div className="ring-hairline relative flex h-full flex-col overflow-hidden rounded-card-lg border border-stone/40 bg-white/70 p-6 shadow-luxe transition-[box-shadow,border-color] duration-500 group-hover:border-champagne/60 group-hover:shadow-lift sm:p-8">
-                  <div className="relative flex items-center gap-4 md:block">
+                <div className="ring-hairline relative flex h-full flex-col overflow-hidden rounded-card-lg border border-stone/40 bg-white/70 p-5 shadow-luxe transition-[box-shadow,border-color] duration-500 group-hover:border-champagne/60 group-hover:shadow-lift sm:p-6">
+                  <div className="relative flex items-center gap-4 lg:block">
                     <IconChip>{m.icon}</IconChip>
-                    <h3 className="font-playfair text-[19px] text-charcoal md:mt-5">{m.title}</h3>
+                    <h3 className="font-playfair text-[18px] text-charcoal lg:mt-3.5">{m.title}</h3>
                   </div>
-                  <p className="relative mt-4 text-[13px] leading-relaxed text-charcoal/70 md:mt-3">{m.text}</p>
+                  <p className="relative mt-3 text-[12.5px] leading-[1.6] text-charcoal/70 lg:mt-2.5">{m.text}</p>
                 </div>
               </TiltCard>
             </StaggerItem>
@@ -197,9 +218,6 @@ export default function HomeContent() {
         </Stagger>
         </div>
       </section>
-
-      {/* ============ LE ORIGINI (Markengeschichte) ============ */}
-      <OriginsSection />
 
       {/* ============ UNSERE WEINE (rail) ============ */}
       <section className="relative overflow-hidden border-y border-stone/40 bg-gradient-to-b from-cream via-champagne-light/25 to-ivory py-16 sm:py-20 lg:py-24">
@@ -218,6 +236,9 @@ export default function HomeContent() {
           <WineRail wines={WINES} className="mt-8 sm:mt-10" />
         </div>
       </section>
+
+      {/* ============ LE ORIGINI (Markengeschichte) ============ */}
+      <OriginsSection />
 
       {/* ============ REGIONEN ============ */}
       <section className="relative overflow-hidden">
@@ -248,20 +269,18 @@ export default function HomeContent() {
       <section className="px-4 py-10 lg:px-8">
         <div className="grain relative overflow-hidden rounded-card-lg">
           <ShaderGradient palette="wine" />
-          <div className="relative mx-auto max-w-3xl px-6 py-16 text-center sm:py-24 lg:py-28">
-            <Reveal>
-              <Eyebrow light className="justify-center">
-                Der offizielle Shop
-              </Eyebrow>
-              <h2 className="mt-4 text-balance font-playfair text-[clamp(2rem,4.2vw,3.2rem)] leading-[1.1] text-ivory">
+          <div className="relative mx-auto flex max-w-content flex-col items-start gap-8 px-6 py-10 text-left sm:py-11 lg:flex-row lg:items-center lg:justify-between lg:gap-14 lg:px-12 lg:py-12">
+            <Reveal className="max-w-xl">
+              <Eyebrow light>Der offizielle Shop</Eyebrow>
+              <h2 className="mt-3 text-balance font-playfair text-[clamp(1.75rem,3.4vw,2.75rem)] leading-[1.08] text-ivory">
                 Bereit für Ihren <span className="italic text-champagne">Maria-Moment?</span>
               </h2>
-              <p className="mx-auto mt-5 max-w-md text-[13.5px] leading-relaxed text-ivory/70">
+              <p className="mt-3 max-w-md text-[13.5px] leading-relaxed text-ivory/70">
                 Entdecken und bestellen Sie unsere Weine bequem online – direkt vom Weingut zu Ihnen nach Hause.
               </p>
             </Reveal>
-            <Reveal delay={0.18}>
-              <div className="mx-auto mt-8 flex max-w-xs flex-col items-stretch gap-3 sm:mt-9 sm:max-w-none sm:flex-row sm:items-center sm:justify-center sm:gap-4">
+            <Reveal delay={0.18} className="w-full lg:w-auto lg:shrink-0">
+              <div className="flex w-full max-w-xs flex-col items-stretch gap-3 sm:max-w-none sm:flex-row sm:items-center lg:justify-end">
                 <Button href="/shop" variant="light" size="lg" className="w-full sm:w-auto">
                   Zum Shop
                 </Button>

@@ -25,13 +25,6 @@ const ACCENT_FALLBACK = { base: "#C8B77A", deep: "#8A2B2F", light: "#E3D9B8" };
 const SPRING = { type: "spring", stiffness: 90, damping: 19, mass: 0.9 };
 const EASE = [0.16, 1, 0.3, 1];
 
-/* Marken-Versprechen — bewusst für alle Weine identisch */
-const TRUST = [
-  { icon: "grapes", title: "Ausgewählte Weine", text: "mit Charakter" },
-  { icon: "vineleaf", title: "Handverlesen", text: "von Familienweingütern" },
-  { icon: "heart", title: "Für bewusste", text: "Genussmomente" },
-];
-
 /* Seiteneinflug — Karten kommen federgedämpft von links/rechts/unten.
    Auf Touch-Geräten stattdessen ein ruhiger Aufstieg ohne Blur: seitliche
    64px-Einflüge wirken auf schmalen Screens ruckhaft, animierter Blur kostet
@@ -333,47 +326,6 @@ export default function MariaMoment({ wine }) {
             </SlideIn>
           ))}
         </div>
-
-        {/* Marken-Leiste — das stille Versprechen unter jedem Wein */}
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.4 }}
-          variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.1, delayChildren: 0.1 } } }}
-          className="mt-14 lg:mt-20"
-        >
-          <GoldRule className="mx-auto max-w-3xl" />
-          <div className="mt-10 grid gap-8 sm:grid-cols-3">
-            {TRUST.map((badge) => {
-              const Icon = WINE_ICON[badge.icon];
-              return (
-                <motion.div
-                  key={badge.title}
-                  variants={{
-                    hidden: { opacity: 0, y: 24, filter: "blur(6px)" },
-                    visible: {
-                      opacity: 1,
-                      y: 0,
-                      filter: "blur(0px)",
-                      transition: { ...SPRING, opacity: { duration: 0.5 }, filter: { duration: 0.55 } },
-                    },
-                  }}
-                  className="flex items-center justify-center gap-4 text-center sm:text-left"
-                >
-                  <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-champagne/50 text-wine">
-                    {Icon && <Icon className="h-6 w-6" aria-hidden="true" />}
-                  </span>
-                  <span>
-                    <span className="block text-[11px] font-semibold uppercase tracking-[0.22em] text-charcoal">
-                      {badge.title}
-                    </span>
-                    <span className="mt-0.5 block text-[12.5px] text-charcoal/60">{badge.text}</span>
-                  </span>
-                </motion.div>
-              );
-            })}
-          </div>
-        </motion.div>
       </div>
     </section>
   );

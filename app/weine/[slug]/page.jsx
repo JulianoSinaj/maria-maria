@@ -7,7 +7,6 @@ import HeroPreload from "@/components/weine/falanghina/HeroPreload";
 import SubNav from "@/components/weine/falanghina/SubNav";
 import FactStrip from "@/components/weine/falanghina/FactStrip";
 import ColorBand from "@/components/weine/falanghina/ColorBand";
-import TasteStory from "@/components/weine/falanghina/TasteStory";
 import StorySection from "@/components/weine/falanghina/StorySection";
 import PlaceSection from "@/components/weine/falanghina/PlaceSection";
 import PairingSection from "@/components/weine/falanghina/PairingSection";
@@ -76,7 +75,6 @@ export default function WinePage({ params }) {
       <SubNav wine={wine} />
       <FactStrip wine={wine} />
       <ColorBand wine={wine} />
-      <TasteStory wine={wine} />
       <StorySection wine={wine} />
       <PlaceSection wine={wine} />
       <PairingSection wine={wine} />

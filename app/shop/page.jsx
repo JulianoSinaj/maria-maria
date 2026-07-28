@@ -12,6 +12,8 @@ import { WINES, REGION_COUNT } from "@/components/data";
 import { BUNDLES } from "@/components/shop/shopData";
 import BundleCard from "@/components/shop/BundleCard";
 import ShopExplorer from "@/components/shop/ShopExplorer";
+import FaqSection from "@/components/faq/FaqSection";
+import { SHOP_FAQ } from "@/components/faq/faqData";
 import Atmosphere, { Aura, GhostWord, Vines } from "@/components/Atmosphere";
 import Link from "next/link";
 
@@ -40,14 +42,14 @@ const SERVICE = [
     title: "Versand & Lieferung",
     text: "Ihre Weine verlassen unser Lager sorgfältig verpackt und erreichen Sie in 1–3 Werktagen – ab 69 € versandkostenfrei.",
     link: "Fragen zum Versand",
-    href: "/kontakt",
+    href: "#fragen",
   },
   {
     icon: <Shield className="h-7 w-7" />,
     title: "Sichere Bezahlung",
     text: "Bezahlen Sie bequem und sicher – alle gängigen Zahlungsarten, SSL-verschlüsselt und ohne Umwege.",
     link: "Mehr im FAQ",
-    href: "/kontakt",
+    href: "#fragen",
   },
   {
     icon: <Gift className="h-7 w-7" />,
@@ -469,6 +471,25 @@ export default function ShopPage() {
             </Stagger>
           </div>
         </section>
+
+        {/* ============ HÄUFIGE FRAGEN (Service-FAQ) ============ */}
+        <div className="relative overflow-hidden border-t border-stone/40 bg-gradient-to-b from-cream via-champagne-light/25 to-ivory">
+          <Vines className="inset-x-0 bottom-0 h-72 w-full" />
+          <Aura tint="gold" drift={2} className="-left-56 -top-44 h-[34rem] w-[34rem]" />
+          <FaqSection
+            className="relative"
+            pageType="shop"
+            eyebrow="Häufige Fragen"
+            title={
+              <>
+                Fragen zur <span className="italic text-bordeaux">Bestellung.</span>
+              </>
+            }
+            description="Versand, Bezahlung, Geschenke und persönliche Beratung — alles Wichtige vor dem Checkout, kurz und verbindlich beantwortet."
+            items={SHOP_FAQ}
+            footer={{ label: "Ihre Frage ist nicht dabei? Kontakt aufnehmen", href: "/kontakt" }}
+          />
+        </div>
 
         {/* ============ CROSS-LINK CTA (shader band) ============ */}
         <section className="px-4 pb-6 lg:px-8">

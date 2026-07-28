@@ -114,7 +114,7 @@ export const PRIMITIVO_155 = {
       icon: "lips",
       kicker: "Geschmack",
       title: "Körperreich, warm und komplex",
-      text: "Ein körperreicher Wein von bemerkenswerter gusto-olfaktorischer Dichte: entschieden, trocken, warm und komplex — und über den ganzen Nachhall hinweg intensiv.",
+      text: "Ein körperreicher Wein von bemerkenswerter geschmacklicher und aromatischer Dichte: entschieden, trocken, warm und komplex — und über den ganzen Nachhall hinweg intensiv.",
       tone: "#A8452F",
       artwork: {
         src: "/img/wines/primitivo-15-5/hero.jpg",
@@ -174,8 +174,8 @@ export const PRIMITIVO_155 = {
       { label: "Erziehung", value: "Alberello, ohne Bewässerung" },
       { label: "Ausbau", value: "12 Monate in capasoni" },
     ],
-    photo: "/img/region-apulien.jpg",
-    photoAlt: "Weinlandschaft in Apulien mit Alberello-Reben",
+    photo: "/img/home/region-apulien.webp",
+    photoAlt: "Trulli und Olivenhaine in Apulien im Abendlicht",
     chip: { title: "Manduria", subtitle: "Apulien · Italien" },
   },
 
@@ -240,30 +240,36 @@ export const PRIMITIVO_155 = {
   },
 
   /* ---- Häufige Fragen ---- */
+  /* Fragenset nach der FAQ-Guide (Product-Cluster Primitivo 15,5): Geschmack,
+     Vergleich zum 14,5 (kurz + Link), Dekantieren (nur die bestätigte
+     Servierempfehlung, keine erfundene Önologie), Pairing und die
+     Capasoni-Frage als Alleinstellungsmerkmal dieses Weins. */
   faq: [
     {
-      q: "Wie schmeckt der Primitivo di Manduria DOP 15,50?",
-      a: "Körperreich und von bemerkenswerter gusto-olfaktorischer Dichte: entschieden, trocken, warm und komplex, dabei durchgehend intensiv. In der Nase fein und delikat mit Anklängen von Erdbeere und Waldfrüchten.",
+      id: "p155-geschmack",
+      q: "Wie schmeckt der Maria Maria Primitivo 15,5?",
+      a: "Körperreich und von bemerkenswerter geschmacklicher und aromatischer Dichte: entschieden, trocken, warm und komplex, dabei durchgehend intensiv. In der Nase fein und delikat mit Anklängen von Erdbeere und Waldfrüchten.",
     },
     {
-      q: "Aus welchen Trauben besteht dieser Wein?",
-      a: "Zu 100 % aus Primitivo di Manduria DOP. Die Trauben stammen aus den Weingärten der Gemeinden Torricella und Maruggio in Apulien.",
+      id: "p155-kraeftiger",
+      q: "Ist der Primitivo 15,5 kräftiger als der 14,5?",
+      a: "Ja. Mit 15,5 % vol. und zwölf Monaten Reife in Terrakotta-Amphoren ist er körperreicher, dichter und komplexer als der weiche, fruchtbetonte 14,5 aus dem Stahltank. Wer Struktur und Intensität sucht, greift zum 15,5 — für den unkomplizierteren Abend bleibt der 14,5 die zugänglichere Wahl.",
+      link: { label: "Zum Primitivo 14,5", href: "/weine/primitivo-14-5" },
     },
     {
-      q: "Was sind capasoni?",
+      id: "p155-dekantieren",
+      q: "Sollte man den Primitivo 15,5 dekantieren?",
+      a: "Ein Muss ist es nicht — etwas Luft tut ihm aber gut. Öffnen Sie die Flasche eine gute Stunde vor dem Genuss und servieren Sie ihn bei 16 bis 18 °C im großen Rotweinglas, damit sich Frucht und Würze voll entfalten.",
+    },
+    {
+      id: "p155-essen",
+      q: "Zu welchen Gerichten passt er?",
+      a: "Zu Primi al ragù, Braten und Wild, zu pikanten Speisen sowie zu Hartkäse — kräftige Aromen und Würze verträgt er mühelos. Mit 15,5 % vol. und seiner dichten Struktur ist er der Wein für die kraftvolle Küche, serviert bei 16 bis 18 °C im großen Rotweinglas.",
+    },
+    {
+      id: "p155-capasoni",
+      q: "Was sind Capasoni?",
       a: "Capasoni sind antike Giare — große Amphoren aus Terrakotta, die in Apulien traditionell zum Ausbau von Wein genutzt werden. Der Primitivo 15,5 reift zwölf Monate darin, bevor er abgefüllt wird.",
-    },
-    {
-      q: "Was bedeutet die Erziehung im Alberello?",
-      a: "Alberello ist die traditionelle Buscherziehung Süditaliens: freistehende, niedrige Stöcke ohne Drahtrahmen. Hier wird ausschließlich im Alberello und ohne Bewässerung gearbeitet — die Reben tragen weniger und reifen dafür vollständig aus.",
-    },
-    {
-      q: "Zu welchen Gerichten passt der Primitivo 15,5?",
-      a: "Zu Primi al ragù, Braten und Wild, zu pikanten Speisen sowie zu Hartkäse. Er verträgt kräftige Aromen und Würze mühelos.",
-    },
-    {
-      q: "Wie sollte der Primitivo 15,5 serviert werden?",
-      a: "Bei 16 bis 18 °C im großen Rotweinglas. Bei 15,5 % vol. lohnt es sich, die Flasche eine gute Stunde vorher zu öffnen, damit sich Frucht und Würze voll entfalten.",
     },
   ],
 

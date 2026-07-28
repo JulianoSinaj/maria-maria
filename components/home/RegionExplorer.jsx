@@ -12,27 +12,31 @@ import {
 import Button from "@/components/ui/Button";
 import ItalyMap from "@/components/ItalyMap";
 
-/* Region explorer — one continuous Süditalien map as the stage.
-   The map drifts on a scroll-driven spring (parallax depth) and sits behind
-   vertical panels; the panel under the cursor grows while its siblings dim.
+/* Region explorer — drei eigenständige Foto-Karten statt einer gemeinsamen
+   Karten-Bühne. Jede Region bringt ihr eigenes Landschaftsfoto mit (inklusive
+   der eingezeichneten Italien-Silhouette); die Fotos driften auf einer
+   scroll-getriebenen Feder (Parallax-Tiefe), die Karte unter dem Cursor
+   wächst, während ihre Nachbarn leicht abdunkeln.
 
-   Motion contract — one clock for the whole swap, so nothing ever stacks:
-     phase 1 (0 → OUT)      outgoing card + incoming title fade OUT
-     phase 2 (OUT → OUT+IN) incoming card + outgoing title fade IN
-   Background layers (bloom, dim, gradient) and the flex-grow of the panel
-   cross-fade across the full OUT+IN window on the same cubic-bezier, so the
-   map highlight and the foreground card land together.
-   Cards stay mounted and are driven by `animate` (no AnimatePresence on the
-   desktop stage) — enter/exit overlap was what produced the ghost text. */
+   Motion contract — eine Uhr für den ganzen Wechsel, damit nichts stapelt:
+     Phase 1 (0 → OUT)      ausgehende Karte + eingehender Titel blenden AUS
+     Phase 2 (OUT → OUT+IN) eingehende Karte + ausgehender Titel blenden EIN
+   Scrim, Abdunkelung, Foto-Zoom und der flex-grow der Karte laufen über
+   dasselbe 420ms-Fenster auf derselben cubic-bezier, so landen Ausdehnung
+   und Vordergrund-Karte gemeinsam.
+   Karten bleiben gemountet und werden über `animate` getrieben (kein
+   AnimatePresence auf der Desktop-Bühne) — Enter/Exit-Überlappung war es,
+   die den Geistertext erzeugte. */
 
 const EASE = [0.4, 0, 0.2, 1]; // cubic-bezier(0.4, 0, 0.2, 1)
-const OUT = 0.16; // s — outgoing content clears first
-const IN = 0.26; // s — incoming content follows
-const SWAP_MS = 420; // (OUT + IN) * 1000 — CSS-driven layers use the same window
-const GROW = 2.4; // hovered panel weight vs. 1 for the rest
+const OUT = 0.16; // s — ausgehender Inhalt räumt zuerst
+const IN = 0.26; // s — eingehender Inhalt folgt
+const SWAP_MS = 420; // (OUT + IN) * 1000 — CSS-Layer nutzen dasselbe Fenster
+const GROW = 2.4; // Gewicht der aktiven Karte vs. 1 für den Rest
 
 const FADE_OUT = { duration: OUT, ease: EASE };
 const FADE_IN = { duration: IN, delay: OUT, ease: EASE };
+const ZOOM = { duration: SWAP_MS / 1000, ease: EASE };
 const INSTANT = { duration: 0 };
 
 function DetailCard({ region, compact = false }) {
@@ -69,14 +73,42 @@ function DetailCard({ region, compact = false }) {
   );
 }
 
-export default function RegionExplorer({ regions, mapSrc = "/img/map-sud-italia.jpg" }) {
-  const [active, setActive] = useState(null); // desktop hovered/focused panel
-  const [open, setOpen] = useState(null); // mobile expanded row
+/* Das Regionsfoto einer Karte: Parallax-Drift auf der Feder, dazu ein
+   sanfter Zoom, sobald die Karte die Bühne hält. Zoom und Drift leben auf
+   getrennten Ebenen — beide reine GPU-Transforms, nie ein Layout-Shift. */
+function CardPhoto({ region, drift, active, reduced }) {
+  return (
+    <motion.div
+      aria-hidden="true"
+      initial={false}
+      animate={{ scale: active ? 1.05 : 1 }}
+      transition={reduced ? INSTANT : ZOOM}
+      style={{ willChange: "transform" }}
+      className="absolute inset-0"
+    >
+      <motion.img
+        src={region.img}
+        alt=""
+        loading="lazy"
+        style={
+          drift && !reduced
+            ? { y: drift, scale: 1.12, objectPosition: region.pos, willChange: "transform" }
+            : { scale: 1.04, objectPosition: region.pos }
+        }
+        className="pointer-events-none h-full w-full object-cover"
+      />
+    </motion.div>
+  );
+}
+
+export default function RegionExplorer({ regions }) {
+  const [active, setActive] = useState(null); // Desktop: Karte unter Cursor/Fokus
+  const [open, setOpen] = useState(null); // Mobil: aufgeklappte Karte
   const reduced = useReducedMotion();
 
-  // Scroll-driven parallax for the map. Desktop and mobile stages each need
-  // their own target ref: whichever one is display:none has no geometry, so a
-  // shared useScroll would report a dead progress on the other breakpoint.
+  // Scroll-Parallax für die Fotos. Desktop- und Mobil-Bühne brauchen je einen
+  // eigenen Target-Ref: die per display:none versteckte hat keine Geometrie,
+  // ein geteiltes useScroll meldete dort einen toten Fortschritt.
   const stageRef = useRef(null);
   const mobileStageRef = useRef(null);
   const SPRING_CFG = { stiffness: 120, damping: 30, mass: 0.6 };
@@ -88,217 +120,183 @@ export default function RegionExplorer({ regions, mapSrc = "/img/map-sud-italia.
     target: mobileStageRef,
     offset: ["start end", "end start"],
   });
-  // raw progress → gentle vertical drift, smoothed through a physics spring.
-  // Scale is held constant: an second, independently timed zoom loop only added
-  // repaint churn behind the cards.
+  // roher Fortschritt → sanfter vertikaler Drift, geglättet durch die Feder.
   const driftRaw = useTransform(scrollYProgress, [0, 1], ["-6%", "6%"]);
   const drift = useSpring(driftRaw, SPRING_CFG);
   const mobileDriftRaw = useTransform(mobileProgress, [0, 1], ["-6%", "6%"]);
   const mobileDrift = useSpring(mobileDriftRaw, SPRING_CFG);
 
-  const mapLayer = (parallaxDrift = null) => (
-    <>
-      {/* the photographic Sud-Italia relief — GPU transformed, never a layout shift */}
-      <motion.img
-        src={mapSrc}
-        alt="Karte Süditaliens mit den Weinregionen"
-        style={
-          parallaxDrift && !reduced
-            ? { y: parallaxDrift, scale: 1.12, willChange: "transform" }
-            : { scale: 1.04 }
-        }
-        className="pointer-events-none absolute inset-0 h-full w-full object-cover"
-      />
-      {/* readability wash — keeps ivory titles crisp over the bright parchment */}
-      <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-espresso/70 via-espresso/15 to-espresso/35" />
-    </>
-  );
-
   return (
     <>
-      {/* ============ DESKTOP — expanding vertical panels ============ */}
+      {/* ============ DESKTOP — drei wachsende Foto-Karten ============ */}
       <div
         ref={stageRef}
-        className="relative hidden overflow-hidden rounded-card-lg bg-espresso shadow-luxe md:block"
+        onMouseLeave={() => setActive(null)}
+        className="hidden h-[540px] gap-4 md:flex lg:h-[600px] lg:gap-5"
       >
-        {mapLayer(drift)}
-        <div className="relative flex h-[540px] lg:h-[600px]" onMouseLeave={() => setActive(null)}>
-          {regions.map((r, i) => {
-            const isActive = active === i;
-            const dimmed = active !== null && !isActive;
-            return (
+        {regions.map((r, i) => {
+          const isActive = active === i;
+          const dimmed = active !== null && !isActive;
+          return (
+            <div
+              key={r.region}
+              tabIndex={0}
+              onMouseEnter={() => setActive(i)}
+              onFocus={() => setActive(i)}
+              onClick={() => setActive(i)}
+              style={{
+                flexGrow: isActive ? GROW : 1,
+                transition: `flex-grow ${SWAP_MS}ms cubic-bezier(0.4, 0, 0.2, 1)`,
+                willChange: "flex-grow",
+              }}
+              className="group relative min-w-0 basis-0 overflow-hidden rounded-card-lg bg-espresso shadow-luxe outline-none transition-shadow duration-500 focus-visible:ring-2 focus-visible:ring-champagne/80 focus-visible:ring-offset-2 focus-visible:ring-offset-ivory"
+            >
+              <CardPhoto region={r} drift={drift} active={isActive} reduced={reduced} />
+
+              {/* Lesbarkeits-Scrim hinter dem ruhenden Titel — weicht zurück,
+                  sobald die elfenbeinfarbene Detail-Karte übernimmt */}
               <div
-                key={r.region}
-                tabIndex={0}
-                onMouseEnter={() => setActive(i)}
-                onFocus={() => setActive(i)}
-                onClick={() => setActive(i)}
-                style={{
-                  flexGrow: isActive ? GROW : 1,
-                  transition: `flex-grow ${SWAP_MS}ms cubic-bezier(0.4, 0, 0.2, 1)`,
-                  willChange: "flex-grow",
-                }}
-                className={`group relative min-w-0 basis-0 outline-none ${
-                  i > 0 ? "border-l border-ivory/25" : ""
+                aria-hidden="true"
+                className={`pointer-events-none absolute inset-x-0 bottom-0 h-64 bg-gradient-to-t from-espresso/85 via-espresso/35 to-transparent transition-opacity duration-[420ms] ease-standard ${
+                  isActive ? "opacity-35" : "opacity-100"
                 }`}
+              />
+
+              {/* Nachbarn dunkeln leicht ab, während eine Karte die Bühne hält */}
+              <div
+                aria-hidden="true"
+                className={`pointer-events-none absolute inset-0 bg-espresso/50 transition-opacity duration-[420ms] ease-standard ${
+                  dimmed ? "opacity-100" : "opacity-0"
+                }`}
+              />
+
+              {/* Ruhezustand — Regionsname am unteren Rand.
+                  Räumt, bevor die Karte kommt; kehrt zurück, wenn sie geht. */}
+              <motion.div
+                initial={false}
+                animate={{ opacity: isActive ? 0 : 1, y: isActive ? -8 : 0 }}
+                transition={reduced ? INSTANT : isActive ? FADE_OUT : FADE_IN}
+                style={{ willChange: "transform, opacity" }}
+                className="pointer-events-none absolute inset-x-0 bottom-0 p-6"
               >
-                {/* map highlight — a warm bloom marks the region under focus.
-                    Opacity only: the old 6s scale loop restarted on every switch
-                    and flickered whenever two panels overlapped mid-swap. */}
-                <div
-                  aria-hidden="true"
-                  className={`pointer-events-none absolute inset-0 bg-[radial-gradient(120%_90%_at_50%_18%,theme(colors.champagne/25),transparent_60%)] transition-opacity duration-[420ms] ease-standard ${
-                    isActive ? "opacity-75" : "opacity-0"
-                  }`}
-                />
+                <p className="truncate text-[10px] uppercase tracking-[0.22em] text-champagne-light">{r.tag}</p>
+                <h3 className="mt-1 truncate font-playfair text-[24px] text-ivory lg:text-[27px]">{r.name}</h3>
+              </motion.div>
 
-                {/* dim siblings while one panel holds the stage (no backdrop
-                    filter — it recomposited the whole map on every swap) */}
-                <div
-                  aria-hidden="true"
-                  className={`pointer-events-none absolute inset-0 bg-espresso/55 transition-opacity duration-[420ms] ease-standard ${
-                    dimmed ? "opacity-100" : "opacity-0"
-                  }`}
-                />
-                {/* readability gradient behind the resting title */}
-                <div
-                  aria-hidden="true"
-                  className={`pointer-events-none absolute inset-x-0 bottom-0 h-56 bg-gradient-to-t from-espresso/90 via-espresso/40 to-transparent transition-opacity duration-[420ms] ease-standard ${
-                    isActive ? "opacity-30" : "opacity-100"
-                  }`}
-                />
-
-                {/* resting state — region name near the bottom.
-                    Clears out before the card arrives, returns after it leaves. */}
-                <motion.div
-                  initial={false}
-                  animate={{ opacity: isActive ? 0 : 1, y: isActive ? -8 : 0 }}
-                  transition={reduced ? INSTANT : isActive ? FADE_OUT : FADE_IN}
-                  style={{ willChange: "transform, opacity" }}
-                  className="pointer-events-none absolute inset-x-0 bottom-0 p-6"
-                >
-                  <p className="truncate text-[10px] uppercase tracking-[0.22em] text-champagne-light">{r.tag}</p>
-                  <h3 className="mt-1 truncate font-playfair text-[24px] text-ivory lg:text-[27px]">{r.name}</h3>
-                </motion.div>
-
-                {/* focus state — detail card, spanning the full width of the
-                    panel. Its fade-in finishes exactly when the panel's
-                    flex-grow settles, so the text re-wrap happens under the
-                    fade instead of after it. */}
-                <motion.div
-                  initial={false}
-                  animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 12 }}
-                  transition={reduced ? INSTANT : isActive ? FADE_IN : FADE_OUT}
-                  inert={isActive ? undefined : ""}
-                  style={{ willChange: "transform, opacity", pointerEvents: isActive ? "auto" : "none" }}
-                  className="absolute inset-x-5 bottom-5 lg:inset-x-7 lg:bottom-7"
-                >
-                  <DetailCard region={r} />
-                </motion.div>
-              </div>
-            );
-          })}
-        </div>
+              {/* Fokuszustand — Detail-Karte über die volle Kartenbreite. Ihr
+                  Fade-in endet genau, wenn der flex-grow settelt, damit der
+                  Text-Umbruch unter der Blende passiert statt danach. */}
+              <motion.div
+                initial={false}
+                animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 12 }}
+                transition={reduced ? INSTANT : isActive ? FADE_IN : FADE_OUT}
+                inert={isActive ? undefined : ""}
+                style={{ willChange: "transform, opacity", pointerEvents: isActive ? "auto" : "none" }}
+                className="absolute inset-x-5 bottom-5 lg:inset-x-7 lg:bottom-7"
+              >
+                <DetailCard region={r} />
+              </motion.div>
+            </div>
+          );
+        })}
       </div>
 
-      {/* ============ MOBILE — stacked rows, tap to expand ============ */}
-      {/* Same motion contract as the desktop stage: the map drifts on its own
-          scroll spring, the open row gets the warm bloom, siblings dim — all
-          layers share the 420ms ease-standard clock of the height swap. */}
-      <div
-        ref={mobileStageRef}
-        className="relative overflow-hidden rounded-card-lg bg-espresso shadow-luxe md:hidden"
-      >
-        {mapLayer(mobileDrift)}
-        <div className="relative">
-          {regions.map((r, i) => {
-            const isOpen = open === i;
-            const dimmed = open !== null && !isOpen;
-            return (
-              <div key={r.region} className={`relative ${i > 0 ? "border-t border-ivory/20" : ""}`}>
-                <button
-                  type="button"
-                  aria-expanded={isOpen}
-                  onClick={() => setOpen(isOpen ? null : i)}
-                  className="relative block w-full text-left"
-                >
-                  {/* readability gradient behind the row title */}
-                  <span
-                    aria-hidden="true"
-                    className="pointer-events-none absolute inset-0 bg-gradient-to-r from-espresso/80 via-espresso/35 to-transparent"
-                  />
-                  {/* map highlight — the same warm bloom as the desktop panels,
-                      layered between readability gradient and title */}
-                  <span
-                    aria-hidden="true"
-                    className={`pointer-events-none absolute inset-0 bg-[radial-gradient(120%_140%_at_50%_100%,theme(colors.champagne/25),transparent_60%)] transition-opacity duration-[420ms] ease-standard ${
-                      isOpen ? "opacity-75" : "opacity-0"
-                    }`}
-                  />
-                  <span className="relative flex items-end justify-between gap-4 px-5 pb-4 pt-12">
-                    <span className="min-w-0">
-                      <span className="block truncate text-[9.5px] uppercase tracking-[0.22em] text-champagne-light">
-                        {r.tag}
-                      </span>
-                      <span className="mt-0.5 block truncate font-playfair text-[22px] text-ivory">{r.name}</span>
-                    </span>
-                    {/* plus → minus toggle mark */}
-                    <span
-                      aria-hidden="true"
-                      className="glass relative mb-1 grid h-9 w-9 shrink-0 place-items-center rounded-full"
-                    >
-                      <span className="absolute h-[1.5px] w-3.5 rounded-full bg-charcoal/80" />
-                      <span
-                        className={`absolute h-[1.5px] w-3.5 rounded-full bg-charcoal/80 transition-transform duration-[420ms] ease-standard ${
-                          isOpen ? "rotate-0" : "rotate-90"
-                        }`}
-                      />
-                    </span>
-                  </span>
-                </button>
+      {/* ============ MOBIL — drei gestapelte Foto-Karten, Tippen klappt auf ============ */}
+      {/* Gleicher Motion-Vertrag wie auf dem Desktop: die Fotos driften auf
+          ihrer eigenen Scroll-Feder, geschlossene Nachbarn dunkeln ab — alle
+          Ebenen teilen die 420ms-ease-standard-Uhr des Höhenwechsels. */}
+      <div ref={mobileStageRef} className="space-y-3.5 md:hidden">
+        {regions.map((r, i) => {
+          const isOpen = open === i;
+          const dimmed = open !== null && !isOpen;
+          return (
+            <div
+              key={r.region}
+              className="relative overflow-hidden rounded-card-lg bg-espresso shadow-luxe"
+            >
+              <CardPhoto region={r} drift={mobileDrift} active={isOpen} reduced={reduced} />
 
-                {/* one row is open at a time: the closing row and the opening
-                    row share the same height curve, and the card only fades in
-                    once the outgoing one has gone. */}
-                <AnimatePresence initial={false}>
-                  {isOpen && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{
-                        height: "auto",
-                        opacity: 1,
-                        transition: reduced
-                          ? INSTANT
-                          : { height: { duration: 0.34, ease: EASE }, opacity: FADE_IN },
-                      }}
-                      exit={{
-                        height: 0,
-                        opacity: 0,
-                        transition: reduced
-                          ? INSTANT
-                          : { height: { duration: 0.34, ease: EASE }, opacity: FADE_OUT },
-                      }}
-                      className="overflow-hidden"
-                    >
-                      <div className="px-4 pb-5">
-                        <DetailCard region={r} compact />
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+              {/* Lesbarkeits-Scrim hinter der Titelzeile */}
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0 bg-gradient-to-t from-espresso/85 via-espresso/30 to-transparent"
+              />
 
-                {/* dim closed rows while one holds the stage — painted last so
-                    it covers the header, taps pass straight through */}
-                <div
+              <button
+                type="button"
+                aria-expanded={isOpen}
+                onClick={() => setOpen(isOpen ? null : i)}
+                className="relative block w-full text-left"
+              >
+                {/* eigener Scrim der Titelzeile — der Karten-Scrim wandert beim
+                    Aufklappen nach unten mit, die Zeile bleibt so lesbar */}
+                <span
                   aria-hidden="true"
-                  className={`pointer-events-none absolute inset-0 bg-espresso/55 transition-opacity duration-[420ms] ease-standard ${
-                    dimmed ? "opacity-100" : "opacity-0"
-                  }`}
+                  className="pointer-events-none absolute inset-0 bg-gradient-to-r from-espresso/60 via-espresso/25 to-transparent"
                 />
-              </div>
-            );
-          })}
-        </div>
+                <span className="relative flex items-end justify-between gap-4 px-5 pb-4 pt-20">
+                  <span className="min-w-0">
+                    <span className="block truncate text-[9.5px] uppercase tracking-[0.22em] text-champagne-light">
+                      {r.tag}
+                    </span>
+                    <span className="mt-0.5 block truncate font-playfair text-[22px] text-ivory">{r.name}</span>
+                  </span>
+                  {/* Plus → Minus als Aufklapp-Zeichen */}
+                  <span
+                    aria-hidden="true"
+                    className="glass relative mb-1 grid h-9 w-9 shrink-0 place-items-center rounded-full"
+                  >
+                    <span className="absolute h-[1.5px] w-3.5 rounded-full bg-charcoal/80" />
+                    <span
+                      className={`absolute h-[1.5px] w-3.5 rounded-full bg-charcoal/80 transition-transform duration-[420ms] ease-standard ${
+                        isOpen ? "rotate-0" : "rotate-90"
+                      }`}
+                    />
+                  </span>
+                </span>
+              </button>
+
+              {/* Eine Karte ist zur Zeit offen: schließende und öffnende Karte
+                  teilen dieselbe Höhenkurve, die Detail-Karte blendet erst
+                  ein, wenn die ausgehende gegangen ist. */}
+              <AnimatePresence initial={false}>
+                {isOpen && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{
+                      height: "auto",
+                      opacity: 1,
+                      transition: reduced
+                        ? INSTANT
+                        : { height: { duration: 0.34, ease: EASE }, opacity: FADE_IN },
+                    }}
+                    exit={{
+                      height: 0,
+                      opacity: 0,
+                      transition: reduced
+                        ? INSTANT
+                        : { height: { duration: 0.34, ease: EASE }, opacity: FADE_OUT },
+                    }}
+                    className="relative overflow-hidden"
+                  >
+                    <div className="px-4 pb-5">
+                      <DetailCard region={r} compact />
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+              {/* geschlossene Karten dunkeln ab, während eine die Bühne hält —
+                  zuletzt gemalt, damit sie den Kopf überdeckt; Taps gehen durch */}
+              <div
+                aria-hidden="true"
+                className={`pointer-events-none absolute inset-0 bg-espresso/50 transition-opacity duration-[420ms] ease-standard ${
+                  dimmed ? "opacity-100" : "opacity-0"
+                }`}
+              />
+            </div>
+          );
+        })}
       </div>
     </>
   );

@@ -10,6 +10,8 @@ import { SectionTitle, Eyebrow, GrapeRule, IconChip } from "@/components/Deco";
 import { Arrow, Plate, GrapeVine, Book } from "@/components/Icons";
 import { WINES, REGION_COUNT } from "@/components/data";
 import WineExplorer from "@/components/weine/WineExplorer";
+import FaqSection from "@/components/faq/FaqSection";
+import { WEINE_FAQ } from "@/components/faq/faqData";
 import Atmosphere, { Aura, GhostWord, Vines } from "@/components/Atmosphere";
 
 export const metadata = {
@@ -34,11 +36,6 @@ const MOMENTS = [
     text: "Für gute Gespräche und unvergessliche Abende.",
     img: "/img/tasting.jpg",
   },
-  {
-    title: "Geschenk",
-    text: "Stilvoll schenken – Freude, die bleibt.",
-    img: "/img/gift.jpg",
-  },
 ];
 
 const HELP = [
@@ -58,10 +55,10 @@ const HELP = [
   },
   {
     icon: <Book className="h-7 w-7" />,
-    title: "FAQ",
-    text: "Häufige Fragen rund um Wein, Bestellung und Versand – kurz beantwortet.",
-    link: "Zu den FAQs",
-    href: "/kontakt",
+    title: "Service-FAQ",
+    text: "Häufige Fragen rund um Bestellung, Versand und Kontakt – kurz beantwortet.",
+    link: "Zu den Service-FAQs",
+    href: "/kontakt#fragen",
   },
 ];
 
@@ -170,48 +167,75 @@ export default function WeinePage() {
       </section>
 
       {/* ============ WELCHER WEIN PASST ZU IHREM MOMENT ============ */}
-      <section className="relative overflow-hidden">
-        <Atmosphere variant="rose" />
-        <GhostWord className="left-[-2vw] top-8 text-[12vw]">Occasioni</GhostWord>
-        <div className="relative mx-auto max-w-content px-6 pb-24 lg:px-10">
+      <section className="grain relative overflow-hidden">
+        {/* Flaschen-Stillleben als weiche Bühne: federnder Parallax-Drift unter
+            einem Elfenbein-Schleier, damit Titel und Karten lesbar bleiben und
+            die Ränder nahtlos in die Nachbarsektionen übergehen */}
+        <div aria-hidden="true" className="absolute inset-0">
+          <Parallax speed={0.08} overscan className="h-full w-full">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/img/weine/occasioni-bg.jpg"
+              alt=""
+              loading="lazy"
+              className="h-full w-full object-cover object-center"
+            />
+          </Parallax>
+          <div className="absolute inset-0 bg-ivory/25" />
+          <div className="absolute inset-x-0 top-0 h-44 bg-gradient-to-b from-ivory via-ivory/55 to-transparent" />
+          <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-ivory via-ivory/45 to-transparent" />
+        </div>
+        <Atmosphere variant="rose" className="opacity-60" />
+        <div className="relative mx-auto max-w-content px-6 lg:px-10">
         <SectionTitle
           eyebrow="Genussmomente"
-          description="Vier Anlässe, vier Stimmungen – finden Sie den Wein, der Ihren Augenblick begleitet."
+          description="Drei Anlässe, drei Stimmungen – finden Sie den Wein, der Ihren Augenblick begleitet."
         >
           Welcher Wein passt zu <span className="italic text-bordeaux">Ihrem Moment?</span>
         </SectionTitle>
-        <Stagger className="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        </div>
+        {/* Karten als breite, flache Streifen übereinander ganz links am
+            Viewport-Rand – rechts bleibt die Flaschen-Bühne des Fotos frei */}
+        <div className="relative px-6 pb-24 lg:pl-24 lg:pr-10">
+        <Stagger className="mt-8 flex flex-col gap-5 lg:max-w-[38rem]">
           {MOMENTS.map((m, i) => (
             <StaggerItem key={m.title} className="h-full">
               <TiltCard className="group h-full" max={5} radius="rounded-card-lg">
-                <article className="relative h-[300px] overflow-hidden rounded-card-lg shadow-luxe transition-shadow duration-500 group-hover:shadow-lift">
+                <article className="relative h-[172px] overflow-hidden rounded-card-lg shadow-luxe transition-shadow duration-500 group-hover:shadow-lift sm:h-[184px]">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={m.img}
                     alt=""
                     className="h-full w-full object-cover transition-transform duration-700 ease-out-expo group-hover:scale-[1.06]"
                   />
+                  {/* Schleier von links + weicher Boden, damit Titel und Text
+                      auf dem breiten, flachen Format lesbar bleiben */}
                   <div
                     aria-hidden="true"
-                    className="absolute inset-0 bg-gradient-to-t from-espresso/90 via-espresso/30 to-transparent"
+                    className="absolute inset-0 bg-gradient-to-r from-espresso/85 via-espresso/40 to-transparent"
+                  />
+                  <div
+                    aria-hidden="true"
+                    className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-espresso/70 to-transparent"
                   />
                   <span className="glass absolute left-4 top-4 rounded-full px-3 py-1.5 text-[9.5px] font-semibold uppercase tracking-[0.16em] text-charcoal/70">
                     Moment 0{i + 1}
                   </span>
-                  <div className="absolute inset-x-0 bottom-0 p-6">
-                    <h3 className="font-playfair text-[24px] text-ivory">{m.title}</h3>
-                    <p className="mt-1.5 text-[12.5px] leading-snug text-ivory/80">{m.text}</p>
-                    <div className="mt-5">
-                      <Button
-                        href="#kollektion"
-                        variant="glass"
-                        size="sm"
-                        magnetic={false}
-                        aria-label={`Passende Weine für ${m.title} entdecken`}
-                      >
-                        Weine finden
-                      </Button>
+                  <div className="absolute inset-0 flex items-end justify-between gap-5 p-5 sm:p-6">
+                    <div className="max-w-[17rem]">
+                      <h3 className="font-playfair text-[22px] text-ivory">{m.title}</h3>
+                      <p className="mt-1 text-[12.5px] leading-snug text-ivory/80">{m.text}</p>
                     </div>
+                    <Button
+                      href="#kollektion"
+                      variant="glass"
+                      size="sm"
+                      magnetic={false}
+                      className="shrink-0"
+                      aria-label={`Passende Weine für ${m.title} entdecken`}
+                    >
+                      Weine finden
+                    </Button>
                   </div>
                 </article>
               </TiltCard>
@@ -256,6 +280,25 @@ export default function WeinePage() {
           </Stagger>
         </div>
       </section>
+
+      {/* ============ HÄUFIGE FRAGEN (Wahl-FAQ) ============ */}
+      <div className="relative overflow-hidden">
+        <Atmosphere variant="warm" className="opacity-70" />
+        <GhostWord className="right-[-2vw] bottom-8 text-[11vw]">Quale vino?</GhostWord>
+        <FaqSection
+          className="relative"
+          pageType="wine-hub"
+          eyebrow="Häufige Fragen"
+          title={
+            <>
+              Welcher Wein <span className="italic text-bordeaux">darf es sein?</span>
+            </>
+          }
+          description="Orientierung für Ihre Wahl — von Farbe und Anlass bis zum passenden Geschenk. Jede Antwort führt Sie einen Schritt näher zur richtigen Flasche."
+          items={WEINE_FAQ}
+          footer={{ label: "Persönliche Beratung? Schreiben Sie uns", href: "/kontakt" }}
+        />
+      </div>
     </div>
   );
 }

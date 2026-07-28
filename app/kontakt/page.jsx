@@ -5,7 +5,9 @@ import { Reveal, Stagger, StaggerItem } from "@/components/motion/Reveal";
 import Button from "@/components/ui/Button";
 import { SectionTitle, Eyebrow, GrapeRule, IconChip } from "@/components/Deco";
 import ContactForm from "@/components/kontakt/ContactForm";
-import Faq from "@/components/kontakt/Faq";
+import FaqSection from "@/components/faq/FaqSection";
+import { KONTAKT_FAQ_GROUPS } from "@/components/faq/faqData";
+import NewsletterSignup from "@/components/kontakt/NewsletterSignup";
 import { Mail, Phone, Pin, Instagram, Facebook, LinkedIn, Arrow, Clock } from "@/components/Icons";
 import Atmosphere, { Aura, GhostWord, Vines } from "@/components/Atmosphere";
 
@@ -49,8 +51,8 @@ const QuestionIcon = (p) => (
 
 const HELP = [
   {
-    title: "Verkostungen in Düsseldorf",
-    text: "Erleben Sie unsere Weine persönlich – privat oder mit Ihrem Team, in Düsseldorf & Umgebung.",
+    title: "Verkostungen",
+    text: "Sie möchten unsere Weine verkosten? Hier erfahren Sie, wie es geht.",
     icon: <TastingIcon className="h-7 w-7" />,
   },
   {
@@ -210,35 +212,28 @@ export default function KontaktPage() {
         </div>
       </section>
 
-      {/* ============ FAQ + SHOP-CTA ============ */}
+      {/* ============ FAQ (Service-Cluster, Index links) + SHOP-CTA ============ */}
       <section className="relative overflow-hidden border-y border-stone/40 bg-gradient-to-b from-cream via-champagne-light/25 to-ivory">
         <Vines className="inset-x-0 bottom-0 h-72 w-full" />
         <Aura tint="blush" drift={2} className="-left-56 -top-44 h-[34rem] w-[34rem]" />
-        <div className="relative mx-auto grid max-w-content grid-cols-1 gap-12 px-6 py-20 lg:grid-cols-2 lg:gap-16 lg:px-10 lg:py-24">
-          {/* FAQ */}
-          <div>
-            <SectionTitle
-              align="left"
-              eyebrow="Gut zu wissen"
-              description="Antworten auf die Fragen, die uns am häufigsten erreichen."
-            >
-              Häufige Fragen
-            </SectionTitle>
-            <Reveal delay={0.12}>
-              <Faq className="mt-8" />
-              <a
-                href="#kontakt-formular"
-                className="group mt-4 inline-flex min-h-[44px] items-center gap-1.5 text-[12px] font-medium text-bordeaux"
-              >
-                Frage nicht dabei? Schreiben Sie uns
-                <Arrow className="h-3.5 w-3.5 transition-transform duration-500 ease-out-expo group-hover:translate-x-1" />
-              </a>
-            </Reveal>
-          </div>
+        <FaqSection
+          className="relative"
+          pageType="kontakt"
+          eyebrow="Gut zu wissen"
+          title={
+            <>
+              Häufige <span className="italic text-bordeaux">Fragen.</span>
+            </>
+          }
+          description="Antworten auf die Fragen, die uns am häufigsten erreichen — nach Anliegen sortiert: von Verkostungen in Düsseldorf über Händleranfragen bis zu Shop und Versand."
+          groups={KONTAKT_FAQ_GROUPS}
+          footer={{ label: "Frage nicht dabei? Schreiben Sie uns", href: "#kontakt-formular" }}
+        />
 
-          {/* dark shader shop card */}
-          <Reveal delay={0.18} className="h-full">
-            <div className="grain relative h-full min-h-[380px] overflow-hidden rounded-card-lg shadow-luxe">
+        {/* dark shader shop card + newsletter unter der FAQ */}
+        <div className="relative mx-auto grid max-w-content grid-cols-1 items-stretch gap-6 px-6 pb-20 lg:grid-cols-2 lg:px-10 lg:pb-24">
+          <Reveal delay={0.1} className="h-full">
+            <div className="grain relative h-full min-h-[320px] overflow-hidden rounded-card-lg shadow-luxe">
               <ShaderGradient palette="wine" />
               <div className="relative flex h-full flex-col justify-center p-9 lg:p-12">
                 <Eyebrow light>Der offizielle Shop</Eyebrow>
@@ -255,6 +250,9 @@ export default function KontaktPage() {
                 </div>
               </div>
             </div>
+          </Reveal>
+          <Reveal delay={0.16} className="h-full">
+            <NewsletterSignup />
           </Reveal>
         </div>
       </section>

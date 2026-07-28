@@ -27,6 +27,8 @@ module.exports = {
         /* wine-in-glass tones for white-wine colour chapters */
         straw: "#E8DC9A",
         "straw-deep": "#D3C56E",
+        /* vineyard-foliage green — dark enough for text on ivory */
+        vine: "#55683F",
       },
       fontFamily: {
         playfair: ["var(--font-playfair)", "serif"],

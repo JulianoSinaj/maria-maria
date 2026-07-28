@@ -170,8 +170,8 @@ export const IL_BIANCO = {
       { label: "Lese", value: "Ende September" },
       { label: "Reife", value: "2 Jahre im Stahl" },
     ],
-    photo: "/img/region-kampanien.jpg",
-    photoAlt: "Weinlandschaft in Kampanien",
+    photo: "/img/home/region-kampanien.webp",
+    photoAlt: "Weinberge über dem Golf von Neapel mit Blick auf den Vesuv",
     chip: { title: "Campania", subtitle: "Kampanien · Italien" },
   },
 
@@ -236,30 +236,35 @@ export const IL_BIANCO = {
   },
 
   /* ---- Häufige Fragen ---- */
+  /* Fragenset nach der FAQ-Guide (Product-Cluster Il Bianco): Geschmack,
+     Bedeutung der Greco-Cuvée (technisches Gate: keine Prozentangaben —
+     der Erzeuger gibt die Sortenaufteilung bewusst nicht frei), Aperitivo
+     samt Temperatur und Anlass. Ausbau/Servieren stehen in Detail & Genießen. */
   faq: [
     {
-      q: "Wie schmeckt der Il Bianco?",
+      id: "bianco-geschmack",
+      q: "Wie schmeckt Maria Maria Il Bianco Greco-Cuvée?",
       a: "Sehr intensiv und angenehm im Duft, im Geschmack dagegen zart und verführerisch. Die Farbe ist strohgelb — ein heller, zugänglicher Weißwein mit erstaunlicher aromatischer Tiefe.",
     },
     {
-      q: "Aus welchen Rebsorten besteht er?",
-      a: "Il Bianco ist eine Cuvée aus ausgewählten weißen Rebsorten Kampaniens. Der Erzeuger gibt bewusst keine exakte Sortenaufteilung an — die Zusammensetzung folgt dem Jahrgang.",
+      id: "bianco-cuvee",
+      q: "Was bedeutet Greco-Cuvée bei Il Bianco?",
+      a: "Il Bianco ist eine Cuvée aus ausgewählten weißen Rebsorten Kampaniens — der Name verweist auf den Greco. Eine exakte Sortenaufteilung ist nicht veröffentlicht; bestätigt sind die sanfte Pressung ganzer Trauben und zwei Jahre Reife im Stahltank, die die Sorten zu einem intensiven, zarten Weißwein vereinen.",
     },
     {
+      id: "bianco-aperitivo",
+      q: "Passt die Greco-Cuvée zum Aperitivo?",
+      a: "Ja — gut gekühlt bei etwa 10 °C ist sie ein eleganter Auftakt des Abends. Nicht zu kalt servieren, sonst verschließt sich das intensive Bouquet; im bauchigen Weißweinglas entfaltet es sich am schönsten.",
+    },
+    {
+      id: "bianco-anlass",
+      q: "Für welchen Anlass eignet sich Il Bianco Greco-Cuvée?",
+      a: "Für ruhige Abende, an denen es nichts zu beweisen gibt — zu Fischgerichten, Krustentieren und Meeresfrüchten oder als Aperitivo. Ein bereits gereifter Wein (zwei Jahre im Stahl), der nicht drängt, sondern einlädt.",
+    },
+    {
+      id: "bianco-igp",
       q: "Was bedeutet „Campania Bianco IGP“?",
       a: "IGP steht für „Indicazione Geografica Protetta“, die geschützte geografische Angabe. Die Trauben stammen aus der Region Kampanien in Süditalien.",
-    },
-    {
-      q: "Zu welchen Gerichten passt der Il Bianco?",
-      a: "Er passt hervorragend zu Fischgerichten, Krustentieren und Meeresfrüchten — und ebenso als gut gekühlter Aperitivo.",
-    },
-    {
-      q: "Wie wird der Il Bianco ausgebaut?",
-      a: "Ganze Trauben werden sanft und weich gepresst, anschließend reift der Wein zwei Jahre im Stahlsilo. Ohne Holz bleibt die Frucht der Cuvée unverfälscht.",
-    },
-    {
-      q: "Wie sollte er serviert werden?",
-      a: "Bei etwa 10 °C im Weißweinglas. So bleibt das intensive Bouquet erhalten, ohne dass der Wein zu kalt und damit verschlossen wird.",
     },
   ],
 

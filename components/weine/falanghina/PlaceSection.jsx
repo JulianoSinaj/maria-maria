@@ -1,41 +1,55 @@
 import { Eyebrow } from "@/components/Deco";
 import { Reveal, Stagger, StaggerItem } from "@/components/motion/Reveal";
-import Parallax from "@/components/motion/Parallax";
 import ItalyMap from "@/components/ItalyMap";
 
-/* „Die Herkunft" — ein immersives Kartenkapitel: die Sud-Italia-Landkarte
-   liegt vermattet („glassed") hinter einem warmen Espresso-Verlauf — nur die
-   Ahnung einer Karte, kein lesbares Bild. Darüber Erzählung, Italien-Silhouette
-   und Kennzahlen. Eine Bühne für alle Weinseiten, mobil wie am Desktop. */
+/* „Die Herkunft" — ein immersives Foto-Kapitel: das Regionsfoto der Startseite
+   (Region-Explorer) trägt die Bühne. Der Foto-Rahmen ist auf das exakte
+   Seitenverhältnis der Datei verriegelt — kein Beschnitt, kein Zoom, kein
+   Drift: die eingezeichnete Italien-Karte und jedes Detail der Landschaft
+   bleiben auf jedem Viewport vollständig sichtbar. Nach unten blendet das
+   Foto in massives Espresso, das Erzählung, Italien-Silhouette und
+   Kennzahlen trägt. Das Foto wird über place.region aufgelöst. */
 
+const REGION_PHOTO = {
+  apulien: "/img/home/region-apulien.webp",
+  kampanien: "/img/home/region-kampanien.webp",
+  garda: "/img/home/region-garda.webp",
+};
+
+/* Fallback für Regionen ohne eigenes Foto: die vermattete Sud-Italia-Karte */
 const MAP_BG = "/img/map-sud-italia.jpg";
 
 export default function PlaceSection({ wine }) {
   const { place } = wine;
+  const photo = REGION_PHOTO[place.region];
   const titleWords = place.title.split(" ");
   const lastWord = titleWords.pop();
 
   return (
     <section id="herkunft" className="scroll-mt-36 px-4 py-6">
       <div className="grain relative mx-auto max-w-[1280px] overflow-hidden rounded-card-lg bg-espresso shadow-lift">
-        <Parallax speed={0.06} overscan className="absolute inset-0">
+        {/* Foto-Bühne im Original-Seitenverhältnis (1672×941) — der Rahmen ist
+            deckungsgleich mit der Datei, es geht kein einziger Pixel verloren */}
+        <div className="relative aspect-[1672/941] w-full">
           <img
-            src={MAP_BG}
+            src={photo || MAP_BG}
             alt=""
             aria-hidden="true"
-            className="h-full w-full scale-110 object-cover blur-[8px] saturate-[0.85]"
+            className={`absolute inset-0 h-full w-full object-cover ${
+              photo ? "" : "blur-[8px] saturate-[0.85]"
+            }`}
             loading="lazy"
           />
-        </Parallax>
-        {/* glassed veil + warm scrim — oben schimmert die Karte, unten trägt
-            solides Espresso den Text */}
-        <div aria-hidden="true" className="absolute inset-0 bg-espresso/45" />
-        <div
-          aria-hidden="true"
-          className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(33,21,17,0.08)_0%,rgba(33,21,17,0.45)_30%,rgba(33,21,17,0.87)_56%,#211511_82%)] lg:bg-[linear-gradient(to_bottom,rgba(33,21,17,0)_0%,rgba(33,21,17,0.35)_40%,rgba(33,21,17,0.85)_66%,#211511_96%)]"
-        />
+          {/* weicher Übergang in den Espresso-Körper darunter */}
+          <div
+            aria-hidden="true"
+            className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-b from-transparent via-espresso/70 to-espresso"
+          />
+        </div>
 
-        <div className="relative px-6 pb-9 pt-44 sm:px-10 sm:pb-11 sm:pt-56 lg:px-14 lg:pb-12 lg:pt-[19rem]">
+        {/* Inhalt — schiebt sich in die verlaufsgedeckte untere Bildzone;
+            mobil läuft er auf massivem Espresso unter dem Foto weiter */}
+        <div className="relative -mt-14 px-6 pb-9 sm:-mt-24 sm:px-10 sm:pb-11 lg:-mt-40 lg:px-14 lg:pb-12">
           <div className="grid gap-9 lg:grid-cols-[1fr_auto] lg:items-end lg:gap-16">
             <div>
               <Reveal>

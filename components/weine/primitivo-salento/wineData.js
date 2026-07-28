@@ -171,8 +171,8 @@ export const PRIMITIVO_SALENTO = {
       { label: "Klassifikation", value: "Primitivo I.G.P. Salento" },
       { label: "Erziehung", value: "Alberello, ohne Bewässerung" },
     ],
-    photo: "/img/region-apulien.jpg",
-    photoAlt: "Weinlandschaft im Salento, Apulien",
+    photo: "/img/home/region-apulien.webp",
+    photoAlt: "Trulli und Olivenhaine in Apulien im Abendlicht",
     chip: { title: "Salento", subtitle: "Apulien · Italien" },
   },
 
@@ -237,34 +237,36 @@ export const PRIMITIVO_SALENTO = {
   },
 
   /* ---- Häufige Fragen ---- */
+  /* Fragenset nach der FAQ-Guide (Product-Cluster Primitivo Salento IGP):
+     Geschmack, IGP-Kurzdefinition, Abgrenzung zu Primitivo di Manduria
+     (Synthese + Link, die Produktseite wird nicht zur Vergleichs-Guide),
+     Pairing und Alberello. Ausbau/Servieren stehen in Detail & Genießen. */
   faq: [
     {
-      q: "Wie schmeckt der Primitivo IGP Salento?",
+      id: "psal-geschmack",
+      q: "Wie schmeckt der Maria Maria Primitivo Salento IGP?",
       a: "Intensiv und lang anhaltend im Geschmack, dabei von unkomplizierter Trinkfreude und angenehm zugänglich. In der Nase ein komplexes Bukett mit Noten von Pflaume und Trockenfrüchten.",
     },
     {
-      q: "Aus welchen Trauben besteht dieser Wein?",
-      a: "Zu 100 % aus Primitivo. Die Trauben stammen aus den Weinbergen der Gemeinden Torricella und Lizzano im Salento.",
-    },
-    {
-      q: "Was bedeutet „I.G.P. Salento“?",
+      id: "psal-igp",
+      q: "Was bedeutet Salento IGP?",
       a: "IGP steht für „Indicazione Geografica Protetta“, die geschützte geografische Angabe. Der Salento ist die Halbinsel im Süden Apuliens — der Absatz des italienischen Stiefels.",
     },
     {
+      id: "psal-vs-manduria",
+      q: "Was unterscheidet Primitivo Salento von Primitivo di Manduria?",
+      a: "Die Herkunftsstufe: „Primitivo di Manduria D.O.P.“ ist die geschützte Ursprungsbezeichnung für Primitivo aus dem eng umgrenzten Gebiet um Manduria; „I.G.P. Salento“ umfasst die ganze Salento-Halbinsel. Unser Salento IGP ist die unkompliziertere, zugänglichere Interpretation — die beiden Manduria-Weine sind strukturierter und konzentrierter.",
+      link: { label: "Primitivo di Manduria DOP entdecken", href: "/weine/primitivo-14-5" },
+    },
+    {
+      id: "psal-essen",
+      q: "Zu welchem Essen passt Primitivo Salento IGP?",
+      a: "Zu Fleisch und Käse — von Braten und Gegrilltem über gereiften Hartkäse bis zu kräftigen Pastagerichten und Salumi. Seine unkomplizierte Trinkfreude macht ihn zum zugänglichen Begleiter der herzhaften Küche, am besten bei 16 bis 18 °C im Rotweinglas serviert.",
+    },
+    {
+      id: "psal-alberello",
       q: "Was heißt Alberello-Erziehung?",
       a: "Alberello ist die traditionelle Buscherziehung Süditaliens: niedrige, freistehende Stöcke ohne Drahtrahmen. Hier wird sie ausschließlich und ohne Bewässerung praktiziert, sodass die Rebe ihr Wasser selbst aus der Tiefe holt.",
-    },
-    {
-      q: "Zu welchen Gerichten passt der Primitivo?",
-      a: "Zu Fleisch und Käse — von Braten und Gegrilltem über gereiften Hartkäse bis zu kräftigen Pastagerichten und Salumi.",
-    },
-    {
-      q: "Wie sollte der Primitivo serviert werden?",
-      a: "Bei 16 bis 18 °C im Rotweinglas. Eine knappe Stunde vorher öffnen lässt die reife Frucht deutlicher hervortreten.",
-    },
-    {
-      q: "Wie wird der Primitivo ausgebaut?",
-      a: "Die alkoholische Gärung läuft bei kontrollierter Temperatur, um Aromen und Farbe zu bewahren, mit sieben bis acht Tagen Kontakt auf den Schalen. Nach einer leichten Pressung reift der Wein zwölf Monate im Stahltank bis zur Abfüllung.",
     },
   ],
 

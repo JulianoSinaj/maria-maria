@@ -8,6 +8,8 @@ import Button from "@/components/ui/Button";
 import { SectionTitle, Eyebrow, GrapeRule, IconChip } from "@/components/Deco";
 import RegionWineRail from "@/components/RegionWineRail";
 import ItalyMap from "@/components/ItalyMap";
+import FaqSection from "@/components/faq/FaqSection";
+import { REGIONEN_FAQ_GROUPS } from "@/components/faq/faqData";
 import { Arrow, Check, Fields } from "@/components/Icons";
 import { WINES, REGION_COUNT } from "@/components/data";
 import Atmosphere, { Aura, GhostWord, Vines } from "@/components/Atmosphere";
@@ -233,6 +235,25 @@ export default function RegionenPage() {
         </div>
         </div>
       </section>
+
+      {/* ============ HÄUFIGE FRAGEN (je Region, Index links) ============ */}
+      <div className="relative overflow-hidden">
+        <Atmosphere variant="warm" className="opacity-70" />
+        <GhostWord className="left-[-2vw] bottom-8 text-[11vw]">Origini</GhostWord>
+        <FaqSection
+          className="relative"
+          pageType="regionen"
+          eyebrow="Häufige Fragen"
+          title={
+            <>
+              Fragen zur <span className="italic text-bordeaux">Herkunft.</span>
+            </>
+          }
+          description="Drei Herkünfte, drei Charaktere — wählen Sie links eine Region und entdecken Sie die häufigsten Fragen zu Rebsorten, Gebieten und unseren Weinen."
+          groups={REGIONEN_FAQ_GROUPS}
+          footer={{ label: "Mehr Wissen im Magazin entdecken", href: "/magazin" }}
+        />
+      </div>
 
       {/* ============ WARUM REGIONEN + CTA ============ */}
       <section className="relative overflow-hidden border-y border-stone/40 bg-gradient-to-b from-cream via-champagne-light/25 to-ivory py-20 lg:py-24">

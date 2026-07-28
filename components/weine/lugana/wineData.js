@@ -176,8 +176,8 @@ export const LUGANA = {
       { label: "Boden", value: "Skelettreich, kiesig" },
       { label: "Erziehung", value: "Guyot" },
     ],
-    photo: "/img/region-garda.jpg",
-    photoAlt: "Weinberge am Südufer des Gardasees",
+    photo: "/img/home/region-garda.webp",
+    photoAlt: "Weinberge am Südufer des Gardasees im Abendlicht",
     chip: { title: "Lugana", subtitle: "Gardasee · Lombardei" },
   },
 
@@ -242,26 +242,37 @@ export const LUGANA = {
   },
 
   /* ---- Häufige Fragen ---- */
+  /* Fragenset nach der FAQ-Guide (Cluster Lugana — der heikelste SEO-Fall):
+     „Was ist Lugana?“ bleibt bewusst ein kurzer Teaser mit Link Richtung
+     Region, damit die Produktseite nicht mit einer künftigen Wissens-Guide
+     konkurriert; dazu Geschmack, Rebsorte, Fisch-Pairing und der
+     Pinot-Grigio-Vergleich aus Sicht dieses Weins. */
   faq: [
     {
-      q: "Wie schmeckt der Lugana DOC?",
+      id: "lugana-was-ist",
+      q: "Was ist Lugana-Wein?",
+      a: "Lugana ist eine kleine, renommierte Weißwein-Denomination (DOC) am Südufer des Gardasees, gekeltert aus der Rebsorte Turbiana. Unser Lugana stammt aus den Lagen von Desenzano und Pozzolengo.",
+      link: { label: "Mehr über das Lugana-Gebiet am Gardasee", href: "/regionen#garda" },
+    },
+    {
+      id: "lugana-geschmack",
+      q: "Wie schmeckt der Maria Maria Lugana?",
       a: "Voll, warm, weich und umhüllend, mit guter Persistenz und harmonischen aromatischen Anklängen. In der Nase intensiv und komplex: Maiglöckchen und Weißdorn, gefolgt von reifer Frucht, feinem Gebäck und einem zarten Röstton.",
     },
     {
-      q: "Aus welcher Rebsorte wird der Lugana gemacht?",
-      a: "Aus Trebbiano di Lugana, auch Turbiana genannt. Die Trauben stammen aus den Turbiana-Weinbergen der Gemeinden Desenzano und Pozzolengo am Südufer des Gardasees.",
+      id: "lugana-rebsorte",
+      q: "Welche Rebsorte wird für Lugana verwendet?",
+      a: "Trebbiano di Lugana, auch Turbiana genannt. Die Trauben stammen aus den Turbiana-Weinbergen der Gemeinden Desenzano und Pozzolengo am Südufer des Gardasees.",
     },
     {
-      q: "Wie wird der Lugana ausgebaut?",
-      a: "Weißweinbereitung mit siebentägiger Kryomazeration auf der Schale, um die Primäraromen zu extrahieren. Anschließend vergärt der Wein temperaturkontrolliert bei 14–16 °C und bleibt bis zur Abfüllung auf der Feinhefe.",
+      id: "lugana-fisch",
+      q: "Passt Lugana zu Fisch?",
+      a: "Ja, ausgezeichnet – vor allem zu rohen und gegarten Fisch-Antipasti und delikaten ersten Gängen. Wichtig ist nur: keine schweren Saucen, keine dominante Würze, damit seine Feinheit führt. Auch als Aperitivo eine elegante Wahl.",
     },
     {
-      q: "Zu welchen Gerichten passt der Lugana?",
-      a: "Zu rohen und gegarten Fisch-Antipasti, zu delikaten ersten Gängen und zu Speisen ohne schwere Saucen oder dominante Würze. Ausgezeichnet auch als Aperitivo.",
-    },
-    {
-      q: "Wie sollte der Lugana serviert werden?",
-      a: "Bei 8 bis 10 °C im Weißweinglas. So bleiben der florale Duft und die weiche Textur am klarsten erhalten.",
+      id: "lugana-vs-pinot-grigio",
+      q: "Was ist der Unterschied zwischen Lugana und Pinot Grigio?",
+      a: "Lugana ist ein herkunftsgebundener Weißwein (DOC) vom Südufer des Gardasees, gekeltert aus der Rebsorte Turbiana; Pinot Grigio ist dagegen der Name einer Rebsorte ohne diese Herkunftsbindung. Unser Lugana zeigt sich voll, warm und weich am Gaumen — mit intensivem Duft nach Maiglöckchen und Weißdorn, reifer Frucht und guter Persistenz.",
     },
   ],
 

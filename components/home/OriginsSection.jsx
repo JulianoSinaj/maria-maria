@@ -11,7 +11,7 @@ import Atmosphere, { GhostWord } from "@/components/Atmosphere";
 
 const SOULS = [
   {
-    name: "Maria Pia",
+    name: "Maria",
     tag: "Die Gegenwart",
     traits: ["Moderne", "Unabhängigkeit", "Pure Ästhetik"],
   },

@@ -176,8 +176,8 @@ export const GRECO_DI_TUFO = {
       { label: "Lese", value: "Mitte Oktober" },
       { label: "Boden", value: "Vulkanischer Tuff" },
     ],
-    photo: "/img/region-kampanien.jpg",
-    photoAlt: "Hügelige Weinlandschaft in Kampanien",
+    photo: "/img/home/region-kampanien.webp",
+    photoAlt: "Weinberge über dem Golf von Neapel mit Blick auf den Vesuv",
     chip: { title: "Tufo", subtitle: "Irpinien · Kampanien" },
   },
 
@@ -242,26 +242,36 @@ export const GRECO_DI_TUFO = {
   },
 
   /* ---- Häufige Fragen ---- */
+  /* Fragenset nach der FAQ-Guide (Product-Cluster Greco): Geschmack, DOCG,
+     Mineralität, Pairing, Vergleich mit der Falanghina — Antworten aus
+     bestätigten Fakten (Boden, Denomination, Datenblatt), Vergleich kurz
+     mit Link auf den Nachbarwein. */
   faq: [
     {
-      q: "Wie schmeckt der Greco di Tufo D.O.C.G.?",
+      id: "greco-geschmack",
+      q: "Wie schmeckt der Greco di Tufo?",
       a: "Intensiv und angenehm im Duft, strohgelb mit goldenen Reflexen im Glas – und am Gaumen frisch, zart und verführerisch. Ein Weißwein mit Struktur, der zugänglich bleibt.",
     },
     {
-      q: "Was bedeutet „D.O.C.G.“?",
+      id: "greco-docg",
+      q: "Was bedeutet DOCG bei Greco di Tufo?",
       a: "D.O.C.G. steht für „Denominazione di Origine Controllata e Garantita“ – die höchste Herkunftsstufe im italienischen Weinrecht. Der Greco di Tufo ist einer der wenigen Weißweine Italiens mit dieser Klassifizierung.",
     },
     {
-      q: "Zu welchen Gerichten passt der Greco di Tufo?",
-      a: "Perfekt zu Fischgerichten, Meeresfrüchten, Käse und Risotto. Besonders überraschend schmeckt er zu Mozzarella di Bufala.",
+      id: "greco-mineralisch",
+      q: "Ist Greco di Tufo mineralisch?",
+      a: "Ja. Die Weinberge rund um das Dorf Tufo liegen auf vulkanischem Tuffgestein, das dem Wein einen feinen mineralischen Zug und Spannung verleiht. Zusammen mit Höhenlage und kühlen Nächten entsteht so seine typische Struktur – Frische mit Tiefgang.",
     },
     {
-      q: "Wie sollte der Greco di Tufo serviert werden?",
-      a: "Am besten bei etwa 10 °C im Weißweinglas. So bleiben Duft und Frische am klarsten – kurz vor dem Servieren aus dem Kühlschrank nehmen.",
+      id: "greco-pairing",
+      q: "Zu welchem Essen passt Greco di Tufo?",
+      a: "Perfekt zu Fischgerichten, Meeresfrüchten, Käse und Risotto — besonders überraschend schmeckt er zu Mozzarella di Bufala. Mit seiner Struktur begleitet der Greco die helle Küche, ohne sie zu übertönen; servieren Sie ihn dazu gut gekühlt bei etwa 10 °C im Weißweinglas.",
     },
     {
-      q: "Wie wird der Greco di Tufo ausgebaut?",
-      a: "Die ganzen Trauben werden sanft gepresst, die malolaktische Gärung wird bewusst nicht vollständig durchgeführt. Anschließend reift der Wein ein Jahr im Stahltank – so bleiben Frische und Rebsortencharakter erhalten.",
+      id: "greco-vs-falanghina",
+      q: "Was ist der Unterschied zu Falanghina?",
+      a: "Der Greco bringt Struktur, goldene Reflexe und einen mineralischen Zug vom Tuffboden mit – ein Weißwein mit D.O.C.G.-Status, der leise verführt. Die Falanghina aus dem Beneventano ist weicher, heller in der Frucht und unkomplizierter. Kurz: der Greco für Tiefe, die Falanghina für den leichten Auftakt.",
+      link: { label: "Falanghina entdecken", href: "/weine/falanghina" },
     },
   ],
 

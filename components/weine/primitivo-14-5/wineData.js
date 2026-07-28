@@ -179,8 +179,8 @@ export const PRIMITIVO_14_5 = {
       { label: "Klassifikation", value: "Primitivo di Manduria D.O.P." },
       { label: "Ausbau", value: "12 Monate im Stahltank" },
     ],
-    photo: "/img/region-apulien.jpg",
-    photoAlt: "Weinlandschaft im Salento, Apulien",
+    photo: "/img/home/region-apulien.webp",
+    photoAlt: "Trulli und Olivenhaine in Apulien im Abendlicht",
     chip: { title: "Manduria", subtitle: "Apulien · Italien" },
   },
 
@@ -245,30 +245,36 @@ export const PRIMITIVO_14_5 = {
   },
 
   /* ---- Häufige Fragen ---- */
+  /* Fragenset nach der FAQ-Guide (Product-Cluster Primitivo 14,5): Geschmack,
+     Pairing, Trinktemperatur, Unterschied zum 15,5 (kurz, nur belegte
+     Unterschiede aus beiden Datenblättern, Link zum Nachbarwein) plus die
+     DOP-Kurzdefinition. Ausbau/Alberello erzählt die Story-Sektion. */
   faq: [
     {
-      q: "Wie schmeckt der Primitivo di Manduria DOP 14,50?",
+      id: "p145-geschmack",
+      q: "Wie schmeckt der Maria Maria Primitivo 14,5?",
       a: "Weich am Gaumen, mit intensivem und anhaltendem Geschmack — leicht zu trinken und ausgesprochen angenehm. In der Nase überrascht er mit einem komplexen Aroma von Brombeeren und Pflaumen.",
     },
     {
-      q: "Aus welcher Rebsorte besteht dieser Wein?",
-      a: "Zu 100 % aus Primitivo di Manduria DOP. Die Trauben stammen aus den Weinbergen der Gemeinden Torricella und Lizzano in Apulien.",
+      id: "p145-essen",
+      q: "Zu welchem Essen passt der Primitivo 14,5?",
+      a: "Zu robusten Primi, rotem Fleisch — gegrillt, gebraten oder geschmort — sowie zu Wild und gereiftem Hartkäse. Als Faustregel gilt: Je kräftiger das Gericht, desto wohler fühlt er sich.",
     },
     {
+      id: "p145-temperatur",
+      q: "Bei welcher Temperatur serviert man den Primitivo 14,5?",
+      a: "16 bis 18 °C im Rotweinglas. Eine knappe Stunde vorher geöffnet, treten die dunkle Frucht und die weiche Textur am deutlichsten hervor.",
+    },
+    {
+      id: "p145-vs-155",
+      q: "Was unterscheidet den Primitivo 14,5 vom Primitivo 15,5?",
+      a: "Der 14,5 reift zwölf Monate im Stahltank und bleibt weich, fruchtbetont und leicht zugänglich (14,5 % vol.). Der 15,5 reift zwölf Monate in Capasoni — traditionellen Terrakotta-Amphoren — und ist mit 15,5 % vol. körperreicher, dichter und komplexer. Beide sind zu 100 % Primitivo di Manduria DOP.",
+      link: { label: "Zum Primitivo 15,5", href: "/weine/primitivo-15-5" },
+    },
+    {
+      id: "p145-dop",
       q: "Was bedeutet „Primitivo di Manduria D.O.P.“?",
       a: "DOP steht für „Denominazione di Origine Protetta“, die geschützte Ursprungsbezeichnung. Sie erlaubt den Namen nur für Primitivo aus dem eng umgrenzten Gebiet um Manduria im apulischen Salento.",
-    },
-    {
-      q: "Wie wird der Wein ausgebaut?",
-      a: "Die alkoholische Gärung läuft bei kontrollierter Temperatur, um Aromen und Farbe zu bewahren, mit 7 bis 8 Tagen Kontakt auf den Schalen. Danach folgt eine leichte Pressung und ein Ausbau von zwölf Monaten im Stahltank bis zur Abfüllung.",
-    },
-    {
-      q: "Was bedeutet die Erziehung im Alberello?",
-      a: "Alberello ist der traditionelle Buschbau ohne Drahtrahmen. Die Reben stehen einzeln und werden nicht bewässert — die Stöcke tragen weniger, die Trauben werden konzentrierter.",
-    },
-    {
-      q: "Wie sollte der Primitivo 14,50 serviert werden?",
-      a: "Bei 16 bis 18 °C im Rotweinglas. Eine knappe Stunde vorher geöffnet, treten die dunkle Frucht und die weiche Textur am deutlichsten hervor.",
     },
   ],
 

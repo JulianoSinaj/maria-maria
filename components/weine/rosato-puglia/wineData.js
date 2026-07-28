@@ -170,8 +170,8 @@ export const ROSATO_NEGROAMARO = {
       { label: "Erziehung", value: "Alberello, ohne Bewässerung" },
       { label: "Klassifikation", value: "Negroamaro I.G.P. Salento" },
     ],
-    photo: "/img/region-apulien.jpg",
-    photoAlt: "Weinlandschaft im Salento, Apulien",
+    photo: "/img/home/region-apulien.webp",
+    photoAlt: "Trulli und Olivenhaine in Apulien im Abendlicht",
     chip: { title: "Salento", subtitle: "Apulien · Italien" },
   },
 
@@ -236,30 +236,38 @@ export const ROSATO_NEGROAMARO = {
   },
 
   /* ---- Häufige Fragen ---- */
+  /* Fragenset nach der FAQ-Guide (Product-Cluster Rosato Puglia — bewusst auf
+     dem aktuellen Produkt aufgebaut, kein Chiaretto-Erbe): Geschmack,
+     Trockenheit, Aperitivo-Anlass samt Serviertemperatur und die
+     Rosato/Rosé-Terminologie als Mikro-Antwort mit der Schalenkontakt-Story. */
   faq: [
     {
-      q: "Wie schmeckt der Rosato Negroamaro IGP Salento?",
-      a: "Frisch, ausgewogen und elegant fruchtig. In der Nase delikat und anhaltend mit floralen Noten, im Glas rosa wie Pfirsichfleisch.",
+      id: "rosato-geschmack",
+      q: "Wie schmeckt der Maria Maria Rosato Puglia?",
+      a: "Frisch, ausgewogen und elegant fruchtig. In der Nase delikat und anhaltend mit floralen Noten, im Glas rosa wie Pfirsichfleisch — am Gaumen bleibt die Frucht elegant, statt süß zu werden: ein Rosé, der von seiner Frische lebt.",
     },
     {
-      q: "Aus welcher Rebsorte besteht der Rosato?",
-      a: "Zu 100 % aus Negroamaro IGP Salento — der wichtigsten roten Rebsorte Apuliens.",
+      /* [BESTÄTIGEN] „trocken (secco)“ steht nicht explizit im Datenblatt —
+         Antwort stützt sich auf die freigegebene Geschmacksbeschreibung
+         („statt süß zu werden“) und die Sortiments-Auszeichnung „Trocken“ */
+      id: "rosato-trocken",
+      q: "Ist Rosato Puglia trocken?",
+      a: "Ja — seine Frucht bleibt elegant und frisch, statt süß zu wirken. Nur vier Stunden auf der Schale und drei Monate Ruhe im Stahltank bewahren genau diese Klarheit, bei leichten 12 % vol.",
     },
     {
-      q: "Warum ist ein Wein aus einer roten Rebe rosé?",
-      a: "Weil der Most nur vier Stunden Kontakt mit den Schalen hat. Die Farbe sitzt in der Beerenhaut, nicht im Saft — eine kurze Standzeit ergibt daher ein zartes Rosa statt eines Rotweins.",
+      id: "rosato-aperitivo",
+      q: "Passt Rosato zum Aperitivo?",
+      a: "Er ist geradezu dafür gemacht: gut gekühlt bei 12 bis 14 °C der Klassiker vor dem Essen. Ebenso schön begleitet er Antipasti, einfache Primi und Hauptgänge mit blauem Fisch oder weißem Fleisch.",
     },
     {
+      id: "rosato-vs-rose",
+      q: "Was ist der Unterschied zwischen Rosato und Rosé?",
+      a: "In der Sache keiner: Rosato ist das italienische Wort für Rosé. Entscheidend ist die Machart — unser Rosato entsteht aus der dunklen Negroamaro-Traube, deren Most nur vier Stunden auf den Schalen bleibt. Die Farbe sitzt in der Beerenhaut, nicht im Saft: eine kurze Standzeit ergibt das zarte Rosa statt eines Rotweins.",
+    },
+    {
+      id: "rosato-igp",
       q: "Was bedeutet „IGP Salento“?",
       a: "IGP steht für „Indicazione Geografica Protetta“, die geschützte geografische Angabe. Die Trauben stammen aus dem Salento, dem südlichsten Teil Apuliens.",
-    },
-    {
-      q: "Zu welchen Gerichten passt der Rosato?",
-      a: "Ideal zum Aperitif sowie zu Antipasti, einfachen Primi und Hauptgängen mit blauem Fisch oder weißem Fleisch.",
-    },
-    {
-      q: "Wie sollte der Rosato serviert werden?",
-      a: "Gut gekühlt bei 12 bis 14 °C. So bleiben die floralen Noten und die Frische am besten erhalten.",
     },
   ],
 

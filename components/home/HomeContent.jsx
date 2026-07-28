@@ -3,6 +3,7 @@ import ShaderGradient from "@/components/motion/ShaderGradient";
 import SplitText from "@/components/motion/SplitText";
 import TiltCard from "@/components/motion/TiltCard";
 import Marquee from "@/components/motion/Marquee";
+import Parallax from "@/components/motion/Parallax";
 import { Reveal, Stagger, StaggerItem } from "@/components/motion/Reveal";
 import Button from "@/components/ui/Button";
 import { SectionTitle, Eyebrow, GrapeRule, IconChip } from "@/components/Deco";
@@ -11,6 +12,8 @@ import HomeHeroFx from "@/components/home/HomeHeroFx";
 import OriginsSection from "@/components/home/OriginsSection";
 import RegionExplorer from "@/components/home/RegionExplorer";
 import WineRail from "@/components/WineRail";
+import FaqSection from "@/components/faq/FaqSection";
+import { HOME_FAQ } from "@/components/faq/faqData";
 import { Grapes, Vineyard, Barrel, Glasses, Arrow, Clock } from "@/components/Icons";
 import { WINES, REGION_COUNT } from "@/components/data";
 import Atmosphere, { Aura, GhostWord, Vines } from "@/components/Atmosphere";
@@ -57,7 +60,9 @@ const REGIONS = [
     long: "Zwischen Salento und Gallipoli reifen Primitivo und Negroamaro unter der Sonne des Südens – kraftvolle, warme Weine mit mediterraner Seele.",
     grapes: ["Primitivo", "Negroamaro", "Rosato"],
     region: "apulien",
-    img: "/img/region-apulien.jpg",
+    img: "/img/home/region-apulien.webp",
+    /* Trulli links im Bild; Crop hält die eingezeichnete Karte aus dem Schnitt */
+    pos: "26% 50%",
   },
   {
     name: "Kampanien",
@@ -66,7 +71,9 @@ const REGIONS = [
     long: "Rund um Napoli und Salerno prägen die vulkanischen Böden des Vesuv Weine mit Tiefe und Ursprünglichkeit – von Falanghina bis Aglianico.",
     grapes: ["Falanghina", "Greco di Tufo", "Aglianico"],
     region: "kampanien",
-    img: "/img/region-kampanien.jpg",
+    img: "/img/home/region-kampanien.webp",
+    /* der Vesuv leicht links, damit die eingezeichnete Karte nicht anschneidet */
+    pos: "40% 45%",
   },
   {
     name: "Gardasee / Lugana",
@@ -75,7 +82,9 @@ const REGIONS = [
     long: "Am Südufer des Gardasees entsteht Lugana – ein Weißwein von seltener Eleganz, getragen von Frische und mineralischer Tiefe.",
     grapes: ["Lugana", "Turbiana"],
     region: "garda",
-    img: "/img/region-garda.jpg",
+    img: "/img/home/region-garda.webp",
+    /* See und Berge tragen das Bild; Karte bleibt außerhalb des Schnitts */
+    pos: "38% 55%",
   },
 ];
 
@@ -134,7 +143,7 @@ export default function HomeContent() {
         <div className="relative mx-auto flex min-h-[100svh] max-w-content flex-col justify-end px-6 pb-24 pt-32 lg:justify-center lg:px-10 lg:pb-16">
           <div className="lg:max-w-xl">
             <Reveal y={18} delay={0.05}>
-              <Eyebrow>Italienische Boutique-Weine</Eyebrow>
+              <Eyebrow tone="text-vine">Italienische Boutique-Weine</Eyebrow>
             </Reveal>
             <h1 className="mt-6 font-playfair text-[clamp(2.8rem,6vw,4.6rem)] leading-[1.05] tracking-[-0.015em] text-charcoal">
               <SplitText text="Maria Maria" className="block" delay={0.12} />
@@ -191,9 +200,25 @@ export default function HomeContent() {
       <Marquee items={MARQUEE} className="border-y border-stone/40" />
 
       {/* ============ DER MARIA-MOMENT ============ */}
-      <section className="relative overflow-hidden">
-        <Atmosphere variant="warm" />
-        <GhostWord className="right-[-2vw] top-10 text-[12vw]">Momenti</GhostWord>
+      <section className="grain relative overflow-hidden">
+        {/* Terrassen-Foto als weiche Bühne: federnd im Parallax-Drift, unter
+            einem Elfenbein-Schleier, damit Titel und Karten lesbar bleiben und
+            die Ränder nahtlos in Marquee und Weine-Band übergehen */}
+        <div aria-hidden="true" className="absolute inset-0">
+          <Parallax speed={0.08} overscan className="h-full w-full">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/img/home/moment-bg.jpg"
+              alt=""
+              loading="lazy"
+              className="h-full w-full object-cover object-center"
+            />
+          </Parallax>
+          <div className="absolute inset-0 bg-ivory/65" />
+          <div className="absolute inset-x-0 top-0 h-36 bg-gradient-to-b from-ivory via-ivory/70 to-transparent" />
+          <div className="absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-ivory via-ivory/70 to-transparent" />
+        </div>
+        <Atmosphere variant="warm" className="opacity-60" />
         <div className="relative mx-auto max-w-content px-6 py-10 sm:py-14 lg:px-10">
         <SectionTitle
           eyebrow="Unsere Philosophie"
@@ -205,7 +230,7 @@ export default function HomeContent() {
           {MOMENT.map((m, i) => (
             <StaggerItem key={m.title} className="h-full">
               <TiltCard className="group h-full" max={5} radius="rounded-card-lg">
-                <div className="ring-hairline relative flex h-full flex-col overflow-hidden rounded-card-lg border border-stone/40 bg-white/70 p-5 shadow-luxe transition-[box-shadow,border-color] duration-500 group-hover:border-champagne/60 group-hover:shadow-lift sm:p-6">
+                <div className="ring-hairline relative flex h-full flex-col overflow-hidden rounded-card-lg border border-stone/40 bg-white/70 p-5 shadow-luxe backdrop-blur-md transition-[box-shadow,border-color] duration-500 group-hover:border-champagne/60 group-hover:shadow-lift sm:p-6">
                   <div className="relative flex items-center gap-4 lg:block">
                     <IconChip>{m.icon}</IconChip>
                     <h3 className="font-playfair text-[18px] text-charcoal lg:mt-3.5">{m.title}</h3>
@@ -350,6 +375,25 @@ export default function HomeContent() {
         </Stagger>
         </div>
       </section>
+
+      {/* ============ HÄUFIGE FRAGEN (Brand-FAQ) ============ */}
+      <div className="relative overflow-hidden border-t border-stone/40 bg-gradient-to-b from-cream via-champagne-light/25 to-ivory">
+        <Vines className="inset-x-0 bottom-0 h-72 w-full" />
+        <Aura tint="bordeaux" className="-right-56 -top-44 h-[34rem] w-[34rem]" />
+        <FaqSection
+          className="relative"
+          pageType="home"
+          eyebrow="Häufige Fragen"
+          title={
+            <>
+              Maria Maria, <span className="italic text-bordeaux">kurz erklärt.</span>
+            </>
+          }
+          description="Was hinter dem Namen steht, wie wir unsere Weine auswählen und wofür unser Leitsatz steht — die häufigsten Fragen, direkt beantwortet."
+          items={HOME_FAQ}
+          footer={{ label: "Weitere Fragen? Kontakt aufnehmen", href: "/kontakt" }}
+        />
+      </div>
     </div>
   );
 }

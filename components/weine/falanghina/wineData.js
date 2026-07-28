@@ -181,8 +181,8 @@ export const FALANGHINA = {
       { label: "Lese", value: "Anfang Oktober" },
       { label: "Klima", value: "Warme Tage, kühle Nächte" },
     ],
-    photo: "/img/region-kampanien.jpg",
-    photoAlt: "Hügelige Weinlandschaft in Kampanien",
+    photo: "/img/home/region-kampanien.webp",
+    photoAlt: "Weinberge über dem Golf von Neapel mit Blick auf den Vesuv",
     chip: { title: "Beneventano", subtitle: "Kampanien · Italien" },
   },
 
@@ -245,27 +245,38 @@ export const FALANGHINA = {
     ],
   },
 
-  /* ---- Häufige Fragen ---- */
+  /* ---- Häufige Fragen ----
+     Fragenset nach der FAQ-Guide (Product-Cluster Falanghina): Geschmack,
+     Herkunft, Pairing, Vergleich mit dem Greco. Antworten nur aus bestätigten
+     Datenblatt-Fakten; Vergleichsfragen kurz halten und auf die Seite des
+     Nachbarweins verlinken (max. 1 interner Link pro Antwort). */
   faq: [
     {
-      q: "Wie schmeckt die Beneventano Falanghina IGP?",
-      a: "Sehr weich und zugleich harmonisch und anhaltend: ein charakterstarker, frischer Weißwein mit heller Frucht und lebendiger Klarheit – zugänglich, ohne beliebig zu sein.",
+      id: "falanghina-geschmack",
+      q: "Wie schmeckt die Falanghina?",
+      a: "Sehr weich und zugleich harmonisch und anhaltend: ein charakterstarker, frischer Weißwein mit heller Frucht und lebendiger Klarheit – zugänglich, ohne beliebig zu sein. Im Glas zeigt sie sich strohgelb mit grünlichen Reflexen, hell und leuchtend – Frische, die sie am Gaumen einlöst.",
     },
     {
+      id: "falanghina-herkunft",
+      q: "Woher kommt die Falanghina?",
+      a: "Unsere Falanghina wächst im Beneventano, dem hügeligen Hinterland der Provinz Benevento in Kampanien – warme Tage, kühle Nächte und die Nähe des Mittelmeers schenken ihr Frische und feine, helle Frucht. Die Rebsorte selbst zählt zu den ältesten Kampaniens.",
+      link: { label: "Mehr über Kampanien entdecken", href: "/regionen#kampanien" },
+    },
+    {
+      id: "falanghina-igp",
       q: "Was bedeutet „Beneventano IGP“?",
       a: "IGP steht für „Indicazione Geografica Protetta“, die geschützte geografische Angabe. Die Trauben stammen aus dem Beneventano – dem hügeligen Hinterland der Provinz Benevento in Kampanien.",
     },
     {
-      q: "Zu welchen Gerichten passt die Falanghina?",
-      a: "Perfekt zu Fischgerichten, Krustentieren und Meeresfrüchten – und ebenso zu hellen Antipasti oder als gut gekühlter Aperitivo.",
+      id: "falanghina-pairing",
+      q: "Passt Falanghina zu Fisch oder Pasta?",
+      a: "Zu beidem – am liebsten zu Fisch: gegrillt, gebraten oder aus dem Ofen, ebenso zu Krustentieren und Meeresfrüchten. Bei Pasta entscheidet die Sauce: Zu hellen, leichten Zubereitungen passt sie wunderbar. Und gut gekühlt ist sie ein idealer Aperitivo.",
     },
     {
-      q: "Wie sollte die Falanghina serviert werden?",
-      a: "Am besten bei etwa 10 °C im Weißweinglas. So bleiben Frische und Duft am klarsten – kurz vor dem Servieren aus dem Kühlschrank nehmen.",
-    },
-    {
-      q: "Wie wird die Falanghina ausgebaut?",
-      a: "Die ganzen Trauben werden sanft gepresst, anschließend reift der Wein ein Jahr im Stahltank und ruht vor dem Verkauf noch zwei Monate in der Flasche. So bleibt die Rebsorte pur: Frucht, Frische und Klarheit statt Holz.",
+      id: "falanghina-vs-greco",
+      q: "Was ist der Unterschied zwischen Falanghina und Greco di Tufo?",
+      a: "Beide sind weiße Rebsorten Kampaniens, aber mit eigenem Charakter: Die Falanghina aus dem Beneventano ist weich, harmonisch und unkompliziert frisch. Der Greco di Tufo wächst auf vulkanischem Tuffgestein, bringt mehr Struktur und einen mineralischen Zug mit – und trägt als einer der wenigen Weißweine Italiens das D.O.C.G.-Siegel.",
+      link: { label: "Greco di Tufo entdecken", href: "/weine/greco-di-tufo" },
     },
   ],
 

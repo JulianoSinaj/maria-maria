@@ -171,8 +171,8 @@ export const IL_ROSSO = {
       { label: "Lese", value: "Ende Oktober, von Hand" },
       { label: "Ausbau", value: "6 Monate französische Eiche" },
     ],
-    photo: "/img/region-kampanien.jpg",
-    photoAlt: "Hügelige Weinlandschaft in Kampanien",
+    photo: "/img/home/region-kampanien.webp",
+    photoAlt: "Weinberge über dem Golf von Neapel mit Blick auf den Vesuv",
     chip: { title: "Campania", subtitle: "Kampanien · Italien" },
   },
 
@@ -237,30 +237,39 @@ export const IL_ROSSO = {
   },
 
   /* ---- Häufige Fragen ---- */
+  /* Fragenset nach der FAQ-Guide (Product-Cluster Il Rosso): der branded Name
+     allein bleibt abstrakt — die FAQ macht die Rebsorte Aglianico und den
+     Anlass sichtbar, ohne Cuvée-Details zu erfinden (keine Prozentangaben,
+     die nicht freigegeben sind). Ausbau/Servieren stehen in Detail & Genießen. */
   faq: [
     {
-      q: "Wie schmeckt der Campania Rosso IGP?",
+      id: "rosso-geschmack",
+      q: "Wie schmeckt Maria Maria Il Rosso Aglianico?",
       a: "Ein einnehmender Rotwein mit ausgeprägten Noten von Amarena, Brombeere und getrockneter Pflaume, einem leichten Hauch süßer Gewürze und einem Abgang mit angenehm konzentrierter Frucht.",
     },
     {
-      q: "Aus welchen Rebsorten besteht Il Rosso?",
-      a: "Aus einer Cuvée von Aglianico, Piedirosso und Primitivo — Struktur, Duft und reife Frucht aus drei süditalienischen Reben.",
+      id: "rosso-rebsorte",
+      q: "Welche Rebsorte prägt Il Rosso?",
+      a: "Namensgebend ist der Aglianico. Das Uvaggio verbindet die drei süditalienischen Rebsorten Aglianico, Piedirosso und Primitivo. Ende Oktober werden die Trauben von Hand gelesen und selektiert; nach rund zwölf Tagen auf der Maische reift der Wein sechs Monate in Fässern aus französischer Eiche.",
     },
     {
+      id: "rosso-essen",
+      q: "Zu welchem Essen passt Il Rosso Aglianico?",
+      a: "Zu kräftigen Primi, Wurstwaren und Schweinebraten — ebenso zu vegetarischen Gerichten mit reichen, würzigen Saucen und fein gewürzten Rezepten. Der Rosso liebt alles, was Würze und Substanz hat; servieren Sie ihn dazu bei 16 bis 18 °C im Rotweinglas.",
+    },
+    {
+      id: "rosso-anlass",
+      q: "Für welchen Anlass eignet sich Il Rosso Aglianico?",
+      a: "„La poesia in bottiglia“: ein Wein für lange Abende, volle Tische und Gespräche, die nicht enden wollen. Ideal zum gemeinsamen Dinner mit kräftiger Küche — bei 16 bis 18 °C serviert und eine knappe Stunde vorher geöffnet.",
+    },
+    {
+      /* Herkunftsangabe bewusst auf die Bezeichnung beschränkt: Katalog
+         (Basilikata) und Datenblatt (Campania Rosso I.G.P.) widersprechen
+         sich — bis zur Klärung mit dem Erzeuger keine Trauben-Herkunft
+         als Fakt publizieren. */
+      id: "rosso-igp",
       q: "Was bedeutet „Campania Rosso I.G.P.“?",
-      a: "IGP steht für „Indicazione Geografica Protetta“, die geschützte geografische Angabe. Die Trauben stammen aus der Region Kampanien in Süditalien.",
-    },
-    {
-      q: "Zu welchen Gerichten passt Il Rosso?",
-      a: "Zu kräftigen Primi, Wurstwaren und Schweinebraten — ebenso zu vegetarischen Gerichten mit reichen, würzigen Saucen und fein gewürzten Rezepten.",
-    },
-    {
-      q: "Wie sollte Il Rosso serviert werden?",
-      a: "Bei etwa 16 bis 18 °C im Rotweinglas. Eine knappe Stunde vorher öffnen lässt die Frucht und die Gewürznoten deutlicher hervortreten.",
-    },
-    {
-      q: "Wie wird Il Rosso ausgebaut?",
-      a: "Nach rund zwölf Tagen Maischestandzeit — die Gärung teilweise mit autochthonen Hefen gestartet — erfolgt die malolaktische Gärung vollständig in französischer Eiche. Anschließend reift der Wein sechs Monate in französischen Holzfässern.",
+      a: "IGP steht für „Indicazione Geografica Protetta“, die geschützte geografische Angabe. „Campania Rosso I.G.P.“ ist die auf Etikett und Datenblatt ausgewiesene Bezeichnung dieses Weins.",
     },
   ],
 

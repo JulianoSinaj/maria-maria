@@ -14,8 +14,11 @@ export default function Template({ children }) {
 
   /* Force every new route to open at the top — Lenis owns the scroll
      position, so a bare window.scrollTo won't stick. Reset on each path
-     change (template remounts, but the browser can restore prior offset). */
+     change (template remounts, but the browser can restore prior offset).
+     Anchor-Navigationen (/kontakt#fragen, /shop#fragen, FAQ-Deep-Links)
+     dürfen nicht überschrieben werden — bei vorhandenem Hash nichts tun. */
   useEffect(() => {
+    if (window.location.hash) return;
     if (lenis?.current) {
       lenis.current.scrollTo(0, { immediate: true, force: true });
     } else {

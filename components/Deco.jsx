@@ -13,11 +13,11 @@ export function GoldRule({ className = "" }) {
 }
 
 /* small uppercase eyebrow with a grape mark — the editorial section opener */
-export function Eyebrow({ children, className = "", light = false }) {
+export function Eyebrow({ children, className = "", light = false, tone }) {
   return (
     <span
       className={`inline-flex items-center gap-2.5 text-[11px] font-semibold uppercase tracking-[0.24em] ${
-        light ? "text-champagne-light" : "text-champagne"
+        tone || (light ? "text-champagne-light" : "text-champagne")
       } ${className}`}
     >
       <Grapes className="h-4 w-4" />

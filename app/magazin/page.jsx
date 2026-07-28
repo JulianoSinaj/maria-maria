@@ -8,6 +8,8 @@ import { SectionTitle, Eyebrow, GoldRule, GrapeRule } from "@/components/Deco";
 import { Arrow, Clock, GrapeVine, Plate, Mountains, Book, Sun } from "@/components/Icons";
 import FilterPanel from "@/components/magazin/FilterPanel";
 import NewsletterCard from "@/components/magazin/NewsletterCard";
+import FaqSection from "@/components/faq/FaqSection";
+import { MAGAZIN_FAQ } from "@/components/faq/faqData";
 import RegionWineRail from "@/components/RegionWineRail";
 import { WINES } from "@/components/data";
 import { Aura, GhostWord } from "@/components/Atmosphere";
@@ -415,6 +417,24 @@ export default function MagazinPage() {
           </div>
         </div>
       </section>
+
+      {/* ============ WEINWISSEN-FAQ ============ */}
+      <div className="relative overflow-hidden border-t border-stone/40 bg-gradient-to-b from-cream via-champagne-light/25 to-ivory">
+        <GhostWord className="right-[-2vw] bottom-6 text-[11vw]">Sapere</GhostWord>
+        <FaqSection
+          className="relative"
+          pageType="magazin"
+          eyebrow="Weinwissen"
+          title={
+            <>
+              Häufige Fragen aus dem <span className="italic text-bordeaux">Weinwissen.</span>
+            </>
+          }
+          description="Die Evergreens rund um Temperatur, Glas, Lagerung und Herkunftsstufen — beantwortet aus den Datenblättern unserer Weine, ohne Fachchinesisch."
+          items={MAGAZIN_FAQ}
+          footer={{ label: "Eine Frage fehlt? Schreiben Sie uns", href: "/kontakt" }}
+        />
+      </div>
     </div>
   );
 }

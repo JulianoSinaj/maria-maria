@@ -48,8 +48,8 @@ export default function StorySection({ wine }) {
                 className="aspect-[4/5] overflow-hidden rounded-card-lg shadow-lift"
               >
                 <img
-                  src="/img/vineyard.jpg"
-                  alt="Reben im Abendlicht in Kampanien"
+                  src="/img/sotria.png"
+                  alt="Handlese der Trauben und Ausbau im Weinkeller"
                   className="h-full w-full object-cover"
                   loading="lazy"
                 />

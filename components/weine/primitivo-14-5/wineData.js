@@ -189,7 +189,7 @@ export const PRIMITIVO_14_5 = {
     kicker: "Passt zu",
     title: "Ein Begleiter für die kräftige Küche",
     text: "Dieser Wein gibt sein Bestes zu robusten Primi, rotem Fleisch und Wild sowie zu Hartkäse.",
-    photo: "/img/dinner.jpg",
+    photo: "/img/dinner.png",
     photoAlt: "Gedeckter Tisch mit herzhaften Gerichten und Rotwein",
     items: [
       { icon: "plate", title: "Robuste Primi", text: "Kräftige Pasta- und Nudelgerichte" },

@@ -180,7 +180,7 @@ export const ROSATO_NEGROAMARO = {
     kicker: "Passt zu",
     title: "Der Wein für den Aperitivo",
     text: "Ideal zum Aperitif und zu allem, was leicht und mediterran bleibt — von Antipasti bis zum blauen Fisch.",
-    photo: "/img/dinner.jpg",
+    photo: "/img/dinner.png",
     photoAlt: "Gedeckter Tisch mit Antipasti und Roséwein",
     items: [
       { icon: "glasses", title: "Aperitivo", text: "Der Klassiker vor dem Essen" },

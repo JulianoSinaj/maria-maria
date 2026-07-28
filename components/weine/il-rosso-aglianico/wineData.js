@@ -181,7 +181,7 @@ export const IL_ROSSO = {
     kicker: "Passt zu",
     title: "Ein Begleiter für die kräftige Küche",
     text: "Der Rosso liebt alles, was Würze und Substanz hat — von der herzhaften Pasta bis zum Braten.",
-    photo: "/img/dinner.jpg",
+    photo: "/img/dinner.png",
     photoAlt: "Gedeckter Tisch mit herzhaften Gerichten und Rotwein",
     items: [
       { icon: "plate", title: "Kräftige Primi", text: "Herzhafte Pasta- und Nudelgerichte" },

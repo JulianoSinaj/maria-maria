@@ -181,7 +181,7 @@ export const PRIMITIVO_SALENTO = {
     kicker: "Passt zu",
     title: "Fleisch und Käse",
     text: "Ein Wein für den gedeckten Tisch: Seine Intensität hält kräftigen Gerichten stand, seine Zugänglichkeit macht ihn zum unkomplizierten Begleiter.",
-    photo: "/img/dinner.jpg",
+    photo: "/img/dinner.png",
     photoAlt: "Gedeckter Tisch mit Fleisch, Käse und Rotwein",
     items: [
       { icon: "plate", title: "Rotes Fleisch", text: "Braten, Schmorgerichte und Gegrilltes" },

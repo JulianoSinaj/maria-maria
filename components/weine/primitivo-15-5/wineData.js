@@ -184,7 +184,7 @@ export const PRIMITIVO_155 = {
     kicker: "Passt zu",
     title: "Ein Wein für den vollen Tisch",
     text: "Mit 15,5 % vol. und dieser Dichte begleitet der Primitivo hervorragend alles, was Substanz, Würze und Röstaromen mitbringt.",
-    photo: "/img/dinner.jpg",
+    photo: "/img/dinner.png",
     photoAlt: "Gedeckter Tisch mit herzhaften Gerichten und Rotwein",
     items: [
       { icon: "plate", title: "Primi al ragù", text: "Pastagerichte mit langsam geschmortem Ragù" },

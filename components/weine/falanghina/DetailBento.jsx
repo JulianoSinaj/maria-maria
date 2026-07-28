@@ -7,10 +7,13 @@ import { WINE_ICON } from "./WineIcons";
 /* „Im Detail" — das technische Datenblatt als kuratiertes Masonry statt eines
    uniformen Rasters: eine Kopfkarte mit Flasche, ein asymmetrisches Zweispalter
    (Rebsorte/Herkunft gestapelt neben einer hohen Erziehungs-Karte mit
-   Handskizze) und zwei Breitkarten (Vinifikation, Ausbau) mit Akzentbild
-   rechts. Die restlichen Datenblatt-Fakten laufen als ruhige Chip-Leiste
-   darunter — nichts geht verloren. Rein wine.detail-getrieben: fehlt ein Label,
-   fällt die Karte weg. */
+   Handskizze) und ein Zweispalter Vinifikation/Ausbau. Die restlichen
+   Datenblatt-Fakten laufen als ruhige Chip-Leiste darunter — nichts geht
+   verloren. Rein wine.detail-getrieben: fehlt ein Label, fällt die Karte weg.
+
+   Jede Karte teilt dieselbe Anatomie: Label und Wert eng gruppiert oben links,
+   ein akzentgetönter Icon-Badge oben rechts — gleiche Größe, gleiche Tönung,
+   auf jeder Karte und jedem Breakpoint identisch. */
 
 const ACCENT_FALLBACK = { base: "#45B3A2", deep: "#23786B", light: "#C9E8E1" };
 
@@ -58,55 +61,45 @@ function VineTrellis({ className = "", accent }) {
   );
 }
 
-/* Kleine, ruhige Fakten-Karte (Rebsorte / Herkunft) — Label oben, Serifenwert. */
-function FactCard({ item, icon }) {
-  const Icon = icon ? WINE_ICON[icon] : null;
+/* Einheitliches Karten-Label — identische Typo auf jeder Karte. */
+function CardLabel({ children }) {
   return (
-    <div className="flex h-full flex-col justify-between gap-4 rounded-card bg-cream/90 p-5 ring-hairline sm:p-6">
-      <div className="flex items-start justify-between gap-3">
-        <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-charcoal/45 sm:text-[11px]">
-          {item.label}
-        </p>
-        {Icon && <Icon className="h-6 w-6 shrink-0 text-acqua-deep/70 sm:h-7 sm:w-7" aria-hidden="true" />}
-      </div>
-      <p className="text-balance font-playfair text-[1.15rem] leading-snug text-charcoal sm:text-xl">
-        {item.value}
-      </p>
-    </div>
+    <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-charcoal/45 sm:text-[11px]">
+      {children}
+    </p>
   );
 }
 
-/* Breitkarte (Vinifikation / Ausbau) — Text links, dekoratives Akzentmotiv
-   rechts als „background accent". */
-function WideCard({ item, icon, accent }) {
+/* Einheitlicher Icon-Badge — ein Format für alle Karten: akzentgetönter Kreis
+   mit Liniensymbol, dezent mitwachsend beim Hover (nur transform, kein Layout). */
+function IconBadge({ icon, accent }) {
   const Icon = icon ? WINE_ICON[icon] : null;
+  if (!Icon) return null;
   return (
-    <div className="group relative flex h-full flex-col justify-between gap-6 overflow-hidden rounded-card bg-cream/90 p-6 ring-hairline sm:flex-row sm:items-center sm:gap-8 sm:p-8">
-      <div className="relative max-w-xl">
-        <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-acqua-deep sm:text-[11px]">
-          {item.label}
-        </p>
-        <p className="mt-3 text-balance font-playfair text-[1.15rem] leading-snug text-charcoal sm:text-[1.35rem]">
+    <span
+      aria-hidden="true"
+      className="ring-hairline flex h-9 w-9 shrink-0 items-center justify-center rounded-full transition-transform duration-500 ease-out-expo will-transform group-hover:scale-110 sm:h-10 sm:w-10"
+      style={{ background: `${accent.base}16`, color: accent.deep }}
+    >
+      <Icon className="h-[18px] w-[18px] sm:h-5 sm:w-5" />
+    </span>
+  );
+}
+
+/* Fakten-Karte (Rebsorte / Herkunft / Vinifikation / Ausbau) — Label und Wert
+   eng gruppiert oben links, Icon-Badge oben rechts. Die Breite kommt aus dem
+   Grid, nicht aus der Karte; kein justify-between mehr, das Label und Wert
+   auf gestreckten Karten auseinanderreißt. */
+function FactCard({ item, icon, accent }) {
+  return (
+    <div className="flex h-full items-start justify-between gap-4 rounded-card bg-cream/90 p-4 ring-hairline sm:gap-8 sm:p-5">
+      <div className="max-w-2xl">
+        <CardLabel>{item.label}</CardLabel>
+        <p className="mt-2 text-balance font-playfair text-[1.05rem] leading-snug text-charcoal sm:text-lg">
           {item.value}
         </p>
       </div>
-
-      {/* Akzentmotiv rechts — großes, angeschnittenes Icon als Wasserzeichen. */}
-      {Icon && (
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute -right-6 -bottom-8 opacity-[0.14] transition-transform duration-500 ease-out-expo group-hover:scale-105 group-hover:opacity-20 sm:static sm:opacity-100 sm:group-hover:scale-100"
-          style={{ color: accent.deep }}
-        >
-          <span
-            className="hidden sm:flex ring-hairline h-24 w-24 shrink-0 items-center justify-center rounded-full"
-            style={{ background: `${accent.base}18` }}
-          >
-            <Icon className="h-12 w-12" />
-          </span>
-          <Icon className="h-40 w-40 sm:hidden" />
-        </div>
-      )}
+      <IconBadge icon={icon} accent={accent} />
     </div>
   );
 }
@@ -144,7 +137,7 @@ export default function DetailBento({ wine }) {
           {/* 1 — Kopfkarte: Flasche links, Titel rechts. */}
           <StaggerItem>
             <TiltCard max={3} lift={false} radius="rounded-card-lg" className="group shadow-luxe">
-              <div className="relative flex items-center gap-5 overflow-hidden rounded-card-lg bg-espresso p-6 text-ivory sm:gap-10 sm:p-9">
+              <div className="relative flex items-center gap-5 overflow-hidden rounded-card-lg bg-espresso p-5 text-ivory sm:gap-10 sm:p-7">
                 <div
                   aria-hidden="true"
                   className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full blur-3xl"
@@ -155,7 +148,7 @@ export default function DetailBento({ wine }) {
                     <img
                       src={bottle}
                       alt={wine.name ?? ""}
-                      className="h-28 w-auto object-contain drop-shadow-[0_18px_30px_rgba(0,0,0,0.45)] sm:h-44 lg:h-52"
+                      className="h-24 w-auto object-contain drop-shadow-[0_18px_30px_rgba(0,0,0,0.45)] sm:h-36 lg:h-40"
                       loading="lazy"
                       draggable={false}
                     />
@@ -165,7 +158,7 @@ export default function DetailBento({ wine }) {
                   <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-champagne/85 sm:text-[11px]">
                     Das Datenblatt
                   </p>
-                  <h3 className="mt-3 text-balance font-playfair text-[1.5rem] leading-[1.1] sm:text-[2rem] lg:text-[2.4rem]">
+                  <h3 className="mt-2.5 text-balance font-playfair text-[1.4rem] leading-[1.1] sm:text-[1.8rem] lg:text-[2.1rem]">
                     {bezeichnung?.value ?? wine.name}
                   </h3>
                   <p className="mt-3 max-w-md text-[13px] leading-relaxed text-ivory/65 sm:text-sm">
@@ -183,14 +176,14 @@ export default function DetailBento({ wine }) {
               {rebsorte && (
                 <StaggerItem className="h-full">
                   <TiltCard max={4} lift={false} radius="rounded-card" className="group h-full shadow-md">
-                    <FactCard item={rebsorte} icon="grapes" />
+                    <FactCard item={rebsorte} icon="grapes" accent={accent} />
                   </TiltCard>
                 </StaggerItem>
               )}
               {herkunft && (
                 <StaggerItem className="h-full">
                   <TiltCard max={4} lift={false} radius="rounded-card" className="group h-full shadow-md">
-                    <FactCard item={herkunft} icon="pin" />
+                    <FactCard item={herkunft} icon="pin" accent={accent} />
                   </TiltCard>
                 </StaggerItem>
               )}
@@ -199,22 +192,18 @@ export default function DetailBento({ wine }) {
             {erziehung && (
               <StaggerItem className="h-full">
                 <TiltCard max={4} lift={false} radius="rounded-card" className="group h-full shadow-md">
-                  <div className="relative flex h-full flex-col justify-between overflow-hidden rounded-card bg-gradient-to-br from-cream via-ivory to-cream p-5 ring-hairline sm:p-6">
-                    <div
-                      aria-hidden="true"
-                      className="absolute inset-0 opacity-60"
-                      style={{ background: `radial-gradient(120% 90% at 100% 0%, ${accent.light}55, transparent 60%)` }}
-                    />
-                    <div className="relative">
-                      <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-charcoal/45 sm:text-[11px]">
-                        {erziehung.label}
-                      </p>
-                      <p className="mt-3 text-balance font-playfair text-[1.15rem] leading-snug text-charcoal sm:text-xl">
-                        {erziehung.value}
-                      </p>
+                  <div className="flex h-full flex-col overflow-hidden rounded-card bg-cream/90 p-4 ring-hairline sm:p-5">
+                    <div className="flex items-start justify-between gap-4 sm:gap-8">
+                      <div className="max-w-2xl">
+                        <CardLabel>{erziehung.label}</CardLabel>
+                        <p className="mt-2 text-balance font-playfair text-[1.05rem] leading-snug text-charcoal sm:text-lg">
+                          {erziehung.value}
+                        </p>
+                      </div>
+                      <IconBadge icon="vineleaf" accent={accent} />
                     </div>
                     <VineTrellis
-                      className="relative mx-auto mt-5 h-32 w-auto self-center sm:h-40"
+                      className="mx-auto mt-auto h-20 w-auto pt-3 opacity-80 sm:h-24"
                       accent={accent}
                     />
                   </div>
@@ -223,31 +212,34 @@ export default function DetailBento({ wine }) {
             )}
           </div>
 
-          {/* 3 — Breitkarten: Vinifikation, dann Ausbau. */}
-          {vinifikation && (
-            <StaggerItem>
-              <TiltCard max={3} lift={false} radius="rounded-card" className="group shadow-md">
-                <WideCard item={vinifikation} icon="tank" accent={accent} />
-              </TiltCard>
-            </StaggerItem>
-          )}
-          {ausbau && (
-            <StaggerItem>
-              <TiltCard max={3} lift={false} radius="rounded-card" className="group shadow-md">
-                <WideCard item={ausbau} icon="hourglass" accent={accent} />
-              </TiltCard>
-            </StaggerItem>
+          {/* 3 — Vinifikation und Ausbau nebeneinander statt als Breitkarten:
+                 die kurzen Texte tragen keine volle Zeilenbreite. */}
+          {(vinifikation || ausbau) && (
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
+              {vinifikation && (
+                <StaggerItem className="h-full">
+                  <TiltCard max={4} lift={false} radius="rounded-card" className="group h-full shadow-md">
+                    <FactCard item={vinifikation} icon="tank" accent={accent} />
+                  </TiltCard>
+                </StaggerItem>
+              )}
+              {ausbau && (
+                <StaggerItem className="h-full">
+                  <TiltCard max={4} lift={false} radius="rounded-card" className="group h-full shadow-md">
+                    <FactCard item={ausbau} icon="hourglass" accent={accent} />
+                  </TiltCard>
+                </StaggerItem>
+              )}
+            </div>
           )}
 
           {/* 4 — Restliche Kennzahlen als ruhige Chip-Leiste. */}
           {chips.length > 0 && (
             <StaggerItem>
-              <div className="flex flex-wrap gap-x-8 gap-y-4 rounded-card bg-cream/70 px-6 py-5 ring-hairline sm:px-8">
+              <div className="flex flex-wrap gap-x-10 gap-y-4 rounded-card bg-cream/90 px-4 py-4 ring-hairline sm:px-5 sm:py-5">
                 {chips.map((c) => (
                   <div key={c.label} className="min-w-[7rem]">
-                    <p className="text-[9.5px] font-semibold uppercase tracking-[0.2em] text-charcoal/40 sm:text-[10px]">
-                      {c.label}
-                    </p>
+                    <CardLabel>{c.label}</CardLabel>
                     <p className="mt-1 font-playfair text-[0.98rem] leading-snug text-charcoal sm:text-[1.05rem]">
                       {c.value}
                     </p>

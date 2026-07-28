@@ -7,7 +7,6 @@ import { Reveal } from "@/components/motion/Reveal";
 import Button from "@/components/ui/Button";
 import { SectionTitle, Eyebrow, GrapeRule, IconChip } from "@/components/Deco";
 import RegionWineRail from "@/components/RegionWineRail";
-import ItalyMap from "@/components/ItalyMap";
 import FaqSection from "@/components/faq/FaqSection";
 import { REGIONEN_FAQ_GROUPS } from "@/components/faq/faqData";
 import { Arrow, Check, Fields } from "@/components/Icons";
@@ -26,7 +25,7 @@ const REGIONS = [
     tag: "Das Herz des Südens",
     anchor: "apulien",
     region: "apulien",
-    img: "/img/region-apulien.jpg",
+    img: "/img/regions/apulien.png",
     label: "Weine aus Apulien",
     link: "Mehr über Apulien",
     desc: "Sonne, Meer und rote Erde. Apulien ist das Herz des Südens – weitläufige Ebenen, alte Reben und warme Brisen vom Ionischen und Adriatischen Meer prägen kraftvolle, fruchtbetonte Weine mit mediterraner Seele.",
@@ -37,7 +36,7 @@ const REGIONS = [
     tag: "Zwischen Vulkan und Meer",
     anchor: "kampanien",
     region: "kampanien",
-    img: "/img/region-kampanien.jpg",
+    img: "/img/regions/kampanien.png",
     label: "Weine aus Kampanien & Basilikata",
     link: "Mehr über Kampanien",
     desc: "Zwischen Vulkan und Meer. Die mineralischen Böden rund um den Vesuv schenken Weinen Spannung, Frische und Tiefe. Unser Aglianico stammt aus der benachbarten Basilikata, vom Fuße des Monte Vulture – derselbe vulkanische Charakter, dieselbe Hingabe.",
@@ -48,7 +47,7 @@ const REGIONS = [
     tag: "Eleganz des Nordens",
     anchor: "garda",
     region: "garda",
-    img: "/img/region-garda.jpg",
+    img: "/img/regions/lugana.png",
     label: "Weine vom Gardasee",
     link: "Mehr über Lugana",
     desc: "Das milde Klima, die sanften Hügel und die kalkhaltigen Böden am Südufer des Gardasees schaffen Weine von großer Eleganz und Frische. Lugana steht für Mineralität, Feinheit und mediterrane Leichtigkeit.",
@@ -169,28 +168,23 @@ export default function RegionenPage() {
               <article
                 key={r.name}
                 id={r.anchor}
-                className={`scroll-mt-32 ${i > 0 ? "mt-16 border-t border-stone/50 pt-16 lg:mt-24 lg:pt-24" : ""}`}
+                className={`scroll-mt-32 ${i > 0 ? "mt-16 pt-16 lg:mt-24 lg:pt-24" : ""}`}
               >
                 {/* photo + intro */}
                 <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-2 lg:gap-16">
                   <Reveal className={flipped ? "lg:order-2" : ""}>
                     <TiltCard className="group h-full" max={4} radius="rounded-card-lg">
-                      <div className="relative h-[280px] overflow-hidden rounded-card-lg shadow-luxe transition-shadow duration-500 group-hover:shadow-lift sm:h-[340px] lg:h-[400px]">
-                        <Parallax speed={0.09} overscan className="absolute inset-0">
-                          {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img
-                            src={r.img}
-                            alt={`Landschaft der Region ${r.name}`}
-                            className="h-full w-full object-cover transition-transform duration-700 ease-out-expo group-hover:scale-[1.05]"
-                          />
-                        </Parallax>
+                      <div className="relative aspect-[1672/941] overflow-hidden rounded-card-lg shadow-luxe transition-shadow duration-500 group-hover:shadow-lift">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={r.img}
+                          alt={`Landschaft der Region ${r.name}`}
+                          className="absolute inset-0 h-full w-full object-cover"
+                        />
                         <div
                           aria-hidden="true"
                           className="absolute inset-0 bg-gradient-to-t from-espresso/90 via-espresso/30 to-transparent"
                         />
-                        <div className="glass absolute right-4 top-4 rounded-2xl p-2.5">
-                          <ItalyMap region={r.region} className="w-10 sm:w-12" />
-                        </div>
                         <div className="absolute inset-x-0 bottom-0 p-5 sm:p-7">
                           <p className="text-[10px] uppercase tracking-[0.22em] text-champagne-light">{r.tag}</p>
                           <h3 className="mt-1.5 font-playfair text-[clamp(1.5rem,2.6vw,2.1rem)] text-ivory">
@@ -256,7 +250,7 @@ export default function RegionenPage() {
       </div>
 
       {/* ============ WARUM REGIONEN + CTA ============ */}
-      <section className="relative overflow-hidden border-y border-stone/40 bg-gradient-to-b from-cream via-champagne-light/25 to-ivory py-20 lg:py-24">
+      <section className="relative overflow-hidden bg-gradient-to-b from-cream via-champagne-light/25 to-ivory py-20 lg:py-24">
         <Vines className="inset-x-0 bottom-0 h-72 w-full" />
         <Aura tint="bordeaux" className="-right-56 -top-44 h-[34rem] w-[34rem]" />
         <div className="relative mx-auto grid max-w-content grid-cols-1 items-center gap-12 px-6 lg:grid-cols-2 lg:gap-16 lg:px-10">

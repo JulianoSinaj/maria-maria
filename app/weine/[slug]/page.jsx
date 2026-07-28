@@ -19,7 +19,13 @@ import MariaMoment from "@/components/weine/falanghina/MariaMoment";
 /* Produkt-Landingpage im Apple-Stil — eine dynamische Route für alle neun
    Weine. Die Sektionen (components/weine/falanghina/*) sind komplett
    wine-Prop-getrieben; die Daten kommen pro Slug aus dem wineRegistry.
-   Neuer Wein = neue wineData.js + ein Registry-Eintrag, keine neue Route. */
+   Neuer Wein = neue wineData.js + ein Registry-Eintrag, keine neue Route.
+
+   Kapitel-Dramaturgie: Herkunft eröffnet als erstes großes Bildkapitel
+   (das Terroir ist das Verkaufsargument), aus dem Ort folgt das Glas
+   (Farbe/Geschmack → Passt zu → Genießen); die Geschichte vertieft für
+   Lesende vor dem Datenblatt. Ähnliche Weine stehen vor den Fragen,
+   damit die FAQ als Einwand-Klärung direkt am Schluss-CTA liegt. */
 
 export function generateStaticParams() {
   return WINE_SLUGS.map((slug) => ({ slug }));
@@ -74,14 +80,14 @@ export default function WinePage({ params }) {
       <FalanghinaHero wine={wine} photo={<HeroPhoto wine={wine} />} />
       <SubNav wine={wine} />
       <FactStrip wine={wine} />
-      <ColorBand wine={wine} />
-      <StorySection wine={wine} />
       <PlaceSection wine={wine} />
+      <ColorBand wine={wine} />
       <PairingSection wine={wine} />
       <MariaMoment wine={wine} />
+      <StorySection wine={wine} />
       <DetailBento wine={wine} />
-      <WineFaq wine={wine} />
       <SimilarWines wine={wine} />
+      <WineFaq wine={wine} />
       <CtaBand wine={wine} />
     </>
   );

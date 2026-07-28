@@ -1,6 +1,5 @@
 import { Suspense } from "react";
 import Link from "next/link";
-import ShaderGradient from "@/components/motion/ShaderGradient";
 import SplitText from "@/components/motion/SplitText";
 import Parallax from "@/components/motion/Parallax";
 import TiltCard from "@/components/motion/TiltCard";
@@ -10,6 +9,8 @@ import { SectionTitle, Eyebrow, GrapeRule, IconChip } from "@/components/Deco";
 import { Arrow, Plate, GrapeVine, Book } from "@/components/Icons";
 import { WINES, REGION_COUNT } from "@/components/data";
 import WineExplorer from "@/components/weine/WineExplorer";
+import WeineHeroPhoto, { WeineHeroPreload } from "@/components/weine/WeineHeroPhoto";
+import HomeHeroFx from "@/components/home/HomeHeroFx";
 import FaqSection from "@/components/faq/FaqSection";
 import { WEINE_FAQ } from "@/components/faq/faqData";
 import Atmosphere, { Aura, GhostWord, Vines } from "@/components/Atmosphere";
@@ -24,17 +25,17 @@ const MOMENTS = [
   {
     title: "Aperitivo",
     text: "Leicht, frisch und bereichernd.",
-    img: "/img/aperitivo.jpg",
+    img: "/img/aperitivo-sunset.jpg",
   },
   {
     title: "Dinner",
     text: "Elegante Begleiter für besondere Gerichte.",
-    img: "/img/dinner.jpg",
+    img: "/img/dinner.png",
   },
   {
     title: "Freunde",
     text: "Für gute Gespräche und unvergessliche Abende.",
-    img: "/img/tasting.jpg",
+    img: "/img/pranzo.png",
   },
 ];
 
@@ -66,13 +67,30 @@ export default function WeinePage() {
   return (
     <div className="relative min-h-screen">
       {/* ============ HERO ============ */}
+      <WeineHeroPreload />
       <section className="grain relative overflow-hidden">
-        <ShaderGradient palette="dawn" />
+        {/* Volle Foto-Bühne wie auf der Startseite: die Neuner-Reihe trägt
+            den Hero randlos, die Headline steht links im Schleierlicht. */}
+        <HomeHeroFx photo={<WeineHeroPhoto />} />
+
+        {/* Schleier für Lesbarkeit: mobil von unten, ab lg von links */}
+        <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+          <div className="absolute inset-0 bg-gradient-to-t from-ivory via-ivory/60 to-ivory/10 lg:hidden" />
+          <div className="absolute inset-0 hidden bg-gradient-to-r from-ivory via-ivory/55 to-transparent lg:block" />
+        </div>
+
+        {/* Elfenbein-Hauch oben, damit die Navigation über dem Abendhimmel
+            lesbar bleibt */}
+        <div
+          className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-ivory/80 via-ivory/30 to-transparent"
+          aria-hidden="true"
+        />
+
         {/* settle into the page colour */}
         <div aria-hidden="true" className="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-b from-transparent to-ivory" />
 
-        <div className="relative mx-auto grid max-w-content grid-cols-1 items-center gap-14 px-6 pb-24 pt-32 lg:grid-cols-[1.05fr_0.95fr] lg:px-10 lg:pt-36">
-          <div>
+        <div className="relative mx-auto flex min-h-[100svh] max-w-content flex-col justify-end px-6 pb-24 pt-32 lg:justify-center lg:px-10 lg:pb-16">
+          <div className="lg:max-w-xl">
             <Reveal y={18} delay={0.05}>
               <Eyebrow>Die Kollektion</Eyebrow>
             </Reveal>
@@ -130,27 +148,6 @@ export default function WeinePage() {
               </dl>
             </Reveal>
           </div>
-
-          {/* photo frame */}
-          <Reveal delay={0.35} y={26} className="hidden lg:block">
-            <div className="group ring-hairline relative overflow-hidden rounded-card-lg shadow-luxe">
-              <Parallax speed={0.1} overscan className="aspect-[4/3]">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src="/img/weine-hero.jpg"
-                  alt="Stillleben mit italienischen Boutique-Weinen im warmen Abendlicht"
-                  className="h-full w-full object-cover transition-transform duration-700 ease-out-expo group-hover:scale-[1.04]"
-                />
-              </Parallax>
-              <div
-                aria-hidden="true"
-                className="absolute inset-0 bg-gradient-to-t from-espresso/45 via-transparent to-transparent"
-              />
-              <span className="glass absolute bottom-4 left-4 rounded-full px-3.5 py-2 text-[9.5px] font-semibold uppercase tracking-[0.16em] text-charcoal/70">
-                Aus kleinen Familienweingütern
-              </span>
-            </div>
-          </Reveal>
         </div>
       </section>
 
@@ -246,7 +243,7 @@ export default function WeinePage() {
       </section>
 
       {/* ============ HELP STRIP ============ */}
-      <section className="relative overflow-hidden border-y border-stone/40 bg-gradient-to-b from-cream via-champagne-light/25 to-ivory py-20 lg:py-24">
+      <section className="relative overflow-hidden bg-gradient-to-b from-cream via-champagne-light/25 to-ivory py-20 lg:py-24">
         <Vines className="inset-x-0 bottom-0 h-72 w-full" />
         <Aura tint="bordeaux" className="-left-56 -top-44 h-[34rem] w-[34rem]" />
         <Aura tint="gold" drift={2} className="-right-48 bottom-0 h-[30rem] w-[30rem]" />

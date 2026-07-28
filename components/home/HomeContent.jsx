@@ -112,7 +112,7 @@ const MAGAZINE = [
   },
 ];
 
-const MARQUEE = ["Primitivo", "Lugana", "Falanghina", "Greco di Tufo", "Aglianico", "Rosato", "Il piacere del vino"];
+const MARQUEE = ["Primitivo", "Lugana", "Falanghina", "Greco di Tufo", "Aglianico", "Rosato"];
 
 export default function HomeContent() {
   return (
@@ -197,7 +197,7 @@ export default function HomeContent() {
       </section>
 
       {/* ============ MARQUEE ============ */}
-      <Marquee items={MARQUEE} className="border-y border-stone/40" />
+      <Marquee items={MARQUEE} />
 
       {/* ============ DER MARIA-MOMENT ============ */}
       <section className="grain relative overflow-hidden">
@@ -245,7 +245,7 @@ export default function HomeContent() {
       </section>
 
       {/* ============ UNSERE WEINE (rail) ============ */}
-      <section className="relative overflow-hidden border-y border-stone/40 bg-gradient-to-b from-cream via-champagne-light/25 to-ivory py-16 sm:py-20 lg:py-24">
+      <section className="relative overflow-hidden bg-gradient-to-b from-cream via-champagne-light/25 to-ivory py-16 sm:py-20 lg:py-24">
         <Vines className="inset-x-0 bottom-0 h-72 w-full" />
         <Aura tint="bordeaux" className="-right-56 -top-44 h-[34rem] w-[34rem]" />
         <Aura tint="gold" drift={2} className="-left-48 bottom-0 h-[30rem] w-[30rem]" />
@@ -377,7 +377,7 @@ export default function HomeContent() {
       </section>
 
       {/* ============ HÄUFIGE FRAGEN (Brand-FAQ) ============ */}
-      <div className="relative overflow-hidden border-t border-stone/40 bg-gradient-to-b from-cream via-champagne-light/25 to-ivory">
+      <div className="relative overflow-hidden bg-gradient-to-b from-cream via-champagne-light/25 to-ivory">
         <Vines className="inset-x-0 bottom-0 h-72 w-full" />
         <Aura tint="bordeaux" className="-right-56 -top-44 h-[34rem] w-[34rem]" />
         <FaqSection

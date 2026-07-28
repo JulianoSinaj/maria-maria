@@ -207,7 +207,7 @@ export default function ShopPage() {
         {/* ============ USP STRIP ============ */}
         <section className="relative">
           <div className="mx-auto max-w-content px-6 lg:px-10">
-            <Stagger className="grid grid-cols-2 gap-x-6 gap-y-5 border-y border-stone/40 py-7 lg:grid-cols-4">
+            <Stagger className="grid grid-cols-2 gap-x-6 gap-y-5 py-7 lg:grid-cols-4">
               {USPS.map((u) => (
                 <StaggerItem key={u.text}>
                   <p className="flex items-center gap-3 text-[11.5px] font-medium uppercase tracking-[0.12em] text-charcoal/70">
@@ -375,7 +375,7 @@ export default function ShopPage() {
         </section>
 
         {/* ============ GESCHENKMOMENTE ============ */}
-        <section className="relative overflow-hidden border-y border-stone/40 bg-gradient-to-b from-cream via-champagne-light/25 to-ivory py-20 lg:py-24">
+        <section className="relative overflow-hidden bg-gradient-to-b from-cream via-champagne-light/25 to-ivory py-20 lg:py-24">
           <Vines className="inset-x-0 bottom-0 h-72 w-full" />
           <Aura tint="bordeaux" className="-left-56 -top-44 h-[34rem] w-[34rem]" />
           <Aura tint="gold" drift={2} className="-right-48 bottom-0 h-[30rem] w-[30rem]" />
@@ -473,7 +473,7 @@ export default function ShopPage() {
         </section>
 
         {/* ============ HÄUFIGE FRAGEN (Service-FAQ) ============ */}
-        <div className="relative overflow-hidden border-t border-stone/40 bg-gradient-to-b from-cream via-champagne-light/25 to-ivory">
+        <div className="relative overflow-hidden bg-gradient-to-b from-cream via-champagne-light/25 to-ivory">
           <Vines className="inset-x-0 bottom-0 h-72 w-full" />
           <Aura tint="gold" drift={2} className="-left-56 -top-44 h-[34rem] w-[34rem]" />
           <FaqSection

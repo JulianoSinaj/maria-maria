@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Reveal, Stagger, StaggerItem } from "./motion/Reveal";
 import Button from "./ui/Button";
-import { GoldRule } from "./Deco";
 import { Instagram, Facebook, Mail, Arrow, Check, Grapes } from "./Icons";
 
 const EXPLORE = [
@@ -86,8 +85,6 @@ export default function Footer() {
           )}
         </Reveal>
 
-        <GoldRule className="mt-14 w-full opacity-40" />
-
         {/* columns */}
         <Stagger className="mt-12 grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4" gap={0.07}>
           <StaggerItem>
@@ -163,7 +160,7 @@ export default function Footer() {
       </div>
 
       {/* bottom bar */}
-      <div className="relative border-t border-ivory/10">
+      <div className="relative">
         <div className="mx-auto flex max-w-content flex-wrap items-center justify-between gap-x-6 gap-y-2 px-6 py-5 text-[11px] text-ivory/60 lg:px-10">
           <span>© {year} Maria Maria Wines — Il piacere del vino</span>
           <div className="flex items-center gap-5">

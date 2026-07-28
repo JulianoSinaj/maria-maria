@@ -25,15 +25,15 @@ const FEATURED = {
   title: "Der Maria-Moment zuhause",
   min: "5 Min. Lesedauer",
   excerpt: "Warum die besonderen Momente oft ganz einfach sind – und wie Wein sie noch schöner macht.",
-  img: "/img/stilllife.jpg",
+  img: "/img/magazin/weinkeller.jpg",
 };
 
 const THEMES = [
-  { cat: "Weinwissen", sub: "Wissen vertiefen", icon: GrapeVine, img: "/img/tasting.jpg" },
-  { cat: "Food Pairing", sub: "Perfekt kombiniert", icon: Plate, img: "/img/food.jpg" },
-  { cat: "Regionen", sub: "Italien entdecken", icon: Mountains, img: "/img/vineyard.jpg" },
-  { cat: "Geschichten", sub: "Hinter den Kulissen", icon: Book, img: "/img/stilllife.jpg" },
-  { cat: "Genussmomente", sub: "Inspiration genießen", icon: Sun, img: "/img/dinner.jpg" },
+  { cat: "Weinwissen", sub: "Wissen vertiefen", icon: GrapeVine, img: "/img/magazin/trauben-hand.jpg" },
+  { cat: "Food Pairing", sub: "Perfekt kombiniert", icon: Plate, img: "/img/magazin/abendessen.jpg" },
+  { cat: "Regionen", sub: "Italien entdecken", icon: Mountains, img: "/img/magazin/weinlese.jpg" },
+  { cat: "Geschichten", sub: "Hinter den Kulissen", icon: Book, img: "/img/magazin/handverlesen.jpg" },
+  { cat: "Genussmomente", sub: "Inspiration genießen", icon: Sun, img: "/img/aperitivo-sunset.jpg" },
 ];
 
 const LATEST = [
@@ -42,35 +42,35 @@ const LATEST = [
     title: "Was passt zu Primitivo?",
     min: "4 Min. Lesedauer",
     excerpt: "Tipps für harmonische Kombinationen mit Aromen, die begeistern.",
-    img: "/img/food.jpg",
+    img: "/img/magazin/trauben-hand.jpg",
   },
   {
     cat: "Food Pairing",
     title: "Lugana und Fisch – eine elegante Kombination",
     min: "4 Min. Lesedauer",
     excerpt: "Frische, Mineralität und feine Aromen im perfekten Zusammenspiel.",
-    img: "/img/aperitivo.jpg",
+    img: "/img/magazin/pranzo.jpg",
   },
   {
     cat: "Regionen",
     title: "Apulien: Sonne, Reben, Charakter",
     min: "6 Min. Lesedauer",
     excerpt: "Eine Reise in das Herz Süditaliens und seine unverwechselbaren Weine.",
-    img: "/img/region-apulien.jpg",
+    img: "/img/magazin/weinlese.jpg",
   },
   {
     cat: "Geschichten",
     title: "Der Maria-Moment zuhause",
     min: "5 Min. Lesedauer",
     excerpt: "Warum die besonderen Momente oft ganz einfach sind – und wie Wein sie noch schöner macht.",
-    img: "/img/stilllife.jpg",
+    img: "/img/magazin/weinkeller.jpg",
   },
   {
     cat: "Genussmomente",
     title: "Sommerabend auf Italienisch",
     min: "3 Min. Lesedauer",
     excerpt: "Leichte Gerichte, gute Gespräche und der richtige Wein dazu.",
-    img: "/img/dinner.jpg",
+    img: "/img/magazin/abendessen.jpg",
   },
 ];
 
@@ -96,10 +96,10 @@ const TAGS = [
 ];
 
 const POPULAR = [
-  { title: "Falanghina entdecken", min: "5 Min. Lesedauer", img: "/img/vineyard.jpg" },
-  { title: "Primitivo 101 – Alles über die Rebsorte", min: "6 Min. Lesedauer", img: "/img/region-apulien.jpg" },
-  { title: "Die Kunst der Weinverkostung", min: "4 Min. Lesedauer", img: "/img/tasting.jpg" },
-  { title: "Wein & Käse – Klassiker neu gedacht", min: "5 Min. Lesedauer", img: "/img/food.jpg" },
+  { title: "Falanghina entdecken", min: "5 Min. Lesedauer", img: "/img/magazin/weinlese.jpg" },
+  { title: "Primitivo 101 – Alles über die Rebsorte", min: "6 Min. Lesedauer", img: "/img/magazin/trauben-hand.jpg" },
+  { title: "Die Kunst der Weinverkostung", min: "4 Min. Lesedauer", img: "/img/magazin/weinkeller.jpg" },
+  { title: "Wein & Käse – Klassiker neu gedacht", min: "5 Min. Lesedauer", img: "/img/magazin/handverlesen.jpg" },
 ];
 
 export default function MagazinPage() {
@@ -165,7 +165,7 @@ export default function MagazinPage() {
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
                           src={FEATURED.img}
-                          alt="Stillleben mit Wein, Gläsern und mediterranen Zutaten"
+                          alt="Winzer prüft ein Glas Rotwein zwischen Barriquefässern im Keller"
                           className="h-full w-full object-cover transition-transform duration-700 ease-out-expo group-hover:scale-[1.05]"
                         />
                       </Parallax>
@@ -419,7 +419,7 @@ export default function MagazinPage() {
       </section>
 
       {/* ============ WEINWISSEN-FAQ ============ */}
-      <div className="relative overflow-hidden border-t border-stone/40 bg-gradient-to-b from-cream via-champagne-light/25 to-ivory">
+      <div className="relative overflow-hidden bg-gradient-to-b from-cream via-champagne-light/25 to-ivory">
         <GhostWord className="right-[-2vw] bottom-6 text-[11vw]">Sapere</GhostWord>
         <FaqSection
           className="relative"

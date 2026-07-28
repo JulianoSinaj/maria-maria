@@ -141,8 +141,6 @@ export default function FactStrip({ wine }) {
             ))}
           </Stagger>
         </div>
-
-        <GoldRule className="mx-auto mt-12 max-w-3xl" />
       </div>
     </section>
   );

@@ -76,7 +76,8 @@ export default function ColorBand({ wine }) {
 
   return (
     <section
-      className="relative overflow-hidden"
+      id="geschmack"
+      className="relative scroll-mt-36 overflow-hidden"
       style={{
         background: `linear-gradient(180deg, #FBF9F4 0%, ${s0.hex}26 62%, ${s0.hex}45 100%)`,
       }}

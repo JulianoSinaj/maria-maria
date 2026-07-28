@@ -2,12 +2,10 @@ import ShaderGradient from "@/components/motion/ShaderGradient";
 import SplitText from "@/components/motion/SplitText";
 import TiltCard from "@/components/motion/TiltCard";
 import { Reveal, Stagger, StaggerItem } from "@/components/motion/Reveal";
-import Button from "@/components/ui/Button";
 import { SectionTitle, Eyebrow, GrapeRule, IconChip } from "@/components/Deco";
 import ContactForm from "@/components/kontakt/ContactForm";
 import FaqSection from "@/components/faq/FaqSection";
 import { KONTAKT_FAQ_GROUPS } from "@/components/faq/faqData";
-import NewsletterSignup from "@/components/kontakt/NewsletterSignup";
 import { Mail, Phone, Pin, Instagram, Facebook, LinkedIn, Arrow, Clock } from "@/components/Icons";
 import Atmosphere, { Aura, GhostWord, Vines } from "@/components/Atmosphere";
 
@@ -212,8 +210,8 @@ export default function KontaktPage() {
         </div>
       </section>
 
-      {/* ============ FAQ (Service-Cluster, Index links) + SHOP-CTA ============ */}
-      <section className="relative overflow-hidden border-y border-stone/40 bg-gradient-to-b from-cream via-champagne-light/25 to-ivory">
+      {/* ============ FAQ (Service-Cluster, Index links) ============ */}
+      <section className="relative overflow-hidden bg-gradient-to-b from-cream via-champagne-light/25 to-ivory">
         <Vines className="inset-x-0 bottom-0 h-72 w-full" />
         <Aura tint="blush" drift={2} className="-left-56 -top-44 h-[34rem] w-[34rem]" />
         <FaqSection
@@ -229,32 +227,6 @@ export default function KontaktPage() {
           groups={KONTAKT_FAQ_GROUPS}
           footer={{ label: "Frage nicht dabei? Schreiben Sie uns", href: "#kontakt-formular" }}
         />
-
-        {/* dark shader shop card + newsletter unter der FAQ */}
-        <div className="relative mx-auto grid max-w-content grid-cols-1 items-stretch gap-6 px-6 pb-20 lg:grid-cols-2 lg:px-10 lg:pb-24">
-          <Reveal delay={0.1} className="h-full">
-            <div className="grain relative h-full min-h-[320px] overflow-hidden rounded-card-lg shadow-luxe">
-              <ShaderGradient palette="wine" />
-              <div className="relative flex h-full flex-col justify-center p-9 lg:p-12">
-                <Eyebrow light>Der offizielle Shop</Eyebrow>
-                <h3 className="mt-4 max-w-sm text-balance font-playfair text-[clamp(1.7rem,3vw,2.3rem)] leading-[1.12] text-ivory">
-                  Zum offiziellen <span className="italic text-champagne">Maria Maria</span> Shop
-                </h3>
-                <p className="mt-4 max-w-xs text-[13px] leading-relaxed text-ivory/70">
-                  Entdecken Sie unsere Weine und bestellen Sie bequem online im offiziellen Shop.
-                </p>
-                <div className="mt-8">
-                  <Button href="/shop" variant="light">
-                    Zum Shop
-                  </Button>
-                </div>
-              </div>
-            </div>
-          </Reveal>
-          <Reveal delay={0.16} className="h-full">
-            <NewsletterSignup />
-          </Reveal>
-        </div>
       </section>
     </div>
   );

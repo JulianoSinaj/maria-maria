@@ -80,7 +80,7 @@ export default function PlaceSection({ wine }) {
             </Reveal>
           </div>
 
-          <Stagger className="mt-9 border-t border-ivory/15 pt-7 lg:mt-10" delay={0.08}>
+          <Stagger className="mt-9 pt-7 lg:mt-10" delay={0.08}>
             <dl className="grid grid-cols-2 gap-x-8 gap-y-6 sm:grid-cols-4 sm:gap-x-10">
               {place.stats.map((s) => (
                 <StaggerItem key={s.label}>

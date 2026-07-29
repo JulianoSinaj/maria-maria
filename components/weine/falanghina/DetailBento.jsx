@@ -15,12 +15,12 @@ import Atmosphere, { GhostWord } from "@/components/Atmosphere";
 /* „Im Detail" — das technische Datenblatt als eine einzige, ruhige Komposition
    statt verstreuter Bento-Karten: links eine dunkle Identitätstafel mit dem
    freigestellten Packshot (Karten-WebP mit Alpha — kein weißer Fotokasten),
-   rechts ein präzises Ledger mit Haarlinien, Laufnummern und Serifenwerten.
+   rechts ein präzises Ledger mit Haarlinien und Serifenwerten.
    Die Kurzfakten (Boden, Serviertemperatur, Füllmenge …) laufen als
-   Fine-Print-Band unter beiden Spalten — nichts geht verloren.
+   Fine-Print-Fußnote unter beiden Spalten — nichts geht verloren.
 
-   Keine Icon-Badges mehr: die Laufnummer in Playfair-Kursive trägt die
-   Orientierung, die Typografie die Hierarchie. Rein wine.detail-getrieben —
+   Keine Icon-Badges, keine Laufnummern: die Typografie trägt die
+   Hierarchie. Rein wine.detail-getrieben —
    fehlt ein Label, fällt die Zeile weg. Akzent pro Wein über wine.accent,
    sonst wine.moment.accent (jede Weinseite hat einen). */
 
@@ -95,7 +95,8 @@ function SheetIdentity({ wine, accent, title }) {
     my.set(0);
   };
 
-  const bottle = wine.slug ? `/img/wines/${wine.slug}/card-front.webp` : wine.images?.front;
+  /* Entsäumter Freisteller fürs dunkle Panel (scripts/sheet-shots.mjs) */
+  const bottle = wine.slug ? `/img/wines/${wine.slug}/sheet-front.webp` : wine.images?.front;
 
   return (
     <div
@@ -142,15 +143,34 @@ function SheetIdentity({ wine, accent, title }) {
           <motion.div
             style={reduced ? undefined : { y: floatY, rotate: floatR, willChange: "transform" }}
           >
-            <motion.img
-              src={bottle}
-              alt={`Flasche ${wine.name ?? ""}`}
+            <motion.div
               style={reduced ? undefined : { x: magX, y: magY }}
-              className="h-52 w-auto select-none object-contain drop-shadow-[0_30px_38px_rgba(0,0,0,0.55)] sm:h-60 lg:h-72"
-              loading="lazy"
-              decoding="async"
-              draggable={false}
-            />
+              className="flex flex-col items-center"
+            >
+              <img
+                src={bottle}
+                alt={`Flasche ${wine.name ?? ""}`}
+                className="h-52 w-auto select-none object-contain drop-shadow-[0_30px_38px_rgba(0,0,0,0.55)] sm:h-60 lg:h-72"
+                loading="lazy"
+                decoding="async"
+                draggable={false}
+              />
+              {/* Spiegelung am Boden — verankert die Flasche auf der Tafel,
+                  statt sie aufgeklebt wirken zu lassen */}
+              <div
+                aria-hidden="true"
+                className="pointer-events-none -mt-px h-14 overflow-hidden opacity-25 [-webkit-mask-image:linear-gradient(to_bottom,rgba(0,0,0,0.55),transparent_80%)] [mask-image:linear-gradient(to_bottom,rgba(0,0,0,0.55),transparent_80%)]"
+              >
+                <img
+                  src={bottle}
+                  alt=""
+                  className="h-52 w-auto -scale-y-100 select-none object-contain blur-[2px] sm:h-60 lg:h-72"
+                  loading="lazy"
+                  decoding="async"
+                  draggable={false}
+                />
+              </div>
+            </motion.div>
           </motion.div>
         )}
       </div>
@@ -163,15 +183,12 @@ function SheetIdentity({ wine, accent, title }) {
   );
 }
 
-/* Ledger-Zeile: Laufnummer in Playfair-Kursive, Etikett, Serifenwert.
-   Hover zeichnet eine Akzentkante und tönt die Nummer — nur Transform und
-   Opacity, kein Layout-Shift. */
-function LedgerRow({ item, index, accent }) {
+/* Ledger-Zeile: Etikett und Serifenwert, getrennt durch Haarlinien.
+   Hover zeichnet eine Akzentkante und schiebt den Wert minimal an — nur
+   Transform und Opacity, kein Layout-Shift. */
+function LedgerRow({ item, accent }) {
   return (
-    <div
-      className="group relative flex h-full items-center px-6 py-5 sm:px-8 lg:px-10 lg:py-6"
-      style={{ "--acc": accent.deep }}
-    >
+    <div className="group relative flex h-full items-center px-6 py-5 sm:px-8 lg:px-10 lg:py-6">
       {/* Hover-Wash + Akzentkante */}
       <span
         aria-hidden="true"
@@ -184,31 +201,15 @@ function LedgerRow({ item, index, accent }) {
         style={{ background: accent.base }}
       />
 
-      <div className="relative grid w-full grid-cols-[2.5rem_1fr] items-start gap-x-3 gap-y-1.5 sm:grid-cols-[3rem_10rem_1fr] sm:gap-x-6">
-        <span
-          aria-hidden="true"
-          className="pt-0.5 font-playfair text-[15px] italic leading-none text-charcoal/30 transition-colors duration-400 group-hover:text-[color:var(--acc)]"
-        >
-          {String(index + 1).padStart(2, "0")}
-        </span>
+      <div className="relative grid w-full gap-y-1.5 sm:grid-cols-[11rem_1fr] sm:gap-x-6">
         <SheetLabel className="sm:pt-1">{item.label}</SheetLabel>
-        <p className="col-start-2 font-playfair text-[1.05rem] leading-snug text-charcoal transition-transform duration-500 ease-out-expo will-transform group-hover:translate-x-1 sm:col-start-3 sm:text-[1.12rem]">
+        <p className="font-playfair text-[1.05rem] leading-snug text-charcoal transition-transform duration-500 ease-out-expo will-transform group-hover:translate-x-1 sm:text-[1.12rem]">
           {item.value}
         </p>
       </div>
     </div>
   );
 }
-
-/* Rasterkanten des Fine-Print-Bands — mobil eine Quittungs-Spalte,
-   ab sm 2, ab lg 4 Spalten. */
-const finePrintBorders = (i) => [
-  i > 0 ? "border-t border-stone/50" : "",
-  i === 1 ? "sm:border-t-0" : "",
-  i % 2 === 1 ? "sm:border-l sm:border-stone/50" : "",
-  i % 4 !== 0 ? "lg:border-l lg:border-stone/50" : "lg:border-l-0",
-  i >= 4 ? "lg:border-t" : "lg:border-t-0",
-].join(" ");
 
 export default function DetailBento({ wine }) {
   const detail = wine.detail ?? [];
@@ -241,31 +242,34 @@ export default function DetailBento({ wine }) {
               {/* Das Ledger — jede Zeile eine Kennzahl, getrennt durch Haarlinien.
                   flex-1 verteilt die Zeilen über die volle Tafelhöhe. */}
               <div className="flex flex-col">
-                {rows.map((item, i) => (
+                {rows.map((item) => (
                   <StaggerItem
                     key={item.label}
                     y={18}
                     className="flex-1 border-t border-stone/50 first:border-t-0"
                   >
-                    <LedgerRow item={item} index={i} accent={accent} />
+                    <LedgerRow item={item} accent={accent} />
                   </StaggerItem>
                 ))}
               </div>
             </div>
 
-            {/* Fine-Print-Band: die Kurzfakten als ruhige Fußzeile der Tafel. */}
+            {/* Fine-Print: die Kurzfakten als ruhige Fußnotenzeile — keine
+                Rasterkanten, nur eine Haarlinie zur Tafel und Weißraum. */}
             {finePrint.length > 0 && (
-              <div className="grid grid-cols-1 border-t border-stone/60 sm:grid-cols-2 lg:grid-cols-4">
-                {finePrint.map((c, i) => (
-                  <StaggerItem key={c.label} y={14} className={finePrintBorders(i)}>
-                    <div className="flex items-baseline justify-between gap-4 px-6 py-3.5 sm:block sm:px-8 sm:py-5">
-                      <SheetLabel className="shrink-0">{c.label}</SheetLabel>
-                      <p className="text-right font-playfair text-[0.98rem] leading-snug text-charcoal sm:mt-1.5 sm:text-left sm:text-[1.05rem]">
-                        {c.value}
-                      </p>
-                    </div>
-                  </StaggerItem>
-                ))}
+              <div className="border-t border-stone/60 px-6 py-5 sm:px-8 sm:py-6 lg:px-10">
+                <div className="flex flex-col gap-y-3.5 sm:flex-row sm:flex-wrap sm:items-start sm:gap-x-12 sm:gap-y-5 lg:gap-x-16">
+                  {finePrint.map((c) => (
+                    <StaggerItem key={c.label} y={14}>
+                      <div className="flex items-baseline justify-between gap-6 sm:block">
+                        <SheetLabel className="shrink-0">{c.label}</SheetLabel>
+                        <p className="text-right font-playfair text-[0.98rem] leading-snug text-charcoal sm:mt-1.5 sm:text-left sm:text-[1.02rem]">
+                          {c.value}
+                        </p>
+                      </div>
+                    </StaggerItem>
+                  ))}
+                </div>
               </div>
             )}
           </div>

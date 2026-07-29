@@ -7,6 +7,7 @@ import { Reveal } from "@/components/motion/Reveal";
 import Button from "@/components/ui/Button";
 import { SectionTitle, Eyebrow, IconChip } from "@/components/Deco";
 import RegionWineRail from "@/components/RegionWineRail";
+import RegionHeroVideo from "@/components/RegionHeroVideo";
 import FaqSection from "@/components/faq/FaqSection";
 import { REGIONEN_FAQ_GROUPS } from "@/components/faq/faqData";
 import { Arrow, Check, Fields } from "@/components/Icons";
@@ -67,15 +68,13 @@ export default function RegionenPage() {
       {/* ============ HERO ============ */}
       <section className="grain relative overflow-hidden">
         {/* Volle Video-Bühne: das Weinberg-Panorama trägt den Hero.
-            Raw-Markup statt JSX, damit `muted` im SSR-HTML landet (React 18
-            lässt das Attribut sonst weg und Browser blocken das Autoplay). */}
+            speed 0.08 statt 0.1 hält den Overscan-Zoom klein — je weniger
+            das Video hochskaliert wird, desto schärfer bleibt es. */}
         <div aria-hidden="true" className="absolute inset-0">
-          <Parallax speed={0.1} overscan className="absolute inset-0">
-            <div
-              className="h-full w-full"
-              dangerouslySetInnerHTML={{
-                __html: `<video class="h-full w-full object-cover" autoplay loop muted playsinline preload="auto" src="/video/video1crop.mp4"></video>`,
-              }}
+          <Parallax speed={0.08} overscan className="absolute inset-0">
+            <RegionHeroVideo
+              src="/video/video1crop.mp4"
+              className="h-full w-full object-cover"
             />
           </Parallax>
         </div>
@@ -85,6 +84,12 @@ export default function RegionenPage() {
         <div
           aria-hidden="true"
           className="absolute inset-0 bg-gradient-to-r from-espresso/70 via-espresso/30 to-transparent"
+        />
+
+        {/* Kino-Vignette: Ränder sacht abdunkeln gibt dem Bild Tiefe und Fassung */}
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 bg-[radial-gradient(120%_90%_at_50%_38%,transparent_55%,rgba(33,21,17,0.38)_100%)]"
         />
 
         {/* Elfenbein-Hauch oben für die Navigation, unten der weiche Übergang in die Seite */}
@@ -151,7 +156,7 @@ export default function RegionenPage() {
               <article
                 key={r.name}
                 id={r.anchor}
-                className={`scroll-mt-32 ${i > 0 ? "mt-16 pt-16 lg:mt-24 lg:pt-24" : ""}`}
+                className={`scroll-mt-32 ${i > 0 ? "mt-8 pt-8 lg:mt-12 lg:pt-12" : ""}`}
               >
                 {/* photo + intro */}
                 <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-2 lg:gap-16">

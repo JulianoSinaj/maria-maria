@@ -285,7 +285,7 @@ export default function ShopPage() {
                 <Reveal delay={0.15}>
                   <div className="mt-8 flex items-center gap-3">
                     <GoldRule className="w-12" />
-                    <p className="font-playfair text-[19px] italic leading-snug text-bordeaux">
+                    <p className="font-playfair text-[19px] italic leading-snug text-vine">
                       „Italian wine, personal selection, share the pleasure.“
                     </p>
                   </div>

@@ -76,7 +76,7 @@ const REGIONS = [
     pos: "40% 45%",
   },
   {
-    name: "Gardasee / Lugana",
+    name: "Gardasee / Lombardei",
     tag: "Eleganz des Nordens",
     desc: "Eleganz, Frische und mineralische Tiefe.",
     long: "Am Südufer des Gardasees entsteht Lugana – ein Weißwein von seltener Eleganz, getragen von Frische und mineralischer Tiefe.",
@@ -224,7 +224,7 @@ export default function HomeContent() {
           eyebrow="Unsere Philosophie"
           description="Vier Überzeugungen, die jede Flasche prägen – vom Weinberg bis ins Glas."
         >
-          Der Maria-Moment
+          Der Maria Maria Moment
         </SectionTitle>
         <Stagger className="mx-auto mt-7 grid w-full grid-cols-1 gap-5 sm:mt-9 sm:grid-cols-2 lg:grid-cols-4">
           {MOMENT.map((m, i) => (

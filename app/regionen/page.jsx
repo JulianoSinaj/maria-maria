@@ -32,7 +32,7 @@ const REGIONS = [
     dataRegions: ["Apulien"],
   },
   {
-    name: "Kampanien & Basilikata",
+    name: "Kampanien",
     tag: "Zwischen Vulkan und Meer",
     anchor: "kampanien",
     region: "kampanien",
@@ -43,7 +43,7 @@ const REGIONS = [
     dataRegions: ["Kampanien", "Basilikata"],
   },
   {
-    name: "Gardasee / Lugana",
+    name: "Gardasee / Lombardei",
     tag: "Eleganz des Nordens",
     anchor: "garda",
     region: "garda",
@@ -196,13 +196,7 @@ export default function RegionenPage() {
                   </Reveal>
 
                   <Reveal delay={0.12} className={flipped ? "lg:order-1" : ""}>
-                    <span
-                      aria-hidden="true"
-                      className="font-playfair text-[13px] italic tracking-[0.08em] text-bordeaux/45"
-                    >
-                      {String(i + 1).padStart(2, "0")} — {String(REGIONS.length).padStart(2, "0")}
-                    </span>
-                    <div className="mt-3">
+                    <div>
                       <Eyebrow>{r.label}</Eyebrow>
                     </div>
                     <h2 className="mt-4 font-playfair text-[clamp(1.9rem,3.2vw,2.5rem)] leading-[1.12] text-charcoal">

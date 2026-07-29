@@ -6,7 +6,7 @@ import TiltCard from "@/components/motion/TiltCard";
 import { Reveal, Stagger, StaggerItem } from "@/components/motion/Reveal";
 import Button from "@/components/ui/Button";
 import { SectionTitle, Eyebrow, GrapeRule, IconChip } from "@/components/Deco";
-import { Arrow, Plate, GrapeVine, Book } from "@/components/Icons";
+import { Arrow, Plate, GrapeVine, Mountains } from "@/components/Icons";
 import { WINES, REGION_COUNT } from "@/components/data";
 import WineExplorer from "@/components/weine/WineExplorer";
 import WeineHeroPhoto, { WeineHeroPreload } from "@/components/weine/WeineHeroPhoto";
@@ -55,11 +55,11 @@ const HELP = [
     href: "/magazin",
   },
   {
-    icon: <Book className="h-7 w-7" />,
-    title: "Service-FAQ",
-    text: "Häufige Fragen rund um Bestellung, Versand und Kontakt – kurz beantwortet.",
-    link: "Zu den Service-FAQs",
-    href: "/kontakt#fragen",
+    icon: <Mountains className="h-7 w-7" />,
+    title: "Regionen",
+    text: "Entdecken Sie die Herkunft unserer Weine – von Apulien bis zum Gardasee.",
+    link: "Zu den Regionen",
+    href: "/regionen",
   },
 ];
 

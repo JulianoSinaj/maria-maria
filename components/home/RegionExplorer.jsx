@@ -10,7 +10,6 @@ import {
   useTransform,
 } from "motion/react";
 import Button from "@/components/ui/Button";
-import ItalyMap from "@/components/ItalyMap";
 
 /* Region explorer — drei eigenständige Foto-Karten statt einer gemeinsamen
    Karten-Bühne. Jede Region bringt ihr eigenes Landschaftsfoto mit (inklusive
@@ -44,35 +43,60 @@ const FADE_IN = { duration: IN, delay: OUT, ease: EASE };
 const ZOOM = { duration: SWAP_MS / 1000, ease: EASE };
 const INSTANT = { duration: 0 };
 
-function DetailCard({ region, compact = false }) {
+/* Specular-Details, die den Frost "flüssig" wirken lassen: eine helle
+   Lichtkante entlang des oberen Rands plus ein weicher, schräger Sheen. */
+function GlassLight() {
   return (
-    <div className={`rounded-card bg-ivory shadow-lift ring-1 ring-stone/60 ${compact ? "p-5" : "p-6"}`}>
-      <div className="flex items-start justify-between gap-4">
-        <div className="min-w-0">
-          <p className="text-[10px] uppercase tracking-[0.22em] text-bordeaux">{region.tag}</p>
-          <h3 className="mt-1 font-playfair text-[clamp(20px,2vw,26px)] text-charcoal">{region.name}</h3>
+    <>
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-5 top-0 h-px bg-gradient-to-r from-transparent via-white/45 to-transparent"
+      />
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute -left-1/4 -top-3/4 h-[170%] w-2/3 rotate-12 bg-gradient-to-b from-white/10 to-transparent blur-2xl"
+      />
+    </>
+  );
+}
+
+function DetailCard({ region, compact = false }) {
+  if (compact) {
+    return (
+      <div className="glass-dark relative overflow-hidden rounded-card p-5">
+        <GlassLight />
+        <div className="relative">
+          <p className="text-[10px] uppercase tracking-[0.25em] text-champagne-light">{region.tag}</p>
+          <h3 className="mt-1 font-playfair text-[clamp(19px,2vw,22px)] text-ivory">{region.name}</h3>
+          <p className="mt-2 text-[13px] leading-relaxed text-ivory/75">{region.long || region.desc}</p>
+          <div className="mt-4">
+            <Button href={`/regionen#${region.region}`} size="sm" magnetic={false}>
+              Mehr entdecken
+            </Button>
+          </div>
         </div>
-        <span className="shrink-0 rounded-2xl bg-gradient-to-br from-espresso to-charcoal p-2">
-          <ItalyMap region={region.region} ghost className="w-9" />
-        </span>
       </div>
-      <p className="mt-3 text-[13px] leading-relaxed text-charcoal/70">{region.long || region.desc}</p>
-      {region.grapes?.length > 0 && (
-        <div className="mt-4 flex flex-wrap gap-1.5">
-          {region.grapes.map((g) => (
-            <span
-              key={g}
-              className="rounded-full border border-stone/70 bg-cream px-2.5 py-1 text-[10px] uppercase tracking-[0.12em] text-charcoal/60"
-            >
-              {g}
-            </span>
-          ))}
+    );
+  }
+  // Desktop: dunkle Liquid-Glass-Leiste, die knapp über dem unteren Bildrand
+  // schwebt — Zeilenlayout (Text links, Button rechts) hält sie bei ~1/4 der
+  // Bildhöhe, der Frost lässt das Foto durchscheinen.
+  return (
+    <div className="glass-dark relative overflow-hidden rounded-[22px] px-6 py-5 lg:px-7">
+      <GlassLight />
+      <div className="relative flex items-center justify-between gap-6">
+        <div className="min-w-0">
+          <p className="text-[10px] uppercase tracking-[0.25em] text-champagne-light">{region.tag}</p>
+          <h3 className="mt-1 font-playfair text-[clamp(20px,1.8vw,26px)] text-ivory">{region.name}</h3>
+          <p className="mt-1.5 line-clamp-2 max-w-[560px] text-[12.5px] leading-relaxed text-ivory/75">
+            {region.long || region.desc}
+          </p>
         </div>
-      )}
-      <div className="mt-5">
-        <Button href={`/regionen#${region.region}`} size="sm" magnetic={false}>
-          Mehr entdecken
-        </Button>
+        <div className="shrink-0">
+          <Button href={`/regionen#${region.region}`} size="sm" magnetic={false}>
+            Mehr entdecken
+          </Button>
+        </div>
       </div>
     </div>
   );
@@ -200,8 +224,9 @@ export default function RegionExplorer({ regions }) {
                 <h3 className="mt-1 truncate font-playfair text-[24px] text-ivory lg:text-[27px]">{r.name}</h3>
               </motion.div>
 
-              {/* Fokuszustand — Detail-Karte über die volle Kartenbreite. Ihr
-                  Fade-in endet genau, wenn der flex-grow settelt, damit der
+              {/* Fokuszustand — Liquid-Glass-Leiste, die knapp über dem
+                  unteren Bildrand schwebt (fast volle Breite). Ihr Fade-in
+                  endet genau, wenn der flex-grow settelt, damit der
                   Text-Umbruch unter der Blende passiert statt danach. */}
               <motion.div
                 initial={false}
@@ -209,7 +234,7 @@ export default function RegionExplorer({ regions }) {
                 transition={reduced ? INSTANT : isActive ? FADE_IN : FADE_OUT}
                 inert={isActive ? undefined : ""}
                 style={{ willChange: "transform, opacity", pointerEvents: isActive ? "auto" : "none" }}
-                className="absolute inset-x-5 bottom-5 max-w-[560px] lg:inset-x-7 lg:bottom-7"
+                className="absolute inset-x-3.5 bottom-3.5 lg:inset-x-4 lg:bottom-4"
               >
                 <DetailCard region={r} />
               </motion.div>

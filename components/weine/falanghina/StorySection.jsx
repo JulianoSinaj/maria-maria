@@ -43,11 +43,13 @@ export default function StorySection({ wine }) {
           <Parallax
             speed={0.09}
             overscan
-            className="aspect-[5/4] overflow-hidden rounded-card-lg shadow-lift lg:aspect-[4/5]"
+            className={`overflow-hidden rounded-card-lg shadow-lift ${
+              story.image?.wide ? "aspect-[3/2]" : "aspect-[5/4] lg:aspect-[4/5]"
+            }`}
           >
             <img
-              src="/img/sotria.png"
-              alt="Handlese der Trauben und Ausbau im Weinkeller"
+              src={story.image?.src ?? "/img/sotria.png"}
+              alt={story.image?.alt ?? "Handlese der Trauben und Ausbau im Weinkeller"}
               className="h-full w-full object-cover"
               loading="lazy"
             />

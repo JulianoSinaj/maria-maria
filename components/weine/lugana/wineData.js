@@ -162,6 +162,12 @@ export const LUGANA = {
       text: "Ein Wein, der den See im Glas trägt: weit, warm und ruhig.",
       attribution: "Maria & Maria",
     },
+    image: {
+      src: "/img/wines/lugana/story.jpg",
+      alt: "Reife Turbiana-Trauben in goldgelbem Sonnenlicht am Rebstock",
+      /* Querformat statt Hochformat — bleibt auf Höhe des Textblocks */
+      wide: true,
+    },
   },
 
   /* ---- Der Ort (Luogo) ---- */

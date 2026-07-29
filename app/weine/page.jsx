@@ -75,8 +75,8 @@ export default function WeinePage() {
 
         {/* Schleier für Lesbarkeit: mobil von unten, ab lg von links */}
         <div className="pointer-events-none absolute inset-0" aria-hidden="true">
-          <div className="absolute inset-0 bg-gradient-to-t from-ivory via-ivory/60 to-ivory/10 lg:hidden" />
-          <div className="absolute inset-0 hidden bg-gradient-to-r from-ivory via-ivory/55 to-transparent lg:block" />
+          <div className="absolute inset-0 bg-gradient-to-t from-ivory via-ivory/45 to-transparent lg:hidden" />
+          <div className="absolute inset-0 hidden bg-gradient-to-r from-ivory/90 via-ivory/30 via-35% to-transparent to-70% lg:block" />
         </div>
 
         {/* Elfenbein-Hauch oben, damit die Navigation über dem Abendhimmel
@@ -172,7 +172,9 @@ export default function WeinePage() {
           <Parallax speed={0.08} overscan className="h-full w-full">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/img/weine/occasioni-bg.jpg"
+              src="/img/weine/occasioni-bg-1920.webp"
+              srcSet="/img/weine/occasioni-bg-640.webp 640w, /img/weine/occasioni-bg-1280.webp 1280w, /img/weine/occasioni-bg-1920.webp 1920w, /img/weine/occasioni-bg-2560.webp 2560w"
+              sizes="100vw"
               alt=""
               loading="lazy"
               className="h-full w-full object-cover object-center"

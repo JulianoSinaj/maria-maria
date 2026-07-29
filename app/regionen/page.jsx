@@ -5,12 +5,12 @@ import Parallax from "@/components/motion/Parallax";
 import TiltCard from "@/components/motion/TiltCard";
 import { Reveal } from "@/components/motion/Reveal";
 import Button from "@/components/ui/Button";
-import { SectionTitle, Eyebrow, GrapeRule, IconChip } from "@/components/Deco";
+import { SectionTitle, Eyebrow, IconChip } from "@/components/Deco";
 import RegionWineRail from "@/components/RegionWineRail";
 import FaqSection from "@/components/faq/FaqSection";
 import { REGIONEN_FAQ_GROUPS } from "@/components/faq/faqData";
 import { Arrow, Check, Fields } from "@/components/Icons";
-import { WINES, REGION_COUNT } from "@/components/data";
+import { WINES } from "@/components/data";
 import Atmosphere, { Aura, GhostWord, Vines } from "@/components/Atmosphere";
 
 export const metadata = {
@@ -66,83 +66,66 @@ export default function RegionenPage() {
     <div className="relative min-h-screen">
       {/* ============ HERO ============ */}
       <section className="grain relative overflow-hidden">
-        <ShaderGradient palette="vigna" />
-        {/* soften the shader to a quiet, sunlit presence */}
-        <div aria-hidden="true" className="absolute inset-0 bg-ivory/55" />
-        <div aria-hidden="true" className="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-b from-transparent to-ivory" />
+        {/* Volle Video-Bühne: das Weinberg-Panorama trägt den Hero.
+            Raw-Markup statt JSX, damit `muted` im SSR-HTML landet (React 18
+            lässt das Attribut sonst weg und Browser blocken das Autoplay). */}
+        <div aria-hidden="true" className="absolute inset-0">
+          <Parallax speed={0.1} overscan className="absolute inset-0">
+            <div
+              className="h-full w-full"
+              dangerouslySetInnerHTML={{
+                __html: `<video class="h-full w-full object-cover" autoplay loop muted playsinline preload="auto" src="/video/video1crop.mp4"></video>`,
+              }}
+            />
+          </Parallax>
+        </div>
 
-        <div className="relative mx-auto grid max-w-content grid-cols-1 items-center gap-14 px-6 pb-20 pt-32 lg:grid-cols-[1.02fr_0.98fr] lg:gap-16 lg:px-10 lg:pb-24 lg:pt-36">
-          <div>
+        {/* dunkler Schleier für Lesbarkeit — dichter von links, wo der Text steht */}
+        <div aria-hidden="true" className="absolute inset-0 bg-black/50" />
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 bg-gradient-to-r from-espresso/70 via-espresso/30 to-transparent"
+        />
+
+        {/* Elfenbein-Hauch oben für die Navigation, unten der weiche Übergang in die Seite */}
+        <div
+          aria-hidden="true"
+          className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-ivory/80 via-ivory/30 to-transparent"
+        />
+        {/* Eased-Scrim statt 3-Stop-Verlauf: viele Zwischenstufen entlang einer
+            Smoothstep-Kurve, damit weder Anfangs- noch Endkante sichtbar ist */}
+        <div
+          aria-hidden="true"
+          className="absolute inset-x-0 bottom-0 h-64 bg-[linear-gradient(to_bottom,rgba(247,244,239,0)_0%,rgba(247,244,239,0.02)_14%,rgba(247,244,239,0.06)_27%,rgba(247,244,239,0.13)_39%,rgba(247,244,239,0.25)_50%,rgba(247,244,239,0.42)_61%,rgba(247,244,239,0.63)_73%,rgba(247,244,239,0.85)_86%,rgba(247,244,239,1)_100%)]"
+        />
+
+        <div className="relative mx-auto flex min-h-[100svh] max-w-content flex-col justify-center px-6 pb-24 pt-32 lg:px-10 lg:pt-36">
+          <div className="max-w-2xl">
             <Reveal y={18} delay={0.05}>
-              <Eyebrow>Herkunft</Eyebrow>
+              <span className="inline-flex items-center gap-4 text-[10.5px] font-semibold uppercase tracking-[0.3em] text-ivory/90">
+                <span aria-hidden="true" className="h-px w-10 bg-champagne" />
+                Italienische Weinregionen
+              </span>
             </Reveal>
-            <h1 className="mt-6 font-playfair text-[clamp(2.6rem,5.5vw,4.2rem)] leading-[1.05] text-charcoal">
-              <SplitText text="Regionen" className="block" delay={0.12} />
-              <SplitText
-                text="Italiens."
-                className="block italic"
-                wordClassName="bg-gradient-to-r from-bordeaux via-wine to-bordeaux bg-clip-text text-transparent"
-                delay={0.28}
-              />
+            <h1 className="mt-6 font-playfair text-[clamp(2.6rem,5.5vw,4.2rem)] leading-[1.1] text-ivory">
+              <SplitText text="Wo Italiens Weine" className="block" delay={0.12} />
+              <SplitText text="ihren Charakter finden" className="block" delay={0.28} />
             </h1>
-            <Reveal delay={0.48} y={16}>
-              <GrapeRule className="mt-7" />
-              <p className="mt-6 max-w-md text-[15px] leading-relaxed text-charcoal/75">
-                Maria Maria arbeitet mit ausgewählten, familiengeführten Weingütern in Italien zusammen. Jede
-                Region bringt ihren eigenen Charakter, ihre Böden, ihr Klima – und Geschichten hervor, die man
-                schmeckt.
-              </p>
-            </Reveal>
-            <Reveal delay={0.6} y={16}>
-              <div className="mt-9 flex flex-wrap items-center gap-4">
-                <Button href="#apulien" size="lg">
-                  Regionen entdecken
-                </Button>
-                <Button href="/weine" variant="outline" size="lg">
-                  Zu unseren Weinen
-                </Button>
-              </div>
-            </Reveal>
-            <Reveal delay={0.75} y={12}>
-              <dl className="mt-14 flex max-w-md items-center">
-                {[
-                  [`${REGION_COUNT}`, "Weinregionen"],
-                  [`${WINES.length}`, "Boutique-Weine"],
-                  ["100 %", "Familiengeführt"],
-                ].map(([num, label], i) => (
-                  <div key={label} className={`flex-1 ${i > 0 ? "border-l border-charcoal/10 pl-4 sm:pl-6" : ""}`}>
-                    <dt className="sr-only">{label}</dt>
-                    <dd>
-                      <span className="font-playfair text-[26px] text-bordeaux">{num}</span>
-                      <span className="mt-0.5 block text-[10.5px] uppercase tracking-[0.14em] text-charcoal/55">
-                        {label}
-                      </span>
-                    </dd>
-                  </div>
-                ))}
-              </dl>
+            <Reveal delay={0.55} y={14}>
+              <a
+                href="#apulien"
+                className="group mt-10 inline-flex min-h-[44px] items-center gap-2 text-[14px] text-ivory/90 transition-colors duration-300 hover:text-champagne"
+              >
+                Den Ursprüngen folgen
+                <span
+                  aria-hidden="true"
+                  className="transition-transform duration-500 ease-out-expo group-hover:translate-y-1"
+                >
+                  ↓
+                </span>
+              </a>
             </Reveal>
           </div>
-
-          <Reveal delay={0.3} y={24} className="relative">
-            <div className="ring-hairline relative h-[400px] overflow-hidden rounded-card-lg shadow-luxe lg:h-[540px]">
-              <Parallax speed={0.1} overscan className="absolute inset-0">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src="/img/regionen-hero.jpg"
-                  alt="Weinberge unter italienischer Sonne"
-                  className="h-full w-full object-cover"
-                />
-              </Parallax>
-              <div
-                aria-hidden="true"
-                className="absolute inset-0 bg-gradient-to-t from-espresso/45 via-transparent to-transparent"
-              />
-              <span className="glass absolute bottom-5 left-5 rounded-full px-4 py-2 text-[9.5px] font-semibold uppercase tracking-[0.16em] text-charcoal/70">
-                Apulien · Kampanien · Basilikata · Gardasee
-              </span>
-            </div>
-          </Reveal>
         </div>
       </section>
 

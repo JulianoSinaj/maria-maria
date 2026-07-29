@@ -1,134 +1,98 @@
 "use client";
 import Link from "next/link";
-import { motion, useReducedMotion } from "motion/react";
 import Bottle from "./Bottle";
 import WinePhotos from "./WinePhotos";
 import { Arrow } from "./Icons";
-import { fmtPrice, wineHref, detailHref } from "./data";
-import AddToCart from "./shop/AddToCart";
+import { wineHref, tasteWords } from "./data";
 
-/* E-commerce product card. Two variants:
-   - "default": vertical boutique card — glowing stage, real swipeable
-     packshots (WinePhotos), region chip, price row with add-to-cart control;
-     the whole card is a stretched link to the wine's landing page (shop as
-     fallback). A press on the photo flips the bottle instead of navigating.
-   - "mini": compact horizontal card for carousels and region rails. */
+/* Editorial wine entry — kein Karten-Chrome mehr: Flasche und Text schweben
+   frei auf dem Seitengrund (Referenz: „Neun Charaktere"-Layout).
 
-function Stage({ wine, className = "", bottleClass = "h-40" }) {
-  return (
-    <div className={`relative flex items-end justify-center overflow-hidden ${className}`}>
-      {/* champagne glow */}
-      <div
-        aria-hidden="true"
-        className="absolute left-1/2 top-1/2 h-[130%] w-[130%] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-70 transition-opacity duration-500 group-hover:opacity-100"
-        style={{ background: "radial-gradient(closest-side, rgba(200,183,122,0.32), rgba(200,183,122,0.08) 55%, transparent 75%)" }}
-      />
-      {/* ghost region monogram */}
-      <span
-        aria-hidden="true"
-        className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-[58%] select-none font-playfair text-[7.5rem] italic leading-none text-bordeaux/[0.06]"
-      >
-        {wine.region.charAt(0)}
-      </span>
-      {wine.photos ? (
-        <WinePhotos wine={wine} imgClass={bottleClass} className="pb-3" />
-      ) : (
-        /* Fallback ohne Fotos: illustrierte Flasche (Spacer hält die Höhe) */
-        <div className="relative flex flex-col items-center pb-5">
-          <Bottle
-            variant={wine.variant}
-            className={`${bottleClass} will-transform transition-transform duration-500 ease-out-expo group-hover:-translate-y-2.5 group-hover:rotate-[-2deg]`}
-          />
-          <span aria-hidden="true" className="mt-1 h-2 w-20" />
-        </div>
-      )}
-    </div>
+   - "default": rote Laufnummer (01…), kursiver Name, Region, Charakterworte
+     mit „·" getrennt, Pairing-Satz und „Wein kennenlernen →". Flasche links,
+     Text rechts. Der ganze Eintrag ist ein gestreckter Link zur Landingpage
+     (Shop als Fallback); ein Druck aufs Foto blättert die Flasche um statt
+     zu navigieren (WinePhotos liegt auf z-10 über dem Link).
+   - "mini": kompakte Ausgabe derselben Anatomie für Karussells und Rails.
+
+   `index` ist optional — nur Listen mit echter Reihenfolge (Kollektion,
+   Rails) zeigen die Nummer. */
+
+function Packshot({ wine, imgClass }) {
+  return wine.photos ? (
+    <WinePhotos wine={wine} imgClass={imgClass} />
+  ) : (
+    /* Fallback ohne Fotos: illustrierte Flasche mit demselben Hover-Lift */
+    <Bottle
+      variant={wine.variant}
+      className={`${imgClass} will-transform transition-transform duration-500 ease-out-expo group-hover:-translate-y-2.5 group-hover:rotate-[-2deg]`}
+    />
   );
 }
 
-export default function WineCard({ wine, variant = "default", className = "", href }) {
-  const reduced = useReducedMotion();
+export default function WineCard({ wine, variant = "default", className = "", href, index }) {
   // Landingpage des Weins, sonst Shop — explizites href gewinnt.
   const link = href ?? wineHref(wine);
-  // Hover wird auf einem unbewegten Wrapper erkannt; nur die innere Karte hebt
-  // sich. Wäre die angehobene Karte selbst das Hover-Ziel, würde ein Zeiger an
-  // ihrer Kante (oder Scrollen unter ruhendem Cursor) enter/leave im Loop
-  // auslösen und die Karte zittern lassen.
-  const hover = reduced ? {} : { initial: "rest", whileHover: "hover", animate: "rest" };
-  const lift = reduced ? undefined : { rest: { y: 0 }, hover: { y: -6 } };
-  const spring = { type: "spring", stiffness: 260, damping: 24 };
+  const number = Number.isInteger(index) ? String(index + 1).padStart(2, "0") : null;
+  const words = tasteWords(wine).join(" · ");
 
   if (variant === "mini") {
     return (
-      <motion.div {...hover} className={`group relative ${className || "w-[228px] shrink-0 snap-start"}`}>
-      <motion.article
-        variants={lift}
-        transition={spring}
-        className="relative flex h-full flex-col overflow-hidden rounded-card border border-stone/50 bg-gradient-to-b from-white/90 to-cream shadow-luxe transition-[box-shadow,border-color] duration-500 group-hover:border-champagne/70 group-hover:shadow-lift"
-      >
-        <Stage wine={wine} className="h-40 pt-4" bottleClass="h-32" />
-        <div className="flex flex-1 flex-col px-4 pb-4">
-          <h3 className="font-playfair text-[15px] leading-snug text-charcoal">
+      <div className={`group relative flex items-center gap-4 ${className || "w-[228px] shrink-0 snap-start"}`}>
+        <div className="flex w-16 shrink-0 items-end justify-center">
+          <Packshot wine={wine} imgClass="h-32" />
+        </div>
+        <div className="min-w-0 flex-1 py-1">
+          <h3 className="font-playfair text-[15px] italic leading-snug text-charcoal transition-colors duration-300 group-hover:text-bordeaux">
             <Link href={link} className="outline-none after:absolute after:inset-0" aria-label={`${wine.name} — Details ansehen`}>
               {wine.name}
             </Link>
           </h3>
-          <p className="mt-0.5 text-[10.5px] uppercase tracking-[0.14em] text-charcoal/70">{wine.region}</p>
-          <div className="mt-2.5 flex items-center justify-between">
-            <p className="text-[14px] font-semibold tabular-nums text-charcoal">{fmtPrice(wine.price)}</p>
-            <span className="pointer-events-none flex h-8 w-8 items-center justify-center rounded-full bg-bordeaux text-ivory transition-all duration-400 ease-out-expo group-hover:bg-bordeaux-deep">
-              <Arrow className="h-3.5 w-3.5 transition-transform duration-400 ease-out-expo group-hover:translate-x-0.5" />
-            </span>
-          </div>
+          <p className="mt-0.5 font-playfair text-[11.5px] italic text-bordeaux/75">{wine.region}</p>
+          <p className="mt-2 text-[10.5px] lowercase tracking-[0.04em] text-charcoal/70">{words}</p>
+          <p className="pointer-events-none mt-3 inline-flex items-center gap-1.5 text-[11px] font-medium text-bordeaux">
+            Wein kennenlernen
+            <Arrow className="h-3 w-3 transition-transform duration-400 ease-out-expo group-hover:translate-x-0.5" />
+          </p>
         </div>
-      </motion.article>
-      </motion.div>
+      </div>
     );
   }
 
   return (
-    <motion.div {...hover} className={`group relative ${className}`}>
-    <motion.article
-      variants={lift}
-      transition={spring}
-      className="relative flex h-full flex-col overflow-hidden rounded-card border border-stone/50 bg-gradient-to-b from-white/90 to-cream shadow-luxe transition-[box-shadow,border-color] duration-500 group-hover:border-champagne/70 group-hover:shadow-lift"
-    >
-      {/* region chip */}
-      <span className="glass pointer-events-none absolute left-4 top-4 z-10 rounded-full px-3 py-1.5 text-[9.5px] font-semibold uppercase tracking-[0.16em] text-charcoal/70">
-        {wine.region}
-      </span>
-
-      <Stage wine={wine} className="h-56 pt-6" bottleClass="h-44" />
-
-      <div className="flex flex-1 flex-col border-t border-stone/40 px-5 pb-5 pt-4">
-        <div className="flex items-baseline justify-between gap-3">
-          <h3 className="font-playfair text-[17px] leading-snug text-charcoal">
-            <Link href={link} className="outline-none after:absolute after:inset-0" aria-label={`${wine.name} — Details ansehen`}>
-              {wine.name}
-            </Link>
-          </h3>
-          <span className="shrink-0 text-[11px] tabular-nums text-charcoal/60">{wine.year}</span>
-        </div>
-        <p className="mt-1.5 text-[12px] leading-relaxed text-charcoal/65">{wine.notes}</p>
-        {detailHref(wine) && (
-          <p className="pointer-events-none mt-2 inline-flex items-center gap-1.5 text-[11px] font-medium text-bordeaux/70 transition-colors duration-300 group-hover:text-bordeaux">
-            Details ansehen
-            <Arrow className="h-3 w-3 transition-transform duration-400 ease-out-expo group-hover:translate-x-0.5" />
-          </p>
-        )}
-        <p className="mt-2.5 flex items-center gap-1.5 text-[11px] text-charcoal/60">
-          <span className="inline-block h-2 w-2 rounded-full ring-1 ring-black/10" style={{ background: wine.dot }} />
-          {wine.type} · Trocken
-        </p>
-        <div className="mt-4 flex items-center justify-between border-t border-dashed border-stone/60 pt-4">
-          <p className="text-[16px] font-semibold tabular-nums text-charcoal">
-            {fmtPrice(wine.price)}
-            <span className="ml-1.5 text-[10px] font-normal text-charcoal/60">/ 0,75 l</span>
-          </p>
-          <AddToCart wine={wine} />
-        </div>
+    <div className={`group relative flex items-stretch gap-5 sm:gap-6 ${className}`}>
+      {/* Flasche schwebt direkt auf der Seite — keine Bühne, kein Glow */}
+      <div className="flex w-[84px] shrink-0 items-end justify-center sm:w-[92px]">
+        <Packshot wine={wine} imgClass="h-44 sm:h-48" />
       </div>
-    </motion.article>
-    </motion.div>
+
+      <div className="flex min-w-0 flex-1 flex-col pt-1">
+        {number && (
+          <span aria-hidden="true" className="font-playfair text-[19px] leading-none tracking-[0.08em] text-bordeaux">
+            {number}
+          </span>
+        )}
+        <h3
+          className={`font-playfair text-[19px] italic leading-snug text-charcoal transition-colors duration-300 group-hover:text-bordeaux ${
+            number ? "mt-3" : ""
+          }`}
+        >
+          <Link href={link} className="outline-none after:absolute after:inset-0" aria-label={`${wine.name} — Details ansehen`}>
+            {wine.name}
+          </Link>
+        </h3>
+        <p className="mt-1 font-playfair text-[12.5px] italic text-bordeaux/75">{wine.region}</p>
+        <p className="mt-3 text-[11.5px] lowercase tracking-[0.05em] text-charcoal/75">{words}</p>
+        {wine.pairing && (
+          <p className="mt-2 max-w-[15rem] text-[12.5px] leading-relaxed text-charcoal/60">{wine.pairing}</p>
+        )}
+        <p className="pointer-events-none mt-auto inline-flex items-center gap-1.5 pt-4 text-[12px] font-medium text-bordeaux">
+          <span className="border-b border-bordeaux/30 pb-0.5 transition-colors duration-300 group-hover:border-bordeaux/70">
+            Wein kennenlernen
+          </span>
+          <Arrow className="h-3.5 w-3.5 transition-transform duration-500 ease-out-expo group-hover:translate-x-1" />
+        </p>
+      </div>
+    </div>
   );
 }

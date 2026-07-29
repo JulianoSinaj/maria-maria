@@ -33,7 +33,8 @@ export default function WineRail({ wines, className = "" }) {
   const count = list.length;
   /* Guard gegen leere Filterergebnisse: ohne ihn wäre `active` undefined
      (Crash in WineCard) und `% 0` ergäbe NaN */
-  const active = count > 0 ? list[Math.min(index, count - 1)] : null;
+  const shown = Math.min(index, Math.max(count - 1, 0));
+  const active = count > 0 ? list[shown] : null;
 
   const go = (step) => {
     if (count < 1) return;
@@ -88,12 +89,12 @@ export default function WineRail({ wines, className = "" }) {
   const scrollRail = (direction) => {
     const el = trackRef.current;
     if (!el) return;
-    // Each card is sized to fit exactly 4 per view, so a page = 4 card widths
-    // (incl. the 20px gap between them).
+    // Each entry is sized to fit exactly 3 per view (the editorial layout is
+    // horizontal and needs width), so a page = 3 entry widths incl. gap.
     const first = el.firstElementChild;
     const gap = 20; // matches gap-5
     const cardW = first ? first.getBoundingClientRect().width + gap : 300;
-    el.scrollBy({ left: direction * cardW * 4, behavior: reduced ? "auto" : "smooth" });
+    el.scrollBy({ left: direction * cardW * 3, behavior: reduced ? "auto" : "smooth" });
   };
 
   // Shared paddle button. `onClick` + optional disabled state.
@@ -165,7 +166,7 @@ export default function WineRail({ wines, className = "" }) {
                 transition={spring}
                 className="col-start-1 row-start-1 will-transform"
               >
-                <WineCard wine={active} className="w-full" />
+                <WineCard wine={active} index={shown} className="w-full" />
               </motion.div>
               )}
             </AnimatePresence>
@@ -175,7 +176,7 @@ export default function WineRail({ wines, className = "" }) {
         <div className="mt-7 flex items-center justify-center gap-6">
           {paddle({ onClick: () => go(-1), label: "Vorheriger Wein", flip: true, extra: "flex" })}
           <p aria-live="polite" className="text-[11px] uppercase tracking-[0.22em] text-charcoal/55">
-            <span className="font-semibold tabular-nums text-bordeaux">{String(index + 1).padStart(2, "0")}</span>
+            <span className="font-semibold tabular-nums text-bordeaux">{String(shown + 1).padStart(2, "0")}</span>
             <span className="mx-1.5">/</span>
             <span className="tabular-nums">{String(count).padStart(2, "0")}</span>
           </p>
@@ -216,14 +217,14 @@ export default function WineRail({ wines, className = "" }) {
           ref={trackRef}
           className="no-scrollbar -mx-2 mt-6 flex snap-x snap-mandatory gap-5 overflow-x-auto scroll-smooth px-2 pb-4 pt-1"
         >
-          {list.map((wine) => (
+          {list.map((wine, i) => (
             <div
               key={`${filter ?? "alle"}-${wine.slug}`}
-              /* exactly 4 cards per view: quarter of the track minus its
-                 share of the 3 inter-card gaps (3 × 20px ÷ 4 = 15px) */
-              className="w-[calc((100%-60px)/4)] shrink-0 snap-start"
+              /* exactly 3 entries per view: a third of the track minus its
+                 share of the 2 inter-entry gaps (2 × 20px ÷ 3) */
+              className="w-[calc((100%-40px)/3)] shrink-0 snap-start"
             >
-              <WineCard wine={wine} className="h-full w-full" />
+              <WineCard wine={wine} index={i} className="h-full w-full" />
             </div>
           ))}
         </div>

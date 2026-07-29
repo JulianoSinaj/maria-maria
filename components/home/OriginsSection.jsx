@@ -1,28 +1,15 @@
 import Link from "next/link";
-import TiltCard from "@/components/motion/TiltCard";
-import { Reveal, Stagger, StaggerItem } from "@/components/motion/Reveal";
+import { Reveal } from "@/components/motion/Reveal";
 import { Eyebrow, GoldRule } from "@/components/Deco";
 import { Arrow } from "@/components/Icons";
 import Atmosphere, { GhostWord } from "@/components/Atmosphere";
+import SoulCards from "@/components/SoulCards";
 
 /* Le Origini auf der Startseite — die Markengeschichte gehört an den Anfang
    der Reise, nicht nur in den Shop: der Sommer 2019 im Salento, die zwei
    Seelen hinter dem Namen und der Weg vom Salento hinauf zum Gardasee. */
 
-const SOULS = [
-  {
-    name: "Maria",
-    tag: "Die Gegenwart",
-    traits: ["Moderne", "Unabhängigkeit", "Pure Ästhetik"],
-  },
-  {
-    name: "Maria",
-    tag: "Der Ursprung",
-    traits: ["Wurzeln", "Familie", "Wärme geteilter Momente"],
-  },
-];
-
-const JOURNEY = ["Salento", "Manduria", "Kampanien", "Gardasee"];
+const JOURNEY = ["Salento", "Apulien", "Kampanien", "Gardasee"];
 
 export default function OriginsSection() {
   return (
@@ -84,37 +71,7 @@ export default function OriginsSection() {
           </div>
 
           {/* the double soul */}
-          <div className="relative">
-            <Stagger className="grid grid-cols-1 gap-5 sm:grid-cols-2" gap={0.12}>
-              {SOULS.map((s) => (
-                <StaggerItem key={s.name} className="h-full">
-                  <TiltCard className="group h-full" max={5} radius="rounded-card-lg">
-                    <div className="ring-hairline relative flex h-full flex-col overflow-hidden rounded-card-lg border border-stone/40 bg-white/70 p-7 shadow-luxe transition-[box-shadow,border-color] duration-500 group-hover:border-champagne/60 group-hover:shadow-lift">
-                      <p className="text-[10px] uppercase tracking-[0.22em] text-champagne">{s.tag}</p>
-                      <h3 className="mt-2 font-playfair text-[24px] text-charcoal">{s.name}</h3>
-                      <ul className="mt-4 flex flex-wrap gap-1.5">
-                        {s.traits.map((t) => (
-                          <li
-                            key={t}
-                            className="rounded-full border border-stone/60 bg-cream/80 px-3 py-1.5 text-[9.5px] font-semibold uppercase tracking-[0.14em] text-charcoal/65"
-                          >
-                            {t}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </TiltCard>
-                </StaggerItem>
-              ))}
-            </Stagger>
-            {/* the union of both souls */}
-            <span
-              aria-hidden="true"
-              className="glass absolute left-1/2 top-1/2 hidden h-12 w-12 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full font-playfair text-[22px] italic text-bordeaux shadow-glass sm:flex"
-            >
-              &amp;
-            </span>
-          </div>
+          <SoulCards />
         </div>
       </div>
     </section>

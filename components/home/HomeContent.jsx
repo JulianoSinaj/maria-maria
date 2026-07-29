@@ -126,14 +126,14 @@ export default function HomeContent() {
 
         {/* Schleier für Lesbarkeit: mobil von unten, ab lg von links */}
         <div className="pointer-events-none absolute inset-0" aria-hidden="true">
-          <div className="absolute inset-0 bg-gradient-to-t from-ivory via-ivory/60 to-ivory/10 lg:hidden" />
-          <div className="absolute inset-0 hidden bg-gradient-to-r from-ivory via-ivory/55 to-transparent lg:block" />
+          <div className="absolute inset-0 bg-gradient-to-t from-ivory/90 via-ivory/35 via-35% to-transparent to-70% lg:hidden" />
+          <div className="absolute inset-0 hidden bg-gradient-to-r from-ivory/90 via-ivory/30 via-35% to-transparent to-70% lg:block" />
         </div>
 
         {/* Elfenbein-Hauch oben, damit die Navigation über dem Abendhimmel
             lesbar bleibt */}
         <div
-          className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-ivory/80 via-ivory/30 to-transparent"
+          className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-ivory/55 via-ivory/20 to-transparent"
           aria-hidden="true"
         />
 

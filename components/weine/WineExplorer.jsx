@@ -129,12 +129,20 @@ export default function WineExplorer() {
         </p>
       </div>
 
-      {/* ---- layout-animated grid ---- */}
-      <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {/* ---- layout-animated collection ---- */}
+      {/* Kein Karten-Raster mehr: die Einträge schweben frei, Reihen werden
+          nur durch Haarlinien getrennt. Jede Zelle reserviert ihre border-t
+          dauerhaft (transparent), damit Filterwechsel nichts verschieben;
+          nth-child blendet sie je Spaltenzahl erst ab der zweiten Reihe ein. */}
+      <div className="mt-4 grid grid-cols-1 gap-x-8 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-12">
         <AnimatePresence mode="popLayout" initial={false}>
-          {wines.map((w) => (
-            <motion.div key={w.name} {...itemMotion} className="h-full">
-              <WineCard wine={w} className="h-full" />
+          {wines.map((w, i) => (
+            <motion.div
+              key={w.name}
+              {...itemMotion}
+              className="h-full border-t border-transparent pb-6 pt-8 [&:nth-child(n+2)]:border-charcoal/10 sm:[&:nth-child(2)]:border-transparent lg:[&:nth-child(3)]:border-transparent"
+            >
+              <WineCard wine={w} index={i} className="h-full" />
             </motion.div>
           ))}
         </AnimatePresence>

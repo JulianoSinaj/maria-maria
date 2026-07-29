@@ -7,12 +7,16 @@
 const SIZES = "100vw";
 const BASE = "/img/weine/hero";
 
-/* Das Panorama-Quellfoto ist 1600 px breit — mehr gibt es nicht, also endet
-   der srcSet ehrlich bei 1600w. */
+/* Das Panorama-Quellfoto ist 1600 px breit. Der Hero füllt aber 100svh —
+   auf Desktop streckt object-cover das Foto deutlich über 1600 px hinaus.
+   Die 1920er/2560er Varianten sind deshalb vorab mit Lanczos hochskaliert
+   und nachgeschärft, damit nicht der Browser weich hochrechnet. */
 const WEBP_SRCSET = [
   `${BASE}-640.webp 640w`,
   `${BASE}-1280.webp 1280w`,
   `${BASE}-1600.webp 1600w`,
+  `${BASE}-1920.webp 1920w`,
+  `${BASE}-2560.webp 2560w`,
 ].join(", ");
 
 /* LQIP: 20 px breite WebP-Vorschau als Data-URI (102 B), erzeugt mit den
@@ -53,7 +57,7 @@ export default function WeineHeroPhoto() {
       <picture>
         <source type="image/webp" srcSet={WEBP_SRCSET} sizes={SIZES} />
         <img
-          src={`${BASE}-1280.webp`}
+          src={`${BASE}-1600.webp`}
           srcSet={WEBP_SRCSET}
           sizes={SIZES}
           alt="Alle neun Maria-Maria-Weine aufgereiht auf einer Steinmauer vor süditalienischer Hügellandschaft im Abendlicht"

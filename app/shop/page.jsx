@@ -12,6 +12,7 @@ import { WINES, REGION_COUNT } from "@/components/data";
 import { BUNDLES } from "@/components/shop/shopData";
 import BundleCard from "@/components/shop/BundleCard";
 import ShopExplorer from "@/components/shop/ShopExplorer";
+import SoulCards from "@/components/SoulCards";
 import FaqSection from "@/components/faq/FaqSection";
 import { SHOP_FAQ } from "@/components/faq/faqData";
 import Atmosphere, { Aura, GhostWord, Vines } from "@/components/Atmosphere";
@@ -293,54 +294,7 @@ export default function ShopPage() {
               </div>
 
               {/* the double soul */}
-              <div className="relative">
-                <Stagger className="grid grid-cols-1 gap-5 sm:grid-cols-2" gap={0.12}>
-                  {[
-                    {
-                      name: "Maria Pia",
-                      tag: "Die Gegenwart",
-                      traits: ["Moderne", "Unabhängigkeit", "Pure Ästhetik"],
-                    },
-                    {
-                      name: "Maria",
-                      tag: "Der Ursprung",
-                      traits: ["Wurzeln", "Familie", "Wärme geteilter Momente"],
-                    },
-                  ].map((s) => (
-                    <StaggerItem key={s.name} className="h-full">
-                      <TiltCard className="group h-full" max={5} radius="rounded-card-lg">
-                        <div className="ring-hairline relative flex h-full flex-col overflow-hidden rounded-card-lg border border-stone/40 bg-white/70 p-7 shadow-luxe transition-[box-shadow,border-color] duration-500 group-hover:border-champagne/60 group-hover:shadow-lift">
-                          <span
-                            aria-hidden="true"
-                            className="pointer-events-none absolute -right-3 -top-6 select-none font-playfair text-[6.5rem] italic leading-none text-bordeaux/[0.06]"
-                          >
-                            M
-                          </span>
-                          <p className="text-[10px] uppercase tracking-[0.22em] text-champagne">{s.tag}</p>
-                          <h3 className="mt-2 font-playfair text-[24px] text-charcoal">{s.name}</h3>
-                          <ul className="mt-4 flex flex-wrap gap-1.5">
-                            {s.traits.map((t) => (
-                              <li
-                                key={t}
-                                className="rounded-full border border-stone/60 bg-cream/80 px-3 py-1.5 text-[9.5px] font-semibold uppercase tracking-[0.14em] text-charcoal/65"
-                              >
-                                {t}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      </TiltCard>
-                    </StaggerItem>
-                  ))}
-                </Stagger>
-                {/* the union of both souls */}
-                <span
-                  aria-hidden="true"
-                  className="glass absolute left-1/2 top-1/2 hidden h-12 w-12 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full font-playfair text-[22px] italic text-bordeaux shadow-glass sm:flex"
-                >
-                  &amp;
-                </span>
-              </div>
+              <SoulCards />
             </div>
 
             {/* craft facts */}

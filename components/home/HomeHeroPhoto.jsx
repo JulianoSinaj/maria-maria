@@ -5,14 +5,12 @@
    das Hero-Foto in der ersten Netzwerk-Runde findet — nicht erst nach der
    Hydration. Der src des <img> ist bewusst die 1280er WebP-Variante, damit
    Reacts Auto-Preload (<link rel="preload"> aus server-gerendertem <img src>)
-   auf ~79 KB zielt statt auf das 185-KB-JPEG. */
+   auf ~52 KB zielt statt auf das 183-KB-JPEG. */
 
 const SIZES = "100vw";
 const BASE = "/img/home/hero";
 
-/* Das Quellfoto (hero111.png) ist 1596 px breit und wird beim Ableiten
-   minimal auf 1600 px normalisiert (0,25 % — unsichtbar), damit Dateinamen
-   und Deskriptoren zusammenpassen. Mehr gibt es nicht, also endet der
+/* Das Quellfoto ist 1600 px breit — mehr gibt es nicht, also endet der
    srcSet ehrlich bei 1600w statt bei den 1920w der Wein-Heroes. */
 const WEBP_SRCSET = [
   `${BASE}-640.webp 640w`,
@@ -26,13 +24,12 @@ const WEBP_SRCSET = [
    optimize:heroes-Lauf komplett aus public/img/wines neu generiert und
    würde einen Home-Eintrag stillschweigend verlieren. */
 const BLUR =
-  "data:image/webp;base64,UklGRnAAAABXRUJQVlA4IGQAAADQAwCdASoUAAkAPxl2slEspySisAgBkCMJQBWABD0hiiyTJ2NKPgAA/ORL9QItOrTtHNAE7WqWkNAikEKyZmx0lQ7VfAL2xN6bJ+Btpc+ZXIxqg/zonZ3lT05YL0MII7IXQAAA";
+  "data:image/webp;base64,UklGRmgAAABXRUJQVlA4IFwAAADwAwCdASoUAAsAPxl0sVCspqSisAgBkCMJYgCdAB6Vbu72KSJ+wyQAAM4CRFTs9H/aRhOBUH9itY5tDDpWKzCE0B/K+kM9hQ9gnX72NV8/G4rGyZeh3QY6rjOQAA==";
 
-/* Bildanker deutlich rechts der Mitte: das Foto ist mit 1600×685 sehr breit,
-   der Hochkant-Ausschnitt des Handys schneidet also viel weg. Bei 68 % bleiben
-   die Nonna und die beiden Flaschen im Bild, während das leere Tischende links
-   aus dem Schnitt wandern darf. */
-const POSITION = "object-[68%_50%]";
+/* Bildanker leicht rechts der Mitte: so bleibt die Flasche auch im harten
+   Hochkant-Ausschnitt des Handys im Bild, während die Frau links aus dem
+   Schnitt wandern darf. */
+const POSITION = "object-[58%_42%]";
 
 export function HomeHeroPreload() {
   /* Kleingeschriebene Attribute wie in HeroPreload der Weinseiten — React 18
@@ -65,7 +62,7 @@ export default function HomeHeroPhoto() {
           src={`${BASE}-1280.webp`}
           srcSet={WEBP_SRCSET}
           sizes={SIZES}
-          alt="Große italienische Familientafel unter einer Loggia: drei Generationen essen und lachen gemeinsam, dazwischen Flaschen Maria Maria und gefüllte Weingläser"
+          alt="Maria-Maria-Flasche und ein Glas Rotwein auf einer Steinterrasse über den Hügeln der Toskana im Abendlicht"
           fetchPriority="high"
           loading="eager"
           decoding="async"

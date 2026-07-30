@@ -1,30 +1,32 @@
 "use client";
 import PageShell from "@/components/admin/PageShell";
 import Placeholder from "@/components/admin/Placeholder";
-import Button from "@/components/ui/Button";
+import HeroContentManager from "@/components/admin/media/HeroContentManager";
 import { Media } from "@/components/admin/AdminIcons";
 
 export default function MediaPage() {
   return (
     <PageShell
       title="Hero & Media Manager"
-      lede="Bildwelten kuratieren: Hero-Motive, Videosequenzen und Bildmaterial der Kollektion."
-      actions={
-        <Button size="sm" iconType="none">
-          Medien hochladen
-        </Button>
-      }
+      lede="Den Auftritt der Startseite pflegen: Hero-Motiv, Bildanker und Markenbotschaft."
     >
-      <Placeholder
-        icon={Media}
-        title="Bildwelten & Bewegtbild"
-        items={[
-          "Hero-Slots je Seite mit Bildausschnitt und Fokuspunkt",
-          "Video-Loops für die Regionsköpfe inklusive Poster-Frame",
-          "Asset-Bibliothek mit Alternativtexten und Bildrechten",
-          "Automatische Ableitungen in AVIF und WebP für alle Breakpoints",
-        ]}
-      />
+      <h3 className="mb-4 text-[11px] font-semibold uppercase tracking-[0.2em] text-bordeaux/55">
+        Startseiten-Hero — Bild & Botschaft
+      </h3>
+      <HeroContentManager />
+
+      <div className="mt-8">
+        <Placeholder
+          icon={Media}
+          title="Weitere Bildwelten"
+          items={[
+            "Hero-Slots der Unterseiten mit Bildausschnitt und Fokuspunkt",
+            "Video-Loops für die Regionsköpfe inklusive Poster-Frame",
+            "Asset-Bibliothek mit Alternativtexten und Bildrechten",
+            "Automatische Ableitungen in AVIF und WebP für alle Breakpoints",
+          ]}
+        />
+      </div>
     </PageShell>
   );
 }

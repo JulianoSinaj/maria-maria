@@ -66,7 +66,7 @@ export const ROSATO_NEGROAMARO = {
       focus: "50% 38%",
       /* Loop-Video im Rahmen — läuft stumm in Endlosschleife, das Gemälde
          oben bleibt Poster und Reduced-Motion-Fallback */
-      video: "/video/wine-red.mp4",
+      video: "/video/wine-red-720.mp4",
       videoFocus: "50% 50%",
       videoTitle: "Rosa im Glas",
     },
@@ -180,13 +180,43 @@ export const ROSATO_NEGROAMARO = {
     kicker: "Passt zu",
     title: "Der Wein für den Aperitivo",
     text: "Ideal zum Aperitif und zu allem, was leicht und mediterran bleibt — von Antipasti bis zum blauen Fisch.",
-    photo: "/img/dinner.png",
+    why: {
+      kicker: "Warum das zusammenpasst",
+      principle:
+        "Der Rosato steht dazwischen — und genau das ist sein Vorteil: die Frische eines Weißweins, die Frucht eines Roten. Er passt dorthin, wo ein Tisch beides gleichzeitig verlangt.",
+      axes: [
+        { label: "Frische", value: 76, hint: "die Seite, die er vom Weißwein hat" },
+        { label: "Frucht", value: 68, hint: "die Seite, die er vom Roten hat" },
+        { label: "Leichtigkeit", value: 72, hint: "bleibt mediterran, nie schwer" },
+      ],
+    },
+    photo: "/img/dinner.webp",
     photoAlt: "Gedeckter Tisch mit Antipasti und Roséwein",
     items: [
-      { icon: "glasses", title: "Aperitivo", text: "Der Klassiker vor dem Essen" },
-      { icon: "plate", title: "Antipasti", text: "Vorspeisen, kalt wie warm" },
-      { icon: "plate", title: "Einfache Primi", text: "Unkomplizierte Pasta- und Reisgerichte" },
-      { icon: "plate", title: "Fisch & weißes Fleisch", text: "Blauer Fisch, Geflügel, Kaninchen" },
+      {
+        icon: "glasses",
+        title: "Aperitivo",
+        text: "Der Klassiker vor dem Essen",
+        note: "Frucht macht neugierig, Frische macht Appetit — beides in einem Glas.",
+      },
+      {
+        icon: "plate",
+        title: "Antipasti",
+        text: "Vorspeisen, kalt wie warm",
+        note: "Auf einem Antipasti-Teller liegt vieles nebeneinander: Der Rosato passt zu allem davon.",
+      },
+      {
+        icon: "plate",
+        title: "Einfache Primi",
+        text: "Unkomplizierte Pasta- und Reisgerichte",
+        note: "Wo Tomate und Kräuter führen, ergänzt die Frucht, ohne zu dominieren.",
+      },
+      {
+        icon: "plate",
+        title: "Fisch & weißes Fleisch",
+        text: "Blauer Fisch, Geflügel, Kaninchen",
+        note: "Blauer Fisch ist vielen Weißweinen zu kräftig — hier trägt ihn die Frucht.",
+      },
     ],
   },
 
@@ -288,10 +318,9 @@ export const ROSATO_NEGROAMARO = {
   /* ---- Seitennavigation (Apple-Stil Subnav) ---- */
   subnav: [
     { label: "Überblick", href: "#ueberblick" },
-    { label: "Herkunft", href: "#herkunft" },
+    { label: "Servieren", href: "#servieren" },
     { label: "Geschmack", href: "#geschmack" },
-    { label: "Genießen", href: "#geniessen" },
-    { label: "Details", href: "#details" },
+    { label: "Passt zu", href: "#passt-zu" },
     { label: "Fragen", href: "#fragen" },
   ],
 };

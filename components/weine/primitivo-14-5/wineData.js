@@ -73,7 +73,7 @@ export const PRIMITIVO_14_5 = {
       focus: "50% 40%",
       /* Loop-Video im Rahmen — läuft stumm in Endlosschleife, das Gemälde
          oben bleibt Poster und Reduced-Motion-Fallback */
-      video: "/video/wine-red.mp4",
+      video: "/video/wine-red-720.mp4",
       videoFocus: "50% 50%",
       videoTitle: "Rubinrot im Glas",
     },
@@ -189,13 +189,43 @@ export const PRIMITIVO_14_5 = {
     kicker: "Passt zu",
     title: "Ein Begleiter für die kräftige Küche",
     text: "Dieser Wein gibt sein Bestes zu robusten Primi, rotem Fleisch und Wild sowie zu Hartkäse.",
-    photo: "/img/dinner.png",
+    why: {
+      kicker: "Warum das zusammenpasst",
+      principle:
+        "Am Tisch gewinnt keiner — beide sollen bestehen. Mit 14,5 % vol. bringt der Primitivo genug Gewicht mit, um kräftigen Gerichten zu begegnen, statt unter ihnen zu verschwinden.",
+      axes: [
+        { label: "Kraft", value: 78, hint: "14,5 % vol. mit Substanz dahinter" },
+        { label: "Struktur", value: 70, hint: "Tannin, das Fett und Eiweiß bindet" },
+        { label: "Frucht", value: 72, hint: "dunkle Frucht als warmer Gegenpol" },
+      ],
+    },
+    photo: "/img/dinner.webp",
     photoAlt: "Gedeckter Tisch mit herzhaften Gerichten und Rotwein",
     items: [
-      { icon: "plate", title: "Robuste Primi", text: "Kräftige Pasta- und Nudelgerichte" },
-      { icon: "plate", title: "Rotes Fleisch", text: "Gegrilltes, Braten und Schmorgerichte" },
-      { icon: "plate", title: "Wild", text: "Cacciagione und kräftige Wildgerichte" },
-      { icon: "glasses", title: "Hartkäse", text: "Gereifte Käse mit fester Textur" },
+      {
+        icon: "plate",
+        title: "Robuste Primi",
+        text: "Kräftige Pasta- und Nudelgerichte",
+        note: "Je kräftiger die Sauce, desto weicher wirkt das Tannin daneben.",
+      },
+      {
+        icon: "plate",
+        title: "Rotes Fleisch",
+        text: "Gegrilltes, Braten und Schmorgerichte",
+        note: "Das Fett im Fleisch bindet den Gerbstoff — der Wein wird runder im Mund.",
+      },
+      {
+        icon: "plate",
+        title: "Wild",
+        text: "Cacciagione und kräftige Wildgerichte",
+        note: "Kräftiges Wildaroma braucht ein Glas, das nicht sofort nachgibt.",
+      },
+      {
+        icon: "glasses",
+        title: "Hartkäse",
+        text: "Gereifte Käse mit fester Textur",
+        note: "Salz und Reife im Käse holen die dunkle Frucht nach vorn.",
+      },
     ],
   },
 
@@ -295,10 +325,9 @@ export const PRIMITIVO_14_5 = {
   /* ---- Seitennavigation (Apple-Stil Subnav) ---- */
   subnav: [
     { label: "Überblick", href: "#ueberblick" },
-    { label: "Herkunft", href: "#herkunft" },
+    { label: "Servieren", href: "#servieren" },
     { label: "Geschmack", href: "#geschmack" },
-    { label: "Genießen", href: "#geniessen" },
-    { label: "Details", href: "#details" },
+    { label: "Passt zu", href: "#passt-zu" },
     { label: "Fragen", href: "#fragen" },
   ],
 };

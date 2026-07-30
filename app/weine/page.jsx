@@ -1,24 +1,23 @@
 import { Suspense } from "react";
-import Link from "next/link";
 import SplitText from "@/components/motion/SplitText";
 import Parallax from "@/components/motion/Parallax";
 import TiltCard from "@/components/motion/TiltCard";
 import { Reveal, Stagger, StaggerItem } from "@/components/motion/Reveal";
 import Button from "@/components/ui/Button";
-import { SectionTitle, Eyebrow, GrapeRule, IconChip } from "@/components/Deco";
-import { Arrow, Plate, GrapeVine, Mountains } from "@/components/Icons";
+import { SectionTitle, Eyebrow, GrapeRule } from "@/components/Deco";
 import { WINES, REGION_COUNT } from "@/components/data";
 import WineExplorer from "@/components/weine/WineExplorer";
 import WeineHeroPhoto, { WeineHeroPreload } from "@/components/weine/WeineHeroPhoto";
+import HelpStrip from "@/components/weine/HelpStrip";
 import HomeHeroFx from "@/components/home/HomeHeroFx";
 import FaqSection from "@/components/faq/FaqSection";
 import { WEINE_FAQ } from "@/components/faq/faqData";
-import Atmosphere, { Aura, GhostWord, Vines } from "@/components/Atmosphere";
+import Atmosphere, { GhostWord } from "@/components/Atmosphere";
 
 export const metadata = {
   title: "Unsere Weine — Maria Maria",
   description:
-    "Handverlesene italienische Boutique-Weine von kleinen Weingütern – Rotwein, Weißwein und Rosé aus Apulien, Kampanien, der Basilikata und vom Gardasee.",
+    "Handverlesene italienische Boutique-Weine von kleinen Weingütern – Rotwein, Weißwein und Rosé aus Apulien, Kampanien und vom Gardasee.",
 };
 
 const MOMENTS = [
@@ -30,36 +29,12 @@ const MOMENTS = [
   {
     title: "Dinner",
     text: "Elegante Begleiter für besondere Gerichte.",
-    img: "/img/dinner.png",
+    img: "/img/dinner.webp",
   },
   {
     title: "Freunde",
     text: "Für gute Gespräche und unvergessliche Abende.",
-    img: "/img/pranzo.png",
-  },
-];
-
-const HELP = [
-  {
-    icon: <Plate className="h-7 w-7" />,
-    title: "Food Pairing",
-    text: "Entdecken Sie passende Speisen zu unseren Weinen – für den perfekten Genussmoment.",
-    link: "Mehr erfahren",
-    href: "/magazin",
-  },
-  {
-    icon: <GrapeVine className="h-7 w-7" />,
-    title: "Rebsorten",
-    text: "Lernen Sie die wichtigsten italienischen Rebsorten kennen und ihre Besonderheiten.",
-    link: "Mehr erfahren",
-    href: "/magazin",
-  },
-  {
-    icon: <Mountains className="h-7 w-7" />,
-    title: "Regionen",
-    text: "Entdecken Sie die Herkunft unserer Weine – von Apulien bis zum Gardasee.",
-    link: "Zu den Regionen",
-    href: "/regionen",
+    img: "/img/pranzo.webp",
   },
 ];
 
@@ -172,11 +147,12 @@ export default function WeinePage() {
           <Parallax speed={0.08} overscan className="h-full w-full">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/img/weine/occasioni-bg-1920.webp"
-              srcSet="/img/weine/occasioni-bg-640.webp 640w, /img/weine/occasioni-bg-1280.webp 1280w, /img/weine/occasioni-bg-1920.webp 1920w, /img/weine/occasioni-bg-2560.webp 2560w"
+              src="/img/weine/occasioni-bg-1523.webp"
+              srcSet="/img/weine/occasioni-bg-640.webp 640w, /img/weine/occasioni-bg-1280.webp 1280w, /img/weine/occasioni-bg-1523.webp 1523w"
               sizes="100vw"
               alt=""
               loading="lazy"
+              decoding="async"
               className="h-full w-full object-cover object-center"
             />
           </Parallax>
@@ -205,6 +181,8 @@ export default function WeinePage() {
                   <img
                     src={m.img}
                     alt=""
+                    loading="lazy"
+                    decoding="async"
                     className="h-full w-full object-cover transition-transform duration-700 ease-out-expo group-hover:scale-[1.06]"
                   />
                   {/* Schleier von links + weicher Boden, damit Titel und Text
@@ -245,40 +223,7 @@ export default function WeinePage() {
       </section>
 
       {/* ============ HELP STRIP ============ */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-cream via-champagne-light/25 to-ivory py-20 lg:py-24">
-        <Vines className="inset-x-0 bottom-0 h-72 w-full" />
-        <Aura tint="bordeaux" className="-left-56 -top-44 h-[34rem] w-[34rem]" />
-        <Aura tint="gold" drift={2} className="-right-48 bottom-0 h-[30rem] w-[30rem]" />
-        <div className="relative mx-auto max-w-content px-6 lg:px-10">
-          <SectionTitle
-            align="left"
-            eyebrow="Gut zu wissen"
-            description="Wissen und Antworten rund um Ihre Auswahl – vom passenden Gericht bis zur richtigen Rebsorte."
-          >
-            Gut beraten genießen
-          </SectionTitle>
-          <Stagger className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-3">
-            {HELP.map((h) => (
-              <StaggerItem key={h.title} className="h-full">
-                <div className="ring-hairline relative z-10 flex h-full flex-col rounded-card-lg border border-stone/40 bg-white p-8 shadow-luxe transition-[box-shadow,border-color] duration-500 hover:border-champagne/60 hover:shadow-lift">
-                  <IconChip>{h.icon}</IconChip>
-                  <h3 className="mt-6 font-playfair text-[19px] text-charcoal">{h.title}</h3>
-                  <p className="mt-3 text-[13px] leading-relaxed text-charcoal/70">{h.text}</p>
-                  <div className="mt-auto pt-6">
-                    <Link
-                      href={h.href}
-                      className="group inline-flex items-center gap-1.5 text-[12px] font-medium text-bordeaux"
-                    >
-                      {h.link}
-                      <Arrow className="h-3.5 w-3.5 transition-transform duration-500 ease-out-expo group-hover:translate-x-1" />
-                    </Link>
-                  </div>
-                </div>
-              </StaggerItem>
-            ))}
-          </Stagger>
-        </div>
-      </section>
+      <HelpStrip />
 
       {/* ============ HÄUFIGE FRAGEN (Wahl-FAQ) ============ */}
       <div className="relative overflow-hidden">

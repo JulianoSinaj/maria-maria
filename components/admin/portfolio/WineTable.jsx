@@ -31,7 +31,7 @@ const eur = (n) =>
 const th = "px-4 py-3 text-left text-[10px] font-semibold uppercase tracking-[0.14em] text-charcoal/45";
 const td = "px-4 py-3.5 align-middle";
 
-export default function WineTable({ items, loading, onQuickEdit, onEdit, onArchive, onRestore }) {
+export default function WineTable({ items, loading, onQuickEdit, onEdit, onAssets, onArchive, onRestore }) {
   const reduced = useReducedMotion();
 
   if (loading && !items.length) {
@@ -231,6 +231,14 @@ export default function WineTable({ items, loading, onQuickEdit, onEdit, onArchi
                               className="rounded-lg px-2.5 py-1.5 text-[11px] text-charcoal/55 transition-colors hover:bg-charcoal/[0.06] hover:text-charcoal"
                             >
                               Bearbeiten
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => onAssets(w)}
+                              title="Flaschen-Mockups & Öffner-Position"
+                              className="rounded-lg px-2.5 py-1.5 text-[11px] text-charcoal/55 transition-colors hover:bg-champagne/20 hover:text-bordeaux"
+                            >
+                              Assets
                             </button>
                             <button
                               type="button"

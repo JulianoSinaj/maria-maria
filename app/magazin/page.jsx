@@ -8,6 +8,7 @@ import { SectionTitle, Eyebrow, GoldRule, GrapeRule } from "@/components/Deco";
 import { Arrow, Clock, GrapeVine, Plate, Mountains, Book, Sun } from "@/components/Icons";
 import FilterPanel from "@/components/magazin/FilterPanel";
 import NewsletterCard from "@/components/magazin/NewsletterCard";
+import StoriesSection from "@/components/magazin/StoriesSection";
 import FaqSection from "@/components/faq/FaqSection";
 import { MAGAZIN_FAQ } from "@/components/faq/faqData";
 import RegionWineRail from "@/components/RegionWineRail";
@@ -334,6 +335,9 @@ export default function MagazinPage() {
                   </div>
                 </Stagger>
               </section>
+
+              {/* ---- Die Geschichte (aus den Wein-Landingpages hierher gezogen) ---- */}
+              <StoriesSection />
 
               {/* ---- Die Weine aus den Geschichten ---- */}
               <section className="mt-20">

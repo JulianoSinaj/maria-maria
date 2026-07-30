@@ -67,7 +67,7 @@ export const IL_BIANCO = {
       focus: "72% 52%",
       /* Loop-Video im Rahmen — läuft stumm in Endlosschleife, das Gemälde
          oben bleibt Poster und Reduced-Motion-Fallback */
-      video: "/video/wine-white.mp4",
+      video: "/video/wine-white-720.mp4",
       videoFocus: "50% 50%",
       videoTitle: "Strohgelb im Glas",
     },
@@ -180,13 +180,43 @@ export const IL_BIANCO = {
     kicker: "Passt zu",
     title: "Alles, was aus dem Meer kommt",
     text: "Das Datenblatt ist hier eindeutig: Fisch, Krustentiere, Meeresfrüchte. Der Bianco begleitet sie, ohne sie zu übertönen.",
+    why: {
+      kicker: "Warum das zusammenpasst",
+      principle:
+        "Eine Cuvée gleicht aus. Was der eine Partner an Frische mitbringt, ergänzt der andere an Schmelz — deshalb passt der Bianco zu einer ganzen Tafel und nicht nur zu einem einzelnen Gang.",
+      axes: [
+        { label: "Balance", value: 78, hint: "die Cuvée gleicht die Spitzen aus" },
+        { label: "Frische", value: 72, hint: "hält Fisch und Salz in Form" },
+        { label: "Körper", value: 52, hint: "genug Schmelz für Krustentiere" },
+      ],
+    },
     photo: "/img/aperitivo.jpg",
     photoAlt: "Gedeckter Tisch mit Fisch und einem Glas Weißwein",
     items: [
-      { icon: "fish", title: "Fischgerichte", text: "Gegrillt, gedämpft oder aus dem Ofen" },
-      { icon: "shell", title: "Krustentiere", text: "Garnelen, Scampi, Langustinen" },
-      { icon: "plate", title: "Meeresfrüchte", text: "Vongole, Muscheln, Crudo" },
-      { icon: "glasses", title: "Aperitivo", text: "Gut gekühlt als Auftakt des Abends" },
+      {
+        icon: "fish",
+        title: "Fischgerichte",
+        text: "Gegrillt, gedämpft oder aus dem Ofen",
+        note: "Ob gedämpft oder gegrillt: Die Balance passt sich der Garart an.",
+      },
+      {
+        icon: "shell",
+        title: "Krustentiere",
+        text: "Garnelen, Scampi, Langustinen",
+        note: "Der feine Schmelz nimmt die Süße der Krustentiere auf.",
+      },
+      {
+        icon: "plate",
+        title: "Meeresfrüchte",
+        text: "Vongole, Muscheln, Crudo",
+        note: "Frische gegen Salz — die klassischste Brücke, die es am Tisch gibt.",
+      },
+      {
+        icon: "glasses",
+        title: "Aperitivo",
+        text: "Gut gekühlt als Auftakt des Abends",
+        note: "Gekühlt tritt die Frische vor, der Körper zurück: ein leichter Auftakt.",
+      },
     ],
   },
 
@@ -283,10 +313,9 @@ export const IL_BIANCO = {
 
   subnav: [
     { label: "Überblick", href: "#ueberblick" },
-    { label: "Herkunft", href: "#herkunft" },
+    { label: "Servieren", href: "#servieren" },
     { label: "Geschmack", href: "#geschmack" },
-    { label: "Genießen", href: "#geniessen" },
-    { label: "Details", href: "#details" },
+    { label: "Passt zu", href: "#passt-zu" },
     { label: "Fragen", href: "#fragen" },
   ],
 };

@@ -11,7 +11,7 @@ import { WINE_ICON } from "./WineIcons";
    Karte gleitet weg und wandert nach hinten. Pausiert bei Hover/Touch, mit
    manueller Vor/Zurück-Steuerung. Rein moment.essence-getrieben.
 
-   Nur < lg sichtbar — auf Desktop bleibt das dreispaltige Grid in MariaMoment. */
+   Nur < lg sichtbar — auf Desktop bleibt das dreispaltige Essence-Grid. */
 
 const AUTO_MS = 4000;
 const SPRING = { type: "spring", stiffness: 260, damping: 30, mass: 0.9 };

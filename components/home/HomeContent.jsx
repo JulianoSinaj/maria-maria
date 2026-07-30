@@ -1,11 +1,11 @@
 import Link from "next/link";
-import ShaderGradient from "@/components/motion/ShaderGradient";
 import SplitText from "@/components/motion/SplitText";
 import TiltCard from "@/components/motion/TiltCard";
 import Marquee from "@/components/motion/Marquee";
 import Parallax from "@/components/motion/Parallax";
 import { Reveal, Stagger, StaggerItem } from "@/components/motion/Reveal";
 import Button from "@/components/ui/Button";
+import ShopCtaBand from "@/components/ui/ShopCtaBand";
 import { SectionTitle, Eyebrow, GrapeRule, IconChip } from "@/components/Deco";
 import HomeHeroPhoto, { HomeHeroPreload } from "@/components/home/HomeHeroPhoto";
 import HomeHeroFx from "@/components/home/HomeHeroFx";
@@ -101,7 +101,7 @@ const MAGAZINE = [
     title: "Apulien – Das Herz des Südens",
     excerpt: "Eine Reise in das Herz Süditaliens und seine unverwechselbaren Weine.",
     min: "6 Min.",
-    img: "/img/vineyard.jpg",
+    img: "/img/magazin/weinlese.jpg",
   },
   {
     cat: "Weinwissen",
@@ -290,33 +290,20 @@ export default function HomeContent() {
         </div>
       </section>
 
-      {/* ============ SHOP CTA (shader band) ============ */}
-      <section className="px-4 py-10 lg:px-8">
-        <div className="grain relative overflow-hidden rounded-card-lg">
-          <ShaderGradient palette="wine" />
-          <div className="relative mx-auto flex max-w-content flex-col items-start gap-8 px-6 py-10 text-left sm:py-11 lg:flex-row lg:items-center lg:justify-between lg:gap-14 lg:px-12 lg:py-12">
-            <Reveal className="max-w-xl">
-              <Eyebrow light>Der offizielle Shop</Eyebrow>
-              <h2 className="mt-3 text-balance font-playfair text-[clamp(1.75rem,3.4vw,2.75rem)] leading-[1.08] text-ivory">
-                Bereit für Ihren <span className="italic text-champagne">Maria-Moment?</span>
-              </h2>
-              <p className="mt-3 max-w-md text-[13.5px] leading-relaxed text-ivory/70">
-                Entdecken und bestellen Sie unsere Weine bequem online – direkt vom Weingut zu Ihnen nach Hause.
-              </p>
-            </Reveal>
-            <Reveal delay={0.18} className="w-full lg:w-auto lg:shrink-0">
-              <div className="flex w-full max-w-xs flex-col items-stretch gap-3 sm:max-w-none sm:flex-row sm:items-center lg:justify-end">
-                <Button href="/shop" variant="light" size="lg" className="w-full sm:w-auto">
-                  Zum Shop
-                </Button>
-                <Button href="/kontakt" variant="glass" size="lg" className="w-full sm:w-auto">
-                  Kontakt aufnehmen
-                </Button>
-              </div>
-            </Reveal>
-          </div>
-        </div>
-      </section>
+      {/* ============ SHOP CTA (liquid-glass band) ============ */}
+      {/* Bauform liegt in components/ui/ShopCtaBand — dieses Band war die
+          Vorlage, die übrigen Seiten teilen sie jetzt. */}
+      <ShopCtaBand
+        eyebrow="Der offizielle Shop"
+        title={
+          <>
+            Bereit für den Geschmack, der <span className="italic text-champagne">Sie inspiriert?</span>
+          </>
+        }
+        text="Entdecken und bestellen Sie unsere Weine bequem online – direkt vom Weingut zu Ihnen nach Hause."
+        primary={{ label: "Zum Shop", href: "/shop" }}
+        secondary={{ label: "Kontakt aufnehmen", href: "/kontakt" }}
+      />
 
       {/* ============ MAGAZIN ============ */}
       <section className="relative overflow-hidden">

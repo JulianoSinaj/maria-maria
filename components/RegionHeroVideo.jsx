@@ -7,7 +7,7 @@ import { useEffect, useRef } from "react";
    die Hektik und lässt es ruhig und schwer wirken. Der leichte Grade
    (Sättigung/Kontrast) läuft als GPU-Composite, kein Repaint. */
 
-export default function RegionHeroVideo({ src, rate = 0.75, className = "" }) {
+export default function RegionHeroVideo({ src, poster, rate = 0.75, className = "" }) {
   const ref = useRef(null);
 
   useEffect(() => {
@@ -23,11 +23,12 @@ export default function RegionHeroVideo({ src, rate = 0.75, className = "" }) {
     <video
       ref={ref}
       src={src}
+      poster={poster}
       autoPlay
       loop
       muted
       playsInline
-      preload="auto"
+      preload="metadata"
       disablePictureInPicture
       className={className}
       style={{

@@ -16,7 +16,7 @@ const CATALOGUE = [
   { slug: "greco-di-tufo", name: "Greco di Tufo D.O.C.G.", region: "Kampanien", variant: "white", type: "Weißwein", price: 18.9, year: 2022, notes: "Strukturiert, fein und aromatisch", pairing: "Zu Meeresfrüchten, gegrilltem Fisch und feiner Küche.", dot: "#C8B77A" },
   { slug: "falanghina", name: "Falanghina", region: "Kampanien", variant: "white", type: "Weißwein", price: 13.9, year: 2023, notes: "Frisch, fruchtig und lebendig", pairing: "Perfekt zum Aperitivo, zu Meeresfrüchten oder Salaten.", dot: "#C8B77A" },
   { slug: "rosato-puglia", name: "Rosato Puglia", region: "Apulien", variant: "rose", type: "Roséwein", price: 10.9, year: 2023, notes: "Zart, fruchtig und erfrischend", pairing: "Herrlich zu Antipasti, Salaten oder gegrilltem Gemüse.", dot: "#c67f78" },
-  { slug: "il-rosso-aglianico", name: "Il Rosso – Aglianico", region: "Basilikata", variant: "red", type: "Rotwein", price: 17.5, year: 2020, notes: "Tiefgründig, würzig und charakterstark", pairing: "Ein Begleiter zu Pasta al forno, Grillfleisch und Käse.", dot: "#6B0F1A" },
+  { slug: "il-rosso-aglianico", name: "Il Rosso – Aglianico", region: "Kampanien", variant: "red", type: "Rotwein", price: 17.5, year: 2020, notes: "Tiefgründig, würzig und charakterstark", pairing: "Ein Begleiter zu Pasta al forno, Grillfleisch und Käse.", dot: "#6B0F1A" },
   { slug: "il-bianco-greco-cuvee", name: "Il Bianco – Greco Cuvée", region: "Kampanien", variant: "white", type: "Weißwein", price: 15.5, year: 2022, notes: "Frisch, elegant und ausgewogen", pairing: "Ein Genuss zu Antipasti, Fisch und leichten Gerichten.", dot: "#C8B77A" },
 ];
 

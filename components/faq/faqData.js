@@ -26,7 +26,7 @@ export const HOME_FAQ = [
   {
     id: "home-auswahl",
     q: "Welche Weine gehören zur Maria-Maria-Auswahl?",
-    a: "Neun Charaktere aus vier Regionen — Apulien, Kampanien, Basilikata und Gardasee: drei Primitivo und ein Rosato aus Apulien, die Weißweine Falanghina, Greco di Tufo und Il Bianco, der Lugana vom Gardasee sowie die Rotwein-Cuvée Il Rosso. Den besten Überblick gibt die Kollektion.",
+    a: "Neun Charaktere aus drei Regionen — Apulien, Kampanien und Gardasee: drei Primitivo und ein Rosato aus Apulien, die Weißweine Falanghina, Greco di Tufo und Il Bianco sowie die Rotwein-Cuvée Il Rosso aus Kampanien und der Lugana vom Gardasee. Den besten Überblick gibt die Kollektion.",
     link: { label: "Alle Weine ansehen", href: "/weine" },
   },
   {
@@ -102,7 +102,7 @@ export const REGIONEN_FAQ_GROUPS = [
   },
   {
     key: "kampanien",
-    label: "Kampanien & Basilikata",
+    label: "Kampanien",
     items: [
       {
         id: "reg-kampanien-rebsorten",
@@ -122,9 +122,9 @@ export const REGIONEN_FAQ_GROUPS = [
         link: { label: "Falanghina entdecken", href: "/weine/falanghina" },
       },
       {
-        id: "reg-basilikata",
-        q: "Wofür ist die Basilikata bekannt?",
-        a: "Die Region am Fuße des Monte Vulture ist eine große Heimat des Aglianico. In unserer Kollektion steht die Rebsorte im Il Rosso im Mittelpunkt — der Cuvée, die diese dunkle, würzige Seite Süditaliens ins Glas trägt.",
+        id: "reg-kampanien-aglianico",
+        q: "Wofür steht der Aglianico?",
+        a: "Aglianico gilt als die große rote Rebsorte Süditaliens — spät reifend, tanninstark und auf vulkanischen Böden zu Hause. In unserer Kollektion steht sie im Il Rosso im Mittelpunkt: der Cuvée, die diese dunkle, würzige Seite Süditaliens ins Glas trägt.",
         link: { label: "Il Rosso entdecken", href: "/weine/il-rosso-aglianico" },
       },
     ],

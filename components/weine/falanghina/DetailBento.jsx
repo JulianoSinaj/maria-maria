@@ -10,6 +10,7 @@ import {
 } from "motion/react";
 import { SectionTitle } from "@/components/Deco";
 import { Stagger, StaggerItem } from "@/components/motion/Reveal";
+import { ACCENT_FALLBACK } from "./accent";
 import Atmosphere, { GhostWord } from "@/components/Atmosphere";
 
 /* „Im Detail" — das technische Datenblatt als eine einzige, ruhige Komposition
@@ -23,8 +24,6 @@ import Atmosphere, { GhostWord } from "@/components/Atmosphere";
    Hierarchie. Rein wine.detail-getrieben —
    fehlt ein Label, fällt die Zeile weg. Akzent pro Wein über wine.accent,
    sonst wine.moment.accent (jede Weinseite hat einen). */
-
-const ACCENT_FALLBACK = { base: "#C8B77A", deep: "#8A2B2F", light: "#E3D9B8" };
 
 /* Prozess-Fakten mit eigener Ledger-Zeile — alles Übrige wird Fine-Print. */
 const LEDGER = new Set(["Rebsorte", "Uvaggio", "Herkunft", "Lese", "Erziehung", "Vinifikation", "Ausbau"]);

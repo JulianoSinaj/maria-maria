@@ -1,6 +1,5 @@
 "use client";
 import { useRef } from "react";
-import Link from "next/link";
 import {
   motion,
   useScroll,
@@ -99,25 +98,6 @@ export default function FalanghinaHero({ wine, photo }) {
 
   const act1Content = (
     <>
-      <nav aria-label="Brotkrumen" className="mb-7 hidden sm:block">
-        <ol className="flex flex-wrap items-center gap-2 text-[12px] text-charcoal/55">
-          {wine.breadcrumb.map((c, i) => (
-            <li key={c.label} className="flex items-center gap-2">
-              {i > 0 && <span aria-hidden="true">·</span>}
-              {c.href ? (
-                <Link href={c.href} className="transition-colors duration-300 hover:text-bordeaux">
-                  {c.label}
-                </Link>
-              ) : (
-                <span aria-current="page" className="font-medium text-charcoal/80">
-                  {c.label}
-                </span>
-              )}
-            </li>
-          ))}
-        </ol>
-      </nav>
-
       <Eyebrow>{wine.eyebrow}</Eyebrow>
       <h1 className="mt-5 font-playfair text-[clamp(2.4rem,5.6vw,4.4rem)] leading-[1.05] text-charcoal">
         <SplitText text={wine.heroTitle[0]} className="block" delay={0.12} />

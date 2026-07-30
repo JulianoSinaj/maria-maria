@@ -4,6 +4,7 @@ import Parallax from "@/components/motion/Parallax";
 import TiltCard from "@/components/motion/TiltCard";
 import { Reveal, Stagger, StaggerItem } from "@/components/motion/Reveal";
 import Button from "@/components/ui/Button";
+import ShopCtaBand from "@/components/ui/ShopCtaBand";
 import Bottle from "@/components/Bottle";
 import { SectionTitle, Eyebrow, GrapeRule, GoldRule, IconChip } from "@/components/Deco";
 import { Arrow, Check, Grapes, Vineyard } from "@/components/Icons";
@@ -446,36 +447,17 @@ export default function ShopPage() {
         </div>
 
         {/* ============ CROSS-LINK CTA (shader band) ============ */}
-        <section className="px-4 pb-6 lg:px-8">
-          <div className="grain relative overflow-hidden rounded-card-lg">
-            <ShaderGradient palette="wine" />
-            <div className="relative mx-auto max-w-3xl px-6 py-24 text-center lg:py-28">
-              <Reveal>
-                <Eyebrow light className="justify-center">
-                  Die sensorische Reise
-                </Eyebrow>
-                <h2 className="mt-4 text-balance font-playfair text-[clamp(2rem,4.2vw,3.2rem)] leading-[1.1] text-ivory">
-                  Vom Salento bis zum <span className="italic text-champagne">Gardasee</span>
-                </h2>
-                <p className="mx-auto mt-5 max-w-md text-[13.5px] leading-relaxed text-ivory/70">
-                  Unsere Selection zeichnet eine Reise durch Italien – vom sonnigen Süden Apuliens
-                  über Kampanien und die Basilikata hinauf ans Ufer des Gardasees. Jedes Glas eine
-                  Station, jede Flasche eine Geschichte.
-                </p>
-              </Reveal>
-              <Reveal delay={0.18}>
-                <div className="mt-9 flex flex-wrap items-center justify-center gap-4">
-                  <Button href="/weine" variant="light" size="lg">
-                    Unsere Weine
-                  </Button>
-                  <Button href="/regionen" variant="glass" size="lg">
-                    Regionen entdecken
-                  </Button>
-                </div>
-              </Reveal>
-            </div>
-          </div>
-        </section>
+        <ShopCtaBand
+          eyebrow="Die sensorische Reise"
+          title={
+            <>
+              Vom Salento bis zum <span className="italic text-champagne">Gardasee</span>
+            </>
+          }
+          text="Unsere Selection zeichnet eine Reise durch Italien – vom sonnigen Süden Apuliens über Kampanien hinauf ans Ufer des Gardasees."
+          primary={{ label: "Unsere Weine", href: "/weine" }}
+          secondary={{ label: "Regionen entdecken", href: "/regionen" }}
+        />
 
       </div>
   );

@@ -70,7 +70,7 @@ export const GRECO_DI_TUFO = {
       focus: "72% 52%",
       /* Loop-Video im Rahmen — läuft stumm in Endlosschleife, das Gemälde
          oben bleibt Poster und Reduced-Motion-Fallback */
-      video: "/video/wine-white.mp4",
+      video: "/video/wine-white-720.mp4",
       videoFocus: "50% 50%",
       videoTitle: "Strohgelb im Glas",
     },
@@ -186,13 +186,43 @@ export const GRECO_DI_TUFO = {
     kicker: "Passt zu",
     title: "Fisch, Meeresfrüchte – und Büffelmozzarella",
     text: "Der Greco di Tufo begleitet die helle Küche mit Struktur. Und überrascht, wenn er zu Mozzarella di Bufala ins Glas kommt.",
+    why: {
+      kicker: "Warum das zusammenpasst",
+      principle:
+        "Ein Weißwein mit Rückgrat. Wo die Falanghina begleitet, hält der Greco dagegen: Sein mineralischer Zug vom Tuffgestein schneidet durch Cremiges und Sahniges, das andere Weißweine schlicht zudecken würden.",
+      axes: [
+        { label: "Mineralik", value: 86, hint: "vulkanischer Tuff, schneidet durch Cremiges" },
+        { label: "Struktur", value: 72, hint: "trägt auch kräftigere Gänge" },
+        { label: "Frische", value: 70, hint: "hält den Gaumen wach" },
+      ],
+    },
     photo: "/img/aperitivo.jpg",
     photoAlt: "Gedeckter Tisch mit Meeresfrüchten und einem Glas Weißwein",
     items: [
-      { icon: "fish", title: "Fischgerichte", text: "Gegrillt, gebraten oder aus dem Ofen" },
-      { icon: "shell", title: "Meeresfrüchte", text: "Von Vongole bis Gambero" },
-      { icon: "plate", title: "Risotto & Käse", text: "Cremige Risotti und helle Käsesorten" },
-      { icon: "glasses", title: "Büffelmozzarella", text: "Die überraschendste Kombination" },
+      {
+        icon: "fish",
+        title: "Fischgerichte",
+        text: "Gegrillt, gebraten oder aus dem Ofen",
+        note: "Genug Struktur, um auch gegrilltem Fisch mit Röstnote standzuhalten.",
+      },
+      {
+        icon: "shell",
+        title: "Meeresfrüchte",
+        text: "Von Vongole bis Gambero",
+        note: "Jod und Salz treffen auf Mineralik — dieselbe Sprache, zwei Quellen.",
+      },
+      {
+        icon: "plate",
+        title: "Risotto & Käse",
+        text: "Cremige Risotti und helle Käsesorten",
+        note: "Die Frische schneidet durch die Sahne und macht den Gaumen wieder frei.",
+      },
+      {
+        icon: "glasses",
+        title: "Büffelmozzarella",
+        text: "Die überraschendste Kombination",
+        note: "Milchsäure und vulkanische Mineralik: der Kontrast, der beide schärft.",
+      },
     ],
   },
 
@@ -292,10 +322,9 @@ export const GRECO_DI_TUFO = {
   /* ---- Seitennavigation (Apple-Stil Subnav) ---- */
   subnav: [
     { label: "Überblick", href: "#ueberblick" },
-    { label: "Herkunft", href: "#herkunft" },
+    { label: "Servieren", href: "#servieren" },
     { label: "Geschmack", href: "#geschmack" },
-    { label: "Genießen", href: "#geniessen" },
-    { label: "Details", href: "#details" },
+    { label: "Passt zu", href: "#passt-zu" },
     { label: "Fragen", href: "#fragen" },
   ],
 };

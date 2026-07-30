@@ -70,7 +70,7 @@ export const FALANGHINA = {
       focus: "72% 52%",
       /* Loop-Video im Rahmen — läuft stumm in Endlosschleife, das Gemälde
          oben bleibt Poster und Reduced-Motion-Fallback */
-      video: "/video/wine-white.mp4",
+      video: "/video/wine-white-720.mp4",
       videoFocus: "50% 50%",
       videoTitle: "Strohgelb im Glas",
     },
@@ -186,18 +186,53 @@ export const FALANGHINA = {
     chip: { title: "Beneventano", subtitle: "Kampanien · Italien" },
   },
 
-  /* ---- Passt zu (Food-Pairing, aus dem Datenblatt) ---- */
+  /* ---- Passt zu (Food-Pairing, aus dem Datenblatt) ----
+     `why` erklärt das Prinzip hinter den Empfehlungen: `principle` ist der
+     Merksatz, `axes` sind die Struktur-Achsen des Weins (0–100), die die
+     Sektion als Balken zeichnet, und `note` an jedem Item sagt in einer Zeile,
+     welche Achse hier greift. Alles optional — fehlt `why`, rendert die
+     Sektion wie bisher nur die Liste. */
   pairing: {
     kicker: "Passt zu",
     title: "Ein Begleiter für die helle Küche",
     text: "Die Falanghina liebt alles, was aus dem Meer kommt – und jeden Auftakt eines guten Abends.",
+    why: {
+      kicker: "Warum das zusammenpasst",
+      principle:
+        "Frische bindet Salz und Fett. Die lebendige Säure der Falanghina wischt den Gaumen nach jedem Bissen frei – deshalb schmeckt der zweite Happen so klar wie der erste.",
+      axes: [
+        { label: "Frische", value: 84, hint: "hebt zarte Aromen, statt sie zu decken" },
+        { label: "Körper", value: 46, hint: "leicht genug für helle Küche" },
+        { label: "Frucht", value: 58, hint: "helle Frucht statt Süße" },
+      ],
+    },
     photo: "/img/aperitivo.jpg",
     photoAlt: "Aperitivo mit Antipasti und einem Glas Weißwein",
     items: [
-      { icon: "fish", title: "Fischgerichte", text: "Gegrillt, gebraten oder aus dem Ofen" },
-      { icon: "shell", title: "Krustentiere & Meeresfrüchte", text: "Von Garnelen bis Vongole" },
-      { icon: "plate", title: "Antipasti", text: "Helle Vorspeisen und Gemüse" },
-      { icon: "glasses", title: "Aperitivo-Momente", text: "Gut gekühlt als Auftakt des Abends" },
+      {
+        icon: "fish",
+        title: "Fischgerichte",
+        text: "Gegrillt, gebraten oder aus dem Ofen",
+        note: "Die Säure ersetzt den Spritzer Zitrone – und lässt das Fischaroma stehen.",
+      },
+      {
+        icon: "shell",
+        title: "Krustentiere & Meeresfrüchte",
+        text: "Von Garnelen bis Vongole",
+        note: "Salzige Jodnoten finden im mediterranen Ton des Weins ihr Echo.",
+      },
+      {
+        icon: "plate",
+        title: "Antipasti",
+        text: "Helle Vorspeisen und Gemüse",
+        note: "Der leichte Körper überfährt keine Vorspeise, sondern rahmt sie.",
+      },
+      {
+        icon: "glasses",
+        title: "Aperitivo-Momente",
+        text: "Gut gekühlt als Auftakt des Abends",
+        note: "Gekühlt wirkt die Frische straffer – sie macht Appetit, statt zu sättigen.",
+      },
     ],
   },
 
@@ -297,10 +332,9 @@ export const FALANGHINA = {
   /* ---- Seitennavigation (Apple-Stil Subnav) ---- */
   subnav: [
     { label: "Überblick", href: "#ueberblick" },
-    { label: "Herkunft", href: "#herkunft" },
+    { label: "Servieren", href: "#servieren" },
     { label: "Geschmack", href: "#geschmack" },
-    { label: "Genießen", href: "#geniessen" },
-    { label: "Details", href: "#details" },
+    { label: "Passt zu", href: "#passt-zu" },
     { label: "Fragen", href: "#fragen" },
   ],
 };

@@ -33,3 +33,9 @@ review_*.png
 # ---- design reference screenshots (keep locally, not in the repo) ----
 WhatsApp Image*.jpeg
 WhatsApp Image*.jpg
+
+# admin mock uploads (Bottle Asset Configurator)
+data/uploads/
+
+# isolated verification builds
+.next-verify/

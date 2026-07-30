@@ -48,7 +48,7 @@ export default function StorySection({ wine }) {
             }`}
           >
             <img
-              src={story.image?.src ?? "/img/sotria.png"}
+              src={story.image?.src ?? "/img/sotria.webp"}
               alt={story.image?.alt ?? "Handlese der Trauben und Ausbau im Weinkeller"}
               className="h-full w-full object-cover"
               loading="lazy"

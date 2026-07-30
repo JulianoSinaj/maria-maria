@@ -67,7 +67,7 @@ export const PRIMITIVO_SALENTO = {
       focus: "50% 40%",
       /* Loop-Video im Rahmen — läuft stumm in Endlosschleife, das Gemälde
          oben bleibt Poster und Reduced-Motion-Fallback */
-      video: "/video/wine-red.mp4",
+      video: "/video/wine-red-720.mp4",
       videoFocus: "50% 50%",
       videoTitle: "Rubinrot im Glas",
     },
@@ -181,13 +181,43 @@ export const PRIMITIVO_SALENTO = {
     kicker: "Passt zu",
     title: "Fleisch und Käse",
     text: "Ein Wein für den gedeckten Tisch: Seine Intensität hält kräftigen Gerichten stand, seine Zugänglichkeit macht ihn zum unkomplizierten Begleiter.",
-    photo: "/img/dinner.png",
+    why: {
+      kicker: "Warum das zusammenpasst",
+      principle:
+        "Gleiches Gewicht auf beiden Seiten. Ein intensives Gericht braucht einen Wein, der es aushält — der Primitivo bringt genug Substanz mit, bleibt dabei aber weich genug, um nicht zu konkurrieren.",
+      axes: [
+        { label: "Intensität", value: 80, hint: "hält kräftigen Gerichten stand" },
+        { label: "Weichheit", value: 70, hint: "rundes Tannin statt harter Kante" },
+        { label: "Frucht", value: 74, hint: "dunkle Frucht als Gegengewicht zum Salz" },
+      ],
+    },
+    photo: "/img/dinner.webp",
     photoAlt: "Gedeckter Tisch mit Fleisch, Käse und Rotwein",
     items: [
-      { icon: "plate", title: "Rotes Fleisch", text: "Braten, Schmorgerichte und Gegrilltes" },
-      { icon: "plate", title: "Gereifter Käse", text: "Pecorino, Caciocavallo und Hartkäse" },
-      { icon: "plate", title: "Kräftige Primi", text: "Herzhafte Pasta mit Fleischsauce" },
-      { icon: "glasses", title: "Salumi", text: "Aufschnitt und würzige Wurstwaren" },
+      {
+        icon: "plate",
+        title: "Rotes Fleisch",
+        text: "Braten, Schmorgerichte und Gegrilltes",
+        note: "Das Fett im Fleisch nimmt das Tannin auf und macht den Wein samtiger.",
+      },
+      {
+        icon: "plate",
+        title: "Gereifter Käse",
+        text: "Pecorino, Caciocavallo und Hartkäse",
+        note: "Salz im gereiften Käse hebt die dunkle Frucht deutlich hervor.",
+      },
+      {
+        icon: "plate",
+        title: "Kräftige Primi",
+        text: "Herzhafte Pasta mit Fleischsauce",
+        note: "Ragù und Wein teilen sich dieselbe Tiefe — keiner überstimmt den anderen.",
+      },
+      {
+        icon: "glasses",
+        title: "Salumi",
+        text: "Aufschnitt und würzige Wurstwaren",
+        note: "Zur Würze der Wurst antwortet die Frucht, nicht die Säure.",
+      },
     ],
   },
 
@@ -287,10 +317,9 @@ export const PRIMITIVO_SALENTO = {
   /* ---- Seitennavigation (Apple-Stil Subnav) ---- */
   subnav: [
     { label: "Überblick", href: "#ueberblick" },
-    { label: "Herkunft", href: "#herkunft" },
+    { label: "Servieren", href: "#servieren" },
     { label: "Geschmack", href: "#geschmack" },
-    { label: "Genießen", href: "#geniessen" },
-    { label: "Details", href: "#details" },
+    { label: "Passt zu", href: "#passt-zu" },
     { label: "Fragen", href: "#fragen" },
   ],
 };

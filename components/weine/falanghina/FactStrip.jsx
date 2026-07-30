@@ -4,6 +4,8 @@ import { motion, useMotionValue, useSpring, useReducedMotion, useMotionTemplate 
 import { Stagger, StaggerItem, Reveal } from "@/components/motion/Reveal";
 import { Eyebrow, GoldRule } from "@/components/Deco";
 import { WINE_ICON } from "./WineIcons";
+/* Markenneutraler Fallback (Champagner/Bordeaux) für Weine ohne eigenen Akzent */
+import { ACCENT_FALLBACK } from "./accent";
 
 /* Schnellfakten unter dem Hero — schmales "Auf einen Blick"-Band:
    horizontale Fakten (Icon links, Label + Wert daneben) in einer flachen
@@ -11,8 +13,6 @@ import { WINE_ICON } from "./WineIcons";
    (Spotlight + sanfter 3D-Tilt).
    Akzentfarbe pro Wein via wine.accent = { base, deep, light } überschreibbar. */
 
-/* Markenneutraler Fallback (Champagner/Bordeaux) für Weine ohne eigenen Akzent */
-const ACCENT_FALLBACK = { base: "#C8B77A", deep: "#8A2B2F", light: "#E3D9B8" };
 const SPRING = { stiffness: 160, damping: 22, mass: 0.6 };
 
 function FactTile({ fact, index, accent }) {

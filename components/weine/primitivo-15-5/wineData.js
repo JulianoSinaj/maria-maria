@@ -69,7 +69,7 @@ export const PRIMITIVO_155 = {
       focus: "50% 40%",
       /* Loop-Video im Rahmen — läuft stumm in Endlosschleife, das Gemälde
          oben bleibt Poster und Reduced-Motion-Fallback */
-      video: "/video/wine-red.mp4",
+      video: "/video/wine-red-720.mp4",
       videoFocus: "50% 50%",
       videoTitle: "Rubinrot im Glas",
     },
@@ -184,13 +184,43 @@ export const PRIMITIVO_155 = {
     kicker: "Passt zu",
     title: "Ein Wein für den vollen Tisch",
     text: "Mit 15,5 % vol. und dieser Dichte begleitet der Primitivo hervorragend alles, was Substanz, Würze und Röstaromen mitbringt.",
-    photo: "/img/dinner.png",
+    why: {
+      kicker: "Warum das zusammenpasst",
+      principle:
+        "Dichte verlangt Dichte. Bei 15,5 % vol. wirkt der Primitivo neben einem leichten Gericht schlicht zu laut — erst gegen Röstaromen und lange geschmorte Substanz kommt er ins Gleichgewicht.",
+      axes: [
+        { label: "Dichte", value: 92, hint: "15,5 % vol. — verlangt Substanz im Teller" },
+        { label: "Wärme", value: 80, hint: "Alkoholwärme, die Röstaromen trägt" },
+        { label: "Würze", value: 74, hint: "trifft pikante Küche auf halbem Weg" },
+      ],
+    },
+    photo: "/img/dinner.webp",
     photoAlt: "Gedeckter Tisch mit herzhaften Gerichten und Rotwein",
     items: [
-      { icon: "plate", title: "Primi al ragù", text: "Pastagerichte mit langsam geschmortem Ragù" },
-      { icon: "plate", title: "Braten", text: "Arrosti — gebratenes und geschmortes Fleisch" },
-      { icon: "plate", title: "Wild", text: "Cacciagione und kräftige Schmorgerichte" },
-      { icon: "glasses", title: "Scharf & Hartkäse", text: "Pikante Speisen und lang gereifte Hartkäse" },
+      {
+        icon: "plate",
+        title: "Primi al ragù",
+        text: "Pastagerichte mit langsam geschmortem Ragù",
+        note: "Stunden im Topf ergeben die Tiefe, die dieser Dichte gewachsen ist.",
+      },
+      {
+        icon: "plate",
+        title: "Braten",
+        text: "Arrosti — gebratenes und geschmortes Fleisch",
+        note: "Röstaromen aus der Pfanne finden in der Wärme des Weins ihr Echo.",
+      },
+      {
+        icon: "plate",
+        title: "Wild",
+        text: "Cacciagione und kräftige Schmorgerichte",
+        note: "Eines der wenigen Aromen, die hier nicht überstimmt werden.",
+      },
+      {
+        icon: "glasses",
+        title: "Scharf & Hartkäse",
+        text: "Pikante Speisen und lang gereifte Hartkäse",
+        note: "Bei Schärfe gilt: gut gekühlt servieren, sonst tritt der Alkohol vor.",
+      },
     ],
   },
 
@@ -290,10 +320,9 @@ export const PRIMITIVO_155 = {
   /* ---- Seitennavigation (Apple-Stil Subnav) ---- */
   subnav: [
     { label: "Überblick", href: "#ueberblick" },
-    { label: "Herkunft", href: "#herkunft" },
+    { label: "Servieren", href: "#servieren" },
     { label: "Geschmack", href: "#geschmack" },
-    { label: "Genießen", href: "#geniessen" },
-    { label: "Details", href: "#details" },
+    { label: "Passt zu", href: "#passt-zu" },
     { label: "Fragen", href: "#fragen" },
   ],
 };

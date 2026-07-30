@@ -82,7 +82,7 @@ export default function ColorBand({ wine }) {
         background: `linear-gradient(180deg, #FBF9F4 0%, ${s0.hex}26 62%, ${s0.hex}45 100%)`,
       }}
     >
-      <div className="mx-auto grid max-w-content items-center gap-12 px-6 py-16 lg:grid-cols-[1.05fr_0.95fr] lg:gap-8 lg:px-10 lg:py-24">
+      <div className="mx-auto grid max-w-content items-center gap-8 px-6 py-12 sm:gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-8 lg:px-10 lg:py-14">
         {/* ---------- Typo-Bühne ---------- */}
         <div className="relative z-10">
           <Reveal blur={false}>
@@ -93,7 +93,7 @@ export default function ColorBand({ wine }) {
               {c.kicker}
             </span>
           </Reveal>
-          <h2 className="mt-4 font-playfair text-[clamp(2.1rem,4.2vw,3.4rem)] leading-[1.05] text-charcoal">
+          <h2 className="mt-3 font-playfair text-[clamp(1.95rem,3.6vw,2.9rem)] leading-[1.05] text-charcoal">
             <SplitText text={c.lines[0]} className="block" delay={0.08} />
             <SplitText
               text={c.lines[1]}
@@ -105,7 +105,7 @@ export default function ColorBand({ wine }) {
           </h2>
           <Reveal delay={0.15} y={18}>
             <p
-              className="mt-6 max-w-md border-l pl-5 text-[14px] leading-relaxed text-charcoal/70"
+              className="mt-4 max-w-md border-l pl-5 text-[14px] leading-relaxed text-charcoal/70"
               style={{ borderColor: `${accent.base}59` }}
             >
               {c.text}
@@ -113,7 +113,7 @@ export default function ColorBand({ wine }) {
           </Reveal>
           {tempFact && (
             <Reveal delay={0.24} y={14} blur={false}>
-              <div className="mt-7 inline-flex items-center gap-3 rounded-full border border-charcoal/10 bg-white/70 py-2 pl-3 pr-5 shadow-chip backdrop-blur-sm">
+              <div className="mt-5 inline-flex items-center gap-3 rounded-full border border-charcoal/10 bg-white/70 py-2 pl-3 pr-5 shadow-chip backdrop-blur-sm">
                 <span
                   className="grid h-8 w-8 place-items-center rounded-full"
                   style={{ backgroundColor: `${s1.hex}66`, color: inkTo }}
@@ -135,11 +135,11 @@ export default function ColorBand({ wine }) {
         </div>
 
         {/* ---------- Das Gemälde ---------- */}
-        <div className="relative flex items-center justify-center pb-4 lg:pb-2">
+        <div className="relative flex items-center justify-center lg:pb-0">
           {/* weiche Lichtaura hinter dem Rahmen */}
           <div
             aria-hidden="true"
-            className="absolute left-1/2 top-1/2 h-[340px] w-[340px] -translate-x-1/2 -translate-y-1/2 rounded-full blur-3xl"
+            className="absolute left-1/2 top-1/2 h-[280px] w-[280px] -translate-x-1/2 -translate-y-1/2 rounded-full blur-3xl"
             style={{ background: `radial-gradient(closest-side, ${s1.hex}59, transparent 72%)` }}
           />
             <motion.figure
@@ -192,7 +192,7 @@ export default function ColorBand({ wine }) {
                         playsInline
                         preload="metadata"
                         aria-label={art.alt}
-                        className="block aspect-[4/5] w-full object-cover"
+                        className="block aspect-[5/4] w-full object-cover sm:aspect-[4/3.4]"
                         style={{ objectPosition: art.videoFocus ?? art.focus ?? "50% 50%" }}
                       />
                     ) : (
@@ -200,7 +200,7 @@ export default function ColorBand({ wine }) {
                         src={art.src}
                         alt={art.alt}
                         loading="lazy"
-                        className="block aspect-[4/5] w-full object-cover"
+                        className="block aspect-[5/4] w-full object-cover sm:aspect-[4/3.4]"
                         style={{ objectPosition: art.focus ?? "50% 50%" }}
                       />
                     )}

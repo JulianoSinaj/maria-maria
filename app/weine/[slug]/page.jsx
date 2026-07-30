@@ -6,26 +6,26 @@ import HeroPhoto from "@/components/weine/falanghina/HeroPhoto";
 import HeroPreload from "@/components/weine/falanghina/HeroPreload";
 import SubNav from "@/components/weine/falanghina/SubNav";
 import FactStrip from "@/components/weine/falanghina/FactStrip";
+import RitualSection from "@/components/weine/falanghina/RitualSection";
 import ColorBand from "@/components/weine/falanghina/ColorBand";
-import StorySection from "@/components/weine/falanghina/StorySection";
-import PlaceSection from "@/components/weine/falanghina/PlaceSection";
 import PairingSection from "@/components/weine/falanghina/PairingSection";
-import DetailBento from "@/components/weine/falanghina/DetailBento";
 import WineFaq from "@/components/weine/falanghina/WineFaq";
 import SimilarWines from "@/components/weine/falanghina/SimilarWines";
 import CtaBand from "@/components/weine/falanghina/CtaBand";
-import MariaMoment from "@/components/weine/falanghina/MariaMoment";
 
 /* Produkt-Landingpage im Apple-Stil — eine dynamische Route für alle neun
    Weine. Die Sektionen (components/weine/falanghina/*) sind komplett
    wine-Prop-getrieben; die Daten kommen pro Slug aus dem wineRegistry.
    Neuer Wein = neue wineData.js + ein Registry-Eintrag, keine neue Route.
 
-   Kapitel-Dramaturgie: Herkunft eröffnet als erstes großes Bildkapitel
-   (das Terroir ist das Verkaufsargument), aus dem Ort folgt das Glas
-   (Farbe/Geschmack → Passt zu → Genießen); die Geschichte vertieft für
-   Lesende vor dem Datenblatt. Ähnliche Weine stehen vor den Fragen,
-   damit die FAQ als Einwand-Klärung direkt am Schluss-CTA liegt. */
+   Kapitel-Dramaturgie: der Überblick nennt die Eckdaten, dann sagt das
+   Genuss-Kapitel (#servieren), wie der Wein ins Glas kommt — Ritual und
+   Maria-Moment stehen dort als helles und dunkles Kartenpaar nebeneinander
+   (RitualSection), beide aus dem wine.moment-Block. Erst danach öffnet das
+   Farb-/Geschmackskapitel das Glas selbst. Das Herkunftskapitel („Die Geschichte“) liegt gebündelt im
+   Magazin (components/magazin/StoriesSection) — die Landingpage bleibt am
+   Produkt. Nach den ähnlichen Weinen folgt das Shop-Band, die FAQ schließt
+   die Seite als ruhiger Ausklang ab. */
 
 export function generateStaticParams() {
   return WINE_SLUGS.map((slug) => ({ slug }));
@@ -80,15 +80,12 @@ export default function WinePage({ params }) {
       <FalanghinaHero wine={wine} photo={<HeroPhoto wine={wine} />} />
       <SubNav wine={wine} />
       <FactStrip wine={wine} />
-      <PlaceSection wine={wine} />
+      <RitualSection wine={wine} />
       <ColorBand wine={wine} />
       <PairingSection wine={wine} />
-      <MariaMoment wine={wine} />
-      <StorySection wine={wine} />
-      <DetailBento wine={wine} />
       <SimilarWines wine={wine} />
-      <WineFaq wine={wine} />
       <CtaBand wine={wine} />
+      <WineFaq wine={wine} />
     </>
   );
 }

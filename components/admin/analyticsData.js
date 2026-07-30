@@ -120,9 +120,8 @@ export const REVENUE = buildRevenue();
 
 const REGION_META = {
   Apulien: { detail: "Salento · Manduria D.O.P.", trend: +12.4 },
-  Kampanien: { detail: "Irpinia · Tufo", trend: +8.1 },
+  Kampanien: { detail: "Irpinia · Tufo · Aglianico", trend: +8.1 },
   Gardasee: { detail: "Sirmione · Lugana D.O.C.", trend: +5.6 },
-  Basilikata: { detail: "Vulture · Aglianico", trend: -2.3 },
 };
 
 function buildRegions() {

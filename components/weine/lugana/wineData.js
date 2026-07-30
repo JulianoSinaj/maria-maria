@@ -72,7 +72,7 @@ export const LUGANA = {
       focus: "72% 52%",
       /* Loop-Video im Rahmen — läuft stumm in Endlosschleife, das Gemälde
          oben bleibt Poster und Reduced-Motion-Fallback */
-      video: "/video/wine-white.mp4",
+      video: "/video/wine-white-720.mp4",
       videoFocus: "50% 50%",
       videoTitle: "Strohgelb im Glas",
     },
@@ -192,13 +192,43 @@ export const LUGANA = {
     kicker: "Passt zu",
     title: "Roher und gegarter Fisch – und der Auftakt des Abends",
     text: "Der Lugana begleitet die feine Küche ohne sie zu übertönen: Er liebt zarte Gerichte, die ohne schwere Saucen auskommen.",
+    why: {
+      kicker: "Warum das zusammenpasst",
+      principle:
+        "Zurückhaltung ist hier die Qualität. Der Lugana setzt Feinheit gegen Feinheit — er begleitet ein zartes Gericht auf Augenhöhe, statt es zu übertönen. Schwere Saucen wären der eine Gast zu viel.",
+      axes: [
+        { label: "Finesse", value: 80, hint: "leise genug für zarte Gerichte" },
+        { label: "Mineralik", value: 66, hint: "salziger Zug, der Meeresfrüchte spiegelt" },
+        { label: "Körper", value: 48, hint: "schlank, ohne dünn zu wirken" },
+      ],
+    },
     photo: "/img/aperitivo.jpg",
     photoAlt: "Aperitivo mit Antipasti und einem Glas Weißwein",
     items: [
-      { icon: "fish", title: "Fisch-Antipasti", text: "Roh und gegart – von Crudo bis Gebratenem" },
-      { icon: "shell", title: "Meeresfrüchte", text: "Zart gewürzt, ohne schwere Saucen" },
-      { icon: "plate", title: "Feine Primi", text: "Delikate erste Gänge mit klarer Würze" },
-      { icon: "glasses", title: "Aperitivo", text: "Ausgezeichnet als Auftakt des Abends" },
+      {
+        icon: "fish",
+        title: "Fisch-Antipasti",
+        text: "Roh und gegart – von Crudo bis Gebratenem",
+        note: "Bei Crudo entscheidet Feinheit: Der Lugana legt sich darunter, nicht darüber.",
+      },
+      {
+        icon: "shell",
+        title: "Meeresfrüchte",
+        text: "Zart gewürzt, ohne schwere Saucen",
+        note: "Der mineralische Zug greift die salzige Note der Schalentiere auf.",
+      },
+      {
+        icon: "plate",
+        title: "Feine Primi",
+        text: "Delikate erste Gänge mit klarer Würze",
+        note: "Klare Würze braucht einen klaren Wein — hier stört nichts das andere.",
+      },
+      {
+        icon: "glasses",
+        title: "Aperitivo",
+        text: "Ausgezeichnet als Auftakt des Abends",
+        note: "Der schlanke Körper öffnet den Appetit, statt ihn schon zu stillen.",
+      },
     ],
   },
 
@@ -299,10 +329,9 @@ export const LUGANA = {
   /* ---- Seitennavigation (Apple-Stil Subnav) ---- */
   subnav: [
     { label: "Überblick", href: "#ueberblick" },
-    { label: "Herkunft", href: "#herkunft" },
+    { label: "Servieren", href: "#servieren" },
     { label: "Geschmack", href: "#geschmack" },
-    { label: "Genießen", href: "#geniessen" },
-    { label: "Details", href: "#details" },
+    { label: "Passt zu", href: "#passt-zu" },
     { label: "Fragen", href: "#fragen" },
   ],
 };

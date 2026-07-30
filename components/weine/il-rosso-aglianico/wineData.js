@@ -66,7 +66,7 @@ export const IL_ROSSO = {
       focus: "50% 40%",
       /* Loop-Video im Rahmen — läuft stumm in Endlosschleife, das Gemälde
          oben bleibt Poster und Reduced-Motion-Fallback */
-      video: "/video/wine-red.mp4",
+      video: "/video/wine-red-720.mp4",
       videoFocus: "50% 50%",
       videoTitle: "Rubinrot im Glas",
     },
@@ -181,13 +181,43 @@ export const IL_ROSSO = {
     kicker: "Passt zu",
     title: "Ein Begleiter für die kräftige Küche",
     text: "Der Rosso liebt alles, was Würze und Substanz hat — von der herzhaften Pasta bis zum Braten.",
-    photo: "/img/dinner.png",
+    why: {
+      kicker: "Warum das zusammenpasst",
+      principle:
+        "Tannin braucht ein Gegenüber. Was den Rosso trägt, sind Fett und Eiweiß im Gericht: Sie binden das Gerbstoffgerüst, das solo streng wirken könnte — und lassen dafür die Frucht nach vorn.",
+      axes: [
+        { label: "Struktur", value: 82, hint: "Tannin, das nach Substanz verlangt" },
+        { label: "Würze", value: 74, hint: "sechs Monate Eiche im Hintergrund" },
+        { label: "Wärme", value: 68, hint: "trägt Schmorgerichte, ohne zu drücken" },
+      ],
+    },
+    photo: "/img/dinner.webp",
     photoAlt: "Gedeckter Tisch mit herzhaften Gerichten und Rotwein",
     items: [
-      { icon: "plate", title: "Kräftige Primi", text: "Herzhafte Pasta- und Nudelgerichte" },
-      { icon: "plate", title: "Wurst & Salumi", text: "Insaccati und gereifte Aufschnitte" },
-      { icon: "plate", title: "Schweinebraten", text: "Arrosti und Schmorgerichte" },
-      { icon: "glasses", title: "Vegetarisch & würzig", text: "Reiche Saucen, fein gewürzte Rezepte" },
+      {
+        icon: "plate",
+        title: "Kräftige Primi",
+        text: "Herzhafte Pasta- und Nudelgerichte",
+        note: "Je länger die Sauce geschmort hat, desto weicher liest sich das Tannin.",
+      },
+      {
+        icon: "plate",
+        title: "Wurst & Salumi",
+        text: "Insaccati und gereifte Aufschnitte",
+        note: "Salz und Fett des Aufschnitts nehmen dem Gerbstoff die Kante.",
+      },
+      {
+        icon: "plate",
+        title: "Schweinebraten",
+        text: "Arrosti und Schmorgerichte",
+        note: "Röstaromen aus der Pfanne treffen auf die Würze aus dem Fass.",
+      },
+      {
+        icon: "glasses",
+        title: "Vegetarisch & würzig",
+        text: "Reiche Saucen, fein gewürzte Rezepte",
+        note: "Kräuter und Gewürze verlängern das, was der Ausbau schon angelegt hat.",
+      },
     ],
   },
 
@@ -263,10 +293,8 @@ export const IL_ROSSO = {
       a: "„La poesia in bottiglia“: ein Wein für lange Abende, volle Tische und Gespräche, die nicht enden wollen. Ideal zum gemeinsamen Dinner mit kräftiger Küche — bei 16 bis 18 °C serviert und eine knappe Stunde vorher geöffnet.",
     },
     {
-      /* Herkunftsangabe bewusst auf die Bezeichnung beschränkt: Katalog
-         (Basilikata) und Datenblatt (Campania Rosso I.G.P.) widersprechen
-         sich — bis zur Klärung mit dem Erzeuger keine Trauben-Herkunft
-         als Fakt publizieren. */
+      /* Katalog folgt jetzt dem Datenblatt: Herkunft durchgängig Kampanien
+         (Campania Rosso I.G.P.), wie auf dem Etikett ausgewiesen. */
       id: "rosso-igp",
       q: "Was bedeutet „Campania Rosso I.G.P.“?",
       a: "IGP steht für „Indicazione Geografica Protetta“, die geschützte geografische Angabe. „Campania Rosso I.G.P.“ ist die auf Etikett und Datenblatt ausgewiesene Bezeichnung dieses Weins.",
@@ -290,10 +318,9 @@ export const IL_ROSSO = {
   /* ---- Seitennavigation (Apple-Stil Subnav) ---- */
   subnav: [
     { label: "Überblick", href: "#ueberblick" },
-    { label: "Herkunft", href: "#herkunft" },
+    { label: "Servieren", href: "#servieren" },
     { label: "Geschmack", href: "#geschmack" },
-    { label: "Genießen", href: "#geniessen" },
-    { label: "Details", href: "#details" },
+    { label: "Passt zu", href: "#passt-zu" },
     { label: "Fragen", href: "#fragen" },
   ],
 };

@@ -8,7 +8,7 @@
    ghost: translucent ivory + champagne treatment for dark photo backdrops —
    the light default stays untouched for the home rail and the regions page. */
 
-const MAINLAND =
+export const MAINLAND =
   "M19.3 88.4 L9.7 65 L3.9 54.6 L9.7 35.1 L36.7 20.8 L54 22.1 L69.5 15.6 " +
   "L88.8 6.5 L110 2.6 L125.5 13 L139 18.2 L137 36.4 L139.9 40.3 L133.2 39 " +
   "L115.8 49.4 L116.8 61.1 L111.6 72.8 L117.2 81.9 L138 94.9 L142.8 110.5 " +
@@ -21,18 +21,18 @@ const MAINLAND =
   "L136.5 156 L126.4 155.5 L118.3 149.8 L110.6 142.2 L101.9 132.9 L88.8 125.1 " +
   "L79.1 111.3 L73.3 95.4 L72 86.6 L64.3 81.1 L46.9 72.8 L38 75.4 L29.5 86.3 Z";
 
-const SICILY =
+export const SICILY =
   "M173.6 235.2 L166.6 246.1 L162.8 255.2 L166.8 266.6 L163.6 276.5 L158.2 275.5 " +
   "L146 266.4 L140.6 265.9 L133.5 261.4 L124 255.2 L114.5 251.3 L111.6 247.4 " +
   "L113 241.7 L117.2 237.8 L122.8 241.7 L129.6 237.3 L142.1 241.4 L153.9 240.4 " +
   "L165.7 236.5 Z";
 
-const SARDINIA =
+export const SARDINIA =
   "M51.3 154.9 L59.1 161.2 L62.1 163.3 L64.3 174.2 L62 188.9 L59.3 205.4 " +
   "L50.4 207.7 L48.1 215.8 L37.2 213.8 L36.7 193.7 L38 189.8 L36.7 179.4 " +
   "L31.5 172.6 L32.6 162.5 L34.4 159.9 Z";
 
-const HILITE = {
+export const HILITE = {
   /* Puglia — Gargano spur, Adriatic coast and the Salento heel */
   apulien:
     "M170.8 138.3 L178.5 137.3 L187 138.3 L187.2 141.9 L182 146.4 L189.1 152.9 " +
@@ -50,7 +50,7 @@ const HILITE = {
 };
 
 /* Wine origin: Salento / Beneventano / Lugana (south shore of Lake Garda) */
-const DOT = { apulien: [214.8, 176.8], kampanien: [159.8, 157.8], garda: [79.5, 47] };
+export const DOT = { apulien: [214.8, 176.8], kampanien: [159.8, 157.8], garda: [79.5, 47] };
 
 export default function ItalyMap({ region = "apulien", className = "w-28", ghost = false }) {
   const dot = DOT[region] || DOT.apulien;

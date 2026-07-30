@@ -5,6 +5,7 @@ import PageShell from "@/components/admin/PageShell";
 import CategoryTabs from "@/components/admin/portfolio/CategoryTabs";
 import WineTable from "@/components/admin/portfolio/WineTable";
 import WineSlideOver from "@/components/admin/portfolio/WineSlideOver";
+import AssetConfigurator from "@/components/admin/portfolio/AssetConfigurator";
 import { Search } from "@/components/admin/AdminIcons";
 import {
   useInventory,
@@ -36,6 +37,7 @@ export default function PortfolioPage() {
   }, [search]);
 
   const [panel, setPanel] = useState({ open: false, mode: "edit", item: null });
+  const [assetPanel, setAssetPanel] = useState({ open: false, wine: null });
   const [saving, setSaving] = useState(false);
   const [saveError, setSaveError] = useState(null);
   const [toast, setToast] = useState(null);
@@ -172,6 +174,7 @@ export default function PortfolioPage() {
           loading={loading}
           onQuickEdit={(w) => openPanel("quick", w)}
           onEdit={(w) => openPanel("edit", w)}
+          onAssets={(w) => setAssetPanel({ open: true, wine: w })}
           onArchive={handleArchive}
           onRestore={handleRestore}
         />
@@ -187,6 +190,13 @@ export default function PortfolioPage() {
         onSave={handleSave}
         /* escalate from quick edit to the full form without losing the record */
         onFull={() => setPanel((p) => ({ ...p, mode: "edit" }))}
+      />
+
+      <AssetConfigurator
+        open={assetPanel.open}
+        wine={assetPanel.wine}
+        onClose={() => setAssetPanel((p) => ({ ...p, open: false }))}
+        onSaved={(w) => flash(`Assets für „${w.name}" gespeichert.`)}
       />
 
       {/* ---- toast ---- */}

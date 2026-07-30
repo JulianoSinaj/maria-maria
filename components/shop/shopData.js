@@ -25,7 +25,7 @@ export const BUNDLES = [
     id: "paket-trio-rosso",
     name: "Trio Rosso",
     tag: "Die Kraft des Südens",
-    desc: "Drei charakterstarke Rotweine aus Apulien und der Basilikata – vom weichen Primitivo bis zum würzigen Aglianico.",
+    desc: "Drei charakterstarke Rotweine aus Apulien und Kampanien – vom weichen Primitivo bis zum würzigen Aglianico.",
     wines: ["Primitivo 14,5", "Primitivo Salento IGP", "Il Rosso – Aglianico"],
     price: 37.9,
   },

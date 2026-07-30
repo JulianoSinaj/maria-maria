@@ -17,16 +17,21 @@ export default function Template({ children }) {
      change (template remounts, but the browser can restore prior offset).
      Anchor-Navigationen (/kontakt#fragen, /shop#fragen, FAQ-Deep-Links)
      dürfen nicht überschrieben werden — bei vorhandenem Hash nichts tun. */
+  const isAdmin = pathname?.startsWith("/admin");
+
   useEffect(() => {
+    if (isAdmin) return; // the admin shell scrolls its own column, not the window
     if (window.location.hash) return;
     if (lenis?.current) {
       lenis.current.scrollTo(0, { immediate: true, force: true });
     } else {
       window.scrollTo(0, 0);
     }
-  }, [pathname, lenis]);
+  }, [pathname, lenis, isAdmin]);
 
-  if (reduced) return children;
+  /* the admin frame is fixed-height; a transformed wrapper around it would
+     break the sticky header and the scroll container */
+  if (reduced || isAdmin) return children;
   return (
     <motion.div
       initial={{ opacity: 0, y: 22 }}

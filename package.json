@@ -10,6 +10,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "test:inventory": "node lib/inventory/__tests__/api.test.mjs",
     "optimize:heroes": "node scripts/optimize-heroes.mjs",
     "optimize:art": "node scripts/optimize-art.mjs",
     "crop:cards": "node scripts/crop-cards.mjs",

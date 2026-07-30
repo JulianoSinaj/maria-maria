@@ -3,10 +3,7 @@ import { Playfair_Display, Montserrat } from "next/font/google";
 import SmoothScroll from "@/components/motion/SmoothScroll";
 import { MagneticRouteProvider } from "@/components/motion/MagneticContext";
 import { CartProvider } from "@/components/shop/CartContext";
-import CartDrawer from "@/components/shop/CartDrawer";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import { AmbientBackdrop } from "@/components/Atmosphere";
+import StorefrontChrome from "@/components/StorefrontChrome";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -43,18 +40,7 @@ export default function RootLayout({ children }) {
         <SmoothScroll>
           <MagneticRouteProvider>
           <CartProvider>
-          <AmbientBackdrop />
-          <a
-            href="#main"
-            className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-bordeaux focus:px-5 focus:py-3 focus:text-[13px] focus:text-ivory"
-          >
-            Zum Inhalt springen
-          </a>
-          <Header />
-          <main id="main">{children}</main>
-          <Footer />
-          {/* site-wide cart: slide-over + floating pill, appears once something is added */}
-          <CartDrawer />
+          <StorefrontChrome>{children}</StorefrontChrome>
           </CartProvider>
           </MagneticRouteProvider>
         </SmoothScroll>

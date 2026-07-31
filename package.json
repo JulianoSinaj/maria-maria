@@ -15,6 +15,7 @@
     "test:map": "node lib/map/__tests__/api.test.mjs",
     "test:showcase": "node lib/showcase/__tests__/api.test.mjs",
     "test:hero": "node lib/hero/__tests__/api.test.mjs",
+    "test:gallery": "node lib/gallery/__tests__/api.test.mjs",
     "optimize:heroes": "node scripts/optimize-heroes.mjs",
     "optimize:art": "node scripts/optimize-art.mjs",
     "crop:cards": "node scripts/crop-cards.mjs",

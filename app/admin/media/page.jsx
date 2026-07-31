@@ -2,6 +2,7 @@
 import PageShell from "@/components/admin/PageShell";
 import Placeholder from "@/components/admin/Placeholder";
 import HeroContentManager from "@/components/admin/media/HeroContentManager";
+import AssetGallery from "@/components/admin/media/AssetGallery";
 import { Media } from "@/components/admin/AdminIcons";
 
 export default function MediaPage() {
@@ -15,6 +16,11 @@ export default function MediaPage() {
       </h3>
       <HeroContentManager />
 
+      <h3 className="mb-4 mt-10 text-[11px] font-semibold uppercase tracking-[0.2em] text-bordeaux/55">
+        Media & Asset-Galerie
+      </h3>
+      <AssetGallery />
+
       <div className="mt-8">
         <Placeholder
           icon={Media}
@@ -22,7 +28,7 @@ export default function MediaPage() {
           items={[
             "Hero-Slots der Unterseiten mit Bildausschnitt und Fokuspunkt",
             "Video-Loops für die Regionsköpfe inklusive Poster-Frame",
-            "Asset-Bibliothek mit Alternativtexten und Bildrechten",
+            "Alternativtexte und Bildrechte je Asset",
             "Automatische Ableitungen in AVIF und WebP für alle Breakpoints",
           ]}
         />

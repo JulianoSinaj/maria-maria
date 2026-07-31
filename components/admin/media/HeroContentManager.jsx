@@ -62,13 +62,18 @@ export default function HeroContentManager() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch("/api/admin/hero")
-      .then((r) => r.json())
-      .then((b) => {
-        setCfg(b.data.config);
-        setImages(b.data.images);
-      })
-      .catch((e) => setError(e));
+    const load = () =>
+      fetch("/api/admin/hero")
+        .then((r) => r.json())
+        .then((b) => {
+          setCfg(b.data.config);
+          setImages(b.data.images);
+        })
+        .catch((e) => setError(e));
+    load();
+    /* the Asset Gallery below dispatches this after assigning a background */
+    window.addEventListener("mm:hero-config-changed", load);
+    return () => window.removeEventListener("mm:hero-config-changed", load);
   }, []);
 
   const setCopy = (field, value) =>

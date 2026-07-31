@@ -38,10 +38,31 @@ async function listImages() {
   return out;
 }
 
-/** Heal a config whose image has since vanished from disk. */
-function resolveConfig(images, { fresh = false } = {}) {
+/** Map a legal image src to its on-disk location. Returns null for paths
+    outside the known sources (validation should have caught those). */
+function srcToDisk(src) {
+  if (typeof src !== "string" || src.includes("..")) return null;
+  if (src.startsWith("/img/")) return path.join(process.cwd(), "public", src);
+  const hero = src.match(/^\/api\/admin\/hero\/file\/([^/]+)$/);
+  if (hero) return path.join(uploadDir(), path.basename(hero[1]));
+  const gal = src.match(/^\/api\/admin\/gallery\/file\/([^/]+)\/([^/]+)$/);
+  if (gal)
+    return path.join(process.cwd(), "data", "uploads", "gallery", gal[1], path.basename(gal[2]));
+  return null;
+}
+
+const existsOnDisk = async (src) => {
+  const p = srcToDisk(src);
+  if (!p) return false;
+  return fs.access(p).then(() => true, () => false);
+};
+
+/** Heal a config whose image has since vanished from disk. The src may be a
+    library-wide path assigned from the gallery, so the check is against the
+    disk — not against the picker's img/home listing. */
+async function resolveConfig(images, { fresh = false } = {}) {
   const cfg = fresh ? defaultHeroConfig() : getHeroConfig();
-  if (!images.some((i) => i.path === cfg.image.src)) {
+  if (!(await existsOnDisk(cfg.image.src))) {
     cfg.image.src = images.find((i) => i.name === "hero-1280.webp")?.path ?? images[0]?.path ?? null;
   }
   return cfg;
@@ -51,7 +72,7 @@ function resolveConfig(images, { fresh = false } = {}) {
 export async function GET(request) {
   const images = await listImages();
   const fresh = request.nextUrl.searchParams.get("fresh") === "1";
-  return NextResponse.json({ data: { config: resolveConfig(images, { fresh }), images } });
+  return NextResponse.json({ data: { config: await resolveConfig(images, { fresh }), images } });
 }
 
 /** PUT /api/admin/hero — partial config update. */
@@ -68,13 +89,14 @@ export async function PUT(request) {
     return NextResponse.json({ error: errs.join("; "), details: errs }, { status: 422 });
   }
 
-  const images = await listImages();
-  if (patch.image?.src !== undefined && !images.some((i) => i.path === patch.image.src)) {
+  /* the src may point anywhere in the library — verify it on disk */
+  if (patch.image?.src !== undefined && !(await existsOnDisk(patch.image.src))) {
     return NextResponse.json(
       { error: `Image "${patch.image.src}" does not exist` },
       { status: 422 },
     );
   }
 
+  const images = await listImages();
   return NextResponse.json({ data: { config: putHeroConfig(patch), images } });
 }

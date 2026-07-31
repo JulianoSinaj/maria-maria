@@ -85,12 +85,23 @@ export async function PUT(request, { params }) {
   }
 
   const assets = await listAssets(slug);
-  /* the chosen asset must actually exist on disk, not merely look plausible */
+  /* the chosen asset must actually exist on disk, not merely look plausible.
+     Gallery uploads live outside this wine's listing — check those on disk. */
   if (patch.asset !== undefined && !assets.some((a) => a.path === patch.asset)) {
-    return NextResponse.json(
-      { error: `Asset "${patch.asset}" does not exist for this wine` },
-      { status: 422 },
-    );
+    const gal = patch.asset.match(/^\/api\/admin\/gallery\/file\/([^/]+)\/([^/]+)$/);
+    const onDisk =
+      gal &&
+      (await fs
+        .access(
+          path.join(process.cwd(), "data", "uploads", "gallery", gal[1], path.basename(gal[2])),
+        )
+        .then(() => true, () => false));
+    if (!onDisk) {
+      return NextResponse.json(
+        { error: `Asset "${patch.asset}" does not exist for this wine` },
+        { status: 422 },
+      );
+    }
   }
 
   const config = putConfig(slug, patch, resolveConfig(slug, assets));

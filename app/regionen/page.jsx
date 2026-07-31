@@ -4,14 +4,13 @@ import Parallax from "@/components/motion/Parallax";
 import TiltCard from "@/components/motion/TiltCard";
 import { Reveal } from "@/components/motion/Reveal";
 import ShopCtaBand from "@/components/ui/ShopCtaBand";
-import { SectionTitle, Eyebrow, IconChip } from "@/components/Deco";
-import RegionWineRail from "@/components/RegionWineRail";
+import { SectionTitle, Eyebrow } from "@/components/Deco";
 import RegionHeroVideo from "@/components/RegionHeroVideo";
 import FaqSection from "@/components/faq/FaqSection";
 import { REGIONEN_FAQ_GROUPS } from "@/components/faq/faqData";
-import { Arrow, Check, Fields } from "@/components/Icons";
-import { WINES } from "@/components/data";
-import Atmosphere, { Aura, GhostWord, Vines } from "@/components/Atmosphere";
+import { Arrow } from "@/components/Icons";
+import Atmosphere, { Aura, GhostWord } from "@/components/Atmosphere";
+import TerroirManifest from "@/components/regionen/TerroirManifest";
 
 export const metadata = {
   title: "Regionen Italiens — Maria Maria",
@@ -29,7 +28,6 @@ const REGIONS = [
     label: "Weine aus Apulien",
     link: "Mehr über Apulien",
     desc: "Sonne, Meer und rote Erde. Apulien ist das Herz des Südens – weitläufige Ebenen, alte Reben und warme Brisen vom Ionischen und Adriatischen Meer prägen kraftvolle, fruchtbetonte Weine mit mediterraner Seele.",
-    dataRegions: ["Apulien"],
   },
   {
     name: "Kampanien",
@@ -40,7 +38,6 @@ const REGIONS = [
     label: "Weine aus Kampanien",
     link: "Mehr über Kampanien",
     desc: "Zwischen Vulkan und Meer. Die mineralischen Böden rund um den Vesuv schenken Weinen Spannung, Frische und Tiefe. Vom Greco di Tufo bis zum Aglianico tragen alle Weine denselben vulkanischen Charakter – und dieselbe Hingabe.",
-    dataRegions: ["Kampanien"],
   },
   {
     name: "Gardasee / Lombardei",
@@ -51,14 +48,7 @@ const REGIONS = [
     label: "Weine vom Gardasee",
     link: "Mehr über Lugana",
     desc: "Das milde Klima, die sanften Hügel und die kalkhaltigen Böden am Südufer des Gardasees schaffen Weine von großer Eleganz und Frische. Lugana steht für Mineralität, Feinheit und mediterrane Leichtigkeit.",
-    dataRegions: ["Gardasee"],
   },
-];
-
-const TERROIR = [
-  "Familiengeführte Weingüter mit Geschichte",
-  "Autochthone Rebsorten und echtes Terroir",
-  "Handverlesene Qualität in limitierter Menge",
 ];
 
 export default function RegionenPage() {
@@ -156,7 +146,7 @@ export default function RegionenPage() {
               <article
                 key={r.name}
                 id={r.anchor}
-                className={`scroll-mt-32 ${i > 0 ? "mt-8 pt-8 lg:mt-12 lg:pt-12" : ""}`}
+                className={`scroll-mt-32 ${i > 0 ? "mt-16 pt-16 lg:mt-24 lg:pt-24" : ""}`}
               >
                 {/* photo + intro */}
                 <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-2 lg:gap-16">
@@ -203,16 +193,30 @@ export default function RegionenPage() {
                   </Reveal>
                 </div>
 
-                {/* full-width wine rail for this region */}
-                <Reveal delay={0.2} className="mt-10 lg:mt-12">
-                  <RegionWineRail wines={WINES.filter((w) => r.dataRegions.includes(w.region))} />
-                </Reveal>
+                {/* Hier folgt die Interview-Sektion zu dieser Region. */}
               </article>
             );
           })}
         </div>
         </div>
       </section>
+
+      {/* ============ TERROIR-MANIFEST ============
+          Steht bewusst vor dem Shop-Band: erst das Argument, warum Herkunft
+          zählt — dann der Weg in die Kollektion, danach die Detailfragen. */}
+      <TerroirManifest />
+
+      <ShopCtaBand
+        eyebrow="Die Kollektion"
+        title={
+          <>
+            Weine nach <span className="italic text-champagne">Region</span> entdecken
+          </>
+        }
+        text="Vom kraftvollen Primitivo aus Apulien bis zum mineralischen Lugana vom Gardasee – finden Sie den Wein, dessen Herkunft Sie schmecken möchten."
+        primary={{ label: "Zu unseren Weinen", href: "/weine" }}
+        secondary={{ label: "Zum Shop", href: "/shop" }}
+      />
 
       {/* ============ HÄUFIGE FRAGEN (je Region, Index links) ============ */}
       <div className="relative overflow-hidden">
@@ -232,53 +236,6 @@ export default function RegionenPage() {
           footer={{ label: "Mehr Wissen im Magazin entdecken", href: "/magazin" }}
         />
       </div>
-
-      {/* ============ WARUM REGIONEN + CTA ============ */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-cream via-champagne-light/25 to-ivory py-20 lg:py-24">
-        <Vines className="inset-x-0 bottom-0 h-72 w-full" />
-        <Aura tint="bordeaux" className="-right-56 -top-44 h-[34rem] w-[34rem]" />
-        {/* Der Shop-CTA lag früher als halbe Karte rechts daneben; er steht
-            jetzt als randloses Band unter der Sektion (einheitliche Bauform,
-            components/ui/ShopCtaBand), der Fließtext läuft dafür zweispaltig. */}
-        <div className="relative mx-auto max-w-3xl px-6 lg:px-10">
-          <Reveal>
-            <IconChip size="lg">
-              <Fields className="h-7 w-7" />
-            </IconChip>
-            <h2 className="mt-6 font-playfair text-[clamp(1.9rem,3.4vw,2.6rem)] leading-[1.12] text-charcoal">
-              Warum Regionen <span className="italic text-bordeaux">wichtig</span> sind
-            </h2>
-            <p className="mt-5 max-w-lg text-[13.5px] leading-relaxed text-charcoal/70">
-              Jede Region Italiens hat ihre eigene Sprache: andere Böden, anderes Klima, andere Rebsorten – und
-              Menschen, die mit Hingabe arbeiten. Wir glauben, dass Herkunft zählt. Sie verleiht unseren Weinen
-              Authentizität, Charakter und Seele.
-            </p>
-            <ul className="mt-7 space-y-3">
-              {TERROIR.map((t) => (
-                <li key={t} className="flex items-center gap-3 text-[13px] text-charcoal/75">
-                  <span className="ring-hairline flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-cream to-champagne-light/40 text-bordeaux">
-                    <Check className="h-3.5 w-3.5" />
-                  </span>
-                  {t}
-                </li>
-              ))}
-            </ul>
-          </Reveal>
-
-        </div>
-      </section>
-
-      <ShopCtaBand
-        eyebrow="Die Kollektion"
-        title={
-          <>
-            Weine nach <span className="italic text-champagne">Region</span> entdecken
-          </>
-        }
-        text="Vom kraftvollen Primitivo aus Apulien bis zum mineralischen Lugana vom Gardasee – finden Sie den Wein, dessen Herkunft Sie schmecken möchten."
-        primary={{ label: "Zu unseren Weinen", href: "/weine" }}
-        secondary={{ label: "Zum Shop", href: "/shop" }}
-      />
     </div>
   );
 }

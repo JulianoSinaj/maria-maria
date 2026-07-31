@@ -9,6 +9,7 @@ import { Arrow, Clock, GrapeVine, Plate, Mountains, Book, Sun } from "@/componen
 import FilterPanel from "@/components/magazin/FilterPanel";
 import NewsletterCard from "@/components/magazin/NewsletterCard";
 import StoriesSection from "@/components/magazin/StoriesSection";
+import InterviewSection from "@/components/magazin/InterviewSection";
 import FaqSection from "@/components/faq/FaqSection";
 import { MAGAZIN_FAQ } from "@/components/faq/faqData";
 import RegionWineRail from "@/components/RegionWineRail";
@@ -338,6 +339,9 @@ export default function MagazinPage() {
 
               {/* ---- Die Geschichte (aus den Wein-Landingpages hierher gezogen) ---- */}
               <StoriesSection />
+
+              {/* ---- Im Gespräch: echte Stimmen aus Weinberg, Keller und Küche ---- */}
+              <InterviewSection />
 
               {/* ---- Die Weine aus den Geschichten ---- */}
               <section className="mt-20">

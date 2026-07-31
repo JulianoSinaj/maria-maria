@@ -1,15 +1,7 @@
 "use client";
 import { useRef } from "react";
 import Link from "next/link";
-import {
-  motion,
-  useMotionValue,
-  useSpring,
-  useMotionTemplate,
-  useTransform,
-  useScroll,
-  useReducedMotion,
-} from "motion/react";
+import { motion, useMotionValue, useSpring, useReducedMotion } from "motion/react";
 import { Arrow, Plate, GrapeVine, Mountains, Grapes } from "@/components/Icons";
 import { Reveal } from "@/components/motion/Reveal";
 
@@ -17,9 +9,8 @@ import { Reveal } from "@/components/motion/Reveal";
 
    Die drei Karten lagen vorher als flache weiße Kacheln auf hellem Grund –
    gleiche Fläche, gleiches Gewicht, kein Blickanker. Jetzt trägt ein
-   espresso-getöntes Band die Reihe: die Ordnungsziffer wächst als Geisterzahl
-   aus dem Hintergrund, ein Champagner-Rail zeichnet sich beim Eintritt in den
-   Viewport, und jede Karte kippt federgedämpft zum Cursor. */
+   espresso-getöntes Band die kompakte Reihe: drei gleich hohe Karten, jede
+   kippt federgedämpft zum Cursor. */
 
 const HELP = [
   {
@@ -28,7 +19,6 @@ const HELP = [
     text: "Entdecken Sie passende Speisen zu unseren Weinen – für den perfekten Genussmoment.",
     link: "Mehr erfahren",
     href: "/magazin",
-    ghost: "Cucina",
   },
   {
     icon: GrapeVine,
@@ -36,7 +26,6 @@ const HELP = [
     text: "Lernen Sie die wichtigsten italienischen Rebsorten kennen und ihre Besonderheiten.",
     link: "Mehr erfahren",
     href: "/magazin",
-    ghost: "Uva",
   },
   {
     icon: Mountains,
@@ -44,7 +33,6 @@ const HELP = [
     text: "Entdecken Sie die Herkunft unserer Weine – von Apulien bis zum Gardasee.",
     link: "Zu den Regionen",
     href: "/regionen",
-    ghost: "Terra",
   },
 ];
 
@@ -226,19 +214,12 @@ export default function HelpStrip() {
           </Reveal>
         </div>
 
-        {/* Karten: die mittlere sitzt eine Spur tiefer, damit die Reihe atmet */}
+        {/* Karten auf einer Linie, gleiche Höhe – die Reihe wirkt als Block */}
         <div className="mt-9 grid grid-cols-1 gap-5 md:grid-cols-3 lg:gap-6">
           {HELP.map((h, i) => (
-            /* Versatz sitzt auf einem statischen Wrapper – Reveal animiert
-               `y` inline und würde eine Translate-Klasse sonst überschreiben */
-            <div
-              key={h.title}
-              className={`h-full ${i === 1 ? "lg:pt-5" : ""} ${i === 2 ? "lg:pt-10" : ""}`}
-            >
-              <Reveal delay={i * 0.09} y={34} className="h-full">
-                <HelpCard item={h} />
-              </Reveal>
-            </div>
+            <Reveal key={h.title} delay={i * 0.09} y={34} className="h-full">
+              <HelpCard item={h} />
+            </Reveal>
           ))}
         </div>
       </div>

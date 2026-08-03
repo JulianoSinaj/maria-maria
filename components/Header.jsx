@@ -139,7 +139,7 @@ export default function Header() {
 
           <div className="flex items-center gap-3">
             <div className="hidden md:block">
-              <Button href="/shop" size="sm">
+              <Button href="/shop" variant="dark" size="sm">
                 Zum Shop
               </Button>
             </div>

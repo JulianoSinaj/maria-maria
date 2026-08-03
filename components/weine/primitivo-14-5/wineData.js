@@ -48,7 +48,7 @@ export const PRIMITIVO_14_5 = {
 
   /* ---- Schnellfakten (Icon-Leiste unter dem Hero) ---- */
   facts: [
-    { icon: "pin", label: "Herkunft", value: "Manduria, Apulien" },
+    { icon: "pin", label: "Herkunft", value: "Torricella, Apulien" },
     { icon: "grapes", label: "Rebsorte", value: "100 % Primitivo di Manduria DOP" },
     { icon: "tank", label: "Ausbau", value: "12 Monate im Stahltank" },
     { icon: "thermometer", label: "Serviertemperatur", value: "16–18 °C" },
@@ -170,7 +170,7 @@ export const PRIMITIVO_14_5 = {
   /* ---- Der Ort (Luogo) ---- */
   place: {
     kicker: "Die Herkunft",
-    title: "Manduria, Apulien",
+    title: "Torricella, Apulien",
     region: "apulien", // ItalyMap region key
     text: "Im Absatz des italienischen Stiefels, zwischen Ionischem und Adriatischem Meer, liegen Torricella und Lizzano. Viel Sonne, wenig Regen und kalkhaltige Böden geben dem Primitivo di Manduria seine Wärme, seine Reife und seine unverkennbare Tiefe.",
     stats: [
@@ -181,7 +181,7 @@ export const PRIMITIVO_14_5 = {
     ],
     photo: "/img/home/region-apulien.webp",
     photoAlt: "Trulli und Olivenhaine in Apulien im Abendlicht",
-    chip: { title: "Manduria", subtitle: "Apulien · Italien" },
+    chip: { title: "Torricella", subtitle: "Apulien · Italien" },
   },
 
   /* ---- Passt zu (Food-Pairing, aus dem Datenblatt) ---- */
@@ -258,7 +258,7 @@ export const PRIMITIVO_14_5 = {
       {
         icon: "italy",
         kicker: "Herkunft",
-        title: "Manduria, Apulien",
+        title: "Torricella, Apulien",
         text: "Torricella und Lizzano im sonnigen Süden Italiens — warme Tage und kühle Nächte sorgen für reife Trauben und Finesse.",
         tone: "#A8452F",
         toneDeep: "#6B2114",

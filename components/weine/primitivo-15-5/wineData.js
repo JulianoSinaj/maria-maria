@@ -44,7 +44,7 @@ export const PRIMITIVO_155 = {
 
   /* ---- Schnellfakten (Icon-Leiste unter dem Hero) ---- */
   facts: [
-    { icon: "pin", label: "Herkunft", value: "Manduria, Apulien" },
+    { icon: "pin", label: "Herkunft", value: "Torricella, Apulien" },
     { icon: "grapes", label: "Rebsorte", value: "100 % Primitivo di Manduria" },
     { icon: "tank", label: "Ausbau", value: "12 Monate in Terrakotta-Amphoren" },
     { icon: "thermometer", label: "Serviertemperatur", value: "16–18 °C" },
@@ -165,7 +165,7 @@ export const PRIMITIVO_155 = {
   /* ---- Der Ort (Luogo) ---- */
   place: {
     kicker: "Die Herkunft",
-    title: "Manduria, Apulien",
+    title: "Torricella, Apulien",
     region: "apulien", // ItalyMap region key
     text: "Zwischen Torricella und Maruggio, im Salento und nur wenige Kilometer vom Ionischen Meer entfernt: kalkhaltige rote Böden, viel Sonne und eine ständige Meeresbrise. Genau diese Nähe zum Wasser gibt dem Primitivo di Manduria seine Düfte und seine Struktur.",
     stats: [
@@ -176,7 +176,7 @@ export const PRIMITIVO_155 = {
     ],
     photo: "/img/home/region-apulien.webp",
     photoAlt: "Trulli und Olivenhaine in Apulien im Abendlicht",
-    chip: { title: "Manduria", subtitle: "Apulien · Italien" },
+    chip: { title: "Torricella", subtitle: "Apulien · Italien" },
   },
 
   /* ---- Passt zu (Food-Pairing, aus dem Datenblatt) ---- */

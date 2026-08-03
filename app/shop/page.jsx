@@ -251,7 +251,7 @@ export default function ShopPage() {
             <SectionTitle
               align="left"
               eyebrow="Das Sortiment"
-              description="Wählen Sie nach Charakter – corposo, elegante oder fresco – oder entdecken Sie die ganze Selection. Jede Flasche eine persönliche Auswahl."
+              description="Entdecken Sie die ganze Selection – corposo, elegante und fresco. Jede Flasche eine persönliche Auswahl."
             >
               Die Maria Maria <span className="italic text-bordeaux">Selection</span>
             </SectionTitle>

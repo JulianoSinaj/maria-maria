@@ -8,7 +8,7 @@ import SubNav from "@/components/weine/falanghina/SubNav";
 import FactStrip from "@/components/weine/falanghina/FactStrip";
 import RitualSection from "@/components/weine/falanghina/RitualSection";
 import ColorBand from "@/components/weine/falanghina/ColorBand";
-import PairingSection from "@/components/weine/falanghina/PairingSection";
+import PairingScene from "@/components/weine/PairingScene";
 import WineFaq from "@/components/weine/falanghina/WineFaq";
 import SimilarWines from "@/components/weine/falanghina/SimilarWines";
 import CtaBand from "@/components/weine/falanghina/CtaBand";
@@ -22,10 +22,13 @@ import CtaBand from "@/components/weine/falanghina/CtaBand";
    Genuss-Kapitel (#servieren), wie der Wein ins Glas kommt — Ritual und
    Maria-Moment stehen dort als helles und dunkles Kartenpaar nebeneinander
    (RitualSection), beide aus dem wine.moment-Block. Erst danach öffnet das
-   Farb-/Geschmackskapitel das Glas selbst. Das Herkunftskapitel („Die Geschichte“) liegt gebündelt im
-   Magazin (components/magazin/StoriesSection) — die Landingpage bleibt am
-   Produkt. Nach den ähnlichen Weinen folgt das Shop-Band, die FAQ schließt
-   die Seite als ruhiger Ausklang ab. */
+   Farb-/Geschmackskapitel das Glas selbst. Das Pairing-Kapitel ist bewusst
+   eine einzige Szene (PairingScene, aus wine.pairing.scene) statt eines
+   Rasters aus Speisenkategorien: Maria Maria ist kein Rezeptbuch, das Bild
+   ist Gebrauchsbeweis für den Wein. Das Herkunftskapitel („Die Geschichte“)
+   liegt gebündelt im Magazin (components/magazin/StoriesSection) — die
+   Landingpage bleibt am Produkt. Nach den ähnlichen Weinen folgt das
+   Shop-Band, die FAQ schließt die Seite als ruhiger Ausklang ab. */
 
 export function generateStaticParams() {
   return WINE_SLUGS.map((slug) => ({ slug }));
@@ -82,7 +85,7 @@ export default function WinePage({ params }) {
       <FactStrip wine={wine} />
       <RitualSection wine={wine} />
       <ColorBand wine={wine} />
-      <PairingSection wine={wine} />
+      <PairingScene wine={wine} />
       <SimilarWines wine={wine} />
       <CtaBand wine={wine} />
       <WineFaq wine={wine} />

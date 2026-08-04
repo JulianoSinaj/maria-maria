@@ -176,49 +176,24 @@ export const IL_ROSSO = {
     chip: { title: "Campania", subtitle: "Kampanien · Italien" },
   },
 
-  /* ---- Passt zu (Food-Pairing, aus dem Datenblatt) ---- */
+  /* ---- Der Maria-Maria-Moment ---- */
+  /* ---- Der Maria-Maria-Moment (eine Szene statt einer Speisenliste) ----
+     PHOTO DROP-IN: 2:1 (1774 × 887) unter public/img/pairing/ ablegen und
+     `image` auf den Pfad setzen. Solange null, rendert die Sektion die
+     Copy über die volle Breite. */
   pairing: {
-    kicker: "Passt zu",
-    title: "Ein Begleiter für die kräftige Küche",
-    text: "Der Rosso liebt alles, was Würze und Substanz hat — von der herzhaften Pasta bis zum Braten.",
-    why: {
-      kicker: "Warum das zusammenpasst",
-      principle:
-        "Tannin braucht ein Gegenüber. Was den Rosso trägt, sind Fett und Eiweiß im Gericht: Sie binden das Gerbstoffgerüst, das solo streng wirken könnte — und lassen dafür die Frucht nach vorn.",
-      axes: [
-        { label: "Struktur", value: 82, hint: "Tannin, das nach Substanz verlangt" },
-        { label: "Würze", value: 74, hint: "sechs Monate Eiche im Hintergrund" },
-        { label: "Wärme", value: 68, hint: "trägt Schmorgerichte, ohne zu drücken" },
-      ],
+    scene: {
+      dish: "Maiale al ragù mit Paccheri",
+      copy: "Schweinenacken, der einen halben Nachmittag in Tomate, Zwiebel und Lorbeer schmort, bis die Sauce dunkel und dicht ist. Dazu Paccheri, die breiten Röhren, die genug Sauce fassen. Der Rosso braucht dieses Gegenüber: Fett und Eiweiß aus dem Schmorfleisch binden sein Tannin, das solo streng wirken könnte, und lassen dafür die Frucht nach vorn. Die sechs Monate Eiche liegen im Hintergrund und treffen dort auf die Röstaromen aus der Pfanne.",
+      image: null,
+      imageAlt:
+        "Paccheri mit geschmortem Schweinefleisch-Ragù in einer Schüssel, daneben ein Glas Il Rosso und die geöffnete Flasche",
+      regionLink: {
+        label: "Mehr über Kampanien entdecken",
+        href: "/regionen#kampanien",
+        region: "kampanien",
+      },
     },
-    photo: "/img/dinner.webp",
-    photoAlt: "Gedeckter Tisch mit herzhaften Gerichten und Rotwein",
-    items: [
-      {
-        icon: "plate",
-        title: "Kräftige Primi",
-        text: "Herzhafte Pasta- und Nudelgerichte",
-        note: "Je länger die Sauce geschmort hat, desto weicher liest sich das Tannin.",
-      },
-      {
-        icon: "plate",
-        title: "Wurst & Salumi",
-        text: "Insaccati und gereifte Aufschnitte",
-        note: "Salz und Fett des Aufschnitts nehmen dem Gerbstoff die Kante.",
-      },
-      {
-        icon: "plate",
-        title: "Schweinebraten",
-        text: "Arrosti und Schmorgerichte",
-        note: "Röstaromen aus der Pfanne treffen auf die Würze aus dem Fass.",
-      },
-      {
-        icon: "glasses",
-        title: "Vegetarisch & würzig",
-        text: "Reiche Saucen, fein gewürzte Rezepte",
-        note: "Kräuter und Gewürze verlängern das, was der Ausbau schon angelegt hat.",
-      },
-    ],
   },
 
   /* ---- Servieren & Genießen + Der Maria-Moment ---- */
@@ -323,7 +298,7 @@ export const IL_ROSSO = {
     { label: "Überblick", href: "#ueberblick" },
     { label: "Servieren", href: "#servieren" },
     { label: "Geschmack", href: "#geschmack" },
-    { label: "Passt zu", href: "#passt-zu" },
+    { label: "Passt zu", href: "#maria-moment" },
     { label: "Fragen", href: "#fragen" },
   ],
 };

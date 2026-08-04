@@ -181,49 +181,24 @@ export const GRECO_DI_TUFO = {
     chip: { title: "Tufo", subtitle: "Irpinien · Kampanien" },
   },
 
-  /* ---- Passt zu (Food-Pairing, aus dem Datenblatt) ---- */
+  /* ---- Der Maria-Maria-Moment ---- */
+  /* ---- Der Maria-Maria-Moment (eine Szene statt einer Speisenliste) ----
+     PHOTO DROP-IN: 2:1 (1774 × 887) unter public/img/pairing/ ablegen und
+     `image` auf den Pfad setzen. Solange null, rendert die Sektion die
+     Copy über die volle Breite. */
   pairing: {
-    kicker: "Passt zu",
-    title: "Fisch, Meeresfrüchte – und Büffelmozzarella",
-    text: "Der Greco di Tufo begleitet die helle Küche mit Struktur. Und überrascht, wenn er zu Mozzarella di Bufala ins Glas kommt.",
-    why: {
-      kicker: "Warum das zusammenpasst",
-      principle:
-        "Ein Weißwein mit Rückgrat. Wo die Falanghina begleitet, hält der Greco dagegen: Sein mineralischer Zug vom Tuffgestein schneidet durch Cremiges und Sahniges, das andere Weißweine schlicht zudecken würden.",
-      axes: [
-        { label: "Mineralik", value: 86, hint: "vulkanischer Tuff, schneidet durch Cremiges" },
-        { label: "Struktur", value: 72, hint: "trägt auch kräftigere Gänge" },
-        { label: "Frische", value: 70, hint: "hält den Gaumen wach" },
-      ],
+    scene: {
+      dish: "Spaghetti mit Venusmuscheln",
+      copy: "Spaghetti alle vongole, wie sie am Golf von Neapel auf den Tisch kommen: Muscheln, Knoblauch, Olivenöl, ein Schluck Weißwein, sonst nichts. Das Gericht lebt vom Meerwasser, das beim Öffnen der Muscheln in die Pfanne läuft. Der Greco di Tufo trifft dieses Salz mit dem mineralischen Zug seines Tuffbodens — dieselbe Sprache aus zwei Quellen. Seine Struktur hält dagegen, statt nur zu begleiten, und die Frische macht den Gaumen für die nächste Gabel wieder frei.",
+      image: null,
+      imageAlt:
+        "Spaghetti mit Venusmuscheln in einer Pfanne, daneben ein Glas Greco di Tufo und die geöffnete Flasche",
+      regionLink: {
+        label: "Mehr über Kampanien entdecken",
+        href: "/regionen#kampanien",
+        region: "kampanien",
+      },
     },
-    photo: "/img/aperitivo.jpg",
-    photoAlt: "Gedeckter Tisch mit Meeresfrüchten und einem Glas Weißwein",
-    items: [
-      {
-        icon: "fish",
-        title: "Fischgerichte",
-        text: "Gegrillt, gebraten oder aus dem Ofen",
-        note: "Genug Struktur, um auch gegrilltem Fisch mit Röstnote standzuhalten.",
-      },
-      {
-        icon: "shell",
-        title: "Meeresfrüchte",
-        text: "Von Vongole bis Gambero",
-        note: "Jod und Salz treffen auf Mineralik — dieselbe Sprache, zwei Quellen.",
-      },
-      {
-        icon: "plate",
-        title: "Risotto & Käse",
-        text: "Cremige Risotti und helle Käsesorten",
-        note: "Die Frische schneidet durch die Sahne und macht den Gaumen wieder frei.",
-      },
-      {
-        icon: "glasses",
-        title: "Büffelmozzarella",
-        text: "Die überraschendste Kombination",
-        note: "Milchsäure und vulkanische Mineralik: der Kontrast, der beide schärft.",
-      },
-    ],
   },
 
   /* ---- Servieren & Genießen + Der Maria-Moment ---- */
@@ -325,7 +300,7 @@ export const GRECO_DI_TUFO = {
     { label: "Überblick", href: "#ueberblick" },
     { label: "Servieren", href: "#servieren" },
     { label: "Geschmack", href: "#geschmack" },
-    { label: "Passt zu", href: "#passt-zu" },
+    { label: "Passt zu", href: "#maria-moment" },
     { label: "Fragen", href: "#fragen" },
   ],
 };

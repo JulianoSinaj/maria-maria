@@ -176,49 +176,24 @@ export const PRIMITIVO_SALENTO = {
     chip: { title: "Salento", subtitle: "Apulien · Italien" },
   },
 
-  /* ---- Passt zu (Food-Pairing, aus dem Datenblatt) ---- */
+  /* ---- Der Maria-Maria-Moment ---- */
+  /* ---- Der Maria-Maria-Moment (eine Szene statt einer Speisenliste) ----
+     PHOTO DROP-IN: 2:1 (1774 × 887) unter public/img/pairing/ ablegen und
+     `image` auf den Pfad setzen. Solange null, rendert die Sektion die
+     Copy über die volle Breite. */
   pairing: {
-    kicker: "Passt zu",
-    title: "Fleisch und Käse",
-    text: "Ein Wein für den gedeckten Tisch: Seine Intensität hält kräftigen Gerichten stand, seine Zugänglichkeit macht ihn zum unkomplizierten Begleiter.",
-    why: {
-      kicker: "Warum das zusammenpasst",
-      principle:
-        "Gleiches Gewicht auf beiden Seiten. Ein intensives Gericht braucht einen Wein, der es aushält — der Primitivo bringt genug Substanz mit, bleibt dabei aber weich genug, um nicht zu konkurrieren.",
-      axes: [
-        { label: "Intensität", value: 80, hint: "hält kräftigen Gerichten stand" },
-        { label: "Weichheit", value: 70, hint: "rundes Tannin statt harter Kante" },
-        { label: "Frucht", value: 74, hint: "dunkle Frucht als Gegengewicht zum Salz" },
-      ],
+    scene: {
+      dish: "Bombette aus dem Valle d'Itria",
+      copy: "Bombette sind kleine Röllchen aus Schweinenacken, gefüllt mit Caciocavallo und Pfeffer, die in der Macelleria über Holzkohle gegrillt werden. Der Käse schmilzt nach innen, außen wird das Fleisch dunkel und knusprig. Ein Gericht ohne Feierlichkeit — und genau dafür ist dieser Primitivo gemacht. Er hält der Intensität stand, bleibt aber weich genug, um nicht mit ihr zu konkurrieren. Das Salz des gereiften Käses holt seine dunkle Frucht deutlich nach vorn.",
+      image: null,
+      imageAlt:
+        "Gegrillte Bombette aus dem Valle d'Itria auf einem Holzbrett, daneben ein Glas Primitivo und die geöffnete Flasche",
+      regionLink: {
+        label: "Mehr über Apulien entdecken",
+        href: "/regionen#apulien",
+        region: "apulien",
+      },
     },
-    photo: "/img/dinner.webp",
-    photoAlt: "Gedeckter Tisch mit Fleisch, Käse und Rotwein",
-    items: [
-      {
-        icon: "plate",
-        title: "Rotes Fleisch",
-        text: "Braten, Schmorgerichte und Gegrilltes",
-        note: "Das Fett im Fleisch nimmt das Tannin auf und macht den Wein samtiger.",
-      },
-      {
-        icon: "plate",
-        title: "Gereifter Käse",
-        text: "Pecorino, Caciocavallo und Hartkäse",
-        note: "Salz im gereiften Käse hebt die dunkle Frucht deutlich hervor.",
-      },
-      {
-        icon: "plate",
-        title: "Kräftige Primi",
-        text: "Herzhafte Pasta mit Fleischsauce",
-        note: "Ragù und Wein teilen sich dieselbe Tiefe — keiner überstimmt den anderen.",
-      },
-      {
-        icon: "glasses",
-        title: "Salumi",
-        text: "Aufschnitt und würzige Wurstwaren",
-        note: "Zur Würze der Wurst antwortet die Frucht, nicht die Säure.",
-      },
-    ],
   },
 
   /* ---- Servieren & Genießen + Der Maria-Moment ---- */
@@ -320,7 +295,7 @@ export const PRIMITIVO_SALENTO = {
     { label: "Überblick", href: "#ueberblick" },
     { label: "Servieren", href: "#servieren" },
     { label: "Geschmack", href: "#geschmack" },
-    { label: "Passt zu", href: "#passt-zu" },
+    { label: "Passt zu", href: "#maria-moment" },
     { label: "Fragen", href: "#fragen" },
   ],
 };

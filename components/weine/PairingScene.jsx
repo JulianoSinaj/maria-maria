@@ -29,6 +29,12 @@ import {
    Flasche, Glas, Korkenzieher und Teller an keiner Breite angeschnitten
    werden, also skaliert die Szene vollständig statt formatfüllend.
 
+   PHOTO DROP-IN: `scene.image` steht pro Wein auf null, solange das Foto
+   fehlt. Dann entfällt die Bildspalte und die Copy trägt die Sektion allein
+   über die volle Breite — kein Platzhalter, kein gebrochenes Bild. Sobald
+   die Datei unter public/img/pairing/ liegt, genügt der Pfad im wineData;
+   an dieser Komponente ändert sich dafür nichts.
+
    Messung: `food_pairing_view` feuert einmal, sobald mindestens die Hälfte
    der Sektion sichtbar war; die beiden Links melden `wine_shop_click` mit
    cta_position „food_pairing" und `region_link_click`. */
@@ -71,6 +77,9 @@ export default function PairingScene({ wine }) {
 
   const titleId = `pairing-${wine.slug}-title`;
   const animate = !reduced && !touch;
+  /* Ohne Foto keine leere Spalte: das Raster fällt auf eine Spalte zurück
+     und die Copy bekommt eine Lesebreite statt der halben Bühne. */
+  const hasImage = Boolean(scene.image);
 
   return (
     <section
@@ -91,26 +100,34 @@ export default function PairingScene({ wine }) {
       <div className="relative mx-auto max-w-content px-6 py-14 sm:py-16 lg:px-10 lg:py-20">
         {/* Desktop 7/12 Bild + 5/12 Copy laut Wireframe; mobil steht das
             Bild oben und der Text darunter. */}
-        <div className="grid items-center gap-8 lg:grid-cols-[7fr_5fr] lg:gap-12">
-          <motion.div
-            initial={animate ? { opacity: 0, y: 24 } : false}
-            whileInView={animate ? { opacity: 1, y: 0 } : undefined}
-            viewport={{ once: true, amount: 0.25 }}
-            transition={{ duration: 0.7, ease: EASE }}
-            className="ring-hairline overflow-hidden rounded-card-lg bg-cream shadow-luxe"
-          >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={scene.image}
-              alt={scene.imageAlt}
-              width={1774}
-              height={887}
-              loading="lazy"
-              decoding="async"
-              sizes="(min-width: 1024px) 58vw, 100vw"
-              className="h-auto w-full object-contain"
-            />
-          </motion.div>
+        <div
+          className={
+            hasImage
+              ? "grid items-center gap-8 lg:grid-cols-[7fr_5fr] lg:gap-12"
+              : "grid items-center gap-8"
+          }
+        >
+          {hasImage && (
+            <motion.div
+              initial={animate ? { opacity: 0, y: 24 } : false}
+              whileInView={animate ? { opacity: 1, y: 0 } : undefined}
+              viewport={{ once: true, amount: 0.25 }}
+              transition={{ duration: 0.7, ease: EASE }}
+              className="ring-hairline overflow-hidden rounded-card-lg bg-cream shadow-luxe"
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={scene.image}
+                alt={scene.imageAlt}
+                width={1774}
+                height={887}
+                loading="lazy"
+                decoding="async"
+                sizes="(min-width: 1024px) 58vw, 100vw"
+                className="h-auto w-full object-contain"
+              />
+            </motion.div>
+          )}
 
           <motion.div
             initial={animate ? { opacity: 0, y: 20 } : false}

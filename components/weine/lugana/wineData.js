@@ -187,49 +187,23 @@ export const LUGANA = {
     chip: { title: "Lugana", subtitle: "Gardasee · Lombardei" },
   },
 
-  /* ---- Passt zu (Food-Pairing, aus dem Datenblatt) ---- */
+  /* ---- Der Maria-Maria-Moment (eine Szene statt einer Speisenliste) ----
+     PHOTO DROP-IN: 2:1 (1774 × 887) unter public/img/pairing/ ablegen und
+     `image` auf den Pfad setzen. Solange null, rendert die Sektion die
+     Copy über die volle Breite. */
   pairing: {
-    kicker: "Passt zu",
-    title: "Roher und gegarter Fisch – und der Auftakt des Abends",
-    text: "Der Lugana begleitet die feine Küche ohne sie zu übertönen: Er liebt zarte Gerichte, die ohne schwere Saucen auskommen.",
-    why: {
-      kicker: "Warum das zusammenpasst",
-      principle:
-        "Zurückhaltung ist hier die Qualität. Der Lugana setzt Feinheit gegen Feinheit — er begleitet ein zartes Gericht auf Augenhöhe, statt es zu übertönen. Schwere Saucen wären der eine Gast zu viel.",
-      axes: [
-        { label: "Finesse", value: 80, hint: "leise genug für zarte Gerichte" },
-        { label: "Mineralik", value: 66, hint: "salziger Zug, der Meeresfrüchte spiegelt" },
-        { label: "Körper", value: 48, hint: "schlank, ohne dünn zu wirken" },
-      ],
+    scene: {
+      dish: "Risotto mit Gardasee-Felchen",
+      copy: "Der Felchen ist der Fisch des Sees: mager, süßlich, ohne jede Schwere. Im Risotto gart er nur die letzten Minuten mit, dazu Zitronenabrieb und ein Löffel Butter zum Schluss. Genau hier zeigt der Lugana, warum Zurückhaltung seine Stärke ist — sein voller, weicher Gaumen legt sich unter die Cremigkeit des Reis, ohne den zarten Fisch zu überdecken. Der lange aromatische Nachhall trägt den Bissen weiter, als der Teller es allein täte.",
+      image: null,
+      imageAlt:
+        "Risotto mit Gardasee-Felchen auf hellem Teller, daneben ein Glas Lugana DOC und die geöffnete Flasche",
+      regionLink: {
+        label: "Mehr über das Lugana-Gebiet am Gardasee",
+        href: "/regionen#garda",
+        region: "garda",
+      },
     },
-    photo: "/img/aperitivo.jpg",
-    photoAlt: "Aperitivo mit Antipasti und einem Glas Weißwein",
-    items: [
-      {
-        icon: "fish",
-        title: "Fisch-Antipasti",
-        text: "Roh und gegart – von Crudo bis Gebratenem",
-        note: "Bei Crudo entscheidet Feinheit: Der Lugana legt sich darunter, nicht darüber.",
-      },
-      {
-        icon: "shell",
-        title: "Meeresfrüchte",
-        text: "Zart gewürzt, ohne schwere Saucen",
-        note: "Der mineralische Zug greift die salzige Note der Schalentiere auf.",
-      },
-      {
-        icon: "plate",
-        title: "Feine Primi",
-        text: "Delikate erste Gänge mit klarer Würze",
-        note: "Klare Würze braucht einen klaren Wein — hier stört nichts das andere.",
-      },
-      {
-        icon: "glasses",
-        title: "Aperitivo",
-        text: "Ausgezeichnet als Auftakt des Abends",
-        note: "Der schlanke Körper öffnet den Appetit, statt ihn schon zu stillen.",
-      },
-    ],
   },
 
   /* ---- Servieren & Genießen + Der Maria-Moment ---- */
@@ -332,7 +306,7 @@ export const LUGANA = {
     { label: "Überblick", href: "#ueberblick" },
     { label: "Servieren", href: "#servieren" },
     { label: "Geschmack", href: "#geschmack" },
-    { label: "Passt zu", href: "#passt-zu" },
+    { label: "Passt zu", href: "#maria-moment" },
     { label: "Fragen", href: "#fragen" },
   ],
 };

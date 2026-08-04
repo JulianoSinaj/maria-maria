@@ -184,49 +184,24 @@ export const PRIMITIVO_14_5 = {
     chip: { title: "Torricella", subtitle: "Apulien · Italien" },
   },
 
-  /* ---- Passt zu (Food-Pairing, aus dem Datenblatt) ---- */
+  /* ---- Der Maria-Maria-Moment ---- */
+  /* ---- Der Maria-Maria-Moment (eine Szene statt einer Speisenliste) ----
+     PHOTO DROP-IN: 2:1 (1774 × 887) unter public/img/pairing/ ablegen und
+     `image` auf den Pfad setzen. Solange null, rendert die Sektion die
+     Copy über die volle Breite. */
   pairing: {
-    kicker: "Passt zu",
-    title: "Ein Begleiter für die kräftige Küche",
-    text: "Dieser Wein gibt sein Bestes zu robusten Primi, rotem Fleisch und Wild sowie zu Hartkäse.",
-    why: {
-      kicker: "Warum das zusammenpasst",
-      principle:
-        "Am Tisch gewinnt keiner — beide sollen bestehen. Mit 14,5 % vol. bringt der Primitivo genug Gewicht mit, um kräftigen Gerichten zu begegnen, statt unter ihnen zu verschwinden.",
-      axes: [
-        { label: "Kraft", value: 78, hint: "14,5 % vol. mit Substanz dahinter" },
-        { label: "Struktur", value: 70, hint: "Tannin, das Fett und Eiweiß bindet" },
-        { label: "Frucht", value: 72, hint: "dunkle Frucht als warmer Gegenpol" },
-      ],
+    scene: {
+      dish: "Orecchiette mit Braciole-Ragù",
+      copy: "Braciole sind dünn geklopfte Rinderrouladen mit Pecorino und Petersilie, die stundenlang in der Tomatensauce schmoren, bis sie zerfallen. Das Ragù daraus ist Apuliens Sonntagsgericht, und die Orecchiette fangen es in ihren Mulden auf. Mit 14,5 % vol. bringt der Primitivo das Gewicht mit, das eine so lange geschmorte Sauce verlangt. Das Fett aus dem Fleisch bindet sein Tannin und macht es rund, während die dunkle Frucht gegen die Säure der Tomate steht.",
+      image: null,
+      imageAlt:
+        "Orecchiette mit Braciole-Ragù in einer Schüssel, daneben ein Glas Primitivo und die geöffnete Flasche",
+      regionLink: {
+        label: "Mehr über Apulien entdecken",
+        href: "/regionen#apulien",
+        region: "apulien",
+      },
     },
-    photo: "/img/dinner.webp",
-    photoAlt: "Gedeckter Tisch mit herzhaften Gerichten und Rotwein",
-    items: [
-      {
-        icon: "plate",
-        title: "Robuste Primi",
-        text: "Kräftige Pasta- und Nudelgerichte",
-        note: "Je kräftiger die Sauce, desto weicher wirkt das Tannin daneben.",
-      },
-      {
-        icon: "plate",
-        title: "Rotes Fleisch",
-        text: "Gegrilltes, Braten und Schmorgerichte",
-        note: "Das Fett im Fleisch bindet den Gerbstoff — der Wein wird runder im Mund.",
-      },
-      {
-        icon: "plate",
-        title: "Wild",
-        text: "Cacciagione und kräftige Wildgerichte",
-        note: "Kräftiges Wildaroma braucht ein Glas, das nicht sofort nachgibt.",
-      },
-      {
-        icon: "glasses",
-        title: "Hartkäse",
-        text: "Gereifte Käse mit fester Textur",
-        note: "Salz und Reife im Käse holen die dunkle Frucht nach vorn.",
-      },
-    ],
   },
 
   /* ---- Servieren & Genießen + Der Maria-Moment ---- */
@@ -328,7 +303,7 @@ export const PRIMITIVO_14_5 = {
     { label: "Überblick", href: "#ueberblick" },
     { label: "Servieren", href: "#servieren" },
     { label: "Geschmack", href: "#geschmack" },
-    { label: "Passt zu", href: "#passt-zu" },
+    { label: "Passt zu", href: "#maria-moment" },
     { label: "Fragen", href: "#fragen" },
   ],
 };

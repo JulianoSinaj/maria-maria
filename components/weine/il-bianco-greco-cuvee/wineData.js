@@ -175,49 +175,24 @@ export const IL_BIANCO = {
     chip: { title: "Campania", subtitle: "Kampanien · Italien" },
   },
 
-  /* ---- Passt zu (aus dem Datenblatt) ---- */
+  /* ---- Der Maria-Maria-Moment ---- */
+  /* ---- Der Maria-Maria-Moment (eine Szene statt einer Speisenliste) ----
+     PHOTO DROP-IN: 2:1 (1774 × 887) unter public/img/pairing/ ablegen und
+     `image` auf den Pfad setzen. Solange null, rendert die Sektion die
+     Copy über die volle Breite. */
   pairing: {
-    kicker: "Passt zu",
-    title: "Alles, was aus dem Meer kommt",
-    text: "Das Datenblatt ist hier eindeutig: Fisch, Krustentiere, Meeresfrüchte. Der Bianco begleitet sie, ohne sie zu übertönen.",
-    why: {
-      kicker: "Warum das zusammenpasst",
-      principle:
-        "Eine Cuvée gleicht aus. Was der eine Partner an Frische mitbringt, ergänzt der andere an Schmelz — deshalb passt der Bianco zu einer ganzen Tafel und nicht nur zu einem einzelnen Gang.",
-      axes: [
-        { label: "Balance", value: 78, hint: "die Cuvée gleicht die Spitzen aus" },
-        { label: "Frische", value: 72, hint: "hält Fisch und Salz in Form" },
-        { label: "Körper", value: 52, hint: "genug Schmelz für Krustentiere" },
-      ],
+    scene: {
+      dish: "Gegrillte Gambero rosso mit Olivenöl und Meersalz",
+      copy: "Rote Garnelen, nur kurz über die Glut gelegt, mit gutem Olivenöl und grobem Meersalz. Ein Gericht ohne Versteck: Es steht und fällt mit der Süße des Krustentiers. Genau dafür ist eine Cuvée gemacht. Der Schmelz des Bianco nimmt diese Süße auf und trägt sie weiter, während die Frische der zweiten Rebsorte das Salz in Form hält. Kein Partner drängt sich vor — was der eine an Fülle gibt, gleicht der andere an Spannung aus.",
+      image: null,
+      imageAlt:
+        "Gegrillte rote Gambero mit Olivenöl und Meersalz auf einer Platte, daneben ein Glas Il Bianco und die geöffnete Flasche",
+      regionLink: {
+        label: "Mehr über Kampanien entdecken",
+        href: "/regionen#kampanien",
+        region: "kampanien",
+      },
     },
-    photo: "/img/aperitivo.jpg",
-    photoAlt: "Gedeckter Tisch mit Fisch und einem Glas Weißwein",
-    items: [
-      {
-        icon: "fish",
-        title: "Fischgerichte",
-        text: "Gegrillt, gedämpft oder aus dem Ofen",
-        note: "Ob gedämpft oder gegrillt: Die Balance passt sich der Garart an.",
-      },
-      {
-        icon: "shell",
-        title: "Krustentiere",
-        text: "Garnelen, Scampi, Langustinen",
-        note: "Der feine Schmelz nimmt die Süße der Krustentiere auf.",
-      },
-      {
-        icon: "plate",
-        title: "Meeresfrüchte",
-        text: "Vongole, Muscheln, Crudo",
-        note: "Frische gegen Salz — die klassischste Brücke, die es am Tisch gibt.",
-      },
-      {
-        icon: "glasses",
-        title: "Aperitivo",
-        text: "Gut gekühlt als Auftakt des Abends",
-        note: "Gekühlt tritt die Frische vor, der Körper zurück: ein leichter Auftakt.",
-      },
-    ],
   },
 
   /* ---- Servieren & Genießen + Der Maria-Moment ---- */
@@ -316,7 +291,7 @@ export const IL_BIANCO = {
     { label: "Überblick", href: "#ueberblick" },
     { label: "Servieren", href: "#servieren" },
     { label: "Geschmack", href: "#geschmack" },
-    { label: "Passt zu", href: "#passt-zu" },
+    { label: "Passt zu", href: "#maria-moment" },
     { label: "Fragen", href: "#fragen" },
   ],
 };

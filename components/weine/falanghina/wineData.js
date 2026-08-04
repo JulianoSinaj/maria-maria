@@ -186,54 +186,29 @@ export const FALANGHINA = {
     chip: { title: "Beneventano", subtitle: "Kampanien · Italien" },
   },
 
-  /* ---- Passt zu (Food-Pairing, aus dem Datenblatt) ----
+  /* ---- Der Maria-Maria-Moment ----
      `why` erklärt das Prinzip hinter den Empfehlungen: `principle` ist der
      Merksatz, `axes` sind die Struktur-Achsen des Weins (0–100), die die
      Sektion als Balken zeichnet, und `note` an jedem Item sagt in einer Zeile,
      welche Achse hier greift. Alles optional — fehlt `why`, rendert die
      Sektion wie bisher nur die Liste. */
+  /* ---- Der Maria-Maria-Moment (eine Szene statt einer Speisenliste) ----
+     PHOTO DROP-IN: 2:1 (1774 × 887) unter public/img/pairing/ ablegen und
+     `image` auf den Pfad setzen. Solange null, rendert die Sektion die
+     Copy über die volle Breite. */
   pairing: {
-    kicker: "Passt zu",
-    title: "Ein Begleiter für die helle Küche",
-    text: "Die Falanghina liebt alles, was aus dem Meer kommt – und jeden Auftakt eines guten Abends.",
-    why: {
-      kicker: "Warum das zusammenpasst",
-      principle:
-        "Frische bindet Salz und Fett. Die lebendige Säure der Falanghina wischt den Gaumen nach jedem Bissen frei – deshalb schmeckt der zweite Happen so klar wie der erste.",
-      axes: [
-        { label: "Frische", value: 84, hint: "hebt zarte Aromen, statt sie zu decken" },
-        { label: "Körper", value: 46, hint: "leicht genug für helle Küche" },
-        { label: "Frucht", value: 58, hint: "helle Frucht statt Süße" },
-      ],
+    scene: {
+      dish: "Gegrillter Wolfsbarsch mit Zitrone und Oliven",
+      copy: "Ein ganzer Fisch vom Grill, die Haut knusprig, innen nur Zitrone, Petersilie und ein paar schwarze Oliven. Mehr braucht es an einem warmen Abend nicht. Die Falanghina antwortet mit genau der Frische, die dieses Gericht verlangt: Ihre lebendige Säure ersetzt den zweiten Spritzer Zitrone und wischt den Gaumen nach jedem Bissen frei. Ihr leichter Körper rahmt das zarte Fischaroma, statt es zuzudecken — der letzte Bissen schmeckt so klar wie der erste.",
+      image: null,
+      imageAlt:
+        "Gegrillter Wolfsbarsch mit Zitrone und Oliven auf einer Platte, daneben ein Glas Falanghina und die geöffnete Flasche",
+      regionLink: {
+        label: "Mehr über Kampanien entdecken",
+        href: "/regionen#kampanien",
+        region: "kampanien",
+      },
     },
-    photo: "/img/aperitivo.jpg",
-    photoAlt: "Aperitivo mit Antipasti und einem Glas Weißwein",
-    items: [
-      {
-        icon: "fish",
-        title: "Fischgerichte",
-        text: "Gegrillt, gebraten oder aus dem Ofen",
-        note: "Die Säure ersetzt den Spritzer Zitrone – und lässt das Fischaroma stehen.",
-      },
-      {
-        icon: "shell",
-        title: "Krustentiere & Meeresfrüchte",
-        text: "Von Garnelen bis Vongole",
-        note: "Salzige Jodnoten finden im mediterranen Ton des Weins ihr Echo.",
-      },
-      {
-        icon: "plate",
-        title: "Antipasti",
-        text: "Helle Vorspeisen und Gemüse",
-        note: "Der leichte Körper überfährt keine Vorspeise, sondern rahmt sie.",
-      },
-      {
-        icon: "glasses",
-        title: "Aperitivo-Momente",
-        text: "Gut gekühlt als Auftakt des Abends",
-        note: "Gekühlt wirkt die Frische straffer – sie macht Appetit, statt zu sättigen.",
-      },
-    ],
   },
 
   /* ---- Servieren & Genießen + Der Maria-Moment ---- */
@@ -337,7 +312,7 @@ export const FALANGHINA = {
     { label: "Überblick", href: "#ueberblick" },
     { label: "Servieren", href: "#servieren" },
     { label: "Geschmack", href: "#geschmack" },
-    { label: "Passt zu", href: "#passt-zu" },
+    { label: "Passt zu", href: "#maria-moment" },
     { label: "Fragen", href: "#fragen" },
   ],
 };

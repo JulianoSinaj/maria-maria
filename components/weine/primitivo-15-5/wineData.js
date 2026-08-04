@@ -179,49 +179,24 @@ export const PRIMITIVO_155 = {
     chip: { title: "Torricella", subtitle: "Apulien · Italien" },
   },
 
-  /* ---- Passt zu (Food-Pairing, aus dem Datenblatt) ---- */
+  /* ---- Der Maria-Maria-Moment ---- */
+  /* ---- Der Maria-Maria-Moment (eine Szene statt einer Speisenliste) ----
+     PHOTO DROP-IN: 2:1 (1774 × 887) unter public/img/pairing/ ablegen und
+     `image` auf den Pfad setzen. Solange null, rendert die Sektion die
+     Copy über die volle Breite. */
   pairing: {
-    kicker: "Passt zu",
-    title: "Ein Wein für den vollen Tisch",
-    text: "Mit 15,5 % vol. und dieser Dichte begleitet der Primitivo hervorragend alles, was Substanz, Würze und Röstaromen mitbringt.",
-    why: {
-      kicker: "Warum das zusammenpasst",
-      principle:
-        "Dichte verlangt Dichte. Bei 15,5 % vol. wirkt der Primitivo neben einem leichten Gericht schlicht zu laut — erst gegen Röstaromen und lange geschmorte Substanz kommt er ins Gleichgewicht.",
-      axes: [
-        { label: "Dichte", value: 92, hint: "15,5 % vol. — verlangt Substanz im Teller" },
-        { label: "Wärme", value: 80, hint: "Alkoholwärme, die Röstaromen trägt" },
-        { label: "Würze", value: 74, hint: "trifft pikante Küche auf halbem Weg" },
-      ],
+    scene: {
+      dish: "Agnello al forno mit Kartoffeln und Rosmarin",
+      copy: "Lammschulter aus dem Ofen, darunter Kartoffeln, die das Bratenfett aufnehmen, dazu Rosmarin und ein paar Knoblauchzehen in der Schale. Nach zwei Stunden löst sich das Fleisch vom Knochen und die Kartoffeln haben eine dunkle Kruste. Dieses Gericht ist einer der wenigen Gegner, die 15,5 % vol. nicht überstimmen. Die Alkoholwärme des Primitivo findet in den Röstaromen ihr Echo, seine Würze antwortet dem Rosmarin — Dichte gegen Dichte, ohne dass einer nachgibt.",
+      image: null,
+      imageAlt:
+        "Lamm aus dem Ofen mit Kartoffeln und Rosmarin in der Bratform, daneben ein Glas Primitivo und die geöffnete Flasche",
+      regionLink: {
+        label: "Mehr über Apulien entdecken",
+        href: "/regionen#apulien",
+        region: "apulien",
+      },
     },
-    photo: "/img/dinner.webp",
-    photoAlt: "Gedeckter Tisch mit herzhaften Gerichten und Rotwein",
-    items: [
-      {
-        icon: "plate",
-        title: "Primi al ragù",
-        text: "Pastagerichte mit langsam geschmortem Ragù",
-        note: "Stunden im Topf ergeben die Tiefe, die dieser Dichte gewachsen ist.",
-      },
-      {
-        icon: "plate",
-        title: "Braten",
-        text: "Arrosti — gebratenes und geschmortes Fleisch",
-        note: "Röstaromen aus der Pfanne finden in der Wärme des Weins ihr Echo.",
-      },
-      {
-        icon: "plate",
-        title: "Wild",
-        text: "Cacciagione und kräftige Schmorgerichte",
-        note: "Eines der wenigen Aromen, die hier nicht überstimmt werden.",
-      },
-      {
-        icon: "glasses",
-        title: "Scharf & Hartkäse",
-        text: "Pikante Speisen und lang gereifte Hartkäse",
-        note: "Bei Schärfe gilt: gut gekühlt servieren, sonst tritt der Alkohol vor.",
-      },
-    ],
   },
 
   /* ---- Servieren & Genießen + Der Maria-Moment ---- */
@@ -323,7 +298,7 @@ export const PRIMITIVO_155 = {
     { label: "Überblick", href: "#ueberblick" },
     { label: "Servieren", href: "#servieren" },
     { label: "Geschmack", href: "#geschmack" },
-    { label: "Passt zu", href: "#passt-zu" },
+    { label: "Passt zu", href: "#maria-moment" },
     { label: "Fragen", href: "#fragen" },
   ],
 };

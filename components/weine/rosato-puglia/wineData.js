@@ -175,49 +175,24 @@ export const ROSATO_NEGROAMARO = {
     chip: { title: "Salento", subtitle: "Apulien · Italien" },
   },
 
-  /* ---- Passt zu (Food-Pairing, aus dem Datenblatt) ---- */
+  /* ---- Der Maria-Maria-Moment ---- */
+  /* ---- Der Maria-Maria-Moment (eine Szene statt einer Speisenliste) ----
+     PHOTO DROP-IN: 2:1 (1774 × 887) unter public/img/pairing/ ablegen und
+     `image` auf den Pfad setzen. Solange null, rendert die Sektion die
+     Copy über die volle Breite. */
   pairing: {
-    kicker: "Passt zu",
-    title: "Der Wein für den Aperitivo",
-    text: "Ideal zum Aperitif und zu allem, was leicht und mediterran bleibt — von Antipasti bis zum blauen Fisch.",
-    why: {
-      kicker: "Warum das zusammenpasst",
-      principle:
-        "Der Rosato steht dazwischen — und genau das ist sein Vorteil: die Frische eines Weißweins, die Frucht eines Roten. Er passt dorthin, wo ein Tisch beides gleichzeitig verlangt.",
-      axes: [
-        { label: "Frische", value: 76, hint: "die Seite, die er vom Weißwein hat" },
-        { label: "Frucht", value: 68, hint: "die Seite, die er vom Roten hat" },
-        { label: "Leichtigkeit", value: 72, hint: "bleibt mediterran, nie schwer" },
-      ],
+    scene: {
+      dish: "Gegrillte Sardinen mit Tomate und Oregano",
+      copy: "Blauer Fisch vom Grill, dazu nur aufgeschnittene Tomaten, Oregano und Olivenöl — ein Sommergericht, an dem die meisten Weißweine scheitern: Sardinen sind zu kräftig, zu ölig, zu salzig. Der Rosato steht genau dazwischen und macht daraus seinen Vorteil. Seine Frucht trägt das kräftige Fischaroma, das einem Weißwein zu viel wäre, und die Frische von der anderen Seite hält das Öl in Schach. Gut gekühlt, wenn der Abend noch hell ist.",
+      image: null,
+      imageAlt:
+        "Gegrillte Sardinen mit Tomate und Oregano auf einer Platte, daneben ein Glas Rosato und die geöffnete Flasche",
+      regionLink: {
+        label: "Mehr über Apulien entdecken",
+        href: "/regionen#apulien",
+        region: "apulien",
+      },
     },
-    photo: "/img/dinner.webp",
-    photoAlt: "Gedeckter Tisch mit Antipasti und Roséwein",
-    items: [
-      {
-        icon: "glasses",
-        title: "Aperitivo",
-        text: "Der Klassiker vor dem Essen",
-        note: "Frucht macht neugierig, Frische macht Appetit — beides in einem Glas.",
-      },
-      {
-        icon: "plate",
-        title: "Antipasti",
-        text: "Vorspeisen, kalt wie warm",
-        note: "Auf einem Antipasti-Teller liegt vieles nebeneinander: Der Rosato passt zu allem davon.",
-      },
-      {
-        icon: "plate",
-        title: "Einfache Primi",
-        text: "Unkomplizierte Pasta- und Reisgerichte",
-        note: "Wo Tomate und Kräuter führen, ergänzt die Frucht, ohne zu dominieren.",
-      },
-      {
-        icon: "plate",
-        title: "Fisch & weißes Fleisch",
-        text: "Blauer Fisch, Geflügel, Kaninchen",
-        note: "Blauer Fisch ist vielen Weißweinen zu kräftig — hier trägt ihn die Frucht.",
-      },
-    ],
   },
 
   /* ---- Servieren & Genießen + Der Maria-Moment ---- */
@@ -323,7 +298,7 @@ export const ROSATO_NEGROAMARO = {
     { label: "Überblick", href: "#ueberblick" },
     { label: "Servieren", href: "#servieren" },
     { label: "Geschmack", href: "#geschmack" },
-    { label: "Passt zu", href: "#passt-zu" },
+    { label: "Passt zu", href: "#maria-moment" },
     { label: "Fragen", href: "#fragen" },
   ],
 };

@@ -14,7 +14,7 @@ import RegionExplorer from "@/components/home/RegionExplorer";
 import WineRail from "@/components/WineRail";
 import FaqSection from "@/components/faq/FaqSection";
 import { HOME_FAQ } from "@/components/faq/faqData";
-import { Grapes, Vineyard, Barrel, Glasses, Arrow, Clock } from "@/components/Icons";
+import { Vineyard, Glasses, Plate, Conversation, Arrow, Clock } from "@/components/Icons";
 import { WINES, REGION_COUNT } from "@/components/data";
 import Atmosphere, { Aura, GhostWord, Vines } from "@/components/Atmosphere";
 
@@ -23,32 +23,32 @@ import Atmosphere, { Aura, GhostWord, Vines } from "@/components/Atmosphere";
 
 const MOMENT = [
   {
-    icon: <Grapes className="h-7 w-7" />,
+    icon: <Glasses className="h-7 w-7" />,
     kicker: "Auswahl",
-    title: "Handverlesen",
-    text: "Jede Flasche wird persönlich verkostet und ausgewählt – nur Weine, die uns wirklich überzeugen, finden den Weg in unsere Kollektion.",
+    title: "Persönlich kuratiert",
+    text: "Jeder Wein wird persönlich verkostet und bewusst ausgewählt. So entsteht ein überschaubares Boutique-Sortiment, das Gastgeber sicher empfehlen und Genießer leicht entdecken können.",
     note: "Persönlich verkostet · Kuratiert",
   },
   {
     icon: <Vineyard className="h-7 w-7" />,
     kicker: "Herkunft",
-    title: "Ausgewählte Weingüter",
-    text: "Wir arbeiten mit kleinen, familiengeführten Weingütern in Italien zusammen – Menschen, die ihre Heimat, ihre Reben und ihre Handwerkskunst mit Leidenschaft pflegen.",
+    title: "Herkunft mit Handschrift",
+    text: "Wir arbeiten mit ausgewählten, familiengeführten Weingütern in Italien. Region, Rebsorte und die Menschen hinter dem Wein geben jeder Flasche eine glaubwürdige und erzählenswerte Geschichte.",
     note: "Familiengeführt · Italien",
   },
   {
-    icon: <Barrel className="h-7 w-7" />,
-    kicker: "Handwerk",
-    title: "Limitierte Produktion",
-    text: "Unsere Weine entstehen in begrenzten Mengen und spiegeln das Terroir und die Persönlichkeit ihrer Herkunft unverfälscht wider – echt, charakterstark, besonders.",
-    note: "Begrenzte Mengen · Terroir",
+    icon: <Plate className="h-7 w-7" />,
+    kicker: "Anlass",
+    title: "Für Genussmomente gemacht",
+    text: "Vom Aperitivo und Food Pairing bis zu Events und stilvollen Geschenken: Maria Maria verbindet Geschmack, Ästhetik und italienische Lebensart in Momenten, die in Erinnerung bleiben.",
+    note: "Aperitivo · Events · Geschenke",
   },
   {
-    icon: <Glasses className="h-7 w-7" />,
-    kicker: "Haltung",
-    title: "Gemeinsam genießen",
-    text: "Ein Maria-Moment ist kein Anlass, sondern eine Entscheidung: den Augenblick zu wählen, den Wein zu öffnen und bewusst miteinander zu sein.",
-    note: "Bewusst · Miteinander",
+    icon: <Conversation className="h-7 w-7" />,
+    kicker: "Begleitung",
+    title: "Persönlich begleitet",
+    text: "Ein klares Sortiment, verständliche Empfehlungen und der direkte Austausch erleichtern Auswahl und Einsatz – für eine persönliche Zusammenarbeit auf Augenhöhe.",
+    note: "Direkter Austausch · Beratung",
   },
 ];
 
@@ -222,9 +222,9 @@ export default function HomeContent() {
         <div className="relative mx-auto max-w-content px-6 py-10 sm:py-14 lg:px-10">
         <SectionTitle
           eyebrow="Unsere Philosophie"
-          description="Vier Überzeugungen, die jede Flasche prägen – vom Weinberg bis ins Glas."
+          description="Persönlich kuratiert, klar in ihrer Herkunft und ausgewählt für Gastronomie, Hospitality, Events und besondere Genussmomente."
         >
-          Der Maria Maria Moment
+          Italienische Boutique-Weine, die sich leicht wählen, erzählen und erleben lassen.
         </SectionTitle>
         <Stagger className="mx-auto mt-7 grid w-full grid-cols-1 gap-5 sm:mt-9 sm:grid-cols-2 lg:grid-cols-4">
           {MOMENT.map((m, i) => (
@@ -241,6 +241,16 @@ export default function HomeContent() {
             </StaggerItem>
           ))}
         </Stagger>
+        {/* Abschluss der Philosophie: Zierlinie, Einordnung, Partner-Einstieg */}
+        <Reveal className="mt-9 flex flex-col items-center gap-4 sm:mt-11">
+          <GrapeRule />
+          <p className="text-balance text-center text-[13px] leading-[1.6] text-charcoal/70">
+            Für Gastronomie, Hospitality und besondere Konzepte
+          </p>
+          <Button href="/kontakt" size="lg">
+            Maria Maria als Partner entdecken
+          </Button>
+        </Reveal>
         </div>
       </section>
 

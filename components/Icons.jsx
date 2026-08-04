@@ -105,6 +105,15 @@ export const Plate = (p) => (
     <path d="M9 12v9M9 12c-2 0-2 3-2 4s0 4 2 4M39 12v22M39 12c2 0 2 4 2 7s-1 5-3 5" />
   </svg>
 );
+/* zwei Gegenüber mit Sprechblase — persönliche Begleitung / Austausch */
+export const Conversation = (p) => (
+  <svg viewBox="0 0 48 48" {...F} {...p}>
+    <path d="M14 12h11a3 3 0 0 1 3 3v5a3 3 0 0 1-3 3h-6l-4.5 3.5V23h-0.5a3 3 0 0 1-3-3v-5a3 3 0 0 1 3-3z" />
+    <circle cx="17.5" cy="31" r="4" /><circle cx="31" cy="29.5" r="4.5" />
+    <path d="M10.5 42v-2.5a7 7 0 0 1 7-7 7 7 0 0 1 5.4 2.6" />
+    <path d="M23 42v-2a8 8 0 0 1 8-8 8 8 0 0 1 8 8v2" />
+  </svg>
+);
 export const GrapeVine = (p) => (
   <svg viewBox="0 0 48 48" {...F} {...p}>
     <path d="M24 8c-1 3-1 5 1 7" /><path d="M27 15c3-2 6-2 8 0-2 2-5 2-8 0z" />

@@ -13,7 +13,7 @@
    Nextens Stylesheets und Skripte stehen — das schlug als Hydration-Fehler
    fehl. Next hoistet ein nacktes <link> ohnehin selbst in den Head. */
 
-import { heroSources } from "./HeroPhoto";
+import { heroSources } from "@/components/weine/pairingPhoto";
 
 export default function HeroPreload({ wine }) {
   if (!wine.images?.hero) return null;

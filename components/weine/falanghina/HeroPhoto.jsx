@@ -12,46 +12,10 @@
    FalanghinaHero, motion.div-Wrapper). */
 
 import { heroBlurFor } from "@/components/weine/heroBlur";
-
-/* Muss zur Layout-Logik im Hero passen: das Foto füllt immer den vollen
-   Viewport, deshalb 100vw. Ohne sizes lädt der Browser die größte Quelle. */
-const SIZES = "100vw";
-
-/* Kodiert einen Dateinamen für den URL-Pfad: encodeURIComponent() erwischt
-   Leerzeichen, Halbgeviertstriche, Umlaute und typografische Anführungszeichen —
-   kodiert aber auch das Komma zu %2C. Genau daran scheitert Nexts statischer
-   Datei-Handler: er vergleicht gegen die nicht dekodierten Pfadsegmente und
-   antwortet auf %2C mit 404, während das literale Komma sauber ausgeliefert
-   wird. Das Komma wird deshalb wieder zurückgedreht; es ist in einem Pfad-
-   segment ohnehin ein erlaubtes Zeichen (RFC 3986 sub-delims).
-   Die Dateien auf der Platte bleiben unangetastet. */
-export function encodePairingFile(file) {
-  return encodeURIComponent(file).replace(/%2C/g, ",");
-}
-
-/* Food-Pairing-Foto je Wein — das Gericht, das der jeweilige Wein begleitet,
-   trägt jetzt die Hero-Bühne. Die Dateinamen tragen Leerzeichen, Halbgeviert-
-   striche, Umlaute und typografische Anführungszeichen; sie bleiben auf der
-   Platte unverändert und werden beim Bauen der URL kodiert (siehe unten). */
-const PAIRING_FILE = {
-  falanghina: "Beneventano Falanghina IGP – Bernsteinmakrele „all’acqua pazza“ mit Kirschtomaten.png",
-  "greco-di-tufo": "Greco di Tufo DOCG – Spaghetti mit Venusmuscheln.png",
-  "il-bianco-greco-cuvee": "Il Bianco – Campania Bianco IGP – Paccheri mit Garnelen, Zucchini und Zitrone.png",
-  "il-rosso-aglianico": "Il Rosso – Aglianico – Irpinisches Ofenlamm mit Kartoffeln und Rosmarin.png",
-  lugana: "Lugana DOC – Risotto mit Gardasee-Felchen, Zitrone und Kräutern.png",
-  "primitivo-14-5": "Primitivo di Manduria DOP 14,5 – Orecchiette mit Braciole-Ragù und Cacioricotta.png",
-  "primitivo-15-5": "Primitivo di Manduria 15,5 –geschmorte Rinderbacke mit Kartoffelcreme.png",
-  "primitivo-salento": "Primitivo Salento IGP – Gegrillte apulische Bombette mit Caciocavallo.png",
-  "rosato-puglia": "Rosato Puglia IGP – Salentinischer Oktopus mit Tomaten und Kartoffeln.png",
-};
-
-export function heroSources(slug) {
-  const src = `/img/food-pairing/${encodePairingFile(PAIRING_FILE[slug])}`;
-  /* Kein srcSet: von diesen PNGs existieren keine vorab optimierten
-     -640/-1280/-1920.webp-Varianten wie beim früheren Kellerei-Foto.
-     Ein srcSet auf nicht existierende Dateien liefe in 404s. */
-  return { src, sizes: SIZES };
-}
+/* Dateiliste und URL-Bau liegen in pairingPhoto.js, weil dieselbe Datei auch
+   die Sektion „Der Maria-Maria-Moment" trägt (PairingScene, Client-Komponente).
+   Sie darf dafür nicht diese Server-Komponente importieren müssen. */
+import { heroSources } from "@/components/weine/pairingPhoto";
 
 export default function HeroPhoto({ wine, className = "" }) {
   const { src, sizes } = heroSources(wine.slug);

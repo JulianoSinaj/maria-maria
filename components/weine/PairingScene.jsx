@@ -1,9 +1,18 @@
 "use client";
 import { useEffect, useRef } from "react";
 import Link from "next/link";
-import { motion, useReducedMotion } from "motion/react";
+import {
+  motion,
+  useMotionValue,
+  useReducedMotion,
+  useScroll,
+  useSpring,
+  useTransform,
+} from "motion/react";
 import Button from "@/components/ui/Button";
 import { useTouchDevice } from "@/components/motion/useMediaQuery";
+import { heroBlurFor } from "@/components/weine/heroBlur";
+import { PAIRING_PHOTO_SIZE, pairingPhotoSrc } from "@/components/weine/pairingPhoto";
 import {
   pushEvent,
   WINE_SHOP_CLICK,
@@ -23,17 +32,31 @@ import {
    Das Bild ist Gebrauchsbeweis für den Wein, nicht Motiv für sich — deshalb
    genau ein Foto pro Landingpage, nie die ganze Serie.
 
-   Bild: 2:1 (1774 × 887), width/height stehen im Markup, damit beim Laden
-   nichts springt (CLS). Es liegt unterhalb des Heros und lädt deshalb lazy —
-   niemals das LCP-Bild. `object-contain` statt `cover`: laut Guide dürfen
-   Flasche, Glas, Korkenzieher und Teller an keiner Breite angeschnitten
-   werden, also skaliert die Szene vollständig statt formatfüllend.
+   DAS FOTO: dasselbe Motiv, das oben die Hero-Bühne trägt (pairingPhoto.js).
+   Der Hero zeigt es formatfüllend und angeschnitten als Raum, in den man
+   hineinfährt; hier kehrt es als gerahmtes Objekt auf dem Tisch zurück —
+   vollständig sichtbar, auf einem Elfenbein-Passepartout, leicht in den Raum
+   gekippt. Reprise statt Wiederholung: gleiches Motiv, anderer Aggregat-
+   zustand. Weil die URL identisch ist, kostet der zweite Auftritt kein Byte —
+   der Browser bedient ihn aus dem Cache und das Bild steht sofort.
+   `scene.image` sticht diese Vorgabe, falls je ein eigenes Motiv für die
+   Sektion existiert; fehlt beides, entfällt die Bildspalte ersatzlos.
 
-   PHOTO DROP-IN: `scene.image` steht pro Wein auf null, solange das Foto
-   fehlt. Dann entfällt die Bildspalte und die Copy trägt die Sektion allein
-   über die volle Breite — kein Platzhalter, kein gebrochenes Bild. Sobald
-   die Datei unter public/img/pairing/ liegt, genügt der Pfad im wineData;
-   an dieser Komponente ändert sich dafür nichts.
+   `object-contain` statt `cover`: laut Guide dürfen Flasche, Glas, Korken-
+   zieher und Teller an keiner Breite angeschnitten werden. Deshalb liegt auch
+   die gesamte Choreografie auf dem Rahmen und nie auf dem Bildausschnitt —
+   kein Zoom, der den Teller beschneidet. width/height stehen im Markup, damit
+   beim Laden nichts springt (CLS), und das Foto lädt lazy, niemals als LCP.
+
+   Bewegung (Desktop, Zeiger, keine reduzierte Bewegung):
+   · Vorhang — der Rahmen wird beim Eintritt von oben nach unten aufgedeckt
+     (clip-path), das Bild darin fängt sich aus einem Hauch Überzeichnung.
+   · Drift — Bild und Copy laufen beim Scrollen mit unterschiedlichem Gewicht
+     durchs Bild, beide durch dieselbe Feder; das erzeugt die Tiefe.
+   · Neigung — der Rahmen folgt dem Zeiger in echtem 3D (perspective +
+     preserve-3d), federgewichtet, nie linear.
+   · Glanz — ein weicher Lichtstreifen wandert mit dem Zeiger über die
+     Oberfläche, wie das Streiflicht auf einem Fotoabzug.
 
    Messung: `food_pairing_view` feuert einmal, sobald mindestens die Hälfte
    der Sektion sichtbar war; die beiden Links melden `wine_shop_click` mit
@@ -41,12 +64,174 @@ import {
 
 const EASE = [0.16, 1, 0.3, 1];
 
+/* Scroll-Drift: schwer und träge — die Szene soll ziehen, nicht rutschen. */
+const DRIFT = { stiffness: 64, damping: 22, mass: 0.95 };
+/* Zeiger-Neigung: leichter und wacher, damit der Rahmen am Cursor hängt. */
+const TILT = { stiffness: 170, damping: 20, mass: 0.55 };
+
+/* Der gerahmte Abzug. Eigene Komponente, weil sie eigene Zeiger-Federn hält —
+   die dürfen nicht in der Sektion liegen, wo sie auch ohne Bild liefen. */
+function PairingPhoto({ src, blur, alt, drift, animate }) {
+  /* Zeigerposition, normalisiert auf −0.5 … +0.5 vom Rahmenmittelpunkt */
+  const px = useMotionValue(0);
+  const py = useMotionValue(0);
+  const near = useMotionValue(0);
+
+  /* Jede Zeiger-Koordinate läuft durch eine Feder, keine rohen Werte */
+  const rotateY = useSpring(useTransform(px, [-0.5, 0.5], [-7.5, 7.5]), TILT);
+  const rotateX = useSpring(useTransform(py, [-0.5, 0.5], [5.5, -5.5]), TILT);
+  /* Der Lichtstreifen wandert gegenläufig zur Neigung — so wirkt er wie eine
+     Reflexion der Raumlampe und nicht wie ein mitgeschleppter Sticker. */
+  const glareX = useSpring(useTransform(px, [-0.5, 0.5], [180, -180]), TILT);
+  const glareOpacity = useSpring(near, TILT);
+  /* Das Umgebungslicht hinter dem Rahmen atmet mit der Nähe des Zeigers */
+  const auraOpacity = useSpring(useTransform(near, [0, 1], [0.55, 1]), TILT);
+
+  const track = (event) => {
+    const r = event.currentTarget.getBoundingClientRect();
+    px.set((event.clientX - r.left) / r.width - 0.5);
+    py.set((event.clientY - r.top) / r.height - 0.5);
+    near.set(1);
+  };
+
+  const release = () => {
+    px.set(0);
+    py.set(0);
+    near.set(0);
+  };
+
+  const photo = (
+    <>
+      {/* LQIP aus derselben Quelle wie der Hero: deckt die Fläche, falls das
+          Foto wider Erwarten doch nicht im Cache liegt — kein weißer Kasten. */}
+      {blur && (
+        <img
+          src={blur}
+          alt=""
+          aria-hidden="true"
+          draggable={false}
+          className="absolute inset-0 h-full w-full select-none object-cover blur-lg"
+        />
+      )}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={src}
+        alt={alt}
+        width={PAIRING_PHOTO_SIZE.width}
+        height={PAIRING_PHOTO_SIZE.height}
+        loading="lazy"
+        decoding="async"
+        draggable={false}
+        sizes="(min-width: 1024px) 58vw, 100vw"
+        className="relative h-full w-full select-none object-contain"
+      />
+    </>
+  );
+
+  /* Passepartout: heller Karton, Haarlinie in Champagner, kein Schlagschatten —
+     die Bildsprache der Seite kennt keine Kartenschatten (shadow-luxe ist
+     bewusst flach), Tiefe entsteht hier über Licht und Perspektive. */
+  const frameClass =
+    "ring-hairline relative overflow-hidden rounded-card-lg bg-cream p-2 sm:p-2.5";
+  const plateClass =
+    "relative aspect-[2/1] w-full overflow-hidden rounded-[1.35rem] bg-ivory";
+
+  if (!animate) {
+    return (
+      <figure className={frameClass}>
+        <div className={plateClass}>{photo}</div>
+      </figure>
+    );
+  }
+
+  return (
+    /* Drei Ebenen, jede mit genau einer Aufgabe:
+       Kamera (perspective + Scroll-Drift) → Bühne (Kippung, preserve-3d,
+       hält Licht und Abzug in echter Tiefe) → Abzug (Vorhang, Rahmen).
+
+       Warum Licht und Abzug getrennte Kinder der Bühne sind: sobald ein
+       Element ein clip-path trägt — und der Vorhang tut das dauerhaft —
+       zwingt die Spezifikation sein transform-style auf `flat`. Läge das
+       Licht im Rahmen, wäre sein translateZ wirkungslos. So bleibt die
+       Bühne frei von Gruppierungs-Eigenschaften und die z-Achse echt. */
+    <motion.div style={{ y: drift }} className="relative [perspective:1500px] will-transform">
+      <motion.div
+        onPointerMove={track}
+        onPointerLeave={release}
+        style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
+        whileHover={{ z: 26 }}
+        transition={{ type: "spring", ...TILT }}
+        className="relative will-transform"
+      >
+        {/* Umgebungslicht, echte 80 px hinter dem Abzug — Tiefe über Licht
+            statt über Schatten: die Bildsprache der Seite kennt keine
+            Kartenschatten (shadow-luxe löst bewusst flach auf). */}
+        <motion.div
+          aria-hidden="true"
+          style={{
+            opacity: auraOpacity,
+            z: -80,
+            background:
+              "radial-gradient(60% 55% at 50% 50%, rgba(200,183,122,0.30) 0%, rgba(138,43,47,0.10) 45%, transparent 72%)",
+          }}
+          className="pointer-events-none absolute -inset-6 blur-2xl sm:-inset-10"
+        />
+
+        <motion.figure
+          initial={{ opacity: 0, clipPath: "inset(0% 0% 100% 0% round 2rem)" }}
+          whileInView={{ opacity: 1, clipPath: "inset(0% 0% 0% 0% round 2rem)" }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 1.05, ease: EASE }}
+          className={frameClass}
+        >
+          <div className={plateClass}>
+            {/* Das Bild fängt sich aus einem Hauch Überzeichnung in seine
+                Endgröße — die Bewegung endet exakt bei 1, also unbeschnitten. */}
+            <motion.div
+              initial={{ scale: 1.05 }}
+              whileInView={{ scale: 1 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 1.5, ease: EASE }}
+              className="absolute inset-0 will-transform"
+            >
+              {photo}
+            </motion.div>
+          </div>
+
+          {/* Streiflicht: wandert mit dem Zeiger, liegt vor dem Karton und
+              bleibt für Zeiger und Screenreader unsichtbar. Neigung und
+              Zentrierung stehen bewusst in der style-Prop und nicht als
+              Tailwind-Klasse: Framer schreibt `transform` komplett neu und
+              würde eine Utility-Rotation stillschweigend überschreiben. */}
+          <motion.div
+            aria-hidden="true"
+            style={{ x: glareX, rotate: 14, opacity: glareOpacity }}
+            className="pointer-events-none absolute -inset-y-12 left-1/3 w-1/3 bg-gradient-to-r from-transparent via-white/45 to-transparent blur-md"
+          />
+        </motion.figure>
+      </motion.div>
+    </motion.div>
+  );
+}
+
 export default function PairingScene({ wine }) {
   const scene = wine.pairing?.scene;
   const reduced = useReducedMotion();
   const touch = useTouchDevice();
   const ref = useRef(null);
   const seen = useRef(false);
+
+  /* Der Drift läuft über die volle Sichtbarkeitsstrecke der Sektion: 0 beim
+     Eintritt von unten, 1 beim Verlassen nach oben. Feder statt roher
+     Scroll-Koordinate — sonst delegiert Framer an die ScrollTimeline des
+     Browsers, und die läuft hier zu hart. */
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"],
+  });
+  const photoDrift = useSpring(useTransform(scrollYProgress, [0, 1], [44, -44]), DRIFT);
+  /* Die Copy zieht flacher mit — die Differenz ist die Tiefe. */
+  const copyDrift = useSpring(useTransform(scrollYProgress, [0, 1], [16, -16]), DRIFT);
 
   /* ≥50 % sichtbar → einmalig melden. IntersectionObserver statt Scroll-
      Listener, damit die Messung die Interaktionslatenz nicht belastet. */
@@ -77,9 +262,12 @@ export default function PairingScene({ wine }) {
 
   const titleId = `pairing-${wine.slug}-title`;
   const animate = !reduced && !touch;
-  /* Ohne Foto keine leere Spalte: das Raster fällt auf eine Spalte zurück
-     und die Copy bekommt eine Lesebreite statt der halben Bühne. */
-  const hasImage = Boolean(scene.image);
+  /* Eigenes Sektionsmotiv sticht; sonst das Hero-Foto des Weins. Ohne beides
+     keine leere Spalte: das Raster fällt auf eine Spalte zurück und die Copy
+     bekommt eine Lesebreite statt der halben Bühne. */
+  const image = scene.image ?? pairingPhotoSrc(wine.slug);
+  const imageAlt = scene.imageAlt ?? `${wine.name} – das passende Gericht`;
+  const blur = scene.image ? null : heroBlurFor(wine.slug);
 
   return (
     <section
@@ -102,87 +290,84 @@ export default function PairingScene({ wine }) {
             Bild oben und der Text darunter. */}
         <div
           className={
-            hasImage
+            image
               ? "grid items-center gap-8 lg:grid-cols-[7fr_5fr] lg:gap-12"
               : "grid items-center gap-8"
           }
         >
-          {hasImage && (
-            <motion.div
-              initial={animate ? { opacity: 0, y: 24 } : false}
-              whileInView={animate ? { opacity: 1, y: 0 } : undefined}
-              viewport={{ once: true, amount: 0.25 }}
-              transition={{ duration: 0.7, ease: EASE }}
-              className="ring-hairline overflow-hidden rounded-card-lg bg-cream shadow-luxe"
-            >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={scene.image}
-                alt={scene.imageAlt}
-                width={1774}
-                height={887}
-                loading="lazy"
-                decoding="async"
-                sizes="(min-width: 1024px) 58vw, 100vw"
-                className="h-auto w-full object-contain"
-              />
-            </motion.div>
+          {image && (
+            <PairingPhoto
+              src={image}
+              blur={blur}
+              alt={imageAlt}
+              drift={photoDrift}
+              animate={animate}
+            />
           )}
 
+          {/* Zwei Ebenen mit Absicht: außen der Scroll-Drift (Motion Value in
+              `style`), innen der Auftritt (initial/whileInView). Beides auf
+              einem Element hieße zweimal `y` auf derselben Ebene — der Motion
+              Value gewänne und der Auftritt verlöre seinen Anstieg. */}
           <motion.div
-            initial={animate ? { opacity: 0, y: 20 } : false}
-            whileInView={animate ? { opacity: 1, y: 0 } : undefined}
-            viewport={{ once: true, amount: 0.25 }}
-            transition={{ duration: 0.7, delay: 0.1, ease: EASE }}
+            style={animate ? { y: copyDrift } : undefined}
+            className={animate ? "will-transform" : undefined}
           >
-            <p className="text-[10.5px] font-semibold uppercase tracking-[0.26em] text-champagne">
-              Der Maria-Maria-Moment
-            </p>
-            <h2
-              id={titleId}
-              className="mt-3 text-balance font-playfair text-[clamp(1.6rem,2.8vw,2.2rem)] leading-[1.08] text-charcoal"
+            <motion.div
+              initial={animate ? { opacity: 0, y: 22 } : false}
+              whileInView={animate ? { opacity: 1, y: 0 } : undefined}
+              viewport={{ once: true, amount: 0.25 }}
+              transition={{ duration: 0.7, delay: 0.1, ease: EASE }}
             >
-              Wozu passt {wine.name}?
-            </h2>
-            <h3 className="mt-3 font-playfair text-[clamp(1rem,1.5vw,1.2rem)] italic leading-snug text-bordeaux">
-              {scene.dish}
-            </h3>
-            <p className="mt-4 max-w-prose text-[13.5px] leading-[1.7] text-charcoal/70">
-              {scene.copy}
-            </p>
-
-            <div className="mt-7 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center">
-              <Button
-                href={wine.cta.button.href}
-                variant="primary"
-                size="md"
-                className="w-full sm:w-auto"
-                onClick={() =>
-                  pushEvent(WINE_SHOP_CLICK, {
-                    wine_name: wine.name,
-                    cta_position: CTA_POSITION.foodPairing,
-                    language: pageLanguage(),
-                  })
-                }
+              <p className="text-[10.5px] font-semibold uppercase tracking-[0.26em] text-champagne">
+                Der Maria-Maria-Moment
+              </p>
+              <h2
+                id={titleId}
+                className="mt-3 text-balance font-playfair text-[clamp(1.6rem,2.8vw,2.2rem)] leading-[1.08] text-charcoal"
               >
-                Diesen Wein im offiziellen Shop entdecken
-              </Button>
+                Wozu passt {wine.name}?
+              </h2>
+              <h3 className="mt-3 font-playfair text-[clamp(1rem,1.5vw,1.2rem)] italic leading-snug text-bordeaux">
+                {scene.dish}
+              </h3>
+              <p className="mt-4 max-w-prose text-[13.5px] leading-[1.7] text-charcoal/70">
+                {scene.copy}
+              </p>
 
-              {scene.regionLink && (
-                <Link
-                  href={scene.regionLink.href}
+              <div className="mt-7 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center">
+                <Button
+                  href={wine.cta.button.href}
+                  variant="primary"
+                  size="md"
+                  className="w-full sm:w-auto"
                   onClick={() =>
-                    pushEvent(REGION_LINK_CLICK, {
+                    pushEvent(WINE_SHOP_CLICK, {
                       wine_name: wine.name,
-                      region: scene.regionLink.region ?? null,
+                      cta_position: CTA_POSITION.foodPairing,
+                      language: pageLanguage(),
                     })
                   }
-                  className="inline-flex min-h-[44px] items-center justify-center rounded-full px-2 text-[12.5px] text-charcoal/70 underline-offset-4 transition-colors hover:text-bordeaux hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bordeaux"
                 >
-                  {scene.regionLink.label}
-                </Link>
-              )}
-            </div>
+                  Diesen Wein im offiziellen Shop entdecken
+                </Button>
+
+                {scene.regionLink && (
+                  <Link
+                    href={scene.regionLink.href}
+                    onClick={() =>
+                      pushEvent(REGION_LINK_CLICK, {
+                        wine_name: wine.name,
+                        region: scene.regionLink.region ?? null,
+                      })
+                    }
+                    className="inline-flex min-h-[44px] items-center justify-center rounded-full px-2 text-[12.5px] text-charcoal/70 underline-offset-4 transition-colors hover:text-bordeaux hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bordeaux"
+                  >
+                    {scene.regionLink.label}
+                  </Link>
+                )}
+              </div>
+            </motion.div>
           </motion.div>
         </div>
       </div>

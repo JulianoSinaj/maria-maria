@@ -105,8 +105,14 @@ export default function FalanghinaHero({ wine, photo }) {
 
   const act1Content = (
     <>
-      <Eyebrow>{wine.eyebrow}</Eyebrow>
-      <h1 className="mt-5 font-playfair text-[clamp(2.4rem,5.6vw,4.4rem)] leading-[1.05] text-charcoal">
+      {/* Der Eyebrow ist ein inline-flex-Kasten — `lg:text-right` der Textspalte
+          greift bei ihm nicht. Ohne eigene Ausrichtung klebte er im Foto-Modus
+          am linken Spaltenrand, während Titel, Rule und CTAs rechts standen.
+          Die Flex-Zeile richtet ihn in beiden Modi mit der Headline aus. */}
+      <div className={`flex ${m("lg:justify-end")}`}>
+        <Eyebrow>{wine.eyebrow}</Eyebrow>
+      </div>
+      <h1 className="mt-4 font-playfair text-[clamp(2.4rem,5.6vw,4.4rem)] leading-[1.05] text-charcoal">
         <SplitText text={wine.heroTitle[0]} className="block" delay={0.12} />
         <SplitText
           text={wine.heroTitle[1]}

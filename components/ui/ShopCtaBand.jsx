@@ -1,7 +1,9 @@
+"use client";
 import ShaderGradient from "@/components/motion/ShaderGradient";
 import { Reveal } from "@/components/motion/Reveal";
 import { Eyebrow } from "@/components/Deco";
 import Button from "@/components/ui/Button";
+import { pushEvent, CTA_SHOP_CLICK } from "@/lib/analytics";
 
 /* Abschlussband „zum Shop" — eine Bauform für alle Seiten.
 
@@ -16,7 +18,14 @@ import Button from "@/components/ui/Button";
    Jetzt liegt die Gestaltung hier, die Seiten geben nur noch Text und Ziele.
 
    Props: eyebrow, title (Node — kursive Akzente kommen von der Seite),
-   text, primary/secondary als { label, href }. */
+   text, primary/secondary als { label, href }.
+
+   Messung: der primäre Button meldet jeden Klick als `cta_shop_click` an den
+   dataLayer (lib/analytics). Weil alle neun Wein-Landingpages dieselbe
+   Bauform benutzen, hängt die Messung damit an der Komponente statt an den
+   Seiten — eine Seite kann das Event nicht mehr vergessen. `wine` und
+   `location` sagen in GA4, welche Seite und welche Sektion den Klick
+   ausgelöst hat. */
 
 export default function ShopCtaBand({
   eyebrow,
@@ -28,6 +37,9 @@ export default function ShopCtaBand({
      ersetzen die Bordeaux-Palette des Shaders. Ohne `colors` bleibt es beim
      Marken-Bordeaux. */
   colors,
+  /* Kontext für die Messung: Slug der Landingpage und Name der Sektion */
+  wine = null,
+  location = "cta_band",
 }) {
   return (
     <section className="relative overflow-hidden">
@@ -50,7 +62,20 @@ export default function ShopCtaBand({
             <Reveal delay={0.18} className="w-full">
               <div className="mx-auto flex w-full max-w-xs flex-col items-stretch gap-3 sm:max-w-none sm:flex-row sm:items-center sm:justify-center">
                 {primary && (
-                  <Button href={primary.href} variant="light" size="md" className="w-full sm:w-auto">
+                  <Button
+                    href={primary.href}
+                    variant="light"
+                    size="md"
+                    className="w-full sm:w-auto"
+                    onClick={() =>
+                      pushEvent(CTA_SHOP_CLICK, {
+                        wine,
+                        location,
+                        link_url: primary.href,
+                        link_text: primary.label,
+                      })
+                    }
+                  >
                     {primary.label}
                   </Button>
                 )}

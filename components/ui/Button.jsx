@@ -1,24 +1,18 @@
 "use client";
-import { useRef } from "react";
 import Link from "next/link";
-import { motion, useMotionValue, useSpring, useReducedMotion } from "motion/react";
-import { useMagneticEnabled } from "../motion/MagneticContext";
+import { motion } from "motion/react";
 import { Arrow, ArrowUpRight } from "../Icons";
 
 /* Maria Maria button system.
-   Layered micro-interactions: magnetic cursor tracking, a fill that rises
-   inside the pill, a masked label roll, arrow travel, and press compression.
-   All layers are transform/opacity only — zero layout shift.
+   Layered micro-interactions: a fill that rises inside the pill, a masked
+   label roll, arrow travel, and press compression. All layers are
+   transform/opacity only — zero layout shift.
 
-   Magnetism lives on the button element itself (no wrapper div): a wrapper
-   would break `w-full`-CTAs and flex layouts, while x/y on the element merges
-   cleanly with the whileTap spring. Pointer-fine only, off under reduced
-   motion. */
+   The button body itself stays put on hover: magnetic cursor tracking read as
+   restless while scrolling past, so the hover language is colour and fill
+   only. */
 
 const MotionLink = motion.create(Link);
-
-const MAGNET_SPRING = { stiffness: 180, damping: 16, mass: 0.4 };
-const MAGNET_STRENGTH = 0.22;
 
 const VARIANTS = {
   primary: {
@@ -66,7 +60,8 @@ export default function Button({
   size = "md",
   icon = true,
   iconType = "arrow", // "arrow" | "up-right" | "none"
-  magnetic = true,
+  /* akzeptiert, aber ohne Wirkung — die Magnet-Bewegung ist entfernt */
+  magnetic = true, // eslint-disable-line no-unused-vars
   className = "",
   children,
   ...rest
@@ -74,31 +69,9 @@ export default function Button({
   const cfg = VARIANTS[variant] || VARIANTS.primary;
   const Icon = iconType === "up-right" ? ArrowUpRight : Arrow;
 
-  const ref = useRef(null);
-  const routeEnabled = useMagneticEnabled();
-  const reduced = useReducedMotion();
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-  const sx = useSpring(x, MAGNET_SPRING);
-  const sy = useSpring(y, MAGNET_SPRING);
-  const magneticOn = magnetic && routeEnabled && !reduced;
-
-  const onPointerMove = (e) => {
-    if (!magneticOn || e.pointerType === "touch") return;
-    const r = ref.current?.getBoundingClientRect();
-    if (!r) return;
-    x.set((e.clientX - (r.left + r.width / 2)) * MAGNET_STRENGTH);
-    y.set((e.clientY - (r.top + r.height / 2)) * MAGNET_STRENGTH);
-  };
-  const onPointerLeave = () => {
-    x.set(0);
-    y.set(0);
-  };
-
   const cls = [
     "group relative inline-flex select-none items-center justify-center gap-2.5 overflow-hidden rounded-full",
     "font-medium uppercase tracking-[0.14em] transition-shadow duration-300",
-    magneticOn ? "will-transform" : "",
     SIZES[size] || SIZES.md,
     cfg.base,
     className,
@@ -141,11 +114,9 @@ export default function Button({
   );
 
   const motionProps = {
-    ref,
     whileTap: { scale: 0.96 },
     transition: { type: "spring", stiffness: 400, damping: 22 },
     className: cls,
-    ...(magneticOn && { style: { x: sx, y: sy }, onPointerMove, onPointerLeave }),
     ...rest,
   };
 

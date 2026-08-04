@@ -24,7 +24,7 @@ const WEBP_SRCSET = [
    optimize:heroes-Lauf komplett aus public/img/wines neu generiert und
    würde einen Home-Eintrag stillschweigend verlieren. */
 const BLUR =
-  "data:image/webp;base64,UklGRmgAAABXRUJQVlA4IFwAAADwAwCdASoUAAsAPxl0sVCspqSisAgBkCMJYgCdAB6Vbu72KSJ+wyQAAM4CRFTs9H/aRhOBUH9itY5tDDpWKzCE0B/K+kM9hQ9gnX72NV8/G4rGyZeh3QY6rjOQAA==";
+  "data:image/webp;base64,UklGRmoAAABXRUJQVlA4IF4AAAAQBACdASoUAAsAPxl0sVCspqSisAgBkCMJQBOmUABfktEaDQuUthusAAD4/SkHb/7Bcz1UyDDfXU9YZmqqhdf7LzxG5XV4AGP3UgoPK3IHcY9UmQd6iqS5MgK2aAAA";
 
 /* Bildanker leicht rechts der Mitte: so bleibt die Flasche auch im harten
    Hochkant-Ausschnitt des Handys im Bild, während die Frau links aus dem

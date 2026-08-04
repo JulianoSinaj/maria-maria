@@ -17,7 +17,7 @@ import { heroSources } from "./HeroPhoto";
 
 export default function HeroPreload({ wine }) {
   if (!wine.images?.hero) return null;
-  const { webpSrcSet, sizes } = heroSources(wine.slug);
+  const { src, sizes } = heroSources(wine.slug);
 
   /* React 18 warnt im Dev-Modus über die kleingeschriebenen Attribute
      („Invalid DOM property `imagesrcset`"). Die Warnung ist hier gewollt in
@@ -27,8 +27,8 @@ export default function HeroPreload({ wine }) {
     <link
       rel="preload"
       as="image"
-      type="image/webp"
-      imagesrcset={webpSrcSet}
+      type="image/png"
+      href={src}
       imagesizes={sizes}
       fetchpriority="high"
     />

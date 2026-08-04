@@ -96,6 +96,13 @@ export default function FalanghinaHero({ wine, photo }) {
 
   const cueOpacity = useSpring(useTransform(scrollYProgress, [0, 0.08], [1, 0]), SPRING);
 
+  /* Der Foto-Hero spiegelt die Textspalte nach rechts (Schleier läuft dort von
+     rechts herein). Der Flaschen-Fallback behält die linke Spalte — dort steht
+     die Flasche rechts, eine Spiegelung würde Text und Flasche kollidieren
+     lassen. `mirror` schaltet deshalb nur die lg-Ausrichtung um. */
+  const mirror = hasPhoto;
+  const m = (cls) => (mirror ? cls : "");
+
   const act1Content = (
     <>
       <Eyebrow>{wine.eyebrow}</Eyebrow>
@@ -110,11 +117,11 @@ export default function FalanghinaHero({ wine, photo }) {
           delay={0.3}
         />
       </h1>
-      <GrapeRule className="mt-7 hidden sm:flex" />
-      <p className="mt-5 max-w-md text-[14px] leading-relaxed text-charcoal/75 sm:mt-6 sm:text-[15px]">
+      <GrapeRule className={`mt-7 hidden sm:flex ${m("lg:justify-end")}`} />
+      <p className={`mt-5 max-w-md text-[14px] leading-relaxed text-charcoal/75 sm:mt-6 sm:text-[15px] ${m("lg:ml-auto")}`}>
         {wine.lede}
       </p>
-      <div className="mt-8 flex flex-col items-stretch gap-3 sm:mt-9 sm:flex-row sm:items-center sm:gap-3.5">
+      <div className={`mt-8 flex flex-col items-stretch gap-3 sm:mt-9 sm:flex-row sm:items-center sm:gap-3.5 ${m("lg:justify-end")}`}>
         <Button href="/shop" size="lg" className="w-full sm:w-auto">
           Im offiziellen Shop entdecken
         </Button>
@@ -130,7 +137,7 @@ export default function FalanghinaHero({ wine, photo }) {
         </p>
       )}
       {wine.edition && (
-        <p className="mt-3.5 inline-flex items-center gap-2.5 self-start rounded-full border border-champagne/60 bg-ivory/70 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-charcoal/75 backdrop-blur-sm">
+        <p className={`mt-3.5 inline-flex items-center gap-2.5 self-start rounded-full border border-champagne/60 bg-ivory/70 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-charcoal/75 backdrop-blur-sm ${m("lg:self-end")}`}>
           <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-bordeaux" />
           Limitierte Auflage · nur <span className="tabular-nums">{wine.edition}</span>
         </p>
@@ -140,11 +147,12 @@ export default function FalanghinaHero({ wine, photo }) {
 
   /* ================= Foto-Modus: das echte Kellerfoto als Kino-Bühne ================= */
   if (hasPhoto) {
-    /* Schleier für Lesbarkeit: mobil von unten, ab lg von links */
+    /* Schleier für Lesbarkeit: mobil von unten, ab lg von rechts — gespiegelt
+       zur Textspalte, damit die Headline auf der hellen Seite steht */
     const veilLayers = (
       <>
         <div className="absolute inset-0 bg-gradient-to-t from-ivory via-ivory/60 to-ivory/10 lg:hidden" />
-        <div className="absolute inset-0 hidden bg-gradient-to-r from-ivory via-ivory/55 to-transparent lg:block" />
+        <div className="absolute inset-0 hidden bg-gradient-to-l from-ivory via-ivory/55 to-transparent lg:block" />
       </>
     );
 
@@ -167,7 +175,7 @@ export default function FalanghinaHero({ wine, photo }) {
           {topFade}
           <div className="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-b from-transparent to-ivory" aria-hidden="true" />
           <div className="relative mx-auto flex min-h-[100svh] max-w-content flex-col justify-end px-6 pb-24 pt-32 lg:justify-center lg:px-10 lg:pb-16">
-            <div className="lg:max-w-xl">{act1Content}</div>
+            <div className="lg:ml-auto lg:max-w-xl">{act1Content}</div>
           </div>
         </section>
       );
@@ -198,7 +206,7 @@ export default function FalanghinaHero({ wine, photo }) {
           {/* Akt 2 — das Kino dunkelt ab, damit die Worte im Licht stehen */}
           <motion.div
             style={{ opacity: dimOpacity }}
-            className="pointer-events-none absolute inset-0 bg-gradient-to-r from-charcoal/80 via-charcoal/45 to-charcoal/15"
+            className="pointer-events-none absolute inset-0 bg-gradient-to-l from-charcoal/80 via-charcoal/45 to-charcoal/15"
             aria-hidden="true"
           />
 
@@ -211,14 +219,14 @@ export default function FalanghinaHero({ wine, photo }) {
             {/* Akt 1 — Headline, Lede, CTAs im Schleierlicht */}
             <motion.div
               style={{ opacity: act1Opacity, y: act1Y, pointerEvents: act1Pointer }}
-              className="absolute inset-x-6 inset-y-0 flex flex-col justify-end pb-24 will-transform lg:inset-x-0 lg:max-w-xl lg:justify-center lg:pb-10"
+              className="absolute inset-x-6 inset-y-0 flex flex-col justify-end pb-24 will-transform lg:inset-x-0 lg:ml-auto lg:max-w-xl lg:justify-center lg:pb-10 lg:text-right"
             >
               {act1Content}
             </motion.div>
 
             {/* Akt 2 — drei Charakterworte in Elfenbein über dem Keller */}
             <div
-              className="pointer-events-none absolute inset-x-6 inset-y-0 flex flex-col justify-end pb-24 lg:inset-x-0 lg:justify-center lg:pb-10"
+              className="pointer-events-none absolute inset-x-6 inset-y-0 flex flex-col justify-end pb-24 lg:inset-x-0 lg:justify-center lg:pb-10 lg:text-right"
               aria-hidden="true"
             >
               {wine.heroWords.map((w, i) => (

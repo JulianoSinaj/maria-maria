@@ -22,7 +22,7 @@ const WEBP_SRCSET = [
 /* LQIP: 20 px breite WebP-Vorschau als Data-URI (102 B), erzeugt mit den
    Einstellungen aus scripts/optimize-heroes.mjs (quality 28, effort 6). */
 const BLUR =
-  "data:image/webp;base64,UklGRl4AAABXRUJQVlA4IFIAAABwAwCdASoUAAgAPxl2slEspySisAgBkCMJQBYdhDzA1yfRHAAA/fz3EO9M5y2zBAGmTzNhLMCcPRLSIQWydsKGncUHQpMIGiY0VpI4tXD4oAAA";
+  "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAABwAwCdASoUAAgAPxl2slEspySisAgBkCMJQBadBEAdxwewB+AA/ma//tj8kduJ36uChUQOWlyfpd/LPU3r5Zwyb+oeZC0umn9A3VkMAAA=";
 
 /* Rosé-Flasche als Bildmitte: im schmalen Hochkant-Schnitt des Handys bleibt
    die Neuner-Reihe um ihre helle Mitte herum im Bild, der Himmel darf oben

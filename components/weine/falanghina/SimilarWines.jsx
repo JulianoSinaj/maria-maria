@@ -58,12 +58,12 @@ export default function SimilarWines({ wine }) {
         {/* Schwebende Einträge statt Karten — Reihen trennt nur eine Haarlinie
             (Border dauerhaft reserviert, nth-child färbt sie je Spaltenzahl) */}
         <Stagger className="mt-6 grid gap-x-8 sm:mt-10 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-12" gap={0.09}>
-          {wines.map((w, i) => (
+          {wines.map((w) => (
             <StaggerItem
               key={w.name}
               className="h-full border-t border-transparent pb-6 pt-8 [&:nth-child(n+2)]:border-charcoal/10 sm:[&:nth-child(2)]:border-transparent lg:[&:nth-child(3)]:border-transparent"
             >
-              <WineCard wine={w} index={i} className="h-full" />
+              <WineCard wine={w} className="h-full" />
             </StaggerItem>
           ))}
         </Stagger>

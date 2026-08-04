@@ -166,7 +166,7 @@ export default function WineRail({ wines, className = "" }) {
                 transition={spring}
                 className="col-start-1 row-start-1 will-transform"
               >
-                <WineCard wine={active} index={shown} className="w-full" />
+                <WineCard wine={active} className="w-full" />
               </motion.div>
               )}
             </AnimatePresence>
@@ -217,14 +217,14 @@ export default function WineRail({ wines, className = "" }) {
           ref={trackRef}
           className="no-scrollbar -mx-2 mt-6 flex snap-x snap-mandatory gap-5 overflow-x-auto scroll-smooth px-2 pb-4 pt-1"
         >
-          {list.map((wine, i) => (
+          {list.map((wine) => (
             <div
               key={`${filter ?? "alle"}-${wine.slug}`}
               /* exactly 3 entries per view: a third of the track minus its
                  share of the 2 inter-entry gaps (2 × 20px ÷ 3) */
               className="w-[calc((100%-40px)/3)] shrink-0 snap-start"
             >
-              <WineCard wine={wine} index={i} className="h-full w-full" />
+              <WineCard wine={wine} className="h-full w-full" />
             </div>
           ))}
         </div>

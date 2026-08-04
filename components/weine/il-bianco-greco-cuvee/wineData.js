@@ -28,7 +28,7 @@ export const IL_BIANCO = {
 
   breadcrumb: [
     { label: "Home", href: "/" },
-    { label: "Unsere Weine", href: "/weine" },
+    { label: "Unsere Weine", href: "/unsere-weine" },
     { label: "Il Bianco — Campania Bianco IGP", href: null },
   ],
 
@@ -303,6 +303,7 @@ export const IL_BIANCO = {
     kicker: "Ähnliche Weine entdecken",
     title: "Wenn Ihnen der Bianco gefällt",
     names: ["Falanghina", "Greco di Tufo D.O.C.G.", "Lugana"],
+    trait: "die dieselbe helle Handschrift tragen: frisch, elegant, ausgewogen.",
   },
 
   cta: {

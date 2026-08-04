@@ -455,7 +455,7 @@ export default function ShopPage() {
             </>
           }
           text="Unsere Selection zeichnet eine Reise durch Italien – vom sonnigen Süden Apuliens über Kampanien hinauf ans Ufer des Gardasees."
-          primary={{ label: "Unsere Weine", href: "/weine" }}
+          primary={{ label: "Unsere Weine", href: "/unsere-weine" }}
           secondary={{ label: "Regionen entdecken", href: "/regionen" }}
         />
 

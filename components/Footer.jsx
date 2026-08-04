@@ -6,7 +6,7 @@ import Button from "./ui/Button";
 import { Instagram, Facebook, Mail, Arrow, Check, Grapes } from "./Icons";
 
 const EXPLORE = [
-  { label: "Unsere Weine", href: "/weine" },
+  { label: "Unsere Weine", href: "/unsere-weine" },
   { label: "Regionen Italiens", href: "/regionen" },
   { label: "Magazin", href: "/magazin" },
   { label: "Kontakt", href: "/kontakt" },

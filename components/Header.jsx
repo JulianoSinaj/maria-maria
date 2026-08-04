@@ -11,7 +11,7 @@ import { Close, Menu, Grapes } from "./Icons";
 
 const NAV = [
   { label: "Home", href: "/" },
-  { label: "Unsere Weine", href: "/weine" },
+  { label: "Unsere Weine", href: "/unsere-weine" },
   { label: "Regionen", href: "/regionen" },
   { label: "Magazin", href: "/magazin" },
   { label: "Kontakt", href: "/kontakt" },
@@ -113,7 +113,7 @@ export default function Header() {
           <nav className="hidden items-center gap-8 md:flex" aria-label="Hauptnavigation">
             {NAV.map((item) => {
               const active = isActive(item.href);
-              if (item.href === "/weine") return <WineMenu key={item.href} active={active} scrolled={scrolled} />;
+              if (item.href === "/unsere-weine") return <WineMenu key={item.href} active={active} scrolled={scrolled} />;
               return (
                 <Link
                   key={item.href}
@@ -199,12 +199,12 @@ export default function Header() {
                   >
                     {item.label}
                   </Link>
-                  {item.href === "/weine" && (
+                  {item.href === "/unsere-weine" && (
                     <div className="mb-2 flex flex-wrap gap-2">
                       {WINE_ARTEN.map((a) => (
                         <Link
                           key={a.art}
-                          href={`/weine?art=${a.art}#kollektion`}
+                          href={`/unsere-weine?art=${a.art}#kollektion`}
                           className="rounded-full border border-ivory/20 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-ivory/70 transition-colors hover:border-champagne hover:text-champagne"
                         >
                           {a.label}

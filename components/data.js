@@ -24,7 +24,7 @@ export const WINES = CATALOGUE.map((w) => ({ ...w, photos: cardPhotos(w.slug) })
 
 export const byName = (n) => WINES.find((w) => w.name === n);
 
-/* Slugs, für die bereits eine Landingpage unter app/weine/<slug>/ existiert.
+/* Slugs, für die bereits eine Landingpage unter app/unsere-weine/<slug>/ existiert.
    Geht eine neue Weinseite live, den Slug hier ergänzen — alle Karten
    verlinken dann automatisch dorthin. */
 const DETAIL_PAGES = new Set([
@@ -39,7 +39,7 @@ const DETAIL_PAGES = new Set([
   "rosato-puglia",
 ]);
 
-export const detailHref = (w) => (DETAIL_PAGES.has(w.slug) ? `/weine/${w.slug}` : null);
+export const detailHref = (w) => (DETAIL_PAGES.has(w.slug) ? `/unsere-weine/${w.slug}` : null);
 
 /* Karten-Link: eigene Landingpage, sonst der Shop als Kaufweg. */
 export const wineHref = (w) => detailHref(w) ?? "/shop";

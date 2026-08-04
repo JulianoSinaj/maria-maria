@@ -1,6 +1,6 @@
 /* Greco di Tufo D.O.C.G. — content model for the wine landing page.
    Gleiche Struktur wie components/weine/falanghina/wineData.js; die Sektionen
-   sind wine-Prop-getrieben und werden von app/weine/greco-di-tufo/page.jsx
+   sind wine-Prop-getrieben und werden von app/unsere-weine/greco-di-tufo/page.jsx
    mit diesen Daten gefüttert.
 
    PHOTO DROP-IN: Fotografie unter public/img/wines/greco-di-tufo/ ablegen
@@ -30,7 +30,7 @@ export const GRECO_DI_TUFO = {
 
   breadcrumb: [
     { label: "Home", href: "/" },
-    { label: "Unsere Weine", href: "/weine" },
+    { label: "Unsere Weine", href: "/unsere-weine" },
     { label: "Greco di Tufo D.O.C.G.", href: null },
   ],
 
@@ -301,7 +301,7 @@ export const GRECO_DI_TUFO = {
       id: "greco-vs-falanghina",
       q: "Was ist der Unterschied zu Falanghina?",
       a: "Der Greco bringt Struktur, goldene Reflexe und einen mineralischen Zug vom Tuffboden mit – ein Weißwein mit D.O.C.G.-Status, der leise verführt. Die Falanghina aus dem Beneventano ist weicher, heller in der Frucht und unkomplizierter. Kurz: der Greco für Tiefe, die Falanghina für den leichten Auftakt.",
-      link: { label: "Falanghina entdecken", href: "/weine/falanghina" },
+      link: { label: "Falanghina entdecken", href: "/unsere-weine/falanghina" },
     },
   ],
 
@@ -310,6 +310,7 @@ export const GRECO_DI_TUFO = {
     kicker: "Ähnliche Weine entdecken",
     title: "Wenn Ihnen der Greco gefällt",
     names: ["Falanghina", "Il Bianco – Greco Cuvée", "Lugana"],
+    trait: "die dieselbe Klarheit mitbringen: frisch, fein, mineralisch.",
   },
 
   /* ---- Abschluss-CTA ---- */

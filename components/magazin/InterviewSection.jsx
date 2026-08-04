@@ -314,7 +314,7 @@ export default function InterviewSection() {
                       {linkedWines.map((w) => (
                         <Link
                           key={w.slug}
-                          href={`/weine/${w.slug}`}
+                          href={`/unsere-weine/${w.slug}`}
                           className="group inline-flex min-h-[44px] items-center gap-1.5 rounded-full border border-stone/70 bg-white/60 px-4 py-2 text-[11.5px] font-medium text-charcoal/75 transition-colors duration-300 hover:border-champagne hover:bg-white hover:text-bordeaux"
                         >
                           {w.name}

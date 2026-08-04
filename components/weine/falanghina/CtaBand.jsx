@@ -37,7 +37,7 @@ export default function CtaBand({ wine }) {
       }
       text={wine.cta.text}
       primary={{ label: wine.cta.button.label, href: wine.cta.button.href }}
-      secondary={{ label: "Alle Weine", href: "/weine" }}
+      secondary={{ label: "Alle Weine", href: "/unsere-weine" }}
       /* damit GA4 den Shop-Klick der auslösenden Landingpage zuordnen kann */
       wine={wine.slug}
     />

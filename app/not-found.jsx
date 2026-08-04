@@ -24,7 +24,7 @@ export default function NotFound() {
           Weine — da liegt ohnehin das Beste.
         </p>
         <div className="mx-auto mt-9 flex max-w-xs flex-col items-stretch gap-3 sm:max-w-none sm:flex-row sm:items-center sm:justify-center">
-          <Button href="/weine" size="lg" className="w-full sm:w-auto">
+          <Button href="/unsere-weine" size="lg" className="w-full sm:w-auto">
             Unsere Weine
           </Button>
           <Button href="/" variant="outline" size="lg" className="w-full sm:w-auto">

@@ -34,7 +34,7 @@ export const PRIMITIVO_14_5 = {
 
   breadcrumb: [
     { label: "Home", href: "/" },
-    { label: "Unsere Weine", href: "/weine" },
+    { label: "Unsere Weine", href: "/unsere-weine" },
     { label: "Primitivo di Manduria DOP 14,50", href: null },
   ],
 
@@ -299,7 +299,7 @@ export const PRIMITIVO_14_5 = {
       id: "p145-vs-155",
       q: "Was unterscheidet den Primitivo 14,5 vom Primitivo 15,5?",
       a: "Der 14,5 reift zwölf Monate im Stahltank und bleibt weich, fruchtbetont und leicht zugänglich (14,5 % vol.). Der 15,5 reift zwölf Monate in Capasoni — traditionellen Terrakotta-Amphoren — und ist mit 15,5 % vol. körperreicher, dichter und komplexer. Beide sind zu 100 % Primitivo di Manduria DOP.",
-      link: { label: "Zum Primitivo 15,5", href: "/weine/primitivo-15-5" },
+      link: { label: "Zum Primitivo 15,5", href: "/unsere-weine/primitivo-15-5" },
     },
     {
       id: "p145-dop",
@@ -313,6 +313,7 @@ export const PRIMITIVO_14_5 = {
     kicker: "Ähnliche Weine entdecken",
     title: "Wenn Ihnen der Primitivo 14,50 gefällt",
     names: ["Primitivo 15,5", "Primitivo Salento IGP", "Il Rosso – Aglianico"],
+    trait: "die denselben Ton treffen: warm, vollmundig, süditalienisch.",
   },
 
   /* ---- Abschluss-CTA ---- */

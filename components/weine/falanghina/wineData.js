@@ -27,7 +27,7 @@ export const FALANGHINA = {
 
   breadcrumb: [
     { label: "Home", href: "/" },
-    { label: "Unsere Weine", href: "/weine" },
+    { label: "Unsere Weine", href: "/unsere-weine" },
     { label: "Beneventano Falanghina IGP", href: null },
   ],
 
@@ -311,7 +311,7 @@ export const FALANGHINA = {
       id: "falanghina-vs-greco",
       q: "Was ist der Unterschied zwischen Falanghina und Greco di Tufo?",
       a: "Beide sind weiße Rebsorten Kampaniens, aber mit eigenem Charakter: Die Falanghina aus dem Beneventano ist weich, harmonisch und unkompliziert frisch. Der Greco di Tufo wächst auf vulkanischem Tuffgestein, bringt mehr Struktur und einen mineralischen Zug mit – und trägt als einer der wenigen Weißweine Italiens das D.O.C.G.-Siegel.",
-      link: { label: "Greco di Tufo entdecken", href: "/weine/greco-di-tufo" },
+      link: { label: "Greco di Tufo entdecken", href: "/unsere-weine/greco-di-tufo" },
     },
   ],
 
@@ -320,6 +320,9 @@ export const FALANGHINA = {
     kicker: "Ähnliche Weine entdecken",
     title: "Wenn Ihnen die Falanghina gefällt",
     names: ["Greco di Tufo D.O.C.G.", "Il Bianco – Greco Cuvée", "Lugana"],
+    /* Halbsatz hinter „Drei Weißweine aus unserer Kollektion," — die Gattung
+       davor leitet SimilarWines aus den Karten ab, nicht aus diesem Text. */
+    trait: "die denselben Ton treffen: hell, frisch, mediterran.",
   },
 
   /* ---- Abschluss-CTA ---- */

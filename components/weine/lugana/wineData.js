@@ -1,6 +1,6 @@
 /* Lugana DOC — content model for the wine landing page.
    Gleiche Struktur wie components/weine/falanghina/wineData.js; die Sektionen
-   sind wine-Prop-getrieben und werden von app/weine/lugana/page.jsx
+   sind wine-Prop-getrieben und werden von app/unsere-weine/lugana/page.jsx
    mit diesen Daten gefüttert.
 
    PHOTO DROP-IN: Fotografie unter public/img/wines/lugana/ ablegen
@@ -32,7 +32,7 @@ export const LUGANA = {
 
   breadcrumb: [
     { label: "Home", href: "/" },
-    { label: "Unsere Weine", href: "/weine" },
+    { label: "Unsere Weine", href: "/unsere-weine" },
     { label: "Lugana DOC", href: null },
   ],
 
@@ -317,6 +317,7 @@ export const LUGANA = {
     kicker: "Ähnliche Weine entdecken",
     title: "Wenn Ihnen der Lugana gefällt",
     names: ["Falanghina", "Greco di Tufo D.O.C.G.", "Il Bianco – Greco Cuvée"],
+    trait: "die dieselbe Frische und Mineralität suchen: elegant und klar.",
   },
 
   /* ---- Abschluss-CTA ---- */

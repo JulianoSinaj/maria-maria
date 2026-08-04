@@ -4,6 +4,16 @@ const nextConfig = {
      never contend with dev servers writing .next — this machine tends to run
      several (IDE-supervised + sessions). Unset, everything behaves as stock. */
   ...(process.env.MM_DIST_DIR ? { distDir: process.env.MM_DIST_DIR } : {}),
+  /* Die Kollektion liegt seit dem Route-Umzug unter /unsere-weine (vorher
+     /weine). Alte Links — Lesezeichen, Suchmaschinen-Index, gedruckte QR-Codes
+     — dürfen nicht ins Leere laufen: 308 (permanent) leitet Übersicht und alle
+     neun Produktseiten dauerhaft weiter und vererbt das Ranking mit. */
+  async redirects() {
+    return [
+      { source: "/weine", destination: "/unsere-weine", permanent: true },
+      { source: "/weine/:slug", destination: "/unsere-weine/:slug", permanent: true },
+    ];
+  },
   async headers() {
     /* Die Dateinamen unter /img und /video sind NICHT content-gehasht
        (hero-1280.webp bleibt hero-1280.webp, auch wenn das Motiv wechselt).

@@ -165,7 +165,7 @@ export default function HomeContent() {
             </Reveal>
             <Reveal delay={0.62} y={16}>
               <div className="mt-8 flex flex-col items-stretch gap-3 sm:mt-9 sm:flex-row sm:items-center sm:gap-3.5">
-                <Button href="/weine" size="lg" className="w-full sm:w-auto">
+                <Button href="/unsere-weine" size="lg" className="w-full sm:w-auto">
                   Weine entdecken
                 </Button>
                 <Button href="/shop" variant="outline" size="lg" className="w-full sm:w-auto">

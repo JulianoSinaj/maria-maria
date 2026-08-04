@@ -30,7 +30,7 @@ export const PRIMITIVO_155 = {
 
   breadcrumb: [
     { label: "Home", href: "/" },
-    { label: "Unsere Weine", href: "/weine" },
+    { label: "Unsere Weine", href: "/unsere-weine" },
     { label: "Primitivo di Manduria DOP 15,50", href: null },
   ],
 
@@ -284,7 +284,7 @@ export const PRIMITIVO_155 = {
       id: "p155-kraeftiger",
       q: "Ist der Primitivo 15,5 kräftiger als der 14,5?",
       a: "Ja. Mit 15,5 % vol. und zwölf Monaten Reife in Terrakotta-Amphoren ist er körperreicher, dichter und komplexer als der weiche, fruchtbetonte 14,5 aus dem Stahltank. Wer Struktur und Intensität sucht, greift zum 15,5 — für den unkomplizierteren Abend bleibt der 14,5 die zugänglichere Wahl.",
-      link: { label: "Zum Primitivo 14,5", href: "/weine/primitivo-14-5" },
+      link: { label: "Zum Primitivo 14,5", href: "/unsere-weine/primitivo-14-5" },
     },
     {
       id: "p155-dekantieren",
@@ -308,6 +308,7 @@ export const PRIMITIVO_155 = {
     kicker: "Ähnliche Weine entdecken",
     title: "Wenn Ihnen der Primitivo 15,5 gefällt",
     names: ["Primitivo 14,5", "Primitivo Salento IGP", "Il Rosso – Aglianico"],
+    trait: "die dieselbe Tiefe mitbringen: kraftvoll, reif, ausgewogen.",
   },
 
   /* ---- Abschluss-CTA ---- */

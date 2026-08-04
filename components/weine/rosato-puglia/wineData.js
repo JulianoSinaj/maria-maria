@@ -28,7 +28,7 @@ export const ROSATO_NEGROAMARO = {
 
   breadcrumb: [
     { label: "Home", href: "/" },
-    { label: "Unsere Weine", href: "/weine" },
+    { label: "Unsere Weine", href: "/unsere-weine" },
     { label: "Rosato Negroamaro IGP Salento", href: null },
   ],
 
@@ -306,6 +306,9 @@ export const ROSATO_NEGROAMARO = {
     kicker: "Ähnliche Weine entdecken",
     title: "Wenn Ihnen der Rosato gefällt",
     names: ["Falanghina", "Primitivo Salento IGP", "Il Bianco – Greco Cuvée"],
+    /* Gemischte Auswahl (zwei Weiße, ein Roter) — SimilarWines schreibt hier
+       „Drei Weine", der Halbsatz bleibt deshalb bewusst farbneutral. */
+    trait: "die dieselbe Leichtigkeit suchen: fruchtig, frisch, unkompliziert.",
   },
 
   /* ---- Abschluss-CTA ---- */

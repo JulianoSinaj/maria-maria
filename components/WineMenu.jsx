@@ -23,7 +23,7 @@ const COLUMNS = [
 ];
 
 const OVERVIEW = [
-  { label: "Alle Weine", href: "/weine", hint: "Die komplette Kollektion" },
+  { label: "Alle Weine", href: "/unsere-weine", hint: "Die komplette Kollektion" },
   { label: "Bestseller", href: "/shop?sort=bestseller", hint: "Was am häufigsten im Glas landet" },
   { label: "Regionen Italiens", href: "/regionen", hint: "Herkunft und Terroir" },
 ];
@@ -93,7 +93,7 @@ export default function WineMenu({ active, scrolled = false }) {
       }}
     >
       <Link
-        href="/weine"
+        href="/unsere-weine"
         aria-current={active ? "page" : undefined}
         aria-expanded={open}
         className={`group relative flex items-center gap-1.5 py-2 text-[12.5px] tracking-[0.08em] transition-colors duration-300 ${
@@ -209,7 +209,7 @@ export default function WineMenu({ active, scrolled = false }) {
                     {COLUMNS.map((c) => (
                       <div key={c.title} className="min-w-0">
                         <Link
-                          href={`/weine?art=${c.art}#kollektion`}
+                          href={`/unsere-weine?art=${c.art}#kollektion`}
                           onClick={close}
                           className="group/c flex items-center gap-2 border-b border-stone/60 pb-2.5"
                         >
@@ -252,7 +252,7 @@ export default function WineMenu({ active, scrolled = false }) {
                     Handverlesen von kleinen italienischen Weingütern.
                   </p>
                   <Link
-                    href="/weine"
+                    href="/unsere-weine"
                     onClick={close}
                     className="group/a flex shrink-0 items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-bordeaux"
                   >

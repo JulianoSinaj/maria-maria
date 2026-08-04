@@ -28,7 +28,7 @@ export const PRIMITIVO_SALENTO = {
 
   breadcrumb: [
     { label: "Home", href: "/" },
-    { label: "Unsere Weine", href: "/weine" },
+    { label: "Unsere Weine", href: "/unsere-weine" },
     { label: "Primitivo IGP Salento", href: null },
   ],
 
@@ -286,7 +286,7 @@ export const PRIMITIVO_SALENTO = {
       id: "psal-vs-manduria",
       q: "Was unterscheidet Primitivo Salento von Primitivo di Manduria?",
       a: "Die Herkunftsstufe: „Primitivo di Manduria D.O.P.“ ist die geschützte Ursprungsbezeichnung für Primitivo aus dem eng umgrenzten Gebiet um Manduria; „I.G.P. Salento“ umfasst die ganze Salento-Halbinsel. Unser Salento IGP ist die unkompliziertere, zugänglichere Interpretation — die beiden Manduria-Weine sind strukturierter und konzentrierter.",
-      link: { label: "Primitivo di Manduria DOP entdecken", href: "/weine/primitivo-14-5" },
+      link: { label: "Primitivo di Manduria DOP entdecken", href: "/unsere-weine/primitivo-14-5" },
     },
     {
       id: "psal-essen",
@@ -305,6 +305,7 @@ export const PRIMITIVO_SALENTO = {
     kicker: "Ähnliche Weine entdecken",
     title: "Wenn Ihnen der Primitivo gefällt",
     names: ["Primitivo 14,5", "Primitivo 15,5", "Il Rosso – Aglianico"],
+    trait: "die dieselbe Frucht und Wärme tragen: rund, weich, zugänglich.",
   },
 
   /* ---- Abschluss-CTA ---- */

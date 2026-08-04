@@ -119,7 +119,7 @@ export default function StoriesSection() {
                 </blockquote>
               )}
               <Link
-                href={`/weine/${current.slug}`}
+                href={`/unsere-weine/${current.slug}`}
                 className="group mt-7 inline-flex min-h-[44px] items-center gap-1.5 text-[12px] font-medium text-bordeaux"
               >
                 Zum Wein

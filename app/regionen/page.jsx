@@ -214,7 +214,7 @@ export default function RegionenPage() {
           </>
         }
         text="Vom kraftvollen Primitivo aus Apulien bis zum mineralischen Lugana vom Gardasee – finden Sie den Wein, dessen Herkunft Sie schmecken möchten."
-        primary={{ label: "Zu unseren Weinen", href: "/weine" }}
+        primary={{ label: "Zu unseren Weinen", href: "/unsere-weine" }}
         secondary={{ label: "Zum Shop", href: "/shop" }}
       />
 

@@ -232,7 +232,7 @@ export default function WineRail({ wines, className = "" }) {
 
       <div className="mt-5 text-center sm:mt-7">
         <Link
-          href="/weine"
+          href="/unsere-weine"
           className="group inline-flex items-center gap-1.5 text-[12px] font-medium uppercase tracking-[0.16em] text-bordeaux"
         >
           Die ganze Kollektion

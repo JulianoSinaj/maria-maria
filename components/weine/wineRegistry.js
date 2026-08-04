@@ -1,5 +1,5 @@
 /* Zentrales Register aller Wein-Landingpages — eine Quelle für die dynamische
-   Route app/weine/[slug]. Neuer Wein: wineData.js anlegen und hier eintragen. */
+   Route app/unsere-weine/[slug]. Neuer Wein: wineData.js anlegen und hier eintragen. */
 
 import { FALANGHINA } from "./falanghina/wineData";
 import { GRECO_DI_TUFO } from "./greco-di-tufo/wineData";

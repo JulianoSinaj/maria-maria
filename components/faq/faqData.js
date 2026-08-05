@@ -191,7 +191,7 @@ export const MAGAZIN_FAQ = [
   {
     id: "wissen-lagerung",
     q: "Wie lagert man Wein richtig?",
-    a: "Kühl, dunkel und ruhig — ideal sind konstante Temperaturen ohne starke Schwankungen, Flaschen mit Naturkorken liegend. Unsere Weine sind auf Genuss ausgelegt: Die Servierempfehlungen finden Sie auf jeder Weinseite unter „Servieren & Genießen“.",
+    a: "Kühl, dunkel und ruhig — ideal sind konstante Temperaturen ohne starke Schwankungen, Flaschen mit Naturkorken liegend. Unsere Weine sind auf Genuss ausgelegt: Die Servierempfehlungen finden Sie auf jeder Weinseite im Kapitel „Geschmack“.",
   },
   {
     id: "wissen-docg",

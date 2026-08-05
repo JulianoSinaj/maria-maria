@@ -296,9 +296,8 @@ export const ROSATO_NEGROAMARO = {
   /* ---- Seitennavigation (Apple-Stil Subnav) ---- */
   subnav: [
     { label: "Überblick", href: "#ueberblick" },
-    { label: "Servieren", href: "#servieren" },
-    { label: "Geschmack", href: "#geschmack" },
     { label: "Passt zu", href: "#maria-moment" },
+    { label: "Geschmack", href: "#geschmack" },
     { label: "Fragen", href: "#fragen" },
   ],
 };

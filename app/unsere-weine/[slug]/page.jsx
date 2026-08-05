@@ -6,7 +6,6 @@ import HeroPhoto from "@/components/weine/falanghina/HeroPhoto";
 import HeroPreload from "@/components/weine/falanghina/HeroPreload";
 import SubNav from "@/components/weine/falanghina/SubNav";
 import FactStrip from "@/components/weine/falanghina/FactStrip";
-import RitualSection from "@/components/weine/falanghina/RitualSection";
 import ColorBand from "@/components/weine/falanghina/ColorBand";
 import PairingScene from "@/components/weine/PairingScene";
 import WineFaq from "@/components/weine/falanghina/WineFaq";
@@ -18,14 +17,13 @@ import CtaBand from "@/components/weine/falanghina/CtaBand";
    wine-Prop-getrieben; die Daten kommen pro Slug aus dem wineRegistry.
    Neuer Wein = neue wineData.js + ein Registry-Eintrag, keine neue Route.
 
-   Kapitel-Dramaturgie: der Überblick nennt die Eckdaten, dann sagt das
-   Genuss-Kapitel (#servieren), wie der Wein ins Glas kommt — Ritual und
-   Maria-Moment stehen dort als helles und dunkles Kartenpaar nebeneinander
-   (RitualSection), beide aus dem wine.moment-Block. Erst danach öffnet das
-   Farb-/Geschmackskapitel das Glas selbst. Das Pairing-Kapitel ist bewusst
-   eine einzige Szene (PairingScene, aus wine.pairing.scene) statt eines
-   Rasters aus Speisenkategorien: Maria Maria ist kein Rezeptbuch, das Bild
-   ist Gebrauchsbeweis für den Wein. Das Herkunftskapitel („Die Geschichte“)
+   Kapitel-Dramaturgie: der Überblick nennt die Eckdaten, dann folgt direkt
+   das Pairing-Kapitel — bewusst eine einzige Szene (PairingScene, aus
+   wine.pairing.scene) statt eines Rasters aus Speisenkategorien: Maria Maria
+   ist kein Rezeptbuch, das Bild ist Gebrauchsbeweis für den Wein. Erst danach
+   öffnet das Farb-/Geschmackskapitel das Glas selbst. Ein eigenes
+   Genuss-Kapitel („Servieren & Genießen“) gibt es nicht mehr; sein Platz
+   gehört jetzt dem Pairing. Das Herkunftskapitel („Die Geschichte“)
    liegt gebündelt im Magazin (components/magazin/StoriesSection) — die
    Landingpage bleibt am Produkt. Nach den ähnlichen Weinen folgt das
    Shop-Band, die FAQ schließt die Seite als ruhiger Ausklang ab. */
@@ -83,9 +81,8 @@ export default function WinePage({ params }) {
       <FalanghinaHero wine={wine} photo={<HeroPhoto wine={wine} />} />
       <SubNav wine={wine} />
       <FactStrip wine={wine} />
-      <RitualSection wine={wine} />
-      <ColorBand wine={wine} />
       <PairingScene wine={wine} />
+      <ColorBand wine={wine} />
       <SimilarWines wine={wine} />
       <CtaBand wine={wine} />
       <WineFaq wine={wine} />

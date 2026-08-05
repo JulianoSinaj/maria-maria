@@ -333,7 +333,14 @@ export default function PairingScene({ wine }) {
         }}
       />
 
-      <div className="relative mx-auto max-w-content px-6 py-16 sm:py-20 lg:px-10 lg:py-24">
+      {/* Bandhöhe: die Sektion trug py-16/20/24 aus der Zeit, als sie zwischen
+          zwei dunklen Kapiteln lag und Luft zum Atmen brauchte. Jetzt steht sie
+          direkt unter dem Faktenband, und die Szene selbst bringt über
+          Passepartout und Scroll-Drift genug Ruhe mit — der zusätzliche Rand
+          las sich nur noch als Loch über und unter dem Bild. Der Rest (64 px
+          ab lg) bleibt bewusst größer als die Drift-Amplitude von 44 px, damit
+          der Abzug beim Scrollen nie an die Sektionskante stößt. */}
+      <div className="relative mx-auto max-w-content px-6 py-10 sm:py-12 lg:px-10 lg:py-16">
         {/* Zwei nahezu gleich schwere Spalten statt der ursprünglichen 7/12 zu
             5/12: bei 7/12 blieben der Copy rund 445 px, und darin wurde alles
             eng — der Fließtext lief auf sieben Wörter pro Zeile, der sekundäre

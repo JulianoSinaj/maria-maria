@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useDragControls, useReducedMotion } from "motion/react";
 import Bottle from "@/components/Bottle";
+import Photo from "@/components/media/Photo";
 import Button from "@/components/ui/Button";
 import { useLenis } from "@/components/motion/SmoothScroll";
 import useMediaQuery from "@/components/motion/useMediaQuery";
@@ -38,14 +39,14 @@ function ItemRow({ item }) {
             ? product.photos.slice(0, 3).map((src, i) => (
                 /* multiply pro Foto: weißer Studiohintergrund löst sich in
                    die Bühne auf, auch wo sich die Miniaturen überlappen */
-                <img
+                <Photo
                   key={src + i}
                   src={src}
                   alt=""
                   aria-hidden="true"
                   draggable={false}
-                  loading="lazy"
-                  decoding="async"
+                  /* Warenkorb-Miniatur, h-14 — ~56 px, auf Retina 112 */
+                  sizes="56px"
                   className={`h-14 w-auto select-none object-contain ${i > 0 ? "-ml-3" : ""} ${
                     product.photos.length > 1 ? (i === 0 ? "-rotate-6" : i === 2 ? "rotate-6" : "") : ""
                   }`}

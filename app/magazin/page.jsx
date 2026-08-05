@@ -5,6 +5,7 @@ import TiltCard from "@/components/motion/TiltCard";
 import { Reveal, Stagger, StaggerItem } from "@/components/motion/Reveal";
 import Button from "@/components/ui/Button";
 import { SectionTitle, Eyebrow, GoldRule, GrapeRule } from "@/components/Deco";
+import Photo from "@/components/media/Photo";
 import { Arrow, Clock, GrapeVine, Plate, Mountains, Book, Sun } from "@/components/Icons";
 import FilterPanel from "@/components/magazin/FilterPanel";
 import NewsletterCard from "@/components/magazin/NewsletterCard";
@@ -165,9 +166,10 @@ export default function MagazinPage() {
                     <article className="relative h-[400px] overflow-hidden rounded-card-lg shadow-luxe transition-shadow duration-500 group-hover:shadow-lift sm:h-[430px]">
                       <Parallax speed={0.08} overscan className="absolute inset-0">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img
+                        <Photo
                           src={FEATURED.img}
                           alt="Winzer prüft ein Glas Rotwein zwischen Barriquefässern im Keller"
+                          sizes="(min-width: 1024px) 66vw, 100vw"
                           className="h-full w-full object-cover transition-transform duration-700 ease-out-expo group-hover:scale-[1.05]"
                         />
                       </Parallax>
@@ -218,9 +220,10 @@ export default function MagazinPage() {
                           <article className="flex h-full flex-col overflow-hidden rounded-card border border-stone/50 bg-white/70 shadow-luxe transition-all duration-500 ease-out-expo hover:-translate-y-1.5 hover:border-champagne/60 hover:shadow-lift">
                             <div className="relative h-24 overflow-hidden">
                               {/* eslint-disable-next-line @next/next/no-img-element */}
-                              <img
+                              <Photo
                                 src={t.img}
                                 alt=""
+                                sizes="(min-width: 1024px) 25vw, 50vw"
                                 className="h-full w-full object-cover transition-transform duration-700 ease-out-expo group-hover:scale-[1.08]"
                               />
                               <div
@@ -268,9 +271,10 @@ export default function MagazinPage() {
                       <article className="grid grid-cols-1 overflow-hidden rounded-card-lg border border-stone/50 bg-white/70 shadow-luxe transition-all duration-500 ease-out-expo hover:-translate-y-1 hover:border-champagne/60 hover:shadow-lift sm:grid-cols-[1.05fr_1fr]">
                         <div className="relative h-56 overflow-hidden sm:h-full sm:min-h-[280px]">
                           {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img
+                          <Photo
                             src={LATEST[0].img}
                             alt=""
+                            sizes="(min-width: 1024px) 50vw, 100vw"
                             className="h-full w-full object-cover transition-transform duration-700 ease-out-expo group-hover:scale-[1.05]"
                           />
                           <span className="glass absolute left-4 top-4 rounded-full px-3 py-1.5 text-[9.5px] font-semibold uppercase tracking-[0.16em] text-charcoal/70">
@@ -305,9 +309,10 @@ export default function MagazinPage() {
                           <article className="flex h-full flex-col overflow-hidden rounded-card border border-stone/50 bg-white/70 shadow-luxe transition-all duration-500 ease-out-expo hover:-translate-y-1.5 hover:border-champagne/60 hover:shadow-lift">
                             <div className="relative h-44 overflow-hidden">
                               {/* eslint-disable-next-line @next/next/no-img-element */}
-                              <img
+                              <Photo
                                 src={a.img}
                                 alt=""
+                                sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
                                 className="h-full w-full object-cover transition-transform duration-700 ease-out-expo group-hover:scale-[1.06]"
                               />
                               <span className="glass absolute left-4 top-4 rounded-full px-3 py-1.5 text-[9.5px] font-semibold uppercase tracking-[0.16em] text-charcoal/70">
@@ -377,10 +382,12 @@ export default function MagazinPage() {
                     {POPULAR.map((p) => (
                       <Link key={p.title} href="#" className="group flex items-center gap-3.5">
                         <span className="relative h-14 w-20 shrink-0 overflow-hidden rounded-xl">
-                          {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img
+                          {/* Daumennagel, h-14 w-20 — feste 80 px, auf Retina
+                              160 px; die 640er Variante deckt beides ab. */}
+                          <Photo
                             src={p.img}
                             alt=""
+                            sizes="80px"
                             className="h-full w-full object-cover transition-transform duration-700 ease-out-expo group-hover:scale-[1.1]"
                           />
                         </span>

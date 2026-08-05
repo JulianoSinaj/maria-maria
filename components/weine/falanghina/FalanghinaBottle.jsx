@@ -4,16 +4,22 @@
    product photo lands in public/img/wines/falanghina/ (pass it as photoSrc
    via wineData.images.front and this component swaps automatically). */
 
+import Photo from "@/components/media/Photo";
+
 export default function FalanghinaBottle({
   photoSrc = null,
   alt = "Flasche Beneventano Falanghina IGP",
   className = "h-72",
 }) {
   if (photoSrc) {
+    /* Der Packshot ist quadratisch und 1920 px breit, steht hier aber
+       höhengebunden auf ~288 px (h-72). `sizes` deckelt ihn auf die 640er
+       Variante — die trägt auch Retina noch mit Reserve. */
     return (
-      <img
+      <Photo
         src={photoSrc}
         alt={alt}
+        sizes="288px"
         draggable={false}
         className={`${className} w-auto select-none object-contain`}
       />

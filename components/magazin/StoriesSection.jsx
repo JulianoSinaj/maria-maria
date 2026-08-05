@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import Parallax from "@/components/motion/Parallax";
+import Photo from "@/components/media/Photo";
 import { Reveal } from "@/components/motion/Reveal";
 import { SectionTitle, GrapeRule } from "@/components/Deco";
 import { Arrow } from "@/components/Icons";
@@ -144,13 +145,13 @@ export default function StoriesSection() {
                 }`}
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
+                <Photo
                   src={story.image?.src ?? FALLBACK_IMG}
                   alt={
                     story.image?.alt ?? "Handlese der Trauben und Ausbau im Weinkeller"
                   }
+                  sizes="(min-width: 1024px) 50vw, 100vw"
                   className="h-full w-full object-cover"
-                  loading="lazy"
                 />
               </Parallax>
             </motion.div>

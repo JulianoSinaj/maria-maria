@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { photoSrcSet } from "@/components/media/Photo";
 
 /* Swipe-Bühne für die echten Packshots einer Weinkarte.
 
@@ -46,9 +47,20 @@ export default function WinePhotos({ wine, imgClass = "h-44", lift = true, class
         }`}
       >
         <AnimatePresence initial={false} custom={dir}>
+          {/* srcSet direkt am motion.img: das Element wird gezogen und
+              gewischt (drag), muss also ein motion-Element bleiben — ein
+              <picture> darum brächte nichts, die Packshots sind ohnehin WebP.
+
+              `sizes`: die Flasche steht höchstens h-48 hoch (192 px) und ist
+              bei 391x1400 damit ~54 px breit; 64 px lassen dem Browser Luft,
+              auf Retina greift er zur 160er-Stufe. Vorher lieferte jede Karte
+              die vollen 391 px aus — bei zehn Karten je Seite war das der
+              größte Posten der Startseite, größer als das Hero-Foto. */}
           <motion.img
             key={side}
             src={shots[side].src}
+            srcSet={photoSrcSet(shots[side].src) ?? undefined}
+            sizes="64px"
             alt={shots[side].alt}
             custom={dir}
             variants={variants}

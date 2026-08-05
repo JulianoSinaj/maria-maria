@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import Link from "next/link";
 import Parallax from "@/components/motion/Parallax";
+import Photo from "@/components/media/Photo";
 import { Reveal } from "@/components/motion/Reveal";
 import { SectionTitle, GrapeRule, GoldRule } from "@/components/Deco";
 import { Arrow, Plus, Pin, Grapes } from "@/components/Icons";
@@ -173,11 +174,11 @@ export default function InterviewSection() {
                     <span className="relative h-11 w-11 shrink-0 overflow-hidden rounded-full border border-stone/60 bg-cream">
                       {p.portrait?.src && (
                         // eslint-disable-next-line @next/next/no-img-element
-                        <img
+                        <Photo
                           src={p.portrait.src}
                           alt=""
+                          sizes="96px"
                           className="h-full w-full object-cover transition-transform duration-700 ease-out-expo group-hover:scale-[1.08]"
-                          loading="lazy"
                         />
                       )}
                     </span>
@@ -220,11 +221,11 @@ export default function InterviewSection() {
                 >
                   {current.portrait?.src ? (
                     // eslint-disable-next-line @next/next/no-img-element
-                    <img
+                    <Photo
                       src={current.portrait.src}
                       alt={current.portrait.alt ?? `Portrait von ${current.name}`}
+                      sizes="(min-width: 1024px) 40vw, 100vw"
                       className="h-full w-full object-cover"
-                      loading="lazy"
                     />
                   ) : (
                     <span

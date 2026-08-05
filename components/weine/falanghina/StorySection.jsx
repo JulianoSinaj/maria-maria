@@ -1,6 +1,7 @@
 import { Eyebrow, GrapeRule } from "@/components/Deco";
 import { Reveal } from "@/components/motion/Reveal";
 import Parallax from "@/components/motion/Parallax";
+import Photo from "@/components/media/Photo";
 import Atmosphere, { GhostWord } from "@/components/Atmosphere";
 
 /* „Die Geschichte" — Herkunftserzählung links, rechts ein Parallax-Still aus
@@ -47,11 +48,11 @@ export default function StorySection({ wine }) {
               story.image?.wide ? "aspect-[3/2]" : "aspect-[5/4] lg:aspect-[4/5]"
             }`}
           >
-            <img
+            <Photo
               src={story.image?.src ?? "/img/sotria.webp"}
               alt={story.image?.alt ?? "Handlese der Trauben und Ausbau im Weinkeller"}
+              sizes="(min-width: 1024px) 50vw, 100vw"
               className="h-full w-full object-cover"
-              loading="lazy"
             />
           </Parallax>
         </Reveal>

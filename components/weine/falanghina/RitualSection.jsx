@@ -3,6 +3,7 @@ import { motion, useReducedMotion } from "motion/react";
 import { Eyebrow, GoldRule } from "@/components/Deco";
 import { Aura } from "@/components/Atmosphere";
 import Parallax from "@/components/motion/Parallax";
+import Photo from "@/components/media/Photo";
 import { useTouchDevice } from "@/components/motion/useMediaQuery";
 
 /* „Servieren & Genießen" — das Genuss-Kapitel als harte Zweiteilung:
@@ -111,10 +112,11 @@ export default function RitualSection({ wine }) {
           <div className="absolute inset-0 overflow-hidden">
             <Parallax speed={0.08} overscan className="h-full w-full">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+              {/* Randlos über die halbe Bandbreite, mobil über die volle */}
+              <Photo
                 src={photo}
                 alt=""
-                loading="lazy"
+                sizes="(min-width: 1024px) 50vw, 100vw"
                 className="h-full w-full object-cover"
               />
             </Parallax>

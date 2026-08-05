@@ -5,6 +5,7 @@ import TiltCard from "@/components/motion/TiltCard";
 import { Reveal, Stagger, StaggerItem } from "@/components/motion/Reveal";
 import Button from "@/components/ui/Button";
 import { SectionTitle, Eyebrow, GrapeRule } from "@/components/Deco";
+import Photo from "@/components/media/Photo";
 import { WINES, REGION_COUNT } from "@/components/data";
 import WineExplorer from "@/components/weine/WineExplorer";
 import WeineHeroPhoto, { WeineHeroPreload } from "@/components/weine/WeineHeroPhoto";
@@ -177,12 +178,11 @@ export default function WeinePage() {
             <StaggerItem key={m.title} className="h-full">
               <TiltCard className="group h-full" max={5} radius="rounded-card-lg">
                 <article className="relative h-[172px] overflow-hidden rounded-card-lg shadow-luxe transition-shadow duration-500 group-hover:shadow-lift sm:h-[184px]">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
+                  {/* Die Streifen sind auf lg:max-w-[38rem] gedeckelt */}
+                  <Photo
                     src={m.img}
                     alt=""
-                    loading="lazy"
-                    decoding="async"
+                    sizes="(min-width: 1024px) 38rem, 100vw"
                     className="h-full w-full object-cover transition-transform duration-700 ease-out-expo group-hover:scale-[1.06]"
                   />
                   {/* Schleier von links + weicher Boden, damit Titel und Text

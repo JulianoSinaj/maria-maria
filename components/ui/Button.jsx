@@ -47,10 +47,15 @@ const VARIANTS = {
   },
 };
 
+/* min-h statt h: eine feste Höhe schneidet jedes Label ab, das in einer
+   schmalen Spalte umbricht — der Text lief dann sichtbar unten aus der Pille
+   heraus (aufgefallen an „Diesen Wein im offiziellen Shop entdecken" in der
+   Pairing-Sektion, 89 px Inhalt in 44 px Pille). Mit min-h + py bleibt die
+   einzeilige Pille exakt so hoch wie vorher und wächst nur im Umbruchfall. */
 const SIZES = {
-  sm: "h-10 px-5 text-[12px]",
-  md: "h-11 px-6 text-[12.5px]",
-  lg: "h-[52px] px-8 text-[13.5px]",
+  sm: "min-h-[40px] px-5 py-2.5 text-[12px]",
+  md: "min-h-[44px] px-6 py-3 text-[12.5px]",
+  lg: "min-h-[52px] px-8 py-3.5 text-[13.5px]",
 };
 
 export default function Button({

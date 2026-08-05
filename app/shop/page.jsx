@@ -6,6 +6,7 @@ import { Reveal, Stagger, StaggerItem } from "@/components/motion/Reveal";
 import Button from "@/components/ui/Button";
 import ShopCtaBand from "@/components/ui/ShopCtaBand";
 import Bottle from "@/components/Bottle";
+import Photo from "@/components/media/Photo";
 import { SectionTitle, Eyebrow, GrapeRule, GoldRule, IconChip } from "@/components/Deco";
 import { Arrow, Check, Grapes, Vineyard } from "@/components/Icons";
 import { Truck, Shield, Package, Gift, Amphora } from "@/components/shop/ShopIcons";
@@ -162,11 +163,12 @@ export default function ShopPage() {
                     {HERO_BOTTLES.map((b) => {
                       const w = heroWine(b.slug);
                       return w?.photos ? (
-                        <img
+                        <Photo
                           key={b.slug}
                           src={w.photos.front}
                           alt={`Flasche ${w.name}`}
                           draggable={false}
+                          sizes="220px"
                           className={`${b.cls} relative w-auto select-none object-contain origin-bottom will-transform transition-transform duration-700 ease-out-expo group-hover:-translate-y-2`}
                         />
                       ) : (
@@ -339,10 +341,10 @@ export default function ShopPage() {
             <Reveal y={24}>
               <div className="group ring-hairline relative overflow-hidden rounded-card-lg shadow-luxe">
                 <Parallax speed={0.09} overscan className="aspect-[4/3]">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
+                  <Photo
                     src="/img/gift.jpg"
                     alt="Elegant verpackte Weinflasche als Geschenk mit Grußkarte"
+                    sizes="(min-width: 1024px) 50vw, 100vw"
                     className="h-full w-full object-cover transition-transform duration-700 ease-out-expo group-hover:scale-[1.04]"
                   />
                 </Parallax>

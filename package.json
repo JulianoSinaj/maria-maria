@@ -17,6 +17,8 @@
     "test:hero": "node lib/hero/__tests__/api.test.mjs",
     "test:gallery": "node lib/gallery/__tests__/api.test.mjs",
     "optimize:heroes": "node scripts/optimize-heroes.mjs",
+    "optimize:pairing": "node scripts/optimize-pairing.mjs",
+    "optimize:pages": "node scripts/optimize-pages.mjs",
     "optimize:art": "node scripts/optimize-art.mjs",
     "crop:cards": "node scripts/crop-cards.mjs",
     "crop:sheet": "node scripts/sheet-shots.mjs"

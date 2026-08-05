@@ -9,6 +9,7 @@ import {
   useTransform,
 } from "motion/react";
 import { SectionTitle } from "@/components/Deco";
+import Photo from "@/components/media/Photo";
 import { Stagger, StaggerItem } from "@/components/motion/Reveal";
 import { ACCENT_FALLBACK } from "./accent";
 import Atmosphere, { GhostWord } from "@/components/Atmosphere";
@@ -146,12 +147,14 @@ function SheetIdentity({ wine, accent, title }) {
               style={reduced ? undefined : { x: magX, y: magY }}
               className="flex flex-col items-center"
             >
-              <img
+              {/* Höhengebunden (h-52 … lg:h-72), der Packshot ist quadratisch —
+                  288 px hoch heißt ~288 px breit, auf Retina 576. Die 640er
+                  Variante trägt beides; das Original ist 1920 px breit. */}
+              <Photo
                 src={bottle}
                 alt={`Flasche ${wine.name ?? ""}`}
+                sizes="288px"
                 className="h-52 w-auto select-none object-contain drop-shadow-[0_30px_38px_rgba(0,0,0,0.55)] sm:h-60 lg:h-72"
-                loading="lazy"
-                decoding="async"
                 draggable={false}
               />
               {/* Spiegelung am Boden — verankert die Flasche auf der Tafel,
@@ -160,12 +163,13 @@ function SheetIdentity({ wine, accent, title }) {
                 aria-hidden="true"
                 className="pointer-events-none -mt-px h-14 overflow-hidden opacity-25 [-webkit-mask-image:linear-gradient(to_bottom,rgba(0,0,0,0.55),transparent_80%)] [mask-image:linear-gradient(to_bottom,rgba(0,0,0,0.55),transparent_80%)]"
               >
-                <img
+                {/* Die Spiegelung zeigt dieselbe URL wie der Packshot darüber
+                    und kostet damit kein zusätzliches Byte. */}
+                <Photo
                   src={bottle}
                   alt=""
+                  sizes="288px"
                   className="h-52 w-auto -scale-y-100 select-none object-contain blur-[2px] sm:h-60 lg:h-72"
-                  loading="lazy"
-                  decoding="async"
                   draggable={false}
                 />
               </div>

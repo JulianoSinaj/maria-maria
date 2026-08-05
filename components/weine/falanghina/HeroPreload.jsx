@@ -17,18 +17,25 @@ import { heroSources } from "@/components/weine/pairingPhoto";
 
 export default function HeroPreload({ wine }) {
   if (!wine.images?.hero) return null;
-  const { src, sizes } = heroSources(wine.slug);
+  const { webp, srcSet, sizes } = heroSources(wine.slug);
+  if (!webp) return null;
 
   /* React 18 warnt im Dev-Modus über die kleingeschriebenen Attribute
      („Invalid DOM property `imagesrcset`"). Die Warnung ist hier gewollt in
      Kauf genommen: camelCase würde zwar nicht warnen, aber genau den Preload
-     unbrauchbar machen. In der Produktion ist die Prüfung deaktiviert. */
+     unbrauchbar machen. In der Produktion ist die Prüfung deaktiviert.
+
+     type/href zeigen auf WebP, nicht mehr aufs Original-PNG: der Preload muss
+     exakt die Datei anfordern, die das <picture> gleich auswählt — sonst lädt
+     der Browser beides. `href` bleibt als Ziel für Engines ohne imagesrcset-
+     Unterstützung stehen und nennt die mittlere Breite. */
   return (
     <link
       rel="preload"
       as="image"
-      type="image/png"
-      href={src}
+      type="image/webp"
+      href={webp}
+      imagesrcset={srcSet}
       imagesizes={sizes}
       fetchpriority="high"
     />

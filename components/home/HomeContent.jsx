@@ -7,6 +7,7 @@ import { Reveal, Stagger, StaggerItem } from "@/components/motion/Reveal";
 import Button from "@/components/ui/Button";
 import ShopCtaBand from "@/components/ui/ShopCtaBand";
 import { SectionTitle, Eyebrow, GrapeRule, IconChip } from "@/components/Deco";
+import Photo from "@/components/media/Photo";
 import HomeHeroPhoto, { HomeHeroPreload } from "@/components/home/HomeHeroPhoto";
 import HomeHeroFx from "@/components/home/HomeHeroFx";
 import OriginsSection from "@/components/home/OriginsSection";
@@ -206,11 +207,10 @@ export default function HomeContent() {
             die Ränder nahtlos in Marquee und Weine-Band übergehen */}
         <div aria-hidden="true" className="absolute inset-0">
           <Parallax speed={0.08} overscan className="h-full w-full">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
+            <Photo
               src="/img/home/moment-bg.jpg"
               alt=""
-              loading="lazy"
+              sizes="100vw"
               className="h-full w-full object-cover object-center"
             />
           </Parallax>
@@ -340,10 +340,13 @@ export default function HomeContent() {
               <Link href="/magazin" className="group block h-full">
                 <article className="flex h-full flex-col overflow-hidden rounded-card border border-stone/50 bg-white/70 shadow-luxe transition-all duration-500 ease-out-expo hover:-translate-y-1.5 hover:border-champagne/60 hover:shadow-lift">
                   <div className="relative h-52 overflow-hidden">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
+                    {/* Dreispaltiges Raster in max-w-content — die Karte wird
+                        nie breiter als ~380 px, das Motiv liegt aber in 700–
+                        1400 px vor. Ohne sizes lüde der Browser die größte. */}
+                    <Photo
                       src={a.img}
                       alt=""
+                      sizes="(min-width: 1024px) 380px, (min-width: 640px) 50vw, 100vw"
                       className="h-full w-full object-cover transition-transform duration-700 ease-out-expo group-hover:scale-[1.06]"
                     />
                     <span className="glass absolute left-4 top-4 rounded-full px-3 py-1.5 text-[9.5px] font-semibold uppercase tracking-[0.16em] text-charcoal/70">

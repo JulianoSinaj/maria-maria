@@ -10,6 +10,7 @@ import {
   useTransform,
 } from "motion/react";
 import Button from "@/components/ui/Button";
+import { photoSrcSet } from "@/components/media/Photo";
 
 /* Region explorer — drei eigenständige Foto-Karten statt einer gemeinsamen
    Karten-Bühne. Jede Region bringt ihr eigenes Landschaftsfoto mit (inklusive
@@ -124,10 +125,19 @@ function CardPhoto({ region, drift, active, reduced }) {
       style={reduced ? undefined : { y, willChange: "transform" }}
       className="absolute inset-0"
     >
+      {/* srcSet direkt am <img> statt über <Photo>: der Zoom beim Öffnen
+          läuft über framer-motion, das Element muss also ein motion.img
+          bleiben. Ein <picture> darum wäre möglich, aber die Quellen sind
+          ohnehin schon WebP — ein Fallback-Zweig hätte nichts zu tun. */}
       <motion.img
         src={region.img}
+        srcSet={photoSrcSet(region.img) ?? undefined}
+        /* Geschlossen ist die Karte ein schmaler Streifen, geöffnet nimmt sie
+           gut die halbe Bühne — 50vw deckt beide Zustände ohne Nachladen. */
+        sizes="(min-width: 1024px) 50vw, 100vw"
         alt=""
         loading="lazy"
+        decoding="async"
         initial={false}
         animate={{
           scale: active ? 1.02 : reduced ? 1.04 : 1.12,

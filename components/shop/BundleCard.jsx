@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
 import Bottle from "@/components/Bottle";
+import Photo from "@/components/media/Photo";
 import Button from "@/components/ui/Button";
 import TiltCard from "@/components/motion/TiltCard";
 import { Check } from "@/components/Icons";
@@ -75,13 +76,14 @@ export default function BundleCard({ bundle, className = "" }) {
           <div className="relative flex items-end pb-6">
             {wines.map((w, i) =>
               w.photos ? (
-                <img
+                <Photo
                   key={w.name}
                   src={w.photos.front}
                   alt={`Flasche ${w.name}`}
                   draggable={false}
-                  loading="lazy"
-                  decoding="async"
+                  /* Aufgefächerte Flaschen, h-32/h-40 — nie breiter als
+                     ~160 px, auf Retina 320. */
+                  sizes="160px"
                   className={`${wines.length > 3 ? "h-32" : "h-40"} relative w-auto select-none object-contain origin-bottom will-transform transition-transform duration-500 ease-out-expo ${fan[i] || ""}`}
                 />
               ) : (

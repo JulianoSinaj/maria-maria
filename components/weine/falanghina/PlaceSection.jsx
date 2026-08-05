@@ -1,6 +1,7 @@
 import { Eyebrow, GoldRule } from "@/components/Deco";
 import { Reveal, Stagger, StaggerItem } from "@/components/motion/Reveal";
 import Parallax from "@/components/motion/Parallax";
+import Photo from "@/components/media/Photo";
 import { Aura } from "@/components/Atmosphere";
 
 /* „Die Herkunft" — immersives Vollbild-Kapitel im Stil des Maria-Moments:
@@ -32,10 +33,12 @@ export default function PlaceSection({ wine }) {
       <div aria-hidden="true" className="absolute inset-0">
         <Parallax speed={0.08} overscan className="h-full w-full">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
+          {/* Vollflächiger, weichgezeichneter Hintergrund — die Unschärfe
+              verzeiht die kleinere Variante ohnehin. */}
+          <Photo
             src={photo || MAP_BG}
             alt=""
-            loading="lazy"
+            sizes="100vw"
             className={`h-full w-full object-cover ${
               photo ? "blur-[3px] brightness-[0.95] saturate-[1.12]" : "blur-[10px] saturate-[0.85]"
             }`}

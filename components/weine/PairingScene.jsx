@@ -1,8 +1,9 @@
 "use client";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import {
   motion,
+  useInView,
   useMotionValue,
   useReducedMotion,
   useScroll,
@@ -11,8 +12,8 @@ import {
 } from "motion/react";
 import Button from "@/components/ui/Button";
 import { useTouchDevice } from "@/components/motion/useMediaQuery";
-import { heroBlurFor } from "@/components/weine/heroBlur";
-import { PAIRING_PHOTO_SIZE, pairingPhotoSrc } from "@/components/weine/pairingPhoto";
+import { pairingBlurFor } from "@/components/weine/pairingBlur";
+import { PAIRING_PHOTO_SIZE, sceneSources } from "@/components/weine/pairingPhoto";
 import {
   pushEvent,
   WINE_SHOP_CLICK,
@@ -49,8 +50,9 @@ import {
    beim Laden nichts springt (CLS), und das Foto lädt lazy, niemals als LCP.
 
    Bewegung (Desktop, Zeiger, keine reduzierte Bewegung):
-   · Vorhang — der Rahmen wird beim Eintritt von oben nach unten aufgedeckt
-     (clip-path), das Bild darin fängt sich aus einem Hauch Überzeichnung.
+   · Vorhang — eine Elfenbein-Blende fährt beim Eintritt nach unten aus dem
+     Passepartout und gibt das Bild frei, das sich zugleich aus einem Hauch
+     Überzeichnung fängt.
    · Drift — Bild und Copy laufen beim Scrollen mit unterschiedlichem Gewicht
      durchs Bild, beide durch dieselbe Feder; das erzeugt die Tiefe.
    · Neigung — der Rahmen folgt dem Zeiger in echtem 3D (perspective +
@@ -71,11 +73,36 @@ const TILT = { stiffness: 170, damping: 20, mass: 0.55 };
 
 /* Der gerahmte Abzug. Eigene Komponente, weil sie eigene Zeiger-Federn hält —
    die dürfen nicht in der Sektion liegen, wo sie auch ohne Bild liefen. */
-function PairingPhoto({ src, blur, alt, drift, animate }) {
+function PairingPhoto({ src, srcSet, sizes, blur, alt, drift, animate }) {
   /* Zeigerposition, normalisiert auf −0.5 … +0.5 vom Rahmenmittelpunkt */
   const px = useMotionValue(0);
   const py = useMotionValue(0);
   const near = useMotionValue(0);
+
+  /* Der Vorhang ist bewusst ausfallsicher gebaut, und das ist die Lehre aus
+     der Vorgängerfassung: die hatte den Rahmen mit `initial opacity 0` plus
+     animiertem clip-path aufgedeckt. Feuerte die whileInView-Animation nicht,
+     blieb an dieser Stelle exakt nichts stehen — kein Bild, kein Rahmen, eine
+     leere Spalte. Genau das ist passiert.
+
+     Jetzt gilt: das Foto ist immer sichtbar. Die Blende ist ein zusätzliches
+     Element, das nur nach der Hydration existiert und nur dann, wenn die
+     Sektion beim Hydrieren noch unter dem Falz liegt — steht sie schon im
+     Bild, gibt es keinen Vorhang statt eines Aufblitzens. Fällt JS aus,
+     entsteht sie gar nicht erst. Sie bewegt sich ausschließlich über
+     transform, nicht über clip-path: das ist GPU-Arbeit und hat keine
+     zerbrechliche Wertesyntax. */
+  const frameRef = useRef(null);
+  const [armed, setArmed] = useState(false);
+  const inView = useInView(frameRef, { once: true, amount: 0.3 });
+  const revealed = !armed || inView;
+
+  useEffect(() => {
+    if (!animate) return;
+    const el = frameRef.current;
+    if (!el) return;
+    if (el.getBoundingClientRect().top > window.innerHeight * 0.9) setArmed(true);
+  }, [animate]);
 
   /* Jede Zeiger-Koordinate läuft durch eine Feder, keine rohen Werte */
   const rotateY = useSpring(useTransform(px, [-0.5, 0.5], [-7.5, 7.5]), TILT);
@@ -113,18 +140,26 @@ function PairingPhoto({ src, blur, alt, drift, animate }) {
           className="absolute inset-0 h-full w-full select-none object-cover blur-lg"
         />
       )}
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={src}
-        alt={alt}
-        width={PAIRING_PHOTO_SIZE.width}
-        height={PAIRING_PHOTO_SIZE.height}
-        loading="lazy"
-        decoding="async"
-        draggable={false}
-        sizes="(min-width: 1024px) 58vw, 100vw"
-        className="relative h-full w-full select-none object-contain"
-      />
+      <picture>
+        {/* Derselbe srcSet wie oben im Hero (pairingPhoto.js) — nur mit einem
+            `sizes`, das die 7/12-Spalte beschreibt statt des vollen Viewports.
+            Der Browser wählt daraus dieselbe Datei, die er für den Hero schon
+            geholt hat: der zweite Auftritt kostet null Byte. Ohne srcSet wäre
+            das `sizes` von vorher wirkungslos gewesen und die Sektion hätte
+            das 3-MB-PNG nachgeladen. */}
+        {srcSet && <source type="image/webp" srcSet={srcSet} sizes={sizes} />}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={src}
+          alt={alt}
+          width={PAIRING_PHOTO_SIZE.width}
+          height={PAIRING_PHOTO_SIZE.height}
+          loading="lazy"
+          decoding="async"
+          draggable={false}
+          className="relative h-full w-full select-none object-contain"
+        />
+      </picture>
     </>
   );
 
@@ -144,16 +179,53 @@ function PairingPhoto({ src, blur, alt, drift, animate }) {
     );
   }
 
+  /* Passepartout mit Bild, Blende und Streiflicht — in beiden Zuständen
+     identisch aufgebaut, nur die Blende kommt hinzu. */
+  const print = (
+    <figure ref={frameRef} className={frameClass}>
+      <div className={plateClass}>
+        <motion.div
+          animate={{ scale: revealed ? 1 : 1.06 }}
+          transition={{ duration: 1.5, ease: EASE }}
+          className="absolute inset-0 will-transform"
+        >
+          {photo}
+        </motion.div>
+
+        {armed && (
+          <motion.div
+            aria-hidden="true"
+            initial={{ y: "0%" }}
+            animate={{ y: revealed ? "102%" : "0%" }}
+            transition={{ duration: 1, ease: EASE }}
+            className="absolute inset-0 z-10 bg-ivory will-transform"
+          />
+        )}
+      </div>
+
+      {/* Streiflicht: wandert mit dem Zeiger, liegt vor dem Karton und
+          bleibt für Zeiger und Screenreader unsichtbar. Neigung und
+          Zentrierung stehen bewusst in der style-Prop und nicht als
+          Tailwind-Klasse: Framer schreibt `transform` komplett neu und
+          würde eine Utility-Rotation stillschweigend überschreiben. */}
+      <motion.div
+        aria-hidden="true"
+        style={{ x: glareX, rotate: 14, opacity: glareOpacity }}
+        className="pointer-events-none absolute -inset-y-12 left-1/3 w-1/3 bg-gradient-to-r from-transparent via-white/45 to-transparent blur-md"
+      />
+    </figure>
+  );
+
   return (
     /* Drei Ebenen, jede mit genau einer Aufgabe:
        Kamera (perspective + Scroll-Drift) → Bühne (Kippung, preserve-3d,
-       hält Licht und Abzug in echter Tiefe) → Abzug (Vorhang, Rahmen).
+       hält Licht und Abzug in echter Tiefe) → Abzug (Rahmen mit Blende).
 
-       Warum Licht und Abzug getrennte Kinder der Bühne sind: sobald ein
-       Element ein clip-path trägt — und der Vorhang tut das dauerhaft —
-       zwingt die Spezifikation sein transform-style auf `flat`. Läge das
-       Licht im Rahmen, wäre sein translateZ wirkungslos. So bleibt die
-       Bühne frei von Gruppierungs-Eigenschaften und die z-Achse echt. */
+       Warum das Licht neben und nicht im Rahmen liegt: der Rahmen trägt
+       `overflow-hidden` (die Blende muss an seiner Kante enden), und eine
+       Gruppierungs-Eigenschaft zwingt das transform-style der eigenen Kinder
+       auf `flat`. Im Rahmen wäre das translateZ des Lichts wirkungslos. So
+       bleibt die Bühne frei davon und die z-Achse echt. */
     <motion.div style={{ y: drift }} className="relative [perspective:1500px] will-transform">
       <motion.div
         onPointerMove={track}
@@ -177,38 +249,7 @@ function PairingPhoto({ src, blur, alt, drift, animate }) {
           className="pointer-events-none absolute -inset-6 blur-2xl sm:-inset-10"
         />
 
-        <motion.figure
-          initial={{ opacity: 0, clipPath: "inset(0% 0% 100% 0% round 2rem)" }}
-          whileInView={{ opacity: 1, clipPath: "inset(0% 0% 0% 0% round 2rem)" }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 1.05, ease: EASE }}
-          className={frameClass}
-        >
-          <div className={plateClass}>
-            {/* Das Bild fängt sich aus einem Hauch Überzeichnung in seine
-                Endgröße — die Bewegung endet exakt bei 1, also unbeschnitten. */}
-            <motion.div
-              initial={{ scale: 1.05 }}
-              whileInView={{ scale: 1 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 1.5, ease: EASE }}
-              className="absolute inset-0 will-transform"
-            >
-              {photo}
-            </motion.div>
-          </div>
-
-          {/* Streiflicht: wandert mit dem Zeiger, liegt vor dem Karton und
-              bleibt für Zeiger und Screenreader unsichtbar. Neigung und
-              Zentrierung stehen bewusst in der style-Prop und nicht als
-              Tailwind-Klasse: Framer schreibt `transform` komplett neu und
-              würde eine Utility-Rotation stillschweigend überschreiben. */}
-          <motion.div
-            aria-hidden="true"
-            style={{ x: glareX, rotate: 14, opacity: glareOpacity }}
-            className="pointer-events-none absolute -inset-y-12 left-1/3 w-1/3 bg-gradient-to-r from-transparent via-white/45 to-transparent blur-md"
-          />
-        </motion.figure>
+        {print}
       </motion.div>
     </motion.div>
   );
@@ -265,9 +306,16 @@ export default function PairingScene({ wine }) {
   /* Eigenes Sektionsmotiv sticht; sonst das Hero-Foto des Weins. Ohne beides
      keine leere Spalte: das Raster fällt auf eine Spalte zurück und die Copy
      bekommt eine Lesebreite statt der halben Bühne. */
-  const image = scene.image ?? pairingPhotoSrc(wine.slug);
+  /* Eigenes Sektionsmotiv (scene.image) kommt als einzelne Datei ohne
+     Varianten — dann bleibt der srcSet leer und das <picture> fällt auf das
+     nackte <img> zurück. Sonst der Satz aus pairingPhoto.js, identisch zum
+     Hero. `fallback` (das Original-PNG) ist hier der <img>-src, damit auch
+     ohne WebP-Unterstützung ein Bild steht. */
+  const photo = sceneSources(wine.slug);
+  const image = scene.image ?? photo.fallback;
+  const srcSet = scene.image ? null : photo.srcSet;
   const imageAlt = scene.imageAlt ?? `${wine.name} – das passende Gericht`;
-  const blur = scene.image ? null : heroBlurFor(wine.slug);
+  const blur = scene.image ? null : pairingBlurFor(wine.slug);
 
   return (
     <section
@@ -285,19 +333,26 @@ export default function PairingScene({ wine }) {
         }}
       />
 
-      <div className="relative mx-auto max-w-content px-6 py-14 sm:py-16 lg:px-10 lg:py-20">
-        {/* Desktop 7/12 Bild + 5/12 Copy laut Wireframe; mobil steht das
-            Bild oben und der Text darunter. */}
+      <div className="relative mx-auto max-w-content px-6 py-16 sm:py-20 lg:px-10 lg:py-24">
+        {/* Zwei nahezu gleich schwere Spalten statt der ursprünglichen 7/12 zu
+            5/12: bei 7/12 blieben der Copy rund 445 px, und darin wurde alles
+            eng — der Fließtext lief auf sieben Wörter pro Zeile, der sekundäre
+            Link stapelte sich auf drei Zeilen und die primäre CTA brach
+            dreizeilig um. Das Foto trägt 2:1 und verliert bei etwas weniger
+            Breite nichts; der Text gewinnt eine echte Lesebreite.
+            Mobil steht das Bild oben und der Text darunter. */}
         <div
           className={
             image
-              ? "grid items-center gap-8 lg:grid-cols-[7fr_5fr] lg:gap-12"
+              ? "grid items-center gap-10 lg:grid-cols-[1.04fr_1fr] lg:gap-14"
               : "grid items-center gap-8"
           }
         >
           {image && (
             <PairingPhoto
               src={image}
+              srcSet={srcSet}
+              sizes={photo.sizes}
               blur={blur}
               alt={imageAlt}
               drift={photoDrift}
@@ -328,14 +383,20 @@ export default function PairingScene({ wine }) {
               >
                 Wozu passt {wine.name}?
               </h2>
-              <h3 className="mt-3 font-playfair text-[clamp(1rem,1.5vw,1.2rem)] italic leading-snug text-bordeaux">
+              <h3 className="mt-3.5 font-playfair text-[clamp(1.05rem,1.5vw,1.25rem)] italic leading-snug text-bordeaux">
                 {scene.dish}
               </h3>
-              <p className="mt-4 max-w-prose text-[13.5px] leading-[1.7] text-charcoal/70">
+              {/* 14,5 px auf 1.85 statt 13,5 px auf 1.7: in der breiteren
+                  Spalte trägt der Absatz jetzt rund 70 Zeichen pro Zeile und
+                  bekommt die Luft, die der Rest der Seite auch hat. */}
+              <p className="mt-5 max-w-prose text-[14.5px] leading-[1.85] text-charcoal/70">
                 {scene.copy}
               </p>
 
-              <div className="mt-7 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center">
+              {/* flex-wrap statt starrer Zeile: wird es doch einmal eng (lg-
+                  Einstieg, lange Weinnamen), rutscht der Regionen-Link unter
+                  die CTA, statt beide gegeneinander zu quetschen. */}
+              <div className="mt-8 flex flex-col items-stretch gap-x-5 gap-y-3 sm:flex-row sm:flex-wrap sm:items-center">
                 <Button
                   href={wine.cta.button.href}
                   variant="primary"
@@ -349,7 +410,12 @@ export default function PairingScene({ wine }) {
                     })
                   }
                 >
-                  Diesen Wein im offiziellen Shop entdecken
+                  {/* Gekürzt von „Diesen Wein im offiziellen Shop entdecken":
+                      41 Zeichen brauchten 466 px und brachen zwischen 1024 und
+                      1130 px zweizeilig um. „Diesen Wein" trug dabei nichts —
+                      die ganze Sektion spricht über genau diesen Wein — und
+                      dieselbe Formulierung steht schon im Hero. */}
+                  Im offiziellen Shop entdecken
                 </Button>
 
                 {scene.regionLink && (
@@ -361,7 +427,10 @@ export default function PairingScene({ wine }) {
                         region: scene.regionLink.region ?? null,
                       })
                     }
-                    className="inline-flex min-h-[44px] items-center justify-center rounded-full px-2 text-[12.5px] text-charcoal/70 underline-offset-4 transition-colors hover:text-bordeaux hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bordeaux"
+                    /* whitespace-nowrap: der Link ist eine Zeile oder er
+                       wandert ganz in die nächste — dreizeilig gestapelt sah
+                       er aus wie ein Fehler, nicht wie ein Angebot. */
+                    className="inline-flex min-h-[44px] items-center justify-center whitespace-nowrap rounded-full text-[12.5px] text-charcoal/70 underline-offset-4 transition-colors hover:text-bordeaux hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bordeaux"
                   >
                     {scene.regionLink.label}
                   </Link>

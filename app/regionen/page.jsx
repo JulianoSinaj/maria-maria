@@ -5,6 +5,7 @@ import TiltCard from "@/components/motion/TiltCard";
 import { Reveal } from "@/components/motion/Reveal";
 import ShopCtaBand from "@/components/ui/ShopCtaBand";
 import { SectionTitle, Eyebrow } from "@/components/Deco";
+import Photo from "@/components/media/Photo";
 import RegionHeroVideo from "@/components/RegionHeroVideo";
 import FaqSection from "@/components/faq/FaqSection";
 import { REGIONEN_FAQ_GROUPS } from "@/components/faq/faqData";
@@ -153,12 +154,11 @@ export default function RegionenPage() {
                   <Reveal className={flipped ? "lg:order-2" : ""}>
                     <TiltCard className="group h-full" max={4} radius="rounded-card-lg">
                       <div className="relative aspect-[1672/941] overflow-hidden rounded-card-lg shadow-luxe transition-shadow duration-500 group-hover:shadow-lift">
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img
+                        {/* Zweispaltig ab lg, darunter volle Breite */}
+                        <Photo
                           src={r.img}
                           alt={`Landschaft der Region ${r.name}`}
-                          loading="lazy"
-                          decoding="async"
+                          sizes="(min-width: 1024px) 50vw, 100vw"
                           className="absolute inset-0 h-full w-full object-cover"
                         />
                         <div

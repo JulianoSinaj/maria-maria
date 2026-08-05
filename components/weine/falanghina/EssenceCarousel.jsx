@@ -2,6 +2,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { ChevronRight } from "@/components/Icons";
+import Photo from "@/components/media/Photo";
 import { WINE_ICON } from "./WineIcons";
 
 /* Mobile-Variante des Essenz-Trios („So schmeckt … am besten"): ein
@@ -116,12 +117,14 @@ export default function EssenceCarousel({ items, accent, backgrounds = [] }) {
               >
                 {/* Hintergrundbild + dunkle Überlagerung */}
                 {bg ? (
-                  <img
+                  {/* Der Stapel ist die Mobil-Variante des Essenz-Trios und
+                      steht nie breiter als der Viewport. */}
+                  <Photo
                     src={bg}
                     alt=""
                     aria-hidden="true"
+                    sizes="100vw"
                     className="absolute inset-0 h-full w-full object-cover"
-                    loading="lazy"
                     draggable={false}
                   />
                 ) : (

@@ -43,13 +43,13 @@ export default function ShopExplorer() {
           durch Haarlinien getrennt — dieselbe Rhythmik wie auf /weine. */}
       <div className="mt-4 grid grid-cols-1 gap-x-8 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-12">
         <AnimatePresence mode="popLayout" initial={false}>
-          {wines.map((w, i) => (
+          {wines.map((w) => (
             <motion.div
               key={w.name}
               {...itemMotion}
               className="h-full border-t border-transparent pb-6 pt-8 [&:nth-child(n+2)]:border-charcoal/10 sm:[&:nth-child(2)]:border-transparent lg:[&:nth-child(3)]:border-transparent"
             >
-              <ShopCard wine={w} index={i} className="h-full" />
+              <ShopCard wine={w} className="h-full" />
             </motion.div>
           ))}
         </AnimatePresence>

@@ -4,12 +4,7 @@ import { Reveal } from "./motion/Reveal";
 
 /* thin champagne rule that fades at the ends */
 export function GoldRule({ className = "" }) {
-  return (
-    <span
-      className={`block h-px ${className}`}
-      style={{ background: "linear-gradient(90deg,transparent,#C8B77A,transparent)" }}
-    />
-  );
+  return null;
 }
 
 /* small uppercase eyebrow with a grape mark — the editorial section opener */
@@ -82,9 +77,7 @@ export function SectionTitle({
 export function GrapeRule({ className = "" }) {
   return (
     <div className={`flex items-center gap-3 ${className}`}>
-      <span className="h-px w-16 bg-champagne/70" />
       <Grapes className="h-5 w-5 text-champagne" />
-      <span className="h-px w-16 bg-champagne/70" />
     </div>
   );
 }

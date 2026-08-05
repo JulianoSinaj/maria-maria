@@ -4,7 +4,13 @@ import Link from "next/link";
 import { motion, useReducedMotion } from "motion/react";
 import { Eyebrow, GoldRule } from "@/components/Deco";
 import { Reveal } from "@/components/motion/Reveal";
-import { Plus, Arrow } from "@/components/Icons";
+import { Arrow } from "@/components/Icons";
+import {
+  pushEvent,
+  pageLocation,
+  FAQ_OPEN,
+  FAQ_CTA_CLICK,
+} from "@/lib/analytics";
 
 /* Wiederverwendbare FAQ-Sektion für alle Seiten — geteiltes „Index“-Layout:
    links der Sektionstext (Eyebrow, Titel, Beschreibung) samt Themen-Index bei
@@ -16,16 +22,16 @@ import { Plus, Arrow } from "@/components/Icons";
      werden nur auf Höhe 0 animiert), eine offene Frage pro Cluster.
    - Max. 1 interner Link pro Antwort (`item.link`), beschreibender Anchor.
    - Stabile IDs je Frage (`item.id`) für Deep-Links und dataLayer-Tracking
-     (faq_open / faq_internal_link_click), niemals der Fragetext als Schlüssel.
+     (faq_open / cta_click), niemals der Fragetext als Schlüssel.
+   - Fragen mind. 18 px, Antworten mind. 16 px, Touch-Target mind. 44 px,
+     Icon `+` im geschlossenen und `–` im geöffneten Zustand.
    - Kein FAQPage-JSON-LD: seit Mai 2026 ohne Rich-Result-Effekt, bewusst P2. */
 
 const INDICATOR_SPRING = { type: "spring", stiffness: 320, damping: 30 };
 
-function pushEvent(event, payload) {
-  if (typeof window === "undefined") return;
-  window.dataLayer = window.dataLayer || [];
-  window.dataLayer.push({ event, ...payload });
-}
+/* sichtbarer Fokus für Tastaturbedienung — gleiche Marke wie die Hover-Ringe */
+const FOCUS_RING =
+  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-champagne focus-visible:ring-offset-2 focus-visible:ring-offset-cream";
 
 export default function FaqSection({
   id = "fragen",
@@ -36,6 +42,16 @@ export default function FaqSection({
   groups,
   accent,
   pageType = "page",
+  /* „index“ = zweispaltig mit Themen-Index (Standard der Cluster-Seiten),
+     „single“ = eine schmale Spalte von 760–860 px, wie die Homepage-FAQ-Guide
+     sie für die Startseite vorgibt. Gruppierte FAQs brauchen den Index und
+     bleiben deshalb immer zweispaltig. */
+  layout = "index",
+  /* Wert für `cta_position` in GA4; die Startseite trägt laut Guide
+     „homepage_faq“, alle übrigen Seiten ihren eigenen Sektionsschlüssel */
+  ctaPosition = pageType === "home"
+    ? "homepage_faq"
+    : `${pageType.replace(/[^a-z0-9]+/gi, "_")}_faq`,
   footer,
   className = "",
 }) {
@@ -48,6 +64,7 @@ export default function FaqSection({
     [groups, items]
   );
   const hasIndex = grouped.length > 1;
+  const single = layout === "single" && !hasIndex;
 
   const [activeKey, setActiveKey] = useState(grouped[0]?.key);
   /* offene Frage je Gruppe — initial alle geschlossen (Antworten stehen
@@ -84,15 +101,45 @@ export default function FaqSection({
     const willOpen = open[group.key] !== index;
     setOpen((prev) => ({ ...prev, [group.key]: willOpen ? index : null }));
     if (willOpen) {
-      pushEvent("faq_open", {
+      pushEvent(FAQ_OPEN, {
         faq_id: item.id ?? `${pageType}-${group.key}-${index}`,
-        question: item.q,
+        faq_question: item.q,
+        page_location: pageLocation(),
         cluster: group.label ?? group.key,
         page_type: pageType,
         position: index + 1,
       });
     }
   };
+
+  const trackCta = (text, href) =>
+    pushEvent(FAQ_CTA_CLICK, {
+      cta_text: text,
+      cta_destination: href,
+      cta_position: ctaPosition,
+      page_type: pageType,
+    });
+
+  /* `footer.note` trägt die Frage über dem Link („Noch Fragen oder Interesse
+     an einer Zusammenarbeit?“) — der Link selbst zählt als CTA und wird wie
+     die Antwort-Links als cta_click erfasst */
+  const footerCta = footer ? (
+    <Reveal delay={0.16}>
+      <div className="mt-5">
+        {footer.note && (
+          <p className="text-[16px] leading-snug text-charcoal/70">{footer.note}</p>
+        )}
+        <Link
+          href={footer.href}
+          onClick={() => trackCta(footer.label, footer.href)}
+          className={`group inline-flex min-h-[44px] items-center gap-1.5 text-[15px] font-medium text-bordeaux ${FOCUS_RING}`}
+        >
+          {footer.label}
+          <Arrow className="h-3.5 w-3.5 transition-transform duration-500 ease-out-expo group-hover:translate-x-1" />
+        </Link>
+      </div>
+    </Reveal>
+  ) : null;
 
   const heightTransition = reduced
     ? { duration: 0 }
@@ -103,16 +150,26 @@ export default function FaqSection({
 
   return (
     <section id={id} className={`relative scroll-mt-36 ${className}`}>
-      <div className="mx-auto grid max-w-content grid-cols-1 gap-8 px-6 py-12 sm:py-14 lg:grid-cols-[0.85fr_1.15fr] lg:gap-12 lg:px-10 lg:py-16">
+      <div
+        className={
+          single
+            ? "mx-auto w-full max-w-[820px] px-6 py-12 sm:py-14 lg:px-10 lg:py-16"
+            : "mx-auto grid max-w-content grid-cols-1 gap-8 px-6 py-12 sm:py-14 lg:grid-cols-[0.85fr_1.15fr] lg:gap-12 lg:px-10 lg:py-16"
+        }
+      >
         {/* ---- linke Spalte: Text + Themen-Index, haftet beim Scrollen ---- */}
-        <div className="lg:sticky lg:top-32 lg:self-start">
+        <div className={single ? "" : "lg:sticky lg:top-32 lg:self-start"}>
           <Reveal>
             <Eyebrow>{eyebrow}</Eyebrow>
             <h2 className="mt-3 text-balance font-playfair text-[clamp(1.75rem,3.4vw,2.6rem)] leading-[1.1] text-charcoal">
               {title}
             </h2>
             {description && (
-              <p className="mt-3 max-w-md text-[13.5px] leading-snug text-charcoal/70">
+              <p
+                className={`mt-3 text-[16px] leading-snug text-charcoal/70 ${
+                  single ? "max-w-[54ch]" : "max-w-md"
+                }`}
+              >
                 {description}
               </p>
             )}
@@ -131,7 +188,7 @@ export default function FaqSection({
                           type="button"
                           aria-pressed={isActive}
                           onClick={() => setActiveKey(g.key)}
-                          className={`group relative flex w-full items-center justify-between gap-3 overflow-hidden rounded-full border px-4 py-2 text-left text-[12.5px] transition-colors duration-300 lg:rounded-2xl lg:px-4 lg:py-2.5 ${
+                          className={`group relative flex min-h-[44px] w-full items-center justify-between gap-3 overflow-hidden rounded-full border px-4 py-2 text-left text-[14px] transition-colors duration-300 lg:rounded-2xl lg:px-4 lg:py-2.5 ${FOCUS_RING} ${
                             isActive
                               ? "border-transparent bg-white shadow-luxe"
                               : "border-stone/70 bg-white/40 text-charcoal/65 hover:border-champagne/70 hover:text-charcoal"
@@ -174,21 +231,13 @@ export default function FaqSection({
             </Reveal>
           )}
 
-          {footer && (
-            <Reveal delay={0.16}>
-              <Link
-                href={footer.href}
-                className="group mt-5 inline-flex min-h-[44px] items-center gap-1.5 text-[12px] font-medium text-bordeaux"
-              >
-                {footer.label}
-                <Arrow className="h-3.5 w-3.5 transition-transform duration-500 ease-out-expo group-hover:translate-x-1" />
-              </Link>
-            </Reveal>
-          )}
+          {/* Abschluss-CTA: im Index-Layout unter dem Sektionstext, in der
+              einspaltigen Fassung hinter der letzten Antwort */}
+          {!single && footerCta}
         </div>
 
         {/* ---- rechte Spalte: Akkordeon; inaktive Cluster bleiben im DOM ---- */}
-        <Reveal delay={0.12} className="min-w-0">
+        <Reveal delay={0.12} className={single ? "mt-8 min-w-0" : "min-w-0"}>
           {grouped.map((group) => (
             <div key={group.key} hidden={hasIndex && group.key !== activeKey}>
               <div className="divide-y divide-stone/60 border-y border-stone/60">
@@ -205,27 +254,30 @@ export default function FaqSection({
                         aria-expanded={isOpen}
                         aria-controls={panelId}
                         onClick={() => toggle(group, i, item)}
-                        className="group flex w-full items-center justify-between gap-5 py-3.5 text-left"
+                        className={`group flex min-h-[44px] w-full items-center justify-between gap-5 py-4 text-left ${FOCUS_RING}`}
                       >
                         <span
-                          className="text-[14.5px] font-medium leading-snug text-charcoal transition-colors duration-300"
+                          className="text-[18px] font-medium leading-snug text-charcoal transition-colors duration-300"
                           style={isOpen ? { color: ink } : undefined}
                         >
                           {item.q}
                         </span>
+                        {/* + geschlossen, – geöffnet: der senkrechte Balken
+                            fährt auf der GPU über scaleY ein statt zu rotieren */}
                         <span
-                          className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-stone/80 text-charcoal/55 transition-colors duration-300 group-hover:border-champagne"
+                          aria-hidden="true"
+                          className="relative flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-stone/80 text-charcoal/55 transition-colors duration-300 group-hover:border-champagne"
                           style={
                             isOpen
                               ? { borderColor: ring, backgroundColor: wash, color: ink }
                               : undefined
                           }
                         >
-                          <Plus
-                            aria-hidden="true"
-                            className={`h-4 w-4 transition-transform duration-500 ease-out-expo ${
-                              isOpen ? "rotate-45" : ""
-                            }`}
+                          <span className="absolute h-[1.5px] w-4 rounded-full bg-current" />
+                          <span
+                            className={`absolute h-4 w-[1.5px] origin-center rounded-full bg-current will-change-transform ${
+                              reduced ? "" : "transition-transform duration-500 ease-out-expo"
+                            } ${isOpen ? "scale-y-0" : "scale-y-100"}`}
                           />
                         </span>
                       </button>
@@ -242,21 +294,15 @@ export default function FaqSection({
                         className="overflow-hidden"
                       >
                         <div className="pb-4 pr-2 sm:pr-10">
-                          <p className="text-[13.5px] leading-normal text-charcoal/70">
+                          <p className="text-[16px] leading-relaxed text-charcoal/70">
                             {item.a}
                           </p>
                           {item.link && (
                             <Link
                               href={item.link.href}
                               tabIndex={isOpen ? 0 : -1}
-                              onClick={() =>
-                                pushEvent("faq_internal_link_click", {
-                                  faq_id: item.id ?? `${pageType}-${group.key}-${i}`,
-                                  target_url: item.link.href,
-                                  page_type: pageType,
-                                })
-                              }
-                              className="group/faql mt-2.5 inline-flex items-center gap-1.5 text-[12px] font-medium"
+                              onClick={() => trackCta(item.link.label, item.link.href)}
+                              className={`group/faql mt-1.5 inline-flex min-h-[44px] items-center gap-1.5 text-[15px] font-medium ${FOCUS_RING}`}
                               style={{ color: ink }}
                             >
                               {item.link.label}
@@ -271,6 +317,7 @@ export default function FaqSection({
               </div>
             </div>
           ))}
+          {single && footerCta}
         </Reveal>
       </div>
     </section>

@@ -15,30 +15,47 @@
    und Dauer der Verkostungen, Lugana-Stilarten) bleiben bewusst draußen,
    bis der Brand Owner sie freigibt. */
 
-/* ---- Homepage: Brand-FAQ (Identität, Auswahl, Leitsatz) ---- */
+/* ---- Homepage: Brand-FAQ (Identität, Sortiment, Anlass, Partner, Kontakt) ----
+   Freigegebene Fassung aus „Maria Maria | Homepage FAQ“ (Guida operativa
+   bilingue IT/DE, V1.0 · 04.08.2026): die deutschen Texte sind wörtlich aus
+   dem Dokument übernommen und dürfen nicht redaktionell verändert werden.
+
+   Bewusst offen: Frage 3 des Dokuments („Wo kann ich die Weine von Maria
+   Maria kaufen?“) nennt den Vertriebspartner Terra Vera als Kaufweg und
+   widerspricht damit dem eigenen Shop dieser Seite. Sie bleibt draußen, bis
+   Kaufweg und finale Terra-Vera-URL bestätigt sind — deshalb fünf statt der
+   sechs Blöcke des Dokuments. */
 export const HOME_FAQ = [
   {
     id: "home-was-ist",
     q: "Was ist Maria Maria?",
-    a: "Maria Maria ist eine Boutique-Weinmarke mit Sitz in Düsseldorf: handverlesene italienische Weine kleiner, familiengeführter Weingüter — persönlich verkostet, in limitierten Mengen und für bewusst gewählte Genussmomente ausgewählt.",
-    link: { label: "Unsere Weine entdecken", href: "/unsere-weine" },
+    a: "Maria Maria steht für persönlich kuratierte Boutique-Weine aus Italien. Das ausgewählte Sortiment verbindet authentische Herkunft, charaktervolle Rebsorten und italienische Lebensart – für Menschen und Gastgeber, die Wein bewusst auswählen und genießen möchten.",
   },
   {
-    id: "home-auswahl",
-    q: "Welche Weine gehören zur Maria-Maria-Auswahl?",
-    a: "Neun Charaktere aus drei Regionen — Apulien, Kampanien und Gardasee: drei Primitivo und ein Rosato aus Apulien, die Weißweine Falanghina, Greco di Tufo und Il Bianco sowie die Rotwein-Cuvée Il Rosso aus Kampanien und der Lugana vom Gardasee. Den besten Überblick gibt die Kollektion.",
-    link: { label: "Alle Weine ansehen", href: "/unsere-weine" },
+    id: "home-sortiment",
+    q: "Welche Weine bietet Maria Maria an?",
+    a: "Das Sortiment umfasst neun ausgewählte Weiß-, Rosé- und Rotweine aus Kampanien, Apulien und der Region rund um den Gardasee. Dazu gehören unter anderem Lugana, Falanghina, Greco di Tufo, Aglianico und verschiedene Primitivo-Weine.",
+    link: { label: "Alle Weine entdecken", href: "/unsere-weine" },
   },
   {
-    id: "home-auswahlkriterien",
-    q: "Wie werden die Maria-Maria-Weine ausgewählt?",
-    a: "Persönlich: Jede Flasche wird von uns verkostet, bevor sie in die Kollektion kommt. Wir arbeiten direkt mit kleinen, familiengeführten Weingütern und ihren Önologen zusammen — limitierte Produktion, echtes Terroir, keine große Distribution.",
-    link: { label: "Die Regionen dahinter entdecken", href: "/regionen" },
+    id: "home-anlass",
+    q: "Welcher Maria-Maria-Wein passt zu meinem Anlass?",
+    a: "Ob Aperitivo, Dinner, Food Pairing, Veranstaltung oder stilvolles Geschenk: Auf den einzelnen Weinseiten finden Sie Informationen zu Geschmack, Charakter, Serviertemperatur und passenden Speisen. Bei einer persönlichen Frage helfen wir Ihnen gerne bei der Auswahl.",
+    link: { label: "Den passenden Wein entdecken", href: "/unsere-weine" },
   },
   {
-    id: "home-piacere",
-    q: "Was bedeutet „Il piacere del vino“?",
-    a: "„Das Vergnügen des Weins“ — unser Leitsatz. Ein Maria-Moment ist kein Anlass, sondern eine Entscheidung: den Augenblick zu wählen, den Wein zu öffnen und bewusst miteinander zu sein.",
+    id: "home-partner",
+    q: "Arbeitet Maria Maria mit Gastronomie, Hospitality und Lifestyle-Partnern zusammen?",
+    a: "Ja. Maria Maria richtet sich auch an ausgewählte Partner aus Gastronomie, Hospitality, Events, Retail und Lifestyle, die italienische Boutique-Weine in ihr Konzept integrieren möchten. Anfragen und mögliche Kooperationen besprechen wir persönlich.",
+    /* eine eigene Partnerschafts-/B2B-Seite existiert noch nicht; Owner der
+       Händler- und Kooperationsfragen ist der Kontakt-Cluster „Händler“ */
+    link: { label: "Maria Maria als Partner entdecken", href: "/kontakt#kontakt-haendler" },
+  },
+  {
+    id: "home-kontakt",
+    q: "Wie kann ich Maria Maria kontaktieren?",
+    a: "Nutzen Sie unser Kontaktformular, wenn Sie eine Frage zu unseren Weinen, einer Zusammenarbeit oder einem besonderen Anlass haben. Wir melden uns persönlich bei Ihnen zurück.",
+    link: { label: "Kontakt aufnehmen", href: "/kontakt" },
   },
 ];
 

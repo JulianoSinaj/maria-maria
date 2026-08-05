@@ -389,9 +389,14 @@ export default function HomeContent() {
               Maria Maria, <span className="italic text-bordeaux">kurz erklärt.</span>
             </>
           }
-          description="Was hinter dem Namen steht, wie wir unsere Weine auswählen und wofür unser Leitsatz steht — die häufigsten Fragen, direkt beantwortet."
+          description="Alles, was Sie über unsere Weine, den Einkauf und eine mögliche Zusammenarbeit mit Maria Maria wissen möchten."
           items={HOME_FAQ}
-          footer={{ label: "Weitere Fragen? Kontakt aufnehmen", href: "/kontakt" }}
+          layout="single"
+          footer={{
+            note: "Noch Fragen oder Interesse an einer Zusammenarbeit?",
+            label: "Persönlich Kontakt aufnehmen",
+            href: "/kontakt",
+          }}
         />
       </div>
     </div>

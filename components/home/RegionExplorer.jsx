@@ -11,6 +11,7 @@ import {
 } from "motion/react";
 import Button from "@/components/ui/Button";
 import { photoSrcSet } from "@/components/media/Photo";
+import { SCROLL_SPRING } from "@/components/motion/springs";
 
 /* Region explorer — drei eigenständige Foto-Karten statt einer gemeinsamen
    Karten-Bühne. Jede Region bringt ihr eigenes Landschaftsfoto mit (inklusive
@@ -161,7 +162,7 @@ export default function RegionExplorer({ regions }) {
   // ein geteiltes useScroll meldete dort einen toten Fortschritt.
   const stageRef = useRef(null);
   const mobileStageRef = useRef(null);
-  const SPRING_CFG = { stiffness: 120, damping: 30, mass: 0.6 };
+  const SPRING_CFG = SCROLL_SPRING;
   const { scrollYProgress } = useScroll({
     target: stageRef,
     offset: ["start end", "end start"],

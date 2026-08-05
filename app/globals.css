@@ -47,7 +47,14 @@ body {
   font-family: var(--font-montserrat);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  /* `overflow-x: hidden` macht den Body zum Scroll-Container: das kostet
+     Lenis die saubere Kontrolle über das Wurzel-Scrolling und hebelt
+     `position: sticky` bei Nachfahren aus — also genau die gepinnten
+     Hero-Sektionen (FalanghinaHero, SubNav). `clip` schneidet den
+     horizontalen Überhang genauso ab, erzeugt aber KEINEN Scroll-Container.
+     Die erste Zeile bleibt als Fallback für Engines ohne `clip`. */
   overflow-x: hidden;
+  overflow-x: clip;
   /* the grey tap flash reads as cheap — press feedback comes from the
      whileTap spring compressions instead */
   -webkit-tap-highlight-color: transparent;

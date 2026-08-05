@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { AnimatePresence, motion, useScroll, useSpring } from "motion/react";
+import { AnimatePresence, motion, useScroll, useSpring, useMotionValueEvent } from "motion/react";
 import Logo from "./Logo";
 import Button from "./ui/Button";
 import WineMenu from "./WineMenu";
@@ -32,15 +32,20 @@ export default function Header() {
   const closeRef = useRef(null);
   const overlayRef = useRef(null);
 
-  const { scrollYProgress } = useScroll();
+  const { scrollY, scrollYProgress } = useScroll();
   const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 28, mass: 0.4 });
 
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 28);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  /* Der Zustandswechsel hängt an Motions scrollY statt an einem eigenen
+     scroll-Listener. Ein zweiter Listener würde `window.scrollY` außerhalb
+     des Frame-Loops lesen — also mitten im Scrollen einen Layout-Read
+     erzwingen, während Lenis im selben Frame schreibt. Motion misst den
+     Scroll ohnehin schon einmal pro Frame im `read`-Step; wir hängen uns
+     dort an, statt ein zweites Mal zu messen. */
+  useMotionValueEvent(scrollY, "change", (v) => setScrolled(v > 28));
+
+  /* Einstiegszustand: bei Back-Navigation stellt der Browser die
+     Scroll-Position wieder her, bevor irgendein "change" feuert. */
+  useEffect(() => setScrolled(scrollY.get() > 28), [scrollY]);
 
   useEffect(() => {
     const lenis = lenisRef?.current;

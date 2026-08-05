@@ -429,6 +429,19 @@ export default function ShopPage() {
           </div>
         </section>
 
+        {/* ============ CROSS-LINK CTA (shader band) ============ */}
+        <ShopCtaBand
+          eyebrow="Die sensorische Reise"
+          title={
+            <>
+              Vom Salento bis zum <span className="italic text-champagne">Gardasee</span>
+            </>
+          }
+          text="Unsere Selection zeichnet eine Reise durch Italien – vom sonnigen Süden Apuliens über Kampanien hinauf ans Ufer des Gardasees."
+          primary={{ label: "Unsere Weine", href: "/unsere-weine" }}
+          secondary={{ label: "Regionen entdecken", href: "/regionen" }}
+        />
+
         {/* ============ HÄUFIGE FRAGEN (Service-FAQ) ============ */}
         <div className="relative overflow-hidden bg-gradient-to-b from-cream via-champagne-light/25 to-ivory">
           <Vines className="inset-x-0 bottom-0 h-72 w-full" />
@@ -447,19 +460,6 @@ export default function ShopPage() {
             footer={{ label: "Ihre Frage ist nicht dabei? Kontakt aufnehmen", href: "/kontakt" }}
           />
         </div>
-
-        {/* ============ CROSS-LINK CTA (shader band) ============ */}
-        <ShopCtaBand
-          eyebrow="Die sensorische Reise"
-          title={
-            <>
-              Vom Salento bis zum <span className="italic text-champagne">Gardasee</span>
-            </>
-          }
-          text="Unsere Selection zeichnet eine Reise durch Italien – vom sonnigen Süden Apuliens über Kampanien hinauf ans Ufer des Gardasees."
-          primary={{ label: "Unsere Weine", href: "/unsere-weine" }}
-          secondary={{ label: "Regionen entdecken", href: "/regionen" }}
-        />
 
       </div>
   );

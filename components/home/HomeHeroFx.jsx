@@ -2,6 +2,7 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform, useSpring, useReducedMotion } from "motion/react";
 import { ChevronDown } from "@/components/Icons";
+import { SCROLL_SPRING_HEAVY } from "@/components/motion/springs";
 
 /* Foto-Bühne und Scroll-Cue des Home-Heros — die Client-Schicht über dem
    server-gerenderten <picture> (siehe HomeHeroPhoto, children-Prop-Trick wie
@@ -11,7 +12,7 @@ import { ChevronDown } from "@/components/Icons";
    Stattdessen zieht die Kamera beim Verlassen des Heros federgewichtet in die
    Szene — derselbe langsame Zoom wie im Foto-Modus der Landingpages. */
 
-const SPRING = { stiffness: 60, damping: 19, mass: 0.9 };
+const SPRING = SCROLL_SPRING_HEAVY;
 
 export default function HomeHeroFx({ photo }) {
   const ref = useRef(null);

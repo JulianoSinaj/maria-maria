@@ -2,6 +2,7 @@
 
 import { useRef } from "react";
 import { motion, useScroll, useSpring, useTransform, useReducedMotion } from "motion/react";
+import { SCROLL_SPRING_HEAVY } from "@/components/motion/springs";
 import { Eyebrow } from "@/components/Deco";
 import { Aura, GhostWord } from "@/components/Atmosphere";
 
@@ -98,7 +99,7 @@ export default function TerroirManifest() {
     target: ref,
     offset: ["start 78%", "end 68%"],
   });
-  const smooth = useSpring(scrollYProgress, { stiffness: 70, damping: 22, mass: 0.7 });
+  const smooth = useSpring(scrollYProgress, SCROLL_SPRING_HEAVY);
   const scaleY = useTransform(smooth, [0, 1], [0, 1]);
 
   return (

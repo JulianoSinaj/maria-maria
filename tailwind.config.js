@@ -14,6 +14,8 @@ module.exports = {
         wine: "#8A2B2F",
         champagne: "#C8B77A",
         "champagne-light": "#E3D9B8",
+        /* dunkleres Gold für kleine Versalzeilen auf Creme (Cover Story) */
+        "champagne-deep": "#A08A4F",
         ivory: "#F7F4EF",
         cream: "#FBF9F4",
         stone: "#D9D2C4",
@@ -61,11 +63,19 @@ module.exports = {
           "0%": { transform: "translateX(0)" },
           "100%": { transform: "translateX(-50%)" },
         },
+        /* Blätterhinweis des Magazins: ein Tropfen wandert die Linie hinab */
+        cue: {
+          "0%": { transform: "translateY(-120%)", opacity: "0" },
+          "20%": { opacity: "1" },
+          "70%": { opacity: "1" },
+          "100%": { transform: "translateY(300%)", opacity: "0" },
+        },
       },
       animation: {
         marquee: "marquee 46s linear infinite",
         aura: "aura 36s ease-in-out infinite",
         aura2: "aura2 44s ease-in-out infinite",
+        cue: "cue 2.4s cubic-bezier(0.4, 0, 0.2, 1) infinite",
       },
     },
   },

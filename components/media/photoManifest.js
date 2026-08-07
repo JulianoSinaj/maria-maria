@@ -104,6 +104,15 @@ export const PHOTO_MANIFEST = {
       1400
     ]
   },
+  "/img/magazin/cover-story.jpg": {
+    "base": "/img/magazin/cover-story",
+    "widths": [
+      160,
+      320,
+      640,
+      875
+    ]
+  },
   "/img/magazin/handverlesen.jpg": {
     "base": "/img/magazin/handverlesen",
     "widths": [

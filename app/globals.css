@@ -181,6 +181,12 @@ a,
   will-change: transform;
 }
 
+/* vertikale Bildzeile im Heftstil — läuft an der Außenkante des
+   Magazin-Titelfotos von oben nach unten */
+.writing-vertical {
+  writing-mode: vertical-rl;
+}
+
 /* ambient aurora drift — slow, weighted, alternate phases */
 @keyframes aura {
   0%,

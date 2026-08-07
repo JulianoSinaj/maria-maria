@@ -284,9 +284,9 @@ export default function HomeContent() {
           <SectionTitle
             align="left"
             eyebrow="Herkunft"
-            description="Jede Region spricht ihre eigene Sprache – man schmeckt sie im Glas."
+            description="Boden, Licht und Klima prägen jede Traube – am Ende schmeckt man die Landschaft im Glas."
           >
-            Regionen Italiens entdecken
+            Wo unsere Weine zuhause sind
           </SectionTitle>
           <Reveal delay={0.15}>
             <Button href="/regionen" variant="outline" size="sm">

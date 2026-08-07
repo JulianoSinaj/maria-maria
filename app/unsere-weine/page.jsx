@@ -119,10 +119,12 @@ export default function WeinePage() {
         </div>
       </section>
 
-      {/* ============ WELCHER WEIN PASST ZU IHREM MOMENT ============ */}
-      {/* Bauform liegt in components/weine/MomentsSection — das Magazin teilt
-          sie; hier zeigt der CTA auf den Kollektions-Anker dieser Seite. */}
-      <MomentsSection />
+      {/* ============ OCCASIONI — FOOD-PAIRING-TEASER ============ */}
+      {/* Bauform liegt in components/weine/MomentsSection — die redaktionelle
+          Doppelseite „Occasioni": Anlass-Index links, Antwort-Karte rechts,
+          beide springen ins Food-Pairing-Kapitel des Magazins
+          (/magazin#food-pairing). */}
+      <MomentsSection headingId="weine-pairing" />
 
       {/* ============ HELP STRIP ============ */}
       <HelpStrip />

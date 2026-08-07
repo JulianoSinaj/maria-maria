@@ -14,13 +14,23 @@ import {
    Motiven auf dunkler Editorial-Bühne (gleiche Bühne wie HelpStrip). Jede
    Kachel kippt federgedämpft zum Cursor, auf Hover legt sich der
    Espresso-Schleier mit Bildunterschrift und Hashtag über das Motiv.
-   Alle Kacheln führen zum Profil. Inhalte: magazinData.SOCIAL_POSTS. */
+   Alle Kacheln führen zum Profil. Inhalte: magazinData.SOCIAL_POSTS.
+
+   Die Wand nimmt ihr Wort ernst: jedes Foto hängt wie von Hand angepinnt —
+   minimal gedreht (unabhängige `rotate`-Eigenschaft, kollidiert nicht mit
+   dem 3D-Transform der TiltCard), mit Pinnnadel oben und ab lg leicht
+   versetzten Hängehöhen (reine Transforms, kein Layout-Sprung). Beim
+   Hover oder Tastaturfokus richtet sich das Foto gerade — als nähme man
+   es von der Wand. */
+
+/* Hängewinkel der vier Fotos — bewusst unregelmäßig, wie von Hand */
+const TILTS = [-1.7, 1.1, -0.8, 1.9];
 
 export default function SocialBoard({ className = "", headingId }) {
   return (
     <section
       aria-labelledby={headingId}
-      className={`grain relative overflow-hidden bg-espresso py-16 lg:py-20 ${className}`}
+      className={`grain relative overflow-hidden bg-espresso py-12 lg:py-14 ${className}`}
     >
       {/* Tiefe: warme Weinglut oben links, Champagnerschimmer unten rechts */}
       <div
@@ -67,11 +77,19 @@ export default function SocialBoard({ className = "", headingId }) {
           </Reveal>
         </div>
 
+        {/* der Handle als Wasserzeichen hinter der Wand */}
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute left-1/2 top-[62%] -translate-x-1/2 select-none whitespace-nowrap font-playfair text-[9vw] italic leading-none text-ivory/[0.04]"
+        >
+          {SOCIAL_HANDLE}
+        </span>
+
         {/* die Pinnwand: quadratische Kacheln, ab lg eine einzige Reihe zu
             viert. Darunter bleibt es bei zwei Spalten — bei dreien stünde die
             vierte Kachel allein in einer zweiten Reihe. */}
-        <Stagger className="mt-10 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4" gap={0.06}>
-          {SOCIAL_POSTS.map((p) => (
+        <Stagger className="mt-8 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4" gap={0.06}>
+          {SOCIAL_POSTS.map((p, i) => (
             <StaggerItem key={p.img} className="h-full">
               <a
                 href={SOCIAL_URL}
@@ -80,8 +98,22 @@ export default function SocialBoard({ className = "", headingId }) {
                 aria-label={`${p.caption} — Maria Maria auf Instagram öffnen`}
                 className="group block h-full rounded-card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-champagne focus-visible:ring-offset-2 focus-visible:ring-offset-espresso"
               >
+                {/* Hängewinkel + versetzte Hängehöhe — richtet sich beim
+                    Hover/Fokus gerade */}
+                <div
+                  className={`will-transform transition-[rotate] duration-500 ease-out-expo group-hover:[rotate:0deg] group-focus-visible:[rotate:0deg] ${
+                    i % 2 === 1 ? "lg:translate-y-4" : ""
+                  }`}
+                  style={{ rotate: `${TILTS[i % TILTS.length]}deg` }}
+                >
                 <TiltCard className="h-full" max={6} radius="rounded-card">
                   <article className="relative aspect-square overflow-hidden rounded-card border border-champagne/15">
+                    {/* die Pinnnadel — hängt über allen Schleiern, denn sie
+                        hält das Foto an der Wand */}
+                    <span
+                      aria-hidden="true"
+                      className="absolute left-1/2 top-2.5 z-20 h-2 w-2 -translate-x-1/2 rounded-full bg-champagne/80 shadow-[0_1px_4px_rgba(0,0,0,0.45)] ring-1 ring-espresso/50"
+                    />
                     <Photo
                       src={p.img}
                       alt={p.caption}
@@ -106,6 +138,7 @@ export default function SocialBoard({ className = "", headingId }) {
                     </div>
                   </article>
                 </TiltCard>
+                </div>
               </a>
             </StaggerItem>
           ))}

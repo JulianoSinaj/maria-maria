@@ -143,22 +143,6 @@ export default function CoverHero({ hasInterviews = false }) {
               </p>
             </Reveal>
 
-            {/* CTA in die Geschichte */}
-            <Reveal delay={0.7} y={12} blur={false}>
-              <Link
-                href="#storia"
-                className="group mt-6 inline-flex w-fit items-center gap-3 border-b border-bordeaux/35 pb-2 transition-colors duration-300 hover:border-bordeaux"
-              >
-                <span className="text-[14px] font-medium text-bordeaux">
-                  Die Geschichte entdecken
-                </span>
-                <Arrow
-                  aria-hidden="true"
-                  className="h-3.5 w-3.5 text-bordeaux transition-transform duration-500 ease-out-expo group-hover:translate-x-1.5"
-                />
-              </Link>
-            </Reveal>
-
             {/* Vision & Mission — das Leitbild schließt die rechte Spalte */}
             <VisionMission className="mt-9" headingId="magazin-leitbild" />
           </div>

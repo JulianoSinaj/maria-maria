@@ -249,9 +249,6 @@ export default function CuriosityBand({
                 Neun Flaschen, vier Regionen — und damit neun Geschichten, die schon geschrieben
                 sind.
               </p>
-              <Button href="/unsere-weine" variant="primary" size="md" className="shrink-0">
-                Die Weine hinter den Geschichten
-              </Button>
             </div>
           </Reveal>
         </div>

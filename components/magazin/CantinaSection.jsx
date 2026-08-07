@@ -65,9 +65,6 @@ export default function CantinaSection({ headingId, className = "" }) {
             <span className="glass rounded-full px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-charcoal/70">
               {CANTINA_WINES.length} Weine · {regionCount} Regionen
             </span>
-            <Button href="/unsere-weine" variant="dark" size="sm">
-              Alle Weine entdecken
-            </Button>
           </div>
         </Reveal>
 

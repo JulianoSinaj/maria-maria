@@ -31,6 +31,9 @@ export function SectionTitle({
   light = false,
   className = "",
   titleGap = "mt-3",
+  /* ID der Überschrift — erlaubt der umgebenden <section>, sich per
+     aria-labelledby von ihrer eigenen Überschrift benennen zu lassen. */
+  headingId,
 }) {
   const centered = align === "center";
   return (
@@ -47,6 +50,7 @@ export function SectionTitle({
         )
       )}
       <h2
+        id={headingId}
         className={`text-balance font-playfair text-[clamp(1.75rem,3.4vw,2.6rem)] leading-[1.12] ${
           light ? "text-ivory" : "text-charcoal"
         } ${eyebrow ? titleGap : ""}`}

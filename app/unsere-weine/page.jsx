@@ -1,13 +1,11 @@
 import { Suspense } from "react";
 import SplitText from "@/components/motion/SplitText";
-import Parallax from "@/components/motion/Parallax";
-import TiltCard from "@/components/motion/TiltCard";
-import { Reveal, Stagger, StaggerItem } from "@/components/motion/Reveal";
+import { Reveal } from "@/components/motion/Reveal";
 import Button from "@/components/ui/Button";
-import { SectionTitle, Eyebrow, GrapeRule } from "@/components/Deco";
-import Photo from "@/components/media/Photo";
+import { Eyebrow, GrapeRule } from "@/components/Deco";
 import { WINES, REGION_COUNT } from "@/components/data";
 import WineExplorer from "@/components/weine/WineExplorer";
+import MomentsSection from "@/components/weine/MomentsSection";
 import WeineHeroPhoto, { WeineHeroPreload } from "@/components/weine/WeineHeroPhoto";
 import HelpStrip from "@/components/weine/HelpStrip";
 import HomeHeroFx from "@/components/home/HomeHeroFx";
@@ -20,24 +18,6 @@ export const metadata = {
   description:
     "Handverlesene italienische Boutique-Weine von kleinen Weingütern – Rotwein, Weißwein und Rosé aus Apulien, Kampanien und vom Gardasee.",
 };
-
-const MOMENTS = [
-  {
-    title: "Aperitivo",
-    text: "Leicht, frisch und bereichernd.",
-    img: "/img/aperitivo-sunset.jpg",
-  },
-  {
-    title: "Dinner",
-    text: "Elegante Begleiter für besondere Gerichte.",
-    img: "/img/dinner.webp",
-  },
-  {
-    title: "Freunde",
-    text: "Für gute Gespräche und unvergessliche Abende.",
-    img: "/img/pranzo.webp",
-  },
-];
 
 export default function WeinePage() {
   return (
@@ -140,87 +120,9 @@ export default function WeinePage() {
       </section>
 
       {/* ============ WELCHER WEIN PASST ZU IHREM MOMENT ============ */}
-      <section className="grain relative overflow-hidden">
-        {/* Flaschen-Stillleben als weiche Bühne: federnder Parallax-Drift unter
-            einem Elfenbein-Schleier, damit Titel und Karten lesbar bleiben und
-            die Ränder nahtlos in die Nachbarsektionen übergehen */}
-        <div aria-hidden="true" className="absolute inset-0">
-          <Parallax speed={0.08} overscan className="h-full w-full">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/img/weine/occasioni-bg-1523.webp"
-              srcSet="/img/weine/occasioni-bg-640.webp 640w, /img/weine/occasioni-bg-1280.webp 1280w, /img/weine/occasioni-bg-1523.webp 1523w"
-              sizes="100vw"
-              alt=""
-              loading="lazy"
-              decoding="async"
-              className="h-full w-full object-cover object-center"
-            />
-          </Parallax>
-          <div className="absolute inset-0 bg-ivory/25" />
-          <div className="absolute inset-x-0 top-0 h-44 bg-gradient-to-b from-ivory via-ivory/55 to-transparent" />
-          <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-ivory via-ivory/45 to-transparent" />
-        </div>
-        <Atmosphere variant="rose" className="opacity-60" />
-        <div className="relative mx-auto max-w-content px-6 lg:px-10">
-        <SectionTitle
-          eyebrow="Genussmomente"
-          description="Drei Anlässe, drei Stimmungen – finden Sie den Wein, der Ihren Augenblick begleitet."
-        >
-          Welcher Wein passt zu <span className="italic text-bordeaux">Ihrem Moment?</span>
-        </SectionTitle>
-        </div>
-        {/* Karten als breite, flache Streifen übereinander ganz links am
-            Viewport-Rand – rechts bleibt die Flaschen-Bühne des Fotos frei */}
-        <div className="relative px-6 pb-24 lg:pl-24 lg:pr-10">
-        <Stagger className="mt-8 flex flex-col gap-5 lg:max-w-[38rem]">
-          {MOMENTS.map((m, i) => (
-            <StaggerItem key={m.title} className="h-full">
-              <TiltCard className="group h-full" max={5} radius="rounded-card-lg">
-                <article className="relative h-[172px] overflow-hidden rounded-card-lg shadow-luxe transition-shadow duration-500 group-hover:shadow-lift sm:h-[184px]">
-                  {/* Die Streifen sind auf lg:max-w-[38rem] gedeckelt */}
-                  <Photo
-                    src={m.img}
-                    alt=""
-                    sizes="(min-width: 1024px) 38rem, 100vw"
-                    className="h-full w-full object-cover transition-transform duration-700 ease-out-expo group-hover:scale-[1.06]"
-                  />
-                  {/* Schleier von links + weicher Boden, damit Titel und Text
-                      auf dem breiten, flachen Format lesbar bleiben */}
-                  <div
-                    aria-hidden="true"
-                    className="absolute inset-0 bg-gradient-to-r from-espresso/85 via-espresso/40 to-transparent"
-                  />
-                  <div
-                    aria-hidden="true"
-                    className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-espresso/70 to-transparent"
-                  />
-                  <span className="glass absolute left-4 top-4 rounded-full px-3 py-1.5 text-[9.5px] font-semibold uppercase tracking-[0.16em] text-charcoal/70">
-                    Moment 0{i + 1}
-                  </span>
-                  <div className="absolute inset-0 flex items-end justify-between gap-5 p-5 sm:p-6">
-                    <div className="max-w-[17rem]">
-                      <h3 className="font-playfair text-[22px] text-ivory">{m.title}</h3>
-                      <p className="mt-1 text-[12.5px] leading-snug text-ivory/80">{m.text}</p>
-                    </div>
-                    <Button
-                      href="#kollektion"
-                      variant="glass"
-                      size="sm"
-                      magnetic={false}
-                      className="shrink-0"
-                      aria-label={`Passende Weine für ${m.title} entdecken`}
-                    >
-                      Weine finden
-                    </Button>
-                  </div>
-                </article>
-              </TiltCard>
-            </StaggerItem>
-          ))}
-        </Stagger>
-        </div>
-      </section>
+      {/* Bauform liegt in components/weine/MomentsSection — das Magazin teilt
+          sie; hier zeigt der CTA auf den Kollektions-Anker dieser Seite. */}
+      <MomentsSection />
 
       {/* ============ HELP STRIP ============ */}
       <HelpStrip />

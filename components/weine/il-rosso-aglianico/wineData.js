@@ -17,7 +17,7 @@ export const IL_ROSSO = {
   eyebrow: "Italienische Boutique-Weine",
   heroTitle: ["Il Rosso", "Campania Rosso IGP"],
   lede:
-    "Aglianico, Piedirosso und Primitivo aus Kampanien. Sechs Monate französische Eiche, dunkle Frucht und würzige Tiefe — la poesia in bottiglia.",
+    "100 % Aglianico aus Kampanien. Sechs Monate französische Eiche, dunkle Frucht und würzige Tiefe — la poesia in bottiglia.",
   /* Akt 2 des gepinnten Heros — drei Worte, die beim Scrollen erscheinen */
   heroWords: ["Tief.", "Würzig.", "Charakterstark."],
 
@@ -42,7 +42,7 @@ export const IL_ROSSO = {
   /* ---- Schnellfakten (Icon-Leiste unter dem Hero) ---- */
   facts: [
     { icon: "pin", label: "Herkunft", value: "Kampanien, Italien" },
-    { icon: "grapes", label: "Rebsorten", value: "Aglianico, Piedirosso, Primitivo" },
+    { icon: "grapes", label: "Rebsorte", value: "100 % Aglianico" },
     { icon: "tank", label: "Ausbau", value: "6 Monate französische Eiche" },
     { icon: "thermometer", label: "Serviertemperatur", value: "ca. 16–18 °C" },
   ],
@@ -128,7 +128,7 @@ export const IL_ROSSO = {
   /* ---- Im Detail (Bento / technisches Datenblatt) ---- */
   detail: [
     { label: "Bezeichnung", value: "Campania Rosso I.G.P.", span: "wide" },
-    { label: "Uvaggio", value: "Aglianico, Piedirosso und Primitivo" },
+    { label: "Uvaggio", value: "100 % Aglianico" },
     { label: "Herkunft", value: "Kampanien, Italien" },
     { label: "Lese", value: "Ende Oktober, Selektion und Handlese" },
     {
@@ -147,10 +147,10 @@ export const IL_ROSSO = {
   /* ---- Die Geschichte ---- */
   story: {
     kicker: "Die Geschichte",
-    title: "Drei Reben, ein Charakter",
+    title: "Eine Rebe, ein Charakter",
     paragraphs: [
-      /* [BESTÄTIGEN] Storytelling zu den Rebsorten */
-      "Aglianico gibt dem Wein sein Rückgrat: Struktur, Tiefe und die dunkle, würzige Seite Kampaniens. Piedirosso bringt Eleganz und Duft, Primitivo die warme, reife Frucht.",
+      /* [BESTÄTIGEN] Storytelling zur Rebsorte */
+      "Aglianico gibt dem Wein alles, was er hat: Rückgrat und Struktur, dunkle Frucht und die würzige Tiefe Kampaniens. Eine Rebsorte, die nichts hinter einem Verschnitt verstecken kann — und es auch nicht muss.",
       "Ende Oktober wird von Hand gelesen und selektiert. Nach rund zwölf Tagen auf der Maische reift der Wein sechs Monate in französischer Eiche — lang genug für süße Gewürznoten, kurz genug, damit die Frucht das letzte Wort behält.",
     ],
     quote: {
@@ -233,8 +233,8 @@ export const IL_ROSSO = {
       {
         icon: "grapes",
         kicker: "Rebsorte",
-        title: "Aglianico, Piedirosso & Primitivo",
-        text: "Drei süditalienische Reben, ein Charakter: Rückgrat, Duft und reife Frucht — Ende Oktober von Hand gelesen.",
+        title: "100 % Aglianico",
+        text: "Die große rote Rebsorte Süditaliens: Rückgrat, Würze und reife dunkle Frucht — Ende Oktober von Hand gelesen.",
         tone: "#7A2A55",
         toneDeep: "#41102A",
       },
@@ -244,8 +244,9 @@ export const IL_ROSSO = {
   /* ---- Häufige Fragen ---- */
   /* Fragenset nach der FAQ-Guide (Product-Cluster Il Rosso): der branded Name
      allein bleibt abstrakt — die FAQ macht die Rebsorte Aglianico und den
-     Anlass sichtbar, ohne Cuvée-Details zu erfinden (keine Prozentangaben,
-     die nicht freigegeben sind). Ausbau/Servieren stehen in Detail & Genießen. */
+     Anlass sichtbar. Il Rosso ist ein reinsortiger Aglianico (100 %) und
+     ausdrücklich keine Cuvée; siehe Regionen-Guide v1.0, Entscheidung P0.
+     Ausbau/Servieren stehen in Detail & Genießen. */
   faq: [
     {
       id: "rosso-geschmack",
@@ -255,7 +256,7 @@ export const IL_ROSSO = {
     {
       id: "rosso-rebsorte",
       q: "Welche Rebsorte prägt Il Rosso?",
-      a: "Namensgebend ist der Aglianico. Das Uvaggio verbindet die drei süditalienischen Rebsorten Aglianico, Piedirosso und Primitivo. Ende Oktober werden die Trauben von Hand gelesen und selektiert; nach rund zwölf Tagen auf der Maische reift der Wein sechs Monate in Fässern aus französischer Eiche.",
+      a: "Il Rosso besteht aus 100 % Aglianico, der großen roten Rebsorte Süditaliens — keine Cuvée. Ende Oktober werden die Trauben von Hand gelesen und selektiert; nach rund zwölf Tagen auf der Maische reift der Wein sechs Monate in Fässern aus französischer Eiche.",
     },
     {
       id: "rosso-essen",

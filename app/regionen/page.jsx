@@ -1,4 +1,3 @@
-import Link from "next/link";
 import SplitText from "@/components/motion/SplitText";
 import Parallax from "@/components/motion/Parallax";
 import TiltCard from "@/components/motion/TiltCard";
@@ -9,16 +8,37 @@ import Photo from "@/components/media/Photo";
 import RegionHeroVideo from "@/components/RegionHeroVideo";
 import FaqSection from "@/components/faq/FaqSection";
 import { REGIONEN_FAQ_GROUPS } from "@/components/faq/faqData";
-import { Arrow } from "@/components/Icons";
 import Atmosphere, { Aura, GhostWord } from "@/components/Atmosphere";
 import TerroirManifest from "@/components/regionen/TerroirManifest";
+import RegionCta from "@/components/regionen/RegionCta";
 
+/* SEO-Snippet nach der Regionen-Guide (v1.0, 05.08.2026, Abschnitt 2):
+   Title trägt die drei Herkünfte, die Description Rebsorten, Herkunft,
+   Geschmack und Food Pairing. Ein einziges H1 („Italiens Weinregionen
+   entdecken“) steht im Hero, die Regionen darunter sind H2. */
 export const metadata = {
-  title: "Regionen Italiens — Maria Maria",
+  /* `absolute`, weil der Titel die Marke schon selbst trägt — der Suffix aus
+     app/layout.jsx würde sie sonst ein zweites Mal anhängen. */
+  title: {
+    absolute: "Italienische Weinregionen: Apulien, Kampanien & Lugana | Maria Maria",
+  },
   description:
-    "Apulien, Kampanien und der Gardasee: die Herkunftsregionen unserer familiengeführten Weingüter in Italien.",
+    "Entdecken Sie ausgewählte Weine aus Apulien, Kampanien und dem Lugana-Gebiet am Gardasee – mit Rebsorten, Herkunft, Geschmack und Food-Pairing-Tipps.",
+  alternates: { canonical: "/regionen" },
 };
 
+/* Regionaltexte nach der Regionen-Guide (v1.0, Abschnitte 3–5). Verbindlich
+   darin sind drei Korrekturen, die hier eingearbeitet sind:
+
+   P0 — Kampanien wird nicht mehr pauschal auf die Böden rund um den Vesuv
+        zurückgeführt: Greco di Tufo stammt aus Irpinien, die Falanghina ist
+        auch im Beneventano stark vertreten.
+   P0 — Lugana DOC liegt zwischen Lombardei und Venetien, nicht in einer der
+        beiden Regionen allein.
+   P1 — Primitivo heißt „eine der prägendsten Rebsorten Apuliens“, nicht
+        „autochthone Rebsorte“.
+   P1 — Jede CTA führt an ein eigenes Ziel; früher zeigten alle drei auf
+        /magazin. `cta.type` unterscheidet in GA4 Wein- von Magazin-Zielen. */
 const REGIONS = [
   {
     name: "Apulien",
@@ -26,29 +46,46 @@ const REGIONS = [
     anchor: "apulien",
     region: "apulien",
     img: "/img/regions/apulien.webp",
+    alt: "Weinberge auf roter Erde in Apulien im warmen Abendlicht",
     label: "Weine aus Apulien",
-    link: "Mehr über Apulien",
-    desc: "Sonne, Meer und rote Erde. Apulien ist das Herz des Südens – weitläufige Ebenen, alte Reben und warme Brisen vom Ionischen und Adriatischen Meer prägen kraftvolle, fruchtbetonte Weine mit mediterraner Seele.",
+    desc: "Sonne, rote Böden und die Nähe zum Meer prägen den Weinbau Apuliens. Besonders Primitivo, eine der prägendsten Rebsorten der Region, steht für reife Frucht, Wärme und einen ausdrucksstarken Charakter. Maria Maria zeigt ausgewählte Weine aus Apulien, die Herkunft und italienische Lebensart genussvoll verbinden.",
+    cta: {
+      label: "Apuliens Weine entdecken",
+      href: "/unsere-weine?region=apulien",
+      type: "wine_overview",
+    },
   },
   {
     name: "Kampanien",
-    tag: "Zwischen Vulkan und Meer",
+    tag: "Höhenlagen und Küste",
     anchor: "kampanien",
     region: "kampanien",
     img: "/img/regions/kampanien.webp",
+    alt: "Terrassierte Weinberge an der Küste Kampaniens im Abendlicht",
     label: "Weine aus Kampanien",
-    link: "Mehr über Kampanien",
-    desc: "Zwischen Vulkan und Meer. Die mineralischen Böden rund um den Vesuv schenken Weinen Spannung, Frische und Tiefe. Vom Greco di Tufo bis zum Aglianico tragen alle Weine denselben vulkanischen Charakter – und dieselbe Hingabe.",
+    desc: "In den Höhenlagen Irpiniens und in weiteren traditionsreichen Anbaugebieten Kampaniens entstehen charaktervolle Weine aus Rebsorten wie Greco, Falanghina und Aglianico. Unterschiedliche Höhenlagen, kalk- und tonhaltige Böden sowie deutliche Temperaturunterschiede verleihen ihnen Frische, Mineralität und aromatische Tiefe.",
+    cta: {
+      label: "Kampaniens Weißweine entdecken",
+      href: "/unsere-weine/greco-di-tufo",
+      type: "wine_detail",
+    },
   },
   {
-    name: "Gardasee / Lombardei",
-    tag: "Eleganz des Nordens",
+    name: "Lugana am Gardasee",
+    tag: "Zwischen Lombardei und Venetien",
+    /* Anker bleibt „garda“: die Lugana-Weinseite und der Regionen-Explorer
+       der Startseite verlinken bereits auf /regionen#garda */
     anchor: "garda",
     region: "garda",
     img: "/img/regions/lugana.webp",
-    label: "Weine vom Gardasee",
-    link: "Mehr über Lugana",
-    desc: "Das milde Klima, die sanften Hügel und die kalkhaltigen Böden am Südufer des Gardasees schaffen Weine von großer Eleganz und Frische. Lugana steht für Mineralität, Feinheit und mediterrane Leichtigkeit.",
+    alt: "Weinberge und sanfte Hügel südlich des Gardasees",
+    label: "Lugana am Gardasee",
+    desc: "Südlich des Gardasees, zwischen Lombardei und Venetien, liegt das Anbaugebiet Lugana DOC. Die Rebsorte Turbiana und die tonreichen Böden prägen Weißweine mit Frische, feiner Mineralität und elegantem Charakter – ideal für Aperitivo, leichte Küche und besondere Genussmomente.",
+    cta: {
+      label: "Lugana und seinen Charakter entdecken",
+      href: "/unsere-weine/lugana",
+      type: "wine_detail",
+    },
   },
 ];
 
@@ -103,11 +140,19 @@ export default function RegionenPage() {
                 Italienische Weinregionen
               </span>
             </Reveal>
+            {/* Einziges H1 der Seite (Guide Abschnitt 2 und 9) */}
             <h1 className="mt-6 font-playfair text-[clamp(2.6rem,5.5vw,4.2rem)] leading-[1.1] text-ivory">
-              <SplitText text="Wo Italiens Weine" className="block" delay={0.12} />
-              <SplitText text="ihren Charakter finden" className="block" delay={0.28} />
+              <SplitText text="Italiens Weinregionen" className="block" delay={0.12} />
+              <SplitText text="entdecken" className="block" delay={0.28} />
             </h1>
-            <Reveal delay={0.55} y={14}>
+            <Reveal delay={0.45} y={14}>
+              <p className="mt-6 max-w-xl text-[15px] leading-relaxed text-ivory/80">
+                Drei Herkunftsgebiete, unterschiedliche Landschaften und charaktervolle
+                Rebsorten: Entdecken Sie, wie Apulien, Kampanien und das Lugana-Gebiet am
+                Gardasee den Stil der ausgewählten Maria-Maria-Weine prägen.
+              </p>
+            </Reveal>
+            <Reveal delay={0.6} y={14}>
               <a
                 href="#apulien"
                 className="group mt-10 inline-flex min-h-[44px] items-center gap-2 text-[14px] text-ivory/90 transition-colors duration-300 hover:text-champagne"
@@ -134,8 +179,8 @@ export default function RegionenPage() {
         <GhostWord className="left-[-2vw] top-[62%] text-[11vw]">Vigneti</GhostWord>
         <div className="relative mx-auto max-w-content px-6 py-24 lg:px-10">
         <SectionTitle
-          eyebrow="Drei Charaktere"
-          description="Vom sonnenverwöhnten Süden bis an die kühlen Ufer des Nordens – jede Herkunft spricht ihre eigene Sprache."
+          eyebrow="Drei Herkunftsgebiete"
+          description="Apulien, Kampanien und Lugana am Gardasee – jede Herkunft mit eigenen Böden, Rebsorten und einem eigenen Stil im Glas."
         >
           Entdecken Sie unsere Regionen
         </SectionTitle>
@@ -157,7 +202,7 @@ export default function RegionenPage() {
                         {/* Zweispaltig ab lg, darunter volle Breite */}
                         <Photo
                           src={r.img}
-                          alt={`Landschaft der Region ${r.name}`}
+                          alt={r.alt}
                           sizes="(min-width: 1024px) 50vw, 100vw"
                           className="absolute inset-0 h-full w-full object-cover"
                         />
@@ -165,11 +210,15 @@ export default function RegionenPage() {
                           aria-hidden="true"
                           className="absolute inset-0 bg-gradient-to-t from-espresso/90 via-espresso/30 to-transparent"
                         />
-                        <div className="absolute inset-x-0 bottom-0 p-5 sm:p-7">
+                        {/* Bildunterschrift, bewusst kein <h3>: die Region
+                            trägt daneben bereits ihr H2, ein zweites Heading
+                            mit demselben Text bräche die Gliederung (Guide,
+                            Abschnitt 9). */}
+                        <div aria-hidden="true" className="absolute inset-x-0 bottom-0 p-5 sm:p-7">
                           <p className="text-[10px] uppercase tracking-[0.22em] text-champagne-light">{r.tag}</p>
-                          <h3 className="mt-1.5 font-playfair text-[clamp(1.5rem,2.6vw,2.1rem)] text-ivory">
+                          <p className="mt-1.5 font-playfair text-[clamp(1.5rem,2.6vw,2.1rem)] text-ivory">
                             {r.name}
-                          </h3>
+                          </p>
                         </div>
                       </div>
                     </TiltCard>
@@ -182,14 +231,13 @@ export default function RegionenPage() {
                     <h2 className="mt-4 font-playfair text-[clamp(1.9rem,3.2vw,2.5rem)] leading-[1.12] text-charcoal">
                       {r.name}
                     </h2>
-                    <p className="mt-4 max-w-lg text-[13.5px] leading-relaxed text-charcoal/70">{r.desc}</p>
-                    <Link
-                      href="/magazin"
-                      className="group mt-3 inline-flex min-h-[44px] items-center gap-1.5 text-[12px] font-medium text-bordeaux"
-                    >
-                      {r.link}
-                      <Arrow className="h-3.5 w-3.5 transition-transform duration-500 ease-out-expo group-hover:translate-x-1" />
-                    </Link>
+                    <p className="mt-4 max-w-lg text-[16px] leading-relaxed text-charcoal/70">{r.desc}</p>
+                    <RegionCta
+                      region={r.name}
+                      label={r.cta.label}
+                      href={r.cta.href}
+                      destinationType={r.cta.type}
+                    />
                   </Reveal>
                 </div>
 
@@ -214,8 +262,8 @@ export default function RegionenPage() {
           </>
         }
         text="Vom kraftvollen Primitivo aus Apulien bis zum mineralischen Lugana vom Gardasee – finden Sie den Wein, dessen Herkunft Sie schmecken möchten."
-        primary={{ label: "Zu unseren Weinen", href: "/unsere-weine" }}
-        secondary={{ label: "Zum Shop", href: "/shop" }}
+        primary={{ label: "Alle Maria-Maria-Weine entdecken", href: "/unsere-weine" }}
+        secondary={{ label: "Persönlich Kontakt aufnehmen", href: "/kontakt" }}
       />
 
       {/* ============ HÄUFIGE FRAGEN (je Region, Index links) ============ */}
@@ -231,9 +279,9 @@ export default function RegionenPage() {
               Fragen zur <span className="italic text-bordeaux">Herkunft.</span>
             </>
           }
-          description="Drei Herkünfte, drei Charaktere — wählen Sie links eine Region und entdecken Sie die häufigsten Fragen zu Rebsorten, Gebieten und unseren Weinen."
+          description="Wählen Sie eine Region und finden Sie Antworten zu Gebieten, Rebsorten, Geschmack und Food Pairing – als Orientierung für die Wahl des passenden Weins."
           groups={REGIONEN_FAQ_GROUPS}
-          footer={{ label: "Mehr Wissen im Magazin entdecken", href: "/magazin" }}
+          footer={{ label: "Food Pairings im Magazin entdecken", href: "/magazin" }}
         />
       </div>
     </div>

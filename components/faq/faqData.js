@@ -86,7 +86,19 @@ export const WEINE_FAQ = [
   },
 ];
 
-/* ---- Regionen: Herkunfts-FAQ, gruppiert je Region (Index links) ---- */
+/* ---- Regionen: Herkunfts-FAQ, gruppiert je Region (Index links) ----
+
+   Zwölf Fragen nach der Regionen-Guide (v1.0, 05.08.2026, Abschnitt 6):
+   vier je Region, jede Antwort mit höchstens einem kontextuellen Link.
+   Die Guide-Vorgaben, die hier inhaltlich greifen:
+
+   P0 — Kampanien wird über Irpinien und das Beneventano beschrieben, nicht
+        pauschal über den Vesuv.
+   P0 — Lugana DOC liegt zwischen Lombardei und Venetien.
+   P1 — Primitivo ist „eine der prägendsten Rebsorten Apuliens“.
+
+   Die IDs bleiben unverändert, wo eine Frage schon bestand: sie tragen die
+   Deep-Links der Weinseiten und die faq_id in GA4. */
 export const REGIONEN_FAQ_GROUPS = [
   {
     key: "apulien",
@@ -94,26 +106,27 @@ export const REGIONEN_FAQ_GROUPS = [
     items: [
       {
         id: "reg-apulien-weine",
-        q: "Welche Weine sind typisch für Apulien?",
-        a: "Apulien ist das Land des Primitivo und des Negroamaro: kraftvolle, warme Rotweine mit mediterraner Seele. Aus der dunklen Negroamaro-Traube entstehen zudem elegante, frische Rosati.",
+        q: "Was prägt den Charakter apulischer Weine?",
+        a: "Viel Sonne, warme Temperaturen, rote und kalkhaltige Böden sowie die Nähe zum Meer prägen viele Weine aus Apulien. Je nach Rebsorte und Ausbau entstehen fruchtbetonte, würzige und kraftvolle Weine, die dennoch sehr unterschiedlich ausfallen können.",
+        link: { label: "Weine aus Apulien ansehen", href: "/unsere-weine?region=apulien" },
       },
       {
         id: "reg-apulien-primitivo",
-        q: "Was ist Primitivo?",
-        a: "Eine autochthone rote Rebsorte Apuliens mit intensivem Charakter und samtigem Abgang. Ihre bekannteste Herkunft ist Primitivo di Manduria D.O.P. — im Salento traditionell als Alberello-Buschrebe ohne Bewässerung erzogen.",
+        q: "Was ist Primitivo und wie schmeckt er?",
+        a: "Primitivo ist eine der prägendsten Rebsorten Apuliens. Typisch sind Aromen reifer dunkler Früchte, eine warme Würze und ein voller Körper. Stil und Süßegrad unterscheiden sich jedoch je nach Herkunft und Vinifikation.",
         link: { label: "Primitivo di Manduria entdecken", href: "/unsere-weine/primitivo-14-5" },
-      },
-      {
-        id: "reg-apulien-mm",
-        q: "Welche Maria-Maria-Weine kommen aus Apulien?",
-        a: "Vier: der Primitivo 14,5 und der Primitivo 15,5 (beide Manduria D.O.P.), der Primitivo Salento IGP und der Rosato Puglia aus Negroamaro.",
-        link: { label: "Alle Weine ansehen", href: "/unsere-weine" },
       },
       {
         id: "reg-apulien-salento",
         q: "Was bedeutet Salento IGP?",
-        a: "Salento IGP ist die Herkunftsangabe unseres dritten Primitivo aus Apulien. Was hinter der Abkürzung steckt und wie sie sich von der Manduria-D.O.P. unterscheidet, erklärt die Seite des Primitivo Salento.",
+        a: "Salento IGP ist eine geschützte geografische Angabe für Weine aus dem südlichen Teil Apuliens. Sie bezeichnet die Herkunft, nicht automatisch einen bestimmten Geschmack oder eine einzelne Rebsorte.",
         link: { label: "Zum Primitivo Salento IGP", href: "/unsere-weine/primitivo-salento" },
+      },
+      {
+        id: "reg-apulien-pairing",
+        q: "Zu welchen Speisen passen apulische Rotweine?",
+        a: "Kräftige apulische Rotweine passen häufig zu Schmorgerichten, gegrilltem Fleisch, würziger Pasta und gereiftem Käse. Entscheidend sind Intensität, Würzung und Zubereitung des Gerichts; die konkrete Empfehlung finden Sie auf der jeweiligen Weinseite.",
+        link: { label: "Primitivo 15,5 und sein Food Pairing", href: "/unsere-weine/primitivo-15-5" },
       },
     ],
   },
@@ -123,48 +136,55 @@ export const REGIONEN_FAQ_GROUPS = [
     items: [
       {
         id: "reg-kampanien-rebsorten",
-        q: "Welche Rebsorten sind typisch für Kampanien?",
-        a: "Die weißen Klassiker Falanghina und Greco sowie der rote Aglianico. Die vulkanischen Böden rund um den Vesuv geben den Weinen Spannung, Frische und Tiefe.",
+        q: "Was macht Kampanien als Weinregion besonders?",
+        a: "Kampanien vereint unterschiedliche Anbaugebiete, Höhenlagen und Böden. In Irpinien entstehen unter anderem Greco di Tufo und Aglianico, während Falanghina auch im Beneventano eine wichtige Rolle spielt. Diese Vielfalt sorgt für sehr unterschiedliche Weincharaktere.",
+        link: { label: "Weine aus Kampanien ansehen", href: "/unsere-weine?region=kampanien" },
       },
       {
         id: "reg-kampanien-greco",
-        q: "Was ist Greco di Tufo DOCG?",
-        a: "Einer der wenigen Weißweine Italiens mit D.O.C.G.-Status, der höchsten Herkunftsstufe des Landes. Er wächst auf vulkanischem Tuffgestein rund um das Dorf Tufo in Irpinien — daher seine Struktur und sein mineralischer Zug.",
+        q: "Wie unterscheiden sich Greco di Tufo und Falanghina?",
+        a: "Greco di Tufo wirkt häufig strukturierter, mineralischer und intensiver. Falanghina zeigt sich oft frischer, duftiger und zugänglicher. Der genaue Stil hängt immer von Herkunft, Jahrgang und Ausbau ab.",
         link: { label: "Greco di Tufo entdecken", href: "/unsere-weine/greco-di-tufo" },
       },
       {
         id: "reg-kampanien-falanghina",
-        q: "Woher kommt Falanghina?",
-        a: "Aus Kampanien: Die Falanghina zählt zu den ältesten Rebsorten der Region — unsere wächst im Beneventano. Die ganze Herkunftsgeschichte erzählt die Falanghina-Seite.",
+        q: "Woher kommt die Falanghina?",
+        a: "Die Falanghina zählt zu den ältesten Rebsorten Kampaniens und ist besonders im Beneventano stark vertreten. Unsere Falanghina wächst dort in den Hügeln — frisch, duftig und mediterran im Ausdruck.",
         link: { label: "Falanghina entdecken", href: "/unsere-weine/falanghina" },
       },
       {
         id: "reg-kampanien-aglianico",
-        q: "Wofür steht der Aglianico?",
-        a: "Aglianico gilt als die große rote Rebsorte Süditaliens — spät reifend, tanninstark und auf vulkanischen Böden zu Hause. In unserer Kollektion steht sie im Il Rosso im Mittelpunkt: der Cuvée, die diese dunkle, würzige Seite Süditaliens ins Glas trägt.",
+        q: "Was ist Aglianico und welchen Stil hat „Il Rosso“?",
+        a: "Aglianico ist eine bedeutende rote Rebsorte Süditaliens. „Il Rosso“ von Maria Maria besteht aus 100 % Aglianico – nicht aus einer Cuvée – und steht für einen charaktervollen Rotweinstil mit Struktur und würziger Tiefe.",
         link: { label: "Il Rosso entdecken", href: "/unsere-weine/il-rosso-aglianico" },
       },
     ],
   },
   {
     key: "garda",
-    label: "Gardasee / Lugana",
+    label: "Lugana am Gardasee",
     items: [
       {
         id: "reg-garda-gebiet",
-        q: "Wo liegt das Lugana-Gebiet?",
-        a: "Am Südufer des Gardasees. Unsere Trauben wachsen in den Turbiana-Weinbergen der Gemeinden Desenzano und Pozzolengo — mildes Klima, sanfte Hügel und kalkhaltige Böden.",
+        q: "Wo liegt das Lugana-Weingebiet?",
+        a: "Das Lugana-DOC-Gebiet liegt südlich des Gardasees und erstreckt sich über Teile der Lombardei und Venetiens. Es ist deshalb präziser, von „Lugana am Gardasee – zwischen Lombardei und Venetien“ zu sprechen.",
       },
       {
         id: "reg-garda-turbiana",
-        q: "Was ist Turbiana?",
-        a: "Die weiße Rebsorte des Lugana, auch Trebbiano di Lugana genannt. Sie steht für Eleganz, Frische und mineralische Tiefe — den Charakter des Nordens in unserer Kollektion.",
+        q: "Aus welcher Rebsorte wird Lugana hergestellt?",
+        a: "Lugana wird überwiegend aus Turbiana erzeugt, der charakteristischen weißen Rebsorte des Gebiets. Die tonreichen Böden und das vom Gardasee beeinflusste Klima prägen Frische, Struktur und feine Mineralität.",
+        link: { label: "Zum Lugana", href: "/unsere-weine/lugana" },
+      },
+      {
+        id: "reg-garda-geschmack",
+        q: "Wie schmeckt Lugana?",
+        a: "Lugana zeigt sich häufig frisch, elegant und fein mineralisch, mit Aromen von Zitrusfrüchten, weißen Blüten und je nach Stil auch reiferem Kernobst. Alter, Ausbau und Jahrgang beeinflussen das Profil.",
       },
       {
         id: "reg-garda-mm",
-        q: "Welcher Maria-Maria-Wein kommt vom Gardasee?",
-        a: "Der Lugana DOC: voll, warm und weich, mit intensivem floralem Duft und guter Persistenz — die Eleganz des Nordens als Gegenpol zum sonnigen Süden.",
-        link: { label: "Zum Lugana", href: "/unsere-weine/lugana" },
+        q: "Zu welchen Speisen und Anlässen passt Lugana?",
+        a: "Lugana eignet sich für Aperitivo, Fisch, Meeresfrüchte, leichte Pasta, Gemüsegerichte und viele mediterrane Speisen. Durch seinen eleganten Stil passt er auch zu Empfängen, Events und stilvollen Geschenkmomenten.",
+        link: { label: "Maria Maria als Partner entdecken", href: "/kontakt" },
       },
     ],
   },

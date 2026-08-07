@@ -16,6 +16,16 @@ import { WINES } from "@/components/data";
 const TYPES = ["Alle Weine", "Rotwein", "Weißwein", "Roséwein"];
 /* ?art=… deep-links from the header dropdown straight into a filtered view */
 export const ART_PARAM = { rot: "Rotwein", weiss: "Weißwein", rose: "Roséwein" };
+/* ?region=… tut dasselbe für die Herkunft — die Regionen-Seite verlinkt ihre
+   Blöcke laut Regionen-Guide (Abschnitt 8) auf eine bereits gefilterte
+   Auswahl statt auf die ungefilterte Übersicht. Slug statt Klartext, damit
+   die URL keine Umlaute trägt. */
+export const REGION_PARAM = {
+  apulien: "Apulien",
+  kampanien: "Kampanien",
+  garda: "Gardasee",
+  lugana: "Gardasee",
+};
 // derived from the catalogue so a chip can never point at zero wines
 const REGIONS = ["Alle Regionen", ...new Set(WINES.map((w) => w.region))];
 
@@ -25,6 +35,7 @@ export default function WineExplorer() {
   const reduced = useReducedMotion();
   const params = useSearchParams();
   const art = params.get("art");
+  const regionParam = params.get("region");
   const [type, setType] = useState(TYPES[0]);
   const [region, setRegion] = useState(REGIONS[0]);
 
@@ -32,6 +43,12 @@ export default function WineExplorer() {
   useEffect(() => {
     if (art && ART_PARAM[art]) setType(ART_PARAM[art]);
   }, [art]);
+
+  // dasselbe für die Herkunft, wenn die Regionen-Seite gefiltert verlinkt
+  useEffect(() => {
+    const target = regionParam && REGION_PARAM[regionParam.toLowerCase()];
+    if (target && REGIONS.includes(target)) setRegion(target);
+  }, [regionParam]);
 
   const wines = useMemo(
     () =>

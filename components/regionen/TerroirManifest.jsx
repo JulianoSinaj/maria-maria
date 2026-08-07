@@ -23,16 +23,16 @@ import { Aura, GhostWord } from "@/components/Atmosphere";
 
 const PILLARS = [
   {
-    title: "Familiengeführte Weingüter",
-    text: "Kein anonymer Massenwein. Hinter jeder Flasche steht eine Familie, die ihre Lagen seit Generationen kennt — und ihren Namen auf das Etikett setzt.",
+    title: "Ausgewählte Produzenten",
+    text: "Persönliche Beziehungen und nachvollziehbare Herkunft statt anonymer Auswahl.",
   },
   {
-    title: "Autochthone Rebsorten",
-    text: "Primitivo, Aglianico, Turbiana. Sorten, die dort gewachsen sind, wo sie hingehören — auf vulkanischem Tuff, roter Erde und Kalkmoräne.",
+    title: "Rebsorten mit regionalem Charakter",
+    text: "Primitivo, Negroamaro, Greco, Falanghina, Aglianico und Turbiana im Kontext ihrer Herkunft.",
   },
   {
-    title: "Limitierte Handlese",
-    text: "Was von Hand gelesen wird, bleibt zwangsläufig begrenzt. Wir nehmen die kleinere Menge in Kauf — für die Qualität, die daraus entsteht.",
+    title: "Orientierung für bewussten Genuss",
+    text: "Geschmack, Anlass und Food Pairing helfen bei der Wahl des passenden Weins.",
   },
 ];
 
@@ -137,9 +137,8 @@ export default function TerroirManifest() {
           </h2>
 
           <p className="mt-6 max-w-md text-[13.5px] leading-relaxed text-charcoal/70">
-            Ein Boden, ein Klima, eine Rebsorte, eine Familie — nimmt man eines davon weg,
-            entsteht ein anderer Wein. Deshalb suchen wir nicht nach Etiketten, sondern nach
-            Orten. Drei Regionen, drei Handschriften, ein Anspruch.
+            Maria Maria sucht nicht nach Etiketten, sondern nach Orten, Menschen und Weinen
+            mit einer klaren Handschrift.
           </p>
         </motion.div>
 

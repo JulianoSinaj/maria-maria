@@ -10,6 +10,7 @@ import {
   pageLocation,
   FAQ_OPEN,
   FAQ_CTA_CLICK,
+  REGION_TAB_VIEW,
 } from "@/lib/analytics";
 
 /* Wiederverwendbare FAQ-Sektion für alle Seiten — geteiltes „Index“-Layout:
@@ -112,6 +113,22 @@ export default function FaqSection({
     }
   };
 
+  /* Cluster-Wechsel. Auf /regionen entspricht ein Cluster einer Region, die
+     Regionen-Guide (Abschnitt 10) verlangt dafür `region_tab_view`. Das
+     Event feuert nur beim tatsächlichen Wechsel — der erste Render zählt
+     nicht, sonst stünde neben jedem Klick eine Dublette. */
+  const selectGroup = (group) => {
+    if (group.key === activeKey) return;
+    setActiveKey(group.key);
+    if (pageType === "regionen") {
+      pushEvent(REGION_TAB_VIEW, {
+        region_name: group.label ?? group.key,
+        page_location: pageLocation(),
+        page_type: pageType,
+      });
+    }
+  };
+
   const trackCta = (text, href) =>
     pushEvent(FAQ_CTA_CLICK, {
       cta_text: text,
@@ -187,7 +204,7 @@ export default function FaqSection({
                         <button
                           type="button"
                           aria-pressed={isActive}
-                          onClick={() => setActiveKey(g.key)}
+                          onClick={() => selectGroup(g)}
                           className={`group relative flex min-h-[44px] w-full items-center justify-between gap-3 overflow-hidden rounded-full border px-4 py-2 text-left text-[14px] transition-colors duration-300 lg:rounded-2xl lg:px-4 lg:py-2.5 ${FOCUS_RING} ${
                             isActive
                               ? "border-transparent bg-white shadow-luxe"

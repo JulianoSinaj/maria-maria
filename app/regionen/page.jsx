@@ -142,8 +142,8 @@ export default function RegionenPage() {
             </Reveal>
             {/* Einziges H1 der Seite (Guide Abschnitt 2 und 9) */}
             <h1 className="mt-6 font-playfair text-[clamp(2.6rem,5.5vw,4.2rem)] leading-[1.1] text-ivory">
-              <SplitText text="Italiens Weinregionen" className="block" delay={0.12} />
-              <SplitText text="entdecken" className="block" delay={0.28} />
+              <SplitText text="Wo Italiens Weine" className="block" delay={0.12} />
+              <SplitText text="ihren Charakter finden" className="block" delay={0.28} />
             </h1>
             <Reveal delay={0.45} y={14}>
               <p className="mt-6 max-w-xl text-[15px] leading-relaxed text-ivory/80">

@@ -12,9 +12,10 @@ import { Arrow } from "@/components/Icons";
 
    1. Zeitungskopf   zentrierter Masthead — Dachzeile, große Serifen-Schlagzeile,
                      zweizeiliger Untertitel.
-   2. Rubrikenleiste die vier Ressorts zwischen zwei Haarlinien, jede ein Anker
-                     in die Seite (Interviews fällt aufs Archiv zurück, solange
-                     kein Gespräch veröffentlicht ist).
+   2. Rubrikenleiste die vier Ressorts zwischen zwei Haarlinien — drei Anker
+                     in die Seite, „Die Geschichte" führt auf /geschichte
+                     (Interviews fällt aufs Archiv zurück, solange kein
+                     Gespräch veröffentlicht ist).
    3. Cover Story    das Aufmacher-Duo: links das Titelfoto (Maria in der
                      Cantina, im Originalformat mit federgedämpftem Tilt),
                      rechts Rubrik,
@@ -27,9 +28,11 @@ const SUBLINE =
 const STATIONS = ["Salento", "Kampanien", "Gardasee", "Düsseldorf"];
 
 export default function CoverHero({ hasInterviews = false }) {
-  /* Die Rubriken der Leiste — Anker in die Kapitel der Seite */
+  /* Die Rubriken der Leiste — Anker in die Kapitel der Seite; nur
+     „Die Geschichte" führt hinaus auf die Erzählseite /geschichte, seit das
+     Markenkapitel (BrandStory) nicht mehr im Heft steht */
   const RUBRIKEN = [
-    { label: "Die Geschichte", href: "#storia" },
+    { label: "Die Geschichte", href: "/geschichte" },
     { label: "Food Pairing", href: "#food-pairing" },
     { label: "Interviews", href: hasInterviews ? "#interviste" : "#artikel" },
     { label: "Events", href: "#bacheca" },
@@ -121,8 +124,12 @@ export default function CoverHero({ hasInterviews = false }) {
                 Cover Story
               </p>
             </Reveal>
+            {/* Zeilenfall der Schlagzeile ist redaktionell gesetzt — drei Zeilen,
+                der Wort-Stagger läuft über die Zeilen hinweg weiter */}
             <h2 className="mt-4 font-playfair text-[clamp(2.2rem,4vw,3.4rem)] leading-[1.05] text-charcoal">
-              <SplitText text="Zwei Marias. Eine Geschichte des Genusses." delay={0.3} />
+              <SplitText className="block" text="Zwei Marias." delay={0.3} />
+              <SplitText className="block" text="Eine Geschichte" delay={0.4} />
+              <SplitText className="block" text="des Genusses." delay={0.5} />
             </h2>
             <Reveal delay={0.55} y={14}>
               <p className="mt-5 max-w-lg text-[14.5px] leading-relaxed text-charcoal/75">
@@ -141,6 +148,18 @@ export default function CoverHero({ hasInterviews = false }) {
                   </Fragment>
                 ))}
               </p>
+            </Reveal>
+
+            {/* CTA in die Geschichte — übernimmt den Sprung des entfallenen
+                Markenkapitels (BrandStory) auf die Erzählseite /geschichte */}
+            <Reveal delay={0.7} y={12} blur={false}>
+              <Link
+                href="/geschichte"
+                className="group mt-4 inline-flex min-h-[44px] items-center gap-1.5 text-[12px] font-medium text-bordeaux"
+              >
+                Die ganze Geschichte lesen
+                <Arrow className="h-3.5 w-3.5 transition-transform duration-500 ease-out-expo group-hover:translate-x-1" />
+              </Link>
             </Reveal>
 
             {/* Vision & Mission — das Leitbild schließt die rechte Spalte */}

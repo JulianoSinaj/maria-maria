@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Button from "@/components/ui/Button";
 import { Reveal } from "@/components/motion/Reveal";
 import { Eyebrow, GoldRule } from "@/components/Deco";
 import { Arrow } from "@/components/Icons";
@@ -17,6 +18,23 @@ export default function OriginsSection() {
       <Atmosphere variant="olive" />
       <GhostWord className="right-[-3vw] top-10 text-[11vw]">Due anime</GhostWord>
       <div className="relative mx-auto max-w-content px-6 py-16 sm:py-24 lg:px-10">
+        {/* Sprung ins Magazin — als weiße, erhabene Pille ganz oben rechts;
+            auf Mobile wandert der Button unter den Text, wo Platz ist.
+            Weiß statt bg-ivory per Inline-Style, weil die Seite selbst auf
+            Ivory steht und die Pille sich sonst nicht abhebt */}
+        <div className="absolute right-6 top-8 z-10 hidden sm:top-10 sm:block lg:right-10">
+          <Reveal delay={0.1}>
+            <Button
+              href="/geschichte"
+              variant="light"
+              size="sm"
+              className="shadow-glass"
+              style={{ backgroundColor: "#FFFFFF" }}
+            >
+              Magazin
+            </Button>
+          </Reveal>
+        </div>
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
           {/* story */}
           <div>
@@ -60,13 +78,20 @@ export default function OriginsSection() {
                   „Italian wine, personal selection, share the pleasure.“
                 </p>
               </div>
-              <Link
-                href="/regionen"
-                className="group mt-6 inline-flex min-h-[44px] items-center gap-1.5 text-[12px] font-medium text-bordeaux"
-              >
-                Die Reise durch die Regionen entdecken
-                <Arrow className="h-3.5 w-3.5 transition-transform duration-500 ease-out-expo group-hover:translate-x-1" />
-              </Link>
+            </Reveal>
+
+            <Reveal delay={0.22}>
+              <div className="mt-8 sm:hidden">
+                <Button
+                  href="/geschichte"
+                  variant="light"
+                  size="sm"
+                  className="shadow-glass"
+                  style={{ backgroundColor: "#FFFFFF" }}
+                >
+                  Magazin
+                </Button>
+              </div>
             </Reveal>
           </div>
 

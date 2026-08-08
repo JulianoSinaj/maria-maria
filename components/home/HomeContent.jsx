@@ -89,30 +89,6 @@ const REGIONS = [
   },
 ];
 
-const MAGAZINE = [
-  {
-    cat: "Weinwissen",
-    title: "Was passt zu Primitivo?",
-    excerpt: "Tipps für harmonische Kombinationen mit Aromen, die begeistern.",
-    min: "4 Min.",
-    img: "/img/food.jpg",
-  },
-  {
-    cat: "Regionen",
-    title: "Apulien – Das Herz des Südens",
-    excerpt: "Eine Reise in das Herz Süditaliens und seine unverwechselbaren Weine.",
-    min: "6 Min.",
-    img: "/img/magazin/weinlese.jpg",
-  },
-  {
-    cat: "Weinwissen",
-    title: "Rebsorten verstehen, Wein bewusster genießen",
-    excerpt: "Die wichtigsten italienischen Rebsorten und ihre Besonderheiten.",
-    min: "5 Min.",
-    img: "/img/stilllife.jpg",
-  },
-];
-
 const MARQUEE = ["Primitivo", "Lugana", "Falanghina", "Greco di Tufo", "Aglianico", "Rosato"];
 
 export default function HomeContent() {
@@ -314,67 +290,6 @@ export default function HomeContent() {
         primary={{ label: "Zum Shop", href: "/shop" }}
         secondary={{ label: "Kontakt aufnehmen", href: "/kontakt" }}
       />
-
-      {/* ============ MAGAZIN ============ */}
-      <section className="relative overflow-hidden">
-        <Atmosphere variant="dusk" />
-        <GhostWord className="left-[-2vw] bottom-6 text-[12vw]">Storie</GhostWord>
-        <div className="relative mx-auto max-w-content px-6 py-16 sm:py-24 lg:px-10">
-        <div className="flex flex-wrap items-end justify-between gap-6">
-          <SectionTitle
-            align="left"
-            eyebrow="Magazin"
-            description="Geschichten, Weinwissen und Inspiration für den nächsten Genussmoment."
-          >
-            Weinwissen &amp; Genussmomente
-          </SectionTitle>
-          <Reveal delay={0.15}>
-            <Button href="/magazin" variant="outline" size="sm">
-              Zum Magazin
-            </Button>
-          </Reveal>
-        </div>
-        <Stagger className="mt-10 grid grid-cols-1 gap-6 sm:mt-12 md:grid-cols-3">
-          {MAGAZINE.map((a) => (
-            <StaggerItem key={a.title} className="h-full">
-              <Link href="/magazin" className="group block h-full">
-                <article className="flex h-full flex-col overflow-hidden rounded-card border border-stone/50 bg-white/70 shadow-luxe transition-all duration-500 ease-out-expo hover:-translate-y-1.5 hover:border-champagne/60 hover:shadow-lift">
-                  <div className="relative h-52 overflow-hidden">
-                    {/* Dreispaltiges Raster in max-w-content — die Karte wird
-                        nie breiter als ~380 px, das Motiv liegt aber in 700–
-                        1400 px vor. Ohne sizes lüde der Browser die größte. */}
-                    <Photo
-                      src={a.img}
-                      alt=""
-                      sizes="(min-width: 1024px) 380px, (min-width: 640px) 50vw, 100vw"
-                      className="h-full w-full object-cover transition-transform duration-700 ease-out-expo group-hover:scale-[1.06]"
-                    />
-                    <span className="glass absolute left-4 top-4 rounded-full px-3 py-1.5 text-[9.5px] font-semibold uppercase tracking-[0.16em] text-charcoal/70">
-                      {a.cat}
-                    </span>
-                  </div>
-                  <div className="flex flex-1 flex-col p-6">
-                    <h3 className="font-playfair text-[19px] leading-snug text-charcoal transition-colors duration-300 group-hover:text-bordeaux">
-                      {a.title}
-                    </h3>
-                    <p className="mt-2 text-[12.5px] leading-relaxed text-charcoal/65">{a.excerpt}</p>
-                    <div className="mt-auto flex items-center justify-between pt-5">
-                      <span className="inline-flex items-center gap-1.5 text-[11px] text-charcoal/50">
-                        <Clock className="h-3.5 w-3.5" /> {a.min} Lesedauer
-                      </span>
-                      <span className="inline-flex items-center gap-1.5 text-[12px] font-medium text-bordeaux">
-                        Mehr lesen
-                        <Arrow className="h-3.5 w-3.5 transition-transform duration-500 ease-out-expo group-hover:translate-x-1" />
-                      </span>
-                    </div>
-                  </div>
-                </article>
-              </Link>
-            </StaggerItem>
-          ))}
-        </Stagger>
-        </div>
-      </section>
 
       {/* ============ HÄUFIGE FRAGEN (Brand-FAQ) ============ */}
       <div className="relative overflow-hidden bg-gradient-to-b from-cream via-champagne-light/25 to-ivory">

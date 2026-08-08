@@ -4,7 +4,6 @@ import { SectionTitle } from "@/components/Deco";
 import { Grapes } from "@/components/Icons";
 import InterviewSection from "@/components/magazin/InterviewSection";
 import CoverHero from "@/components/magazin/CoverHero";
-import BrandStory from "@/components/magazin/BrandStory";
 import SocialBoard from "@/components/magazin/SocialBoard";
 import CantinaSection from "@/components/magazin/CantinaSection";
 import CuriosityBand from "@/components/magazin/CuriosityBand";
@@ -37,7 +36,7 @@ import { MAGAZIN_WINE_SLUGS } from "@/components/magazin/magazinData";
                     Wort für Wort füllt, und der Marquee mit den Leitworten.
 
    Dramaturgie in fünf Kapiteln:
-   I   — La storia   Titelseite, Vision & Mission, die Geschichte, Marquee.
+   I   — La storia   Titelseite, Vision & Mission, Marquee.
    II  — Momente     die drei Anlass-Karten (Bauform geteilt mit /unsere-weine).
    III — La Cantina  die Galerie aller Wein-Landingpages: jede Karte trägt das
                      Hero-Foto ihres Weins und führt per Klick dorthin.
@@ -50,14 +49,17 @@ import { MAGAZIN_WINE_SLUGS } from "@/components/magazin/magazinData";
 
    Die Artikelstrecke (Themenwelten, „Neueste Artikel") und die Sektion
    „Geschichten aus den Weinbergen" sind bewusst nicht Teil der Seite: solange
-   es keine Artikelrouten gibt, trügen sie nur Karten ohne Ziel.
+   es keine Artikelrouten gibt, trügen sie nur Karten ohne Ziel. Auch das
+   Markenkapitel „Die Geschichte von Maria Maria" (BrandStory) entfällt hier:
+   es erzählte wortgleich „Le Origini" der Startseite — die Rubrik
+   „Die Geschichte" führt stattdessen direkt auf /geschichte.
 
    Überschriften-Gliederung: ein einziges <h1> („Magazin"), jedes Kapitel eine
    <section> mit <h2> (über SectionTitle bzw. aria-labelledby). Deshalb tragen
    die Kapitel `headingId` — die Sektion benennt sich von ihrer eigenen
    Überschrift, statt namenlos zu bleiben.
 
-   Anker der Rubrikenleiste: #storia, #cantina, #bacheca und #curiosita liegen
+   Anker der Rubrikenleiste: #cantina, #bacheca und #curiosita liegen
    auf schlanken Wrappern mit scroll-mt; Kapitel II nutzt #food-pairing direkt
    an der Sektion — dieselbe Marke, auf die auch der Pairing-Teaser der
    Weine-Seite springt (/magazin#food-pairing).
@@ -139,11 +141,6 @@ export default function MagazinPage() {
           {/* Masthead, Rubrikenleiste und Cover Story — Aufbau siehe CoverHero */}
           <CoverHero hasInterviews={hasInterviews} />
         </section>
-
-        {/* ---- die Geschichte von Maria Maria ---- */}
-        <div id="storia" className="scroll-mt-24">
-          <BrandStory headingId="magazin-geschichte" />
-        </div>
 
         {/* ---- Leitworte des Hefts als langsames Laufband ---- */}
         <div className="border-y border-champagne/25">

@@ -14,9 +14,10 @@ import Button from "@/components/ui/Button";
 
 /* Occasioni-Teaser — streamlined version:
    Instead of listing all 3 occasions, this version creates an editorial moment
-   that introduces the concept and invites exploration. The hero image shifts
-   based on scroll, and a single prominent CTA guides users to the magazine's
-   food pairing section where all occasions are displayed interactively.
+   that introduces the concept and invites exploration. The hero image cycles
+   through the moments on a timer, and a single prominent CTA guides users to
+   the magazine's food pairing section where all occasions are displayed
+   interactively.
    
    This creates better narrative flow: "look at this beautiful moment" → 
    "discover the different wine pairings" → [magazine's interactive moments].
@@ -37,15 +38,13 @@ export default function OccasioniTeaser({ moments, href, headingId, className = 
   const driftRaw = useTransform(scrollYProgress, [0, 1], ["-5%", "5%"]);
   const drift = useSpring(driftRaw, SCROLL_SPRING);
 
-  /* Rotate through moments based on scroll */
+  /* Rotate through the moments every 2 seconds */
   useEffect(() => {
-    const unsubscribe = scrollYProgress.on("change", (v) => {
-      setDisplayIndex(Math.floor(v * moments.length) % moments.length);
-    });
-    return unsubscribe;
-  }, [scrollYProgress, moments.length]);
-
-  const current = moments[displayIndex];
+    const id = setInterval(() => {
+      setDisplayIndex((i) => (i + 1) % moments.length);
+    }, 2000);
+    return () => clearInterval(id);
+  }, [moments.length]);
 
   return (
     <div className={`grid grid-cols-1 items-stretch gap-12 lg:grid-cols-[1fr_1.05fr] lg:gap-16 ${className}`}>

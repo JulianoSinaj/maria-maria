@@ -87,8 +87,11 @@ export default function WinePhotos({ wine, imgClass = "h-44", lift = true, class
         </AnimatePresence>
       </div>
 
-      {/* Seiten-Punkte: zeigen an, dass die Flasche zwei Seiten hat */}
-      <div className="mt-2 flex items-center gap-1.5">
+      {/* Seiten-Punkte: zeigen an, dass die Flasche zwei Seiten hat.
+          Unterhalb lg wächst die unsichtbare Trefferfläche per Pseudo-Element
+          auf Daumenmaß (~44px) und der Abstand hält die Flächen getrennt —
+          die sichtbaren Punkte und der Desktop bleiben unverändert. */}
+      <div className="mt-2 flex items-center gap-1.5 max-lg:gap-3">
         {shots.map((s, i) => (
           <button
             key={s.label}
@@ -96,7 +99,7 @@ export default function WinePhotos({ wine, imgClass = "h-44", lift = true, class
             aria-label={`${s.label} zeigen`}
             aria-pressed={i === side}
             onClick={() => i !== side && paginate(i - side)}
-            className="group/dot flex h-4 w-4 items-center justify-center"
+            className="group/dot relative flex h-4 w-4 items-center justify-center max-lg:before:absolute max-lg:before:-inset-x-1.5 max-lg:before:-inset-y-3.5 max-lg:before:content-['']"
           >
             <span
               className={`h-1.5 rounded-full transition-all duration-400 ease-out-expo ${

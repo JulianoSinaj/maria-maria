@@ -146,7 +146,10 @@ export default function InterviewSection() {
             <div
               role="tablist"
               aria-label="Interviewpartnerinnen und Interviewpartner"
-              className="flex gap-2 overflow-x-auto pb-2 lg:flex-col lg:overflow-visible lg:pb-0"
+              data-lenis-prevent-horizontal
+              /* Kantenfade + Snap wie im SubNav: unterhalb lg ist die Leiste
+                 eine Wischzeile, ab lg eine Spalte ohne Maske */
+              className="flex snap-x gap-2 overflow-x-auto pb-2 [mask-image:linear-gradient(to_right,transparent,black_20px,black_calc(100%-20px),transparent)] lg:flex-col lg:overflow-visible lg:pb-0 lg:[mask-image:none]"
             >
               {people.map((p, i) => {
                 const isActive = i === active;
@@ -157,7 +160,7 @@ export default function InterviewSection() {
                     type="button"
                     aria-selected={isActive}
                     onClick={() => selectPerson(i)}
-                    className={`group relative flex shrink-0 items-center gap-3 rounded-card border px-3 py-3 text-left transition-all duration-500 ease-out-expo lg:w-full ${
+                    className={`group relative flex shrink-0 snap-start items-center gap-3 rounded-card border px-3 py-3 text-left transition-all duration-500 ease-out-expo lg:w-full ${
                       isActive
                         ? "border-champagne/70 bg-white/80 shadow-luxe"
                         : "border-stone/50 bg-white/45 hover:border-champagne/50 hover:bg-white/70"

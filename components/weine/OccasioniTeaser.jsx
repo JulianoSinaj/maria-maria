@@ -38,13 +38,16 @@ export default function OccasioniTeaser({ moments, href, headingId, className = 
   const driftRaw = useTransform(scrollYProgress, [0, 1], ["-5%", "5%"]);
   const drift = useSpring(driftRaw, SCROLL_SPRING);
 
-  /* Rotate through the moments every 2 seconds */
+  /* Rotate through the moments every 2 seconds.
+     Bei Reduced Motion steht der Timer komplett still — bisher war nur der
+     Zoom gedämpft, das Foto wechselte trotzdem alle 2 s weiter. */
   useEffect(() => {
+    if (reduced) return;
     const id = setInterval(() => {
       setDisplayIndex((i) => (i + 1) % moments.length);
     }, 2000);
     return () => clearInterval(id);
-  }, [moments.length]);
+  }, [moments.length, reduced]);
 
   return (
     <div className={`grid grid-cols-1 items-stretch gap-12 lg:grid-cols-[1fr_1.05fr] lg:gap-16 ${className}`}>

@@ -136,6 +136,26 @@ export default function ShopPage() {
                   ))}
                 </dl>
               </Reveal>
+              {/* Die drei Vertrauens-Chips schweben ab lg an der Flaschenbühne —
+                  unterhalb lg existiert die Bühne nicht, und mit ihr verschwanden
+                  Versand-, Zahlungs- und Verpackungsversprechen komplett. Hier
+                  stehen sie deshalb als kompakte Zeile unter den Statzahlen. */}
+              <Reveal delay={0.9} y={10} className="lg:hidden">
+                <ul className="mt-7 flex flex-wrap gap-2">
+                  {[
+                    [Truck, "Versandkostenfrei ab 69 €"],
+                    [Shield, "Sicher bezahlen"],
+                    [Package, "Sorgfältig verpackt"],
+                  ].map(([Icon, label]) => (
+                    <li
+                      key={label}
+                      className="glass inline-flex items-center gap-2 rounded-full px-3.5 py-2 text-[9.5px] font-semibold uppercase tracking-[0.16em] text-charcoal/70 shadow-glass"
+                    >
+                      <Icon className="h-4 w-4 text-bordeaux" /> {label}
+                    </li>
+                  ))}
+                </ul>
+              </Reveal>
             </div>
 
             {/* boutique still — 3D stage with floating trust chips */}

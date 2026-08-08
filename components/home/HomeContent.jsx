@@ -117,12 +117,15 @@ export default function HomeContent() {
         {/* settle into the page colour */}
         <div aria-hidden="true" className="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-b from-transparent to-ivory" />
 
-        <div className="relative mx-auto flex min-h-[100svh] max-w-content flex-col justify-end px-6 pb-24 pt-32 lg:justify-center lg:px-10 lg:pb-16">
+        {/* Telefon-Budget: Eyebrow + drei Headline-Zeilen + Lede + zwei
+            gestapelte CTAs + Statzeile müssen in EIN 100svh passen — die
+            Basiswerte sind deshalb enger, ab sm gelten wieder die alten. */}
+        <div className="relative mx-auto flex min-h-[100svh] max-w-content flex-col justify-end px-6 pb-16 pt-24 sm:pb-24 sm:pt-32 lg:justify-center lg:px-10 lg:pb-16">
           <div className="lg:max-w-xl">
             <Reveal y={18} delay={0.05}>
               <Eyebrow tone="text-vine">Italienische Boutique-Weine</Eyebrow>
             </Reveal>
-            <h1 className="mt-6 font-playfair text-[clamp(2.8rem,6vw,4.6rem)] leading-[1.05] tracking-[-0.015em] text-charcoal">
+            <h1 className="mt-4 font-playfair text-[clamp(2.8rem,6vw,4.6rem)] leading-[1.05] tracking-[-0.015em] text-charcoal sm:mt-6">
               <SplitText text="Maria Maria" className="block" delay={0.12} />
               <SplitText
                 text="Il piacere del vino."
@@ -134,14 +137,15 @@ export default function HomeContent() {
               />
             </h1>
             <Reveal delay={0.5} y={16}>
-              <GrapeRule className="mt-6" />
+              {/* wie im Wein-Hero: die Zierlinie weicht auf Telefonen dem Platz */}
+              <GrapeRule className="mt-6 hidden sm:flex" />
               <p className="mt-5 max-w-md text-[15px] leading-relaxed text-charcoal/75">
                 Handverlesene Weine kleiner Familienweingüter – für bewusst gewählte Genussmomente,
                 vom Aperitivo bis zum großen Abend.
               </p>
             </Reveal>
             <Reveal delay={0.62} y={16}>
-              <div className="mt-8 flex flex-col items-stretch gap-3 sm:mt-9 sm:flex-row sm:items-center sm:gap-3.5">
+              <div className="mt-6 flex flex-col items-stretch gap-3 sm:mt-9 sm:flex-row sm:items-center sm:gap-3.5">
                 <Button href="/unsere-weine" size="lg" className="w-full sm:w-auto">
                   Weine entdecken
                 </Button>
@@ -151,7 +155,7 @@ export default function HomeContent() {
               </div>
             </Reveal>
             <Reveal delay={0.78} y={12}>
-              <dl className="mt-9 flex max-w-md items-center sm:mt-11">
+              <dl className="mt-7 flex max-w-md items-center sm:mt-11">
                 {[
                   [`${WINES.length}`, "Boutique-Weine"],
                   [`${REGION_COUNT}`, "Regionen Italiens"],

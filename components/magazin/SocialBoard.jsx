@@ -138,6 +138,16 @@ export default function SocialBoard({ className = "", headingId }) {
                     </div>
                   </article>
                 </TiltCard>
+                {/* Ohne Hover gibt es keinen Schleier: auf Touch-Geräten stünde
+                    die Bildunterschrift sonst nirgends — ein Tipp navigiert
+                    sofort zu Instagram. Unterhalb lg hängt sie deshalb wie ein
+                    handgeschriebenes Etikett fest unter dem Foto. */}
+                <div className="mt-2 px-1 lg:hidden">
+                  <p className="text-[11.5px] font-medium leading-snug text-ivory/85">{p.caption}</p>
+                  <p className="mt-0.5 text-[10px] uppercase tracking-[0.14em] text-champagne-light/70">
+                    {p.tag}
+                  </p>
+                </div>
                 </div>
               </a>
             </StaggerItem>

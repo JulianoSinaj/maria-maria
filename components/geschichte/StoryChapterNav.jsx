@@ -36,7 +36,10 @@ export default function StoryChapterNav() {
   }, []);
 
   return (
-    <div className="sticky top-[calc(86px+env(safe-area-inset-top))] z-30 px-3 lg:px-6">
+    /* md:hidden: die Leiste ist der Kapitel-Kompass der Telefone — der
+       Desktop erzählt die Geschichte wie bisher ohne sie und bleibt
+       pixelgleich unverändert. */
+    <div className="sticky top-[calc(86px+env(safe-area-inset-top))] z-30 px-3 md:hidden lg:px-6">
       <motion.nav
         aria-label="Die Kapitel dieser Geschichte"
         initial={reduced ? false : { opacity: 0, y: -10 }}
@@ -44,11 +47,14 @@ export default function StoryChapterNav() {
         transition={{ type: "spring", stiffness: 120, damping: 18 }}
         className="glass mx-auto w-full max-w-[1060px] rounded-full px-4 shadow-glass sm:px-6"
       >
-        <ul className="no-scrollbar flex h-14 items-center justify-start gap-1 overflow-x-auto [mask-image:linear-gradient(to_right,transparent,black_20px,black_calc(100%-20px),transparent)] sm:justify-center lg:[mask-image:none]">
+        <ul
+          data-lenis-prevent-horizontal
+          className="no-scrollbar flex h-14 snap-x items-center justify-start gap-1 overflow-x-auto [mask-image:linear-gradient(to_right,transparent,black_20px,black_calc(100%-20px),transparent)] sm:justify-center lg:[mask-image:none]"
+        >
           {STOPS.map((stop, i) => {
             const isActive = activeId === stop.id;
             return (
-              <li key={stop.id} className="flex shrink-0 items-center">
+              <li key={stop.id} className="flex shrink-0 snap-start items-center">
                 {i > 0 && (
                   <span
                     aria-hidden="true"
@@ -58,7 +64,9 @@ export default function StoryChapterNav() {
                 <a
                   href={`#${stop.id}`}
                   aria-current={isActive ? "location" : undefined}
-                  className={`group relative inline-flex h-9 items-center gap-2 rounded-full px-3 transition-colors duration-300 ${
+                  /* h-11: die Leiste existiert nur noch auf Telefonen —
+                     Daumen brauchen 44px */
+                  className={`group relative inline-flex h-11 items-center gap-2 rounded-full px-3 transition-colors duration-300 ${
                     isActive ? "text-bordeaux" : "text-charcoal/65 hover:text-bordeaux"
                   }`}
                 >

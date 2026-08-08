@@ -56,7 +56,9 @@ function TypeRail({ types, value, onChange, reduced }) {
     <div
       role="group"
       aria-label="Weine nach Weinart filtern"
-      className="no-scrollbar -mx-6 overflow-x-auto px-6 lg:mx-0 lg:overflow-visible lg:px-0"
+      data-lenis-prevent-horizontal
+      /* Kantenfade + nativer Wisch wie im SubNav — unterhalb lg scrollbar */
+      className="no-scrollbar -mx-6 snap-x overflow-x-auto scroll-pl-6 px-6 [mask-image:linear-gradient(to_right,transparent,black_20px,black_calc(100%-20px),transparent)] lg:mx-0 lg:overflow-visible lg:px-0 lg:[mask-image:none]"
     >
       <div className="relative inline-flex items-center gap-0.5 rounded-full border border-stone/50 bg-white/60 p-1.5 backdrop-blur-sm">
         {types.map((t) => {

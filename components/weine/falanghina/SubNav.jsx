@@ -65,7 +65,9 @@ export default function SubNav({ wine }) {
                 <a
                   href={link.href}
                   aria-current={isActive ? "location" : undefined}
-                  className={`group relative inline-flex h-9 items-center rounded-full px-3.5 text-[12.5px] tracking-[0.02em] transition-colors duration-300 ${
+                  /* h-11 unterhalb md: 44px Trefferfläche für Daumen — die
+                     36px-Pille bleibt dem Desktop-Cursor vorbehalten */
+                  className={`group relative inline-flex h-11 items-center rounded-full px-3.5 text-[12.5px] tracking-[0.02em] transition-colors duration-300 md:h-9 ${
                     isActive ? "font-semibold text-bordeaux" : "text-charcoal/70 hover:text-bordeaux"
                   }`}
                 >

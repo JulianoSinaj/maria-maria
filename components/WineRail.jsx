@@ -54,6 +54,10 @@ export default function WineRail({ wines, className = "" }) {
   // ---- desktop rail: scroll state + paddle paging ----
   const trackRef = useRef(null);
   const [edges, setEdges] = useState({ start: true, end: false });
+  /* Telefon-Pager: nach einem Wisch darf der Kartentap nicht mehr als Klick
+     auf den Karten-Link durchschlagen — Framer unterdrückt nur eigene Taps,
+     nicht die nativen Klicks der verlinkten Kinder */
+  const draggingRef = useRef(false);
 
   const syncEdges = useCallback(() => {
     const el = trackRef.current;
@@ -113,8 +117,15 @@ export default function WineRail({ wines, className = "" }) {
 
   return (
     <div className={className}>
-      {/* ---- filter pills: edge-bleed swipe row on phones, plain row on sm+ ---- */}
-      <div className="no-scrollbar -mx-6 overflow-x-auto px-6 sm:mx-0 sm:overflow-visible sm:px-0">
+      {/* ---- filter pills: edge-bleed swipe row on phones, plain row on sm+ ----
+          Der Kantenfade (wie im SubNav) verrät, dass rechts weitere Pillen
+          warten; data-lenis-prevent-horizontal lässt die Wischgeste nativ
+          durch, statt dass Lenis sie schluckt. Ab sm ist nichts scrollbar —
+          Maske weg, Snap inert. */}
+      <div
+        data-lenis-prevent-horizontal
+        className="no-scrollbar -mx-6 snap-x overflow-x-auto scroll-pl-6 px-6 [mask-image:linear-gradient(to_right,transparent,black_20px,black_calc(100%-20px),transparent)] sm:mx-0 sm:overflow-visible sm:px-0 sm:[mask-image:none]"
+      >
         <div className="flex w-max items-center gap-2 pb-1 sm:w-auto sm:flex-wrap sm:gap-2.5">
           {FILTERS.map((f) => {
             const on = filter === f.type;
@@ -125,7 +136,7 @@ export default function WineRail({ wines, className = "" }) {
                 aria-pressed={on}
                 whileTap={{ scale: 0.96 }}
                 transition={tapSpring}
-                className={`relative h-10 shrink-0 rounded-full border px-5 text-[11px] font-medium uppercase tracking-[0.14em] transition-colors duration-300 ${
+                className={`relative h-10 shrink-0 snap-start rounded-full border px-5 text-[11px] font-medium uppercase tracking-[0.14em] transition-colors duration-300 ${
                   on
                     ? "border-transparent text-ivory"
                     : "border-charcoal/20 bg-white/60 text-charcoal/70 hover:border-champagne hover:text-bordeaux"
@@ -156,6 +167,9 @@ export default function WineRail({ wines, className = "" }) {
           <div className="grid">
             <AnimatePresence initial={false} custom={dir}>
               {active && (
+              /* Wischbar wie die Flaschenfotos: gleiche Schwellen, gleiche
+                 Federn. Ein Zug im Foto blättert weiter dessen Seiten um
+                 (das innere drag greift zuerst), daneben wischt die Karte. */
               <motion.div
                 key={`${filter ?? "alle"}-${active.slug}`}
                 custom={dir}
@@ -164,6 +178,26 @@ export default function WineRail({ wines, className = "" }) {
                 animate="center"
                 exit="exit"
                 transition={spring}
+                drag={reduced ? false : "x"}
+                dragConstraints={{ left: 0, right: 0 }}
+                dragElastic={0.7}
+                onDragStart={() => {
+                  draggingRef.current = true;
+                }}
+                onDragEnd={(_, info) => {
+                  const power = Math.abs(info.offset.x) * info.velocity.x;
+                  if (info.offset.x < -48 || power < -6000) go(1);
+                  else if (info.offset.x > 48 || power > 6000) go(-1);
+                  requestAnimationFrame(() => {
+                    draggingRef.current = false;
+                  });
+                }}
+                onClickCapture={(e) => {
+                  if (draggingRef.current) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                  }
+                }}
                 className="col-start-1 row-start-1 will-transform"
               >
                 <WineCard wine={active} className="w-full" />

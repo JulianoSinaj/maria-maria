@@ -4,6 +4,7 @@ import { Eyebrow, GoldRule } from "@/components/Deco";
 import { Aura, GhostWord } from "@/components/Atmosphere";
 import SoulCards from "@/components/SoulCards";
 import StoryChapter from "@/components/geschichte/StoryChapter";
+import StoryChapterNav from "@/components/geschichte/StoryChapterNav";
 import StoryStats from "@/components/geschichte/StoryStats";
 import StoryCta from "@/components/geschichte/StoryCta";
 import { STORY_CHAPTERS, STORY_TODAY } from "@/components/geschichte/storyData";
@@ -146,6 +147,12 @@ export default function GeschichtePage() {
           </div>
         </div>
       </section>
+
+      {/* ================= KAPITEL-KOMPASS (nur Telefone) =================
+          Direktes Kind von <main>, damit die Sticky-Leiste bis zum Ende der
+          Erzählung haftet — ein Wrapper würde sie auf seine eigene Höhe
+          begrenzen. Ab md rendert die Komponente nichts Sichtbares. */}
+      <StoryChapterNav />
 
       {/* ================= KAPITEL 01–05: DIE REISE ======================= */}
       {STORY_CHAPTERS.map((chapter, i) => (

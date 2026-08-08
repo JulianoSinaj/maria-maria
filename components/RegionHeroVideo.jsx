@@ -10,13 +10,27 @@ import { useEffect, useRef } from "react";
 export default function RegionHeroVideo({ src, poster, rate = 0.75, className = "" }) {
   const ref = useRef(null);
 
+  /* Reduced Motion pausiert das Video — als einzige große Bewegtfläche der
+     Seite war es bisher von der sonst durchgängigen Motion-Disziplin
+     ausgenommen. Reagiert wie SmoothScroll auch auf spätere Änderungen der
+     OS-Einstellung; ohne die Einstellung läuft alles exakt wie zuvor. */
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    el.muted = true;
-    el.playbackRate = rate;
-    const attempt = el.play();
-    if (attempt && typeof attempt.catch === "function") attempt.catch(() => {});
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const sync = () => {
+      el.muted = true;
+      el.playbackRate = rate;
+      if (mq.matches) {
+        el.pause();
+      } else {
+        const attempt = el.play();
+        if (attempt && typeof attempt.catch === "function") attempt.catch(() => {});
+      }
+    };
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
   }, [rate]);
 
   return (

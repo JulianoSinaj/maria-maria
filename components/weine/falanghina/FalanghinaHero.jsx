@@ -188,7 +188,11 @@ export default function FalanghinaHero({ wine, photo }) {
     }
 
     return (
-      <section ref={sectionRef} className="relative h-[210vh]">
+      /* svh statt vh: die einklappende iOS-Adressleiste ändert 1vh mitten im
+         Scrollen — die Pin-Strecke wanderte unter dem Daumen und der Fortschritt
+         sprang. svh bleibt konstant (Desktop: identisch mit vh). Auf Telefonen
+         ist die Strecke kürzer, damit weniger Scroll-Weg vor dem Inhalt liegt. */
+      <section ref={sectionRef} className="relative h-[210svh] max-md:h-[175svh]">
         <div className="grain sticky top-0 h-[100svh] overflow-hidden">
           {/* Die Bühne: echtes Foto, langsamer Feder-Zoom in die Szene.
               Der Zoom sitzt auf diesem Wrapper, nicht auf dem <img> selbst —
@@ -315,7 +319,8 @@ export default function FalanghinaHero({ wine, photo }) {
   }
 
   return (
-    <section ref={sectionRef} className="relative h-[210vh]">
+    /* svh + kürzere Telefon-Strecke — gleiche Begründung wie im Foto-Modus */
+    <section ref={sectionRef} className="relative h-[210svh] max-md:h-[175svh]">
       <div className="grain sticky top-0 h-[100svh] overflow-hidden">
         {backdrop}
 

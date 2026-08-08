@@ -196,11 +196,17 @@ export default function FaqSection({
           {hasIndex && (
             <Reveal delay={0.1}>
               <nav aria-label="FAQ-Themen" className="mt-6">
-                <ul className="no-scrollbar -mx-6 flex gap-2 overflow-x-auto px-6 lg:mx-0 lg:flex-col lg:gap-2 lg:px-0">
+                {/* Kantenfade + nativer Wisch (data-lenis-prevent-horizontal)
+                    wie im SubNav — unterhalb lg ist die Themenzeile scrollbar,
+                    ab lg wird sie zur Spalte und die Maske verschwindet. */}
+                <ul
+                  data-lenis-prevent-horizontal
+                  className="no-scrollbar -mx-6 flex snap-x gap-2 overflow-x-auto scroll-pl-6 px-6 [mask-image:linear-gradient(to_right,transparent,black_20px,black_calc(100%-20px),transparent)] lg:mx-0 lg:flex-col lg:gap-2 lg:px-0 lg:[mask-image:none]"
+                >
                   {grouped.map((g) => {
                     const isActive = g.key === activeKey;
                     return (
-                      <li key={g.key} className="shrink-0 lg:shrink">
+                      <li key={g.key} className="shrink-0 snap-start lg:shrink">
                         <button
                           type="button"
                           aria-pressed={isActive}

@@ -1,6 +1,7 @@
 "use client";
 import { useRef } from "react";
 import { motion, useMotionValue, useSpring, useMotionTemplate, useReducedMotion } from "motion/react";
+import { useTouchDevice } from "@/components/motion/useMediaQuery";
 
 /* 3D tilt card — true perspective viewport, spring-damped rotation, and a
    soft champagne glare that tracks the pointer. Desktop pointer only. */
@@ -8,6 +9,10 @@ import { motion, useMotionValue, useSpring, useMotionTemplate, useReducedMotion 
 export default function TiltCard({ children, className = "", max = 6, glare = true, lift = true, radius = "rounded-card-lg" }) {
   const ref = useRef(null);
   const reduced = useReducedMotion();
+  /* whileHover hängt an pointerenter — auf Touch feuert das beim Tippen,
+     aber pointerleave kommt nie: die Karte bliebe „gehoben" stehen. Tailwinds
+     hoverOnlyWhenSupported schützt nur CSS-hover, nicht diesen JS-Zustand. */
+  const touch = useTouchDevice();
 
   const rx = useMotionValue(0);
   const ry = useMotionValue(0);
@@ -49,7 +54,7 @@ export default function TiltCard({ children, className = "", max = 6, glare = tr
       onPointerMove={onMove}
       onPointerLeave={onLeave}
       initial="rest"
-      whileHover="hover"
+      whileHover={touch ? undefined : "hover"}
       animate="rest"
     >
       <motion.div

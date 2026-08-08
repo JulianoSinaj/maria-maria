@@ -14,7 +14,6 @@ import { STORY_CHAPTERS, STORY_TODAY } from "./storyData";
    Leiste seitlich durch, der Mask-Fade deutet die weiteren Kapitel an. */
 
 const STOPS = [...STORY_CHAPTERS, STORY_TODAY].map((c) => ({
-  num: c.num,
   id: c.id,
   label: c.label,
 }));
@@ -72,14 +71,6 @@ export default function StoryChapterNav() {
                       transition={{ type: "spring", stiffness: 350, damping: 30 }}
                     />
                   )}
-                  <span
-                    aria-hidden="true"
-                    className={`font-playfair text-[13px] italic leading-none transition-colors duration-300 ${
-                      isActive ? "text-bordeaux" : "text-champagne"
-                    }`}
-                  >
-                    {stop.num}
-                  </span>
                   <span className="relative whitespace-nowrap text-[10.5px] font-semibold uppercase tracking-[0.18em]">
                     {stop.label}
                     {/* ruhender Zustand: Unterstrich zieht sich von links auf */}

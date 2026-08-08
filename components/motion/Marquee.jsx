@@ -11,7 +11,7 @@ export default function Marquee({ items = [], className = "" }) {
           <span className="whitespace-nowrap px-8 font-playfair text-[15px] italic tracking-wide text-charcoal/55 md:px-12 md:text-[17px]">
             {item}
           </span>
-          <Grapes className="h-4 w-4 shrink-0 text-champagne/80" />
+          <span className="h-2 w-2 shrink-0 rounded-full bg-wine" aria-hidden="true" />
         </span>
       ))}
     </div>

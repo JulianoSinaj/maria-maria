@@ -3,7 +3,6 @@ import { Reveal } from "@/components/motion/Reveal";
 import { Eyebrow, GoldRule } from "@/components/Deco";
 import { Aura, GhostWord } from "@/components/Atmosphere";
 import SoulCards from "@/components/SoulCards";
-import StoryChapterNav from "@/components/geschichte/StoryChapterNav";
 import StoryChapter from "@/components/geschichte/StoryChapter";
 import StoryStats from "@/components/geschichte/StoryStats";
 import StoryCta from "@/components/geschichte/StoryCta";
@@ -13,9 +12,7 @@ import { STORY_CHAPTERS, STORY_TODAY } from "@/components/geschichte/storyData";
    GESCHICHTE — die Erzählseite der Marke, Sprungziel aus Capitolo I
    („La storia") des Magazins.
    ----------------------------------------------------------------------------
-   Die Seite ist als Reise in sechs Kapiteln gesetzt, geführt vom
-   Kapitel-Menü (StoryChapterNav), das als Glas-Leiste unter dem Header
-   haftet und per Scrollspy die Station in Lesehöhe markiert:
+   Die Seite ist als Reise in sechs Kapiteln gesetzt:
 
    Auftakt        Le Origini — „Zwei Seelen, ein Name": der Kanon der
                   Startseite (Sommer 2019, die Reisestationen, das Motto),
@@ -80,9 +77,6 @@ const JOURNEY = ["Salento", "Lago di Garda", "Campania", "Düsseldorf"];
 export default function GeschichtePage() {
   return (
     <main className="relative min-h-screen pt-[calc(96px+env(safe-area-inset-top))]">
-      {/* Kapitel-Menü — haftet ab hier für die ganze Erzählung */}
-      <StoryChapterNav />
-
       {/* ================= AUFTAKT: LE ORIGINI ============================ */}
       <section aria-labelledby="geschichte-titel" className="relative overflow-hidden">
         <Aura tint="gold" className="-left-56 top-16 h-[38rem] w-[38rem]" />
@@ -175,10 +169,6 @@ export default function GeschichtePage() {
         <div className="relative mx-auto max-w-content px-6 pb-6 pt-10 lg:px-10 lg:pb-8 lg:pt-16">
           <Reveal className="text-center">
             <p className="flex items-center justify-center gap-3 text-[10.5px] font-semibold uppercase tracking-[0.26em] text-champagne">
-              <span aria-hidden="true" className="font-playfair text-[15px] italic tracking-normal">
-                {STORY_TODAY.num}
-              </span>
-              <span aria-hidden="true" className="h-px w-7 bg-champagne/70" />
               <span className="text-bordeaux/80">{STORY_TODAY.label}</span>
             </p>
             <h2

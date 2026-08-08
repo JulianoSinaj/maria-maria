@@ -7,12 +7,11 @@ import { Arrow } from "@/components/Icons";
 
 /* Ein Kapitel der Geschichte — Bild und Text im Wechselgriff, wie die
    Regionen-Showcases: gerade Kapitel tragen das Foto links, ungerade
-   rechts. Die Kapitelmarke („01 — Der Anfang") öffnet den Text wie eine
-   Zwischenüberschrift im Heft, das Foto fährt mit Parallax-Feder und
-   kippt als 3D-Karte leicht zum Cursor. */
+   rechts. Das Foto fährt mit Parallax-Feder und kippt als 3D-Karte leicht 
+   zum Cursor. */
 
 export default function StoryChapter({ chapter, flipped = false }) {
-  const { num, id, label, title, paragraphs, link, img, alt, caption } = chapter;
+  const { id, label, title, paragraphs, link, img, alt, caption } = chapter;
   const headingId = `story-${id}`;
 
   return (
@@ -40,12 +39,6 @@ export default function StoryChapter({ chapter, flipped = false }) {
               />
               <figcaption className="absolute inset-x-0 bottom-0 flex items-baseline justify-between gap-4 p-5 sm:p-6">
                 <span className="font-playfair text-[12.5px] italic text-ivory/85">{caption}</span>
-                <span
-                  aria-hidden="true"
-                  className="shrink-0 text-[9px] font-semibold uppercase tracking-[0.26em] text-champagne-light/80"
-                >
-                  MM <span aria-hidden="true">·</span> {num}
-                </span>
               </figcaption>
             </figure>
           </TiltCard>
@@ -54,12 +47,8 @@ export default function StoryChapter({ chapter, flipped = false }) {
         {/* ---- Kapiteltext ---- */}
         <div className={flipped ? "lg:order-1" : ""}>
           <Reveal>
-            {/* Kapitelmarke: Ziffer — Haarlinie — Stationsname */}
+            {/* Kapitelmarke: Stationsname */}
             <p className="flex items-center gap-3 text-[10.5px] font-semibold uppercase tracking-[0.26em] text-champagne">
-              <span aria-hidden="true" className="font-playfair text-[15px] italic tracking-normal">
-                {num}
-              </span>
-              <span aria-hidden="true" className="h-px w-7 bg-champagne/70" />
               <span className="text-bordeaux/80">{label}</span>
             </p>
             <h2

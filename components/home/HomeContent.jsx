@@ -265,7 +265,7 @@ export default function HomeContent() {
             Wo unsere Weine zuhause sind
           </SectionTitle>
           <Reveal delay={0.15}>
-            <Button href="/regionen" variant="outline" size="sm">
+            <Button href="/regionen" variant="premium" size="sm">
               Alle Regionen
             </Button>
           </Reveal>

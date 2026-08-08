@@ -172,7 +172,7 @@ export default function GeschichtePage() {
         <Aura tint="olive" className="-right-48 top-[10%] h-[30rem] w-[30rem]" />
         <GhostWord className="left-[-2vw] bottom-[-6%] text-[11vw]">Oggi</GhostWord>
 
-        <div className="relative mx-auto max-w-content px-6 pb-16 pt-10 lg:px-10 lg:pb-24 lg:pt-16">
+        <div className="relative mx-auto max-w-content px-6 pb-6 pt-10 lg:px-10 lg:pb-8 lg:pt-16">
           <Reveal className="text-center">
             <p className="flex items-center justify-center gap-3 text-[10.5px] font-semibold uppercase tracking-[0.26em] text-champagne">
               <span aria-hidden="true" className="font-playfair text-[15px] italic tracking-normal">

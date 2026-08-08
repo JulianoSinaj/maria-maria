@@ -18,18 +18,15 @@ export default function OriginsSection() {
       <Atmosphere variant="olive" />
       <GhostWord className="right-[-3vw] top-10 text-[11vw]">Due anime</GhostWord>
       <div className="relative mx-auto max-w-content px-6 py-16 sm:py-24 lg:px-10">
-        {/* Sprung ins Magazin — als weiße, erhabene Pille ganz oben rechts;
+        {/* Sprung ins Magazin — als elegante Champagne-Gold-Pille ganz oben rechts;
             auf Mobile wandert der Button unter den Text, wo Platz ist.
-            Weiß statt bg-ivory per Inline-Style, weil die Seite selbst auf
-            Ivory steht und die Pille sich sonst nicht abhebt */}
+            Premium-Variante für Luxus-Appeal und visuellen Impact */}
         <div className="absolute right-6 top-8 z-10 hidden sm:top-10 sm:block lg:right-10">
           <Reveal delay={0.1}>
             <Button
               href="/geschichte"
-              variant="light"
+              variant="premium"
               size="sm"
-              className="shadow-glass"
-              style={{ backgroundColor: "#FFFFFF" }}
             >
               Magazin
             </Button>
@@ -84,10 +81,8 @@ export default function OriginsSection() {
               <div className="mt-8 sm:hidden">
                 <Button
                   href="/geschichte"
-                  variant="light"
+                  variant="premium"
                   size="sm"
-                  className="shadow-glass"
-                  style={{ backgroundColor: "#FFFFFF" }}
                 >
                   Magazin
                 </Button>

@@ -3,14 +3,29 @@ import Link from "next/link";
 import { motion } from "motion/react";
 import { Arrow, ArrowUpRight } from "../Icons";
 
-/* Maria Maria button system.
-   Layered micro-interactions: a fill that rises inside the pill, a masked
-   label roll, arrow travel, and press compression. All layers are
-   transform/opacity only — zero layout shift.
-
-   The button body itself stays put on hover: magnetic cursor tracking read as
-   restless while scrolling past, so the hover language is colour and fill
-   only. */
+/* Maria Maria button system — premium micro-interactions.
+   
+   VARIANTS:
+   - primary: Deep wine gradient (default, prominent CTAs)
+   - dark: Charcoal with bordeaux fill
+   - outline: Minimal outline with charcoal border
+   - glass: Frosted glass effect with transparent shine
+   - light: Soft champagne gradient (neutral, secondary actions)
+   - premium: Gold/champagne gradient (luxury, elegant feel)
+   - accent: Teal/acqua gradient (attention, complementary)
+   - vibrant: Deep wine gradient with layered depths (bold CTAs)
+   - mint: Light aqua gradient (fresh, friendly tone)
+   - earth: Forest green to dark brown (natural, grounded feel)
+   
+   ANIMATIONS: Layered micro-interactions with zero layout shift:
+   - Rising fill from bottom on hover
+   - Shimmer sweep across surface
+   - Subtle glow effect on hover
+   - Masked label roll-up animation
+   - Icon directional movement
+   - Spring-based press compression (scale)
+   
+   All layers use transform/opacity only — zero layout shift. */
 
 const MotionLink = motion.create(Link);
 
@@ -40,9 +55,39 @@ const VARIANTS = {
     iconHover: "group-hover:text-ivory",
   },
   light: {
-    base: "bg-ivory text-charcoal",
-    fill: "bg-champagne-light",
+    base: "bg-gradient-to-br from-champagne-light to-ivory text-charcoal shadow-glass",
+    fill: "bg-champagne",
     labelIn: "text-charcoal",
+    iconHover: "",
+  },
+  premium: {
+    base: "bg-gradient-to-br from-champagne via-champagne-light to-straw text-charcoal shadow-chip hover:shadow-md transition-shadow",
+    fill: "bg-champagne-deep",
+    labelIn: "text-charcoal",
+    iconHover: "",
+  },
+  accent: {
+    base: "bg-gradient-to-br from-acqua to-acqua-deep text-cream shadow-chip",
+    fill: "bg-acqua-deep",
+    labelIn: "text-cream",
+    iconHover: "",
+  },
+  vibrant: {
+    base: "bg-gradient-to-br from-wine via-bordeaux to-bordeaux-deep text-ivory shadow-chip",
+    fill: "bg-bordeaux-deep",
+    labelIn: "text-ivory",
+    iconHover: "",
+  },
+  mint: {
+    base: "bg-gradient-to-br from-acqua-light to-acqua text-charcoal shadow-glass",
+    fill: "bg-acqua-deep",
+    labelIn: "text-cream",
+    iconHover: "",
+  },
+  earth: {
+    base: "bg-gradient-to-br from-vine to-espresso text-ivory shadow-chip",
+    fill: "bg-espresso",
+    labelIn: "text-ivory",
     iconHover: "",
   },
 };
@@ -84,16 +129,27 @@ export default function Button({
 
   const content = (
     <>
-      {/* rising fill */}
+      {/* rising fill with enhanced animation */}
       <span
         aria-hidden="true"
         className={`absolute inset-0 z-0 translate-y-[103%] rounded-[46%_46%_0_0] transition-[transform,border-radius] duration-500 ease-out-expo group-hover:translate-y-0 group-hover:rounded-none ${cfg.fill}`}
       />
-      {/* shine sweep */}
+      
+      {/* enhanced shine sweep with color adaptation */}
       <span aria-hidden="true" className="absolute inset-0 z-[1] overflow-hidden rounded-full">
-        <span className="absolute top-0 h-full w-1/3 -translate-x-[260%] -skew-x-12 bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-[900ms] ease-out-expo group-hover:translate-x-[360%]" />
+        <span className="absolute top-0 h-full w-1/3 -translate-x-[260%] -skew-x-12 bg-gradient-to-r from-transparent via-white/40 to-transparent transition-transform duration-[900ms] ease-out-expo group-hover:translate-x-[360%]" />
       </span>
-      {/* masked label roll */}
+      
+      {/* subtle glow effect on hover */}
+      <span
+        aria-hidden="true"
+        className="absolute inset-0 rounded-full opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+        style={{
+          background: "radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%)",
+        }}
+      />
+      
+      {/* masked label roll with enhanced motion */}
       <span className="relative z-10 block overflow-hidden">
         <span className="block transition-transform duration-500 ease-out-expo group-hover:-translate-y-[115%]">
           {children}
@@ -105,6 +161,7 @@ export default function Button({
           {children}
         </span>
       </span>
+      
       {icon && iconType !== "none" && (
         <span className={`relative z-10 transition-colors duration-300 ${cfg.iconHover}`}>
           <Icon

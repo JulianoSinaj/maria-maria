@@ -26,19 +26,19 @@ const MOMENTS = [
     title: "Aperitivo",
     tag: "Moment 01",
     text: "Leicht, frisch und bereichernd.",
-    img: "/img/aperitivo-sunset.jpg",
+    img: "/img/magazin/imag3.jpeg",
   },
   {
     title: "Dinner",
     tag: "Moment 02",
     text: "Elegante Begleiter für besondere Gerichte.",
-    img: "/img/dinner.webp",
+    img: "/img/magazin/imag3.jpeg",
   },
   {
     title: "Freunde",
     tag: "Moment 03",
     text: "Für gute Gespräche und unvergessliche Abende.",
-    img: "/img/pranzo.webp",
+    img: "/img/magazin/imag3.jpeg",
   },
 ];
 

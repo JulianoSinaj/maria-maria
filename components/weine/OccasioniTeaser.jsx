@@ -86,26 +86,6 @@ export default function OccasioniTeaser({ moments, href, headingId, className = 
             Die Pairings entdecken
           </Button>
         </Reveal>
-
-        {/* Moment indicators — subtle dots showing the 3 occasions available */}
-        <Reveal delay={0.65} y={12} className="mt-10">
-          <div className="flex items-center gap-3">
-            <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-charcoal/50">
-              3 Genussmomente
-            </span>
-            <div className="flex gap-2">
-              {moments.map((_, i) => (
-                <div
-                  key={i}
-                  className={`h-1.5 rounded-full transition-all duration-300 ${
-                    i === displayIndex ? "w-5 bg-bordeaux" : "w-1.5 bg-champagne/50"
-                  }`}
-                  aria-hidden="true"
-                />
-              ))}
-            </div>
-          </div>
-        </Reveal>
       </div>
 
       {/* ================= RIGHT: FEATURED IMAGE ================= */}
@@ -155,38 +135,6 @@ export default function OccasioniTeaser({ moments, href, headingId, className = 
                 aria-hidden="true"
                 className="absolute inset-0 bg-ivory/10 opacity-0 transition-opacity duration-150 ease-out group-active:opacity-100"
               />
-
-              <span className="glass absolute left-5 top-5 rounded-full px-3 py-1.5 text-[9.5px] font-semibold uppercase tracking-[0.16em] text-charcoal/70">
-                Magazin · Food Pairing
-              </span>
-
-              {/* Bottom card label */}
-              <div className="absolute inset-x-4 bottom-4 lg:inset-x-5 lg:bottom-5">
-                <div className="glass-dark relative overflow-hidden rounded-[22px] px-6 py-5 lg:px-7">
-                  <span
-                    aria-hidden="true"
-                    className="pointer-events-none absolute inset-x-5 top-0 h-px bg-gradient-to-r from-transparent via-white/45 to-transparent"
-                  />
-                  <span
-                    aria-hidden="true"
-                    className="pointer-events-none absolute -left-1/4 -top-3/4 h-[170%] w-2/3 rotate-12 bg-gradient-to-b from-white/10 to-transparent blur-2xl"
-                  />
-                  <div className="relative flex items-center justify-between gap-6">
-                    <div className="min-w-0">
-                      <p className="text-[10px] uppercase tracking-[0.25em] text-champagne-light" style={{ opacity: 1, transform: "none" }}>
-                        Moment {String(displayIndex + 1).padStart(2, "0")} · {current.title}
-                      </p>
-                      <h3 className="mt-1 font-playfair text-[clamp(20px,1.8vw,26px)] text-ivory">
-                        Genussmoment
-                      </h3>
-                    </div>
-                    <p className="inline-flex shrink-0 items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-ivory">
-                      <span className="hidden sm:inline">Entdecken</span>
-                      <Arrow aria-hidden="true" className="h-3.5 w-3.5 transition-transform duration-[250ms] ease-out group-hover:translate-x-[5px]" />
-                    </p>
-                  </div>
-                </div>
-              </div>
 
               {/* Hover glow effect */}
               <div

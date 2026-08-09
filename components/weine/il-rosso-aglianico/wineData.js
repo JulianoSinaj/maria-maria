@@ -183,11 +183,11 @@ export const IL_ROSSO = {
      Copy über die volle Breite. */
   pairing: {
     scene: {
-      dish: "Maiale al ragù mit Paccheri",
-      copy: "Schweinenacken, der einen halben Nachmittag in Tomate, Zwiebel und Lorbeer schmort, bis die Sauce dunkel und dicht ist. Dazu Paccheri, die breiten Röhren, die genug Sauce fassen. Der Rosso braucht dieses Gegenüber: Fett und Eiweiß aus dem Schmorfleisch binden sein Tannin, das solo streng wirken könnte, und lassen dafür die Frucht nach vorn. Die sechs Monate Eiche liegen im Hintergrund und treffen dort auf die Röstaromen aus der Pfanne.",
+      dish: "Lammrücken mit Rosmarinkartoffeln",
+      copy: "Zart gebratener Lammrücken, goldene Kartoffeln und Rosmarin: ein Gericht, das von Röstaromen, Kräutern und der Saftigkeit des Fleisches lebt. Il Rosso bringt die passende Tiefe mit. Seine würzige, charaktervolle Art nimmt den Rosmarin auf, während seine Struktur dem kräftigen Fleisch standhält. Die Röstaromen von Fleisch und Kartoffeln verbinden sich mit der dunkleren Seite des Weins – ein Pairing für einen langen, entspannten Abend am Tisch.",
       image: null,
       imageAlt:
-        "Paccheri mit geschmortem Schweinefleisch-Ragù in einer Schüssel, daneben ein Glas Il Rosso und die geöffnete Flasche",
+        "Gebratener Lammrücken mit Rosmarinkartoffeln auf einer Platte, daneben ein Glas Il Rosso und die geöffnete Flasche",
       regionLink: {
         label: "Mehr über Kampanien entdecken",
         href: "/regionen#kampanien",

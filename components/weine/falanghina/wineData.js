@@ -198,11 +198,11 @@ export const FALANGHINA = {
      Copy über die volle Breite. */
   pairing: {
     scene: {
-      dish: "Gegrillter Wolfsbarsch mit Zitrone und Oliven",
-      copy: "Ein ganzer Fisch vom Grill, die Haut knusprig, innen nur Zitrone, Petersilie und ein paar schwarze Oliven. Mehr braucht es an einem warmen Abend nicht. Die Falanghina antwortet mit genau der Frische, die dieses Gericht verlangt: Ihre lebendige Säure ersetzt den zweiten Spritzer Zitrone und wischt den Gaumen nach jedem Bissen frei. Ihr leichter Körper rahmt das zarte Fischaroma, statt es zuzudecken — der letzte Bissen schmeckt so klar wie der erste.",
+      dish: "Ricciola ai Pomodorini",
+      copy: "Zarte Ricciola und saftige Kirschtomaten brauchen keinen schweren Begleiter. Die Falanghina bringt Frische, Frucht und Lebendigkeit an den Tisch und lässt dem feinen Fisch genügend Raum. Ihre frische Art greift die Saftigkeit der Tomaten auf, während ihr leichter Körper das Gericht begleitet, ohne es zu überdecken. Ein klares, mediterranes Pairing, das besonders an warmen Tagen seine Stärke zeigt.",
       image: null,
       imageAlt:
-        "Gegrillter Wolfsbarsch mit Zitrone und Oliven auf einer Platte, daneben ein Glas Falanghina und die geöffnete Flasche",
+        "Ricciola-Filet mit Kirschtomaten auf einem Teller, daneben ein Glas Falanghina und die geöffnete Flasche",
       regionLink: {
         label: "Mehr über Kampanien entdecken",
         href: "/regionen#kampanien",

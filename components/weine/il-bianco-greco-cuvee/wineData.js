@@ -182,11 +182,11 @@ export const IL_BIANCO = {
      Copy über die volle Breite. */
   pairing: {
     scene: {
-      dish: "Gegrillte Gambero rosso mit Olivenöl und Meersalz",
-      copy: "Rote Garnelen, nur kurz über die Glut gelegt, mit gutem Olivenöl und grobem Meersalz. Ein Gericht ohne Versteck: Es steht und fällt mit der Süße des Krustentiers. Genau dafür ist eine Cuvée gemacht. Der Schmelz des Bianco nimmt diese Süße auf und trägt sie weiter, während die Frische der zweiten Rebsorte das Salz in Form hält. Kein Partner drängt sich vor — was der eine an Fülle gibt, gleicht der andere an Spannung aus.",
+      dish: "Paccheri mit Garnelen und Zucchini",
+      copy: "Paccheri, saftige Garnelen und feine Zucchini verbinden mediterrane Frische mit einer angenehm weichen Textur. Il Bianco begleitet genau diese Balance: frisch genug für die Garnelen, aromatisch genug für das Gemüse und mit genügend Struktur für die Pasta. Die feine Süße der Garnelen bleibt erhalten, während die Frische des Weins den Gaumen zwischen den Bissen wieder öffnet. Ein unkompliziertes, aber raffiniertes Pairing für einen italienischen Pasta-Abend.",
       image: null,
       imageAlt:
-        "Gegrillte rote Gambero mit Olivenöl und Meersalz auf einer Platte, daneben ein Glas Il Bianco und die geöffnete Flasche",
+        "Paccheri mit Garnelen und Zucchini auf einem Teller, daneben ein Glas Il Bianco und die geöffnete Flasche",
       regionLink: {
         label: "Mehr über Kampanien entdecken",
         href: "/regionen#kampanien",

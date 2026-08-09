@@ -11,7 +11,7 @@
 
 export const FALANGHINA = {
   slug: "falanghina",
-  catalogName: "Falanghina", // key into components/data.js WINES via byName()
+  catalogName: "Falanghina I.G.P.", // key into components/data.js WINES via byName()
 
   name: "Beneventano Falanghina IGP",
   /* Kurzform für Fließtext — Nominativ und Genitiv, damit die geteilten
@@ -294,7 +294,7 @@ export const FALANGHINA = {
   similar: {
     kicker: "Ähnliche Weine entdecken",
     title: "Wenn Ihnen die Falanghina gefällt",
-    names: ["Greco di Tufo D.O.C.G.", "Il Bianco – Greco Cuvée", "Lugana"],
+    names: ["Greco di Tufo D.O.C.G.", "Il Bianco – Greco Cuvée", "Lugana D.O.P."],
     /* Halbsatz hinter „Drei Weißweine aus unserer Kollektion," — die Gattung
        davor leitet SimilarWines aus den Karten ab, nicht aus diesem Text. */
     trait: "die denselben Ton treffen: hell, frisch, mediterran.",

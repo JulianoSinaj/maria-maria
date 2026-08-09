@@ -16,7 +16,7 @@
 
 export const LUGANA = {
   slug: "lugana",
-  catalogName: "Lugana", // key into components/data.js WINES via byName()
+  catalogName: "Lugana D.O.P.", // key into components/data.js WINES via byName()
 
   name: "Lugana DOC",
   eyebrow: "Italienische Boutique-Weine",
@@ -290,7 +290,7 @@ export const LUGANA = {
   similar: {
     kicker: "Ähnliche Weine entdecken",
     title: "Wenn Ihnen der Lugana gefällt",
-    names: ["Falanghina", "Greco di Tufo D.O.C.G.", "Il Bianco – Greco Cuvée"],
+    names: ["Falanghina I.G.P.", "Greco di Tufo D.O.C.G.", "Il Bianco – Greco Cuvée"],
     trait: "die dieselbe Frische und Mineralität suchen: elegant und klar.",
   },
 

@@ -20,14 +20,14 @@ import { WINE_META } from "@/components/shop/shopData";
    `batch: null` marks that rather than faking a denominator. */
 
 const VESSEL = {
-  "Primitivo 14,5": { vessel: "Stahltank", short: "Steel" },
-  "Primitivo 15,5": { vessel: "Terrakotta-Amphore", short: "Amphore" },
+  "Primitivo di Manduria D.O.C. 14,5": { vessel: "Stahltank", short: "Steel" },
+  "Primitivo di Manduria D.O.C. 15,5": { vessel: "Terrakotta-Amphore", short: "Amphore" },
 };
 
 /* bottles already committed (sold + allocated to trade) per edition wine */
 const COMMITTED = {
-  "Primitivo 14,5": 11_480,
-  "Primitivo 15,5": 9_260,
+  "Primitivo di Manduria D.O.C. 14,5": 11_480,
+  "Primitivo di Manduria D.O.C. 15,5": 9_260,
 };
 
 const parseEdition = (s) => (s ? Number(s.replace(/[^\d]/g, "")) : null);
@@ -61,18 +61,18 @@ export const ALLOCATION_TOTALS = ALLOCATION.reduce(
    and reported separately, so the board wants to see it on its own. */
 
 const SOLD = {
-  "Primitivo 14,5": 4_120,
-  "Primitivo 15,5": 2_980,
+  "Primitivo di Manduria D.O.C. 14,5": 4_120,
+  "Primitivo di Manduria D.O.C. 15,5": 2_980,
   "Primitivo Salento IGP": 3_240,
-  Lugana: 2_760,
+  "Lugana D.O.P.": 2_760,
   "Greco di Tufo D.O.C.G.": 1_180,
-  Falanghina: 2_410,
+  "Falanghina I.G.P.": 2_410,
   "Rosato Puglia": 2_050,
   "Il Rosso – Aglianico": 1_090,
   "Il Bianco – Greco Cuvée": 1_460,
 };
 
-const AMPHORA_WINE = "Primitivo 15,5";
+const AMPHORA_WINE = "Primitivo di Manduria D.O.C. 15,5";
 
 const TYPE_STYLE = {
   Rotwein: { label: "Rotwein", tone: "#6B0F1A" },

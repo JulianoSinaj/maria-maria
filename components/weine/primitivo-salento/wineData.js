@@ -279,7 +279,7 @@ export const PRIMITIVO_SALENTO = {
   similar: {
     kicker: "Ähnliche Weine entdecken",
     title: "Wenn Ihnen der Primitivo gefällt",
-    names: ["Primitivo 14,5", "Primitivo 15,5", "Il Rosso – Aglianico"],
+    names: ["Primitivo di Manduria D.O.C. 14,5", "Primitivo di Manduria D.O.C. 15,5", "Il Rosso – Aglianico"],
     trait: "die dieselbe Frucht und Wärme tragen: rund, weich, zugänglich.",
   },
 

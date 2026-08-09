@@ -10,7 +10,7 @@ import CuriosityBand from "@/components/magazin/CuriosityBand";
 import ChapterBreak from "@/components/magazin/ChapterBreak";
 import InkQuote from "@/components/magazin/InkQuote";
 import MagazinJsonLd from "@/components/magazin/MagazinJsonLd";
-import MomentsSection from "@/components/weine/MomentsSection";
+import PairingMoments from "@/components/magazin/PairingMoments";
 import FaqSection from "@/components/faq/FaqSection";
 import { MAGAZIN_FAQ } from "@/components/faq/faqData";
 import RegionWineRail from "@/components/RegionWineRail";
@@ -37,7 +37,9 @@ import { MAGAZIN_WINE_SLUGS } from "@/components/magazin/magazinData";
 
    Dramaturgie in fünf Kapiteln:
    I   — La storia   Titelseite, Vision & Mission, Marquee.
-   II  — Momente     die drei Anlass-Karten (Bauform geteilt mit /unsere-weine).
+   II  — Momente     der Anlass-Schalter des Food Pairings: fünf Tasten,
+                     eine Antwort-Karte — Gericht, Wein und „Auch passend",
+                     jeder Wein verlinkt auf seine Landingpage.
    III — La Cantina  die Galerie aller Wein-Landingpages: jede Karte trägt das
                      Hero-Foto ihres Weins und führt per Klick dorthin.
    IV  — Bacheca     die Social-Pinnwand.
@@ -149,19 +151,13 @@ export default function MagazinPage() {
 
         {/* ================= CAPITOLO II: GENUSSMOMENTE ===================== */}
         <ChapterBreak number="II" title="Genussmomente" word="Gli abbinamenti" />
-        {/* Bauform geteilt mit /unsere-weine — hier ohne Flaschen-Bühne als
-            kurze, breite Karten-Reihe nach dem Muster des Region-Explorers
-            der Startseite: die Karte unter dem Cursor wächst auf, die
-            Nachbarn schrumpfen. Der CTA führt in die Kollektion.
+        {/* Der Anlass-Schalter: fünf Tasten, eine Antwort-Karte — wer
+            „Fisch & Meer" wählt, sieht die Empfehlung für Fisch (Bauform und
+            Inhalte in components/magazin/PairingMoments bzw. pairingCards.js).
             `id="food-pairing"` ist das Sprungziel des Pairing-Teasers der
             Weine-Seite (/magazin#food-pairing) und zugleich der
             Sommario-Anker von Capitolo II. */}
-        <MomentsSection
-          layout="expand"
-          ctaHref="/unsere-weine#kollektion"
-          headingId="magazin-momente"
-          id="food-pairing"
-        />
+        <PairingMoments headingId="magazin-momente" id="food-pairing" />
 
         {/* ================= CAPITOLO III: LA CANTINA ======================= */}
         <ChapterBreak number="III" title="La Cantina" word="Nove vini" />

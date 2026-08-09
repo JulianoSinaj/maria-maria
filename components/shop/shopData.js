@@ -10,9 +10,9 @@ export const SHIPPING_COST = 4.9;
 /* merchandising accents, keyed by catalogue name.
    edition = real production numbers from the winery. */
 export const WINE_META = {
-  "Primitivo 14,5": { badge: "Bestseller", edition: "18.000 Flaschen" },
-  "Primitivo 15,5": { badge: "Limitiert", edition: "12.000 Flaschen" },
-  Lugana: { badge: "Beliebt" },
+  "Primitivo di Manduria D.O.C. 14,5": { badge: "Bestseller", edition: "18.000 Flaschen" },
+  "Primitivo di Manduria D.O.C. 15,5": { badge: "Limitiert", edition: "12.000 Flaschen" },
+  "Lugana D.O.P.": { badge: "Beliebt" },
   "Greco di Tufo D.O.C.G.": { scarce: true },
   "Il Rosso – Aglianico": { scarce: true },
   "Rosato Puglia": { badge: "Sommerwein" },
@@ -26,7 +26,7 @@ export const BUNDLES = [
     name: "Trio Rosso",
     tag: "Die Kraft des Südens",
     desc: "Drei charakterstarke Rotweine aus Apulien und Kampanien – vom weichen Primitivo bis zum würzigen Aglianico.",
-    wines: ["Primitivo 14,5", "Primitivo Salento IGP", "Il Rosso – Aglianico"],
+    wines: ["Primitivo di Manduria D.O.C. 14,5", "Primitivo Salento IGP", "Il Rosso – Aglianico"],
     price: 37.9,
   },
   {
@@ -35,12 +35,12 @@ export const BUNDLES = [
     tag: "Beliebteste Wahl",
     desc: "Sechs Weine, vier Regionen – die ganze Vielfalt Italiens in einem Paket. Versandkostenfrei zu Ihnen nach Hause.",
     wines: [
-      "Primitivo 14,5",
+      "Primitivo di Manduria D.O.C. 14,5",
       "Primitivo Salento IGP",
       "Il Rosso – Aglianico",
-      "Lugana",
+      "Lugana D.O.P.",
       "Greco di Tufo D.O.C.G.",
-      "Falanghina",
+      "Falanghina I.G.P.",
     ],
     price: 79.9,
     featured: true,
@@ -50,7 +50,7 @@ export const BUNDLES = [
     name: "Trio Bianco",
     tag: "Frische & Eleganz",
     desc: "Drei elegante Weißweine vom Gardasee und aus Kampanien – mineralisch, fein und lebendig im Glas.",
-    wines: ["Lugana", "Greco di Tufo D.O.C.G.", "Falanghina"],
+    wines: ["Lugana D.O.P.", "Greco di Tufo D.O.C.G.", "Falanghina I.G.P."],
     price: 42.9,
   },
 ];

@@ -277,7 +277,7 @@ export const IL_BIANCO = {
   similar: {
     kicker: "Ähnliche Weine entdecken",
     title: "Wenn Ihnen der Bianco gefällt",
-    names: ["Falanghina", "Greco di Tufo D.O.C.G.", "Lugana"],
+    names: ["Falanghina I.G.P.", "Greco di Tufo D.O.C.G.", "Lugana D.O.P."],
     trait: "die dieselbe helle Handschrift tragen: frisch, elegant, ausgewogen.",
   },
 

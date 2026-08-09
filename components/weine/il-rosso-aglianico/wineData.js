@@ -281,7 +281,7 @@ export const IL_ROSSO = {
   similar: {
     kicker: "Ähnliche Weine entdecken",
     title: "Wenn Ihnen Il Rosso gefällt",
-    names: ["Primitivo 15,5", "Primitivo Salento IGP", "Rosato Puglia"],
+    names: ["Primitivo di Manduria D.O.C. 15,5", "Primitivo Salento IGP", "Rosato Puglia"],
     /* Gemischte Auswahl (zwei Rote, ein Rosé) — SimilarWines schreibt hier
        „Drei Weine", der Halbsatz bleibt deshalb bewusst farbneutral. */
     trait: "die den süditalienischen Charakter teilen: würzig, warm, charakterstark.",

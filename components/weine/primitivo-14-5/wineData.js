@@ -12,7 +12,7 @@
 
 export const PRIMITIVO_14_5 = {
   slug: "primitivo-14-5",
-  catalogName: "Primitivo 14,5", // key into components/data.js WINES via byName()
+  catalogName: "Primitivo di Manduria D.O.C. 14,5", // key into components/data.js WINES via byName()
 
   name: "Primitivo di Manduria DOP 14,50",
   eyebrow: "Italienische Boutique-Weine",
@@ -287,7 +287,7 @@ export const PRIMITIVO_14_5 = {
   similar: {
     kicker: "Ähnliche Weine entdecken",
     title: "Wenn Ihnen der Primitivo 14,50 gefällt",
-    names: ["Primitivo 15,5", "Primitivo Salento IGP", "Il Rosso – Aglianico"],
+    names: ["Primitivo di Manduria D.O.C. 15,5", "Primitivo Salento IGP", "Il Rosso – Aglianico"],
     trait: "die denselben Ton treffen: warm, vollmundig, süditalienisch.",
   },
 

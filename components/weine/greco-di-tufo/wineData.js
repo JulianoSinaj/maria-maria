@@ -284,7 +284,7 @@ export const GRECO_DI_TUFO = {
   similar: {
     kicker: "Ähnliche Weine entdecken",
     title: "Wenn Ihnen der Greco gefällt",
-    names: ["Falanghina", "Il Bianco – Greco Cuvée", "Lugana"],
+    names: ["Falanghina I.G.P.", "Il Bianco – Greco Cuvée", "Lugana D.O.P."],
     trait: "die dieselbe Klarheit mitbringen: frisch, fein, mineralisch.",
   },
 

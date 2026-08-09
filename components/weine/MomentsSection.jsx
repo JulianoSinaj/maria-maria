@@ -1,25 +1,20 @@
 import { Reveal } from "@/components/motion/Reveal";
-import { SectionTitle } from "@/components/Deco";
 import Atmosphere, { GhostWord, Vines } from "@/components/Atmosphere";
-import MomentsExpander from "@/components/weine/MomentsExpander";
 import OccasioniTeaser from "@/components/weine/OccasioniTeaser";
 
-/* Food-Pairing-Sektion — zwei Fassungen:
-
-   „expand" (/magazin, Kapitel 2: Food Pairing) — die drei Anlass-Karten
-   (Aperitivo, Dinner, Freunde) nach der Bauform des Region-Explorers der
-   Startseite: die Karte unter dem Cursor wächst auf, die Nachbarn schrumpfen
-   (components/weine/MomentsExpander). `ctaHref` zeigt auf die Kollektion.
-   `id` macht die Sektion als Sprungziel erreichbar (/magazin#food-pairing) —
-   der Teaser der Weine-Seite landet genau hier, nicht am Seitenanfang.
-
-   „stage" (/unsere-weine, Standard) — die redaktionelle Doppelseite
+/* Food-Pairing-Teaser der Weine-Seite — die redaktionelle Doppelseite
    „Occasioni": ein Zeitungskopf zwischen Haarlinien (das Echo der Rivista,
    in die die Sektion führt), links Schlagzeile und Anlass-Index, rechts die
    Antwort-Karte mit überblendenden Fotos (components/weine/OccasioniTeaser).
    Das frühere Flaschen-Stillleben ist bewusst gewichen — Atmosphäre,
    Ghost-Word und Reben-Lineatur tragen den Hintergrund, die Fotos leben
-   jetzt in der Karte selbst. */
+   jetzt in der Karte selbst.
+
+   Die frühere „expand"-Fassung (drei wachsende Anlass-Karten als Kapitel II
+   des Magazins, components/weine/MomentsExpander) ist mit der
+   Redaktionsvorgabe 08/2026 entfallen: das Magazin trägt dort jetzt den
+   Anlass-Schalter aus components/magazin/PairingMoments — fünf Tasten,
+   eine Antwort-Karte, jeder Wein verlinkt auf seine Landingpage. */
 
 const MOMENTS = [
   {
@@ -45,41 +40,8 @@ const MOMENTS = [
 /* Ziel des Occasioni-Teasers: das Food-Pairing-Kapitel des Magazins */
 const PAIRING_HREF = "/magazin#food-pairing";
 
-export default function MomentsSection({
-  ctaHref = "#kollektion",
-  layout = "stage",
-  className = "",
-  headingId,
-  id,
-}) {
-  /* „expand": keine Foto-Bühne — nur Titel und die wachsende Karten-Reihe.
-     Die Sektion bleibt so bewusst kurz und breit. */
-  if (layout === "expand") {
-    return (
-      <section
-        id={id}
-        aria-labelledby={headingId}
-        className={`grain relative scroll-mt-28 overflow-hidden ${className}`}
-      >
-        <Atmosphere variant="rose" className="opacity-60" />
-        <div className="relative mx-auto max-w-content px-6 pb-14 pt-8 lg:px-10 lg:pt-10">
-          <SectionTitle
-            align="center"
-            eyebrow="Genussmomente"
-            description="Drei Anlässe, drei Stimmungen – finden Sie den Wein, der Ihren Augenblick begleitet."
-            headingId={headingId}
-          >
-            Welcher Wein passt zu <span className="italic text-bordeaux">Ihrem Moment?</span>
-          </SectionTitle>
-          <div className="mt-8">
-            <MomentsExpander moments={MOMENTS} ctaHref={ctaHref} />
-          </div>
-        </div>
-      </section>
-    );
-  }
-
-  /* „stage": die Occasioni-Doppelseite der Weine-Seite */
+export default function MomentsSection({ className = "", headingId, id }) {
+  /* die Occasioni-Doppelseite der Weine-Seite */
   return (
     <section
       id={id}

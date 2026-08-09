@@ -73,7 +73,7 @@ export const metadata = {
 };
 
 /* Die Stationen der Reise — wie im Kapitel-Menü, als Zeile unter dem Text */
-const JOURNEY = ["Salento", "Lago di Garda", "Campania", "Düsseldorf"];
+const JOURNEY = ["Salento", "Lago di Garda", "Campania", "Deutschland"];
 
 export default function GeschichtePage() {
   return (
@@ -111,7 +111,7 @@ export default function GeschichtePage() {
                 </p>
                 <p className="mt-4 max-w-lg text-[13.5px] leading-relaxed text-charcoal/70">
                   Seitdem führt unsere Reise von den sonnenverwöhnten Rebsorten des Südens über die
-                  stillen Ufer des Gardasees bis nach Düsseldorf — jede Flasche eine Station, jede
+                  stillen Ufer des Gardasees bis nach Deutschland — jede Flasche eine Station, jede
                   Region eine eigene Sprache.
                 </p>
               </Reveal>

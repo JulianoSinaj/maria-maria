@@ -280,7 +280,7 @@ export const ROSATO_NEGROAMARO = {
   similar: {
     kicker: "Ähnliche Weine entdecken",
     title: "Wenn Ihnen der Rosato gefällt",
-    names: ["Falanghina", "Primitivo Salento IGP", "Il Bianco – Greco Cuvée"],
+    names: ["Falanghina I.G.P.", "Primitivo Salento IGP", "Il Bianco – Greco Cuvée"],
     /* Gemischte Auswahl (zwei Weiße, ein Roter) — SimilarWines schreibt hier
        „Drei Weine", der Halbsatz bleibt deshalb bewusst farbneutral. */
     trait: "die dieselbe Leichtigkeit suchen: fruchtig, frisch, unkompliziert.",

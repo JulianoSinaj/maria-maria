@@ -1,8 +1,9 @@
 /* Le occasioni — die fünf Anlässe des Food-Pairing-Kapitels (/magazin).
 
-   Inhalt nach der Redaktionsvorgabe 08/2026: je Anlass genau ein Gericht und
-   sein Wein (die Empfehlung), dazu `note` als Untertitel des Anlass-Schalters
-   und `alternatives` — genau drei weitere Weine der Kollektion, die zum
+   Inhalt nach der Redaktionsvorgabe 08/2026 („testi da mettere sulle Magazine
+   Cards"): je Anlass genau ein Gericht und sein Wein (die Empfehlung) — die
+   Gericht-Zeile `dish` ist zugleich der Untertitel des Anlass-Schalters,
+   wortgleich mit der Vorlage — und `alternatives` — genau drei weitere Weine der Kollektion, die zum
    Anlass passen (drei füllen die Seitenspalte der Antwort-Karte; über die
    fünf Anlässe verteilt ist so jeder Wein der Cantina von hier erreichbar). Die Alternativen tragen nur Slug und ein kurzes Gericht-
    Stichwort (`hint`); der Weinname kommt zur Laufzeit aus dem Katalog
@@ -36,7 +37,6 @@ export const PAIRING_CARDS = [
   {
     key: "aperitivo",
     anlass: "Aperitivo",
-    note: "Leicht. Frisch. Unkompliziert.",
     dish: "Burrata · Tomaten · Focaccia",
     wine: "Rosato Puglia IGP",
     caption: "Italienischer Aperitivo mit Rosato, Burrata und Focaccia",
@@ -51,7 +51,6 @@ export const PAIRING_CARDS = [
   {
     key: "pasta-abend",
     anlass: "Pasta-Abend",
-    note: "Einfach italienisch.",
     dish: "Spaghetti alle Vongole",
     wine: "Greco di Tufo DOCG",
     caption: "Spaghetti alle Vongole mit Greco di Tufo DOCG",
@@ -66,7 +65,6 @@ export const PAIRING_CARDS = [
   {
     key: "fisch-meer",
     anlass: "Fisch & Meer",
-    note: "Frisch. Fein. Mediterran.",
     dish: "Fischrisotto · Zitrone · Kräuter",
     wine: "Lugana DOC",
     caption: "Lugana DOC mit cremigem Fischrisotto am Gardasee",
@@ -81,7 +79,6 @@ export const PAIRING_CARDS = [
   {
     key: "grillabend",
     anlass: "Grillabend",
-    note: "Röstaromen. Freunde. Lange Abende.",
     dish: "Involtini · Rosmarin · Grillgemüse",
     wine: "Il Rosso · Aglianico",
     caption: "Aglianico zum Grillabend – Fleischröllchen und Rosmarin",
@@ -90,13 +87,12 @@ export const PAIRING_CARDS = [
     alternatives: [
       { slug: "primitivo-salento", hint: "Bombette vom Grill" },
       { slug: "primitivo-14-5", hint: "Orecchiette mit Braciole-Ragù" },
-      { slug: "rosato-puglia", hint: "Salentinischer Oktopus" },
+      { slug: "rosato-puglia", hint: "Burrata mit Focaccia" },
     ],
   },
   {
     key: "dinner",
     anlass: "Dinner mit Gästen",
-    note: "Wenn der Wein allen etwas erzählen soll.",
     dish: "Geschmorte Rinderbacke · Kartoffelcreme",
     wine: "Primitivo di Manduria DOP 15,5",
     caption: "Primitivo di Manduria mit geschmorter Rinderbacke",

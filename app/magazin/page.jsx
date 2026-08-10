@@ -5,7 +5,6 @@ import { Grapes } from "@/components/Icons";
 import InterviewSection from "@/components/magazin/InterviewSection";
 import CoverHero from "@/components/magazin/CoverHero";
 import SocialBoard from "@/components/magazin/SocialBoard";
-import CantinaSection from "@/components/magazin/CantinaSection";
 import CuriosityBand from "@/components/magazin/CuriosityBand";
 import ChapterBreak from "@/components/magazin/ChapterBreak";
 import InkQuote from "@/components/magazin/InkQuote";
@@ -30,24 +29,24 @@ import { MAGAZIN_WINE_SLUGS } from "@/components/magazin/magazinData";
    - Titelseite     zentrierter Masthead, Rubrikenleiste zwischen Haarlinien
                     und die Cover Story („Zwei Marias") mit Titelfoto,
                     Stationenzeile und Vision/Mission (siehe CoverHero).
-   - Kapitelmarken  ChapterBreak („Capitolo II…V") mit treibender Ziffer —
+   - Kapitelmarken  ChapterBreak („Capitolo II…IV") mit treibender Ziffer —
                     die Falze, an denen sich das Heft blättert.
-   - Zwischenspiel  das Tinten-Zitat (InkQuote), das sich beim Scrollen
-                    Wort für Wort füllt, und der Marquee mit den Leitworten.
+   - Zwischenspiel  das Tinten-Zitat (InkQuote), das das Food-Pairing-Kapitel
+                    beschließt und sich beim Scrollen Wort für Wort füllt,
+                    und der Marquee mit den Leitworten.
 
-   Dramaturgie in fünf Kapiteln:
+   Dramaturgie in vier Kapiteln:
    I   — La storia   Titelseite, Vision & Mission, Marquee.
    II  — Momente     der Anlass-Schalter des Food Pairings: fünf Tasten,
                      eine Antwort-Karte — Gericht, Wein und „Auch passend",
-                     jeder Wein verlinkt auf seine Landingpage.
-   III — La Cantina  die Galerie aller Wein-Landingpages: jede Karte trägt das
-                     Hero-Foto ihres Weins und führt per Klick dorthin.
-   IV  — Bacheca     die Social-Pinnwand.
-   V   — Curiosità   Abschlussband mit zweigleisiger Fußzeile.
+                     jeder Wein verlinkt auf seine Landingpage. Das
+                     Tinten-Zitat (Soldati) setzt den Schlusspunkt.
+   III — Bacheca     die Social-Pinnwand.
+   IV  — Curiosità   Abschlussband mit zweigleisiger Fußzeile.
 
-   Zwischen IV und V liegt das Archiv (#artikel): die Gespräche (sobald
+   Zwischen III und IV liegt das Archiv (#artikel): die Gespräche (sobald
    veröffentlicht), die Weine aus den Geschichten und der Newsletter. Die FAQ
-   schließt die Seite nach Kapitel V ab. Kapitel V verlinkt ins Archiv zurück.
+   schließt die Seite nach Kapitel IV ab. Kapitel IV verlinkt ins Archiv zurück.
 
    Die Artikelstrecke (Themenwelten, „Neueste Artikel") und die Sektion
    „Geschichten aus den Weinbergen" sind bewusst nicht Teil der Seite: solange
@@ -61,7 +60,7 @@ import { MAGAZIN_WINE_SLUGS } from "@/components/magazin/magazinData";
    die Kapitel `headingId` — die Sektion benennt sich von ihrer eigenen
    Überschrift, statt namenlos zu bleiben.
 
-   Anker der Rubrikenleiste: #cantina, #bacheca und #curiosita liegen
+   Anker der Rubrikenleiste: #bacheca und #curiosita liegen
    auf schlanken Wrappern mit scroll-mt; Kapitel II nutzt #food-pairing direkt
    an der Sektion — dieselbe Marke, auf die auch der Pairing-Teaser der
    Weine-Seite springt (/magazin#food-pairing).
@@ -159,15 +158,7 @@ export default function MagazinPage() {
             Sommario-Anker von Capitolo II. */}
         <PairingMoments headingId="magazin-momente" id="food-pairing" />
 
-        {/* ================= CAPITOLO III: LA CANTINA ======================= */}
-        <ChapterBreak number="III" title="La Cantina" word="Nove vini" />
-        <div id="cantina" className="scroll-mt-24">
-          {/* Die Kartenwand der neun Weine — Bauform nach dem Food-Pairing-
-              Card-Guide, jede Karte verlinkt auf ihre Landingpage. */}
-          <CantinaSection headingId="magazin-cantina" />
-        </div>
-
-        {/* ---- Zwischenspiel: das Tinten-Zitat ---- */}
+        {/* ---- Schlusspunkt des Food-Pairing-Kapitels: das Tinten-Zitat ---- */}
         <InkQuote
           className="pb-8 lg:pb-10"
           text="Il vino è la poesia della terra."
@@ -175,13 +166,13 @@ export default function MagazinPage() {
           cite="Mario Soldati"
         />
 
-        {/* ================= CAPITOLO IV: BACHECA SOCIAL MEDIA ============== */}
-        <ChapterBreak number="IV" title="Bacheca" word="Dalla community" className="pb-6" />
+        {/* ================= CAPITOLO III: BACHECA SOCIAL MEDIA ============= */}
+        <ChapterBreak number="III" title="Bacheca" word="Dalla community" className="pb-6" />
         <div id="bacheca" className="scroll-mt-24">
           <SocialBoard headingId="magazin-bacheca" />
         </div>
 
-        {/* ================= ARCHIV (Sprungziel aus Kapitel IV) ============= */}
+        {/* ================= ARCHIV (Sprungziel aus Kapitel III) ============ */}
         <div id="artikel" className="relative scroll-mt-28 overflow-hidden">
           <Aura tint="olive" className="-left-48 top-[12%] h-[32rem] w-[32rem]" />
           <Aura tint="terracotta" drift={2} className="-right-48 bottom-[4%] h-[34rem] w-[34rem]" />
@@ -227,8 +218,8 @@ export default function MagazinPage() {
           </div>
         </div>
 
-        {/* ================= CAPITOLO V: BOX CURIOSITÀ & PASSAGGIO ========== */}
-        <ChapterBreak number="V" title="Curiosità" word="Il congedo" className="pb-6" />
+        {/* ================= CAPITOLO IV: BOX CURIOSITÀ & PASSAGGIO ========= */}
+        <ChapterBreak number="IV" title="Curiosità" word="Il congedo" className="pb-6" />
         <div id="curiosita" className="scroll-mt-12">
           <CuriosityBand
             headingId="magazin-curiosita"

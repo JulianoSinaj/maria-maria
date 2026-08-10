@@ -182,12 +182,19 @@ export const IL_ROSSO = {
      `image` auf den Pfad setzen. Solange null, rendert die Sektion die
      Copy über die volle Breite. */
   pairing: {
+    /* Copy nach der Redaktionsvorgabe „testi food pairing" (08/2026) — Anlass
+       Grillabend, identisch mit der Antwort-Karte in /magazin (pairingCards.js).
+       Das 2:1-Hero-Motiv (pairingPhoto.js) zeigt noch das irpinische Ofenlamm
+       und bleibt bewusst stehen; die Sektion holt sich über `cardKey` das
+       Involtini-Motiv der Magazine-Card — Foto und Copy erzählen damit
+       dasselbe Gericht. */
     scene: {
-      dish: "Lammrücken mit Rosmarinkartoffeln",
-      copy: "Zart gebratener Lammrücken, goldene Kartoffeln und Rosmarin: ein Gericht, das von Röstaromen, Kräutern und der Saftigkeit des Fleisches lebt. Il Rosso bringt die passende Tiefe mit. Seine würzige, charaktervolle Art nimmt den Rosmarin auf, während seine Struktur dem kräftigen Fleisch standhält. Die Röstaromen von Fleisch und Kartoffeln verbinden sich mit der dunkleren Seite des Weins – ein Pairing für einen langen, entspannten Abend am Tisch.",
+      dish: "Involtini mit Rosmarin und Grillgemüse",
+      cardKey: "grillabend",
+      copy: "Herzhafte Involtini, duftender Rosmarin und gegrilltes Gemüse verlangen nach einem Wein mit Charakter und Struktur. Il Rosso · Aglianico bringt genau diese Tiefe mit: würzige Noten, eine klare Präsenz und genug Kraft, um Röstaromen und Kräuter harmonisch aufzunehmen. Gleichzeitig bleibt das Pairing ausgewogen, weil der Wein nicht beschwert, sondern dem Gericht Ausdruck und Länge verleiht.",
       image: null,
       imageAlt:
-        "Gebratener Lammrücken mit Rosmarinkartoffeln auf einer Platte, daneben ein Glas Il Rosso und die geöffnete Flasche",
+        "Involtini mit Rosmarin und gegrilltem Gemüse auf einer Platte am rustikalen Holztisch, daneben ein Glas Il Rosso und die Flasche",
       regionLink: {
         label: "Mehr über Kampanien entdecken",
         href: "/regionen#kampanien",

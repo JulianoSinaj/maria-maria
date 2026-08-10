@@ -14,6 +14,8 @@ import Button from "@/components/ui/Button";
 import { useTouchDevice } from "@/components/motion/useMediaQuery";
 import { pairingBlurFor } from "@/components/weine/pairingBlur";
 import { PAIRING_PHOTO_SIZE, sceneSources } from "@/components/weine/pairingPhoto";
+import { CARD_PHOTO_SIZE, PAIRING_CARDS, cardPhotoSrc, cardSrcSet } from "@/components/magazin/pairingCards";
+import { cardBlurFor } from "@/components/magazin/pairingCardsBlur";
 import {
   pushEvent,
   WINE_SHOP_CLICK,
@@ -33,15 +35,21 @@ import {
    Das Bild ist Gebrauchsbeweis für den Wein, nicht Motiv für sich — deshalb
    genau ein Foto pro Landingpage, nie die ganze Serie.
 
-   DAS FOTO: dasselbe Motiv, das oben die Hero-Bühne trägt (pairingPhoto.js).
-   Der Hero zeigt es formatfüllend und angeschnitten als Raum, in den man
-   hineinfährt; hier kehrt es als gerahmtes Objekt auf dem Tisch zurück —
-   vollständig sichtbar, auf einem Elfenbein-Passepartout, leicht in den Raum
-   gekippt. Reprise statt Wiederholung: gleiches Motiv, anderer Aggregat-
-   zustand. Weil die URL identisch ist, kostet der zweite Auftritt kein Byte —
-   der Browser bedient ihn aus dem Cache und das Bild steht sofort.
-   `scene.image` sticht diese Vorgabe, falls je ein eigenes Motiv für die
-   Sektion existiert; fehlt beides, entfällt die Bildspalte ersatzlos.
+   DAS FOTO: im Regelfall dasselbe Motiv, das oben die Hero-Bühne trägt
+   (pairingPhoto.js). Der Hero zeigt es formatfüllend und angeschnitten als
+   Raum, in den man hineinfährt; hier kehrt es als gerahmtes Objekt auf dem
+   Tisch zurück — vollständig sichtbar, auf einem Elfenbein-Passepartout,
+   leicht in den Raum gekippt. Reprise statt Wiederholung: gleiches Motiv,
+   anderer Aggregatzustand. Weil die URL identisch ist, kostet der zweite
+   Auftritt kein Byte — der Browser bedient ihn aus dem Cache.
+
+   Zwei Ausnahmen stechen die Reprise, in dieser Reihenfolge:
+   · `scene.cardKey` holt das Anlass-Motiv der Magazine-Card
+     (magazin/pairingCards.js, 4:3) mitsamt WebP-Breiten und LQIP — für
+     Weine, deren Hero noch das alte Gericht zeigt, während Copy und
+     /magazin-Karte schon das neue tragen. Der Hero bleibt dabei unberührt.
+   · `scene.image` setzt ein freies Einzelmotiv ohne Varianten.
+   Fehlt alles, entfällt die Bildspalte ersatzlos.
 
    `object-contain` statt `cover`: laut Guide dürfen Flasche, Glas, Korken-
    zieher und Teller an keiner Breite angeschnitten werden. Deshalb liegt auch
@@ -73,7 +81,7 @@ const TILT = { stiffness: 170, damping: 20, mass: 0.55 };
 
 /* Der gerahmte Abzug. Eigene Komponente, weil sie eigene Zeiger-Federn hält —
    die dürfen nicht in der Sektion liegen, wo sie auch ohne Bild liefen. */
-function PairingPhoto({ src, srcSet, sizes, blur, alt, drift, animate }) {
+function PairingPhoto({ src, srcSet, sizes, blur, alt, size, drift, animate }) {
   /* Zeigerposition, normalisiert auf −0.5 … +0.5 vom Rahmenmittelpunkt */
   const px = useMotionValue(0);
   const py = useMotionValue(0);
@@ -152,8 +160,8 @@ function PairingPhoto({ src, srcSet, sizes, blur, alt, drift, animate }) {
         <img
           src={src}
           alt={alt}
-          width={PAIRING_PHOTO_SIZE.width}
-          height={PAIRING_PHOTO_SIZE.height}
+          width={size.width}
+          height={size.height}
           loading="lazy"
           decoding="async"
           draggable={false}
@@ -168,13 +176,18 @@ function PairingPhoto({ src, srcSet, sizes, blur, alt, drift, animate }) {
      bewusst flach), Tiefe entsteht hier über Licht und Perspektive. */
   const frameClass =
     "ring-hairline relative overflow-hidden rounded-card-lg bg-cream p-2 sm:p-2.5";
-  const plateClass =
-    "relative aspect-[2/1] w-full overflow-hidden rounded-[1.35rem] bg-ivory";
+  const plateClass = "relative w-full overflow-hidden rounded-[1.35rem] bg-ivory";
+  /* Seitenverhältnis aus den Motivmaßen statt als feste Utility: die
+     Hero-Motive tragen 2:1, die Magazine-Card-Motive 4:3 — der Teller passt
+     sich dem Motiv an, damit object-contain keine Elfenbein-Balken lässt. */
+  const plateStyle = { aspectRatio: `${size.width} / ${size.height}` };
 
   if (!animate) {
     return (
       <figure className={frameClass}>
-        <div className={plateClass}>{photo}</div>
+        <div className={plateClass} style={plateStyle}>
+          {photo}
+        </div>
       </figure>
     );
   }
@@ -183,7 +196,7 @@ function PairingPhoto({ src, srcSet, sizes, blur, alt, drift, animate }) {
      identisch aufgebaut, nur die Blende kommt hinzu. */
   const print = (
     <figure ref={frameRef} className={frameClass}>
-      <div className={plateClass}>
+      <div className={plateClass} style={plateStyle}>
         <motion.div
           animate={{ scale: revealed ? 1 : 1.06 }}
           transition={{ duration: 1.5, ease: EASE }}
@@ -303,19 +316,22 @@ export default function PairingScene({ wine }) {
 
   const titleId = `pairing-${wine.slug}-title`;
   const animate = !reduced && !touch;
-  /* Eigenes Sektionsmotiv sticht; sonst das Hero-Foto des Weins. Ohne beides
+  /* Motiv-Auflösung nach der Rangfolge aus dem Kopfkommentar: Magazine-Card
+     (cardKey, mit WebP-Breiten und LQIP) → freies Einzelmotiv (scene.image,
+     ohne Varianten — srcSet bleibt leer, das <picture> fällt aufs nackte
+     <img> zurück) → Reprise des Hero-Fotos (pairingPhoto.js). Ohne alles
      keine leere Spalte: das Raster fällt auf eine Spalte zurück und die Copy
-     bekommt eine Lesebreite statt der halben Bühne. */
-  /* Eigenes Sektionsmotiv (scene.image) kommt als einzelne Datei ohne
-     Varianten — dann bleibt der srcSet leer und das <picture> fällt auf das
-     nackte <img> zurück. Sonst der Satz aus pairingPhoto.js, identisch zum
-     Hero. `fallback` (das Original-PNG) ist hier der <img>-src, damit auch
-     ohne WebP-Unterstützung ein Bild steht. */
+     bekommt eine Lesebreite statt der halben Bühne. `photo.sizes` beschreibt
+     die 7/12-Spalte und gilt für jedes Motiv gleichermaßen. */
+  const card = scene.cardKey
+    ? PAIRING_CARDS.find((c) => c.key === scene.cardKey) ?? null
+    : null;
   const photo = sceneSources(wine.slug);
-  const image = scene.image ?? photo.fallback;
-  const srcSet = scene.image ? null : photo.srcSet;
+  const image = card ? cardPhotoSrc(card) : scene.image ?? photo.fallback;
+  const srcSet = card ? cardSrcSet(card) : scene.image ? null : photo.srcSet;
   const imageAlt = scene.imageAlt ?? `${wine.name} – das passende Gericht`;
-  const blur = scene.image ? null : pairingBlurFor(wine.slug);
+  const blur = card ? cardBlurFor(card.key) : scene.image ? null : pairingBlurFor(wine.slug);
+  const size = card ? CARD_PHOTO_SIZE : PAIRING_PHOTO_SIZE;
 
   return (
     <section
@@ -362,6 +378,7 @@ export default function PairingScene({ wine }) {
               sizes={photo.sizes}
               blur={blur}
               alt={imageAlt}
+              size={size}
               drift={photoDrift}
               animate={animate}
             />

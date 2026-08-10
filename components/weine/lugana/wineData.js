@@ -192,12 +192,17 @@ export const LUGANA = {
      `image` auf den Pfad setzen. Solange null, rendert die Sektion die
      Copy über die volle Breite. */
   pairing: {
+    /* Copy nach der Redaktionsvorgabe „testi food pairing" (08/2026) — Anlass
+       Fisch & Meer, identisch mit der Antwort-Karte in /magazin (pairingCards.js).
+       Die Sektion zeigt über `cardKey` dasselbe Motiv wie die Magazine-Card;
+       das 2:1-Hero-Motiv (pairingPhoto.js) bleibt oben unberührt. */
     scene: {
-      dish: "Risotto mit Gardasee-Felchen",
-      copy: "Der Felchen ist der Fisch des Sees: mager, süßlich, ohne jede Schwere. Im Risotto gart er nur die letzten Minuten mit, dazu Zitronenabrieb und ein Löffel Butter zum Schluss. Genau hier zeigt der Lugana, warum Zurückhaltung seine Stärke ist — sein voller, weicher Gaumen legt sich unter die Cremigkeit des Reis, ohne den zarten Fisch zu überdecken. Der lange aromatische Nachhall trägt den Bissen weiter, als der Teller es allein täte.",
+      dish: "Fischrisotto mit Zitrone und Kräutern",
+      cardKey: "fisch-meer",
+      copy: "Ein feines Fischrisotto mit Zitrone und Kräutern verlangt nach einem Wein, der Frische und Ruhe zugleich mitbringt. Der Lugana DOC passt hier besonders gut, weil er die cremige Textur des Risottos elegant begleitet und die feinen Aromen des Fischs nicht überlagert. Seine sanfte Struktur, die helle Frucht und der klare Nachhall sorgen dafür, dass jeder Bissen leicht, ausgewogen und sehr stimmig wirkt.",
       image: null,
       imageAlt:
-        "Risotto mit Gardasee-Felchen auf hellem Teller, daneben ein Glas Lugana DOC und die geöffnete Flasche",
+        "Fischrisotto mit Zitrone und Kräutern auf einer Terrasse über dem Gardasee, daneben ein Glas Lugana DOC und die Flasche",
       regionLink: {
         label: "Mehr über das Lugana-Gebiet am Gardasee",
         href: "/regionen#garda",

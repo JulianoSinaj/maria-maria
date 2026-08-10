@@ -66,7 +66,7 @@ export const ROSATO_NEGROAMARO = {
       focus: "50% 38%",
       /* Loop-Video im Rahmen — läuft stumm in Endlosschleife, das Gemälde
          oben bleibt Poster und Reduced-Motion-Fallback */
-      video: "/video/wine-red-720.mp4",
+      video: "/video/wine-white-720.mp4",
       videoFocus: "50% 50%",
       videoTitle: "Rosa im Glas",
     },
@@ -181,12 +181,19 @@ export const ROSATO_NEGROAMARO = {
      `image` auf den Pfad setzen. Solange null, rendert die Sektion die
      Copy über die volle Breite. */
   pairing: {
+    /* Copy nach der Redaktionsvorgabe „testi food pairing" (08/2026) — Anlass
+       Aperitivo, identisch mit der Antwort-Karte in /magazin (pairingCards.js).
+       Das 2:1-Hero-Motiv (pairingPhoto.js) zeigt noch den salentinischen
+       Oktopus und bleibt bewusst stehen; die Sektion holt sich über `cardKey`
+       das Burrata-Motiv der Magazine-Card — Foto und Copy erzählen damit
+       dasselbe Gericht. */
     scene: {
-      dish: "Gegrillte Sardinen mit Tomate und Oregano",
-      copy: "Blauer Fisch vom Grill, dazu nur aufgeschnittene Tomaten, Oregano und Olivenöl — ein Sommergericht, an dem die meisten Weißweine scheitern: Sardinen sind zu kräftig, zu ölig, zu salzig. Der Rosato steht genau dazwischen und macht daraus seinen Vorteil. Seine Frucht trägt das kräftige Fischaroma, das einem Weißwein zu viel wäre, und die Frische von der anderen Seite hält das Öl in Schach. Gut gekühlt, wenn der Abend noch hell ist.",
+      dish: "Burrata mit Tomaten und Focaccia",
+      cardKey: "aperitivo",
+      copy: "Cremige Burrata, sonnengereifte Tomaten und warme Focaccia sind ein Aperitivo, der von Einfachheit und Balance lebt. Der Rosato Puglia IGP begleitet diesen Moment mit Frische, feiner Frucht und einer Leichtigkeit, die weder die Milde des Käses noch die Süße der Tomaten überdeckt. Gerade diese Harmonie macht ihn zum idealen Wein für den frühen Abend — unkompliziert, mediterran und voller Genuss.",
       image: null,
       imageAlt:
-        "Gegrillte Sardinen mit Tomate und Oregano auf einer Platte, daneben ein Glas Rosato und die geöffnete Flasche",
+        "Burrata mit Kirschtomaten, Oliven und Focaccia auf einer Dachterrasse im Abendlicht, daneben ein Glas Rosato und die Flasche",
       regionLink: {
         label: "Mehr über Apulien entdecken",
         href: "/regionen#apulien",

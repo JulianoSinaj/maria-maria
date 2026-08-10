@@ -187,12 +187,17 @@ export const GRECO_DI_TUFO = {
      `image` auf den Pfad setzen. Solange null, rendert die Sektion die
      Copy über die volle Breite. */
   pairing: {
+    /* Copy nach der Redaktionsvorgabe „testi food pairing" (08/2026) — Anlass
+       Pasta-Abend, identisch mit der Antwort-Karte in /magazin (pairingCards.js).
+       Die Sektion zeigt über `cardKey` dasselbe Motiv wie die Magazine-Card;
+       das 2:1-Hero-Motiv (pairingPhoto.js) bleibt oben unberührt. */
     scene: {
-      dish: "Spaghetti mit Venusmuscheln",
-      copy: "Spaghetti alle vongole, wie sie am Golf von Neapel auf den Tisch kommen: Muscheln, Knoblauch, Olivenöl, ein Schluck Weißwein, sonst nichts. Das Gericht lebt vom Meerwasser, das beim Öffnen der Muscheln in die Pfanne läuft. Der Greco di Tufo trifft dieses Salz mit dem mineralischen Zug seines Tuffbodens — dieselbe Sprache aus zwei Quellen. Seine Struktur hält dagegen, statt nur zu begleiten, und die Frische macht den Gaumen für die nächste Gabel wieder frei.",
+      dish: "Spaghetti alle Vongole",
+      cardKey: "pasta-abend",
+      copy: "Spaghetti alle Vongole leben von Klarheit: Venusmuscheln, Olivenöl, Knoblauch und ein Hauch Meeresaroma. Genau darin liegt die Stärke des Greco di Tufo DOCG. Seine mineralische Spannung, seine Frische und seine präzise Struktur greifen die salzige Eleganz des Gerichts auf, ohne sich in den Vordergrund zu drängen. So entsteht ein Pairing, das die Küste Kampaniens auf besonders authentische Weise spürbar macht.",
       image: null,
       imageAlt:
-        "Spaghetti mit Venusmuscheln in einer Pfanne, daneben ein Glas Greco di Tufo und die geöffnete Flasche",
+        "Spaghetti alle Vongole auf einem Teller in der Trattoria, daneben ein Glas Greco di Tufo und die Flasche",
       regionLink: {
         label: "Mehr über Kampanien entdecken",
         href: "/regionen#kampanien",

@@ -185,12 +185,18 @@ export const PRIMITIVO_155 = {
      `image` auf den Pfad setzen. Solange null, rendert die Sektion die
      Copy über die volle Breite. */
   pairing: {
+    /* Copy nach der Redaktionsvorgabe „testi food pairing" (08/2026) — Anlass
+       Dinner mit Gästen, identisch mit der Antwort-Karte in /magazin
+       (pairingCards.js). Die Sektion zeigt über `cardKey` dasselbe Motiv wie
+       die Magazine-Card; das 2:1-Hero-Motiv (pairingPhoto.js: ebenfalls
+       geschmorte Rinderbacke) bleibt oben unberührt. */
     scene: {
-      dish: "Agnello al forno mit Kartoffeln und Rosmarin",
-      copy: "Lammschulter aus dem Ofen, darunter Kartoffeln, die das Bratenfett aufnehmen, dazu Rosmarin und ein paar Knoblauchzehen in der Schale. Nach zwei Stunden löst sich das Fleisch vom Knochen und die Kartoffeln haben eine dunkle Kruste. Dieses Gericht ist einer der wenigen Gegner, die 15,5 % vol. nicht überstimmen. Die Alkoholwärme des Primitivo findet in den Röstaromen ihr Echo, seine Würze antwortet dem Rosmarin — Dichte gegen Dichte, ohne dass einer nachgibt.",
+      dish: "Geschmorte Rinderbacke mit Kartoffelcreme",
+      cardKey: "dinner",
+      copy: "Geschmorte Rinderbacke mit Kartoffelcreme ist ein Gericht mit Tiefe, Wärme und viel Ausdruck. Der Primitivo di Manduria DOP 15,5 begegnet dieser Intensität auf Augenhöhe: mit reifer Frucht, Fülle und einer weichen, dichten Struktur. Die dunklen Aromen des Weins passen wunderbar zur geschmorten Sauce, während seine Wärme und sein Volumen dem Gericht zusätzliche Länge und Persönlichkeit verleihen.",
       image: null,
       imageAlt:
-        "Lamm aus dem Ofen mit Kartoffeln und Rosmarin in der Bratform, daneben ein Glas Primitivo und die geöffnete Flasche",
+        "Geschmorte Rinderbacke mit Kartoffelcreme am kerzenbeleuchteten Abendtisch, daneben ein Glas Primitivo und die Flasche",
       regionLink: {
         label: "Mehr über Apulien entdecken",
         href: "/regionen#apulien",

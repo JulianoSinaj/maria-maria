@@ -43,7 +43,7 @@ export default function WineCard({ wine, variant = "default", className = "", hr
           <Packshot wine={wine} imgClass="h-32" />
         </div>
         <div className="min-w-0 flex-1 py-1">
-          <h3 className="font-playfair text-[15px] italic leading-snug text-charcoal transition-colors duration-300 group-hover:text-bordeaux">
+          <h3 className="font-playfair text-[15px] italic leading-snug text-vine transition-colors duration-300 group-hover:text-bordeaux">
             <Link href={link} className="outline-none after:absolute after:inset-0" aria-label={`${wine.name} — Details ansehen`}>
               {wine.name}
             </Link>
@@ -73,7 +73,7 @@ export default function WineCard({ wine, variant = "default", className = "", hr
           </span>
         )}
         <h3
-          className={`font-playfair text-[19px] italic leading-snug text-charcoal transition-colors duration-300 group-hover:text-bordeaux ${
+          className={`font-playfair text-[19px] italic leading-snug text-vine transition-colors duration-300 group-hover:text-bordeaux ${
             number ? "mt-3" : ""
           }`}
         >

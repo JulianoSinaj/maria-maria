@@ -26,7 +26,7 @@ export default function StoryCta() {
         <div className="relative mx-auto flex max-w-content items-center gap-5 px-6 py-10 sm:py-12 lg:px-10">
           <span className="flex flex-wrap items-center gap-x-4 gap-y-1 sm:pr-[30%]">
             <span className="font-playfair text-[clamp(1.15rem,2.4vw,1.7rem)] leading-snug text-ivory">
-              Die Reise durch die Regionen entdecken
+              Jeder Wein beginnt an einem Ort. Seine Geschichte wird am Tisch weitergeschrieben.
             </span>
             <Arrow
               aria-hidden="true"

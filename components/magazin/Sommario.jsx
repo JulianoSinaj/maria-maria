@@ -3,7 +3,7 @@ import { Stagger, StaggerItem } from "@/components/motion/Reveal";
 import { Arrow } from "@/components/Icons";
 
 /* Sommario — das Inhaltsverzeichnis des Magazins, gesetzt wie im Heft:
-   fünf nummerierte Kapitel zwischen zwei Haarlinien, jedes ein Anker in die
+   vier nummerierte Kapitel zwischen zwei Haarlinien, jedes ein Anker in die
    Seite. Die Ziffer rollt beim Hover maskiert nach oben durch (gleiche
    Sprache wie der Label-Roll der Buttons), der Pfeil deutet den Sprung nach
    unten an. Lenis übernimmt die weiche Fahrt zum Kapitel. */
@@ -11,9 +11,8 @@ import { Arrow } from "@/components/Icons";
 const CHAPTERS = [
   { num: "I", label: "La storia", href: "#storia" },
   { num: "II", label: "Genussmomente", href: "#food-pairing" },
-  { num: "III", label: "La Cantina", href: "#cantina" },
-  { num: "IV", label: "Bacheca", href: "#bacheca" },
-  { num: "V", label: "Curiosità", href: "#curiosita" },
+  { num: "III", label: "Bacheca", href: "#bacheca" },
+  { num: "IV", label: "Curiosità", href: "#curiosita" },
 ];
 
 export default function Sommario({ className = "" }) {
@@ -25,12 +24,12 @@ export default function Sommario({ className = "" }) {
           Sommario
         </span>
         <span className="font-playfair text-[13px] italic text-charcoal/40">
-          Cinque capitoli, una rivista
+          Quattro capitoli, una rivista
         </span>
       </div>
 
       <Stagger
-        className="grid grid-cols-2 gap-x-6 border-b border-charcoal/10 sm:grid-cols-3 lg:grid-cols-5 lg:gap-x-0 lg:divide-x lg:divide-charcoal/10"
+        className="grid grid-cols-2 gap-x-6 border-b border-charcoal/10 sm:grid-cols-2 lg:grid-cols-4 lg:gap-x-0 lg:divide-x lg:divide-charcoal/10"
         gap={0.06}
       >
         {CHAPTERS.map((c) => (

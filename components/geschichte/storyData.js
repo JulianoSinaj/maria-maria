@@ -1,115 +1,133 @@
 /* ============================================================================
    GESCHICHTE — Inhaltsquelle der Seite /geschichte.
    ----------------------------------------------------------------------------
-   Die Erzählung in sechs Kapiteln: der Anfang in Italien, die drei
-   Weinregionen der Reise, die Ankunft in Düsseldorf und der Stand heute.
-   Die Seite (app/geschichte/page.jsx) ordnet nur noch — Texte, Bilder und
-   Sprungziele stehen hier. Das Kapitel-Menü (StoryChapterNav) und die
-   Kapitel selbst lesen aus derselben Liste, damit Anker und Beschriftung
-   nie auseinanderlaufen.
+   Die Erzählung in sechs Kapiteln: der Anfang in Deutschland mit
+   italienischen Wurzeln, die drei Weinregionen der Reise, die Ankunft in
+   Düsseldorf und die Auswahl-Prinzipien. Die Seite (app/geschichte/page.jsx)
+   ordnet nur noch — Texte, Bilder und Sprungziele stehen hier. Das
+   Kapitel-Menü (StoryChapterNav) und die Kapitel selbst lesen aus derselben
+   Liste, damit Anker und Beschriftung nie auseinanderlaufen.
+
+   Bildtexte je Kapitel: `micro` ist das italienische Kurzwort AUF dem Foto
+   („La tavola lunga"), `caption` die Didascalia DARUNTER — zwei Ebenen aus
+   dem Redaktionsbriefing, die StoryChapter getrennt setzt. `rebsorten` ist
+   die Wein-Tag-Zeile über der CTA.
    ========================================================================== */
 
 export const STORY_CHAPTERS = [
   {
     num: "01",
     id: "anfang",
-    label: "Der Anfang",
-    title: "Wo alles begann",
+    label: "Der Anfang · 2019",
+    title: "Von Deutschland aus. Mit italienischen Wurzeln.",
     paragraphs: [
-      "Italien. Familie. Lange Tische und echte Gastfreundschaft — hier begann meine Liebe zum Wein. Nicht im Lehrbuch, sondern im Alltag. Im Gespräch mit Winzern, am Tisch mit Freunden, im Vertrauen auf Geschmack und Instinkt.",
-      "So wurde aus einer Leidenschaft ein Versprechen: Weine zu finden, die Menschen verbinden und besondere Momente unvergesslich machen.",
+      "Seit 2019 ist Maria Maria in Deutschland aktiv. Die Marke hat ihren Sitz in Düsseldorf – ihre persönliche und kulturelle Herkunft führt nach Lizzano im Salento.",
+      "Aus der Verbindung zweier Generationen entstand eine Auswahl, in der jede Flasche für einen Ort, eine Rebsorte und eine bewusste Entscheidung steht.",
     ],
+    quote:
+      "„Der Wein beginnt bei seiner Herkunft – und findet seinen Platz dort, wo Menschen ihn miteinander teilen.“",
     img: "/img/aperitivo-sunset.jpg",
-    alt: "Freunde am langen Tisch beim Aperitivo im Abendlicht — wo die Liebe zum Wein begann",
-    caption: "La tavola lunga — Gastfreundschaft als Anfang von allem.",
+    alt: "Gedeckter Tisch mit Weingläsern und einer originalen Maria-Maria-Weinflasche",
+    micro: "La tavola lunga",
+    caption: "Italienische Wurzeln, seit 2019 in Deutschland weitergetragen.",
   },
   {
     num: "02",
     id: "salento",
-    label: "Salento",
-    title: "Eine Begegnung, die etwas verändert",
+    label: "Salento · Lizzano",
+    title: "Wo die Wurzeln liegen",
     paragraphs: [
-      "Salento hat mich mit seiner Weite, seinem Licht und seiner Bodenständigkeit gepackt. Hier habe ich Winzer getroffen, die mit Herz und Überzeugung arbeiten. Weine, die ehrlich sind und ihre Herkunft spürbar machen.",
+      "Im Salento beginnt die Weinsprache von Maria Maria. Rund um Lizzano prägen rote Erde, mediterrane Vegetation, Licht und die Nähe zum Ionischen Meer die Landschaft.",
+      "Hier liegen die persönlichen Wurzeln des Namens und der Ausgangspunkt einer Auswahl, in der der Primitivo für Wärme, Tiefe und eine unverwechselbare Herkunft steht.",
     ],
-    link: { label: "Die Wurzeln unserer Reise.", href: "/regionen#apulien" },
+    rebsorten: "Primitivo · Rosso · Salento",
+    link: { label: "Salento und unsere Primitivo-Weine entdecken", href: "/regionen#apulien" },
     img: "/img/magazin/puglia1.jpg",
-    alt: "Trulli zwischen Olivenbäumen und Trockenmauern im Abendlicht des Salento",
-    caption: "Trulli, Olivenbäume, rote Erde — das Licht des Südens.",
+    alt: "Rote Erde und Weinberge bei Lizzano im Salento",
+    micro: "Terra rossa",
+    caption: "Reben, mediterranes Licht und die Nähe zum Ionischen Meer.",
   },
   {
     num: "03",
-    id: "gardasee",
-    label: "Lago di Garda",
-    title: "Ein Zwischenstopp, der blieb",
+    id: "kampanien",
+    label: "Kampanien · Irpinien",
+    title: "Autochthone Rebsorten. Unverwechselbare Herkunft.",
     paragraphs: [
-      "Am Gardasee habe ich den Lugana entdeckt — mineralisch, elegant und einzigartig. Eine Rebsorte und Region, die meine Sicht auf italienische Weißweine erweitert und perfekt zu meiner Auswahlphilosophie passt.",
+      "Mit Kampanien erweitert sich die Geschichte um eine Weinlandschaft, die von Höhenlagen, Mikroklimata und autochthonen Rebsorten geprägt ist.",
+      "Greco di Tufo DOCG, Falanghina und Aglianico stehen für eigenständige Charaktere und eine traditionsreiche Weinkultur.",
+      "Der fachliche Austausch mit dem Önologen Francesco De Stefano vertieft den Blick auf Rebsorten, Herkunft und Entscheidungen.",
     ],
-    link: { label: "Lugana & Gardasee entdecken.", href: "/unsere-weine/lugana" },
-    img: "/img/magazin/lagoDG.jpg",
-    alt: "Rebzeilen über dem Südufer des Gardasees im Morgenlicht",
-    caption: "Das Südufer des Gardasees — Heimat des Lugana.",
+    rebsorten: "Greco di Tufo DOCG · Falanghina · Aglianico",
+    link: { label: "Irpinien und seine Weine entdecken", href: "/regionen#kampanien" },
+    img: "/img/magazin/campagnia1.jpg",
+    alt: "Hügelige Weinlandschaft der Irpinia in Kampanien",
+    micro: "Vento di collina",
+    caption: "Höhenlagen und autochthone Rebsorten prägen Irpiniens Weinlandschaft.",
   },
   {
     num: "04",
-    id: "campania",
-    label: "Campania",
-    title: "Wo aus Nähe zum Wein echtes Verständnis wurde",
+    id: "gardasee",
+    label: "Gardasee · Lugana DOC",
+    title: "Eleganz, die aus dem Ort kommt",
     paragraphs: [
-      "In Kampanien habe ich echte Charaktere in der Geschichte von Irpinia kennengelernt. Greco, Falanghina und Aglianico zeigen, wie Tradition und Innovation eine Region prägen.",
+      "Am Südufer des Gardasees begegnet Maria Maria einer anderen Ausdrucksform italienischer Weinkultur.",
+      "Auf kalkhaltigen, lehmreichen Moränenböden und unter dem Einfluss des milden Seeklimas entsteht aus der Rebsorte Turbiana ein Wein mit Klarheit, Frische und eleganter Struktur. Der Lugana DOC ergänzt die Auswahl um eine Herkunft, deren Charakter nicht laut sein muss, um in Erinnerung zu bleiben.",
     ],
-    link: { label: "Mehr über die Menschen und ihre Weine.", href: "/regionen#kampanien" },
-    img: "/img/magazin/campagnia1.jpg",
-    alt: "Weinberge Kampaniens über dem Meer, am Horizont der Vesuv",
-    caption: "Vulkanböden, alte Rebsorten — das Erbe Kampaniens.",
+    rebsorten: "Turbiana · Lugana DOC",
+    link: { label: "Lugana und den Gardasee entdecken", href: "/unsere-weine/lugana" },
+    img: "/img/magazin/lagoDG.jpg",
+    alt: "Weinberge des Lugana-Gebiets am Gardasee",
+    micro: "Luce sul Garda",
+    caption: "Moränenböden, Turbiana und milde Seebrisen.",
   },
   {
     num: "05",
     id: "duesseldorf",
-    label: "Düsseldorf",
-    title: "Ausgewählt für Düsseldorf. Für Menschen, die guten Wein bewusst erleben.",
+    label: "Seit 2019 · Düsseldorf",
+    title: "In Deutschland zu Hause. Über Grenzen hinweg gedacht.",
     paragraphs: [
-      "Maria Maria ist keine Weinbar, sondern eine kuratierte Auswahl besonderer italienischer Weine, bewusst für Düsseldorf und NRW ausgewählt. Für Genießer, Gastgeber und alle, die Wert auf Herkunft, Stil und Qualität legen.",
+      "Die Marke Maria Maria ist seit 2019 in Deutschland aktiv und hat ihren Sitz in Düsseldorf. Von hier aus werden persönlich ausgewählte italienische Weine für Menschen in Deutschland und weiteren Ländern zugänglich.",
+      "Düsseldorf ist der Standort der Marke – nicht die Grenze ihrer Auswahl. Entscheidend bleiben Herkunft, Charakter und die Geschichte hinter jedem Wein.",
     ],
-    link: { label: "Mehr über unsere Auswahl.", href: "/unsere-weine" },
+    link: { label: "Unsere Weinauswahl entdecken", href: "/unsere-weine" },
     img: "/img/magazin/abendessen.jpg",
     alt: "Gedeckter Abendtisch mit Maria-Maria-Rotwein in der Abenddämmerung",
-    caption: "Angekommen — bewusster Genuss, mitten im Alltag.",
+    micro: "Dall’Italia, oltre i confini",
   },
 ];
 
-/* ---- Kapitel 06 „Heute": die Auswahl in Zahlen ---- */
+/* ---- Kapitel 06 „Die Auswahl": was einen Wein zu Maria Maria führt ----
+   Der Intro-Satz gehört sichtbar vor die Prinzipien: er stellt klar, dass
+   nicht Düsseldorf (und kein Trend) über die Auswahl entscheidet. */
 export const STORY_TODAY = {
   num: "06",
-  id: "heute",
-  label: "Heute",
-  title: "Eine kleine Auswahl mit persönlicher Handschrift",
-  footer:
-    "Unsere Auswahl wächst bewusst und mit Bedacht. Immer mit dem Ziel, Weine zu finden, die uns begeistern — und Sie.",
+  id: "auswahl",
+  label: "Die Auswahl",
+  title: "Was einen Wein zu Maria Maria führt",
+  intro:
+    "Nicht eine einzelne Stadt und nicht ein kurzfristiger Trend bestimmen die Auswahl. Entscheidend sind Herkunft, Charakter und die Art, wie ein Wein den Moment am Tisch begleitet.",
 };
 
+/* Die drei Auswahl-Prinzipien — `value` ist die dekorative Prinzip-Nummer
+   (für Screenreader verborgen, die Reihenfolge steckt schon in der Liste),
+   `icon` die Ikone der Spalte. */
 export const STORY_STATS = [
   {
     icon: "glasses",
-    value: 9,
-    label: "ausgewählte Weine",
-    detail: "Sorgfältig kuratiert.",
+    value: 1,
+    label: "Herkunft vor Beliebigkeit",
+    detail: "Jeder Wein muss seine Region, seine Rebsorte und seinen eigenen Charakter erkennen lassen.",
   },
   {
     icon: "grapes",
-    value: 3,
-    label: "Weinregionen",
-    detail: "Salento, Lago di Garda, Campania.",
+    value: 2,
+    label: "Charakter vor Trend",
+    detail: "Keine austauschbaren Etiketten, sondern Weine mit einer klaren Identität und einer Herkunft, die spürbar bleibt.",
   },
   {
     icon: "book",
-    prefix: "seit",
-    value: 2019,
-    plain: true /* Jahreszahl steht — sie zählt nicht hoch */,
-    label: "Aus Leidenschaft entstanden.",
-  },
-  {
-    icon: "sun",
-    text: "für bewusste Genussmomente",
-    label: "Mit Herkunft und Haltung.",
+    value: 3,
+    label: "Genuss, der geteilt wird",
+    detail: "Ein Wein findet seinen Sinn in den Momenten, Speisen und Begegnungen, die er begleitet.",
   },
 ];

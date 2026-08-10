@@ -113,12 +113,15 @@ function AnlassButton({ card, isActive, onSelect, reduced }) {
         >
           {card.anlass}
         </span>
+        {/* Untertitel = die Gericht-Zeile aus der Redaktionsvorgabe („testi da
+            mettere sulle Magazine Cards", 08/2026) — der Wein bleibt bewusst
+            der Antwort-Karte vorbehalten: erst der Anlass, dann der Wein. */}
         <span
           className={`mt-1 block text-[11px] leading-snug transition-colors duration-300 ${
             isActive ? "text-ivory/75" : "text-charcoal/55"
           }`}
         >
-          {card.note}
+          {card.dish}
         </span>
       </span>
     </motion.button>

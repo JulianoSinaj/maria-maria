@@ -10,16 +10,16 @@ import { Grapes } from "@/components/Icons";
 const SOULS = [
   {
     name: "Maria",
-    tag: "Der Ursprung",
-    traits: ["Wurzeln", "Wärme", "Gemeinsame Momente"],
-    desc: "Die emotionale Wurzel von Maria Maria – verbunden mit Familie, Herkunft und der italienischen Kultur, Genuss miteinander zu teilen.",
+    tag: "Die Wurzeln",
+    traits: ["Familie", "Gastfreundschaft", "Erinnerung"],
+    desc: "In Lizzano beginnt die persönliche Geschichte hinter dem Namen – in einer Kultur, in der Wein, Essen und gemeinsam verbrachte Zeit zusammengehören.",
     dark: true,
   },
   {
     name: "Maria",
-    tag: "Die Gegenwart",
-    traits: ["Unabhängigkeit", "Ästhetik", "Neue Perspektiven"],
-    desc: "Der zeitgemäße Blick, der italienische Weinkultur auswählt, verbindet und für ein heutiges Publikum erlebbar macht.",
+    tag: "Der heutige Blick",
+    traits: ["Auswahl", "Ästhetik", "Neue Perspektiven"],
+    desc: "Italienische Weine bewusst auswählen, ihre Regionen erzählen und sie Menschen in verschiedenen Ländern näherbringen.",
     dark: false,
   },
 ];

@@ -9,6 +9,8 @@ export const home = {
     statWines: "Boutique wines",
     statRegions: "Italian regions",
     statSince: "since we began",
+    photoAlt:
+      "Maria Maria bottle and a glass of red wine on a stone wall between vines and sea, behind them a woman in a white dress looking out over the coast",
   },
 
   philosophy: {

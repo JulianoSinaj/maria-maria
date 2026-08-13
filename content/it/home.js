@@ -9,6 +9,8 @@ export const home = {
     statWines: "Vini boutique",
     statRegions: "Regioni d'Italia",
     statSince: "dalla fondazione",
+    photoAlt:
+      "Bottiglia Maria Maria e un calice di vino rosso su un muretto di pietra tra vigne e mare, dietro una donna in abito bianco che guarda la costa",
   },
 
   philosophy: {

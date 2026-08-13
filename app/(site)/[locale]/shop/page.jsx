@@ -91,41 +91,31 @@ function ShopJsonLd({ locale, dict, wines }) {
   );
 }
 
+/* Struktur (Icons, Ziele, Reihenfolge) bleibt im Code — der sichtbare Text
+   kommt pro Schlüssel aus content/<sprache>/shop.js. */
 const USPS = [
-  { icon: <Truck className="h-6 w-6" />, text: "Versand in 1–3 Werktagen" },
-  { icon: <Package className="h-6 w-6" />, text: "Bruchsicher & elegant verpackt" },
-  { icon: <Shield className="h-6 w-6" />, text: "Sichere Bezahlung" },
-  { icon: <Gift className="h-6 w-6" />, text: "Grußkarte auf Wunsch inklusive" },
-];
-
-const GIFT_POINTS = [
-  "Persönliche Grußkarte mit Ihren Zeilen",
-  "Elegante Geschenkverpackung",
-  "Versand direkt an den Beschenkten",
+  { key: "delivery", icon: <Truck className="h-6 w-6" /> },
+  { key: "packaging", icon: <Package className="h-6 w-6" /> },
+  { key: "payment", icon: <Shield className="h-6 w-6" /> },
+  { key: "card", icon: <Gift className="h-6 w-6" /> },
 ];
 
 const SERVICE = [
-  {
-    icon: <Truck className="h-7 w-7" />,
-    title: "Versand & Lieferung",
-    text: "Ihre Weine verlassen unser Lager sorgfältig verpackt und erreichen Sie in 1–3 Werktagen – ab 69 € versandkostenfrei.",
-    link: "Fragen zum Versand",
-    href: "#fragen",
-  },
-  {
-    icon: <Shield className="h-7 w-7" />,
-    title: "Sichere Bezahlung",
-    text: "Bezahlen Sie bequem und sicher – alle gängigen Zahlungsarten, SSL-verschlüsselt und ohne Umwege.",
-    link: "Mehr im FAQ",
-    href: "#fragen",
-  },
-  {
-    icon: <Gift className="h-7 w-7" />,
-    title: "Persönliche Beratung",
-    text: "Unsicher, welcher Wein passt? Wir beraten Sie persönlich – für Ihren Moment, Ihr Menü oder Ihr Geschenk.",
-    link: "Kontakt aufnehmen",
-    href: "/kontakt",
-  },
+  { key: "shipping", icon: <Truck className="h-7 w-7" />, href: "#fragen" },
+  { key: "payment", icon: <Shield className="h-7 w-7" />, href: "#fragen" },
+  { key: "advice", icon: <Gift className="h-7 w-7" />, href: "/kontakt" },
+];
+
+const CRAFT = [
+  { key: "amphora", icon: <Amphora className="h-7 w-7" /> },
+  { key: "direct", icon: <Vineyard className="h-7 w-7" /> },
+  { key: "limited", icon: <Grapes className="h-7 w-7" /> },
+];
+
+const HERO_CHIPS = [
+  { key: "chipShipping", icon: Truck },
+  { key: "chipPayment", icon: Shield },
+  { key: "chipPacking", icon: Package },
 ];
 
 /* Drei echte Packshots als Hero-Still — Rot, Weiß, Rosé */
@@ -139,6 +129,7 @@ const heroWine = (slug) => WINES.find((w) => w.slug === slug);
 
 export default async function ShopPage({ params }) {
   const dict = await getDictionary(params.locale);
+  const t = dict.shop ?? {};
 
   return (
       <div className="relative min-h-screen">
@@ -152,7 +143,7 @@ export default async function ShopPage({ params }) {
           <div className="relative mx-auto grid max-w-content grid-cols-1 items-center gap-14 px-6 pb-24 pt-32 lg:grid-cols-[1.05fr_0.95fr] lg:px-10 lg:pt-36">
             <div>
               <Reveal y={18} delay={0.05}>
-                <Eyebrow>Der offizielle Shop</Eyebrow>
+                <Eyebrow>{t.hero?.eyebrow}</Eyebrow>
               </Reveal>
               <h1 className="mt-6 font-playfair text-[clamp(2.6rem,5.4vw,4.1rem)] leading-[1.06] tracking-[-0.015em] text-charcoal">
                 <SplitText text="Enoteca Maria Maria" className="block" delay={0.12} />
@@ -168,9 +159,7 @@ export default async function ShopPage({ params }) {
               <Reveal delay={0.5} y={16}>
                 <GrapeRule className="mt-6" />
                 <p className="mt-5 max-w-md text-[15px] leading-relaxed text-charcoal/75">
-                  Italienischer Wein, persönlich ausgewählt: Boutique-Weine in limitierter Auflage,
-                  entstanden in direkter Zusammenarbeit mit lokalen Familien und Önologen. Ab 69 €
-                  liefern wir versandkostenfrei.
+                  {t.hero?.lede}
                 </p>
               </Reveal>
               <Reveal delay={0.62} y={16}>
@@ -178,19 +167,19 @@ export default async function ShopPage({ params }) {
                     Eyebrow, Titel und Textblock */}
                 <div className="mt-7 flex w-full max-w-[17.5rem] flex-col items-stretch gap-2.5 sm:mt-8">
                   <Button href="#sortiment" size="lg">
-                    Jetzt entdecken
+                    {t.hero?.ctaDiscover}
                   </Button>
                   <Button href="#pakete" variant="outline" size="lg">
-                    Probierpakete
+                    {t.hero?.ctaBundles}
                   </Button>
                 </div>
               </Reveal>
               <Reveal delay={0.78} y={12}>
                 <dl className="mt-9 flex max-w-md items-center sm:mt-11">
                   {[
-                    [`${WINES.length}`, "Boutique-Weine"],
-                    [`${REGION_COUNT}`, "Regionen Italiens"],
-                    ["1–3", "Werktage Lieferzeit"],
+                    [`${WINES.length}`, t.hero?.statWines],
+                    [`${REGION_COUNT}`, t.hero?.statRegions],
+                    [t.hero?.statDeliveryValue ?? "1–3", t.hero?.statDelivery],
                   ].map(([num, label], i) => (
                     <div key={label} className={`flex-1 ${i > 0 ? "border-l border-charcoal/10 pl-6" : ""}`}>
                       <dt className="sr-only">{label}</dt>
@@ -210,16 +199,12 @@ export default async function ShopPage({ params }) {
                   stehen sie deshalb als kompakte Zeile unter den Statzahlen. */}
               <Reveal delay={0.9} y={10} className="lg:hidden">
                 <ul className="mt-7 flex flex-wrap gap-2">
-                  {[
-                    [Truck, "Versandkostenfrei ab 69 €"],
-                    [Shield, "Sicher bezahlen"],
-                    [Package, "Sorgfältig verpackt"],
-                  ].map(([Icon, label]) => (
+                  {HERO_CHIPS.map(({ key, icon: Icon }) => (
                     <li
-                      key={label}
+                      key={key}
                       className="glass inline-flex items-center gap-2 rounded-full px-3.5 py-2 text-[9.5px] font-semibold uppercase tracking-[0.16em] text-charcoal/70 shadow-glass"
                     >
-                      <Icon className="h-4 w-4 text-bordeaux" /> {label}
+                      <Icon className="h-4 w-4 text-bordeaux" /> {t.hero?.[key]}
                     </li>
                   ))}
                 </ul>
@@ -254,7 +239,7 @@ export default async function ShopPage({ params }) {
                         <Photo
                           key={b.slug}
                           src={w.photos.front}
-                          alt={`Flasche ${w.name}`}
+                          alt={(dict.common?.ui?.bottleAlt ?? "{name}").replace("{name}", w.name)}
                           draggable={false}
                           sizes="220px"
                           className={`${b.cls} relative w-auto select-none object-contain origin-bottom will-transform transition-transform duration-700 ease-out-expo group-hover:-translate-y-2`}
@@ -282,13 +267,13 @@ export default async function ShopPage({ params }) {
                   style={{ transform: "translateZ(55px)" }}
                 >
                   <span className="glass absolute left-5 top-6 inline-flex items-center gap-2 rounded-full px-3.5 py-2 text-[9.5px] font-semibold uppercase tracking-[0.16em] text-charcoal/70 shadow-glass">
-                    <Truck className="h-4 w-4 text-bordeaux" /> Versandkostenfrei ab 69 €
+                    <Truck className="h-4 w-4 text-bordeaux" /> {t.hero?.chipShipping}
                   </span>
                   <span className="glass absolute right-5 top-24 inline-flex items-center gap-2 rounded-full px-3.5 py-2 text-[9.5px] font-semibold uppercase tracking-[0.16em] text-charcoal/70 shadow-glass">
-                    <Shield className="h-4 w-4 text-bordeaux" /> Sicher bezahlen
+                    <Shield className="h-4 w-4 text-bordeaux" /> {t.hero?.chipPayment}
                   </span>
                   <span className="glass absolute bottom-6 left-7 inline-flex items-center gap-2 rounded-full px-3.5 py-2 text-[9.5px] font-semibold uppercase tracking-[0.16em] text-charcoal/70 shadow-glass">
-                    <Package className="h-4 w-4 text-bordeaux" /> Sorgfältig verpackt
+                    <Package className="h-4 w-4 text-bordeaux" /> {t.hero?.chipPacking}
                   </span>
                 </div>
               </TiltCard>
@@ -301,10 +286,10 @@ export default async function ShopPage({ params }) {
           <div className="mx-auto max-w-content px-6 lg:px-10">
             <Stagger className="grid grid-cols-2 gap-x-6 gap-y-5 py-7 lg:grid-cols-4">
               {USPS.map((u) => (
-                <StaggerItem key={u.text}>
+                <StaggerItem key={u.key}>
                   <p className="flex items-center gap-3 text-[11.5px] font-medium uppercase tracking-[0.12em] text-charcoal/70">
                     <span className="text-bordeaux">{u.icon}</span>
-                    {u.text}
+                    {t.usps?.[u.key]}
                   </p>
                 </StaggerItem>
               ))}
@@ -318,10 +303,10 @@ export default async function ShopPage({ params }) {
           <GhostWord className="right-[-3vw] top-8 text-[11vw]">Degustazione</GhostWord>
           <div className="relative mx-auto max-w-content px-6 py-24 lg:px-10">
             <SectionTitle
-              eyebrow="Probierpakete"
-              description="Kuratierte Pakete zum Vorteilspreis – der schönste Weg, Maria Maria kennenzulernen. Das große Paket reist versandkostenfrei."
+              eyebrow={t.bundles?.eyebrow}
+              description={t.bundles?.description}
             >
-              Italien im Paket <span className="italic text-bordeaux">entdecken</span>
+              {t.bundles?.title} <span className="italic text-bordeaux">{t.bundles?.titleAccent}</span>
             </SectionTitle>
             <Stagger className="mt-14 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
               {BUNDLES.map((b) => (
@@ -340,10 +325,10 @@ export default async function ShopPage({ params }) {
           <div className="relative mx-auto max-w-content px-6 pb-24 lg:px-10">
             <SectionTitle
               align="left"
-              eyebrow="Das Sortiment"
-              description="Entdecken Sie die ganze Selection – corposo, elegante und fresco. Jede Flasche eine persönliche Auswahl."
+              eyebrow={t.assortment?.eyebrow}
+              description={t.assortment?.description}
             >
-              Die Maria Maria <span className="italic text-bordeaux">Selection</span>
+              {t.assortment?.title} <span className="italic text-bordeaux">{t.assortment?.titleAccent}</span>
             </SectionTitle>
             <div className="mt-12">
               <ShopExplorer />
@@ -362,56 +347,39 @@ export default async function ShopPage({ params }) {
                 <Reveal>
                   <Eyebrow>Le Origini</Eyebrow>
                   <h2 className="mt-4 text-balance font-playfair text-[clamp(1.75rem,3.4vw,2.6rem)] leading-[1.12] text-charcoal">
-                    Zwei Seelen, <span className="italic text-bordeaux">ein Name</span>
+                    {t.origins?.title} <span className="italic text-bordeaux">{t.origins?.titleAccent}</span>
                   </h2>
-                  <p className="mt-5 max-w-lg text-[13.5px] leading-relaxed text-charcoal/70">
-                    Maria Maria beginnt im Salento, im Sommer 2019 – zwischen Kindheitserinnerungen
-                    und alten Rebzeilen wurde aus einem Moment eine Erleuchtung: Wein ist für uns kein
-                    Getränk, sondern ein Katalysator für Emotionen.
-                  </p>
-                  <p className="mt-4 max-w-lg text-[13.5px] leading-relaxed text-charcoal/70">
-                    Der Name trägt zwei Frauen in sich – die Gegenwart und den Ursprung. Jede Flasche
-                    verbindet beide Seelen zu einem eigenen Charakter.
-                  </p>
+                  {(t.origins?.paragraphs ?? []).map((p, i) => (
+                    <p
+                      key={i}
+                      className={`${i === 0 ? "mt-5" : "mt-4"} max-w-lg text-[13.5px] leading-relaxed text-charcoal/70`}
+                    >
+                      {p}
+                    </p>
+                  ))}
                 </Reveal>
                 <Reveal delay={0.15}>
                   <div className="mt-8 flex items-center gap-3">
                     <GoldRule className="w-12" />
                     <p className="font-playfair text-[19px] italic leading-snug text-vine">
-                      „Italian wine, personal selection, share the pleasure.“
+                      {t.origins?.quote}
                     </p>
                   </div>
                 </Reveal>
               </div>
 
               {/* the double soul */}
-              <SoulCards />
+              <SoulCards souls={dict.common?.souls} />
             </div>
 
             {/* craft facts */}
             <Stagger className="mt-16 grid grid-cols-1 gap-6 md:grid-cols-3">
-              {[
-                {
-                  icon: <Amphora className="h-7 w-7" />,
-                  title: "Terrakotta-Amphoren",
-                  text: "Ausbau nach traditioneller Handwerkskunst – Wein, der in Terrakotta-Amphoren reift, gewinnt Tiefe und Charakter.",
-                },
-                {
-                  icon: <Vineyard className="h-7 w-7" />,
-                  title: "Direkte Zusammenarbeit",
-                  text: "Keine große Distribution: Unsere Weine entstehen gemeinsam mit lokalen Familien und Önologen vor Ort.",
-                },
-                {
-                  icon: <Grapes className="h-7 w-7" />,
-                  title: "Limitierte Auflagen",
-                  text: "Vom Primitivo 14,5 existieren nur 18.000 Flaschen, vom Primitivo 15,5 sogar nur 12.000 – Exklusivität ab dem Weinberg.",
-                },
-              ].map((c) => (
-                <StaggerItem key={c.title} className="h-full">
+              {CRAFT.map((c) => (
+                <StaggerItem key={c.key} className="h-full">
                   <div className="ring-hairline flex h-full flex-col rounded-card-lg border border-stone/40 bg-white/70 p-8 shadow-luxe transition-[box-shadow,border-color] duration-500 hover:border-champagne/60 hover:shadow-lift">
                     <IconChip>{c.icon}</IconChip>
-                    <h3 className="mt-6 font-playfair text-[19px] text-charcoal">{c.title}</h3>
-                    <p className="mt-3 text-[13px] leading-relaxed text-charcoal/70">{c.text}</p>
+                    <h3 className="mt-6 font-playfair text-[19px] text-charcoal">{t.origins?.craft?.[c.key]?.title}</h3>
+                    <p className="mt-3 text-[13px] leading-relaxed text-charcoal/70">{t.origins?.craft?.[c.key]?.text}</p>
                   </div>
                 </StaggerItem>
               ))}
@@ -431,7 +399,7 @@ export default async function ShopPage({ params }) {
                 <Parallax speed={0.09} overscan className="aspect-[4/3]">
                   <Photo
                     src="/img/gift.jpg"
-                    alt="Elegant verpackte Weinflasche als Geschenk mit Grußkarte"
+                    alt={t.gift?.photoAlt ?? ""}
                     sizes="(min-width: 1024px) 50vw, 100vw"
                     className="h-full w-full object-cover transition-transform duration-700 ease-out-expo group-hover:scale-[1.04]"
                   />
@@ -441,23 +409,22 @@ export default async function ShopPage({ params }) {
                   className="absolute inset-0 bg-gradient-to-t from-espresso/40 via-transparent to-transparent"
                 />
                 <span className="glass absolute bottom-4 left-4 rounded-full px-3.5 py-2 text-[9.5px] font-semibold uppercase tracking-[0.16em] text-charcoal/70">
-                  Geschenkmomente
+                  {t.gift?.badge}
                 </span>
               </div>
             </Reveal>
             <div>
               <Reveal>
-                <Eyebrow>Verschenken</Eyebrow>
+                <Eyebrow>{t.gift?.eyebrow}</Eyebrow>
                 <h2 className="mt-4 text-balance font-playfair text-[clamp(1.75rem,3.4vw,2.6rem)] leading-[1.12] text-charcoal">
-                  Wein sagt mehr als <span className="italic text-bordeaux">tausend Worte</span>
+                  {t.gift?.title} <span className="italic text-bordeaux">{t.gift?.titleAccent}</span>
                 </h2>
                 <p className="mt-5 max-w-lg text-[13.5px] leading-relaxed text-charcoal/70">
-                  Ob Dankeschön, Einladung oder besonderer Anlass – eine Flasche Maria Maria ist ein
-                  Geschenk mit Herkunft und Geschichte. Wir kümmern uns um den Rest.
+                  {t.gift?.text}
                 </p>
               </Reveal>
               <Stagger className="mt-7 space-y-3.5" gap={0.08}>
-                {GIFT_POINTS.map((g) => (
+                {(t.gift?.points ?? []).map((g) => (
                   <StaggerItem key={g}>
                     <p className="flex items-center gap-3 text-[13.5px] text-charcoal/80">
                       <span className="ring-hairline flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-cream to-champagne-light/40 text-bordeaux shadow-luxe">
@@ -471,10 +438,10 @@ export default async function ShopPage({ params }) {
               <Reveal delay={0.2}>
                 <div className="mt-9 flex flex-wrap items-center gap-4">
                   <Button href="#pakete" size="md">
-                    Paket verschenken
+                    {t.gift?.ctaPrimary}
                   </Button>
                   <Button href="/kontakt" variant="outline" size="md">
-                    Persönlich beraten lassen
+                    {t.gift?.ctaSecondary}
                   </Button>
                 </div>
               </Reveal>
@@ -489,45 +456,48 @@ export default async function ShopPage({ params }) {
           <div className="relative mx-auto max-w-content px-6 py-24 lg:px-10">
             <SectionTitle
               align="left"
-              eyebrow="Gut zu wissen"
-              description="Bestellen ohne offene Fragen – Versand, Bezahlung und Beratung auf einen Blick."
+              eyebrow={t.service?.eyebrow}
+              description={t.service?.description}
             >
-              Sorglos bestellen
+              {t.service?.title}
             </SectionTitle>
             <Stagger className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-3">
-              {SERVICE.map((s) => (
-                <StaggerItem key={s.title} className="h-full">
-                  <div className="ring-hairline flex h-full flex-col rounded-card-lg border border-stone/40 bg-white/70 p-8 shadow-luxe transition-[box-shadow,border-color] duration-500 hover:border-champagne/60 hover:shadow-lift">
-                    <IconChip>{s.icon}</IconChip>
-                    <h3 className="mt-6 font-playfair text-[19px] text-charcoal">{s.title}</h3>
-                    <p className="mt-3 text-[13px] leading-relaxed text-charcoal/70">{s.text}</p>
-                    <div className="mt-auto pt-6">
-                      <Link
-                        href={s.href}
-                        className="group inline-flex items-center gap-1.5 text-[12px] font-medium text-bordeaux"
-                      >
-                        {s.link}
-                        <Arrow className="h-3.5 w-3.5 transition-transform duration-500 ease-out-expo group-hover:translate-x-1" />
-                      </Link>
+              {SERVICE.map((s) => {
+                const card = t.service?.cards?.[s.key] ?? {};
+                return (
+                  <StaggerItem key={s.key} className="h-full">
+                    <div className="ring-hairline flex h-full flex-col rounded-card-lg border border-stone/40 bg-white/70 p-8 shadow-luxe transition-[box-shadow,border-color] duration-500 hover:border-champagne/60 hover:shadow-lift">
+                      <IconChip>{s.icon}</IconChip>
+                      <h3 className="mt-6 font-playfair text-[19px] text-charcoal">{card.title}</h3>
+                      <p className="mt-3 text-[13px] leading-relaxed text-charcoal/70">{card.text}</p>
+                      <div className="mt-auto pt-6">
+                        <Link
+                          href={s.href}
+                          className="group inline-flex items-center gap-1.5 text-[12px] font-medium text-bordeaux"
+                        >
+                          {card.link}
+                          <Arrow className="h-3.5 w-3.5 transition-transform duration-500 ease-out-expo group-hover:translate-x-1" />
+                        </Link>
+                      </div>
                     </div>
-                  </div>
-                </StaggerItem>
-              ))}
+                  </StaggerItem>
+                );
+              })}
             </Stagger>
           </div>
         </section>
 
         {/* ============ CROSS-LINK CTA (shader band) ============ */}
         <ShopCtaBand
-          eyebrow="Die sensorische Reise"
+          eyebrow={t.band?.eyebrow}
           title={
             <>
-              Vom Salento bis zum <span className="italic text-champagne">Gardasee</span>
+              {t.band?.title} <span className="italic text-champagne">{t.band?.titleAccent}</span>
             </>
           }
-          text="Unsere Selection zeichnet eine Reise durch Italien – vom sonnigen Süden Apuliens über Kampanien hinauf ans Ufer des Gardasees."
-          primary={{ label: "Unsere Weine", href: "/unsere-weine" }}
-          secondary={{ label: "Regionen entdecken", href: "/regionen" }}
+          text={t.band?.text}
+          primary={{ label: t.band?.primary, href: "/unsere-weine" }}
+          secondary={{ label: t.band?.secondary, href: "/regionen" }}
         />
 
         {/* ============ HÄUFIGE FRAGEN (Service-FAQ) ============ */}
@@ -537,15 +507,15 @@ export default async function ShopPage({ params }) {
           <FaqSection
             className="relative"
             pageType="shop"
-            eyebrow="Häufige Fragen"
+            eyebrow={t.faq?.eyebrow}
             title={
               <>
-                Fragen zur <span className="italic text-bordeaux">Bestellung.</span>
+                {t.faq?.title} <span className="italic text-bordeaux">{t.faq?.titleAccent}</span>
               </>
             }
-            description="Versand, Bezahlung, Geschenke und persönliche Beratung — alles Wichtige vor dem Checkout, kurz und verbindlich beantwortet."
+            description={t.faq?.description}
             items={dict.faq?.shop ?? []}
-            footer={{ label: "Ihre Frage ist nicht dabei? Kontakt aufnehmen", href: "/kontakt" }}
+            footer={{ label: t.faq?.footerLabel, href: "/kontakt" }}
           />
         </div>
 

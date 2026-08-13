@@ -2,9 +2,9 @@ import Link from "@/components/i18n/LocaleLink";
 import Photo from "@/components/media/Photo";
 import { Arrow } from "@/components/Icons";
 
-export default function StoryCta() {
+export default function StoryCta({ t = {} }) {
   return (
-    <section aria-label="Weiter zu den Regionen" className="relative">
+    <section aria-label={t.ariaLabel} className="relative">
       <Link href="/regionen" className="group relative block overflow-hidden bg-bordeaux-deep">
         {/* das Panorama als volle Ebene — die Flaschenreihe verläuft
             waagerecht und verträgt den breiten, flachen Beschnitt */}
@@ -26,7 +26,7 @@ export default function StoryCta() {
         <div className="relative mx-auto flex max-w-content items-center gap-5 px-6 py-10 sm:py-12 lg:px-10">
           <span className="flex flex-wrap items-center gap-x-4 gap-y-1 sm:pr-[30%]">
             <span className="font-playfair text-[clamp(1.15rem,2.4vw,1.7rem)] leading-snug text-ivory">
-              Jeder Wein beginnt an einem Ort. Seine Geschichte wird am Tisch weitergeschrieben.
+              {t.text}
             </span>
             <Arrow
               aria-hidden="true"

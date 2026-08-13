@@ -166,6 +166,13 @@ export default function Header() {
                 {nav.shop}
               </Button>
             </div>
+            {/* Auf Telefonen steht die Sprachwahl NEBEN dem Menü-Knopf, nicht
+                darin: Wer die Seite in der falschen Sprache öffnet, soll sie
+                wechseln können, ohne erst ein Menü zu suchen. Im Menü bleibt
+                die Reihe zusätzlich stehen — dort für alle, die schon drin sind. */}
+            <div className="md:hidden">
+              <LanguageSwitcher />
+            </div>
             <button
               ref={triggerRef}
               onClick={() => setOpen(true)}

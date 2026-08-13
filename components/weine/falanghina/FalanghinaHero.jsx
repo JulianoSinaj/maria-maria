@@ -12,8 +12,7 @@ import ShaderGradient from "@/components/motion/ShaderGradient";
 import SplitText from "@/components/motion/SplitText";
 import { Eyebrow, GrapeRule } from "@/components/Deco";
 import { Aura } from "@/components/Atmosphere";
-import { ChevronDown } from "@/components/Icons";
-import { useWines, useLocaleTools } from "@/lib/i18n/context";
+import { useWines, useLocaleTools, useCommon } from "@/lib/i18n/context";
 import FalanghinaBottle from "./FalanghinaBottle";
 
 /* Gepinnter Apple-Stil-Hero in zwei Akten.
@@ -64,6 +63,8 @@ function Act2Word({ progress, word, index, light = false }) {
 export default function FalanghinaHero({ wine, photo }) {
   const { price: fmtPrice } = useLocaleTools();
   const wines = useWines();
+  const winePage = useCommon("winePage");
+  const ui = useCommon("ui");
   const sectionRef = useRef(null);
   const reduced = useReducedMotion();
   const catalog = wines.find((w) => w.name === wine.catalogName);
@@ -95,8 +96,6 @@ export default function FalanghinaHero({ wine, photo }) {
   const rotateX = useSpring(useTransform(scrollYProgress, [0, 1], [3.5, -2]), SPRING);
   const bottleY = useSpring(useTransform(scrollYProgress, [0, 1], [26, -44]), SPRING);
   const bottleScale = useSpring(useTransform(scrollYProgress, [0, 1], [1.02, 0.94]), SPRING);
-
-  const cueOpacity = useSpring(useTransform(scrollYProgress, [0, 0.08], [1, 0]), SPRING);
 
   /* Der Foto-Hero spiegelt die Textspalte nach rechts (Schleier läuft dort von
      rechts herein). Der Flaschen-Fallback behält die linke Spalte — dort steht
@@ -131,23 +130,23 @@ export default function FalanghinaHero({ wine, photo }) {
       </p>
       <div className={`mt-8 flex flex-col items-stretch gap-3 sm:mt-9 sm:flex-row sm:items-center sm:gap-3.5 ${m("lg:justify-end")}`}>
         <Button href="/shop" size="lg" className="w-full sm:w-auto">
-          Im offiziellen Shop entdecken
+          {winePage.heroCtaShop}
         </Button>
         <Button href="#geschmack" variant="outline" size="lg" iconType="none" className="w-full sm:w-auto">
-          Den Wein kennenlernen
+          {winePage.heroCtaTaste}
         </Button>
       </div>
       {catalog && (
         <p className="mt-6 text-[13px] text-charcoal/60">
           <span className="font-semibold tabular-nums text-bordeaux">{fmtPrice(catalog.price)}</span>
-          {" / 0,75 l · Jahrgang "}
+          {` ${ui.perBottle ?? ""} · ${winePage.vintage ?? ""} `}
           <span className="tabular-nums">{catalog.year}</span>
         </p>
       )}
       {wine.edition && (
         <p className={`mt-3.5 inline-flex items-center gap-2.5 self-start rounded-full border border-champagne/60 bg-ivory/70 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-charcoal/75 backdrop-blur-sm ${m("lg:self-end")}`}>
           <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-bordeaux" />
-          Limitierte Auflage · nur <span className="tabular-nums">{wine.edition}</span>
+          {winePage.limitedEdition} <span className="tabular-nums">{wine.edition}</span>
         </p>
       )}
     </>
@@ -247,19 +246,6 @@ export default function FalanghinaHero({ wine, photo }) {
             </div>
           </div>
 
-          <motion.div
-            style={{ opacity: cueOpacity }}
-            className="pointer-events-none absolute inset-x-0 bottom-6 flex flex-col items-center gap-1.5 text-charcoal/55"
-            aria-hidden="true"
-          >
-            <span className="text-[11px] font-semibold uppercase tracking-[0.28em]">Entdecken</span>
-            <motion.span
-              animate={{ y: [0, 6, 0] }}
-              transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
-            >
-              <ChevronDown className="h-4 w-4" />
-            </motion.span>
-          </motion.div>
         </div>
       </section>
     );
@@ -350,19 +336,6 @@ export default function FalanghinaHero({ wine, photo }) {
           <div className="order-1 h-full min-h-0 pt-20 lg:order-2 lg:pt-24">{bottleStage}</div>
         </div>
 
-        <motion.div
-          style={{ opacity: cueOpacity }}
-          className="pointer-events-none absolute inset-x-0 bottom-6 flex flex-col items-center gap-1.5 text-charcoal/55"
-          aria-hidden="true"
-        >
-          <span className="text-[11px] font-semibold uppercase tracking-[0.28em]">Entdecken</span>
-          <motion.span
-            animate={{ y: [0, 6, 0] }}
-            transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
-          >
-            <ChevronDown className="h-4 w-4" />
-          </motion.span>
-        </motion.div>
       </div>
     </section>
   );

@@ -96,7 +96,7 @@ export default async function WeinePage({ params }) {
       <section className="grain relative overflow-hidden">
         {/* Volle Foto-Bühne wie auf der Startseite: die Neuner-Reihe trägt
             den Hero randlos, die Headline steht links im Schleierlicht. */}
-        <HomeHeroFx photo={<WeineHeroPhoto />} />
+        <HomeHeroFx photo={<WeineHeroPhoto alt={t.hero?.photoAlt ?? ""} />} />
 
         {/* Schleier für Lesbarkeit: mobil von unten, ab lg von links */}
         <div className="pointer-events-none absolute inset-0" aria-hidden="true">

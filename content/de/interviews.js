@@ -285,10 +285,10 @@ const interviews = {
          Person; die zweite CTA führt bewusst NICHT zum Artikel. */
       teaserRegion: {
         region: "garda",
-        eyebrow: "Menschen & Herkunft · Lugana DOC",
-        title: "Daniele Malavasi: Der Mensch hinter dem Lugana",
+        eyebrow: "Stimmen aus der Region · Lugana DOC",
+        title: "Echte Menschen erzählen Lugana",
         paragraphs: [
-          "Für Daniele beginnt Lugana nicht beim Etikett, sondern in Pozzolengo: bei Moränenböden, Turbiana, Seeklima und den Menschen, die dort arbeiten.",
+          "Was macht diesen Weißwein vom Gardasee so besonders? Daniele Malavasi erzählt von Moränenböden, Turbiana, Seeklima — und von dem Lugana, der es aus seinem Keller in die Maria-Maria-Kollektion geschafft hat.",
         ],
         pull: "Der Wein soll eher vom Ort erzählen als von der Technik im Keller.",
         ctaPrimary: "Das Gespräch lesen",

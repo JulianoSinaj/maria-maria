@@ -8,7 +8,7 @@ import Atmosphere, { GhostWord } from "@/components/Atmosphere";
    dem Weinberg. Die überlappende Zitatkarte ist entfallen; das Kapitel bleibt
    in voller Sektionsbreite, fällt aber flacher aus. */
 
-export default function StorySection({ wine }) {
+export default function StorySection({ wine, t = {} }) {
   const { story } = wine;
   const titleWords = story.title.split(" ");
   const lastWord = titleWords.pop();
@@ -50,7 +50,7 @@ export default function StorySection({ wine }) {
           >
             <Photo
               src={story.image?.src ?? "/img/sotria.webp"}
-              alt={story.image?.alt ?? "Handlese der Trauben und Ausbau im Weinkeller"}
+              alt={story.image?.alt ?? t.storyFallbackAlt ?? ""}
               sizes="(min-width: 1024px) 50vw, 100vw"
               className="h-full w-full object-cover"
             />

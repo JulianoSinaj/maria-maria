@@ -46,7 +46,7 @@ export default function StoryChapter({ chapter, flipped = false }) {
             >
               {title}
             </h2>
-            {paragraphs.map((text) => (
+            {(paragraphs ?? []).map((text) => (
               <p key={text} className="mt-4 max-w-lg text-[13.5px] leading-relaxed text-charcoal/70">
                 {text}
               </p>

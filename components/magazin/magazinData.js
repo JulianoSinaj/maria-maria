@@ -12,25 +12,28 @@
 export const SOCIAL_URL = "https://www.instagram.com/mariamaria.wine";
 export const SOCIAL_HANDLE = "@mariamaria.wine";
 
+/* Struktur der Pinnwand — Bild, Hashtag und der Schlüssel, unter dem die
+   Bildunterschrift je Sprache in content/<sprache>/magazin.js (social.posts)
+   steht. Die Hashtags bleiben in jeder Sprache gleich. */
 export const SOCIAL_POSTS = [
   {
+    key: "aperitivo",
     img: "/img/aperitivo-sunset.jpg",
-    caption: "Aperitivo im Abendlicht",
     tag: "#aperitivo",
   },
   {
+    key: "harvest",
     img: "/img/magazin/weinlese.jpg",
-    caption: "Weinlese im Süden",
     tag: "#vendemmia",
   },
   {
+    key: "pranzo",
     img: "/img/pranzo.webp",
-    caption: "Pranzo mit Freunden",
     tag: "#pranzo",
   },
   {
+    key: "handpicked",
     img: "/img/magazin/trauben-hand.jpg",
-    caption: "Handverlesen",
     tag: "#handpicked",
   },
 ];

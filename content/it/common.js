@@ -86,6 +86,8 @@ export const common = {
       wineMany: "vini",
       byType: "Filtra i vini per tipologia",
       byRegion: "Filtra i vini per regione",
+      regionAxis: "Regione",
+      allShort: "Tutte",
       emptyTitle: "Per questa selezione",
       emptyTitleAccent: "non abbiamo vini al momento.",
       emptyText:
@@ -238,6 +240,30 @@ export const common = {
       traits: ["Selezione", "Estetica", "Nuove prospettive"],
       desc: "Scegliere vini italiani con consapevolezza, raccontare le loro regioni e portarli alle persone in Paesi diversi.",
     },
+  },
+
+  winePage: {
+    atAGlance: "In sintesi",
+    factsHeading: "L'essenziale {wine} in sintesi",
+    vintage: "Annata",
+    limitedEdition: "Edizione limitata · solo",
+    shopEyebrow: "Lo shop ufficiale",
+    allWines: "Tutti i vini",
+    heroCtaShop: "Scoprilo nello shop ufficiale",
+    heroCtaTaste: "Conosci il vino",
+    faqEyebrow: "Domande frequenti",
+    faqTitle: "Buono a",
+    faqTitleAccent: "sapersi.",
+    faqDescription:
+      "Risposte alle domande più frequenti su {wine} — dal gusto all'origine, fino al servizio. I dati tecnici provengono dalla scheda del vino.",
+    faqFooter: "Non trovi la tua domanda? Scrivici",
+    storyFallbackAlt: "Vendemmia manuale delle uve e affinamento in cantina",
+    tones: "I toni del vino",
+    essence: "L'essenza del vino",
+    prevCard: "Scheda precedente",
+    nextCard: "Scheda successiva",
+    cards: "Schede",
+    sections: "Sezioni di questa pagina",
   },
 
   language: {

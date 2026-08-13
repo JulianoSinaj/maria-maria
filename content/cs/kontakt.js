@@ -74,6 +74,7 @@ export const kontakt = {
       placeholder: "Zvolte počet hostů",
       unit: "osob",
       options: ["2–4", "5–8", "9–12", "13–20", "Více než 20"],
+      note: "Naše degustace se konají v Düsseldorfu a okolí — soukromě nebo pro váš tým, u vás nebo v naší degustační místnosti.",
     },
     message: { label: "Zpráva", placeholder: "Vaše zpráva pro nás …" },
     privacyPre: "Přečetl/a jsem si",

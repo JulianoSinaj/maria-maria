@@ -224,10 +224,10 @@ const interviews = {
 
       teaserRegion: {
         region: "garda",
-        eyebrow: "Lidé & původ · Lugana DOC",
-        title: "Daniele Malavasi: člověk za Luganou",
+        eyebrow: "Hlasy z regionu · Lugana DOC",
+        title: "Luganu vyprávějí skuteční lidé",
         paragraphs: [
-          "Pro Danieleho nezačíná Lugana u etikety, ale v Pozzolengu: u morénových půd, Turbiany, jezerního klimatu a lidí, kteří tam pracují.",
+          "Čím je tohle bílé víno od jezera Garda tak výjimečné? Daniele Malavasi vypráví o morénových půdách, Turbianě, jezerním klimatu — a o Luganě, která se z jeho sklepa dostala do kolekce Maria Maria.",
         ],
         pull: "Víno má vyprávět spíš o místě než o technice ve sklepě.",
         ctaPrimary: "Číst rozhovor",

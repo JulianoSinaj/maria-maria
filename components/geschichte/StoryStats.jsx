@@ -1,6 +1,5 @@
 import { Stagger, StaggerItem } from "@/components/motion/Reveal";
 import { Glasses, GrapeVine, Book, Sun } from "@/components/Icons";
-import { STORY_STATS } from "./storyData";
 
 /* Die Auswahl-Prinzipien — drei Stationen in einer offenen Dreispalten-Box
    mit subtilen Trennlinien, wie die Fakten-Zeile eines Heftrückens: Ikone,
@@ -28,13 +27,15 @@ function StatFigure({ stat }) {
   );
 }
 
-export default function StoryStats() {
+/* `stats` = Struktur (Ikone, Prinzip-Nummer) aus storyData, bereits mit dem
+   Text der aktiven Sprache zusammengeführt — die Seite reicht sie herein. */
+export default function StoryStats({ stats = [] }) {
   return (
     <Stagger
       className="grid grid-cols-1 gap-4 divide-y divide-charcoal/10 py-2 sm:grid-cols-2 sm:divide-y-0 sm:divide-x lg:grid-cols-3 lg:py-4"
       gap={0.1}
     >
-      {STORY_STATS.map((stat) => (
+      {stats.map((stat) => (
         <StaggerItem key={stat.icon} y={18}>
           <StatFigure stat={stat} />
         </StaggerItem>

@@ -13,6 +13,8 @@ export const weine = {
     statSinceValue: "dal 2019",
     statSince: "Per momenti di piacere consapevoli",
     collectionHeading: "La collezione",
+    photoAlt:
+      "Tutti e nove i vini Maria Maria allineati su un muretto di pietra davanti alle colline del Sud Italia nella luce della sera",
   },
 
   occasioni: {

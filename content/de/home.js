@@ -15,6 +15,9 @@ export const home = {
     statWines: "Boutique-Weine",
     statRegions: "Regionen Italiens",
     statSince: "seit der Gründung",
+    /* Scroll-Cue unter dem Hero-Foto + Alternativtext des Fotos */
+    photoAlt:
+      "Maria-Maria-Flasche und ein Glas Rotwein auf einer Steinmauer zwischen Reben und Meer, dahinter eine Frau im weißen Kleid mit Blick auf die Küste",
   },
 
   philosophy: {

@@ -13,6 +13,8 @@ export const weine = {
     statSinceValue: "since 2019",
     statSince: "For considered moments",
     collectionHeading: "The collection",
+    photoAlt:
+      "All nine Maria Maria wines lined up on a stone wall against the rolling hills of southern Italy in the evening light",
   },
 
   occasioni: {

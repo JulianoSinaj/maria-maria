@@ -165,10 +165,27 @@ function AlternativeCard({ alt }) {
   );
 }
 
-export default function PairingSelector({ className = "" }) {
+export default function PairingSelector({ className = "", t = {} }) {
+  /* Struktur (Fotos, Slugs, Weinnamen) aus pairingCards.js, Text je Sprache
+     aus dem Wörterbuch — zusammengeführt über den Karten-Schlüssel. Die
+     „Auch passend"-Hinweise hängen am Wein-Slug der Alternative. */
+  const localized = (c) => {
+    const copy = t.cards?.[c.key] ?? {};
+    return {
+      ...c,
+      anlass: copy.anlass ?? "",
+      dish: copy.dish ?? "",
+      caption: copy.caption ?? "",
+      alternatives: (c.alternatives ?? []).map((a) => ({
+        ...a,
+        hint: copy.hints?.[a.slug] ?? "",
+      })),
+    };
+  };
+  const CARDS = PAIRING_CARDS.map(localized);
   const [active, setActive] = useState(0);
   const reduced = useReducedMotion();
-  const card = PAIRING_CARDS[active];
+  const card = CARDS[active];
 
   const alternatives = card.alternatives.filter((a) => WINE_NAME[a.slug]);
   const swap = swapProps(reduced);
@@ -181,7 +198,7 @@ export default function PairingSelector({ className = "" }) {
         data-lenis-prevent-horizontal
         className="no-scrollbar -mx-6 flex snap-x snap-mandatory gap-2.5 overflow-x-auto px-6 pb-2 lg:mx-0 lg:grid lg:grid-cols-5 lg:gap-3 lg:overflow-visible lg:px-0 lg:pb-0"
       >
-        {PAIRING_CARDS.map((c, i) => (
+        {CARDS.map((c, i) => (
           <AnlassButton
             key={c.key}
             card={c}
@@ -277,7 +294,7 @@ export default function PairingSelector({ className = "" }) {
                   {/* Frost-Pille statt nackter Zeile: bleibt auch über hellem
                       Wasser und Himmel lesbar, egal welches Motiv liegt. */}
                   <span className="mt-3.5 inline-flex items-center gap-2 rounded-full bg-espresso/35 px-4 py-1.5 text-[10px] font-semibold uppercase tracking-[0.22em] text-ivory backdrop-blur-[6px] transition-colors duration-[250ms] ease-out group-hover/hero:bg-espresso/50">
-                    Zum Wein
+                    {t.toWine}
                     <Arrow
                       aria-hidden="true"
                       className="h-3.5 w-3.5 text-champagne-light transition-transform duration-[250ms] ease-out group-hover/hero:translate-x-[5px]"
@@ -293,7 +310,7 @@ export default function PairingSelector({ className = "" }) {
             <AnimatePresence mode="wait" initial={false}>
               <motion.div key={card.key} {...swap}>
                 <p className="text-[9.5px] font-semibold uppercase tracking-[0.22em] text-charcoal/45">
-                  Auch passend
+                  {t.alsoFits}
                 </p>
                 <div className="mt-3.5 grid grid-cols-1 gap-3">
                   {alternatives.map((alt) => (

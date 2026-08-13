@@ -80,7 +80,7 @@ export default function HomeContent({ t = {}, faq = [], souls }) {
       <section className="grain relative overflow-hidden">
         {/* Volle Foto-Bühne wie auf den Wein-Landingpages: das Terrassen-Foto
             trägt den Hero, die Headline steht links im Schleierlicht. */}
-        <HomeHeroFx photo={<HomeHeroPhoto />} />
+        <HomeHeroFx photo={<HomeHeroPhoto alt={hero.photoAlt ?? ""} />} />
 
         {/* Schleier für Lesbarkeit: mobil von unten, ab lg von links.
             Espresso statt Elfenbein — die Headline steht in Weiß, also muss der

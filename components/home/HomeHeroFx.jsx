@@ -1,10 +1,9 @@
 "use client";
 import { useRef } from "react";
 import { motion, useScroll, useTransform, useSpring, useReducedMotion } from "motion/react";
-import { ChevronDown } from "@/components/Icons";
 import { SCROLL_SPRING_HEAVY } from "@/components/motion/springs";
 
-/* Foto-Bühne und Scroll-Cue des Home-Heros — die Client-Schicht über dem
+/* Foto-Bühne des Home-Heros — die Client-Schicht über dem
    server-gerenderten <picture> (siehe HomeHeroPhoto, children-Prop-Trick wie
    bei FalanghinaHero).
 
@@ -25,7 +24,6 @@ export default function HomeHeroFx({ photo }) {
 
   const scale = useSpring(useTransform(scrollYProgress, [0, 1], [1.04, 1.16]), SPRING);
   const y = useSpring(useTransform(scrollYProgress, [0, 1], [0, -30]), SPRING);
-  const cueOpacity = useSpring(useTransform(scrollYProgress, [0, 0.16], [1, 0]), SPRING);
 
   return (
     <>
@@ -37,20 +35,6 @@ export default function HomeHeroFx({ photo }) {
         {photo}
       </motion.div>
 
-      {/* z-10 hebt den Cue über die Schleier- und Fade-Ebenen der Sektion */}
-      <motion.div
-        style={reduced ? undefined : { opacity: cueOpacity }}
-        className="pointer-events-none absolute inset-x-0 bottom-6 z-10 flex flex-col items-center gap-1.5 text-charcoal/55"
-        aria-hidden="true"
-      >
-        <span className="text-[11px] font-semibold uppercase tracking-[0.28em]">Entdecken</span>
-        <motion.span
-          animate={reduced ? undefined : { y: [0, 6, 0] }}
-          transition={reduced ? undefined : { duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
-        >
-          <ChevronDown className="h-4 w-4" />
-        </motion.span>
-      </motion.div>
     </>
   );
 }

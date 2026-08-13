@@ -21,21 +21,6 @@ import { Aura, GhostWord } from "@/components/Atmosphere";
    Hover wandert die einzelne Säule minimal nach vorn: eine 3D-Ebene
    (translateZ) im perspektivischen Viewport, keine Layout-Bewegung. */
 
-const PILLARS = [
-  {
-    title: "Ausgewählte Produzenten",
-    text: "Persönliche Beziehungen und nachvollziehbare Herkunft statt anonymer Auswahl.",
-  },
-  {
-    title: "Rebsorten mit regionalem Charakter",
-    text: "Primitivo, Negroamaro, Greco, Falanghina, Aglianico und Turbiana im Kontext ihrer Herkunft.",
-  },
-  {
-    title: "Orientierung für bewussten Genuss",
-    text: "Geschmack, Anlass und Food Pairing helfen bei der Wahl des passenden Weins.",
-  },
-];
-
 function Pillar({ pillar, index }) {
   const reduced = useReducedMotion();
   const { title, text } = pillar;
@@ -89,7 +74,10 @@ function Pillar({ pillar, index }) {
   );
 }
 
-export default function TerroirManifest() {
+/* Der Text kommt als Prop von der Seite (content/<sprache>/regionen.js,
+   Abschnitt `manifest`) — die Komponente ist eine Client-Component und darf
+   das Wörterbuch nicht selbst laden. */
+export default function TerroirManifest({ t = {} }) {
   const ref = useRef(null);
   const reduced = useReducedMotion();
 
@@ -128,17 +116,16 @@ export default function TerroirManifest() {
             filter: { duration: 0.65, ease: [0.16, 1, 0.3, 1] },
           }}
         >
-          <Eyebrow>Unser Maßstab</Eyebrow>
+          <Eyebrow>{t.eyebrow}</Eyebrow>
 
           <h2 className="mt-5 text-balance font-playfair text-[clamp(2rem,3.6vw,2.9rem)] leading-[1.1] text-charcoal">
-            Herkunft ist keine Angabe.
+            {t.title}
             <br className="hidden sm:block" />{" "}
-            <span className="italic text-bordeaux">Sie ist der Wein.</span>
+            <span className="italic text-bordeaux">{t.titleAccent}</span>
           </h2>
 
           <p className="mt-6 max-w-md text-[13.5px] leading-relaxed text-charcoal/70">
-            Maria Maria sucht nicht nach Etiketten, sondern nach Orten, Menschen und Weinen
-            mit einer klaren Handschrift.
+            {t.text}
           </p>
         </motion.div>
 
@@ -153,7 +140,7 @@ export default function TerroirManifest() {
           </div>
 
           <ul>
-            {PILLARS.map((p, i) => (
+            {(t.pillars ?? []).map((p, i) => (
               <Pillar key={p.title} pillar={p} index={i} />
             ))}
           </ul>

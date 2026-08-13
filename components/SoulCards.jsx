@@ -15,29 +15,16 @@ import { Aura } from "@/components/Atmosphere";
    Gemeinsame Komponente für Startseite, Shop und Geschichte — Aussehen
    und Verhalten sind überall identisch. Nur die Ruhelage steht hier;
    Name, Rubrik, Eigenschaften und Text kommen je Sprache aus
-   common.souls und werden als `souls` hereingereicht. Ohne Prop greift
-   der deutsche Kanon, damit ein nacktes <SoulCards /> gleich aussieht. */
+   common.souls und werden als `souls` hereingereicht. Es gibt bewusst
+   KEINEN deutschen Fallback mehr: er hat auf /shop und /geschichte
+   monatelang die vorhandenen Übersetzungen verdeckt, weil dort das Prop
+   fehlte. Fehlt ein Schlüssel, bleibt die Stelle sichtbar leer. */
 
 const SOUL_SHAPE = [
   /* Anflugrichtung beim Einblenden — bewusst kurz gehalten */
   { key: "roots", dark: true, from: -14 },
   { key: "today", dark: false, from: 14 },
 ];
-
-const FALLBACK = {
-  roots: {
-    name: "Maria",
-    tag: "Die Wurzeln",
-    traits: ["Familie", "Gastfreundschaft", "Erinnerung"],
-    desc: "In Lizzano beginnt die persönliche Geschichte hinter dem Namen – in einer Kultur, in der Wein, Essen und gemeinsam verbrachte Zeit zusammengehören.",
-  },
-  today: {
-    name: "Maria",
-    tag: "Der heutige Blick",
-    traits: ["Auswahl", "Ästhetik", "Neue Perspektiven"],
-    desc: "Italienische Weine bewusst auswählen, ihre Regionen erzählen und sie Menschen in verschiedenen Ländern näherbringen.",
-  },
-};
 
 /* Rautenmarken der Etikette — Position + gestaffelte Verzögerung beim Hover,
    damit sie nicht alle vier gleichzeitig aufspringen */
@@ -246,7 +233,7 @@ export default function SoulCards({ souls: copy }) {
   const reduced = useReducedMotion();
   /* Welche Karte der Zeiger gerade ansteuert — die andere tritt zurück */
   const [active, setActive] = useState(null);
-  const souls = SOUL_SHAPE.map((s) => ({ ...s, ...(copy?.[s.key] ?? FALLBACK[s.key]) }));
+  const souls = SOUL_SHAPE.map((s) => ({ ...s, ...(copy?.[s.key] ?? {}) }));
 
   return (
     <motion.div

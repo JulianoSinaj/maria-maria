@@ -26,7 +26,10 @@ import {
 /* Hängewinkel der vier Fotos — bewusst unregelmäßig, wie von Hand */
 const TILTS = [-1.7, 1.1, -0.8, 1.9];
 
-export default function SocialBoard({ className = "", headingId }) {
+export default function SocialBoard({ className = "", headingId, t = {} }) {
+  /* Bildunterschrift je Kachel aus dem Wörterbuch — Schlüssel steht in
+     magazinData.SOCIAL_POSTS, damit Foto und Text nicht auseinanderlaufen. */
+  const caption = (post) => t.posts?.[post.key] ?? "";
   return (
     <section
       aria-labelledby={headingId}
@@ -63,16 +66,15 @@ export default function SocialBoard({ className = "", headingId }) {
               id={headingId}
               className="mt-3 text-balance font-playfair text-[clamp(1.7rem,3.2vw,2.5rem)] leading-[1.08] text-ivory"
             >
-              Maria Maria auf <span className="italic text-champagne-light">Instagram</span>
+              {t.title} <span className="italic text-champagne-light">{t.titleAccent}</span>
             </h2>
             <p className="mt-3 max-w-lg text-[13px] leading-relaxed text-ivory/60">
-              Momente aus Weinbergen, Kellern und von gedeckten Tischen — unsere Pinnwand aus der
-              Welt von Maria Maria.
+              {t.text}
             </p>
           </Reveal>
           <Reveal delay={0.15}>
             <Button href={SOCIAL_URL} external variant="glass" size="sm" iconType="up-right">
-              {SOCIAL_HANDLE} folgen
+              {(t.follow ?? "").replace("{handle}", SOCIAL_HANDLE)}
             </Button>
           </Reveal>
         </div>
@@ -95,7 +97,7 @@ export default function SocialBoard({ className = "", headingId }) {
                 href={SOCIAL_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label={`${p.caption} — Maria Maria auf Instagram öffnen`}
+                aria-label={(t.postAria ?? "").replace("{caption}", caption(p))}
                 className="group block h-full rounded-card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-champagne focus-visible:ring-offset-2 focus-visible:ring-offset-espresso"
               >
                 {/* Hängewinkel + versetzte Hängehöhe — richtet sich beim
@@ -116,7 +118,7 @@ export default function SocialBoard({ className = "", headingId }) {
                     />
                     <Photo
                       src={p.img}
-                      alt={p.caption}
+                      alt={caption(p)}
                       sizes="(min-width: 1024px) 25vw, 50vw"
                       className="h-full w-full object-cover transition-transform duration-700 ease-out-expo group-hover:scale-[1.07]"
                     />
@@ -131,7 +133,7 @@ export default function SocialBoard({ className = "", headingId }) {
                       <Instagram aria-hidden="true" className="h-3.5 w-3.5" />
                     </span>
                     <div className="absolute inset-x-0 bottom-0 translate-y-3 p-4 opacity-0 transition-all duration-500 ease-out-expo group-hover:translate-y-0 group-hover:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:opacity-100">
-                      <p className="text-[12px] font-medium leading-snug text-ivory">{p.caption}</p>
+                      <p className="text-[12px] font-medium leading-snug text-ivory">{caption(p)}</p>
                       <p className="mt-0.5 text-[10.5px] uppercase tracking-[0.14em] text-champagne-light/80">
                         {p.tag}
                       </p>
@@ -143,7 +145,7 @@ export default function SocialBoard({ className = "", headingId }) {
                     sofort zu Instagram. Unterhalb lg hängt sie deshalb wie ein
                     handgeschriebenes Etikett fest unter dem Foto. */}
                 <div className="mt-2 px-1 lg:hidden">
-                  <p className="text-[11.5px] font-medium leading-snug text-ivory/85">{p.caption}</p>
+                  <p className="text-[11.5px] font-medium leading-snug text-ivory/85">{caption(p)}</p>
                   <p className="mt-0.5 text-[10px] uppercase tracking-[0.14em] text-champagne-light/70">
                     {p.tag}
                   </p>

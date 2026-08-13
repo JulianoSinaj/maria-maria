@@ -22,20 +22,20 @@ import { Arrow } from "@/components/Icons";
                      Schlagzeile, Stationenzeile, CTA in die Geschichte und
                      darunter das Vision/Mission-Kartenpaar. */
 
-const SUBLINE =
-  "Im Magazin erzählt Maria Maria von Herkunft, Auswahl und Genussmomenten — mit Geschichten aus den Regionen, Food Pairings, Begegnungen und der Vision hinter dem Brand.";
+/* Text kommt je Sprache aus content/<sprache>/magazin.js (Abschnitt `cover`),
+   das Kartenpaar bekommt seinen Zweig als `vision`. „Maria Maria Magazin"
+   ist der Masthead der Marke und bleibt in jeder Sprache stehen. */
+export default function CoverHero({ hasInterviews = false, t = {}, vision }) {
+  const STATIONS = t.stations ?? [];
 
-const STATIONS = ["Salento", "Kampanien", "Gardasee", "Düsseldorf"];
-
-export default function CoverHero({ hasInterviews = false }) {
   /* Die Rubriken der Leiste — Anker in die Kapitel der Seite; nur
      „Die Geschichte" führt hinaus auf die Erzählseite /geschichte, seit das
      Markenkapitel (BrandStory) nicht mehr im Heft steht */
   const RUBRIKEN = [
-    { label: "Die Geschichte", href: "/geschichte" },
-    { label: "Food Pairing", href: "#food-pairing" },
-    { label: "Interviews", href: hasInterviews ? "#interviste" : "#artikel" },
-    { label: "Events", href: "#bacheca" },
+    { label: t.rubrics?.story, href: "/geschichte" },
+    { label: t.rubrics?.pairing, href: "#food-pairing" },
+    { label: t.rubrics?.interviews, href: hasInterviews ? "#interviste" : "#artikel" },
+    { label: t.rubrics?.events, href: "#bacheca" },
   ];
 
   return (
@@ -52,11 +52,11 @@ export default function CoverHero({ hasInterviews = false }) {
             id="magazin-titel"
             className="mx-auto mt-5 max-w-[16ch] font-playfair text-[clamp(2.6rem,5.4vw,4.4rem)] leading-[1.06] text-charcoal"
           >
-            <SplitText text="Geschichten, Menschen und Genuss aus Italien" delay={0.12} />
+            <SplitText text={t.title ?? ""} delay={0.12} />
           </h1>
           <Reveal delay={0.45} y={14}>
             <p className="mx-auto mt-6 max-w-xl text-[14px] leading-relaxed text-charcoal/70">
-              {SUBLINE}
+              {t.subline}
             </p>
           </Reveal>
         </div>
@@ -65,7 +65,7 @@ export default function CoverHero({ hasInterviews = false }) {
       {/* ---- 2. Rubrikenleiste zwischen zwei Haarlinien ---- */}
       <Reveal delay={0.55} y={10} blur={false}>
         <nav
-          aria-label="Rubriken des Magazins"
+          aria-label={t.rubricsAria}
           className="mt-10 border-y border-charcoal/10 bg-white/30"
         >
           <div className="mx-auto flex max-w-content flex-wrap items-center justify-center gap-y-1 px-6 py-4">
@@ -107,7 +107,7 @@ export default function CoverHero({ hasInterviews = false }) {
               <figure className="relative aspect-[875/823] w-full max-w-[875px] overflow-hidden rounded-card-lg shadow-luxe transition-shadow duration-500 group-hover:shadow-lift">
                 <Photo
                   src="/img/magazin/cover-story.jpg"
-                  alt="Maria wählt in der Cantina drei Flaschen Maria Maria am Glastisch aus"
+                  alt={t.photoAlt ?? ""}
                   sizes="(min-width: 1024px) 50vw, 100vw"
                   loading="eager"
                   fetchpriority="high"
@@ -127,14 +127,13 @@ export default function CoverHero({ hasInterviews = false }) {
             {/* Zeilenfall der Schlagzeile ist redaktionell gesetzt — drei Zeilen,
                 der Wort-Stagger läuft über die Zeilen hinweg weiter */}
             <h2 className="mt-4 font-playfair text-[clamp(2.2rem,4vw,3.4rem)] leading-[1.05] text-charcoal">
-              <SplitText className="block" text="Zwei Marias." delay={0.3} />
-              <SplitText className="block" text="Eine Geschichte" delay={0.4} />
-              <SplitText className="block" text="des Genusses." delay={0.5} />
+              {(t.headline ?? []).map((line, i) => (
+                <SplitText key={line} className="block" text={line} delay={0.3 + i * 0.1} />
+              ))}
             </h2>
             <Reveal delay={0.55} y={14}>
               <p className="mt-5 max-w-lg text-[14.5px] leading-relaxed text-charcoal/75">
-                Ein Name, zwei Generationen und eine Reise durch italienische Weinwelten — vom
-                Salento über Kampanien und den Gardasee bis nach Düsseldorf.
+                {t.paragraph}
               </p>
             </Reveal>
 
@@ -157,13 +156,13 @@ export default function CoverHero({ hasInterviews = false }) {
                 href="/geschichte"
                 className="group mt-4 inline-flex min-h-[44px] items-center gap-1.5 text-[12px] font-medium text-bordeaux"
               >
-                Die ganze Geschichte lesen
+                {t.cta}
                 <Arrow className="h-3.5 w-3.5 transition-transform duration-500 ease-out-expo group-hover:translate-x-1" />
               </Link>
             </Reveal>
 
             {/* Vision & Mission — das Leitbild schließt die rechte Spalte */}
-            <VisionMission className="mt-9" headingId="magazin-leitbild" />
+            <VisionMission className="mt-9" headingId="magazin-leitbild" t={vision} />
           </div>
         </div>
       </div>

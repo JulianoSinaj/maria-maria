@@ -62,37 +62,18 @@ const TONES = {
   },
 };
 
-const CURIOSITIES = [
-  {
-    kicker: "Nomen est omen",
-    question: "Warum heißt der Primitivo „Primitivo“?",
-    answer:
-      "Nicht weil er urtümlich wäre — sondern weil er als einer der ersten reift. „Primo“: der Frühe. Im August ist er schon fertig, während andere noch hängen.",
-    stamp: "Nº I",
-    tone: TONES.rosso,
-  },
-  {
-    kicker: "Küchenwissen",
-    question: "Wie kalt darf ein Rotwein sein?",
-    answer:
-      "Kühler, als Sie denken. 16–18 °C — also Keller, nicht Wohnzimmer. Zwanzig Minuten im Kühlschrank vor dem Öffnen, und der Wein wird plötzlich präzise.",
-    stamp: "Nº II",
-    tone: TONES.fresco,
-  },
-  {
-    kicker: "Aus dem Keller",
-    question: "Was ist die „Träne“ am Glasrand?",
-    answer:
-      "Die Schlieren, die nach dem Schwenken zurücklaufen. Sie verraten den Alkohol, nicht die Qualität — ein guter Wein weint nicht schöner, nur langsamer.",
-    stamp: "Nº III",
-    tone: TONES.verde,
-  },
+/* Nummern-Stempel und Farbwelt bleiben im Code, Kicker/Frage/Antwort kommen
+   je Sprache aus content/<sprache>/magazin.js (curiosity.cards). */
+const CURIOSITY_SHAPE = [
+  { key: "name", stamp: "Nº I", tone: TONES.rosso },
+  { key: "temperature", stamp: "Nº II", tone: TONES.fresco },
+  { key: "tears", stamp: "Nº III", tone: TONES.verde },
 ];
 
 const FLIP_SPRING = { type: "spring", stiffness: 260, damping: 26, mass: 0.8 };
 
 /* ---- eine umdrehbare Kuriositätenkarte ---- */
-function CuriosityCard({ item, index }) {
+function CuriosityCard({ item, index, labels = {} }) {
   const reduced = useReducedMotion();
   const [flipped, setFlipped] = useState(false);
   const tone = item.tone;
@@ -153,7 +134,7 @@ function CuriosityCard({ item, index }) {
                 className="relative h-3.5 w-3.5 transition-transform duration-500 ease-out-expo group-hover:translate-x-[3px]"
               />
             </span>
-            Umdrehen
+            {labels.flip}
           </span>
         </span>
 
@@ -180,7 +161,7 @@ function CuriosityCard({ item, index }) {
             <span className="flex h-7 w-7 items-center justify-center rounded-full border border-champagne-light/30">
               <Arrow aria-hidden="true" className="h-3.5 w-3.5 rotate-180" />
             </span>
-            Zurück
+            {labels.back}
           </span>
         </span>
       </motion.div>
@@ -189,12 +170,14 @@ function CuriosityCard({ item, index }) {
 }
 
 /* ---- die zweigleisige Fußzeile ---- */
-const INTERVIEW_LINK = {
+/* „Interviste" ist ein Rivista-Wort der Marke und bleibt stehen; die
+   Beschriftung darunter kommt aus dem Wörterbuch. */
+const interviewLink = (label) => ({
   kicker: "Interviste",
-  label: "Winzer & Kunden im Gespräch",
+  label,
   href: "#interviste",
   align: "left",
-};
+});
 
 
 function FooterLink({ item }) {
@@ -241,7 +224,11 @@ export default function CuriosityBand({
      veröffentlicht ist — sonst zeigte er auf eine leere Platzhalterkarte.
      Ohne ihn rückt der Magazin-Link allein nach rechts. */
   showInterviewLink = true,
+  t = {},
 }) {
+  /* Struktur + Sprache zusammenführen — Reihenfolge bleibt die des Codes. */
+  const curiosities = CURIOSITY_SHAPE.map((c) => ({ ...c, ...(t.cards?.[c.key] ?? {}) }));
+
   return (
     <section
       aria-labelledby={headingId}
@@ -293,21 +280,20 @@ export default function CuriosityBand({
                 id={headingId}
                 className="mt-2 font-playfair text-[clamp(1.5rem,2.5vw,2rem)] leading-[1.08] text-charcoal"
               >
-                Kurios, aber{" "}
-                <span className="italic text-bordeaux">wahr</span>
+                {t.title}{" "}
+                <span className="italic text-bordeaux">{t.titleAccent}</span>
               </h2>
             </div>
             <p className="max-w-sm text-[13px] leading-relaxed text-charcoal/65 lg:text-right">
-              Drei Dinge, die wir beim Winzer gelernt haben. Karte antippen — die Antwort
-              steht auf der Rückseite.
+              {t.description}
             </p>
           </div>
 
           {/* ---- die Spielkarten ---- */}
           <div className="relative mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {CURIOSITIES.map((item, i) => (
-              <Reveal key={item.question} delay={0.08 * i} y={22}>
-                <CuriosityCard item={item} index={i} />
+            {curiosities.map((item, i) => (
+              <Reveal key={item.key} delay={0.08 * i} y={22}>
+                <CuriosityCard item={item} index={i} labels={t} />
               </Reveal>
             ))}
           </div>
@@ -316,8 +302,7 @@ export default function CuriosityBand({
           <Reveal delay={0.1}>
             <div className="relative mt-6 flex flex-col items-center gap-4 border-t border-champagne/35 pt-6 text-center sm:flex-row sm:justify-between sm:text-left">
               <p className="max-w-md font-playfair text-[15px] italic leading-snug text-charcoal/75">
-                Neun Flaschen, vier Regionen — und damit neun Geschichten, die schon geschrieben
-                sind.
+                {t.closing}
               </p>
             </div>
           </Reveal>
@@ -332,7 +317,7 @@ export default function CuriosityBand({
               showInterviewLink ? "sm:justify-between" : "sm:justify-end"
             }`}
           >
-            {showInterviewLink && <FooterLink item={INTERVIEW_LINK} />}
+            {showInterviewLink && <FooterLink item={interviewLink(t.interviewsLabel)} />}
           </div>
         </div>
       </Reveal>

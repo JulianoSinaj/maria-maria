@@ -221,10 +221,10 @@ const interviews = {
 
       teaserRegion: {
         region: "garda",
-        eyebrow: "People & origin · Lugana DOC",
-        title: "Daniele Malavasi: the man behind the Lugana",
+        eyebrow: "Voices from the region · Lugana DOC",
+        title: "Real people tell the story of Lugana",
         paragraphs: [
-          "For Daniele, Lugana does not begin with the label but in Pozzolengo: with morainic soils, Turbiana, the lake climate and the people who work there.",
+          "What makes this white from Lake Garda so special? Daniele Malavasi talks about morainic soils, Turbiana, the lake climate — and the Lugana that made it from his cellar into the Maria Maria collection.",
         ],
         pull: "The wine should tell of its place rather than of the technique in the cellar.",
         ctaPrimary: "Read the conversation",

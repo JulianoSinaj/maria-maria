@@ -89,18 +89,21 @@ const MAGAZIN_WINES = MAGAZIN_WINE_SLUGS.map((slug) =>
   WINES.find((w) => w.slug === slug)
 ).filter(Boolean);
 
-/* Die Leitworte des Hefts — laufen als langsames Band unter La storia */
-const MARQUEE_WORDS = [
-  "Storie di vino",
-  "Quattro regioni",
-  "Boutique-Winzer",
-  "Food Pairing",
-  "La dolce vita",
-  "Handverlesen",
-];
-
 export default async function MagazinPage({ params }) {
   const dict = await getDictionary(params.locale);
+  const t = dict.magazin ?? {};
+
+  /* Die Leitworte des Hefts — laufen als langsames Band unter La storia.
+     Die italienischen sind Markendesign und stehen hier im Code; nur die
+     beiden übersetzbaren kommen aus dem Wörterbuch. */
+  const MARQUEE_WORDS = [
+    "Storie di vino",
+    "Quattro regioni",
+    t.marquee?.boutique ?? "",
+    "Food Pairing",
+    "La dolce vita",
+    t.marquee?.handpicked ?? "",
+  ];
 
   /* Die Interview-Sektion und ihr Sprungziel erscheinen nur, wenn wirklich ein
      Gespräch veröffentlicht ist — sonst zeigte die Fußzeile von Kapitel IV auf
@@ -126,7 +129,7 @@ export default async function MagazinPage({ params }) {
           <GhostWord className="left-[-2vw] bottom-[4%] text-[11vw]">La storia</GhostWord>
 
           {/* Masthead, Rubrikenleiste und Cover Story — Aufbau siehe CoverHero */}
-          <CoverHero hasInterviews={hasInterviews} />
+          <CoverHero hasInterviews={hasInterviews} t={t.cover} vision={t.vision} />
         </section>
 
         {/* ---- Leitworte des Hefts als langsames Laufband ---- */}
@@ -135,27 +138,27 @@ export default async function MagazinPage({ params }) {
         </div>
 
         {/* ================= CAPITOLO II: GENUSSMOMENTE ===================== */}
-        <ChapterBreak number="II" title="Genussmomente" word="Gli abbinamenti" />
+        <ChapterBreak number="II" title={t.chapters?.moments} word="Gli abbinamenti" />
         {/* Der Anlass-Schalter: fünf Tasten, eine Antwort-Karte — wer
             „Fisch & Meer" wählt, sieht die Empfehlung für Fisch (Bauform und
             Inhalte in components/magazin/PairingMoments bzw. pairingCards.js).
             `id="food-pairing"` ist das Sprungziel des Pairing-Teasers der
             Weine-Seite (/magazin#food-pairing) und zugleich der
             Sommario-Anker von Capitolo II. */}
-        <PairingMoments headingId="magazin-momente" id="food-pairing" />
+        <PairingMoments headingId="magazin-momente" id="food-pairing" t={t.pairing} />
 
         {/* ---- Schlusspunkt des Food-Pairing-Kapitels: das Tinten-Zitat ---- */}
         <InkQuote
           className="pb-8 lg:pb-10"
           text="Il vino è la poesia della terra."
-          translation="Der Wein ist die Poesie der Erde."
+          translation={t.quote?.translation}
           cite="Mario Soldati"
         />
 
         {/* ================= CAPITOLO III: BACHECA SOCIAL MEDIA ============= */}
         <ChapterBreak number="III" title="Bacheca" word="Dalla community" className="pb-6" />
         <div id="bacheca" className="scroll-mt-24">
-          <SocialBoard headingId="magazin-bacheca" />
+          <SocialBoard headingId="magazin-bacheca" t={t.social} />
         </div>
 
         {/* ================= ARCHIV (Sprungziel aus Kapitel III) ============ */}
@@ -184,6 +187,7 @@ export default async function MagazinPage({ params }) {
                 <InterviewSection
                   interviews={interviews}
                   section={dict.interviews?.section ?? {}}
+                  empty={t.interviewEmpty}
                   headingId="magazin-interviews"
                 />
               </div>
@@ -193,14 +197,14 @@ export default async function MagazinPage({ params }) {
             <section aria-labelledby="magazin-weine" className={hasInterviews ? "mt-14" : "mt-5"}>
               <SectionTitle
                 align="left"
-                eyebrow="Aus dem Magazin ins Glas"
-                description="Die Flaschen, um die sich unsere Geschichten drehen – wischen Sie über ein Foto, um das Rückenetikett zu sehen."
+                eyebrow={t.wines?.eyebrow}
+                description={t.wines?.description}
                 headingId="magazin-weine"
               >
-                Die Weine aus unseren Geschichten
+                {t.wines?.title}
               </SectionTitle>
               <div className="mt-8">
-                <RegionWineRail wines={MAGAZIN_WINES} label="Im Magazin verkostet" />
+                <RegionWineRail wines={MAGAZIN_WINES} label={t.wines?.railLabel} />
               </div>
             </section>
 
@@ -214,6 +218,7 @@ export default async function MagazinPage({ params }) {
           <CuriosityBand
             headingId="magazin-curiosita"
             showInterviewLink={hasInterviews}
+            t={t.curiosity}
             className="py-8 lg:py-10"
           />
         </div>
@@ -224,15 +229,15 @@ export default async function MagazinPage({ params }) {
           <FaqSection
             className="relative"
             pageType="magazin"
-            eyebrow="Weinwissen"
+            eyebrow={t.faq?.eyebrow}
             title={
               <>
-                Häufige Fragen aus dem <span className="italic text-bordeaux">Weinwissen.</span>
+                {t.faq?.title} <span className="italic text-bordeaux">{t.faq?.titleAccent}</span>
               </>
             }
-            description="Die Evergreens rund um Temperatur, Glas, Lagerung und Herkunftsstufen — beantwortet aus den Datenblättern unserer Weine, ohne Fachchinesisch."
+            description={t.faq?.description}
             items={dict.faq?.magazin ?? []}
-            footer={{ label: "Eine Frage fehlt? Schreiben Sie uns", href: "/kontakt" }}
+            footer={{ label: t.faq?.footerLabel, href: "/kontakt" }}
           />
         </div>
       </main>

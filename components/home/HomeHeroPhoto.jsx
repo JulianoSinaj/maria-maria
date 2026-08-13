@@ -47,7 +47,7 @@ export function HomeHeroPreload() {
   );
 }
 
-export default function HomeHeroPhoto() {
+export default function HomeHeroPhoto({ alt = "" }) {
   return (
     <>
       <img
@@ -63,7 +63,7 @@ export default function HomeHeroPhoto() {
           src={`${BASE}-1280.webp`}
           srcSet={WEBP_SRCSET}
           sizes={SIZES}
-          alt="Maria-Maria-Flasche und ein Glas Rotwein auf einer Steinmauer zwischen Reben und Meer, dahinter eine Frau im weißen Kleid mit Blick auf die Küste"
+          alt={alt}
           fetchPriority="high"
           loading="eager"
           decoding="async"

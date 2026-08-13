@@ -5,6 +5,8 @@
 export const meta = {
   siteTitle: "Maria Maria — Il piacere del vino",
   siteDescription: "Vini italiani di boutique per momenti di piacere scelti con cura.",
+  orgDescription:
+    "Vini italiani di boutique selezionati personalmente da Puglia, Campania e Lago di Garda.",
 
   home: {
     title: "Maria Maria — Il piacere del vino",

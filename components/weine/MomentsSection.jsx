@@ -1,6 +1,7 @@
 import { Reveal } from "@/components/motion/Reveal";
 import Atmosphere, { GhostWord, Vines } from "@/components/Atmosphere";
 import OccasioniTeaser from "@/components/weine/OccasioniTeaser";
+import { PAIRING_CARDS, cardPhotoSrc, cardSrcSet } from "@/components/magazin/pairingCards";
 
 /* Food-Pairing-Teaser der Weine-Seite — die redaktionelle Doppelseite
    „Occasioni": ein Zeitungskopf zwischen Haarlinien (das Echo der Rivista,
@@ -16,13 +17,16 @@ import OccasioniTeaser from "@/components/weine/OccasioniTeaser";
    Anlass-Schalter aus components/magazin/PairingMoments — fünf Tasten,
    eine Antwort-Karte, jeder Wein verlinkt auf seine Landingpage. */
 
-/* Struktur der drei Motive: Reihenfolge und Foto. Titel und Zeile kommen je
-   Sprache aus content/<sprache>/weine.js (Abschnitt `occasioni.moments`). */
-const MOMENT_SHAPE = [
-  { key: "aperitivo", img: "/img/aperitivo-sunset.jpg" },
-  { key: "dinner", img: "/img/dinner.webp" },
-  { key: "friends", img: "/img/pranzo.webp" },
-];
+/* Die Motive der überblendenden Foto-Karte sind die fünf Hero-Fotos des
+   Food-Pairing-Kapitels (components/magazin/pairingCards.js) — dieselben
+   Bilder, die im Magazin die Anlässe tragen. Wer der CTA folgt, findet im
+   Magazin exakt die Motive wieder, die hier rotieren; und weil srcSet und
+   Dateien identisch sind, kommt der zweite Auftritt aus dem Browser-Cache. */
+const MOMENT_SHAPE = PAIRING_CARDS.map((card) => ({
+  key: card.key,
+  img: cardPhotoSrc(card),
+  srcSet: cardSrcSet(card),
+}));
 
 /* Ziel des Occasioni-Teasers: das Food-Pairing-Kapitel des Magazins */
 const PAIRING_HREF = "/magazin#food-pairing";

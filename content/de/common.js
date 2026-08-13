@@ -106,6 +106,10 @@ export const common = {
       wineMany: "Weine",
       byType: "Weine nach Weinart filtern",
       byRegion: "Weine nach Region filtern",
+      /* kompakter Trigger der Regionen-Achse: Mini-Label + Kurzform von
+         „Alle Regionen" — der lange Text sprengt die Pille */
+      regionAxis: "Region",
+      allShort: "Alle",
       emptyTitle: "Für diese Auswahl führen wir",
       emptyTitleAccent: "derzeit keinen Wein.",
       emptyText:
@@ -273,6 +277,39 @@ export const common = {
       traits: ["Auswahl", "Ästhetik", "Neue Perspektiven"],
       desc: "Italienische Weine bewusst auswählen, ihre Regionen erzählen und sie Menschen in verschiedenen Ländern näherbringen.",
     },
+  },
+
+  /* Rahmen-Beschriftungen der Wein-Landingpages — die Sektions-Components
+     (FactStrip, ColorBand, EssenceCarousel, SubNav) teilen sich alle neun
+     Weine, ihr Fließtext kommt je Wein aus dem wine-Prop. Hier steht nur,
+     was in der Komponente selbst beschriftet ist. */
+  winePage: {
+    atAGlance: "Auf einen Blick",
+    /* {wine} = Kurzname im Genitiv („der Falanghina"), {wineNom} = Nominativ.
+       Jede Sprache nutzt den Platzhalter, der zu ihrer Grammatik passt. */
+    factsHeading: "Das Wichtigste {wine} im Überblick",
+    /* Preiszeile und Auflagen-Badge im Hero der Produktseite */
+    vintage: "Jahrgang",
+    limitedEdition: "Limitierte Auflage · nur",
+    /* Shop-Band und FAQ am Fuß der Produktseite — {wine} setzt der Code ein */
+    shopEyebrow: "Der offizielle Shop",
+    allWines: "Alle Weine",
+    /* die beiden CTAs im Hero der Produktseite */
+    heroCtaShop: "Im offiziellen Shop entdecken",
+    heroCtaTaste: "Den Wein kennenlernen",
+    faqEyebrow: "Häufige Fragen",
+    faqTitle: "Gut zu",
+    faqTitleAccent: "wissen.",
+    faqDescription:
+      "Antworten auf die häufigsten Fragen zu {wine} — von Geschmack und Herkunft bis zum Servieren. Die technischen Angaben stammen aus dem Datenblatt des Weins.",
+    faqFooter: "Ihre Frage ist nicht dabei? Schreiben Sie uns",
+    storyFallbackAlt: "Handlese der Trauben und Ausbau im Weinkeller",
+    tones: "Die Töne des Weins",
+    essence: "Die Essenz des Weins",
+    prevCard: "Vorherige Karte",
+    nextCard: "Nächste Karte",
+    cards: "Karten",
+    sections: "Abschnitte dieser Seite",
   },
 
   /* Sprachumschalter — neu mit der Mehrsprachigkeit. */

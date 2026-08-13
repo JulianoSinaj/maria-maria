@@ -74,6 +74,7 @@ export const kontakt = {
       placeholder: "Select guests",
       unit: "guests",
       options: ["2–4", "5–8", "9–12", "13–20", "More than 20"],
+      note: "Our tastings take place in Düsseldorf and the surrounding area — private or for your team, at your place or in our tasting room.",
     },
     message: { label: "Message", placeholder: "Your message to us …" },
     privacyPre: "I have read the",

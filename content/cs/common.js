@@ -86,6 +86,8 @@ export const common = {
       wineMany: "vín",
       byType: "Filtrovat vína podle druhu",
       byRegion: "Filtrovat vína podle regionu",
+      regionAxis: "Region",
+      allShort: "Vše",
       emptyTitle: "Pro tento výběr",
       emptyTitleAccent: "momentálně žádné víno nemáme.",
       emptyText:
@@ -238,6 +240,30 @@ export const common = {
       traits: ["Výběr", "Estetika", "Nové perspektivy"],
       desc: "Vědomě vybírat italská vína, vyprávět o jejich regionech a přibližovat je lidem v různých zemích.",
     },
+  },
+
+  winePage: {
+    atAGlance: "V kostce",
+    factsHeading: "To nejdůležitější o víně {wineNom}",
+    vintage: "Ročník",
+    limitedEdition: "Limitovaná edice · pouze",
+    shopEyebrow: "Oficiální obchod",
+    allWines: "Všechna vína",
+    heroCtaShop: "Objevte je v oficiálním obchodě",
+    heroCtaTaste: "Poznejte víno",
+    faqEyebrow: "Časté otázky",
+    faqTitle: "Dobré",
+    faqTitleAccent: "vědět.",
+    faqDescription:
+      "Odpovědi na nejčastější otázky k vínu {wine} — od chuti a původu až po podávání. Technické údaje pocházejí z technického listu vína.",
+    faqFooter: "Nenašli jste svou otázku? Napište nám",
+    storyFallbackAlt: "Ruční sběr hroznů a zrání ve vinném sklepě",
+    tones: "Tóny vína",
+    essence: "Esence vína",
+    prevCard: "Předchozí karta",
+    nextCard: "Další karta",
+    cards: "Karty",
+    sections: "Části této stránky",
   },
 
   language: {

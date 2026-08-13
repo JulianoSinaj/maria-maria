@@ -20,6 +20,9 @@ export const weine = {
     statSince: "Für bewusste Genussmomente",
     /* nur für Screenreader — die Kollektion trägt darüber schon ihr H1 */
     collectionHeading: "Die Kollektion",
+    /* Scroll-Cue unter dem Hero-Foto + Alternativtext des Fotos */
+    photoAlt:
+      "Alle neun Maria-Maria-Weine aufgereiht auf einer Steinmauer vor süditalienischer Hügellandschaft im Abendlicht",
   },
 
   occasioni: {

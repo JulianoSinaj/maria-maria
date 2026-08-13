@@ -15,7 +15,9 @@ const mixHex = (a, b, t) => {
   return `#${((ch(16) << 16) | (ch(8) << 8) | ch(0)).toString(16).padStart(6, "0")}`;
 };
 
-export default function CtaBand({ wine }) {
+/* `t` ist der Zweig common.winePage der aktiven Sprache — die Seite reicht
+   ihn herein, weil dieser Wrapper serverseitig rendert. */
+export default function CtaBand({ wine, t = {} }) {
   const accent = wine.accent ?? wine.moment?.accent ?? ACCENT_FALLBACK;
 
   /* vier Stufen hell → dunkel, wie die benannten Shader-Paletten */
@@ -29,7 +31,7 @@ export default function CtaBand({ wine }) {
   return (
     <ShopCtaBand
       colors={colors}
-      eyebrow="Der offizielle Shop"
+      eyebrow={t.shopEyebrow}
       title={
         <>
           {wine.cta.title} <span className="italic text-champagne">{wine.name}</span>
@@ -37,7 +39,7 @@ export default function CtaBand({ wine }) {
       }
       text={wine.cta.text}
       primary={{ label: wine.cta.button.label, href: wine.cta.button.href }}
-      secondary={{ label: "Alle Weine", href: "/unsere-weine" }}
+      secondary={{ label: t.allWines, href: "/unsere-weine" }}
       /* damit GA4 den Shop-Klick der auslösenden Landingpage zuordnen kann */
       wine={wine.slug}
     />

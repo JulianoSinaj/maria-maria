@@ -86,6 +86,8 @@ export const common = {
       wineMany: "wines",
       byType: "Filter wines by type",
       byRegion: "Filter wines by region",
+      regionAxis: "Region",
+      allShort: "All",
       emptyTitle: "For this selection we currently",
       emptyTitleAccent: "have no wine.",
       emptyText:
@@ -238,6 +240,30 @@ export const common = {
       traits: ["Selection", "Aesthetics", "New perspectives"],
       desc: "Choosing Italian wines with intent, telling the story of their regions and bringing them to people in other countries.",
     },
+  },
+
+  winePage: {
+    atAGlance: "At a glance",
+    factsHeading: "The essentials {wine} at a glance",
+    vintage: "Vintage",
+    limitedEdition: "Limited edition · only",
+    shopEyebrow: "The official shop",
+    allWines: "All wines",
+    heroCtaShop: "Discover it in the official shop",
+    heroCtaTaste: "Get to know the wine",
+    faqEyebrow: "Frequent questions",
+    faqTitle: "Good to",
+    faqTitleAccent: "know.",
+    faqDescription:
+      "Answers to the most frequent questions about {wine} — from taste and origin to serving. The technical details come from the wine's data sheet.",
+    faqFooter: "Your question isn't here? Write to us",
+    storyFallbackAlt: "Hand-picking the grapes and maturing in the cellar",
+    tones: "The tones of the wine",
+    essence: "The essence of the wine",
+    prevCard: "Previous card",
+    nextCard: "Next card",
+    cards: "Cards",
+    sections: "Sections of this page",
   },
 
   language: {

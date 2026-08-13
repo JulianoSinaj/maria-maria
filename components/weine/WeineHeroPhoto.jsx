@@ -44,7 +44,7 @@ export function WeineHeroPreload() {
   );
 }
 
-export default function WeineHeroPhoto() {
+export default function WeineHeroPhoto({ alt = "" }) {
   return (
     <>
       <img
@@ -60,7 +60,7 @@ export default function WeineHeroPhoto() {
           src={`${BASE}-1600.webp`}
           srcSet={WEBP_SRCSET}
           sizes={SIZES}
-          alt="Alle neun Maria-Maria-Weine aufgereiht auf einer Steinmauer vor süditalienischer Hügellandschaft im Abendlicht"
+          alt={alt}
           fetchPriority="high"
           loading="eager"
           decoding="async"

@@ -84,6 +84,8 @@ export const kontakt = {
       /* Werte sind zugleich Anzeigetext — reine Zahlenspannen, nur die
          letzte Option ist ein Satz. */
       options: ["2–4", "5–8", "9–12", "13–20", "Mehr als 20"],
+      /* Hinweis unter den Verkostungsfeldern */
+      note: "Unsere Verkostungen finden in Düsseldorf & Umgebung statt — privat oder für Ihr Team, bei Ihnen oder in unserem Verkostungsraum.",
     },
     message: { label: "Nachricht", placeholder: "Ihre Nachricht an uns …" },
     privacyPre: "Ich habe die",

@@ -225,10 +225,10 @@ const interviews = {
 
       teaserRegion: {
         region: "garda",
-        eyebrow: "Persone & origine · Lugana DOC",
-        title: "Daniele Malavasi: l'uomo dietro il Lugana",
+        eyebrow: "Voci dal territorio · Lugana DOC",
+        title: "Il Lugana raccontato da chi lo vive",
         paragraphs: [
-          "Per Daniele il Lugana non comincia dall'etichetta, ma a Pozzolengo: dai suoli morenici, dalla Turbiana, dal clima del lago e dalle persone che vi lavorano.",
+          "Cosa rende così speciale questo bianco del Garda? Daniele Malavasi racconta i suoli morenici, la Turbiana, il clima del lago — e il Lugana che dalla sua cantina è arrivato nella collezione Maria Maria.",
         ],
         pull: "Il vino deve raccontare il luogo più della tecnica di cantina.",
         ctaPrimary: "Leggi il colloquio",

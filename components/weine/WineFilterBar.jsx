@@ -106,11 +106,14 @@ function TypeRail({ types, labels, value, onChange, reduced }) {
 /* Region — stiller Trigger + Popover mit Herkunfts-Punkten            */
 /* ------------------------------------------------------------------ */
 
-function RegionSelect({ regions, labels, value, onChange, counts, allLabel, reduced }) {
+function RegionSelect({ regions, labels, filterLabels, value, onChange, counts, reduced }) {
   const [open, setOpen] = useState(false);
   const wrapRef = useRef(null);
   const listId = useId();
-  const isAll = value === allLabel;
+  /* `value` ist ein Schlüssel (all/puglia/…) — Ruhelage ist der erste Eintrag.
+     Vorher wurde hier Schlüssel gegen Beschriftung verglichen („all" ===
+     „Alle Regionen") und der Trigger zeigte den rohen Schlüssel. */
+  const isAll = value === regions[0];
 
   /* Klick daneben und Escape schließen das Popover */
   useEffect(() => {
@@ -139,13 +142,15 @@ function RegionSelect({ regions, labels, value, onChange, counts, allLabel, redu
         aria-label={labels?.byRegion}
         className="group flex h-11 select-none items-center gap-2.5 rounded-full border border-stone/50 bg-white/60 pl-4 pr-3.5 outline-none backdrop-blur-sm transition-colors duration-300 hover:border-champagne/70 focus-visible:ring-2 focus-visible:ring-bordeaux/45"
       >
-        <span className="text-[10px] uppercase tracking-[0.2em] text-charcoal/40">Region</span>
+        <span className="text-[10px] uppercase tracking-[0.2em] text-charcoal/40">
+          {filterLabels?.regionAxis}
+        </span>
         <span
           className={`text-[11.5px] font-semibold uppercase tracking-[0.14em] transition-colors duration-300 ${
             isAll ? "text-charcoal/70" : "text-bordeaux"
           }`}
         >
-          {isAll ? "Alle" : value}
+          {isAll ? filterLabels?.allShort : labels?.[value] ?? value}
         </span>
         <motion.span
           aria-hidden="true"
@@ -165,12 +170,17 @@ function RegionSelect({ regions, labels, value, onChange, counts, allLabel, redu
           <motion.div
             id={listId}
             role="listbox"
-            aria-label={regionLabels?.all}
+            aria-label={filterLabels?.byRegion}
             initial={reduced ? { opacity: 0 } : { opacity: 0, y: -8, scale: 0.97 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={reduced ? { opacity: 0 } : { opacity: 0, y: -6, scale: 0.98 }}
             transition={reduced ? { duration: 0.15 } : POP_SPRING}
-            className="glass absolute right-0 top-[calc(100%+0.6rem)] z-30 w-[15.5rem] origin-top-right overflow-hidden rounded-card p-1.5 shadow-glass"
+            /* Mobil hängt der Trigger am linken Rand der umgebrochenen Zeile —
+               `right-0` schöbe das Popover aus dem Viewport. Unterhalb sm also
+               links verankert und in der Breite an den Bildschirm gekoppelt;
+               ab sm bleibt die ursprüngliche rechtsbündige Karte unberührt. */
+            className="glass absolute left-0 top-[calc(100%+0.6rem)] z-30 max-h-[min(60vh,22rem)] w-[min(15.5rem,calc(100vw-3rem))] origin-top-left overflow-y-auto overscroll-contain rounded-card p-1.5 shadow-glass max-sm:bg-[rgba(251,249,244,0.97)] sm:left-auto sm:right-0 sm:max-h-none sm:w-[15.5rem] sm:origin-top-right sm:overflow-hidden"
+            data-lenis-prevent
             style={{ willChange: "transform, opacity" }}
           >
             {regions.map((r) => {
@@ -245,10 +255,10 @@ export default function WineFilterBar({
         <RegionSelect
           regions={regions}
           labels={regionLabels}
+          filterLabels={labels}
           value={region}
           onChange={onRegion}
           counts={regionCounts}
-          allLabel={regionLabels?.all ?? regions[0]}
           reduced={reduced}
         />
 

@@ -3,6 +3,7 @@ import { useRef } from "react";
 import { motion, useMotionValue, useSpring, useReducedMotion, useMotionTemplate } from "motion/react";
 import { Stagger, StaggerItem, Reveal } from "@/components/motion/Reveal";
 import { Eyebrow, GoldRule } from "@/components/Deco";
+import { useCommon } from "@/lib/i18n/context";
 import { WINE_ICON } from "./WineIcons";
 /* Markenneutraler Fallback (Champagner/Bordeaux) für Weine ohne eigenen Akzent */
 import { ACCENT_FALLBACK } from "./accent";
@@ -99,15 +100,21 @@ function FactTile({ fact, index, accent }) {
 
 export default function FactStrip({ wine }) {
   const accent = wine.accent ?? ACCENT_FALLBACK;
+  const winePage = useCommon("winePage");
+  /* Satzbau je Sprache: {wine} nimmt den Genitiv-Kurznamen, {wineNom} den
+     Nominativ — Tschechisch trägt den Fall über „o víně", nicht über den Namen. */
+  const heading = (winePage.factsHeading ?? "")
+    .replace("{wine}", wine.shortNameGen ?? "")
+    .replace("{wineNom}", wine.shortNameNom ?? "");
 
   return (
     <section id="ueberblick" className="scroll-mt-36">
       <div className="mx-auto max-w-content px-6 py-12 lg:px-10 lg:py-16">
         <Reveal className="mb-8 flex items-end justify-between gap-6 lg:mb-10">
           <div>
-            <Eyebrow>Auf einen Blick</Eyebrow>
+            <Eyebrow>{winePage.atAGlance}</Eyebrow>
             <h2 className="mt-3 font-playfair text-[clamp(1.6rem,3vw,2.3rem)] leading-tight text-charcoal">
-              Das Wichtigste {wine.shortNameGen ?? "dieses Weins"} im Überblick
+              {heading}
             </h2>
           </div>
           <GoldRule className="mb-2 hidden w-40 lg:block" />

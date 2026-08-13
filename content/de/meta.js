@@ -12,6 +12,10 @@
 export const meta = {
   siteTitle: "Maria Maria — Il piacere del vino",
   siteDescription: "Italienische Boutique-Weine für bewusst gewählte Genussmomente.",
+  /* Beschreibung der Organisation im JSON-LD-Graphen (lib/seo/jsonLd) —
+     liegt hier, weil sie auf jeder Sprachfassung mitgeliefert wird. */
+  orgDescription:
+    "Persönlich kuratierte italienische Boutique-Weine aus Apulien, Kampanien und vom Gardasee.",
 
   home: {
     title: "Maria Maria — Il piacere del vino",

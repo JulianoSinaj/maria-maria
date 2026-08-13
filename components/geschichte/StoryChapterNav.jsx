@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
-import { STORY_CHAPTERS, STORY_TODAY } from "./storyData";
 
 /* Das Kapitel-Menü der Geschichte — sechs nummerierte Stationen zwischen
    zwei Haarlinien, wie der Zeitungskopf des Magazins. Die Leiste haftet
@@ -13,17 +12,23 @@ import { STORY_CHAPTERS, STORY_TODAY } from "./storyData";
    von Station zu Station statt hart umzuspringen. Auf Telefonen läuft die
    Leiste seitlich durch, der Mask-Fade deutet die weiteren Kapitel an. */
 
-const STOPS = [...STORY_CHAPTERS, STORY_TODAY].map((c) => ({
-  id: c.id,
-  label: c.label,
-}));
-
-export default function StoryChapterNav() {
+/* `chapters` und `today` kommen schon mit dem Text der aktiven Sprache aus
+   der Seite — dieselbe Zusammenführung, aus der auch die Kapitel selbst
+   rendern. Damit können Anker und Beschriftung nicht auseinanderlaufen. */
+export default function StoryChapterNav({ chapters = [], today, t = {} }) {
   const reduced = useReducedMotion();
   const [activeId, setActiveId] = useState(null);
+  const stops = [...chapters, ...(today ? [today] : [])].map((c) => ({
+    id: c.id,
+    label: c.label,
+  }));
+  const ids = stops.map((s) => s.id).join(",");
 
   useEffect(() => {
-    const targets = STOPS.map((s) => document.getElementById(s.id)).filter(Boolean);
+    const targets = ids
+      .split(",")
+      .map((id) => document.getElementById(id))
+      .filter(Boolean);
     if (!targets.length) return;
     const io = new IntersectionObserver(
       (entries) => {
@@ -33,7 +38,7 @@ export default function StoryChapterNav() {
     );
     targets.forEach((t) => io.observe(t));
     return () => io.disconnect();
-  }, []);
+  }, [ids]);
 
   return (
     /* md:hidden: die Leiste ist der Kapitel-Kompass der Telefone — der
@@ -41,7 +46,7 @@ export default function StoryChapterNav() {
        pixelgleich unverändert. */
     <div className="sticky top-[calc(86px+env(safe-area-inset-top))] z-30 px-3 md:hidden lg:px-6">
       <motion.nav
-        aria-label="Die Kapitel dieser Geschichte"
+        aria-label={t.ariaLabel}
         initial={reduced ? false : { opacity: 0, y: -10 }}
         animate={reduced ? undefined : { opacity: 1, y: 0 }}
         transition={{ type: "spring", stiffness: 120, damping: 18 }}
@@ -51,7 +56,7 @@ export default function StoryChapterNav() {
           data-lenis-prevent-horizontal
           className="no-scrollbar flex h-14 snap-x items-center justify-start gap-1 overflow-x-auto [mask-image:linear-gradient(to_right,transparent,black_20px,black_calc(100%-20px),transparent)] sm:justify-center lg:[mask-image:none]"
         >
-          {STOPS.map((stop, i) => {
+          {stops.map((stop, i) => {
             const isActive = activeId === stop.id;
             return (
               <li key={stop.id} className="flex shrink-0 snap-start items-center">

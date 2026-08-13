@@ -248,7 +248,7 @@ export default function CartDrawer() {
               ref={panelRef}
               role="dialog"
               aria-modal="true"
-              aria-label="Warenkorb"
+              aria-label={t.label}
               data-lenis-prevent
               initial={reduced ? { opacity: 0 } : isSheet ? { y: "104%" } : { x: "104%" }}
               animate={reduced ? { opacity: 1 } : isSheet ? { y: 0 } : { x: 0 }}

@@ -51,7 +51,7 @@ function HomeJsonLd({ locale, dict }) {
         }),
         itemListNode({
           url,
-          name: catalogue.filters?.allWines ?? "Alle Weine",
+          name: catalogue.filters?.allWines ?? "",
           items: WINES.map((w) => ({
             name: w.name,
             url: localePath(locale, wineHref(w)),

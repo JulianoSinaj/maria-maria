@@ -355,8 +355,7 @@ export default function ContactForm({ copy, className = "" }) {
                         <FieldError id="kf-guests-error">{errors.guests}</FieldError>
                       </div>
                       <p className="text-[11.5px] leading-snug text-charcoal/60 sm:col-span-2">
-                        Unsere Verkostungen finden in Düsseldorf &amp; Umgebung statt — privat oder
-                        für Ihr Team, bei Ihnen oder in unserem Verkostungsraum.
+                        {t.guests?.note}
                       </p>
                     </div>
                   </motion.div>

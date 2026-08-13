@@ -30,6 +30,19 @@ import { ChevronRight } from "@/components/Icons";
    statischen Rendering in dynamisches — ein hoher Preis dafür, dass ein
    gesetzter Filter einen Sprachwechsel überlebt. */
 
+const LOCALE_COOKIE = "mm_locale";
+const COOKIE_MAX_AGE = 60 * 60 * 24 * 365;
+
+/* Die Wahl SOFORT im Cookie festhalten, nicht erst über die Middleware der
+   Zielseite: Die Middleware schreibt das Cookie nur noch, wenn keines da ist
+   oder es zur besuchten Sprache passt — ein Deep Link in eine andere Sprache
+   überschreibt die Wahl also nicht mehr. Damit ist dieser Klick die einzige
+   Stelle, an der ein Mensch seine Sprache wirklich WÄHLT, und genau deshalb
+   muss er hier verbindlich gespeichert werden. */
+const rememberChoice = (locale) => {
+  document.cookie = `${LOCALE_COOKIE}=${locale}; path=/; max-age=${COOKIE_MAX_AGE}; samesite=lax`;
+};
+
 export default function LanguageSwitcher({ variant = "menu", className = "" }) {
   const locale = useLocale();
   const t = useCommon("language");
@@ -67,6 +80,7 @@ export default function LanguageSwitcher({ variant = "menu", className = "" }) {
               key={l}
               href={localePath(l, bare)}
               hrefLang={LOCALE_META[l].hreflang}
+              onClick={() => rememberChoice(l)}
               aria-current={active ? "true" : undefined}
               className={`rounded-full border px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.16em] transition-colors duration-300 ${
                 active
@@ -92,7 +106,10 @@ export default function LanguageSwitcher({ variant = "menu", className = "" }) {
         aria-label={t.ariaLabel}
         aria-expanded={open}
         aria-haspopup="true"
-        className="flex h-9 items-center gap-1.5 rounded-full border border-charcoal/15 px-3 text-[11px] font-semibold uppercase tracking-[0.14em] text-charcoal/75 transition-colors duration-300 hover:border-champagne hover:text-bordeaux"
+        /* h-11 unterhalb md: dort steht die Pille neben dem Menü-Knopf und
+           muss dessen Höhe und das 44px-Touch-Ziel teilen. Ab md bleibt sie
+           bei h-9 — die Desktop-Kopfzeile ist unverändert. */
+        className="flex h-11 items-center gap-1.5 rounded-full border border-charcoal/15 px-3 text-[11px] font-semibold uppercase tracking-[0.14em] text-charcoal/75 transition-colors duration-300 hover:border-champagne hover:text-bordeaux md:h-9"
       >
         {LOCALE_META[locale].short}
         <ChevronRight
@@ -123,7 +140,10 @@ export default function LanguageSwitcher({ variant = "menu", className = "" }) {
                     <NextLink
                       href={localePath(l, bare)}
                       hrefLang={LOCALE_META[l].hreflang}
-                      onClick={() => setOpen(false)}
+                      onClick={() => {
+                        rememberChoice(l);
+                        setOpen(false);
+                      }}
                       aria-current={active ? "true" : undefined}
                       className={`flex items-center justify-between gap-3 rounded-xl px-3 py-2 text-[13px] transition-colors duration-300 ${
                         active

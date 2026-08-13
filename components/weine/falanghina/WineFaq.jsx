@@ -5,26 +5,28 @@ import FaqSection from "@/components/faq/FaqSection";
    die Akzentfarben aus der Palette des Weins; die Sektion bleibt unter
    #fragen im Subnav-Index der Seite verankert. */
 
-export default function WineFaq({ wine }) {
+/* `t` ist der Zweig common.winePage der aktiven Sprache — die Seite reicht
+   ihn herein, weil dieser Wrapper serverseitig rendert. */
+export default function WineFaq({ wine, t = {} }) {
   const accent = wine.accent ?? wine.moment?.accent;
 
   return (
     <FaqSection
       id="fragen"
       pageType={`wine:${wine.slug}`}
-      eyebrow="Häufige Fragen"
+      eyebrow={t.faqEyebrow}
       title={
         <>
-          Gut zu{" "}
+          {t.faqTitle}{" "}
           <span className="italic" style={accent ? { color: accent.deep } : undefined}>
-            wissen.
+            {t.faqTitleAccent}
           </span>
         </>
       }
-      description={`Antworten auf die häufigsten Fragen zu ${wine.name} — von Geschmack und Herkunft bis zum Servieren. Die technischen Angaben stammen aus dem Datenblatt des Weins.`}
+      description={(t.faqDescription ?? "").replace("{wine}", wine.name)}
       items={wine.faq}
       accent={accent}
-      footer={{ label: "Ihre Frage ist nicht dabei? Schreiben Sie uns", href: "/kontakt" }}
+      footer={{ label: t.faqFooter, href: "/kontakt" }}
     />
   );
 }

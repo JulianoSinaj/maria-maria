@@ -65,12 +65,9 @@ function GlassLight() {
 function DetailCard({ region, ctaLabel, compact = false }) {
   if (compact) {
     return (
-      <div className="glass-dark relative overflow-hidden rounded-card p-5">
-        <GlassLight />
-        <div className="relative">
-          <p className="text-[10px] uppercase tracking-[0.25em] text-champagne-light">{region.tag}</p>
-          <h3 className="mt-1 font-playfair text-[clamp(19px,2vw,22px)] text-ivory">{region.name}</h3>
-          <p className="mt-2 text-[13px] leading-relaxed text-ivory/75">{region.long || region.desc}</p>
+      <div className="relative bg-espresso/65 px-5 pb-5 pt-4 backdrop-blur-[14px]">
+        <div className="max-w-prose">
+          <p className="text-[13px] leading-relaxed text-ivory/80">{region.long || region.desc}</p>
           <div className="mt-4">
             <Button href={`/regionen#${region.region}`} size="sm" magnetic={false}>
               {ctaLabel}
@@ -332,9 +329,7 @@ export default function RegionExplorer({ regions, ctaLabel }) {
                     }}
                     className="relative overflow-hidden"
                   >
-                    <div className="px-4 pb-5">
-                      <DetailCard region={r} ctaLabel={ctaLabel} compact />
-                    </div>
+                    <DetailCard region={r} ctaLabel={ctaLabel} compact />
                   </motion.div>
                 )}
               </AnimatePresence>

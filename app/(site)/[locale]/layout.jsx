@@ -166,7 +166,12 @@ export default async function LocaleLayout({ children, modal, params }) {
             Wiederholung. Die Seiten-Knoten (Produkt, Breadcrumb, FAQ)
             verweisen per @id hierher zurück statt Adresse und Profile
             achtzigmal zu wiederholen. */}
-        <JsonLd data={graph(organizationNode(), websiteNode(locale))} />
+        <JsonLd
+          data={graph(
+            organizationNode({ description: dict.meta?.orgDescription }),
+            websiteNode(locale)
+          )}
+        />
         {/* Der Provider trägt nur Locale + gemeinsamen Rahmen-Text ins
             Client-Bundle. Seitentexte reichen die Server-Components als Prop —
             siehe lib/i18n/context.jsx. */}

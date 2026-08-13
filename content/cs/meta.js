@@ -5,6 +5,8 @@
 export const meta = {
   siteTitle: "Maria Maria — Il piacere del vino",
   siteDescription: "Italská butiková vína pro vědomě zvolené chvíle potěšení.",
+  orgDescription:
+    "Osobně vybíraná italská butiková vína z Apulie, Kampánie a od Gardského jezera.",
 
   home: {
     title: "Maria Maria — Il piacere del vino",

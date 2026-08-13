@@ -17,7 +17,7 @@ import PairingSelector from "@/components/magazin/PairingSelector";
    Keine Aromen-Chips, keine Herkunfts-Zeilen, kein eigener Begründungstext —
    die frühere, vollere Fassung des Mockups war zu viel. */
 
-export default function PairingMoments({ id, headingId, className = "" }) {
+export default function PairingMoments({ id, headingId, t = {}, className = "" }) {
   return (
     <section
       id={id}
@@ -29,15 +29,15 @@ export default function PairingMoments({ id, headingId, className = "" }) {
       <div className="relative mx-auto max-w-content px-6 pb-14 pt-8 lg:px-10 lg:pt-10">
         <SectionTitle
           align="center"
-          eyebrow="Food Pairing · Nach Anlass"
-          description="Nicht den Wein zuerst wählen, sondern den Moment — wählen Sie Ihren Anlass, Maria Maria zeigt den passenden Wein."
+          eyebrow={t.eyebrow}
+          description={t.description}
           headingId={headingId}
         >
-          Welcher Wein passt zu <span className="italic text-bordeaux">Ihrem Moment?</span>
+          {t.title} <span className="italic text-bordeaux">{t.titleAccent}</span>
         </SectionTitle>
 
         <Reveal y={16} delay={0.1}>
-          <PairingSelector className="mt-10 lg:mt-12" />
+          <PairingSelector className="mt-10 lg:mt-12" t={t} />
         </Reveal>
       </div>
     </section>

@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { WINE_PAGES, WINE_SLUGS } from "@/components/weine/wineRegistry";
 import JsonLd from "@/components/seo/JsonLd";
 import { getDictionary } from "@/lib/i18n/dictionaries";
+import { localizeWinePage } from "@/lib/i18n/winePages";
 import { pageMetadata } from "@/lib/i18n/metadata";
 import { localePath } from "@/lib/i18n/routing";
 import { absoluteUrl } from "@/lib/site";
@@ -125,10 +126,14 @@ function WineJsonLd({ slug, locale, seo, dict }) {
 }
 
 export default async function WinePage({ params }) {
-  const wine = WINE_PAGES[params.slug];
-  if (!wine) notFound();
+  const base = WINE_PAGES[params.slug];
+  if (!base) notFound();
 
   const dict = await getDictionary(params.locale);
+  /* Der sichtbare Seitentext in der aktiven Sprache: das Text-Overlay aus
+     content/<sprache>/weine-pages/<slug> legt sich über die deutsche Basis.
+     Für Deutsch gibt es kein Overlay — `wine` ist dann `base`. */
+  const wine = localizeWinePage(base, dict.weinePages?.[params.slug]);
   const seo = wineSeo(params.slug, params.locale, dict);
 
   return (
@@ -141,8 +146,8 @@ export default async function WinePage({ params }) {
       <ColorBand wine={wine} />
       <PairingScene wine={wine} />
       <SimilarWines wine={wine} />
-      <CtaBand wine={wine} />
-      <WineFaq wine={wine} />
+      <CtaBand wine={wine} t={dict.common?.winePage} />
+      <WineFaq wine={wine} t={dict.common?.winePage} />
     </>
   );
 }

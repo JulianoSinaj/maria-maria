@@ -37,7 +37,9 @@ const FOCUS_RING =
 
 export default function FaqSection({
   id = "fragen",
-  eyebrow = "Häufige Fragen",
+  /* kein deutscher Default — die Beschriftung kommt immer aus dem Wörterbuch
+     der aufrufenden Seite, sonst bliebe eine Lücke unbemerkt deutsch */
+  eyebrow,
   title,
   description,
   items,

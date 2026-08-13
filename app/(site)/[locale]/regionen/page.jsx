@@ -96,58 +96,54 @@ function RegionenJsonLd({ locale, dict }) {
         „autochthone Rebsorte“.
    P1 — Jede CTA führt an ein eigenes Ziel; früher zeigten alle drei auf
         /magazin. `cta.type` unterscheidet in GA4 Wein- von Magazin-Zielen. */
-const REGIONS = [
+/* Struktur der drei Regionsporträts: Anker, Bild und Ziel der CTA. Der
+   sichtbare Text (Name, Rubrik, Beschreibung, Beschriftungen) steht je
+   Sprache in content/<sprache>/regionen.js unter demselben Schlüssel.
+
+   Anker bleibt bei Lugana „garda": die Lugana-Weinseite und der
+   Regionen-Explorer der Startseite verlinken bereits auf /regionen#garda. */
+const REGION_SHAPE = [
   {
-    name: "Apulien",
-    tag: "Das Herz des Südens",
+    key: "apulien",
     anchor: "apulien",
     region: "apulien",
     img: "/img/regions/apulien.webp",
-    alt: "Weinberge auf roter Erde in Apulien im warmen Abendlicht",
-    label: "Weine aus Apulien",
-    desc: "Sonne, rote Böden und die Nähe zum Meer prägen den Weinbau Apuliens. Besonders Primitivo, eine der prägendsten Rebsorten der Region, steht für reife Frucht, Wärme und einen ausdrucksstarken Charakter. Maria Maria zeigt ausgewählte Weine aus Apulien, die Herkunft und italienische Lebensart genussvoll verbinden.",
-    cta: {
-      label: "Apuliens Weine entdecken",
-      href: "/unsere-weine?region=apulien",
-      type: "wine_overview",
-    },
+    cta: { href: "/unsere-weine?region=apulien", type: "wine_overview" },
   },
   {
-    name: "Kampanien",
-    tag: "Höhenlagen und Küste",
+    key: "kampanien",
     anchor: "kampanien",
     region: "kampanien",
     img: "/img/regions/kampanien.webp",
-    alt: "Terrassierte Weinberge an der Küste Kampaniens im Abendlicht",
-    label: "Weine aus Kampanien",
-    desc: "In den Höhenlagen Irpiniens und in weiteren traditionsreichen Anbaugebieten Kampaniens entstehen charaktervolle Weine aus Rebsorten wie Greco, Falanghina und Aglianico. Unterschiedliche Höhenlagen, kalk- und tonhaltige Böden sowie deutliche Temperaturunterschiede verleihen ihnen Frische, Mineralität und aromatische Tiefe.",
-    cta: {
-      label: "Kampaniens Weißweine entdecken",
-      href: "/unsere-weine/greco-di-tufo",
-      type: "wine_detail",
-    },
+    cta: { href: "/unsere-weine/greco-di-tufo", type: "wine_detail" },
   },
   {
-    name: "Lugana am Gardasee",
-    tag: "Zwischen Lombardei und Venetien",
-    /* Anker bleibt „garda“: die Lugana-Weinseite und der Regionen-Explorer
-       der Startseite verlinken bereits auf /regionen#garda */
+    key: "garda",
     anchor: "garda",
     region: "garda",
     img: "/img/regions/lugana.webp",
-    alt: "Weinberge und sanfte Hügel südlich des Gardasees",
-    label: "Lugana am Gardasee",
-    desc: "Südlich des Gardasees, zwischen Lombardei und Venetien, liegt das Anbaugebiet Lugana DOC. Die Rebsorte Turbiana und die tonreichen Böden prägen Weißweine mit Frische, feiner Mineralität und elegantem Charakter – ideal für Aperitivo, leichte Küche und besondere Genussmomente.",
-    cta: {
-      label: "Lugana und seinen Charakter entdecken",
-      href: "/unsere-weine/lugana",
-      type: "wine_detail",
-    },
+    cta: { href: "/unsere-weine/lugana", type: "wine_detail" },
   },
 ];
 
 export default async function RegionenPage({ params }) {
   const dict = await getDictionary(params.locale);
+  const t = dict.regionen ?? {};
+
+  /* Struktur + Sprache zusammenführen — dieselbe Ordnung wie im Code, der
+     Text kommt über den Schlüssel aus dem Wörterbuch. */
+  const REGIONS = REGION_SHAPE.map((r) => {
+    const copy = t.regions?.[r.key] ?? {};
+    return {
+      ...r,
+      name: copy.name ?? "",
+      tag: copy.tag ?? "",
+      alt: copy.alt ?? "",
+      label: copy.label ?? "",
+      desc: copy.desc ?? "",
+      cta: { ...r.cta, label: copy.cta ?? "" },
+    };
+  });
 
   /* Die Gespräche, die zu einem Gebiet gehören — Schlüssel ist
      `teaserRegion.region` und damit derselbe Anker wie oben in REGIONS.
@@ -207,19 +203,17 @@ export default async function RegionenPage({ params }) {
             <Reveal y={18} delay={0.05}>
               <span className="inline-flex items-center gap-4 text-[10.5px] font-semibold uppercase tracking-[0.3em] text-ivory/90">
                 <span aria-hidden="true" className="h-px w-10 bg-champagne" />
-                Italienische Weinregionen
+                {t.hero?.eyebrow}
               </span>
             </Reveal>
             {/* Einziges H1 der Seite (Guide Abschnitt 2 und 9) */}
             <h1 className="mt-6 font-playfair text-[clamp(2.6rem,5.5vw,4.2rem)] leading-[1.1] text-ivory">
-              <SplitText text="Wo Italiens Weine" className="block" delay={0.12} />
-              <SplitText text="ihren Charakter finden" className="block" delay={0.28} />
+              <SplitText text={t.hero?.title1 ?? ""} className="block" delay={0.12} />
+              <SplitText text={t.hero?.title2 ?? ""} className="block" delay={0.28} />
             </h1>
             <Reveal delay={0.45} y={14}>
               <p className="mt-6 max-w-xl text-[15px] leading-relaxed text-ivory/80">
-                Drei Herkunftsgebiete, unterschiedliche Landschaften und charaktervolle
-                Rebsorten: Entdecken Sie, wie Apulien, Kampanien und das Lugana-Gebiet am
-                Gardasee den Stil der ausgewählten Maria-Maria-Weine prägen.
+                {t.hero?.text}
               </p>
             </Reveal>
             {/* Der Einstieg nach unten.
@@ -247,10 +241,10 @@ export default async function RegionenPage({ params }) {
 
                 <span className="flex flex-col gap-2">
                   <span className="max-w-[26ch] font-playfair text-[clamp(1.15rem,1.9vw,1.5rem)] italic leading-snug text-ivory transition-colors duration-400 group-hover:text-champagne-light">
-                    Warum schmeckt Apulien anders als der Gardasee?
+                    {t.hero?.question}
                   </span>
                   <span className="inline-flex items-center gap-2 text-[10.5px] font-semibold uppercase tracking-[0.24em] text-champagne">
-                    Der Antwort folgen
+                    {t.hero?.questionCta}
                     <span
                       aria-hidden="true"
                       className="transition-transform duration-500 ease-out-expo group-hover:translate-y-1"
@@ -273,11 +267,8 @@ export default async function RegionenPage({ params }) {
         <GhostWord className="right-[-3vw] top-10 text-[13vw]">Terroir</GhostWord>
         <GhostWord className="left-[-2vw] top-[62%] text-[11vw]">Vigneti</GhostWord>
         <div className="relative mx-auto max-w-content px-6 py-24 lg:px-10">
-        <SectionTitle
-          eyebrow="Drei Herkunftsgebiete"
-          description="Apulien, Kampanien und Lugana am Gardasee – jede Herkunft mit eigenen Böden, Rebsorten und einem eigenen Stil im Glas."
-        >
-          Entdecken Sie unsere Regionen
+        <SectionTitle eyebrow={t.intro?.eyebrow} description={t.intro?.description}>
+          {t.intro?.title}
         </SectionTitle>
 
         <div className="mt-14 lg:mt-20">
@@ -354,18 +345,19 @@ export default async function RegionenPage({ params }) {
       {/* ============ TERROIR-MANIFEST ============
           Steht bewusst vor dem Shop-Band: erst das Argument, warum Herkunft
           zählt — dann der Weg in die Kollektion, danach die Detailfragen. */}
-      <TerroirManifest />
+      <TerroirManifest t={t.manifest} />
 
       <ShopCtaBand
-        eyebrow="Die Kollektion"
+        eyebrow={t.band?.eyebrow}
         title={
           <>
-            Weine nach <span className="italic text-champagne">Region</span> entdecken
+            {t.band?.title} <span className="italic text-champagne">{t.band?.titleAccent}</span>
+            {t.band?.titleEnd ? ` ${t.band.titleEnd}` : ""}
           </>
         }
-        text="Vom kraftvollen Primitivo aus Apulien bis zum mineralischen Lugana vom Gardasee – finden Sie den Wein, dessen Herkunft Sie schmecken möchten."
-        primary={{ label: "Alle Maria-Maria-Weine entdecken", href: "/unsere-weine" }}
-        secondary={{ label: "Persönlich Kontakt aufnehmen", href: "/kontakt" }}
+        text={t.band?.text}
+        primary={{ label: t.band?.primary, href: "/unsere-weine" }}
+        secondary={{ label: t.band?.secondary, href: "/kontakt" }}
       />
 
       {/* ============ HÄUFIGE FRAGEN (je Region, Index links) ============ */}
@@ -375,15 +367,15 @@ export default async function RegionenPage({ params }) {
         <FaqSection
           className="relative"
           pageType="regionen"
-          eyebrow="Häufige Fragen"
+          eyebrow={t.faq?.eyebrow}
           title={
             <>
-              Fragen zur <span className="italic text-bordeaux">Herkunft.</span>
+              {t.faq?.title} <span className="italic text-bordeaux">{t.faq?.titleAccent}</span>
             </>
           }
-          description="Wählen Sie eine Region und finden Sie Antworten zu Gebieten, Rebsorten, Geschmack und Food Pairing – als Orientierung für die Wahl des passenden Weins."
+          description={t.faq?.description}
           groups={dict.faq?.regionen ?? []}
-          footer={{ label: "Food Pairings im Magazin entdecken", href: "/magazin" }}
+          footer={{ label: t.faq?.footerLabel, href: "/magazin" }}
         />
       </div>
     </div>

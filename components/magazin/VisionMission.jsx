@@ -7,31 +7,27 @@ import { Glasses, Vineyard } from "@/components/Icons";
    Kicker in einer Zeile, darunter der Leitsatz — auf warmer Karte mit
    Haarlinien-Rand und federgedämpftem Tilt. */
 
-const BLOCKS = [
-  {
-    kicker: "Vision",
-    icon: <Glasses className="h-5 w-5" />,
-    text: "Maria Maria möchte eine kuratierte Weinwelt schaffen, in der italienische Herkunft, persönliche Auswahl und moderner Genuss für Menschen in Deutschland erlebbar werden.",
-  },
-  {
-    kicker: "Mission",
-    icon: <Vineyard className="h-5 w-5" />,
-    text: "Wir wählen Weine mit Charakter, erzählen ihre Herkunft verständlich und verbinden Regionen, Menschen und Genussmomente zu einer klaren, authentischen Markenerfahrung.",
-  },
+/* Reihenfolge und Ikone bleiben im Code, Kicker und Leitsatz kommen je
+   Sprache aus content/<sprache>/magazin.js (Abschnitt `vision`). */
+const BLOCK_SHAPE = [
+  { key: "vision", icon: <Glasses className="h-5 w-5" /> },
+  { key: "mission", icon: <Vineyard className="h-5 w-5" /> },
 ];
 
-export default function VisionMission({ className = "", headingId }) {
+export default function VisionMission({ className = "", headingId, t = {} }) {
+  const blocks = BLOCK_SHAPE.map((b) => ({ ...b, ...(t.blocks?.[b.key] ?? {}) }));
+
   return (
     <section aria-labelledby={headingId} className={className}>
       {/* Die Überschrift trägt die Sektion in der Gliederung, bleibt aber
           sichtbar zurückgenommen: das Kartenpaar sagt visuell schon, worum es
           geht — im Screenreader-Outline fehlte dem Paar sonst jeder Name. */}
       <h2 id={headingId} className="sr-only">
-        Vision und Mission von Maria Maria
+        {t.srTitle}
       </h2>
       <Stagger className="grid grid-cols-1 gap-4 sm:grid-cols-2" gap={0.08}>
-        {BLOCKS.map((b) => (
-          <StaggerItem key={b.kicker} className="h-full">
+        {blocks.map((b) => (
+          <StaggerItem key={b.key} className="h-full">
             <TiltCard className="group h-full" max={4} radius="rounded-card">
               <article className="flex h-full flex-col rounded-card border border-stone/50 bg-ivory/70 p-5 shadow-luxe transition-[border-color,box-shadow] duration-500 ease-out-expo group-hover:border-champagne/60 group-hover:shadow-lift">
                 <div className="flex items-center gap-2.5">

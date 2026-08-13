@@ -9,6 +9,8 @@ export const home = {
     statWines: "Butiková vína",
     statRegions: "Regionů Itálie",
     statSince: "od založení",
+    photoAlt:
+      "Láhev Maria Maria a sklenka červeného vína na kamenné zídce mezi vinicemi a mořem, za nimi žena v bílých šatech hledící na pobřeží",
   },
 
   philosophy: {

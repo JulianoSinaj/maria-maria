@@ -24,9 +24,20 @@ import SplitText from "@/components/motion/SplitText";
 /* Halbes Tempo — der Guss soll fallen, nicht stürzen */
 const POUR_RATE = 0.55;
 /* Der Clip beginnt mit leerem und endet mit vollem Glas. Am Schnitt würde
-   das Glas hart zurückspringen; die letzten Zehntel blenden darum weg und
-   nach dem Rücksprung wieder auf. */
-const SEAM_LEAD = 0.5;
+   das Glas hart zurückspringen. Darum liegt das Standbild (= letztes Bild
+   des Clips, volles Glas) dauerhaft UNTER dem Video: kurz vor dem Schnitt
+   blendet das Video auf das identische Standbild aus — unsichtbare Übergabe —
+   und nach dem Rücksprung löst sich der neue Guss weich daraus. Der Vorlauf
+   ist Medienzeit: die Blende (FADE_MS Wanduhr) muss bei POUR_RATE vor dem
+   Schnitt fertig sein, also LEAD ≳ FADE_MS/1000 × RATE. */
+const FADE_MS = 700;
+const SEAM_LEAD = 0.45;
+
+/* Video und Standbild müssen deckungsgleich stehen — eine Kadrierung für
+   beide, damit die Naht-Blende keine Kante verschiebt. */
+const MEDIA_CLASS =
+  "h-full w-full origin-[50%_24%] scale-[1.16] object-cover [object-position:50%_50%] sm:scale-[1.2] sm:[object-position:40%_50%] lg:origin-[46%_22%] lg:translate-x-[9%] lg:scale-[1.26]";
+const MEDIA_FILTER = { filter: "saturate(1.12) contrast(1.03)" };
 
 export default function ColorBand({ wine }) {
   const reduced = useReducedMotion();
@@ -59,11 +70,20 @@ export default function ColorBand({ wine }) {
     if (hasVideo) slowDown();
   }, [hasVideo, slowDown]);
 
-  const watchSeam = (e) => {
-    const v = e.currentTarget;
-    if (!v.duration) return;
-    setAtSeam(v.duration - v.currentTime < SEAM_LEAD);
-  };
+  /* timeupdate feuert nur ~4×/s — zu grob, die Naht ruckte sichtbar. Ein
+     rAF-Wächter liest die Abspielzeit bildgenau; setState greift nur am
+     Zustandswechsel, dazwischen rendert nichts neu. */
+  useEffect(() => {
+    if (!hasVideo) return;
+    let raf;
+    const tick = () => {
+      const v = videoRef.current;
+      if (v && v.duration) setAtSeam(v.duration - v.currentTime < SEAM_LEAD);
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [hasVideo]);
 
   return (
     <section
@@ -155,7 +175,18 @@ export default function ColorBand({ wine }) {
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 2.2, ease: [0.16, 1, 0.3, 1] }}
         >
-          {hasVideo ? (
+          {/* Das Standbild liegt immer unten: Fallback ohne Video und
+              Auffangfläche für die Naht-Blende — das Glas verschwindet nie. */}
+          {poster && (
+            <img
+              src={poster}
+              alt={art.videoTitle ?? `${wine.name} im Glas`}
+              loading="lazy"
+              className={MEDIA_CLASS}
+              style={MEDIA_FILTER}
+            />
+          )}
+          {hasVideo && (
             <video
               ref={videoRef}
               src={art.video}
@@ -164,26 +195,15 @@ export default function ColorBand({ wine }) {
               muted
               loop
               playsInline
-              preload="metadata"
+              preload="auto"
               onLoadedMetadata={slowDown}
               onPlay={slowDown}
-              onTimeUpdate={watchSeam}
               aria-label={art.videoTitle ?? `${wine.name} wird eingeschenkt`}
-              className={`h-full w-full origin-[50%_24%] scale-[1.16] object-cover [object-position:50%_50%] transition-opacity duration-500 sm:scale-[1.2] sm:[object-position:40%_50%] lg:origin-[46%_22%] lg:translate-x-[9%] lg:scale-[1.26] ${
+              className={`absolute inset-0 ${MEDIA_CLASS} transition-opacity ease-out will-change-[opacity] ${
                 atSeam ? "opacity-0" : "opacity-100"
               }`}
-              style={{ filter: "saturate(1.12) contrast(1.03)" }}
+              style={{ ...MEDIA_FILTER, transitionDuration: `${FADE_MS}ms` }}
             />
-          ) : (
-            poster && (
-              <img
-                src={poster}
-                alt={art.videoTitle ?? `${wine.name} im Glas`}
-                loading="lazy"
-                className="h-full w-full origin-[50%_24%] scale-[1.16] object-cover [object-position:50%_50%] sm:scale-[1.2] sm:[object-position:40%_50%] lg:origin-[46%_22%] lg:translate-x-[9%] lg:scale-[1.26]"
-                style={{ filter: "saturate(1.12) contrast(1.03)" }}
-              />
-            )
           )}
         </motion.div>
 

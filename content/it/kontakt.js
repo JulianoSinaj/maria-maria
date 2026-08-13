@@ -74,6 +74,7 @@ export const kontakt = {
       placeholder: "Scegli gli ospiti",
       unit: "persone",
       options: ["2–4", "5–8", "9–12", "13–20", "Più di 20"],
+      note: "Le nostre degustazioni si svolgono a Düsseldorf e dintorni — private o per il vostro team, da voi o nella nostra sala di degustazione.",
     },
     message: { label: "Messaggio", placeholder: "Il tuo messaggio per noi …" },
     /* L'articolo eliso sta DENTRO il testo del link: il markup inserisce uno

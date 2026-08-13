@@ -94,7 +94,7 @@ export function middleware(request) {
   /* --- 2. Bereits eine der drei präfigierten Sprachen: durchlassen --- */
   if (isLocale(first)) {
     const response = NextResponse.next();
-    remember(response, first, crawler);
+    remember(request, response, first, crawler);
     return response;
   }
 
@@ -116,7 +116,7 @@ export function middleware(request) {
   const url = request.nextUrl.clone();
   url.pathname = internalPath(DEFAULT_LOCALE, pathname);
   const response = NextResponse.rewrite(url);
-  remember(response, DEFAULT_LOCALE, crawler);
+  remember(request, response, DEFAULT_LOCALE, crawler);
   return response;
 }
 
@@ -128,9 +128,20 @@ export function middleware(request) {
    diesem Kopf nicht ab. Jede gecrawlte Seite musste damit vom Ursprung
    erzeugt werden, obwohl alle 87 statisch vorgerendert sind. Ausgerechnet
    für Googlebot, dessen gemessene Antwortzeit ins Crawl-Budget und über die
-   Core Web Vitals ins Ranking läuft. */
-function remember(response, locale, crawler) {
+   Core Web Vitals ins Ranking läuft.
+
+   Eine bereits getroffene, ABWEICHENDE Wahl bleibt unangetastet: Wer Italienisch
+   gewählt hat und einem deutschen Deep Link folgt, sieht zwar die deutsche
+   Seite (geteilte Links werden nie umgebogen), behält aber seine Sprache —
+   der nächste Besuch der Startseite führt weiter nach /it. Das Cookie ändert
+   sich nur an zwei Stellen: beim allerersten Kontakt (noch keines gesetzt)
+   und beim bewussten Klick im Sprachumschalter, der es clientseitig schreibt.
+   Stimmen Cookie und besuchte Sprache überein, wird nur die Laufzeit
+   verlängert. */
+function remember(request, response, locale, crawler) {
   if (crawler) return response;
+  const existing = request.cookies.get(LOCALE_COOKIE)?.value;
+  if (isLocale(existing) && existing !== locale) return response;
   response.cookies.set(LOCALE_COOKIE, locale, { maxAge: COOKIE_MAX_AGE, sameSite: "lax", path: "/" });
   return response;
 }

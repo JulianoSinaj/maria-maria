@@ -13,6 +13,8 @@ export const weine = {
     statSinceValue: "od roku 2019",
     statSince: "Pro vědomé chvíle požitku",
     collectionHeading: "Kolekce",
+    photoAlt:
+      "Všech devět vín Maria Maria vyrovnaných na kamenné zídce před jihoitalskou krajinou kopců ve večerním světle",
   },
 
   occasioni: {

@@ -20,23 +20,21 @@ import InterviewCard from "@/components/magazin/InterviewCard";
    gleicher Höhe, wie es der Handoff für die drei geplanten Interviews
    vorsieht. */
 
-function EmptyState() {
+function EmptyState({ t = {} }) {
   return (
     <Reveal y={20} className="mt-10">
       <div className="relative overflow-hidden rounded-card-lg border border-dashed border-champagne/60 bg-gradient-to-b from-white/80 to-cream p-10 text-center shadow-luxe sm:p-14">
         <Grapes aria-hidden="true" className="mx-auto h-7 w-7 text-champagne" />
         <p className="mt-5 font-playfair text-[clamp(1.25rem,2.2vw,1.6rem)] leading-snug text-charcoal">
-          Die ersten Gespräche entstehen gerade.
+          {t.title}
         </p>
         <p className="mx-auto mt-4 max-w-lg text-[13.5px] leading-relaxed text-charcoal/70">
-          Wir besuchen Winzerinnen, Kellermeister und Sommeliers in ihren Weinbergen und
-          Kellern — und bringen ihre Antworten hierher: über Böden und Jahrgänge, über
-          Geschmack, Handwerk und die Menschen hinter jeder Flasche.
+          {t.text}
         </p>
         <div className="mt-7 flex items-center justify-center gap-4">
           <GoldRule className="w-14 sm:w-20" />
           <span className="text-[10px] uppercase tracking-[0.22em] text-charcoal/45">
-            Bald hier zu lesen
+            {t.badge}
           </span>
           <GoldRule className="w-14 sm:w-20" />
         </div>
@@ -45,7 +43,7 @@ function EmptyState() {
   );
 }
 
-export default function InterviewSection({ interviews = [], section = {}, headingId }) {
+export default function InterviewSection({ interviews = [], section = {}, empty, headingId }) {
   const featured = interviews.length === 1;
 
   return (
@@ -60,7 +58,7 @@ export default function InterviewSection({ interviews = [], section = {}, headin
       </SectionTitle>
 
       {interviews.length === 0 ? (
-        <EmptyState />
+        <EmptyState t={empty} />
       ) : (
         <div
           className={`mt-10 ${

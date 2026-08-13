@@ -10,7 +10,6 @@ import WeineHeroPhoto, { WeineHeroPreload } from "@/components/weine/WeineHeroPh
 import HelpStrip from "@/components/weine/HelpStrip";
 import HomeHeroFx from "@/components/home/HomeHeroFx";
 import FaqSection from "@/components/faq/FaqSection";
-import { WEINE_FAQ } from "@/components/faq/faqData";
 import Atmosphere, { GhostWord } from "@/components/Atmosphere";
 import JsonLd from "@/components/seo/JsonLd";
 import { wineHref } from "@/components/data";
@@ -79,9 +78,7 @@ function CollectionJsonLd({ locale, dict, wines }) {
           items: wines.map((w) => ({ name: w.name, url: localePath(locale, wineHref(w)) })),
         }),
         crumbs,
-        /* WEINE_FAQ ist noch deutsch — dieselbe Regel wie auf der
-           Startseite: Markup nur dort, wo der Besucher den Text auch liest. */
-        locale === "de" ? faqNode({ url, items: WEINE_FAQ }) : null
+        faqNode({ url, items: dict.faq?.weine ?? [] })
       )}
     />
   );
@@ -89,6 +86,7 @@ function CollectionJsonLd({ locale, dict, wines }) {
 
 export default async function WeinePage({ params }) {
   const dict = await getDictionary(params.locale);
+  const t = dict.weine ?? {};
 
   return (
     <div className="relative min-h-screen">
@@ -119,12 +117,12 @@ export default async function WeinePage({ params }) {
         <div className="relative mx-auto flex min-h-[100svh] max-w-content flex-col justify-end px-6 pb-24 pt-32 lg:justify-center lg:px-10 lg:pb-16">
           <div className="lg:max-w-xl">
             <Reveal y={18} delay={0.05}>
-              <Eyebrow>Die Kollektion</Eyebrow>
+              <Eyebrow>{t.hero?.eyebrow}</Eyebrow>
             </Reveal>
             <h1 className="mt-6 font-playfair text-[clamp(2.6rem,5.4vw,4.1rem)] leading-[1.06] tracking-[-0.015em] text-charcoal">
-              <SplitText text="Unsere Weine" className="block" delay={0.12} />
+              <SplitText text={t.hero?.title ?? ""} className="block" delay={0.12} />
               <SplitText
-                text="Neun Charaktere."
+                text={t.hero?.titleAccent ?? ""}
                 className="block italic"
                 wordClassName="bg-gradient-to-r from-bordeaux via-wine to-bordeaux bg-clip-text text-transparent"
                 delay={0.3}
@@ -132,29 +130,26 @@ export default async function WeinePage({ params }) {
             </h1>
             <Reveal delay={0.5} y={16}>
               <GrapeRule className="mt-6" />
-              <p className="mt-5 max-w-md text-[15px] leading-relaxed text-charcoal/75">
-                Maria Maria steht für handverlesene italienische Boutique-Weine von kleinen Weingütern – ausgewählt
-                für bewusste Momente und echten Genuss.
-              </p>
+              <p className="mt-5 max-w-md text-[15px] leading-relaxed text-charcoal/75">{t.hero?.lede}</p>
             </Reveal>
             <Reveal delay={0.62} y={16}>
               {/* CTAs gestapelt – gleiche Breite, eine vertikale Achse mit
                   Eyebrow, Titel und Textblock */}
               <div className="mt-7 flex w-full max-w-[17.5rem] flex-col items-stretch gap-2.5 sm:mt-8">
                 <Button href="#kollektion" size="lg">
-                  Zur Kollektion
+                  {t.hero?.ctaCollection}
                 </Button>
                 <Button href="/shop" variant="outline" size="lg">
-                  Zum Shop
+                  {t.hero?.ctaShop}
                 </Button>
               </div>
             </Reveal>
             <Reveal delay={0.78} y={12}>
               <dl className="mt-9 flex max-w-md items-start sm:mt-11">
                 {[
-                  [`${WINES.length}`, "Ausgewählte Weine"],
-                  [`${REGION_COUNT}`, "Regionen aus Italien"],
-                  ["seit 2019", "Für bewusste Genussmomente"],
+                  [`${WINES.length}`, t.hero?.statWines],
+                  [`${REGION_COUNT}`, t.hero?.statRegions],
+                  [t.hero?.statSinceValue ?? "", t.hero?.statSince],
                 ].map(([num, label], i) => (
                   <div key={label} className={`flex-1 ${i > 0 ? "border-l border-charcoal/10 pl-6" : ""}`}>
                     <dt className="sr-only">{label}</dt>
@@ -183,7 +178,7 @@ export default async function WeinePage({ params }) {
         <Atmosphere variant="warm" />
         <GhostWord className="right-[-2vw] top-4 text-[11vw]">La Cantina</GhostWord>
         <div className="relative mx-auto max-w-content px-6 pb-24 pt-2 lg:px-10">
-          <h2 className="sr-only">Die Kollektion</h2>
+          <h2 className="sr-only">{t.hero?.collectionHeading}</h2>
           <Suspense fallback={null}>
             <WineExplorer />
           </Suspense>
@@ -195,10 +190,10 @@ export default async function WeinePage({ params }) {
           Doppelseite „Occasioni": Anlass-Index links, Antwort-Karte rechts,
           beide springen ins Food-Pairing-Kapitel des Magazins
           (/magazin#food-pairing). */}
-      <MomentsSection headingId="weine-pairing" />
+      <MomentsSection t={t.occasioni} headingId="weine-pairing" />
 
       {/* ============ HELP STRIP ============ */}
-      <HelpStrip />
+      <HelpStrip t={t.help} />
 
       {/* ============ HÄUFIGE FRAGEN (Wahl-FAQ) ============ */}
       <div className="relative overflow-hidden">
@@ -207,15 +202,15 @@ export default async function WeinePage({ params }) {
         <FaqSection
           className="relative"
           pageType="wine-hub"
-          eyebrow="Häufige Fragen"
+          eyebrow={t.faq?.eyebrow}
           title={
             <>
-              Welcher Wein <span className="italic text-bordeaux">darf es sein?</span>
+              {t.faq?.title} <span className="italic text-bordeaux">{t.faq?.titleAccent}</span>
             </>
           }
-          description="Orientierung für Ihre Wahl — von Farbe und Anlass bis zum passenden Geschenk. Jede Antwort führt Sie einen Schritt näher zur richtigen Flasche."
-          items={WEINE_FAQ}
-          footer={{ label: "Persönliche Beratung? Schreiben Sie uns", href: "/kontakt" }}
+          description={t.faq?.description}
+          items={dict.faq?.weine ?? []}
+          footer={{ label: t.faq?.footerLabel, href: "/kontakt" }}
         />
       </div>
     </div>

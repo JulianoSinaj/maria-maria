@@ -7,7 +7,6 @@ import { SectionTitle, Eyebrow } from "@/components/Deco";
 import Photo from "@/components/media/Photo";
 import RegionHeroVideo from "@/components/RegionHeroVideo";
 import FaqSection from "@/components/faq/FaqSection";
-import { REGIONEN_FAQ_GROUPS } from "@/components/faq/faqData";
 import Atmosphere, { Aura, GhostWord } from "@/components/Atmosphere";
 import TerroirManifest from "@/components/regionen/TerroirManifest";
 import RegionCta from "@/components/regionen/RegionCta";
@@ -78,11 +77,8 @@ function RegionenJsonLd({ locale, dict }) {
         }),
         crumbs,
         /* Die Regionen-FAQ ist nach Gebieten gruppiert; für das Markup
-           zählt die flache Menge aller Fragen. Noch deutsch — deshalb nur
-           auf der deutschen Fassung. */
-        locale === "de"
-          ? faqNode({ url, items: REGIONEN_FAQ_GROUPS.flatMap((g) => g.items ?? []) })
-          : null
+           zählt die flache Menge aller Fragen. */
+        faqNode({ url, items: (dict.faq?.regionen ?? []).flatMap((g) => g.items ?? []) })
       )}
     />
   );
@@ -386,7 +382,7 @@ export default async function RegionenPage({ params }) {
             </>
           }
           description="Wählen Sie eine Region und finden Sie Antworten zu Gebieten, Rebsorten, Geschmack und Food Pairing – als Orientierung für die Wahl des passenden Weins."
-          groups={REGIONEN_FAQ_GROUPS}
+          groups={dict.faq?.regionen ?? []}
           footer={{ label: "Food Pairings im Magazin entdecken", href: "/magazin" }}
         />
       </div>

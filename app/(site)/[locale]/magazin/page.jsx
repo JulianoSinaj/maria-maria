@@ -11,7 +11,6 @@ import InkQuote from "@/components/magazin/InkQuote";
 import MagazinJsonLd from "@/components/magazin/MagazinJsonLd";
 import PairingMoments from "@/components/magazin/PairingMoments";
 import FaqSection from "@/components/faq/FaqSection";
-import { MAGAZIN_FAQ } from "@/components/faq/faqData";
 import RegionWineRail from "@/components/RegionWineRail";
 import { WINES } from "@/components/data";
 import { Aura, GhostWord } from "@/components/Atmosphere";
@@ -112,7 +111,7 @@ export default async function MagazinPage({ params }) {
 
   return (
     <>
-      <MagazinJsonLd locale={params.locale} dict={dict} faq={MAGAZIN_FAQ} />
+      <MagazinJsonLd locale={params.locale} dict={dict} faq={dict.faq?.magazin ?? []} />
 
       <main className="relative min-h-screen">
         {/* ================= CAPITOLO I: TITELSEITE, VISION & GESCHICHTE ==== */}
@@ -232,7 +231,7 @@ export default async function MagazinPage({ params }) {
               </>
             }
             description="Die Evergreens rund um Temperatur, Glas, Lagerung und Herkunftsstufen — beantwortet aus den Datenblättern unserer Weine, ohne Fachchinesisch."
-            items={MAGAZIN_FAQ}
+            items={dict.faq?.magazin ?? []}
             footer={{ label: "Eine Frage fehlt? Schreiben Sie uns", href: "/kontakt" }}
           />
         </div>

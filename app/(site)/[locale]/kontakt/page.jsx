@@ -5,7 +5,6 @@ import { Reveal, Stagger, StaggerItem } from "@/components/motion/Reveal";
 import { SectionTitle, Eyebrow, GrapeRule, IconChip } from "@/components/Deco";
 import ContactForm from "@/components/kontakt/ContactForm";
 import FaqSection from "@/components/faq/FaqSection";
-import { KONTAKT_FAQ_GROUPS } from "@/components/faq/faqData";
 import { Mail, Phone, Pin, Instagram, Facebook, LinkedIn, Arrow, Clock } from "@/components/Icons";
 import Atmosphere, { Aura, GhostWord, Vines } from "@/components/Atmosphere";
 import JsonLd from "@/components/seo/JsonLd";
@@ -58,9 +57,7 @@ function KontaktJsonLd({ locale, dict }) {
           mainEntity: { "@id": ORG_ID },
         },
         crumbs,
-        locale === "de"
-          ? faqNode({ url, items: KONTAKT_FAQ_GROUPS.flatMap((g) => g.items ?? []) })
-          : null
+        faqNode({ url, items: (dict.faq?.kontakt ?? []).flatMap((g) => g.items ?? []) })
       )}
     />
   );
@@ -265,7 +262,7 @@ export default async function KontaktPage({ params }) {
             </>
           }
           description={t.faq.description}
-          groups={KONTAKT_FAQ_GROUPS}
+          groups={dict.faq?.kontakt ?? []}
           footer={{ label: t.faq.footer, href: "#kontakt-formular" }}
         />
       </section>

@@ -16,7 +16,6 @@ import BundleCard from "@/components/shop/BundleCard";
 import ShopExplorer from "@/components/shop/ShopExplorer";
 import SoulCards from "@/components/SoulCards";
 import FaqSection from "@/components/faq/FaqSection";
-import { SHOP_FAQ } from "@/components/faq/faqData";
 import Atmosphere, { Aura, GhostWord, Vines } from "@/components/Atmosphere";
 import Link from "@/components/i18n/LocaleLink";
 import JsonLd from "@/components/seo/JsonLd";
@@ -84,10 +83,9 @@ function ShopJsonLd({ locale, dict, wines }) {
           items: wines.map((w) => ({ name: w.name, url: localePath(locale, wineHref(w)) })),
         }),
         crumbs,
-        /* SHOP_FAQ beantwortet Versand, Zahlung und Rückgabe — genau die
-           Fragen, die KI-Antwortmaschinen vor einem Kauf stellen. Noch
-           deutsch, deshalb nur auf der deutschen Fassung. */
-        locale === "de" ? faqNode({ url, items: SHOP_FAQ }) : null
+        /* Die Service-FAQ beantwortet Versand, Zahlung und Rückgabe — genau
+           die Fragen, die KI-Antwortmaschinen vor einem Kauf stellen. */
+        faqNode({ url, items: dict.faq?.shop ?? [] })
       )}
     />
   );
@@ -546,7 +544,7 @@ export default async function ShopPage({ params }) {
               </>
             }
             description="Versand, Bezahlung, Geschenke und persönliche Beratung — alles Wichtige vor dem Checkout, kurz und verbindlich beantwortet."
-            items={SHOP_FAQ}
+            items={dict.faq?.shop ?? []}
             footer={{ label: "Ihre Frage ist nicht dabei? Kontakt aufnehmen", href: "/kontakt" }}
           />
         </div>

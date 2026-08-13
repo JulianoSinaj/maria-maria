@@ -16,32 +16,20 @@ import OccasioniTeaser from "@/components/weine/OccasioniTeaser";
    Anlass-Schalter aus components/magazin/PairingMoments — fünf Tasten,
    eine Antwort-Karte, jeder Wein verlinkt auf seine Landingpage. */
 
-const MOMENTS = [
-  {
-    title: "Aperitivo",
-    tag: "Moment 01",
-    text: "Leicht, frisch und bereichernd.",
-    img: "/img/aperitivo-sunset.jpg",
-  },
-  {
-    title: "Dinner",
-    tag: "Moment 02",
-    text: "Elegante Begleiter für besondere Gerichte.",
-    img: "/img/dinner.webp",
-  },
-  {
-    title: "Freunde",
-    tag: "Moment 03",
-    text: "Für gute Gespräche und unvergessliche Abende.",
-    img: "/img/pranzo.webp",
-  },
+/* Struktur der drei Motive: Reihenfolge und Foto. Titel und Zeile kommen je
+   Sprache aus content/<sprache>/weine.js (Abschnitt `occasioni.moments`). */
+const MOMENT_SHAPE = [
+  { key: "aperitivo", img: "/img/aperitivo-sunset.jpg" },
+  { key: "dinner", img: "/img/dinner.webp" },
+  { key: "friends", img: "/img/pranzo.webp" },
 ];
 
 /* Ziel des Occasioni-Teasers: das Food-Pairing-Kapitel des Magazins */
 const PAIRING_HREF = "/magazin#food-pairing";
 
-export default function MomentsSection({ className = "", headingId, id }) {
+export default function MomentsSection({ t = {}, className = "", headingId, id }) {
   /* die Occasioni-Doppelseite der Weine-Seite */
+  const moments = MOMENT_SHAPE.map((m) => ({ ...m, ...(t.moments?.[m.key] ?? {}) }));
   return (
     <section
       id={id}
@@ -72,7 +60,8 @@ export default function MomentsSection({ className = "", headingId, id }) {
         </Reveal>
 
         <OccasioniTeaser
-          moments={MOMENTS}
+          t={t}
+          moments={moments}
           href={PAIRING_HREF}
           headingId={headingId}
           className="mt-12 lg:mt-16"

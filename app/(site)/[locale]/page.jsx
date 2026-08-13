@@ -1,6 +1,5 @@
 import HomeContent from "@/components/home/HomeContent";
 import JsonLd from "@/components/seo/JsonLd";
-import { HOME_FAQ } from "@/components/faq/faqData";
 import { WINES, wineHref } from "@/components/data";
 import { getDictionary } from "@/lib/i18n/dictionaries";
 import { pageMetadata } from "@/lib/i18n/metadata";
@@ -58,12 +57,10 @@ function HomeJsonLd({ locale, dict }) {
             url: localePath(locale, wineHref(w)),
           })),
         }),
-        /* Nur auf Deutsch: HOME_FAQ liegt bislang ausschließlich deutsch vor
-           (siehe I18N.md, Abschnitt 7). Die Fragen auch über der englischen
-           Seite als deren Inhalt auszugeben, wäre eine Falschangabe — das
-           Markup muss beschreiben, was der Besucher liest. Sobald die FAQ
-           übersetzt ist, fällt diese Bedingung weg. */
-        locale === "de" ? faqNode({ url, items: HOME_FAQ }) : null
+        /* Die Marken-FAQ liegt in allen vier Sprachen vor — das Markup
+           beschreibt damit in jeder Fassung genau das, was der Besucher
+           auf der Seite liest. */
+        faqNode({ url, items: dict.faq?.home ?? [] })
       )}
     />
   );

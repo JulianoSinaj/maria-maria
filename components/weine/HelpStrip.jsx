@@ -12,21 +12,11 @@ import { Reveal } from "@/components/motion/Reveal";
    espresso-getöntes Band die kompakte Reihe: gleich hohe Karten, jede
    kippt federgedämpft zum Cursor. */
 
-const HELP = [
-  {
-    icon: Plate,
-    title: "Food Pairing",
-    text: "Entdecken Sie passende Speisen zu unseren Weinen – für den perfekten Genussmoment.",
-    link: "Mehr erfahren",
-    href: "/magazin",
-  },
-  {
-    icon: Mountains,
-    title: "Regionen",
-    text: "Entdecken Sie die Herkunft unserer Weine – von Apulien bis zum Gardasee.",
-    link: "Zu den Regionen",
-    href: "/regionen",
-  },
+/* Struktur des Beratungs-Trios: Ikone und Ziel. Titel, Text und
+   Link-Beschriftung stehen je Sprache in content/<sprache>/weine.js. */
+const HELP_SHAPE = [
+  { key: "pairing", icon: Plate, href: "/magazin" },
+  { key: "regions", icon: Mountains, href: "/regionen" },
 ];
 
 /* Eine Karte: echter 3D-Viewport, Rotation und magnetische Nachführung laufen
@@ -164,7 +154,8 @@ function HelpCard({ item }) {
   );
 }
 
-export default function HelpStrip() {
+export default function HelpStrip({ t = {} }) {
+  const help = HELP_SHAPE.map((h) => ({ ...h, ...(t.cards?.[h.key] ?? {}) }));
   return (
     <section className="grain relative overflow-hidden bg-espresso py-14 lg:py-16">
       {/* Tiefe: warme Weinglut oben links, Champagnerschimmer unten rechts */}
@@ -195,22 +186,19 @@ export default function HelpStrip() {
           <Reveal className="max-w-xl">
             <span className="inline-flex items-center gap-2.5 text-[11px] font-semibold uppercase tracking-[0.24em] text-champagne">
               <Grapes className="h-4 w-4" />
-              Gut zu wissen
+              {t.eyebrow}
             </span>
             <h2 className="mt-3 text-balance font-playfair text-[clamp(1.7rem,3.2vw,2.5rem)] leading-[1.08] text-ivory">
-              Gut beraten <span className="italic text-champagne-light">genießen</span>
+              {t.title} <span className="italic text-champagne-light">{t.titleAccent}</span>
             </h2>
-            <p className="mt-3 max-w-lg text-[13px] leading-relaxed text-ivory/60">
-              Wissen und Antworten rund um Ihre Auswahl – vom passenden Gericht bis zur
-              richtigen Herkunft.
-            </p>
+            <p className="mt-3 max-w-lg text-[13px] leading-relaxed text-ivory/60">{t.description}</p>
           </Reveal>
         </div>
 
         {/* Karten auf einer Linie, gleiche Höhe – die Reihe wirkt als Block */}
         <div className="mt-9 grid grid-cols-1 gap-5 md:grid-cols-2 lg:gap-6">
-          {HELP.map((h, i) => (
-            <Reveal key={h.title} delay={i * 0.09} y={34} className="h-full">
+          {help.map((h, i) => (
+            <Reveal key={h.key} delay={i * 0.09} y={34} className="h-full">
               <HelpCard item={h} />
             </Reveal>
           ))}

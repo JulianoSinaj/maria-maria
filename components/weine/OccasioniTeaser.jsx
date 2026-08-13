@@ -25,7 +25,7 @@ import Button from "@/components/ui/Button";
 
 const EASE = [0.4, 0, 0.2, 1];
 
-export default function OccasioniTeaser({ moments, href, headingId, className = "" }) {
+export default function OccasioniTeaser({ t = {}, moments, href, headingId, className = "" }) {
   const reduced = useReducedMotion();
   const [displayIndex, setDisplayIndex] = useState(0);
 
@@ -44,10 +44,10 @@ export default function OccasioniTeaser({ moments, href, headingId, className = 
   useEffect(() => {
     if (reduced) return;
     const id = setInterval(() => {
-      setDisplayIndex((i) => (i + 1) % moments.length);
+      setDisplayIndex((i) => (i + 1) % (moments?.length || 1));
     }, 2000);
     return () => clearInterval(id);
-  }, [moments.length, reduced]);
+  }, [moments?.length, reduced]);
 
   return (
     <div className={`grid grid-cols-1 items-stretch gap-12 lg:grid-cols-[1fr_1.05fr] lg:gap-16 ${className}`}>
@@ -61,9 +61,9 @@ export default function OccasioniTeaser({ moments, href, headingId, className = 
           id={headingId}
           className="mt-5 font-playfair text-[clamp(2.1rem,4vw,3.2rem)] leading-[1.08] tracking-[-0.01em] text-charcoal"
         >
-          <SplitText text="Zu jedem Moment" className="block" delay={0.1} />
+          <SplitText text={t.title ?? ""} className="block" delay={0.1} />
           <SplitText
-            text="der richtige Wein."
+            text={t.titleAccent ?? ""}
             className="block italic"
             wordClassName="bg-gradient-to-r from-bordeaux via-wine to-bordeaux bg-clip-text text-transparent"
             delay={0.26}
@@ -72,11 +72,7 @@ export default function OccasioniTeaser({ moments, href, headingId, className = 
 
         <Reveal delay={0.42} y={14}>
           <GrapeRule className="mt-6" />
-          <p className="mt-5 max-w-md text-[14px] leading-relaxed text-charcoal/75">
-            Aperitivo im Abendlicht. Ein eleganter Dinner. Ein langer Abend mit Freunden. 
-            Maria Maria hat für jeden dieser Momente die passenden Pairings kuratiert — 
-            entdecken Sie im Magazin, welche Weine Ihre Anlässe begleiten.
-          </p>
+          <p className="mt-5 max-w-md text-[14px] leading-relaxed text-charcoal/75">{t.text}</p>
         </Reveal>
 
         <Reveal delay={0.55} y={14} className="mt-8">
@@ -85,7 +81,7 @@ export default function OccasioniTeaser({ moments, href, headingId, className = 
             variant="premium"
             size="md"
           >
-            Die Pairings entdecken
+            {t.cta}
           </Button>
         </Reveal>
       </div>
@@ -96,7 +92,7 @@ export default function OccasioniTeaser({ moments, href, headingId, className = 
           <TiltCard className="group h-full" max={5} radius="rounded-card-lg">
             <Link
               href={href}
-              aria-label="Zu den Food-Pairing-Empfehlungen im Magazin"
+              aria-label={t.ctaAria}
               className="relative block h-[400px] overflow-hidden rounded-card-lg bg-espresso shadow-luxe transition-shadow duration-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-champagne focus-visible:ring-offset-2 focus-visible:ring-offset-ivory group-hover:shadow-lift sm:h-[460px] lg:h-full lg:min-h-[540px]"
             >
               {/* Image stack - all moments remain mounted, fade between them */}
@@ -105,9 +101,9 @@ export default function OccasioniTeaser({ moments, href, headingId, className = 
                 style={reduced ? undefined : { y: drift, willChange: "transform" }}
                 className="absolute -inset-y-[6%] inset-x-0"
               >
-                {moments.map((m, i) => (
+                {(moments ?? []).map((m, i) => (
                   <motion.img
-                    key={m.title}
+                    key={m.key}
                     src={m.img}
                     srcSet={photoSrcSet(m.img) ?? undefined}
                     sizes="(min-width: 1024px) 48vw, 100vw"

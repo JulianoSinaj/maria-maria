@@ -1,44 +1,46 @@
+"use client";
+import { useState } from "react";
+import { motion, useReducedMotion } from "motion/react";
 import TiltCard from "@/components/motion/TiltCard";
-import { Stagger, StaggerItem } from "@/components/motion/Reveal";
-import { GoldRule } from "@/components/Deco";
-import { Grapes } from "@/components/Icons";
+import { Aura } from "@/components/Atmosphere";
 
 /* Die zwei Seelen hinter dem Namen — als Etiketten-Paar gestaltet:
    Maria als dunkle Bordeaux-Karte (der Ursprung), Maria Pia als helle
-   Elfenbein-Karte (die Gegenwart), verbunden durch ein goldenes „&". */
+   Elfenbein-Karte (die Gegenwart), verbunden durch ein goldenes „&".
 
-<<<<<<< Updated upstream
-/* Nur die Ruhelage steht hier — Name, Rubrik, Eigenschaften und Text kommen
-   je Sprache aus common.souls und werden als `souls` hereingereicht. */
-const SOUL_SHAPE = [
-  { key: "roots", dark: true },
-  { key: "today", dark: false },
-=======
    Die beiden Karten stehen gerade nebeneinander; beim Hover tritt die
    jeweils andere Karte dezent einen Schritt zurück, ohne dass etwas im
-   Layout springt. */
+   Layout springt.
 
-const SOULS = [
-  {
+   Gemeinsame Komponente für Startseite, Shop und Geschichte — Aussehen
+   und Verhalten sind überall identisch. Nur die Ruhelage steht hier;
+   Name, Rubrik, Eigenschaften und Text kommen je Sprache aus
+   common.souls und werden als `souls` hereingereicht. Ohne Prop greift
+   der deutsche Kanon, damit ein nacktes <SoulCards /> gleich aussieht. */
+
+const SOUL_SHAPE = [
+  /* Anflugrichtung beim Einblenden — bewusst kurz gehalten */
+  { key: "roots", dark: true, from: -14 },
+  { key: "today", dark: false, from: 14 },
+];
+
+const FALLBACK = {
+  roots: {
     name: "Maria",
     tag: "Die Wurzeln",
     traits: ["Familie", "Gastfreundschaft", "Erinnerung"],
     desc: "In Lizzano beginnt die persönliche Geschichte hinter dem Namen – in einer Kultur, in der Wein, Essen und gemeinsam verbrachte Zeit zusammengehören.",
-    dark: true,
-    /* Anflugrichtung beim Einblenden — bewusst kurz gehalten */
-    from: -14,
   },
-  {
+  today: {
     name: "Maria",
     tag: "Der heutige Blick",
     traits: ["Auswahl", "Ästhetik", "Neue Perspektiven"],
     desc: "Italienische Weine bewusst auswählen, ihre Regionen erzählen und sie Menschen in verschiedenen Ländern näherbringen.",
-    dark: false,
-    from: 14,
   },
->>>>>>> Stashed changes
-];
+};
 
+/* Rautenmarken der Etikette — Position + gestaffelte Verzögerung beim Hover,
+   damit sie nicht alle vier gleichzeitig aufspringen */
 const CORNERS = [
   "left-0 top-0 -translate-x-1/2 -translate-y-1/2",
   "right-0 top-0 translate-x-1/2 -translate-y-1/2",
@@ -46,38 +48,13 @@ const CORNERS = [
   "right-0 bottom-0 translate-x-1/2 translate-y-1/2",
 ];
 
-<<<<<<< Updated upstream
-function SoulCard({ soul }) {
-=======
 const SPRING = { type: "spring", stiffness: 120, damping: 18, mass: 0.9 };
 
 function SoulCard({ soul, dimmed, onEnter, onLeave }) {
   const reduced = useReducedMotion();
->>>>>>> Stashed changes
   const { dark } = soul;
+
   return (
-<<<<<<< Updated upstream
-    <TiltCard className="group h-full" max={5} radius="rounded-card">
-      <div
-        className={`relative flex h-full flex-col overflow-hidden rounded-card p-2.5 shadow-luxe transition-shadow duration-500 group-hover:shadow-lift ${
-          dark
-            ? "bg-gradient-to-b from-bordeaux to-bordeaux-deep"
-            : "ring-hairline border border-stone/50 bg-ivory"
-        }`}
-      >
-        {/* the etiquette frame — hairline border with diamond corner marks */}
-        <div
-          className={`relative flex h-full flex-col items-center rounded-[1.125rem] border px-6 py-8 text-center sm:px-7 ${
-            dark ? "border-champagne/45" : "border-champagne/55"
-          }`}
-        >
-          {CORNERS.map((pos) => (
-            <span
-              key={pos}
-              aria-hidden="true"
-              className={`absolute h-[5px] w-[5px] rotate-45 ${pos} ${
-                dark ? "bg-champagne/70" : "bg-champagne/80"
-=======
     <div className="h-full">
       <motion.div
         className="h-full"
@@ -114,69 +91,23 @@ function SoulCard({ soul, dimmed, onEnter, onLeave }) {
                 dark
                   ? "bg-gradient-to-b from-bordeaux to-bordeaux-deep"
                   : "ring-hairline border border-stone/50 bg-ivory"
->>>>>>> Stashed changes
               }`}
-            />
-          ))}
-          <Grapes className="h-5 w-5 text-champagne" />
-          <p
-            className={`mt-5 text-[10px] font-semibold uppercase tracking-[0.28em] ${
-              dark ? "text-champagne-light" : "text-champagne"
-            }`}
-          >
-            {soul.tag}
-          </p>
-          <h3
-            className={`mt-2.5 font-playfair text-[clamp(26px,2.6vw,32px)] leading-tight ${
-              dark ? "text-ivory" : "text-charcoal"
-            }`}
-          >
-            {soul.name}
-          </h3>
-          <GoldRule className="mt-4 w-16" />
-          <p
-            className={`mt-4 text-[9.5px] font-semibold uppercase leading-[1.9] tracking-[0.2em] ${
-              dark ? "text-champagne-light" : "text-champagne"
-            }`}
-          >
-            {(soul.traits ?? []).join(" · ")}
-          </p>
-          <p
-            className={`mt-5 max-w-[26ch] text-[12.5px] leading-relaxed ${
-              dark ? "text-ivory/75" : "text-charcoal/70"
-            }`}
-          >
-            {soul.desc}
-          </p>
-        </div>
-      </div>
-    </TiltCard>
-  );
-}
+            >
+              {/* atmosphärische Drift im Karteninneren — dieselbe Sprache wie
+                  die Auren der Sektionen, nur im Kleinformat */}
+              <span aria-hidden="true" className="pointer-events-none absolute inset-0">
+                <Aura
+                  tint={dark ? "wine" : "gold"}
+                  drift={1}
+                  className="-left-24 -top-28 h-72 w-72 opacity-80"
+                />
+                <Aura
+                  tint={dark ? "bordeaux" : "champagne"}
+                  drift={2}
+                  className="-bottom-32 -right-20 h-64 w-64 opacity-70"
+                />
+              </span>
 
-<<<<<<< Updated upstream
-export default function SoulCards({ souls: copy = {} }) {
-  const souls = SOUL_SHAPE.map((s) => ({ ...s, ...(copy?.[s.key] ?? {}) }));
-  return (
-    <div className="relative">
-      <Stagger className="grid grid-cols-1 gap-5 sm:grid-cols-2" gap={0.12}>
-        {souls.map((soul) => (
-          <StaggerItem key={soul.key} className="h-full">
-            <SoulCard soul={soul} />
-          </StaggerItem>
-        ))}
-      </Stagger>
-      {/* the union of both souls — a golden seal between the two cards */}
-      <span
-        aria-hidden="true"
-        className="absolute left-1/2 top-1/2 z-10 hidden h-14 w-14 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-gradient-to-br from-champagne to-[#A9945C] font-playfair text-[24px] italic text-cream shadow-chip ring-4 ring-cream/90 sm:flex"
-      >
-        &amp;
-      </span>
-    </div>
-  );
-}
-=======
               {/* Glanz, der beim Hover einmal über das Etikett streicht — auf
                   dem Rückweg blendet er schnell aus, statt zurückzuwischen */}
               <span
@@ -229,14 +160,14 @@ export default function SoulCards({ souls: copy = {} }) {
                     dark ? "text-champagne-light" : "text-champagne"
                   }`}
                 >
-                  {soul.traits.map((trait, i) => (
+                  {(soul.traits ?? []).map((trait, i, traits) => (
                     <span
                       key={trait}
                       style={{ transitionDelay: `${i * 80}ms` }}
                       className="inline-block transition-transform duration-500 ease-out-expo group-hover:-translate-y-[3px]"
                     >
                       {trait}
-                      {i < soul.traits.length - 1 && (
+                      {i < traits.length - 1 && (
                         /* Leerzeichen im Text, nicht als Margin — sonst liest
                            der Screenreader „Familie·Gastfreundschaft" */
                         <span aria-hidden="true" className="opacity-60">
@@ -311,10 +242,11 @@ function Seal({ awake }) {
   );
 }
 
-export default function SoulCards() {
+export default function SoulCards({ souls: copy }) {
   const reduced = useReducedMotion();
   /* Welche Karte der Zeiger gerade ansteuert — die andere tritt zurück */
   const [active, setActive] = useState(null);
+  const souls = SOUL_SHAPE.map((s) => ({ ...s, ...(copy?.[s.key] ?? FALLBACK[s.key]) }));
 
   return (
     <motion.div
@@ -325,9 +257,9 @@ export default function SoulCards() {
       variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.14 } } }}
     >
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-        {SOULS.map((soul, i) => (
+        {souls.map((soul, i) => (
           <SoulCard
-            key={soul.tag}
+            key={soul.key}
             soul={soul}
             dimmed={active !== null && active !== i}
             onEnter={() => setActive(i)}
@@ -340,4 +272,3 @@ export default function SoulCards() {
     </motion.div>
   );
 }
->>>>>>> Stashed changes

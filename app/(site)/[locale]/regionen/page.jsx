@@ -226,17 +226,42 @@ export default async function RegionenPage({ params }) {
                 Gardasee den Stil der ausgewählten Maria-Maria-Weine prägen.
               </p>
             </Reveal>
+            {/* Der Einstieg nach unten.
+
+                Vorher stand hier „Den Ursprüngen folgen ↓" als schlichte
+                Textzeile — eine Beschriftung, die benennt, was passiert,
+                aber keinen Grund gibt, es zu tun. Auf einem bewegten Video
+                verschwand sie zudem fast. Jetzt stellt sie die Frage, die
+                die Seite darunter beantwortet, und der Blätterhinweis
+                (Tropfen an der Linie, `animate-cue`) zeigt, wo die Antwort
+                steht. Wer prefers-reduced-motion gesetzt hat, sieht die
+                Linie ruhig — motion-reduce schaltet den Tropfen ab. */}
             <Reveal delay={0.6} y={14}>
               <a
                 href="#apulien"
-                className="group mt-10 inline-flex min-h-[44px] items-center gap-2 text-[14px] text-ivory/90 transition-colors duration-300 hover:text-champagne"
+                className="group mt-10 inline-flex min-h-[48px] items-start gap-5 rounded-card py-1 text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-champagne lg:min-h-[44px]"
               >
-                Den Ursprüngen folgen
+                {/* Die Linie mit dem wandernden Tropfen */}
                 <span
                   aria-hidden="true"
-                  className="transition-transform duration-500 ease-out-expo group-hover:translate-y-1"
+                  className="relative mt-1.5 hidden h-14 w-px shrink-0 overflow-hidden bg-gradient-to-b from-champagne/70 to-transparent sm:block"
                 >
-                  ↓
+                  <span className="absolute left-1/2 top-0 h-2 w-2 -translate-x-1/2 rounded-full bg-champagne animate-cue motion-reduce:animate-none motion-reduce:opacity-70" />
+                </span>
+
+                <span className="flex flex-col gap-2">
+                  <span className="max-w-[26ch] font-playfair text-[clamp(1.15rem,1.9vw,1.5rem)] italic leading-snug text-ivory transition-colors duration-400 group-hover:text-champagne-light">
+                    Warum schmeckt Apulien anders als der Gardasee?
+                  </span>
+                  <span className="inline-flex items-center gap-2 text-[10.5px] font-semibold uppercase tracking-[0.24em] text-champagne">
+                    Der Antwort folgen
+                    <span
+                      aria-hidden="true"
+                      className="transition-transform duration-500 ease-out-expo group-hover:translate-y-1"
+                    >
+                      ↓
+                    </span>
+                  </span>
                 </span>
               </a>
             </Reveal>

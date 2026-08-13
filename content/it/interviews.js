@@ -30,6 +30,7 @@ const interviews = {
     aboutPerson: "L'intervistato",
     continueReading: "Continua a leggere",
     tasted: "Degustati nel colloquio",
+    inThisConversation: "In questa conversazione",
   },
 
   items: [
@@ -57,7 +58,7 @@ const interviews = {
       },
 
       portrait: {
-        src: "/img/magazin/interviews/daniele-malavasi.jpg",
+        src: "/img/magazin/daniele-solo.jpeg",
         alt: "Daniele Malavasi con un calice di Lugana e il suo cane tra i filari del vigneto di Pozzolengo",
       },
 

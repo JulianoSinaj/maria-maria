@@ -30,6 +30,7 @@ const interviews = {
     aboutPerson: "O hostovi",
     continueReading: "Číst dál",
     tasted: "Ochutnáno v rozhovoru",
+    inThisConversation: "V tomto rozhovoru",
   },
 
   items: [
@@ -57,7 +58,7 @@ const interviews = {
       },
 
       portrait: {
-        src: "/img/magazin/interviews/daniele-malavasi.jpg",
+        src: "/img/magazin/daniele-solo.jpeg",
         alt: "Daniele Malavasi se sklenkou Lugany a se svým psem mezi řadami révy ve vinici v Pozzolengu",
       },
 

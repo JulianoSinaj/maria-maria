@@ -61,11 +61,15 @@ function TypeRail({ types, labels, value, onChange, reduced }) {
     <div
       role="group"
       aria-label={labels?.byType}
+      /* Die Kapsel ist unterhalb lg *selbst* die Scroll-Fläche: Rahmen, Glas
+         und Rundung liegen fest auf dem Rahmen, nur die Pillen wandern darin.
+         Vorher lag die Kapsel im Scroller und wurde beim Wischen an der Kante
+         abgeschnitten — die Leiste sah gebrochen aus und „wuchs" nicht mit.
+         Ab lg bleibt alles wie gehabt: kein Scroll, volle Breite. */
+      className="no-scrollbar relative flex w-full max-w-full snap-x overflow-x-auto overscroll-x-contain rounded-full border border-stone/50 bg-white/60 p-1.5 backdrop-blur-sm lg:inline-flex lg:w-auto lg:overflow-visible"
       data-lenis-prevent-horizontal
-      /* Kantenfade + nativer Wisch wie im SubNav — unterhalb lg scrollbar */
-      className="no-scrollbar -mx-6 snap-x overflow-x-auto scroll-pl-6 px-6 [mask-image:linear-gradient(to_right,transparent,black_20px,black_calc(100%-20px),transparent)] lg:mx-0 lg:overflow-visible lg:px-0 lg:[mask-image:none]"
     >
-      <div className="relative inline-flex items-center gap-0.5 rounded-full border border-stone/50 bg-white/60 p-1.5 backdrop-blur-sm">
+      <div className="relative flex w-max items-center gap-0.5">
         {types.map((t) => {
           const active = t === value;
           const theme = TYPE_THEME[t] ?? TYPE_THEME.all;
@@ -75,7 +79,7 @@ function TypeRail({ types, labels, value, onChange, reduced }) {
               type="button"
               onClick={() => onChange(t)}
               aria-pressed={active}
-              className="group relative h-11 shrink-0 select-none rounded-full px-4 text-[11.5px] font-semibold uppercase tracking-[0.14em] outline-none focus-visible:ring-2 focus-visible:ring-bordeaux/45 sm:px-5"
+              className="group relative h-11 shrink-0 snap-start select-none rounded-full px-4 text-[11.5px] font-semibold uppercase tracking-[0.14em] outline-none focus-visible:ring-2 focus-visible:ring-bordeaux/45 sm:px-5"
               style={{ color: active ? theme.ink : undefined, willChange: "transform" }}
             >
               {active && (
@@ -247,7 +251,12 @@ export default function WineFilterBar({
   return (
     <div className="relative">
       <div className="flex flex-wrap items-center gap-x-4 gap-y-4 lg:flex-nowrap">
-        <TypeRail types={types} labels={typeLabels} value={type} onChange={onType} reduced={reduced} />
+        {/* Unterhalb lg belegt die Weinart-Schiene eine eigene Zeile —
+            sie ist dort volle Breite und darf sich den Platz nicht mit dem
+            Regions-Trigger teilen (sonst schrumpft die Scroll-Fläche). */}
+        <div className="w-full min-w-0 lg:w-auto lg:shrink-0">
+          <TypeRail types={types} labels={typeLabels} value={type} onChange={onType} reduced={reduced} />
+        </div>
 
         {/* Haarlinie trennt die beiden Achsen, statt sie zu stapeln */}
         <span aria-hidden="true" className="hidden h-8 w-px shrink-0 bg-charcoal/10 lg:block" />

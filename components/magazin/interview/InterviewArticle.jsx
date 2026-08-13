@@ -3,8 +3,9 @@ import Photo from "@/components/media/Photo";
 import Button from "@/components/ui/Button";
 import Parallax from "@/components/motion/Parallax";
 import { Reveal } from "@/components/motion/Reveal";
-import { GoldRule, GrapeRule } from "@/components/Deco";
+import { GrapeRule } from "@/components/Deco";
 import { Aura, GhostWord } from "@/components/Atmosphere";
+import InterviewHero from "@/components/magazin/interview/InterviewHero";
 import {
   Arrow,
   ArrowUpRight,
@@ -45,9 +46,9 @@ import { interviewPath } from "@/components/magazin/interviewRegistry";
 const PAIRING_ICONS = { fish: Fish, risotto: Risotto, stockfish: Stockfish, poultry: Poultry };
 const PATH_ICONS = { region: Mountains, pairing: Plate, interviews: Conversation };
 
-/* Eine Lesespalte. 68ch liegt in der vom Handoff geforderten Spanne 65–72. */
+/* Breitere Lesespalte: näher an der Aufmacher-Breite dieser Seite. */
 function Prose({ children, className = "" }) {
-  return <div className={`mx-auto max-w-[68ch] ${className}`}>{children}</div>;
+  return <div className={`mx-auto max-w-[84ch] ${className}`}>{children}</div>;
 }
 
 function Paragraphs({ items = [], className = "" }) {
@@ -113,16 +114,17 @@ function SectionMedia({ media, priority = false }) {
 }
 
 export default function InterviewArticle({ interview, ui = {}, wine = null, headingId = "interview-titel" }) {
-  const { byline = {}, portrait = {}, profile = {}, pairing, serving, outro, paths = [] } = interview;
+  const { portrait = {}, profile = {}, pairing, serving, outro, paths = [] } = interview;
 
-  /* „Interview: Maria Pia Tolo · Redaktion: Maria Maria · 6 Min. Lesezeit" —
-     jeder Teil fällt still weg, wenn er fehlt. Das Datum ist bis zur Freigabe
-     null (siehe Kopf von content/de/interviews.js). */
-  const bylineParts = [
-    byline.interview && `${ui.interview}: ${byline.interview}`,
-    byline.editorial && `${ui.editorial}: ${byline.editorial}`,
-    byline.date,
-    byline.readingTime,
+  /* Die Kapitelleiste des Aufmachers. Sie entsteht HIER und nicht im Hero,
+     weil dieser Artikel die Kapitel samt IDs rendert — „pairing",
+     „servieren" und „fazit" sind unten fest vergeben. So kann die Leiste
+     nie auf Anker zeigen, die es auf der Seite nicht gibt. */
+  const chapters = [
+    ...(interview.sections ?? []).map((s) => ({ id: s.id, heading: s.heading })),
+    pairing && { id: "pairing", heading: pairing.heading },
+    serving && { id: "servieren", heading: serving.heading },
+    outro && { id: "fazit", heading: outro.heading },
   ].filter(Boolean);
 
   return (
@@ -131,99 +133,11 @@ export default function InterviewArticle({ interview, ui = {}, wine = null, head
       <Aura tint="olive" drift={2} className="-right-56 top-[38%] h-[34rem] w-[34rem]" />
       <GhostWord className="left-[-2vw] top-[52%] text-[11vw]">Terroir</GhostWord>
 
-      {/* ================= AUFMACHER ================= */}
-      <header className="relative mx-auto max-w-content px-6 pb-4 pt-28 lg:px-10 lg:pt-32">
-        {/* Brotkrume — dieselbe Kette, die auch der BreadcrumbList-Knoten
-            beschreibt. Kein <nav> mit Landmark-Namen nötig: die Kette ist
-            kurz und steht direkt über der Überschrift. */}
-        <Reveal y={10} blur={false}>
-          <nav
-            aria-label={ui.interviews}
-            className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-charcoal/45"
-          >
-            {/* min-h-6: Brotkrumen sind keine CTAs und brauchen die 44 px
-                nicht — unter 24 px fielen sie aber unter die Mindestgröße
-                für Zeiger-Ziele (WCAG 2.2, 2.5.8). */}
-            <Link
-              href="/magazin"
-              className="inline-flex min-h-6 items-center transition-colors duration-300 hover:text-bordeaux"
-            >
-              {ui.magazin}
-            </Link>
-            <span aria-hidden="true">/</span>
-            <Link
-              href="/magazin#interviste"
-              className="inline-flex min-h-6 items-center transition-colors duration-300 hover:text-bordeaux"
-            >
-              {ui.interviews}
-            </Link>
-            <span aria-hidden="true">/</span>
-            <span className="text-charcoal/70">{interview.name}</span>
-          </nav>
-        </Reveal>
-
-        <div className="mt-8 grid grid-cols-1 items-start gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:gap-14">
-          {/* ---- Aufmacherfoto ---- */}
-          <Reveal y={20}>
-            <figure className="relative aspect-[4/5] overflow-hidden rounded-card-lg bg-cream">
-              <Photo
-                src={portrait.src}
-                alt={portrait.alt ?? ""}
-                sizes="(min-width: 1024px) 42vw, 100vw"
-                /* Der Aufmacher ist der LCP dieser Seite — er lädt sofort. */
-                loading="eager"
-                fetchPriority="high"
-                className="absolute inset-0 h-full w-full object-cover"
-              />
-            </figure>
-          </Reveal>
-
-          {/* ---- Rubrik, Titel, Vorspann, Byline ---- */}
-          <div className="lg:pt-2">
-            <Reveal y={14} delay={0.05}>
-              <p className="text-[10.5px] font-semibold uppercase tracking-[0.26em] text-bordeaux">
-                {interview.eyebrow}
-              </p>
-              {interview.badge && (
-                <p className="mt-4 inline-flex rounded-full border border-champagne/70 bg-white/60 px-4 py-1.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-charcoal/60">
-                  {interview.badge}
-                </p>
-              )}
-            </Reveal>
-
-            {/* Das einzige H1 der Seite. */}
-            <Reveal y={16} delay={0.1}>
-              <h1
-                id={headingId}
-                className="mt-5 text-balance font-playfair text-[clamp(2.05rem,4.4vw,3.4rem)] leading-[1.04] text-charcoal"
-              >
-                {interview.name}: {interview.headline}
-              </h1>
-            </Reveal>
-
-            <Reveal y={14} delay={0.16}>
-              <p className="mt-6 max-w-[60ch] text-[16.5px] leading-[1.6] text-charcoal/75">
-                {interview.deck}
-              </p>
-
-              <GoldRule className="mt-8 w-20" />
-
-              <p className="mt-5 flex flex-wrap items-center gap-x-2.5 gap-y-1 text-[11.5px] text-charcoal/55">
-                {bylineParts.map((part, i) => (
-                  <span key={i} className="inline-flex items-center gap-2.5">
-                    {i > 0 && (
-                      <span aria-hidden="true" className="text-champagne">
-                        ·
-                      </span>
-                    )}
-                    {part}
-                  </span>
-                ))}
-              </p>
-            </Reveal>
-          </div>
-        </div>
-      </header>
+      {/* ================= AUFMACHER =================
+          Die gesamte Landing lebt in InterviewHero — Brotkrume, Bühne,
+          Kapitelleiste. Alles ab dem Fließtext bleibt die Strecke, die der
+          Handoff abgenommen hat. */}
+      <InterviewHero interview={interview} ui={ui} chapters={chapters} headingId={headingId} />
 
       {/* ================= FLIESSTEXT ================= */}
       <div className="relative mx-auto max-w-content px-6 pb-4 pt-10 lg:px-10 lg:pt-14">

@@ -13,7 +13,7 @@ export default function StoryCta({ t = {} }) {
             src="/img/weine/hero.jpg"
             alt=""
             sizes="100vw"
-            className="h-full w-full object-cover object-[center_38%] transition-transform duration-700 ease-out-expo group-hover:scale-[1.03]"
+            className="h-full w-full object-cover object-[center_62%] transition-transform duration-700 ease-out-expo group-hover:scale-[1.03]"
           />
           {/* erst in den Markenton stimmen, dann links zum Text-Grund decken */}
           <div aria-hidden="true" className="absolute inset-0 bg-bordeaux-deep/55 mix-blend-multiply" />

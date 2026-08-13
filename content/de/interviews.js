@@ -66,6 +66,7 @@ const interviews = {
     aboutPerson: "Über den Gesprächspartner",
     continueReading: "Weiterlesen",
     tasted: "Im Gespräch verkostet",
+    inThisConversation: "In diesem Gespräch",
   },
 
   items: [
@@ -100,7 +101,7 @@ const interviews = {
       },
 
       portrait: {
-        src: "/img/magazin/interviews/daniele-malavasi.jpg",
+        src: "/img/magazin/daniele-solo.jpeg",
         alt: "Daniele Malavasi mit einem Glas Lugana und seinem Hund zwischen den Rebzeilen seines Weinbergs in Pozzolengo",
       },
 

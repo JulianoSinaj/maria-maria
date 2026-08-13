@@ -27,12 +27,6 @@ export default function InterviewCard({ interview, featured = false, delay = 0 }
   const t = interview.teaserMagazin ?? {};
   const href = interviewPath(interview.slug);
 
-  const badge = t.badge && (
-    <span className="inline-flex rounded-full border border-bordeaux/35 px-4 py-1.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-bordeaux">
-      {t.badge}
-    </span>
-  );
-
   const name = (
     <p className="text-[12.5px] font-semibold uppercase tracking-[0.18em] text-charcoal/70">
       {interview.name}
@@ -74,12 +68,15 @@ export default function InterviewCard({ interview, featured = false, delay = 0 }
     <p className="text-[11px] uppercase tracking-[0.16em] text-charcoal/45">{t.meta}</p>
   );
 
+  const portraitPosition =
+    interview.slug === "daniele-malavasi-lugana-doc" ? "object-top" : "object-center";
+
   const photo = (
     <Photo
       src={interview.portrait?.src}
       alt={interview.portrait?.alt ?? ""}
       sizes={featured ? "(min-width: 1024px) 50vw, 100vw" : "(min-width: 1024px) 33vw, 100vw"}
-      className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out-expo group-hover:scale-[1.03]"
+      className={`absolute inset-0 h-full w-full object-cover ${portraitPosition} transition-transform duration-700 ease-out-expo group-hover:scale-[1.03]`}
     />
   );
 
@@ -103,7 +100,6 @@ export default function InterviewCard({ interview, featured = false, delay = 0 }
             featured ? "px-7 py-8 sm:px-10 sm:py-12 lg:justify-center" : "px-6 py-7"
           }`}
         >
-          {badge}
           <div className="space-y-3">
             {name}
             {title}

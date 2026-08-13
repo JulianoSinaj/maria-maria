@@ -30,6 +30,7 @@ const interviews = {
     aboutPerson: "About our guest",
     continueReading: "Keep reading",
     tasted: "Tasted in this conversation",
+    inThisConversation: "In this conversation",
   },
 
   items: [
@@ -57,7 +58,7 @@ const interviews = {
       },
 
       portrait: {
-        src: "/img/magazin/interviews/daniele-malavasi.jpg",
+        src: "/img/magazin/daniele-solo.jpeg",
         alt: "Daniele Malavasi with a glass of Lugana and his dog among the vine rows of his vineyard in Pozzolengo",
       },
 

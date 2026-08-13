@@ -7,21 +7,11 @@ import { Grapes } from "@/components/Icons";
    Maria als dunkle Bordeaux-Karte (der Ursprung), Maria Pia als helle
    Elfenbein-Karte (die Gegenwart), verbunden durch ein goldenes „&". */
 
-const SOULS = [
-  {
-    name: "Maria",
-    tag: "Die Wurzeln",
-    traits: ["Familie", "Gastfreundschaft", "Erinnerung"],
-    desc: "In Lizzano beginnt die persönliche Geschichte hinter dem Namen – in einer Kultur, in der Wein, Essen und gemeinsam verbrachte Zeit zusammengehören.",
-    dark: true,
-  },
-  {
-    name: "Maria",
-    tag: "Der heutige Blick",
-    traits: ["Auswahl", "Ästhetik", "Neue Perspektiven"],
-    desc: "Italienische Weine bewusst auswählen, ihre Regionen erzählen und sie Menschen in verschiedenen Ländern näherbringen.",
-    dark: false,
-  },
+/* Nur die Ruhelage steht hier — Name, Rubrik, Eigenschaften und Text kommen
+   je Sprache aus common.souls und werden als `souls` hereingereicht. */
+const SOUL_SHAPE = [
+  { key: "roots", dark: true },
+  { key: "today", dark: false },
 ];
 
 const CORNERS = [
@@ -78,7 +68,7 @@ function SoulCard({ soul }) {
               dark ? "text-champagne-light" : "text-champagne"
             }`}
           >
-            {soul.traits.join(" · ")}
+            {(soul.traits ?? []).join(" · ")}
           </p>
           <p
             className={`mt-5 max-w-[26ch] text-[12.5px] leading-relaxed ${
@@ -93,12 +83,13 @@ function SoulCard({ soul }) {
   );
 }
 
-export default function SoulCards() {
+export default function SoulCards({ souls: copy = {} }) {
+  const souls = SOUL_SHAPE.map((s) => ({ ...s, ...(copy?.[s.key] ?? {}) }));
   return (
     <div className="relative">
       <Stagger className="grid grid-cols-1 gap-5 sm:grid-cols-2" gap={0.12}>
-        {SOULS.map((soul) => (
-          <StaggerItem key={soul.tag} className="h-full">
+        {souls.map((soul) => (
+          <StaggerItem key={soul.key} className="h-full">
             <SoulCard soul={soul} />
           </StaggerItem>
         ))}

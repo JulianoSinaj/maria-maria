@@ -136,7 +136,7 @@ function RegionSelect({ regions, labels, value, onChange, counts, allLabel, redu
         onClick={() => setOpen((o) => !o)}
         aria-expanded={open}
         aria-controls={listId}
-        aria-label="Weine nach Region filtern"
+        aria-label={labels?.byRegion}
         className="group flex h-11 select-none items-center gap-2.5 rounded-full border border-stone/50 bg-white/60 pl-4 pr-3.5 outline-none backdrop-blur-sm transition-colors duration-300 hover:border-champagne/70 focus-visible:ring-2 focus-visible:ring-bordeaux/45"
       >
         <span className="text-[10px] uppercase tracking-[0.2em] text-charcoal/40">Region</span>
@@ -165,7 +165,7 @@ function RegionSelect({ regions, labels, value, onChange, counts, allLabel, redu
           <motion.div
             id={listId}
             role="listbox"
-            aria-label="Regionen"
+            aria-label={regionLabels?.all}
             initial={reduced ? { opacity: 0 } : { opacity: 0, y: -8, scale: 0.97 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={reduced ? { opacity: 0 } : { opacity: 0, y: -6, scale: 0.98 }}

@@ -4,7 +4,7 @@ import { useRef, useState, useCallback, useEffect } from "react";
 import { motion, useReducedMotion } from "motion/react";
 import WineCard from "@/components/WineCard";
 import { ChevronRight } from "@/components/Icons";
-import { useLocalizedWines } from "@/lib/i18n/context";
+import { useCommon, useLocalizedWines } from "@/lib/i18n/context";
 
 /* Region wine rail — full-width, snap-scrolling strip of mini wine cards.
    Card widths are responsive: a fixed peek-width on mobile (so the next card
@@ -88,12 +88,13 @@ export default function RegionWineRail({ wines: incoming, label }) {
 
 function RailArrow({ dir, disabled, onClick }) {
   const isPrev = dir === "prev";
+  const ui = useCommon("ui");
   return (
     <motion.button
       type="button"
       onClick={onClick}
       disabled={disabled}
-      aria-label={isPrev ? "Vorherige Weine" : "Weitere Weine"}
+      aria-label={isPrev ? ui.prevWines : ui.moreWines}
       whileTap={disabled ? undefined : { scale: 0.92 }}
       className={`grid h-9 w-9 place-items-center rounded-full border border-stone/60 bg-cream text-charcoal transition-[opacity,background-color,border-color,box-shadow] duration-300 ${
         disabled

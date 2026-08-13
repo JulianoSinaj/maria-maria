@@ -27,6 +27,7 @@ export default function WineRail({ wines: incoming, className = "" }) {
      Region, Charakterworte und Speiseempfehlung holt der Hook dazu. */
   const wines = useLocalizedWines(incoming);
   const catalogue = useCommon("catalogue");
+  const ui = useCommon("ui");
   const reduced = useReducedMotion();
   const [filter, setFilter] = useState(null);
   // Phone pager: index = position in the filtered list; dir = slide direction.
@@ -213,13 +214,13 @@ export default function WineRail({ wines: incoming, className = "" }) {
         </div>
 
         <div className="mt-7 flex items-center justify-center gap-6">
-          {paddle({ onClick: () => go(-1), label: "Vorheriger Wein", flip: true, extra: "flex" })}
+          {paddle({ onClick: () => go(-1), label: ui.prevWine, flip: true, extra: "flex" })}
           <p aria-live="polite" className="text-[11px] uppercase tracking-[0.22em] text-charcoal/55">
             <span className="font-semibold tabular-nums text-bordeaux">{String(shown + 1).padStart(2, "0")}</span>
             <span className="mx-1.5">/</span>
             <span className="tabular-nums">{String(count).padStart(2, "0")}</span>
           </p>
-          {paddle({ onClick: () => go(1), label: "Nächster Wein", extra: "flex" })}
+          {paddle({ onClick: () => go(1), label: ui.nextWine, extra: "flex" })}
         </div>
       </div>
 
@@ -230,19 +231,19 @@ export default function WineRail({ wines: incoming, className = "" }) {
         <div className="mt-10 flex items-center justify-between">
           <p className="text-[11px] uppercase tracking-[0.22em] text-charcoal/55">
             <span className="tabular-nums">{String(count).padStart(2, "0")}</span>
-            <span className="mx-1.5">Weine</span>
+            <span className="mx-1.5">{ui.winesLabel}</span>
           </p>
           <div className="flex items-center gap-3">
             {paddle({
               onClick: () => scrollRail(-1),
-              label: "Zurück",
+              label: ui.back,
               flip: true,
               disabled: edges.start,
               extra: "flex",
             })}
             {paddle({
               onClick: () => scrollRail(1),
-              label: "Weiter",
+              label: ui.next,
               disabled: edges.end,
               extra: "flex",
             })}
@@ -274,7 +275,7 @@ export default function WineRail({ wines: incoming, className = "" }) {
           href="/unsere-weine"
           className="group inline-flex items-center gap-1.5 text-[12px] font-medium uppercase tracking-[0.16em] text-bordeaux"
         >
-          Die ganze Kollektion
+          {ui.wholeCollection}
           <Arrow className="h-3.5 w-3.5 transition-transform duration-500 ease-out-expo group-hover:translate-x-1" />
         </Link>
       </div>

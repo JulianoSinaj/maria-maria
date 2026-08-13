@@ -1,4 +1,3 @@
-import Link from "@/components/i18n/LocaleLink";
 import SplitText from "@/components/motion/SplitText";
 import TiltCard from "@/components/motion/TiltCard";
 import Marquee from "@/components/motion/Marquee";
@@ -14,74 +13,45 @@ import OriginsSection from "@/components/home/OriginsSection";
 import RegionExplorer from "@/components/home/RegionExplorer";
 import WineRail from "@/components/WineRail";
 import FaqSection from "@/components/faq/FaqSection";
-import { HOME_FAQ } from "@/components/faq/faqData";
-import { Vineyard, Glasses, Plate, Conversation, Arrow, Clock } from "@/components/Icons";
+import { Vineyard, Glasses, Plate, Conversation } from "@/components/Icons";
 import { WINES, REGION_COUNT } from "@/components/data";
 import Atmosphere, { Aura, GhostWord, Vines } from "@/components/Atmosphere";
 
 /* Die Startseite — Hero, Philosophie, Origins, Weine-Rail, Regionen,
-   Shop-CTA und Magazin-Teaser. */
+   Shop-CTA und Magazin-Teaser.
 
-const MOMENT = [
-  {
-    icon: <Glasses className="h-7 w-7" />,
-    kicker: "Auswahl",
-    title: "Persönlich kuratiert",
-    text: "Jeder Wein wird persönlich verkostet und bewusst ausgewählt. So entsteht ein überschaubares Boutique-Sortiment, das Gastgeber sicher empfehlen und Genießer leicht entdecken können.",
-    note: "Persönlich verkostet · Kuratiert",
-  },
-  {
-    icon: <Vineyard className="h-7 w-7" />,
-    kicker: "Herkunft",
-    title: "Herkunft mit Handschrift",
-    text: "Wir arbeiten mit ausgewählten, familiengeführten Weingütern in Italien. Region, Rebsorte und die Menschen hinter dem Wein geben jeder Flasche eine glaubwürdige und erzählenswerte Geschichte.",
-    note: "Familiengeführt · Italien",
-  },
-  {
-    icon: <Plate className="h-7 w-7" />,
-    kicker: "Anlass",
-    title: "Für Genussmomente gemacht",
-    text: "Vom Aperitivo und Food Pairing bis zu Events und stilvollen Geschenken: Maria Maria verbindet Geschmack, Ästhetik und italienische Lebensart in Momenten, die in Erinnerung bleiben.",
-    note: "Aperitivo · Events · Geschenke",
-  },
-  {
-    icon: <Conversation className="h-7 w-7" />,
-    kicker: "Begleitung",
-    title: "Persönlich begleitet",
-    text: "Ein klares Sortiment, verständliche Empfehlungen und der direkte Austausch erleichtern Auswahl und Einsatz – für eine persönliche Zusammenarbeit auf Augenhöhe.",
-    note: "Direkter Austausch · Beratung",
-  },
+   Der gesamte Text kommt als `t` aus content/<sprache>/home.js; hier steht
+   nur noch die Struktur — Reihenfolge, Ikonen, Bildpfade und die
+   Bildausschnitte, die zu den Motiven gehören und keine Sprache kennen. */
+
+/* Reihenfolge und Ikone je Philosophie-Karte; der Schlüssel holt Titel und
+   Text aus dem Wörterbuch. */
+const MOMENT_ICONS = [
+  ["selection", <Glasses className="h-7 w-7" />],
+  ["origin", <Vineyard className="h-7 w-7" />],
+  ["occasion", <Plate className="h-7 w-7" />],
+  ["guidance", <Conversation className="h-7 w-7" />],
 ];
 
-const REGIONS = [
+/* Region-Struktur: Foto, Bildausschnitt und der Anker auf /regionen. Name,
+   Kurzzeile und Fließtext stehen je Sprache im Wörterbuch. */
+const REGION_SHAPE = [
   {
-    name: "Apulien",
-    tag: "Das Herz des Südens",
-    desc: "Die Sonne des Südens und kraftvolle Aromen.",
-    long: "Zwischen Salento und Gallipoli reifen Primitivo und Negroamaro unter der Sonne des Südens – kraftvolle, warme Weine mit mediterraner Seele.",
-    grapes: ["Primitivo", "Negroamaro", "Rosato"],
+    key: "apulien",
     region: "apulien",
     img: "/img/home/region-apulien.webp",
     /* Trulli links im Bild; Crop hält die eingezeichnete Karte aus dem Schnitt */
     pos: "26% 50%",
   },
   {
-    name: "Kampanien",
-    tag: "Zwischen Vulkan und Meer",
-    desc: "Vulkanische Böden, ursprüngliche Charaktere.",
-    long: "Rund um Napoli und Salerno prägen die vulkanischen Böden des Vesuv Weine mit Tiefe und Ursprünglichkeit – von Falanghina bis Aglianico.",
-    grapes: ["Falanghina", "Greco di Tufo", "Aglianico"],
+    key: "kampanien",
     region: "kampanien",
     img: "/img/home/region-kampanien.webp",
     /* der Vesuv leicht links, damit die eingezeichnete Karte nicht anschneidet */
     pos: "40% 45%",
   },
   {
-    name: "Gardasee / Lombardei",
-    tag: "Eleganz des Nordens",
-    desc: "Eleganz, Frische und mineralische Tiefe.",
-    long: "Am Südufer des Gardasees entsteht Lugana – ein Weißwein von seltener Eleganz, getragen von Frische und mineralischer Tiefe.",
-    grapes: ["Lugana", "Turbiana"],
+    key: "garda",
     region: "garda",
     img: "/img/home/region-garda.webp",
     /* See und Berge tragen das Bild; Karte bleibt außerhalb des Schnitts */
@@ -89,9 +59,20 @@ const REGIONS = [
   },
 ];
 
+/* Rebsorten im Laufband — Namen, keine Beschriftungen: bleiben in jeder
+   Sprache stehen. */
 const MARQUEE = ["Primitivo", "Lugana", "Falanghina", "Greco di Tufo", "Aglianico", "Rosato"];
 
-export default function HomeContent() {
+export default function HomeContent({ t = {}, faq = [], souls }) {
+  const hero = t.hero ?? {};
+  const philosophy = t.philosophy ?? {};
+  const collection = t.collection ?? {};
+  const regionsCopy = t.regions ?? {};
+  const band = t.shopBand ?? {};
+  const faqCopy = t.faq ?? {};
+
+  const regions = REGION_SHAPE.map((r) => ({ ...r, ...(regionsCopy.items?.[r.key] ?? {}) }));
+
   return (
     <div className="relative min-h-screen">
       {/* ============ HERO ============ */}
@@ -129,8 +110,9 @@ export default function HomeContent() {
         <div className="relative mx-auto flex min-h-[100svh] max-w-content flex-col justify-end px-6 pb-24 pt-24 sm:pt-32 lg:justify-center lg:px-10 lg:pb-16">
           <div className="lg:max-w-xl">
             <Reveal y={18} delay={0.05}>
-              <Eyebrow tone="text-champagne-light">Italienische Boutique-Weine</Eyebrow>
+              <Eyebrow tone="text-champagne-light">{hero.eyebrow}</Eyebrow>
             </Reveal>
+            {/* Markenname und Claim bleiben in jeder Sprache stehen. */}
             <h1 className="mt-4 font-playfair text-[clamp(2.8rem,6vw,4.6rem)] leading-[1.05] tracking-[-0.015em] text-ivory sm:mt-6">
               <SplitText text="Maria Maria" className="block" delay={0.12} />
               <SplitText text="Il piacere del vino." className="block italic" delay={0.3} />
@@ -138,27 +120,24 @@ export default function HomeContent() {
             <Reveal delay={0.5} y={16}>
               {/* wie im Wein-Hero: die Zierlinie weicht auf Telefonen dem Platz */}
               <GrapeRule className="mt-6 hidden sm:flex" />
-              <p className="mt-5 max-w-md text-[15px] leading-relaxed text-ivory/80">
-                Handverlesene Weine kleiner Familienweingüter – für bewusst gewählte Genussmomente,
-                vom Aperitivo bis zum großen Abend.
-              </p>
+              <p className="mt-5 max-w-md text-[15px] leading-relaxed text-ivory/80">{hero.lede}</p>
             </Reveal>
             <Reveal delay={0.62} y={16}>
               <div className="mt-6 flex flex-col items-stretch gap-3 sm:mt-9 sm:flex-row sm:items-center sm:gap-3.5">
                 <Button href="/unsere-weine" size="lg" className="w-full sm:w-auto">
-                  Weine entdecken
+                  {hero.ctaWines}
                 </Button>
                 <Button href="/shop" variant="outline" size="lg" className="w-full sm:w-auto">
-                  Zum Shop
+                  {hero.ctaShop}
                 </Button>
               </div>
             </Reveal>
             <Reveal delay={0.78} y={12}>
               <dl className="mt-7 flex max-w-md items-center sm:mt-11">
                 {[
-                  [`${WINES.length}`, "Boutique-Weine"],
-                  [`${REGION_COUNT}`, "Regionen Italiens"],
-                  ["2019", "seit der Gründung"],
+                  [`${WINES.length}`, hero.statWines],
+                  [`${REGION_COUNT}`, hero.statRegions],
+                  ["2019", hero.statSince],
                 ].map(([num, label], i) => (
                   <div key={label} className={`flex-1 ${i > 0 ? "border-l border-ivory/20 pl-6" : ""}`}>
                     <dt className="sr-only">{label}</dt>
@@ -199,35 +178,35 @@ export default function HomeContent() {
         </div>
         <Atmosphere variant="warm" className="opacity-60" />
         <div className="relative mx-auto max-w-content px-6 py-10 sm:py-14 lg:px-10">
-        <SectionTitle
-          eyebrow="Unsere Philosophie"
-          description="Persönlich kuratiert, klar in ihrer Herkunft und ausgewählt für Gastronomie, Hospitality, Events und besondere Genussmomente."
-        >
-          Italienische Boutique-Weine, die sich leicht wählen, erzählen und erleben lassen.
+        <SectionTitle eyebrow={philosophy.eyebrow} description={philosophy.description}>
+          {philosophy.title}
         </SectionTitle>
         <Stagger className="mx-auto mt-7 grid w-full grid-cols-1 gap-5 sm:mt-9 sm:grid-cols-2 lg:grid-cols-4">
-          {MOMENT.map((m, i) => (
-            <StaggerItem key={m.title} className="h-full">
-              <TiltCard className="group h-full" max={5} radius="rounded-card-lg">
-                <div className="ring-hairline relative flex h-full flex-col overflow-hidden rounded-card-lg border border-stone/40 bg-white/70 p-5 shadow-luxe backdrop-blur-md transition-[box-shadow,border-color] duration-500 group-hover:border-champagne/60 group-hover:shadow-lift sm:p-6">
-                  <div className="relative flex items-center gap-4 lg:block">
-                    <IconChip>{m.icon}</IconChip>
-                    <h3 className="font-playfair text-[18px] text-charcoal lg:mt-3.5">{m.title}</h3>
+          {MOMENT_ICONS.map(([key, icon]) => {
+            const m = philosophy.moments?.[key] ?? {};
+            return (
+              <StaggerItem key={key} className="h-full">
+                <TiltCard className="group h-full" max={5} radius="rounded-card-lg">
+                  <div className="ring-hairline relative flex h-full flex-col overflow-hidden rounded-card-lg border border-stone/40 bg-white/70 p-5 shadow-luxe backdrop-blur-md transition-[box-shadow,border-color] duration-500 group-hover:border-champagne/60 group-hover:shadow-lift sm:p-6">
+                    <div className="relative flex items-center gap-4 lg:block">
+                      <IconChip>{icon}</IconChip>
+                      <h3 className="font-playfair text-[18px] text-charcoal lg:mt-3.5">{m.title}</h3>
+                    </div>
+                    <p className="relative mt-3 text-[12.5px] leading-[1.6] text-charcoal/70 lg:mt-2.5">{m.text}</p>
                   </div>
-                  <p className="relative mt-3 text-[12.5px] leading-[1.6] text-charcoal/70 lg:mt-2.5">{m.text}</p>
-                </div>
-              </TiltCard>
-            </StaggerItem>
-          ))}
+                </TiltCard>
+              </StaggerItem>
+            );
+          })}
         </Stagger>
         {/* Abschluss der Philosophie: Zierlinie, Einordnung, Partner-Einstieg */}
         <Reveal className="mt-9 flex flex-col items-center gap-4 sm:mt-11">
           <GrapeRule />
           <p className="text-balance text-center text-[13px] leading-[1.6] text-charcoal/70">
-            Für Gastronomie, Hospitality und besondere Konzepte
+            {philosophy.note}
           </p>
           <Button href="/kontakt" size="lg">
-            Maria Maria als Partner entdecken
+            {philosophy.cta}
           </Button>
         </Reveal>
         </div>
@@ -240,19 +219,15 @@ export default function HomeContent() {
         <Aura tint="gold" drift={2} className="-left-48 bottom-0 h-[30rem] w-[30rem]" />
         <GhostWord className="left-[-1vw] top-6 text-[11vw]">Vini d&apos;Italia</GhostWord>
         <div className="relative mx-auto max-w-content px-6 lg:px-10">
-          <SectionTitle
-            align="left"
-            eyebrow="Die Kollektion"
-            description="Neun Charaktere aus vier Regionen – jeder mit eigener Geschichte."
-          >
-            Unsere Weine
+          <SectionTitle align="left" eyebrow={collection.eyebrow} description={collection.description}>
+            {collection.title}
           </SectionTitle>
           <WineRail wines={WINES} className="mt-8 sm:mt-10" />
         </div>
       </section>
 
       {/* ============ LE ORIGINI (Markengeschichte) ============ */}
-      <OriginsSection />
+      <OriginsSection t={t.origins} souls={souls} />
 
       {/* ============ REGIONEN ============ */}
       <section className="relative overflow-hidden">
@@ -260,21 +235,17 @@ export default function HomeContent() {
         <GhostWord className="right-[-3vw] top-14 text-[13vw]">Italia</GhostWord>
         <div className="relative mx-auto max-w-content px-6 py-16 sm:py-24 lg:px-10">
         <div className="flex flex-wrap items-end justify-between gap-6">
-          <SectionTitle
-            align="left"
-            eyebrow="Herkunft"
-            description="Boden, Licht und Klima prägen jede Traube – am Ende schmeckt man die Landschaft im Glas."
-          >
-            Wo unsere Weine zuhause sind
+          <SectionTitle align="left" eyebrow={regionsCopy.eyebrow} description={regionsCopy.description}>
+            {regionsCopy.title}
           </SectionTitle>
           <Reveal delay={0.15}>
             <Button href="/regionen" variant="premium" size="sm">
-              Alle Regionen
+              {regionsCopy.cta}
             </Button>
           </Reveal>
         </div>
         <Reveal delay={0.12} className="mt-10 sm:mt-12">
-          <RegionExplorer regions={REGIONS} />
+          <RegionExplorer regions={regions} ctaLabel={regionsCopy.detailCta} />
         </Reveal>
         </div>
       </section>
@@ -283,15 +254,15 @@ export default function HomeContent() {
       {/* Bauform liegt in components/ui/ShopCtaBand — dieses Band war die
           Vorlage, die übrigen Seiten teilen sie jetzt. */}
       <ShopCtaBand
-        eyebrow="Der offizielle Shop"
+        eyebrow={band.eyebrow}
         title={
           <>
-            Bereit für den Geschmack, der <span className="italic text-champagne">Sie inspiriert?</span>
+            {band.title} <span className="italic text-champagne">{band.titleAccent}</span>
           </>
         }
-        text="Entdecken und bestellen Sie unsere Weine bequem online – direkt vom Weingut zu Ihnen nach Hause."
-        primary={{ label: "Zum Shop", href: "/shop" }}
-        secondary={{ label: "Kontakt aufnehmen", href: "/kontakt" }}
+        text={band.text}
+        primary={{ label: band.primary, href: "/shop" }}
+        secondary={{ label: band.secondary, href: "/kontakt" }}
       />
 
       {/* ============ HÄUFIGE FRAGEN (Brand-FAQ) ============ */}
@@ -301,18 +272,18 @@ export default function HomeContent() {
         <FaqSection
           className="relative"
           pageType="home"
-          eyebrow="Häufige Fragen"
+          eyebrow={faqCopy.eyebrow}
           title={
             <>
-              Maria Maria, <span className="italic text-bordeaux">kurz erklärt.</span>
+              {faqCopy.title} <span className="italic text-bordeaux">{faqCopy.titleAccent}</span>
             </>
           }
-          description="Alles, was Sie über unsere Weine, den Einkauf und eine mögliche Zusammenarbeit mit Maria Maria wissen möchten."
-          items={HOME_FAQ}
+          description={faqCopy.description}
+          items={faq}
           layout="single"
           footer={{
-            note: "Noch Fragen oder Interesse an einer Zusammenarbeit?",
-            label: "Persönlich Kontakt aufnehmen",
+            note: faqCopy.footerNote,
+            label: faqCopy.footerLabel,
             href: "/kontakt",
           }}
         />

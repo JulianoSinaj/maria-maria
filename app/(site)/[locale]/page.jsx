@@ -75,7 +75,7 @@ export default async function HomePage({ params }) {
   return (
     <>
       <HomeJsonLd locale={params.locale} dict={dict} />
-      <HomeContent />
+      <HomeContent t={dict.home} faq={dict.faq?.home ?? []} souls={dict.common?.souls} />
     </>
   );
 }

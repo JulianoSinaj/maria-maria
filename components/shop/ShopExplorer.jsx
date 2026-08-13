@@ -1,7 +1,7 @@
 "use client";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import ShopCard from "./ShopCard";
-import { useWines } from "@/lib/i18n/context";
+import { useCommon, useWines } from "@/lib/i18n/context";
 
 /* Maria Maria Selection — die ganze Selection in einem layout-animierten Grid. */
 
@@ -10,6 +10,8 @@ const GRID_SPRING = { type: "spring", stiffness: 300, damping: 30 };
 export default function ShopExplorer() {
   const reduced = useReducedMotion();
   const wines = useWines();
+  const catalogue = useCommon("catalogue");
+  const ui = useCommon("ui");
 
   const itemMotion = reduced
     ? {}
@@ -30,10 +32,12 @@ export default function ShopExplorer() {
             <span className="mr-1.5 font-playfair text-[24px] normal-case tabular-nums tracking-normal text-bordeaux">
               {wines.length}
             </span>
-            {wines.length === 1 ? "Wein" : "Weine"}
+            {wines.length === 1
+              ? catalogue.filters?.wineOne
+              : catalogue.filters?.wineMany}
           </p>
           <p className="mt-1 flex h-4 items-center justify-end text-[10.5px] text-charcoal/45">
-            Alle Preise inkl. MwSt., zzgl. Versand
+            {ui.priceNote}
           </p>
         </div>
       </div>

@@ -29,6 +29,7 @@ const FAN = {
 export default function BundleCard({ bundle, className = "" }) {
   const { price: fmtPrice } = useLocaleTools();
   const shop = useCommon("shop");
+  const ui = useCommon("ui");
   const copy = shop.bundles?.[bundle.id] ?? {};
   const reduced = useReducedMotion();
   const { add, openCart } = useCart();
@@ -82,7 +83,7 @@ export default function BundleCard({ bundle, className = "" }) {
                 <Photo
                   key={w.name}
                   src={w.photos.front}
-                  alt={`Flasche ${w.name}`}
+                  alt={(ui.bottleAlt ?? "").replace("{name}", w.name)}
                   draggable={false}
                   /* Aufgefächerte Flaschen, h-32/h-40 — nie breiter als
                      ~160 px, auf Retina 320. */
@@ -146,10 +147,10 @@ export default function BundleCard({ bundle, className = "" }) {
               >
                 {added ? (
                   <span className="inline-flex items-center gap-2">
-                    <Check className="h-4 w-4" /> Hinzugefügt
+                    <Check className="h-4 w-4" /> {ui.added}
                   </span>
                 ) : (
-                  "Paket in den Warenkorb"
+                  ui.addBundle
                 )}
               </Button>
               {/* fixed-height slot so the confirmation link never shifts layout */}
@@ -163,7 +164,7 @@ export default function BundleCard({ bundle, className = "" }) {
                     transition={{ type: "spring", stiffness: 200, damping: 22 }}
                     className="text-[11.5px] font-medium text-bordeaux underline-offset-4 hover:underline"
                   >
-                    Warenkorb ansehen
+                    {ui.viewCart}
                   </motion.button>
                 )}
               </div>

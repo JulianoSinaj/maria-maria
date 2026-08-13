@@ -62,7 +62,7 @@ function GlassLight() {
   );
 }
 
-function DetailCard({ region, compact = false }) {
+function DetailCard({ region, ctaLabel, compact = false }) {
   if (compact) {
     return (
       <div className="glass-dark relative overflow-hidden rounded-card p-5">
@@ -73,7 +73,7 @@ function DetailCard({ region, compact = false }) {
           <p className="mt-2 text-[13px] leading-relaxed text-ivory/75">{region.long || region.desc}</p>
           <div className="mt-4">
             <Button href={`/regionen#${region.region}`} size="sm" magnetic={false}>
-              Mehr entdecken
+              {ctaLabel}
             </Button>
           </div>
         </div>
@@ -96,7 +96,7 @@ function DetailCard({ region, compact = false }) {
         </div>
         <div className="shrink-0">
           <Button href={`/regionen#${region.region}`} size="sm" magnetic={false}>
-            Mehr entdecken
+            {ctaLabel}
           </Button>
         </div>
       </div>
@@ -152,7 +152,7 @@ function CardPhoto({ region, drift, active, reduced }) {
   );
 }
 
-export default function RegionExplorer({ regions }) {
+export default function RegionExplorer({ regions, ctaLabel }) {
   const [active, setActive] = useState(null); // Desktop: Karte unter Cursor/Fokus
   const [open, setOpen] = useState(null); // Mobil: aufgeklappte Karte
   const reduced = useReducedMotion();
@@ -247,7 +247,7 @@ export default function RegionExplorer({ regions }) {
                 style={{ willChange: "transform, opacity", pointerEvents: isActive ? "auto" : "none" }}
                 className="absolute inset-x-3.5 bottom-3.5 lg:inset-x-4 lg:bottom-4"
               >
-                <DetailCard region={r} />
+                <DetailCard region={r} ctaLabel={ctaLabel} />
               </motion.div>
             </div>
           );
@@ -333,7 +333,7 @@ export default function RegionExplorer({ regions }) {
                     className="relative overflow-hidden"
                   >
                     <div className="px-4 pb-5">
-                      <DetailCard region={r} compact />
+                      <DetailCard region={r} ctaLabel={ctaLabel} compact />
                     </div>
                   </motion.div>
                 )}

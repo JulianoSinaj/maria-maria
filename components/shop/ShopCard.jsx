@@ -31,6 +31,7 @@ function Packshot({ wine, imgClass }) {
 export default function ShopCard({ wine, className = "", index }) {
   const { price: fmtPrice, number: formatCount } = useLocaleTools();
   const shop = useCommon("shop");
+  const ui = useCommon("ui");
   const meta = WINE_META[wine.name] || {};
   const link = wineHref(wine);
   const number = Number.isInteger(index) ? String(index + 1).padStart(2, "0") : null;
@@ -54,7 +55,7 @@ export default function ShopCard({ wine, className = "", index }) {
             number ? "mt-3" : ""
           }`}
         >
-          <Link href={link} className="outline-none after:absolute after:inset-0" aria-label={`${wine.name} — Details ansehen`}>
+          <Link href={link} className="outline-none after:absolute after:inset-0" aria-label={(ui.wineDetails ?? "").replace("{name}", wine.name)}>
             {wine.name}
           </Link>
         </h3>
@@ -78,7 +79,7 @@ export default function ShopCard({ wine, className = "", index }) {
 
         <p className="pointer-events-none mt-auto inline-flex items-center gap-1.5 pt-4 text-[12px] font-medium text-bordeaux">
           <span className="border-b border-bordeaux/30 pb-0.5 transition-colors duration-300 group-hover:border-bordeaux/70">
-            Wein kennenlernen
+            {ui.discoverWine}
           </span>
           <Arrow className="h-3.5 w-3.5 transition-transform duration-500 ease-out-expo group-hover:translate-x-1" />
         </p>
@@ -87,7 +88,7 @@ export default function ShopCard({ wine, className = "", index }) {
         <div className="mt-4 flex items-center justify-between gap-3">
           <p className="text-[15px] font-semibold tabular-nums text-charcoal">
             {fmtPrice(wine.price)}
-            <span className="ml-1.5 text-[10px] font-normal text-charcoal/60">/ 0,75 l</span>
+            <span className="ml-1.5 text-[10px] font-normal text-charcoal/60">{ui.perBottle}</span>
           </p>
           <AddToCart wine={wine} />
         </div>

@@ -5,6 +5,7 @@ import { motion, useReducedMotion } from "motion/react";
 import { Eyebrow, GoldRule } from "@/components/Deco";
 import { Reveal } from "@/components/motion/Reveal";
 import { Arrow } from "@/components/Icons";
+import { useCommon } from "@/lib/i18n/context";
 import {
   pushEvent,
   pageLocation,
@@ -58,6 +59,7 @@ export default function FaqSection({
 }) {
   const uid = useId();
   const reduced = useReducedMotion();
+  const ui = useCommon("ui");
 
   /* flache Listen intern als Ein-Gruppen-Fall behandeln */
   const grouped = useMemo(
@@ -195,7 +197,7 @@ export default function FaqSection({
 
           {hasIndex && (
             <Reveal delay={0.1}>
-              <nav aria-label="FAQ-Themen" className="mt-6">
+              <nav aria-label={ui.faqTopics} className="mt-6">
                 {/* Kantenfade + nativer Wisch (data-lenis-prevent-horizontal)
                     wie im SubNav — unterhalb lg ist die Themenzeile scrollbar,
                     ab lg wird sie zur Spalte und die Maske verschwindet. */}

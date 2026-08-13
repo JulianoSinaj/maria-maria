@@ -224,6 +224,57 @@ export const common = {
     },
   },
 
+  /* Kleinteil, das in Client-Components steckt: Karten-Beschriftungen,
+     Blätter-Knöpfe, Warenkorb-Labels, Bild-Alternativtexte. Alles hier ist
+     entweder sichtbar oder wird vorgelesen — {name} und {side} setzt die
+     jeweilige Komponente ein. */
+  ui: {
+    discoverWine: "Wein kennenlernen",
+    wineDetails: "{name} — Details ansehen",
+    bottleAlt: "Flasche {name}",
+    bottleFront: "Vorderseite",
+    bottleBack: "Rückseite",
+    bottleFrontAlt: "Flasche {name} – Vorderseite",
+    bottleBackAlt: "Flasche {name} – Rückseite",
+    showSide: "{side} zeigen",
+    prevWine: "Vorheriger Wein",
+    nextWine: "Nächster Wein",
+    prevWines: "Vorherige Weine",
+    moreWines: "Weitere Weine",
+    back: "Zurück",
+    next: "Weiter",
+    wholeCollection: "Die ganze Kollektion",
+    winesLabel: "Weine",
+    addToCart: "{name} in den Warenkorb legen",
+    removeBottle: "Eine Flasche {name} entfernen",
+    addBottle: "Eine weitere Flasche {name} hinzufügen",
+    addBundle: "Paket in den Warenkorb",
+    added: "Hinzugefügt",
+    viewCart: "Warenkorb ansehen",
+    priceNote: "Alle Preise inkl. MwSt., zzgl. Versand",
+    perBottle: "/ 0,75 l",
+    faqTopics: "FAQ-Themen",
+    discoverMore: "Mehr entdecken",
+  },
+
+  /* Die zwei Seelen hinter dem Namen (components/SoulCards) — steht auf
+     Startseite, Shop und Geschichte, deshalb im gemeinsamen Abschnitt.
+     Neigung, Versatz und Reihenfolge bleiben im Code. */
+  souls: {
+    roots: {
+      name: "Maria",
+      tag: "Die Wurzeln",
+      traits: ["Familie", "Gastfreundschaft", "Erinnerung"],
+      desc: "In Lizzano beginnt die persönliche Geschichte hinter dem Namen – in einer Kultur, in der Wein, Essen und gemeinsam verbrachte Zeit zusammengehören.",
+    },
+    today: {
+      name: "Maria",
+      tag: "Der heutige Blick",
+      traits: ["Auswahl", "Ästhetik", "Neue Perspektiven"],
+      desc: "Italienische Weine bewusst auswählen, ihre Regionen erzählen und sie Menschen in verschiedenen Ländern näherbringen.",
+    },
+  },
+
   /* Sprachumschalter — neu mit der Mehrsprachigkeit. */
   language: {
     label: "Sprache",

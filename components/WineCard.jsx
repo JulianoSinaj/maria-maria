@@ -4,7 +4,7 @@ import Bottle from "./Bottle";
 import WinePhotos from "./WinePhotos";
 import { Arrow } from "./Icons";
 import { wineHref } from "./data";
-import { useLocaleTools } from "@/lib/i18n/context";
+import { useCommon, useLocaleTools } from "@/lib/i18n/context";
 
 /* Editorial wine entry — kein Karten-Chrome mehr: Flasche und Text schweben
    frei auf dem Seitengrund (Referenz: „Neun Charaktere"-Layout).
@@ -33,6 +33,8 @@ function Packshot({ wine, imgClass }) {
 
 export default function WineCard({ wine, variant = "default", className = "", href, index }) {
   const { list } = useLocaleTools();
+  const ui = useCommon("ui");
+  const detailsLabel = (ui.wineDetails ?? "").replace("{name}", wine.name);
   // Landingpage des Weins, sonst Shop — explizites href gewinnt.
   const link = href ?? wineHref(wine);
   const number = Number.isInteger(index) ? String(index + 1).padStart(2, "0") : null;
@@ -46,14 +48,14 @@ export default function WineCard({ wine, variant = "default", className = "", hr
         </div>
         <div className="min-w-0 flex-1 py-1">
           <h3 className="font-playfair text-[15px] italic leading-snug text-vine transition-colors duration-300 group-hover:text-bordeaux">
-            <Link href={link} className="outline-none after:absolute after:inset-0" aria-label={`${wine.name} — Details ansehen`}>
+            <Link href={link} className="outline-none after:absolute after:inset-0" aria-label={detailsLabel}>
               {wine.name}
             </Link>
           </h3>
           <p className="mt-0.5 font-playfair text-[11.5px] italic text-bordeaux/75">{wine.region}</p>
           <p className="mt-2 text-[10.5px] lowercase tracking-[0.04em] text-charcoal/70">{words}</p>
           <p className="pointer-events-none mt-3 inline-flex items-center gap-1.5 text-[11px] font-medium text-bordeaux">
-            Wein kennenlernen
+            {ui.discoverWine}
             <Arrow className="h-3 w-3 transition-transform duration-400 ease-out-expo group-hover:translate-x-0.5" />
           </p>
         </div>
@@ -79,7 +81,7 @@ export default function WineCard({ wine, variant = "default", className = "", hr
             number ? "mt-3" : ""
           }`}
         >
-          <Link href={link} className="outline-none after:absolute after:inset-0" aria-label={`${wine.name} — Details ansehen`}>
+          <Link href={link} className="outline-none after:absolute after:inset-0" aria-label={detailsLabel}>
             {wine.name}
           </Link>
         </h3>
@@ -90,7 +92,7 @@ export default function WineCard({ wine, variant = "default", className = "", hr
         )}
         <p className="pointer-events-none mt-auto inline-flex items-center gap-1.5 pt-4 text-[12px] font-medium text-bordeaux">
           <span className="border-b border-bordeaux/30 pb-0.5 transition-colors duration-300 group-hover:border-bordeaux/70">
-            Wein kennenlernen
+            {ui.discoverWine}
           </span>
           <Arrow className="h-3.5 w-3.5 transition-transform duration-500 ease-out-expo group-hover:translate-x-1" />
         </p>

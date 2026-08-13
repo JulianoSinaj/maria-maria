@@ -1,18 +1,20 @@
-import Link from "@/components/i18n/LocaleLink";
 import Button from "@/components/ui/Button";
 import { Reveal } from "@/components/motion/Reveal";
 import { Eyebrow, GoldRule } from "@/components/Deco";
-import { Arrow } from "@/components/Icons";
 import Atmosphere, { GhostWord } from "@/components/Atmosphere";
 import SoulCards from "@/components/SoulCards";
 
 /* Le Origini auf der Startseite — die Markengeschichte gehört an den Anfang
    der Reise, nicht nur in den Shop: der Sommer 2019 im Salento, die zwei
-   Seelen hinter dem Namen und der Weg vom Salento hinauf zum Gardasee. */
+   Seelen hinter dem Namen und der Weg vom Salento hinauf zum Gardasee.
 
-const JOURNEY = ["Salento", "Apulien", "Kampanien", "Gardasee"];
+   Text kommt als `t` aus content/<sprache>/home.js (Abschnitt `origins`);
+   „Le Origini" und „Due anime" bleiben als italienische Marken-Setzungen
+   in jeder Sprache stehen. */
 
-export default function OriginsSection() {
+export default function OriginsSection({ t = {}, souls }) {
+  const journey = t.journey ?? [];
+
   return (
     <section className="relative overflow-hidden">
       <Atmosphere variant="olive" />
@@ -23,12 +25,8 @@ export default function OriginsSection() {
             Premium-Variante für Luxus-Appeal und visuellen Impact */}
         <div className="absolute right-6 top-8 z-10 hidden sm:top-10 sm:block lg:right-10">
           <Reveal delay={0.1}>
-            <Button
-              href="/geschichte"
-              variant="premium"
-              size="sm"
-            >
-              Magazin
+            <Button href="/geschichte" variant="premium" size="sm">
+              {t.cta}
             </Button>
           </Reveal>
         </div>
@@ -38,29 +36,27 @@ export default function OriginsSection() {
             <Reveal>
               <Eyebrow>Le Origini</Eyebrow>
               <h2 className="mt-4 text-balance font-playfair text-[clamp(1.75rem,3.4vw,2.6rem)] leading-[1.12] text-charcoal">
-                Zwei Seelen, <span className="italic text-bordeaux">ein Name</span>
+                {t.title} <span className="italic text-bordeaux">{t.titleAccent}</span>
               </h2>
-              <p className="mt-5 max-w-lg text-[13.5px] leading-relaxed text-charcoal/70">
-                Maria Maria beginnt im Salento, im Sommer 2019 — zwischen Kindheitserinnerungen und
-                alten Rebzeilen wurde aus einem Moment eine Erleuchtung: Wein ist für uns kein
-                Getränk, sondern ein Katalysator für Emotionen.
-              </p>
-              <p className="mt-4 max-w-lg text-[13.5px] leading-relaxed text-charcoal/70">
-                Seitdem führt unsere Reise von den sonnigen Rebzeilen des Salento über die
-                Vulkanböden Kampaniens hinauf ans Südufer des Gardasees — jede Flasche eine Station,
-                jede Region eine eigene Sprache.
-              </p>
+              {(t.paragraphs ?? []).map((text, i) => (
+                <p
+                  key={i}
+                  className={`${i === 0 ? "mt-5" : "mt-4"} max-w-lg text-[13.5px] leading-relaxed text-charcoal/70`}
+                >
+                  {text}
+                </p>
+              ))}
             </Reveal>
 
             {/* the journey — Salento → Gardasee */}
             <Reveal delay={0.12}>
               <ol className="mt-7 flex flex-wrap items-center gap-y-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-charcoal/60">
-                {JOURNEY.map((stop, i) => (
+                {journey.map((stop, i) => (
                   <li key={stop} className="flex items-center">
                     {i > 0 && (
                       <span aria-hidden="true" className="mx-2.5 h-px w-5 bg-champagne sm:w-7" />
                     )}
-                    <span className={i === 0 || i === JOURNEY.length - 1 ? "text-bordeaux" : ""}>
+                    <span className={i === 0 || i === journey.length - 1 ? "text-bordeaux" : ""}>
                       {stop}
                     </span>
                   </li>
@@ -71,27 +67,21 @@ export default function OriginsSection() {
             <Reveal delay={0.18}>
               <div className="mt-8 flex items-center gap-3">
                 <GoldRule className="w-12" />
-                <p className="font-playfair text-[19px] italic leading-snug text-vine">
-                  „Italian wine, personal selection, share the pleasure.“
-                </p>
+                <p className="font-playfair text-[19px] italic leading-snug text-vine">{t.quote}</p>
               </div>
             </Reveal>
 
             <Reveal delay={0.22}>
               <div className="mt-8 sm:hidden">
-                <Button
-                  href="/geschichte"
-                  variant="premium"
-                  size="sm"
-                >
-                  Magazin
+                <Button href="/geschichte" variant="premium" size="sm">
+                  {t.cta}
                 </Button>
               </div>
             </Reveal>
           </div>
 
           {/* the double soul */}
-          <SoulCards />
+          <SoulCards souls={souls} />
         </div>
       </div>
     </section>

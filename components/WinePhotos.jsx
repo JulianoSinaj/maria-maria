@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { photoSrcSet } from "@/components/media/Photo";
+import { useCommon } from "@/lib/i18n/context";
 
 /* Swipe-Bühne für die echten Packshots einer Weinkarte.
 
@@ -21,12 +22,21 @@ const SPRING = { type: "spring", stiffness: 300, damping: 30 };
 
 export default function WinePhotos({ wine, imgClass = "h-44", lift = true, className = "" }) {
   const reduced = useReducedMotion();
+  const ui = useCommon("ui");
   // side = 0 Vorderseite / 1 Rückseite; dir = Blätterrichtung für die Animation
   const [[side, dir], setSide] = useState([0, 0]);
 
   const shots = [
-    { src: wine.photos.front, alt: `Flasche ${wine.name} – Vorderseite`, label: "Vorderseite" },
-    { src: wine.photos.back, alt: `Flasche ${wine.name} – Rückseite`, label: "Rückseite" },
+    {
+      src: wine.photos.front,
+      alt: (ui.bottleFrontAlt ?? "").replace("{name}", wine.name),
+      label: ui.bottleFront ?? "",
+    },
+    {
+      src: wine.photos.back,
+      alt: (ui.bottleBackAlt ?? "").replace("{name}", wine.name),
+      label: ui.bottleBack ?? "",
+    },
   ];
 
   const paginate = (step) => setSide(([s]) => [(s + step + shots.length) % shots.length, step]);
@@ -94,9 +104,9 @@ export default function WinePhotos({ wine, imgClass = "h-44", lift = true, class
       <div className="mt-2 flex items-center gap-1.5 max-lg:gap-3">
         {shots.map((s, i) => (
           <button
-            key={s.label}
+            key={i}
             type="button"
-            aria-label={`${s.label} zeigen`}
+            aria-label={(ui.showSide ?? "").replace("{side}", s.label)}
             aria-pressed={i === side}
             onClick={() => i !== side && paginate(i - side)}
             className="group/dot relative flex h-4 w-4 items-center justify-center max-lg:before:absolute max-lg:before:-inset-x-1.5 max-lg:before:-inset-y-3.5 max-lg:before:content-['']"

@@ -3,6 +3,7 @@ import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { Cart, Plus } from "@/components/Icons";
 import { Minus } from "./ShopIcons";
 import { useCart } from "./CartContext";
+import { useCommon } from "@/lib/i18n/context";
 import { wineId } from "./shopData";
 
 /* Add-to-cart control — a circular cart button that morphs into a quantity
@@ -14,6 +15,7 @@ const SPRING = { type: "spring", stiffness: 320, damping: 24 };
 export default function AddToCart({ wine, className = "" }) {
   const reduced = useReducedMotion();
   const { add, decrement, qtyOf } = useCart();
+  const ui = useCommon("ui");
   const id = wineId(wine);
   const qty = qtyOf(id);
 
@@ -25,7 +27,7 @@ export default function AddToCart({ wine, className = "" }) {
             key="add"
             type="button"
             onClick={() => add(id)}
-            aria-label={`${wine.name} in den Warenkorb legen`}
+            aria-label={(ui.addToCart ?? "").replace("{name}", wine.name)}
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.8 }}
@@ -47,7 +49,7 @@ export default function AddToCart({ wine, className = "" }) {
             <motion.button
               type="button"
               onClick={() => decrement(id)}
-              aria-label={`Eine Flasche ${wine.name} entfernen`}
+              aria-label={(ui.removeBottle ?? "").replace("{name}", wine.name)}
               whileTap={{ scale: 0.85 }}
               transition={SPRING}
               className="flex h-9 w-9 items-center justify-center rounded-full transition-colors duration-300 hover:bg-white/10"
@@ -67,7 +69,7 @@ export default function AddToCart({ wine, className = "" }) {
             <motion.button
               type="button"
               onClick={() => add(id)}
-              aria-label={`Eine weitere Flasche ${wine.name} hinzufügen`}
+              aria-label={(ui.addBottle ?? "").replace("{name}", wine.name)}
               whileTap={{ scale: 0.85 }}
               transition={SPRING}
               className="flex h-9 w-9 items-center justify-center rounded-full transition-colors duration-300 hover:bg-white/10"

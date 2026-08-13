@@ -82,7 +82,6 @@ export const geschichte = {
       linkLabel: "Discover Lugana and Lake Garda",
       alt: "Vineyards of the Lugana area on Lake Garda",
       micro: "Luce sul Garda",
-      caption: "Morainic soils, Turbiana and mild lake breezes.",
     },
     duesseldorf: {
       label: "Since 2019 · Düsseldorf",

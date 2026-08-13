@@ -16,9 +16,11 @@
 
 export const STORY_CHAPTERS = [
   {
-    num: "01",
-    id: "anfang",
-    img: "/img/aperitivo-sunset.jpg",
+    num: "05",
+    id: "duesseldorf",
+    link: { href: "/unsere-weine" },
+    img: "/img/magazin/leave.jpeg",
+    preserveFormat: true,
   },
   {
     num: "02",
@@ -39,13 +41,13 @@ export const STORY_CHAPTERS = [
     id: "gardasee",
     rebsorten: "Turbiana · Lugana DOC",
     link: { href: "/unsere-weine/lugana" },
-    img: "/img/magazin/lagoDG.jpg",
+    img: "/img/magazin/eleganca.jpg",
   },
   {
-    num: "05",
-    id: "duesseldorf",
-    link: { href: "/unsere-weine" },
-    img: "/img/magazin/abendessen.jpg",
+    num: "01",
+    id: "anfang",
+    img: "/img/maria1-con-vino.jpeg",
+    preserveFormat: true,
   },
 ];
 

@@ -97,7 +97,6 @@ export const geschichte = {
       linkLabel: "Lugana und den Gardasee entdecken",
       alt: "Weinberge des Lugana-Gebiets am Gardasee",
       micro: "Luce sul Garda",
-      caption: "Moränenböden, Turbiana und milde Seebrisen.",
     },
     duesseldorf: {
       label: "Seit 2019 · Düsseldorf",

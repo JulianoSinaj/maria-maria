@@ -17,7 +17,7 @@ import { Arrow } from "@/components/Icons";
    `caption` steht als Didascalia darunter. */
 
 export default function StoryChapter({ chapter, flipped = false }) {
-  const { id, label, title, paragraphs, quote, rebsorten, link, img, alt, micro, caption } =
+  const { id, label, title, paragraphs, quote, rebsorten, link, img, alt, micro, caption, preserveFormat } =
     chapter;
   const headingId = `story-${id}`;
   /* Desktop-Spalten: das Foto wechselt die Seite, Text und Zitat nehmen
@@ -72,13 +72,19 @@ export default function StoryChapter({ chapter, flipped = false }) {
         <Reveal className={`${photoCol} lg:row-start-1 ${quote ? "lg:row-span-2" : ""}`} y={24}>
           <figure>
             <TiltCard className="group" max={4} radius="rounded-card-lg">
-              <div className="relative aspect-[16/10] overflow-hidden rounded-card-lg shadow-luxe transition-shadow duration-500 group-hover:shadow-lift">
-                <Parallax speed={0.08} overscan className="absolute inset-0">
+              <div
+                className={`${preserveFormat ? "relative" : "relative aspect-[16/10]"} overflow-hidden rounded-card-lg shadow-luxe transition-shadow duration-500 group-hover:shadow-lift`}
+              >
+                <Parallax
+                  speed={0.08}
+                  overscan
+                  className={preserveFormat ? "relative block" : "absolute inset-0"}
+                >
                   <Photo
                     src={img}
                     alt={alt}
                     sizes="(min-width: 1024px) 50vw, 100vw"
-                    className="h-full w-full object-cover transition-transform duration-700 ease-out-expo group-hover:scale-[1.04]"
+                    className={`${preserveFormat ? "h-auto w-full" : "h-full w-full object-cover"} transition-transform duration-700 ease-out-expo group-hover:scale-[1.04]`}
                   />
                 </Parallax>
                 <div

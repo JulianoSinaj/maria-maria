@@ -82,7 +82,6 @@ export const geschichte = {
       linkLabel: "Objevit Luganu a Gardské jezero",
       alt: "Vinice oblasti Lugana u Gardského jezera",
       micro: "Luce sul Garda",
-      caption: "Morénové půdy, Turbiana a mírné vánky od jezera.",
     },
     duesseldorf: {
       label: "Od roku 2019 · Düsseldorf",

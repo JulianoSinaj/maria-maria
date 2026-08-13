@@ -226,10 +226,6 @@ export default async function GeschichtePage({ params }) {
                       className="h-full w-full object-cover transition-transform duration-700 ease-out-expo group-hover:scale-[1.04]"
                     />
                   </Parallax>
-                  {/* das Siegel der Auswahl — als stilles Etikett auf dem Foto */}
-                  <figcaption className="absolute bottom-5 left-5 rounded-full bg-ivory/90 px-4 py-2 text-[9.5px] font-semibold uppercase tracking-[0.22em] text-bordeaux shadow-chip backdrop-blur-sm">
-                    {hero.photoBadge}
-                  </figcaption>
                 </figure>
               </TiltCard>
             </Reveal>

@@ -82,7 +82,6 @@ export const geschichte = {
       linkLabel: "Scopri il Lugana e il Lago di Garda",
       alt: "Vigneti della zona del Lugana sul Lago di Garda",
       micro: "Luce sul Garda",
-      caption: "Suoli morenici, Turbiana e le brezze miti del lago.",
     },
     duesseldorf: {
       label: "Dal 2019 · Düsseldorf",

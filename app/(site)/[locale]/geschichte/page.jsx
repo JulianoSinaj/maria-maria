@@ -2,7 +2,7 @@ import Link from "@/components/i18n/LocaleLink";
 import SplitText from "@/components/motion/SplitText";
 import { Reveal } from "@/components/motion/Reveal";
 import Button from "@/components/ui/Button";
-import { Eyebrow, GrapeRule } from "@/components/Deco";
+import { Eyebrow } from "@/components/Deco";
 import { Aura, GhostWord } from "@/components/Atmosphere";
 import { Arrow } from "@/components/Icons";
 import HomeHeroFx from "@/components/home/HomeHeroFx";
@@ -162,7 +162,7 @@ export default async function GeschichtePage({ params }) {
               aus dem Kompilat. */}
           <div className="pointer-events-none absolute inset-0" aria-hidden="true">
             <div className="absolute inset-0 bg-gradient-to-t from-ivory from-40% via-ivory/65 via-45% to-transparent to-50% lg:hidden" />
-            <div className="absolute inset-0 hidden bg-[radial-gradient(115%_105%_at_88%_100%,rgba(247,244,239,0.98)_0%,rgba(247,244,239,0.93)_45%,rgba(247,244,239,0)_80%)] lg:block" />
+            <div className="absolute inset-0 hidden bg-[radial-gradient(105%_155%_at_95%_102%,rgba(247,244,239,0.98)_0%,rgba(247,244,239,0.95)_48%,rgba(247,244,239,0)_76%)] lg:block" />
           </div>
 
           {/* Elfenbein-Hauch oben, damit die Navigation über der Pergola
@@ -219,9 +219,11 @@ export default async function GeschichtePage({ params }) {
                 delay={0.48}
               />
             </h1>
+            {/* Ohne die GrapeRule der anderen Heroes: der Kanon hier ist
+                zwei Zeilen länger, und jede Zierzeile schiebt die Headline
+                weiter aus der Lichtpfütze heraus in die Gesichter hinein. */}
             <Reveal delay={0.35} y={16}>
-              <GrapeRule className="mt-6 hidden sm:flex" />
-              <p className="mt-5 max-w-lg text-[14px] leading-relaxed text-charcoal/75">
+              <p className="mt-6 max-w-lg text-[14px] leading-relaxed text-charcoal/75">
                 Der Name Maria Maria verbindet Erinnerung und Gegenwart. Persönliche Wurzeln im
                 Salento prägen eine Haltung, die Herkunft, Charakter und gemeinsamen Genuss
                 verbindet.

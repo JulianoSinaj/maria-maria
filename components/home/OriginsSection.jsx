@@ -54,7 +54,7 @@ export default function OriginsSection({ t = {}, souls }) {
                 {journey.map((stop, i) => (
                   <li key={stop} className="flex items-center">
                     {i > 0 && (
-                      <span aria-hidden="true" className="mx-2.5 h-px w-5 bg-champagne sm:w-7" />
+                      <span aria-hidden="true" className="mx-2.5 h-px w-[15px] bg-champagne sm:w-[21px]" />
                     )}
                     <span className={i === 0 || i === journey.length - 1 ? "text-bordeaux" : ""}>
                       {stop}

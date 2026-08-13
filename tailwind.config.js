@@ -31,6 +31,8 @@ module.exports = {
         "straw-deep": "#D3C56E",
         /* vineyard-foliage green — dark enough for text on ivory */
         vine: "#55683F",
+        /* Flaschenglas: die dunkle Stufe von `vine`, trägt helle Schrift */
+        "vine-deep": "#3D4B2D",
       },
       fontFamily: {
         playfair: ["var(--font-playfair)", "serif"],
@@ -70,12 +72,18 @@ module.exports = {
           "70%": { opacity: "1" },
           "100%": { transform: "translateY(300%)", opacity: "0" },
         },
+        /* Siegelring zwischen den Seelen-Karten: eine sehr langsame Umdrehung */
+        seal: {
+          "0%": { transform: "rotate(0deg)" },
+          "100%": { transform: "rotate(360deg)" },
+        },
       },
       animation: {
         marquee: "marquee 46s linear infinite",
         aura: "aura 36s ease-in-out infinite",
         aura2: "aura2 44s ease-in-out infinite",
         cue: "cue 2.4s cubic-bezier(0.4, 0, 0.2, 1) infinite",
+        seal: "seal 30s linear infinite",
       },
     },
   },

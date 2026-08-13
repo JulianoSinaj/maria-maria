@@ -8,12 +8,63 @@ import FaqSection from "@/components/faq/FaqSection";
 import { KONTAKT_FAQ_GROUPS } from "@/components/faq/faqData";
 import { Mail, Phone, Pin, Instagram, Facebook, LinkedIn, Arrow, Clock } from "@/components/Icons";
 import Atmosphere, { Aura, GhostWord, Vines } from "@/components/Atmosphere";
+import JsonLd from "@/components/seo/JsonLd";
+import { getDictionary } from "@/lib/i18n/dictionaries";
+import { pageMetadata } from "@/lib/i18n/metadata";
+import { localePath } from "@/lib/i18n/routing";
+import { absoluteUrl } from "@/lib/site";
+import { graph, webPageNode, breadcrumbNode, faqNode, ORG_ID } from "@/lib/seo/jsonLd";
 
-export const metadata = {
-  title: "Kontakt — Maria Maria",
-  description:
-    "Wir freuen uns auf Ihre Nachricht – Weinverkostungen in Düsseldorf, Fragen zu unseren Weinen, Partnerschaften oder Händleranfragen.",
-};
+/* Titel und Description je Sprache aus dem Wörterbuch; hreflang,
+   Canonical und OpenGraph baut pageMetadata() daraus auf. */
+export async function generateMetadata({ params }) {
+  const dict = await getDictionary(params.locale);
+  return pageMetadata({
+    locale: params.locale,
+    path: "/kontakt",
+    meta: dict.meta.kontakt,
+  });
+}
+
+/* Als ContactPage ausgezeichnet und über `mainEntity` an die Organisation
+   gebunden: Google entnimmt Telefonnummer, E-Mail und Anschrift dem
+   Organisationsknoten im Layout — sie stehen deshalb hier nicht ein zweites
+   Mal. Zwei Kontaktangaben unter zwei @ids wären zwei Unternehmen. */
+function KontaktJsonLd({ locale, dict }) {
+  const url = absoluteUrl(localePath(locale, "/kontakt"));
+  const nav = dict?.common?.nav ?? {};
+  const localize = (href) => localePath(locale, href);
+
+  const crumbs = breadcrumbNode(
+    [
+      { label: nav.home || "Home", href: "/" },
+      { label: nav.contact || "Kontakt", href: "/kontakt" },
+    ],
+    { url, localize }
+  );
+
+  return (
+    <JsonLd
+      data={graph(
+        {
+          ...webPageNode({
+            url,
+            name: dict.meta.kontakt.title,
+            description: dict.meta.kontakt.description,
+            locale,
+            type: "ContactPage",
+            breadcrumbId: crumbs?.["@id"] ?? null,
+          }),
+          mainEntity: { "@id": ORG_ID },
+        },
+        crumbs,
+        locale === "de"
+          ? faqNode({ url, items: KONTAKT_FAQ_GROUPS.flatMap((g) => g.items ?? []) })
+          : null
+      )}
+    />
+  );
+}
 
 /* lokale Feature-Icons (48er-Viewbox, gleicher Strichstil wie Icons.jsx) */
 const F = { fill: "none", stroke: "currentColor", strokeWidth: 1.3, strokeLinecap: "round", strokeLinejoin: "round" };
@@ -47,33 +98,22 @@ const QuestionIcon = (p) => (
   </svg>
 );
 
+/* Nur Schlüssel und Icon — Überschrift und Text kommen aus dem Wörterbuch.
+   Die Reihenfolge ist bewusst hier und nicht im Text festgelegt: Sie soll in
+   allen vier Sprachen dieselbe sein. */
 const HELP = [
-  {
-    title: "Verkostungen",
-    text: "Sie möchten unsere Weine verkosten? Hier erfahren Sie, wie es geht.",
-    icon: <TastingIcon className="h-7 w-7" />,
-  },
-  {
-    title: "Händleranfragen",
-    text: "Sie sind Händler oder möchten unsere Weine in Ihr Sortiment aufnehmen?",
-    icon: <MerchantIcon className="h-7 w-7" />,
-  },
-  {
-    title: "Presse & Kooperationen",
-    text: "Für Presseanfragen, Kooperationen oder gemeinsame Projekte sind wir offen.",
-    icon: <PressIcon className="h-7 w-7" />,
-  },
-  {
-    title: "Allgemeine Fragen",
-    text: "Sie haben eine allgemeine Frage zu Maria Maria? Wir helfen Ihnen gerne weiter.",
-    icon: <QuestionIcon className="h-7 w-7" />,
-  },
+  { key: "tasting", icon: <TastingIcon className="h-7 w-7" /> },
+  { key: "merchant", icon: <MerchantIcon className="h-7 w-7" /> },
+  { key: "press", icon: <PressIcon className="h-7 w-7" /> },
+  { key: "general", icon: <QuestionIcon className="h-7 w-7" /> },
 ];
 
+/* E-Mail-Adresse und Rufnummer sind sprachneutral — nur ihre Beschriftung
+   und die Anschriftszeile wechseln. */
 const CONTACT = [
-  { label: "E-Mail", value: "info@maria-maria.wine", href: "mailto:info@maria-maria.wine", Icon: Mail },
-  { label: "Telefon", value: "+49 211 976 420", href: "tel:+49211976420", Icon: Phone },
-  { label: "Adresse", value: "Maria Maria Wines · Düsseldorf, Deutschland", Icon: Pin },
+  { key: "email", value: "info@maria-maria.wine", href: "mailto:info@maria-maria.wine", Icon: Mail },
+  { key: "phone", value: "+49 211 976 420", href: "tel:+49211976420", Icon: Phone },
+  { key: "address", value: null, Icon: Pin },
 ];
 
 const SOCIALS = [
@@ -82,9 +122,13 @@ const SOCIALS = [
   { label: "LinkedIn", href: "https://www.linkedin.com/company/mariamaria-wine", Icon: LinkedIn },
 ];
 
-export default function KontaktPage() {
+export default async function KontaktPage({ params }) {
+  const dict = await getDictionary(params.locale);
+  const t = dict.kontakt;
+
   return (
     <div className="relative min-h-screen">
+      <KontaktJsonLd locale={params.locale} dict={dict} />
       {/* ============ HERO — Intro + Formular ============ */}
       <section className="grain relative overflow-hidden">
         <ShaderGradient palette="dawn" />
@@ -95,12 +139,12 @@ export default function KontaktPage() {
           {/* left — copy + contact details */}
           <div className="max-w-xl">
             <Reveal y={18} delay={0.05}>
-              <Eyebrow>Wir sind für Sie da</Eyebrow>
+              <Eyebrow>{t.hero.eyebrow}</Eyebrow>
             </Reveal>
             <h1 className="mt-6 font-playfair text-[clamp(2.6rem,5.5vw,4.2rem)] leading-[1.05] text-charcoal">
-              <SplitText text="Kontakt" className="block" delay={0.12} />
+              <SplitText text={t.hero.title} className="block" delay={0.12} />
               <SplitText
-                text="Parliamo di vino."
+                text={t.hero.titleItalic}
                 className="block italic"
                 wordClassName="bg-gradient-to-r from-bordeaux via-wine to-bordeaux bg-clip-text text-transparent"
                 delay={0.26}
@@ -109,21 +153,20 @@ export default function KontaktPage() {
             <Reveal delay={0.45} y={16}>
               <GrapeRule className="mt-7" />
               <p className="mt-6 max-w-md text-[15px] leading-relaxed text-charcoal/75">
-                Wir freuen uns auf Ihre Nachricht! Ob eine Verkostung in Düsseldorf, Fragen zu
-                unseren Weinen, Partnerschaften oder Händleranfragen – wir sind gerne für Sie da.
+                {t.hero.text}
               </p>
             </Reveal>
 
             <Reveal delay={0.58} y={14}>
               <ul className="mt-10 space-y-4">
-                {CONTACT.map(({ label, value, href, Icon }) => (
-                  <li key={label} className="flex items-center gap-4">
+                {CONTACT.map(({ key, value, href, Icon }) => (
+                  <li key={key} className="flex items-center gap-4">
                     <span className="ring-hairline flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-cream to-champagne-light/40 text-bordeaux shadow-chip">
                       <Icon className="h-[18px] w-[18px]" />
                     </span>
                     <span className="min-w-0">
                       <span className="block text-[10px] uppercase tracking-[0.18em] text-charcoal/50">
-                        {label}
+                        {t.details[key]}
                       </span>
                       {href ? (
                         <a
@@ -134,7 +177,7 @@ export default function KontaktPage() {
                         </a>
                       ) : (
                         <span className="inline-block py-0.5 text-[13.5px] font-medium text-charcoal">
-                          {value}
+                          {t.details.addressValue}
                         </span>
                       )}
                     </span>
@@ -159,9 +202,8 @@ export default function KontaktPage() {
               <div className="mt-10 flex max-w-md items-start gap-3.5 rounded-card border border-stone/50 bg-white/50 p-5 shadow-luxe">
                 <Clock aria-hidden="true" className="mt-0.5 h-5 w-5 shrink-0 text-champagne" />
                 <p className="text-[12.5px] leading-relaxed text-charcoal/75">
-                  <span className="font-semibold text-charcoal">Unser Versprechen:</span> Wir
-                  antworten innerhalb von 1–2 Werktagen auf Ihre Anfrage. Persönlich, ehrlich und mit
-                  Leidenschaft für Wein.
+                  <span className="font-semibold text-charcoal">{t.hero.promiseLabel}</span>{" "}
+                  {t.hero.promise}
                 </p>
               </div>
             </Reveal>
@@ -169,7 +211,7 @@ export default function KontaktPage() {
 
           {/* right — glass form */}
           <Reveal delay={0.3} y={26}>
-            <ContactForm />
+            <ContactForm copy={t.form} />
           </Reveal>
         </div>
       </section>
@@ -179,27 +221,26 @@ export default function KontaktPage() {
         <Atmosphere variant="warm" />
         <GhostWord className="right-[-2vw] top-10 text-[11vw]">Benvenuti</GhostWord>
         <div className="relative mx-auto max-w-content px-6 py-24 lg:px-10">
-        <SectionTitle
-          eyebrow="Ihr Anliegen"
-          description="Vier direkte Wege zu uns – wählen Sie einfach das Thema, das zu Ihrer Anfrage passt."
-        >
-          Womit können wir Ihnen helfen?
+        <SectionTitle eyebrow={t.help.eyebrow} description={t.help.description}>
+          {t.help.title}
         </SectionTitle>
         <Stagger className="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {HELP.map((h) => (
-            <StaggerItem key={h.title} className="h-full">
+            <StaggerItem key={h.key} className="h-full">
               <TiltCard className="group h-full" max={5} radius="rounded-card-lg">
                 <div className="ring-hairline flex h-full flex-col rounded-card-lg border border-stone/40 bg-white/70 p-7 shadow-luxe transition-[box-shadow,border-color] duration-500 group-hover:border-champagne/60 group-hover:shadow-lift">
                   <IconChip>{h.icon}</IconChip>
                   <h3 className="mt-6 font-playfair text-[18px] leading-snug text-charcoal">
-                    {h.title}
+                    {t.help.items[h.key].title}
                   </h3>
-                  <p className="mt-2.5 text-[12.5px] leading-relaxed text-charcoal/70">{h.text}</p>
+                  <p className="mt-2.5 text-[12.5px] leading-relaxed text-charcoal/70">
+                    {t.help.items[h.key].text}
+                  </p>
                   <a
                     href="#kontakt-formular"
                     className="group/link mt-auto inline-flex min-h-[44px] items-center gap-1.5 pt-5 text-[12px] font-medium text-bordeaux"
                   >
-                    Anfrage senden
+                    {t.help.cta}
                     <Arrow className="h-3.5 w-3.5 transition-transform duration-500 ease-out-expo group-hover/link:translate-x-1" />
                   </a>
                 </div>
@@ -217,15 +258,15 @@ export default function KontaktPage() {
         <FaqSection
           className="relative"
           pageType="kontakt"
-          eyebrow="Gut zu wissen"
+          eyebrow={t.faq.eyebrow}
           title={
             <>
-              Häufige <span className="italic text-bordeaux">Fragen.</span>
+              {t.faq.title} <span className="italic text-bordeaux">{t.faq.titleAccent}</span>
             </>
           }
-          description="Antworten auf die Fragen, die uns am häufigsten erreichen — nach Anliegen sortiert: von Verkostungen in Düsseldorf über Händleranfragen bis zu Shop und Versand."
+          description={t.faq.description}
           groups={KONTAKT_FAQ_GROUPS}
-          footer={{ label: "Frage nicht dabei? Schreiben Sie uns", href: "#kontakt-formular" }}
+          footer={{ label: t.faq.footer, href: "#kontakt-formular" }}
         />
       </section>
     </div>

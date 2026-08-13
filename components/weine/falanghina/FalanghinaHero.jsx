@@ -13,7 +13,7 @@ import SplitText from "@/components/motion/SplitText";
 import { Eyebrow, GrapeRule } from "@/components/Deco";
 import { Aura } from "@/components/Atmosphere";
 import { ChevronDown } from "@/components/Icons";
-import { byName, fmtPrice } from "@/components/data";
+import { useWines, useLocaleTools } from "@/lib/i18n/context";
 import FalanghinaBottle from "./FalanghinaBottle";
 
 /* Gepinnter Apple-Stil-Hero in zwei Akten.
@@ -62,9 +62,11 @@ function Act2Word({ progress, word, index, light = false }) {
    initialen HTML — der Preload-Scanner findet das Hero-Foto sofort, statt auf
    die Hydration zu warten. Der Zoom läuft über den motion.div-Wrapper. */
 export default function FalanghinaHero({ wine, photo }) {
+  const { price: fmtPrice } = useLocaleTools();
+  const wines = useWines();
   const sectionRef = useRef(null);
   const reduced = useReducedMotion();
-  const catalog = byName(wine.catalogName);
+  const catalog = wines.find((w) => w.name === wine.catalogName);
   const hasPhoto = Boolean(wine.images.hero);
 
   const { scrollYProgress } = useScroll({

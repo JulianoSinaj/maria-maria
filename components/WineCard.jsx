@@ -1,9 +1,10 @@
 "use client";
-import Link from "next/link";
+import Link from "@/components/i18n/LocaleLink";
 import Bottle from "./Bottle";
 import WinePhotos from "./WinePhotos";
 import { Arrow } from "./Icons";
-import { wineHref, tasteWords } from "./data";
+import { wineHref } from "./data";
+import { useLocaleTools } from "@/lib/i18n/context";
 
 /* Editorial wine entry — kein Karten-Chrome mehr: Flasche und Text schweben
    frei auf dem Seitengrund (Referenz: „Neun Charaktere"-Layout).
@@ -31,10 +32,11 @@ function Packshot({ wine, imgClass }) {
 }
 
 export default function WineCard({ wine, variant = "default", className = "", href, index }) {
+  const { list } = useLocaleTools();
   // Landingpage des Weins, sonst Shop — explizites href gewinnt.
   const link = href ?? wineHref(wine);
   const number = Number.isInteger(index) ? String(index + 1).padStart(2, "0") : null;
-  const words = tasteWords(wine).join(" · ");
+  const words = (wine.notes ?? []).join(" · ");
 
   if (variant === "mini") {
     return (

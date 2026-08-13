@@ -11,21 +11,80 @@ import { REGIONEN_FAQ_GROUPS } from "@/components/faq/faqData";
 import Atmosphere, { Aura, GhostWord } from "@/components/Atmosphere";
 import TerroirManifest from "@/components/regionen/TerroirManifest";
 import RegionCta from "@/components/regionen/RegionCta";
+import JsonLd from "@/components/seo/JsonLd";
+import { getDictionary } from "@/lib/i18n/dictionaries";
+import { pageMetadata } from "@/lib/i18n/metadata";
+import { localePath } from "@/lib/i18n/routing";
+import { absoluteUrl } from "@/lib/site";
+import { graph, webPageNode, breadcrumbNode, faqNode } from "@/lib/seo/jsonLd";
 
 /* SEO-Snippet nach der Regionen-Guide (v1.0, 05.08.2026, Abschnitt 2):
    Title trägt die drei Herkünfte, die Description Rebsorten, Herkunft,
    Geschmack und Food Pairing. Ein einziges H1 („Italiens Weinregionen
    entdecken“) steht im Hero, die Regionen darunter sind H2. */
-export const metadata = {
-  /* `absolute`, weil der Titel die Marke schon selbst trägt — der Suffix aus
-     app/layout.jsx würde sie sonst ein zweites Mal anhängen. */
-  title: {
-    absolute: "Italienische Weinregionen: Apulien, Kampanien & Lugana | Maria Maria",
-  },
-  description:
-    "Entdecken Sie ausgewählte Weine aus Apulien, Kampanien und dem Lugana-Gebiet am Gardasee – mit Rebsorten, Herkunft, Geschmack und Food-Pairing-Tipps.",
-  alternates: { canonical: "/regionen" },
-};
+/* Titel und Description je Sprache aus dem Wörterbuch; hreflang,
+   Canonical und OpenGraph baut pageMetadata() daraus auf. */
+export async function generateMetadata({ params }) {
+  const dict = await getDictionary(params.locale);
+  return pageMetadata({
+    locale: params.locale,
+    path: "/regionen",
+    meta: dict.meta.regionen,
+    image: {
+      url: "/img/og/collection.jpg",
+      width: 1200,
+      height: 630,
+      alt: dict.meta.regionen.description,
+    },
+  });
+}
+
+/* /regionen ist die Wissensseite der Domain — sie beantwortet „Woher kommt
+   Primitivo?", „Was ist Lugana?", „Welche Rebsorten wachsen in Kampanien?".
+   Genau diese Fragen laufen heute überwiegend in KI-Antwortmaschinen und in
+   Googles AI Overviews auf, und beide bevorzugen Quellen, deren Frage-
+   Antwort-Paare ausgezeichnet sind statt im Fließtext zu stehen.
+
+   Die drei Regionen bekommen bewusst keine `Place`-Knoten: Apulien und
+   Kampanien sind Verwaltungsregionen mit eigenen Wikidata-Einträgen, und
+   eigene Ortsknoten unter dieser Domain würden eine zweite, konkurrierende
+   Entität für dieselben Gebiete anlegen. Beschrieben wird, was die Seite
+   ist: eine Sammlung von Herkunftsprofilen. */
+function RegionenJsonLd({ locale, dict }) {
+  const url = absoluteUrl(localePath(locale, "/regionen"));
+  const nav = dict?.common?.nav ?? {};
+  const localize = (href) => localePath(locale, href);
+
+  const crumbs = breadcrumbNode(
+    [
+      { label: nav.home || "Home", href: "/" },
+      { label: nav.regions || "Regionen", href: "/regionen" },
+    ],
+    { url, localize }
+  );
+
+  return (
+    <JsonLd
+      data={graph(
+        webPageNode({
+          url,
+          name: dict.meta.regionen.titleAbsolute,
+          description: dict.meta.regionen.description,
+          locale,
+          type: "CollectionPage",
+          breadcrumbId: crumbs?.["@id"] ?? null,
+        }),
+        crumbs,
+        /* Die Regionen-FAQ ist nach Gebieten gruppiert; für das Markup
+           zählt die flache Menge aller Fragen. Noch deutsch — deshalb nur
+           auf der deutschen Fassung. */
+        locale === "de"
+          ? faqNode({ url, items: REGIONEN_FAQ_GROUPS.flatMap((g) => g.items ?? []) })
+          : null
+      )}
+    />
+  );
+}
 
 /* Regionaltexte nach der Regionen-Guide (v1.0, Abschnitte 3–5). Verbindlich
    darin sind drei Korrekturen, die hier eingearbeitet sind:
@@ -89,9 +148,11 @@ const REGIONS = [
   },
 ];
 
-export default function RegionenPage() {
+export default async function RegionenPage({ params }) {
+  const dict = await getDictionary(params.locale);
   return (
     <div className="relative min-h-screen">
+      <RegionenJsonLd locale={params.locale} dict={dict} />
       {/* ============ HERO ============ */}
       <section className="grain relative overflow-hidden">
         {/* Volle Video-Bühne: das Weinberg-Panorama trägt den Hero.

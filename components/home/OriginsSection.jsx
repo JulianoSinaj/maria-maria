@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/i18n/LocaleLink";
 import Button from "@/components/ui/Button";
 import { Reveal } from "@/components/motion/Reveal";
 import { Eyebrow, GoldRule } from "@/components/Deco";

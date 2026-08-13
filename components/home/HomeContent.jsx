@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/i18n/LocaleLink";
 import SplitText from "@/components/motion/SplitText";
 import TiltCard from "@/components/motion/TiltCard";
 import Marquee from "@/components/motion/Marquee";
@@ -101,45 +101,44 @@ export default function HomeContent() {
             trägt den Hero, die Headline steht links im Schleierlicht. */}
         <HomeHeroFx photo={<HomeHeroPhoto />} />
 
-        {/* Schleier für Lesbarkeit: mobil von unten, ab lg von links */}
+        {/* Schleier für Lesbarkeit: mobil von unten, ab lg von links.
+            Espresso statt Elfenbein — die Headline steht in Weiß, also muss der
+            Schleier abdunkeln statt aufzuhellen. Als Radial statt Linear, damit
+            die obere Bildkante hell bleibt und die Navigation dort weiter auf
+            dem Elfenbein-Hauch (unten) lesbar ist. */}
         <div className="pointer-events-none absolute inset-0" aria-hidden="true">
-          <div className="absolute inset-0 bg-gradient-to-t from-ivory/90 via-ivory/35 via-35% to-transparent to-70% lg:hidden" />
-          <div className="absolute inset-0 hidden bg-gradient-to-r from-ivory/90 via-ivory/30 via-35% to-transparent to-70% lg:block" />
+          <div className="absolute inset-0 bg-[radial-gradient(160%_110%_at_50%_100%,rgba(33,21,17,0.94)_0%,rgba(33,21,17,0.72)_42%,rgba(33,21,17,0)_82%)] lg:hidden" />
+          <div className="absolute inset-0 hidden bg-[radial-gradient(140%_115%_at_18%_55%,rgba(33,21,17,0.94)_0%,rgba(33,21,17,0.7)_38%,rgba(33,21,17,0)_74%)] lg:block" />
         </div>
 
         {/* Elfenbein-Hauch oben, damit die Navigation über dem Abendhimmel
             lesbar bleibt */}
         <div
-          className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-ivory/55 via-ivory/20 to-transparent"
+          className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-ivory/70 via-ivory/25 to-transparent"
           aria-hidden="true"
         />
 
-        {/* settle into the page colour */}
-        <div aria-hidden="true" className="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-b from-transparent to-ivory" />
+        {/* settle into the page colour — auf dem Telefon kurz gehalten, sonst
+            läge die Statzeile mitten im Elfenbein-Verlauf und die helle Schrift
+            verlöre ihren Grund */}
+        <div aria-hidden="true" className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-b from-transparent to-ivory sm:h-44" />
 
         {/* Telefon-Budget: Eyebrow + drei Headline-Zeilen + Lede + zwei
             gestapelte CTAs + Statzeile müssen in EIN 100svh passen — die
             Basiswerte sind deshalb enger, ab sm gelten wieder die alten. */}
-        <div className="relative mx-auto flex min-h-[100svh] max-w-content flex-col justify-end px-6 pb-16 pt-24 sm:pb-24 sm:pt-32 lg:justify-center lg:px-10 lg:pb-16">
+        <div className="relative mx-auto flex min-h-[100svh] max-w-content flex-col justify-end px-6 pb-24 pt-24 sm:pt-32 lg:justify-center lg:px-10 lg:pb-16">
           <div className="lg:max-w-xl">
             <Reveal y={18} delay={0.05}>
-              <Eyebrow tone="text-vine">Italienische Boutique-Weine</Eyebrow>
+              <Eyebrow tone="text-champagne-light">Italienische Boutique-Weine</Eyebrow>
             </Reveal>
-            <h1 className="mt-4 font-playfair text-[clamp(2.8rem,6vw,4.6rem)] leading-[1.05] tracking-[-0.015em] text-charcoal sm:mt-6">
+            <h1 className="mt-4 font-playfair text-[clamp(2.8rem,6vw,4.6rem)] leading-[1.05] tracking-[-0.015em] text-ivory sm:mt-6">
               <SplitText text="Maria Maria" className="block" delay={0.12} />
-              <SplitText
-                text="Il piacere del vino."
-                className="block italic"
-                /* Gradient muss pro Wort liegen – der äußere Wrapper malt nicht
-                   durch die overflow-clip-Spans von SplitText hindurch */
-                wordClassName="bg-gradient-to-r from-bordeaux via-wine to-bordeaux bg-clip-text text-transparent"
-                delay={0.3}
-              />
+              <SplitText text="Il piacere del vino." className="block italic" delay={0.3} />
             </h1>
             <Reveal delay={0.5} y={16}>
               {/* wie im Wein-Hero: die Zierlinie weicht auf Telefonen dem Platz */}
               <GrapeRule className="mt-6 hidden sm:flex" />
-              <p className="mt-5 max-w-md text-[15px] leading-relaxed text-charcoal/75">
+              <p className="mt-5 max-w-md text-[15px] leading-relaxed text-ivory/80">
                 Handverlesene Weine kleiner Familienweingüter – für bewusst gewählte Genussmomente,
                 vom Aperitivo bis zum großen Abend.
               </p>
@@ -161,11 +160,11 @@ export default function HomeContent() {
                   [`${REGION_COUNT}`, "Regionen Italiens"],
                   ["2019", "seit der Gründung"],
                 ].map(([num, label], i) => (
-                  <div key={label} className={`flex-1 ${i > 0 ? "border-l border-charcoal/10 pl-6" : ""}`}>
+                  <div key={label} className={`flex-1 ${i > 0 ? "border-l border-ivory/20 pl-6" : ""}`}>
                     <dt className="sr-only">{label}</dt>
                     <dd>
-                      <span className="font-playfair text-[26px] text-bordeaux">{num}</span>
-                      <span className="mt-0.5 block text-[10.5px] uppercase tracking-[0.14em] text-charcoal/55">
+                      <span className="font-playfair text-[26px] text-champagne">{num}</span>
+                      <span className="mt-0.5 block text-[10.5px] uppercase tracking-[0.14em] text-ivory/65">
                         {label}
                       </span>
                     </dd>

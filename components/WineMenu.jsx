@@ -1,8 +1,9 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import Link from "next/link";
+import Link from "@/components/i18n/LocaleLink";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { WINES, wineHref } from "./data";
+import { wineHref } from "./data";
+import { useWines, useCommon } from "@/lib/i18n/context";
 import { Arrow, ChevronRight, Grapes } from "./Icons";
 
 /* "Unsere Weine" mega-dropdown.
@@ -14,24 +15,28 @@ import { Arrow, ChevronRight, Grapes } from "./Icons";
    bridge, and on focus/click for keyboard and touch. Motion is transform and
    opacity only, spring-driven; the header row never reflows. */
 
-const byType = (t) => WINES.filter((w) => w.type === t);
-
+/* Spalten nach Typ-SCHLÜSSEL, nicht nach deutschem Label: `w.type ===
+   "Rotwein"` hätte auf /it und /en nie getroffen und drei leere Spalten
+   ergeben. Die Farbwerte sind Markenfarben und damit sprachneutral. */
 const COLUMNS = [
-  { title: "Rotweine", art: "rot", accent: "#6B0F1A", wines: byType("Rotwein") },
-  { title: "Weißweine", art: "weiss", accent: "#C8B77A", wines: byType("Weißwein") },
-  { title: "Roséweine", art: "rose", accent: "#c67f78", wines: byType("Roséwein") },
+  { key: "red", art: "rot", accent: "#6B0F1A" },
+  { key: "white", art: "weiss", accent: "#C8B77A" },
+  { key: "rose", art: "rose", accent: "#c67f78" },
 ];
 
 const OVERVIEW = [
-  { label: "Alle Weine", href: "/unsere-weine", hint: "Die komplette Kollektion" },
-  { label: "Bestseller", href: "/shop?sort=bestseller", hint: "Was am häufigsten im Glas landet" },
-  { label: "Regionen Italiens", href: "/regionen", hint: "Herkunft und Terroir" },
+  { key: "all", href: "/unsere-weine" },
+  { key: "bestseller", href: "/shop?sort=bestseller" },
+  { key: "regions", href: "/regionen" },
 ];
 
 const PANEL_SPRING = { type: "spring", stiffness: 300, damping: 30, mass: 0.55 };
 const CLOSE_DELAY = 160;
 
 export default function WineMenu({ active, scrolled = false }) {
+  const wines = useWines();
+  const nav = useCommon("nav");
+  const t = useCommon("wineMenu");
   const [open, setOpen] = useState(false);
   const reduced = useReducedMotion();
   const closeTimer = useRef(null);
@@ -100,7 +105,7 @@ export default function WineMenu({ active, scrolled = false }) {
           active || open ? "font-semibold text-bordeaux" : "text-charcoal/75 hover:text-bordeaux"
         }`}
       >
-        Unsere Weine
+        {nav.wines}
         <ChevronRight
           aria-hidden="true"
           className={`h-3 w-3 transition-transform duration-400 ease-out-expo ${
@@ -168,24 +173,24 @@ export default function WineMenu({ active, scrolled = false }) {
                     <div className="flex items-center gap-2">
                       <Grapes className="h-4 w-4 text-champagne" />
                       <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-bordeaux">
-                        Die Kollektion
+                        {t.eyebrow}
                       </p>
                     </div>
 
                     <ul className="mt-5 space-y-1">
                       {OVERVIEW.map((o) => (
-                        <li key={o.label}>
+                        <li key={o.key}>
                           <Link
                             href={o.href}
                             onClick={close}
                             className="group/o relative block rounded-2xl px-3 py-2.5 transition-colors duration-300 hover:bg-white"
                           >
                             <span className="flex items-center justify-between gap-3 text-[13.5px] font-semibold text-charcoal transition-colors duration-300 group-hover/o:text-bordeaux">
-                              {o.label}
+                              {t.overview[o.key].label}
                               <Arrow className="h-3.5 w-3.5 shrink-0 -translate-x-1.5 text-bordeaux opacity-0 transition-all duration-400 ease-out-expo group-hover/o:translate-x-0 group-hover/o:opacity-100" />
                             </span>
                             <span className="mt-0.5 block text-[11.5px] leading-snug text-charcoal/50">
-                              {o.hint}
+                              {t.overview[o.key].hint}
                             </span>
                           </Link>
                         </li>
@@ -198,7 +203,7 @@ export default function WineMenu({ active, scrolled = false }) {
                       className="group/s mt-6 flex items-center justify-between gap-3 overflow-hidden rounded-2xl bg-gradient-to-br from-bordeaux to-wine px-4 py-3.5 shadow-chip"
                     >
                       <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-ivory">
-                        Zum Shop
+                        {t.shop}
                       </span>
                       <Arrow className="h-4 w-4 text-ivory transition-transform duration-500 ease-out-expo group-hover/s:translate-x-1" />
                     </Link>
@@ -206,8 +211,10 @@ export default function WineMenu({ active, scrolled = false }) {
 
                   {/* ---------- type columns ---------- */}
                   <div className="grid grid-cols-1 gap-x-6 gap-y-7 p-7 sm:grid-cols-3">
-                    {COLUMNS.map((c) => (
-                      <div key={c.title} className="min-w-0">
+                    {COLUMNS.map((c) => {
+                      const columnWines = wines.filter((w) => w.typeKey === c.key);
+                      return (
+                      <div key={c.key} className="min-w-0">
                         <Link
                           href={`/unsere-weine?art=${c.art}#kollektion`}
                           onClick={close}
@@ -219,15 +226,15 @@ export default function WineMenu({ active, scrolled = false }) {
                             style={{ backgroundColor: c.accent }}
                           />
                           <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-charcoal transition-colors duration-300 group-hover/c:text-bordeaux">
-                            {c.title}
+                            {nav.wineTypes[c.key]}
                           </span>
                           <span className="ml-auto font-playfair text-[13px] tabular-nums text-charcoal/35">
-                            {String(c.wines.length).padStart(2, "0")}
+                            {String(columnWines.length).padStart(2, "0")}
                           </span>
                         </Link>
 
                         <ul className="mt-2.5 space-y-0.5">
-                          {c.wines.map((w) => (
+                          {columnWines.map((w) => (
                             <li key={w.slug}>
                               <Link
                                 href={wineHref(w)}
@@ -242,14 +249,15 @@ export default function WineMenu({ active, scrolled = false }) {
                           ))}
                         </ul>
                       </div>
-                    ))}
+                      );
+                    })}
                   </div>
                 </div>
 
                 {/* ---------- footer strip ---------- */}
                 <div className="flex items-center justify-between gap-4 border-t border-stone/50 bg-ivory/70 px-7 py-3.5">
                   <p className="font-playfair text-[13.5px] italic text-charcoal/55">
-                    Handverlesen von kleinen italienischen Weingütern.
+                    {t.note}
                   </p>
                   <Link
                     href="/unsere-weine"
@@ -257,7 +265,7 @@ export default function WineMenu({ active, scrolled = false }) {
                     className="group/a flex shrink-0 items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-bordeaux"
                   >
                     <span className="relative">
-                      Alle {WINES.length} Weine ansehen
+                      {t.seeAll.replace("{count}", wines.length)}
                       <span className="absolute -bottom-0.5 left-0 right-0 h-px origin-left scale-x-0 bg-bordeaux transition-transform duration-400 ease-out-expo group-hover/a:scale-x-100" />
                     </span>
                     <Arrow className="h-3.5 w-3.5 transition-transform duration-500 ease-out-expo group-hover/a:translate-x-1" />

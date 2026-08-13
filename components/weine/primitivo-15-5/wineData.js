@@ -70,6 +70,7 @@ export const PRIMITIVO_155 = {
       /* Loop-Video im Rahmen — läuft stumm in Endlosschleife, das Gemälde
          oben bleibt Poster und Reduced-Motion-Fallback */
       video: "/video/wine-red-720.mp4",
+      videoPoster: "/img/pour/wine-red-still.webp",
       videoFocus: "50% 50%",
       videoTitle: "Rubinrot im Glas",
     },
@@ -302,8 +303,8 @@ export const PRIMITIVO_155 = {
   /* ---- Seitennavigation (Apple-Stil Subnav) ---- */
   subnav: [
     { label: "Überblick", href: "#ueberblick" },
-    { label: "Passt zu", href: "#maria-moment" },
     { label: "Geschmack", href: "#geschmack" },
+    { label: "Passt zu", href: "#maria-moment" },
     { label: "Fragen", href: "#fragen" },
   ],
 };

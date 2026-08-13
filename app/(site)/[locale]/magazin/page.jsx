@@ -17,6 +17,8 @@ import { WINES } from "@/components/data";
 import { Aura, GhostWord } from "@/components/Atmosphere";
 import { PUBLISHED_INTERVIEWS } from "@/components/magazin/interviewData";
 import { MAGAZIN_WINE_SLUGS } from "@/components/magazin/magazinData";
+import { getDictionary } from "@/lib/i18n/dictionaries";
+import { pageMetadata } from "@/lib/i18n/metadata";
 
 /* ============================================================================
    MAGAZIN — Seitenkomposition.
@@ -69,39 +71,20 @@ import { MAGAZIN_WINE_SLUGS } from "@/components/magazin/magazinData";
 const DESCRIPTION =
   "Weinwissen, Food Pairing, Regionen und Geschichten aus der Welt von Maria Maria — Inspiration für den nächsten Genussmoment.";
 
-export const metadata = {
-  /* Der Marken-Suffix kommt aus dem title.template des Root-Layouts */
-  title: "Magazin",
-  description: DESCRIPTION,
-  keywords: [
-    "Weinmagazin",
-    "Weinwissen",
-    "Food Pairing",
-    "italienische Weine",
-    "Genussmomente",
-    "Maria Maria",
-  ],
-  alternates: { canonical: "/magazin" },
-  openGraph: {
-    type: "website",
-    url: "/magazin",
-    title: "Magazin — Maria Maria",
-    description: DESCRIPTION,
-    images: [
-      {
-        url: "/img/magazin/weinkeller.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Winzer prüft ein Glas Rotwein zwischen Barriquefässern im Keller",
-      },
-    ],
-  },
-  twitter: {
-    title: "Magazin — Maria Maria",
-    description: DESCRIPTION,
-    images: ["/img/magazin/weinkeller.jpg"],
-  },
-};
+/* Titel und Description je Sprache aus dem Wörterbuch; hreflang,
+   Canonical und OpenGraph baut pageMetadata() daraus auf. */
+export async function generateMetadata({ params }) {
+  const dict = await getDictionary(params.locale);
+  return pageMetadata({
+    locale: params.locale,
+    path: "/magazin",
+    meta: dict.meta.magazin,
+    /* Zeigte vorher direkt auf /img/magazin/weinkeller.jpg und behauptete
+       1200 × 630 — die Datei misst 641 × 403. Jetzt der echte Zuschnitt aus
+       scripts/og-images.mjs, gleiches Motiv. */
+    image: { url: "/img/og/magazin.jpg", width: 1200, height: 630, alt: dict.meta.magazin.ogImageAlt },
+  });
+}
 
 const MAGAZIN_WINES = MAGAZIN_WINE_SLUGS.map((slug) =>
   WINES.find((w) => w.slug === slug)
@@ -117,15 +100,16 @@ const MARQUEE_WORDS = [
   "Handverlesen",
 ];
 
-export default function MagazinPage() {
+export default async function MagazinPage({ params }) {
   /* Die Interview-Sektion und ihr Sprungziel erscheinen nur, wenn wirklich ein
      Gespräch veröffentlicht ist — sonst zeigte die Fußzeile von Kapitel IV auf
      eine Platzhalterkarte. */
   const hasInterviews = PUBLISHED_INTERVIEWS.length > 0;
+  const dict = await getDictionary(params.locale);
 
   return (
     <>
-      <MagazinJsonLd description={DESCRIPTION} />
+      <MagazinJsonLd locale={params.locale} dict={dict} faq={MAGAZIN_FAQ} />
 
       <main className="relative min-h-screen">
         {/* ================= CAPITOLO I: TITELSEITE, VISION & GESCHICHTE ==== */}

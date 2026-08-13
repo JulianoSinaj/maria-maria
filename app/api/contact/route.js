@@ -43,8 +43,16 @@ async function deliver(data) {
   const resendKey = process.env.RESEND_API_KEY;
   const to = process.env.CONTACT_TO_EMAIL;
   if (resendKey && to) {
+    /* Auf den Schlüssel prüfen, nicht auf die Beschriftung: Seit der
+       Mehrsprachigkeit heißt dasselbe Anliegen je nach Formularsprache
+       „Verkostungsanfrage", „Tasting enquiry", „Richiesta di degustazione"
+       oder „Poptávka degustace". Der Vergleich mit dem deutschen String hätte
+       Wunschtermin und Gästezahl aus jeder fremdsprachigen Anfrage
+       verschluckt — genau die zwei Angaben, wegen derer sie planbar ist.
+       `topic` bleibt als Klartext im Mailtext, damit das Team lesen kann,
+       worum es geht. */
     const tasting =
-      data.topic === "Verkostungsanfrage"
+      data.topicKey === "tasting"
         ? `\nWunschtermin: ${data.date || "—"}\nGäste: ${data.guests || "—"}\n`
         : "";
     const res = await fetch("https://api.resend.com/emails", {

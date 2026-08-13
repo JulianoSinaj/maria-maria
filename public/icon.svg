@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Maria Maria">
+  <!--
+    Das Browser-Tab-Symbol.
+
+    Das Wortbild der Marke (public/img/logo.png) ist ein zweizeiliges,
+    liniertes „MARIA MARIA" — auf 16 × 16 Pixeln davon nichts als ein
+    grauer Fleck übrig. Deshalb hier das Monogramm: zwei M, flächig statt
+    liniert, weil die Linien des Wortbilds bei dieser Größe ineinander
+    laufen und den Buchstaben zumauern.
+
+    Als SVG, damit dasselbe Symbol vom Tab bis zur Lesezeichenkachel scharf
+    bleibt; die PNG-Fassungen daneben bedienen die Systeme, die kein SVG
+    annehmen (Apple Touch, Android-Homescreen).
+
+    Farben: bordeaux #6B0F1A auf ivory #F7F4EF — dieselben Werte wie in
+    tailwind.config.js.
+  -->
+  <rect width="64" height="64" rx="12" fill="#6B0F1A" />
+  <g fill="#F7F4EF">
+    <!-- oberes M -->
+    <path d="M12 17h6.4l5.6 10.2L29.6 17H36v14.6h-5.1v-8.4l-4.4 8.4h-3.1l-4.4-8.4v8.4H12z" />
+    <!-- unteres M, um eine halbe Breite versetzt wie im Wortbild -->
+    <path d="M28 34.4h6.4L40 44.6l5.6-10.2H52V49h-5.1v-8.4L42.5 49h-3.1L35 40.6V49h-7z" />
+  </g>
+</svg>

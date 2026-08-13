@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/i18n/LocaleLink";
 import Photo from "@/components/media/Photo";
 import { Arrow } from "@/components/Icons";
 

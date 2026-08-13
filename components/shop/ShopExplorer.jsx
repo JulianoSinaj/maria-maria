@@ -1,7 +1,7 @@
 "use client";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import ShopCard from "./ShopCard";
-import { WINES } from "@/components/data";
+import { useWines } from "@/lib/i18n/context";
 
 /* Maria Maria Selection — die ganze Selection in einem layout-animierten Grid. */
 
@@ -9,7 +9,7 @@ const GRID_SPRING = { type: "spring", stiffness: 300, damping: 30 };
 
 export default function ShopExplorer() {
   const reduced = useReducedMotion();
-  const wines = WINES;
+  const wines = useWines();
 
   const itemMotion = reduced
     ? {}

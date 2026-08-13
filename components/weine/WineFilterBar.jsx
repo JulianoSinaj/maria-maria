@@ -23,24 +23,26 @@ import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 const PILL_SPRING = { type: "spring", stiffness: 340, damping: 32, mass: 0.7 };
 const POP_SPRING = { type: "spring", stiffness: 420, damping: 34, mass: 0.6 };
 
-/* Farbwelt je Weinart — die Schiene färbt sich mit der Auswahl. */
+/* Farbwelt je Weinart, geschlüsselt auf typeKey (all/red/white/rose).
+   Farbwerte sind sprachneutral — vorher lag die Zuordnung auf den deutschen
+   Bezeichnungen und hätte außerhalb des Deutschen keine Farbe gefunden. */
 export const TYPE_THEME = {
-  "Alle Weine": {
+  all: {
     fill: "linear-gradient(135deg,#1B1B1B 0%,#3A2A26 100%)",
     ink: "#F7F4EF",
     dot: "#C8B77A",
   },
-  Rotwein: {
+  red: {
     fill: "linear-gradient(135deg,#6B0F1A 0%,#8A2B2F 100%)",
     ink: "#F7F4EF",
     dot: "#6B0F1A",
   },
-  Weißwein: {
+  white: {
     fill: "linear-gradient(135deg,#D3C56E 0%,#E8DC9A 100%)",
     ink: "#3A3113",
     dot: "#D3C56E",
   },
-  Roséwein: {
+  rose: {
     fill: "linear-gradient(135deg,#C67F78 0%,#E3B3AC 100%)",
     ink: "#42201D",
     dot: "#C67F78",
@@ -51,11 +53,14 @@ export const TYPE_THEME = {
 /* Weinart — Segment-Schiene mit gleitender, mitfärbender Pille        */
 /* ------------------------------------------------------------------ */
 
-function TypeRail({ types, value, onChange, reduced }) {
+/* `types` sind Schlüssel (all/red/white/rose), `labels` die Übersetzung
+   dazu. Beides getrennt zu führen ist der Kern der Umstellung: Der Zustand
+   des Filters darf sich nicht ändern, wenn der Besucher die Sprache wechselt. */
+function TypeRail({ types, labels, value, onChange, reduced }) {
   return (
     <div
       role="group"
-      aria-label="Weine nach Weinart filtern"
+      aria-label={labels?.byType}
       data-lenis-prevent-horizontal
       /* Kantenfade + nativer Wisch wie im SubNav — unterhalb lg scrollbar */
       className="no-scrollbar -mx-6 snap-x overflow-x-auto scroll-pl-6 px-6 [mask-image:linear-gradient(to_right,transparent,black_20px,black_calc(100%-20px),transparent)] lg:mx-0 lg:overflow-visible lg:px-0 lg:[mask-image:none]"
@@ -63,7 +68,7 @@ function TypeRail({ types, value, onChange, reduced }) {
       <div className="relative inline-flex items-center gap-0.5 rounded-full border border-stone/50 bg-white/60 p-1.5 backdrop-blur-sm">
         {types.map((t) => {
           const active = t === value;
-          const theme = TYPE_THEME[t] ?? TYPE_THEME["Alle Weine"];
+          const theme = TYPE_THEME[t] ?? TYPE_THEME.all;
           return (
             <button
               key={t}
@@ -87,7 +92,7 @@ function TypeRail({ types, value, onChange, reduced }) {
                   active ? "" : "text-charcoal/55 group-hover:text-bordeaux"
                 }`}
               >
-                {t}
+                {labels?.[t] ?? t}
               </span>
             </button>
           );
@@ -101,7 +106,7 @@ function TypeRail({ types, value, onChange, reduced }) {
 /* Region — stiller Trigger + Popover mit Herkunfts-Punkten            */
 /* ------------------------------------------------------------------ */
 
-function RegionSelect({ regions, value, onChange, counts, allLabel, reduced }) {
+function RegionSelect({ regions, labels, value, onChange, counts, allLabel, reduced }) {
   const [open, setOpen] = useState(false);
   const wrapRef = useRef(null);
   const listId = useId();
@@ -197,7 +202,7 @@ function RegionSelect({ regions, value, onChange, counts, allLabel, reduced }) {
                       active ? "font-semibold text-bordeaux" : "text-charcoal/70 group-hover:text-charcoal"
                     }`}
                   >
-                    {r}
+                    {labels?.[r] ?? r}
                   </span>
                   <span className="font-playfair text-[13px] tabular-nums text-charcoal/35">{n}</span>
                 </button>
@@ -214,9 +219,12 @@ function RegionSelect({ regions, value, onChange, counts, allLabel, reduced }) {
 
 export default function WineFilterBar({
   types,
+  typeLabels,
+  labels,
   type,
   onType,
   regions,
+  regionLabels,
   region,
   onRegion,
   regionCounts,
@@ -229,17 +237,18 @@ export default function WineFilterBar({
   return (
     <div className="relative">
       <div className="flex flex-wrap items-center gap-x-4 gap-y-4 lg:flex-nowrap">
-        <TypeRail types={types} value={type} onChange={onType} reduced={reduced} />
+        <TypeRail types={types} labels={typeLabels} value={type} onChange={onType} reduced={reduced} />
 
         {/* Haarlinie trennt die beiden Achsen, statt sie zu stapeln */}
         <span aria-hidden="true" className="hidden h-8 w-px shrink-0 bg-charcoal/10 lg:block" />
 
         <RegionSelect
           regions={regions}
+          labels={regionLabels}
           value={region}
           onChange={onRegion}
           counts={regionCounts}
-          allLabel={regions[0]}
+          allLabel={regionLabels?.all ?? regions[0]}
           reduced={reduced}
         />
 
@@ -262,7 +271,7 @@ export default function WineFilterBar({
                 <svg viewBox="0 0 12 12" className="h-3 w-3" fill="none" aria-hidden="true">
                   <path d="M2.5 2.5 9.5 9.5M9.5 2.5 2.5 9.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
                 </svg>
-                Zurücksetzen
+                {labels?.reset}
               </button>
             </motion.div>
           )}
@@ -276,7 +285,7 @@ export default function WineFilterBar({
           <span className="font-playfair text-[26px] normal-case tabular-nums tracking-normal text-bordeaux">
             {count}
           </span>
-          {count === 1 ? "Wein" : "Weine"}
+          {count === 1 ? labels?.wineOne : labels?.wineMany}
         </p>
       </div>
 
@@ -284,7 +293,7 @@ export default function WineFilterBar({
           unter die ganze Leiste — das visuelle Bindeglied der beiden Achsen */}
       <div aria-hidden="true" className="relative mt-5 h-px w-full bg-charcoal/10">
         <motion.span
-          animate={{ background: (TYPE_THEME[type] ?? TYPE_THEME["Alle Weine"]).fill }}
+          animate={{ background: (TYPE_THEME[type] ?? TYPE_THEME.all).fill }}
           transition={reduced ? { duration: 0 } : { duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           className="absolute inset-y-0 left-0 w-24 rounded-full"
         />

@@ -1,29 +1,37 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import Link from "next/link";
+import Link from "@/components/i18n/LocaleLink";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion, useScroll, useSpring, useMotionValueEvent } from "motion/react";
 import Logo from "./Logo";
 import Button from "./ui/Button";
 import WineMenu from "./WineMenu";
+import LanguageSwitcher from "./i18n/LanguageSwitcher";
+import { useCommon } from "@/lib/i18n/context";
+import { pathWithoutLocale } from "@/lib/i18n/routing";
 import { useLenis } from "./motion/SmoothScroll";
 import { Close, Menu, Grapes } from "./Icons";
 
+/* Pfad und Wörterbuch-Schlüssel gehören zusammen, die Beschriftung nicht:
+   Routen sind in allen vier Sprachen identisch (/unsere-weine bleibt
+   /unsere-weine, nur mit Präfix), der Text darüber wechselt. */
 const NAV = [
-  { label: "Home", href: "/" },
-  { label: "Unsere Weine", href: "/unsere-weine" },
-  { label: "Regionen", href: "/regionen" },
-  { label: "Magazin", href: "/magazin" },
-  { label: "Kontakt", href: "/kontakt" },
+  { key: "home", href: "/" },
+  { key: "wines", href: "/unsere-weine" },
+  { key: "regions", href: "/regionen" },
+  { key: "magazine", href: "/magazin" },
+  { key: "contact", href: "/kontakt" },
 ];
 
 const WINE_ARTEN = [
-  { label: "Rotweine", art: "rot" },
-  { label: "Weißweine", art: "weiss" },
-  { label: "Roséweine", art: "rose" },
+  { key: "red", art: "rot" },
+  { key: "white", art: "weiss" },
+  { key: "rose", art: "rose" },
 ];
 
 export default function Header() {
+  const nav = useCommon("nav");
+  const a11y = useCommon("a11y");
   const pathname = usePathname();
   const lenisRef = useLenis();
   const [scrolled, setScrolled] = useState(false);
@@ -93,7 +101,11 @@ export default function Header() {
     };
   }, [open]);
 
-  const isActive = (href) => (href === "/" ? pathname === "/" : pathname.startsWith(href));
+  /* Vergleich auf dem sprachfreien Pfad: Auf /it/kontakt steht in `pathname`
+     das Präfix mit, in `href` nicht — ohne das Abschneiden wäre außerhalb des
+     Deutschen nie ein Navigationspunkt markiert. */
+  const here = pathWithoutLocale(pathname || "/");
+  const isActive = (href) => (href === "/" ? here === "/" : here.startsWith(href));
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 pt-[env(safe-area-inset-top)]">
@@ -111,11 +123,11 @@ export default function Header() {
               : "h-20 max-w-content bg-transparent px-6 lg:h-24 lg:px-10"
             }`}
         >
-          <Link href="/" aria-label="Maria Maria — Startseite" className="block">
+          <Link href="/" aria-label={a11y.homeLink} className="block">
             <Logo className={`h-auto transition-all duration-500 ease-out-expo ${scrolled ? "w-[76px]" : "w-[96px]"}`} />
           </Link>
 
-          <nav className="hidden items-center gap-8 md:flex" aria-label="Hauptnavigation">
+          <nav className="hidden items-center gap-8 md:flex" aria-label={a11y.mainNav}>
             {NAV.map((item) => {
               const active = isActive(item.href);
               if (item.href === "/unsere-weine") return <WineMenu key={item.href} active={active} scrolled={scrolled} />;
@@ -127,7 +139,7 @@ export default function Header() {
                   className={`group relative py-2 text-[12.5px] tracking-[0.08em] transition-colors duration-300 ${active ? "font-semibold text-bordeaux" : "text-charcoal/75 hover:text-bordeaux"
                     }`}
                 >
-                  {item.label}
+                  {nav[item.key]}
                   {active ? (
                     <motion.span
                       layoutId="nav-underline"
@@ -143,15 +155,21 @@ export default function Header() {
           </nav>
 
           <div className="flex items-center gap-3">
+            {/* Sprachwahl links vom Shop-Button: Sie ist ein Werkzeug, keine
+                Handlungsaufforderung, und darf der primären CTA nicht die
+                Aufmerksamkeit nehmen. */}
+            <div className="hidden md:block">
+              <LanguageSwitcher />
+            </div>
             <div className="hidden md:block">
               <Button href="/shop" size="sm">
-                Zum Shop
+                {nav.shop}
               </Button>
             </div>
             <button
               ref={triggerRef}
               onClick={() => setOpen(true)}
-              aria-label="Menü öffnen"
+              aria-label={a11y.openMenu}
               aria-expanded={open}
               aria-controls="mobile-menu"
               className="flex h-11 w-11 items-center justify-center rounded-full border border-charcoal/15 text-charcoal transition-colors hover:border-champagne hover:text-bordeaux md:hidden"
@@ -170,7 +188,7 @@ export default function Header() {
             id="mobile-menu"
             role="dialog"
             aria-modal="true"
-            aria-label="Menü"
+            aria-label={a11y.menuDialog}
             data-lenis-prevent
             className="grain fixed inset-0 z-[60] flex flex-col overflow-y-auto overscroll-contain bg-gradient-to-b from-bordeaux-deep via-[#33080e] to-espresso pt-[env(safe-area-inset-top)] md:hidden"
             initial={{ opacity: 0, clipPath: "inset(0 0 100% 0)" }}
@@ -183,14 +201,14 @@ export default function Header() {
               <button
                 ref={closeRef}
                 onClick={() => setOpen(false)}
-                aria-label="Menü schließen"
+                aria-label={a11y.closeMenu}
                 className="flex h-11 w-11 items-center justify-center rounded-full border border-ivory/25 text-ivory transition-colors hover:border-champagne hover:text-champagne"
               >
                 <Close className="h-5 w-5" />
               </button>
             </div>
-            <nav className="flex flex-1 flex-col justify-center gap-1 px-8" aria-label="Mobile Navigation">
-              {[...NAV, { label: "Zum Shop", href: "/shop" }].map((item, i) => (
+            <nav className="flex flex-1 flex-col justify-center gap-1 px-8" aria-label={a11y.mobileNav}>
+              {[...NAV, { key: "shop", href: "/shop" }].map((item, i) => (
                 <motion.div
                   key={item.href}
                   initial={{ opacity: 0, y: 32 }}
@@ -202,7 +220,7 @@ export default function Header() {
                     className={`block py-3 font-playfair text-[2.1rem] leading-tight transition-colors ${isActive(item.href) ? "italic text-champagne" : "text-ivory hover:text-champagne"
                       }`}
                   >
-                    {item.label}
+                    {nav[item.key]}
                   </Link>
                   {item.href === "/unsere-weine" && (
                     <div className="mb-2 flex flex-wrap gap-2">
@@ -212,7 +230,7 @@ export default function Header() {
                           href={`/unsere-weine?art=${a.art}#kollektion`}
                           className="rounded-full border border-ivory/20 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-ivory/70 transition-colors hover:border-champagne hover:text-champagne"
                         >
-                          {a.label}
+                          {nav.wineTypes[a.key]}
                         </Link>
                       ))}
                     </div>
@@ -226,6 +244,9 @@ export default function Header() {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.45 }}
             >
+              {/* Flache Reihe statt Aufklapp-Panel: Im mobilen Overlay wäre
+                  ein zweites Overlay darüber nur eine Falle. */}
+              <LanguageSwitcher variant="inline" className="mb-6" />
               <p className="text-[12px] tracking-wide text-ivory/60">info@maria-maria.wine</p>
               <p className="mt-1 font-playfair text-[15px] italic text-champagne/90">Il piacere del vino</p>
             </motion.div>

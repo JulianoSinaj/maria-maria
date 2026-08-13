@@ -1,6 +1,7 @@
 "use client";
 import { useCallback, useEffect, useRef, useState } from "react";
-import Link from "next/link";
+import Link from "@/components/i18n/LocaleLink";
+import { useCommon, useLocalizedWines } from "@/lib/i18n/context";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import WineCard from "./WineCard";
 import { Arrow, ChevronRight } from "./Icons";
@@ -13,23 +14,25 @@ import { Arrow, ChevronRight } from "./Icons";
    The filter pills (Alle / Rot / Weiß / Rosé) drive both; the active pill is
    a shared layout element that glides between buttons. */
 
-const FILTERS = [
-  { label: "Alle Weine", type: null },
-  { label: "Rotweine", type: "Rotwein" },
-  { label: "Weißweine", type: "Weißwein" },
-  { label: "Rosé", type: "Roséwein" },
-];
+/* Schlüssel statt Beschriftung: `w.type === "Rotwein"` hätte außerhalb des
+   Deutschen nie getroffen und die Schiene bei jeder Auswahl leer laufen
+   lassen. Die Beschriftung kommt aus dem Wörterbuch. */
+const FILTERS = [null, "red", "white", "rose"];
 
 const spring = { type: "spring", stiffness: 260, damping: 30 };
 const tapSpring = { type: "spring", stiffness: 400, damping: 22 };
 
-export default function WineRail({ wines, className = "" }) {
+export default function WineRail({ wines: incoming, className = "" }) {
+  /* Die Liste kommt aus einer Server-Component und trägt nur Struktur —
+     Region, Charakterworte und Speiseempfehlung holt der Hook dazu. */
+  const wines = useLocalizedWines(incoming);
+  const catalogue = useCommon("catalogue");
   const reduced = useReducedMotion();
   const [filter, setFilter] = useState(null);
   // Phone pager: index = position in the filtered list; dir = slide direction.
   const [[index, dir], setIndex] = useState([0, 0]);
 
-  const list = filter ? wines.filter((w) => w.type === filter) : wines;
+  const list = filter ? wines.filter((w) => w.typeKey === filter) : wines;
   const count = list.length;
   /* Guard gegen leere Filterergebnisse: ohne ihn wäre `active` undefined
      (Crash in WineCard) und `% 0` ergäbe NaN */
@@ -128,11 +131,13 @@ export default function WineRail({ wines, className = "" }) {
       >
         <div className="flex w-max items-center gap-2 pb-1 sm:w-auto sm:flex-wrap sm:gap-2.5">
           {FILTERS.map((f) => {
-            const on = filter === f.type;
+            const on = filter === f;
+            /* null = „Alle Weine"; sonst der übersetzte Plural der Weinart. */
+            const label = f ? catalogue.typesPlural?.[f] : catalogue.filters?.allWines;
             return (
               <motion.button
-                key={f.label}
-                onClick={() => pick(f.type)}
+                key={f ?? "all"}
+                onClick={() => pick(f)}
                 aria-pressed={on}
                 whileTap={{ scale: 0.96 }}
                 transition={tapSpring}
@@ -150,7 +155,7 @@ export default function WineRail({ wines, className = "" }) {
                     className="absolute inset-0 rounded-full bg-gradient-to-br from-bordeaux to-wine shadow-chip"
                   />
                 )}
-                <span className="relative z-10">{f.label}</span>
+                <span className="relative z-10">{label}</span>
               </motion.button>
             );
           })}

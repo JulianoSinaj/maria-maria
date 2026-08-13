@@ -3,17 +3,27 @@ import { useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import Button from "@/components/ui/Button";
 import { Arrow, Check, ChevronDown } from "@/components/Icons";
+import Link from "@/components/i18n/LocaleLink";
 
 /* Kontaktformular — Glaskarte mit sichtbaren Labels, Blur-Validierung und
-   echtem Versand an /api/contact. Bei "Verkostungsanfrage" klappen Wunschtermin
-   und Gästezahl auf, damit die Anfrage direkt planbar ankommt. */
+   echtem Versand an /api/contact. Bei einer Verkostungsanfrage klappen
+   Wunschtermin und Gästezahl auf, damit die Anfrage direkt planbar ankommt.
+
+   Der gesamte Text kommt als `copy`-Prop aus content/<sprache>/kontakt.js.
+   Ein Formular ist die Stelle, an der eine fehlende Übersetzung am teuersten
+   ist: Wer nicht versteht, was ein Feld will, schickt nichts ab.
+
+   Die Anliegen laufen über feste SCHLÜSSEL (tasting …), nicht über ihre
+   Beschriftung. Vorher stand `values.topic === "Verkostungsanfrage"` im Code —
+   auf Italienisch, Englisch und Tschechisch wären die Terminfelder damit nie
+   aufgegangen. */
 
 const INPUT =
   "w-full rounded-xl border border-white/60 bg-white/50 px-4 py-3 text-[13px] text-charcoal outline-none transition-all duration-200 focus:border-champagne focus:bg-white/70 focus:ring-2 focus:ring-champagne/30 placeholder:text-charcoal/40";
 
 const LABEL = "mb-1.5 block text-[11px] font-semibold uppercase tracking-[0.14em] text-charcoal/60";
 
-const TOPICS = ["Verkostungsanfrage", "Händleranfrage", "Presse & Kooperationen", "Allgemeine Frage"];
+const TOPIC_KEYS = ["tasting", "merchant", "press", "general"];
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
@@ -28,29 +38,31 @@ const EMPTY = {
   privacy: false,
 };
 
-const TASTING = "Verkostungsanfrage";
+const TASTING = "tasting";
 
-function validateField(field, value, values) {
+/* `e` ist der Fehler-Zweig des Wörterbuchs — die Regeln sind sprachneutral,
+   nur der Satz dahinter wechselt. */
+function validateField(field, value, values, e = {}) {
   switch (field) {
     case "name":
-      return value.trim() ? "" : "Bitte geben Sie Ihren Namen an.";
+      return value.trim() ? "" : e.name;
     case "email":
-      if (!value.trim()) return "Bitte geben Sie Ihre E-Mail-Adresse an.";
-      return EMAIL_RE.test(value.trim()) ? "" : "Bitte geben Sie eine gültige E-Mail-Adresse an.";
+      if (!value.trim()) return e.email;
+      return EMAIL_RE.test(value.trim()) ? "" : e.emailInvalid;
     case "subject":
-      return value.trim() ? "" : "Bitte geben Sie einen Betreff an.";
+      return value.trim() ? "" : e.subject;
     case "topic":
-      return value ? "" : "Bitte wählen Sie ein Anliegen.";
+      return value ? "" : e.topic;
     case "date":
       if (values?.topic !== TASTING) return "";
-      return value ? "" : "Bitte wählen Sie einen Wunschtermin.";
+      return value ? "" : e.date;
     case "guests":
       if (values?.topic !== TASTING) return "";
-      return value ? "" : "Bitte geben Sie die Anzahl der Gäste an.";
+      return value ? "" : e.guests;
     case "message":
-      return value.trim() ? "" : "Bitte schreiben Sie uns eine kurze Nachricht.";
+      return value.trim() ? "" : e.message;
     case "privacy":
-      return value ? "" : "Bitte stimmen Sie der Datenschutzerklärung zu.";
+      return value ? "" : e.privacy;
     default:
       return "";
   }
@@ -65,7 +77,9 @@ function FieldError({ id, children }) {
   );
 }
 
-export default function ContactForm({ className = "" }) {
+export default function ContactForm({ copy, className = "" }) {
+  const t = copy;
+  const err = t.errors;
   const [values, setValues] = useState(EMPTY);
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState("idle"); // idle | sending | sent
@@ -73,20 +87,20 @@ export default function ContactForm({ className = "" }) {
 
   const setField = (field, value) => {
     setValues((v) => ({ ...v, [field]: value }));
-    if (errors[field] && !validateField(field, value, { ...values, [field]: value })) {
+    if (errors[field] && !validateField(field, value, { ...values, [field]: value }, err)) {
       setErrors((e) => ({ ...e, [field]: "" }));
     }
   };
 
   const onBlurField = (field) =>
-    setErrors((e) => ({ ...e, [field]: validateField(field, values[field], values) }));
+    setErrors((e) => ({ ...e, [field]: validateField(field, values[field], values, err) }));
 
   const onSubmit = async (e) => {
     e.preventDefault();
     if (status === "sending") return;
     const next = {};
     Object.keys(EMPTY).forEach((f) => {
-      next[f] = validateField(f, values[f], values);
+      next[f] = validateField(f, values[f], values, err);
     });
     setErrors(next);
     if (Object.values(next).some(Boolean)) return;
@@ -100,7 +114,11 @@ export default function ContactForm({ className = "" }) {
           name: values.name,
           email: values.email,
           subject: values.subject,
-          topic: values.topic,
+          /* Schlüssel für die Logik, Klartext für die Benachrichtigungsmail —
+             das Team liest sie auf Deutsch, egal in welcher Sprache das
+             Formular ausgefüllt wurde. */
+          topicKey: values.topic,
+          topic: t.topics[values.topic] ?? values.topic,
           date: values.date,
           guests: values.guests,
           message: values.message,
@@ -108,14 +126,14 @@ export default function ContactForm({ className = "" }) {
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok || !data.ok) {
-        throw new Error(data.error || "Die Nachricht konnte nicht gesendet werden.");
+        /* Die Serverantwort ist immer deutsch (sie geht auch ins Log). Dem
+           Besucher zeigen wir stattdessen den Satz seiner Sprache. */
+        throw new Error(err.send);
       }
       setStatus("sent");
-    } catch (err) {
+    } catch (error) {
       setStatus("idle");
-      setSubmitError(
-        err?.message || "Die Nachricht konnte nicht gesendet werden. Bitte versuchen Sie es erneut."
-      );
+      setSubmitError(error?.message || err.send);
     }
   };
 
@@ -152,18 +170,17 @@ export default function ContactForm({ className = "" }) {
               <Check className="h-7 w-7" />
             </span>
             <h3 className="mt-6 font-playfair text-[22px] text-charcoal">
-              Vielen Dank für Ihre Nachricht!
+              {t.success.title}
             </h3>
             <p className="mt-3 max-w-xs text-[13px] leading-relaxed text-charcoal/70">
-              Wir haben Ihre Anfrage erhalten und melden uns innerhalb von 1–2 Werktagen persönlich
-              bei Ihnen.
+              {t.success.text}
             </p>
             <button
               type="button"
               onClick={reset}
               className="group mt-6 inline-flex min-h-[44px] items-center gap-1.5 text-[12px] font-medium text-bordeaux"
             >
-              Neue Nachricht
+              {t.success.again}
               <Arrow className="h-3.5 w-3.5 transition-transform duration-500 ease-out-expo group-hover:translate-x-1" />
             </button>
           </motion.div>
@@ -175,21 +192,21 @@ export default function ContactForm({ className = "" }) {
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
           >
-            <h2 className="font-playfair text-[24px] text-charcoal">Schreiben Sie uns</h2>
+            <h2 className="font-playfair text-[24px] text-charcoal">{t.title}</h2>
             <span aria-hidden="true" className="mt-3 block h-px w-12 bg-champagne/80" />
 
             <form className="mt-6 space-y-4" onSubmit={onSubmit} noValidate>
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div>
                   <label htmlFor="kf-name" className={LABEL}>
-                    Name
+                    {t.name.label}
                   </label>
                   <input
                     id="kf-name"
                     name="name"
                     type="text"
                     autoComplete="name"
-                    placeholder="Ihr Name"
+                    placeholder={t.name.placeholder}
                     className={INPUT}
                     value={values.name}
                     onChange={(e) => setField("name", e.target.value)}
@@ -201,14 +218,14 @@ export default function ContactForm({ className = "" }) {
                 </div>
                 <div>
                   <label htmlFor="kf-email" className={LABEL}>
-                    E-Mail
+                    {t.email.label}
                   </label>
                   <input
                     id="kf-email"
                     name="email"
                     type="email"
                     autoComplete="email"
-                    placeholder="name@beispiel.de"
+                    placeholder={t.email.placeholder}
                     className={INPUT}
                     value={values.email}
                     onChange={(e) => setField("email", e.target.value)}
@@ -222,13 +239,13 @@ export default function ContactForm({ className = "" }) {
 
               <div>
                 <label htmlFor="kf-subject" className={LABEL}>
-                  Betreff
+                  {t.subject.label}
                 </label>
                 <input
                   id="kf-subject"
                   name="subject"
                   type="text"
-                  placeholder="Worum geht es?"
+                  placeholder={t.subject.placeholder}
                   className={INPUT}
                   value={values.subject}
                   onChange={(e) => setField("subject", e.target.value)}
@@ -241,7 +258,7 @@ export default function ContactForm({ className = "" }) {
 
               <div>
                 <label htmlFor="kf-topic" className={LABEL}>
-                  Anliegen
+                  {t.topic.label}
                 </label>
                 <div className="relative">
                   <select
@@ -257,11 +274,13 @@ export default function ContactForm({ className = "" }) {
                     aria-describedby={describe("topic")}
                   >
                     <option value="" disabled>
-                      Anliegen wählen
+                      {t.topic.placeholder}
                     </option>
-                    {TOPICS.map((t) => (
-                      <option key={t} value={t}>
-                        {t}
+                    {/* Wert ist der Schlüssel, Beschriftung der übersetzte
+                        Text — so bleibt die Auswahl beim Sprachwechsel gültig. */}
+                    {TOPIC_KEYS.map((key) => (
+                      <option key={key} value={key}>
+                        {t.topics[key]}
                       </option>
                     ))}
                   </select>
@@ -286,7 +305,7 @@ export default function ContactForm({ className = "" }) {
                     <div className="grid grid-cols-1 gap-4 pb-1 sm:grid-cols-2">
                       <div>
                         <label htmlFor="kf-date" className={LABEL}>
-                          Wunschtermin
+                          {t.date.label}
                         </label>
                         <input
                           id="kf-date"
@@ -304,7 +323,7 @@ export default function ContactForm({ className = "" }) {
                       </div>
                       <div>
                         <label htmlFor="kf-guests" className={LABEL}>
-                          Anzahl Gäste
+                          {t.guests.label}
                         </label>
                         <div className="relative">
                           <select
@@ -320,11 +339,11 @@ export default function ContactForm({ className = "" }) {
                             aria-describedby={describe("guests")}
                           >
                             <option value="" disabled>
-                              Gäste wählen
+                              {t.guests.placeholder}
                             </option>
-                            {["2–4", "5–8", "9–12", "13–20", "Mehr als 20"].map((g) => (
+                            {t.guests.options.map((g) => (
                               <option key={g} value={g}>
-                                {g} Personen
+                                {g} {t.guests.unit}
                               </option>
                             ))}
                           </select>
@@ -346,13 +365,13 @@ export default function ContactForm({ className = "" }) {
 
               <div>
                 <label htmlFor="kf-message" className={LABEL}>
-                  Nachricht
+                  {t.message.label}
                 </label>
                 <textarea
                   id="kf-message"
                   name="message"
                   rows={4}
-                  placeholder="Ihre Nachricht an uns …"
+                  placeholder={t.message.placeholder}
                   className={`${INPUT} resize-none`}
                   value={values.message}
                   onChange={(e) => setField("message", e.target.value)}
@@ -380,14 +399,14 @@ export default function ContactForm({ className = "" }) {
                     className="mt-0.5 h-4 w-4 shrink-0 cursor-pointer accent-bordeaux"
                   />
                   <span>
-                    Ich habe die{" "}
-                    <a
+                    {t.privacyPre}{" "}
+                    <Link
                       href="/datenschutz"
                       className="font-medium text-bordeaux underline decoration-bordeaux/30 underline-offset-2 transition-colors duration-300 hover:decoration-bordeaux"
                     >
-                      Datenschutzerklärung
-                    </a>{" "}
-                    gelesen und stimme der Verarbeitung meiner Daten zu.
+                      {t.privacyLink}
+                    </Link>{" "}
+                    {t.privacyPost}
                   </span>
                 </label>
                 <FieldError id="kf-privacy-error">{errors.privacy}</FieldError>
@@ -411,7 +430,7 @@ export default function ContactForm({ className = "" }) {
                   aria-busy={sending}
                   className="disabled:cursor-not-allowed disabled:opacity-60"
                 >
-                  {sending ? "Wird gesendet…" : "Nachricht senden"}
+                  {sending ? t.sending : t.submit}
                 </Button>
               </div>
             </form>

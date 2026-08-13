@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/i18n/LocaleLink";
 import { Stagger, StaggerItem } from "@/components/motion/Reveal";
 import { Arrow } from "@/components/Icons";
 

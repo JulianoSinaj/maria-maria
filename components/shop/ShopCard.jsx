@@ -1,9 +1,10 @@
 "use client";
-import Link from "next/link";
+import Link from "@/components/i18n/LocaleLink";
 import Bottle from "@/components/Bottle";
 import WinePhotos from "@/components/WinePhotos";
 import { Arrow } from "@/components/Icons";
-import { fmtPrice, tasteWords, wineHref } from "@/components/data";
+import { wineHref } from "@/components/data";
+import { useCommon, useLocaleTools } from "@/lib/i18n/context";
 import AddToCart from "./AddToCart";
 import { WINE_META } from "./shopData";
 
@@ -28,10 +29,12 @@ function Packshot({ wine, imgClass }) {
 }
 
 export default function ShopCard({ wine, className = "", index }) {
+  const { price: fmtPrice, number: formatCount } = useLocaleTools();
+  const shop = useCommon("shop");
   const meta = WINE_META[wine.name] || {};
   const link = wineHref(wine);
   const number = Number.isInteger(index) ? String(index + 1).padStart(2, "0") : null;
-  const words = tasteWords(wine).join(" · ");
+  const words = (wine.notes ?? []).join(" · ");
 
   return (
     <div className={`group relative flex items-stretch gap-5 sm:gap-6 ${className}`}>
@@ -60,7 +63,7 @@ export default function ShopCard({ wine, className = "", index }) {
 
         {meta.edition && (
           <p className="mt-2 text-[10.5px] uppercase tracking-[0.14em] text-bordeaux/70">
-            Limitierte Auflage · {meta.edition}
+            {shop.limitedEdition?.replace("{count}", formatCount(meta.edition))}
           </p>
         )}
         {meta.scarce && (
@@ -69,7 +72,7 @@ export default function ShopCard({ wine, className = "", index }) {
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-champagne opacity-70" />
               <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-champagne" />
             </span>
-            Nur noch wenige Flaschen
+            {shop.scarce}
           </p>
         )}
 

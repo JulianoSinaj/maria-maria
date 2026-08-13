@@ -71,6 +71,7 @@ export const GRECO_DI_TUFO = {
       /* Loop-Video im Rahmen — läuft stumm in Endlosschleife, das Gemälde
          oben bleibt Poster und Reduced-Motion-Fallback */
       video: "/video/wine-white-720.mp4",
+      videoPoster: "/img/pour/wine-white-still.webp",
       videoFocus: "50% 50%",
       videoTitle: "Strohgelb im Glas",
     },
@@ -303,8 +304,8 @@ export const GRECO_DI_TUFO = {
   /* ---- Seitennavigation (Apple-Stil Subnav) ---- */
   subnav: [
     { label: "Überblick", href: "#ueberblick" },
-    { label: "Passt zu", href: "#maria-moment" },
     { label: "Geschmack", href: "#geschmack" },
+    { label: "Passt zu", href: "#maria-moment" },
     { label: "Fragen", href: "#fragen" },
   ],
 };

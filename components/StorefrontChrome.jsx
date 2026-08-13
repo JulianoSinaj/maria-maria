@@ -1,19 +1,21 @@
 "use client";
-import { usePathname } from "next/navigation";
 import Header from "./Header";
 import Footer from "./Footer";
 import CartDrawer from "./shop/CartDrawer";
 import { AmbientBackdrop } from "./Atmosphere";
+import { useCommon } from "@/lib/i18n/context";
 
 /* The storefront frame — header, footer, ambient wash and the cart slide-over.
-   /admin is a separate surface with its own shell, so it opts out of all of it
-   (a nested layout can add chrome but never remove a parent's). Everything
-   else on the site keeps the frame unchanged. */
+
+   Bis zur Mehrsprachigkeit prüfte diese Komponente selbst, ob der Pfad mit
+   /admin beginnt, und gab in dem Fall die Kinder unverändert zurück. Diese
+   Abfrage ist entfallen: /admin liegt jetzt in einer eigenen Route-Group mit
+   eigenem Root-Layout (app/(admin)/layout.jsx) und kommt hier gar nicht mehr
+   vorbei. Die Storefront-Kette hängt ausschließlich unter
+   app/(site)/[locale]/. */
 
 export default function StorefrontChrome({ children }) {
-  const isAdmin = usePathname()?.startsWith("/admin");
-
-  if (isAdmin) return children;
+  const a11y = useCommon("a11y");
 
   return (
     <>
@@ -22,7 +24,7 @@ export default function StorefrontChrome({ children }) {
         href="#main"
         className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-bordeaux focus:px-5 focus:py-3 focus:text-[13px] focus:text-ivory"
       >
-        Zum Inhalt springen
+        {a11y.skipToContent}
       </a>
       <Header />
       <main id="main">{children}</main>

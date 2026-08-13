@@ -11,8 +11,18 @@
    "Beispieldaten". Replace `seed` + `ORDERS` with real queries and the
    derived aggregates below keep working unchanged. */
 
-import { WINES } from "@/components/data";
+import { WINES as CATALOGUE_STRUCTURE } from "@/components/data";
+import { localizeWines } from "@/lib/i18n/catalogue";
+import deCommon from "@/content/de/common";
 import { WINE_META } from "@/components/shop/shopData";
+
+/* Seit der Mehrsprachigkeit trägt components/data.js nur noch die Struktur;
+   „Rotwein" und „Apulien" stehen in den Wörterbüchern. Das Backoffice ist
+   bewusst einsprachig deutsch (es liegt außerhalb von app/(site)/[locale]/),
+   greift also fest auf das deutsche zu. Die Gruppierungen unten schlüsseln
+   weiter auf den deutschen Bezeichnungen — sie sind hier Anzeigenamen UND
+   Gruppierungsschlüssel, und beides bleibt in einer Sprache konsistent. */
+const WINES = localizeWines(deCommon.catalogue, CATALOGUE_STRUCTURE);
 
 /* ---------- allocation ----------
    Only two wines carry a published edition size. Anything else is stocked
@@ -30,10 +40,13 @@ const COMMITTED = {
   "Primitivo di Manduria D.O.C. 15,5": 9_260,
 };
 
-const parseEdition = (s) => (s ? Number(s.replace(/[^\d]/g, "")) : null);
-
+/* `edition` war früher der fertige String „18.000 Flaschen" und musste hier
+   wieder zur Zahl zurückgerechnet werden. Seit der Mehrsprachigkeit steht in
+   shopData bereits die reine Zahl — das Substantiv und der Tausenderpunkt
+   entstehen erst beim Rendern in der jeweiligen Sprache. Der Parser entfällt
+   damit ersatzlos. */
 export const ALLOCATION = Object.keys(VESSEL).map((name) => {
-  const batch = parseEdition(WINE_META[name]?.edition);
+  const batch = WINE_META[name]?.edition ?? null;
   const committed = COMMITTED[name] ?? 0;
   const remaining = batch == null ? null : batch - committed;
   return {

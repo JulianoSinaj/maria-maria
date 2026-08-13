@@ -1,6 +1,6 @@
 "use client";
 import { useRef } from "react";
-import Link from "next/link";
+import Link from "@/components/i18n/LocaleLink";
 import { motion, useMotionValue, useSpring, useReducedMotion } from "motion/react";
 import { Arrow, Plate, GrapeVine, Mountains, Grapes } from "@/components/Icons";
 import { Reveal } from "@/components/motion/Reveal";

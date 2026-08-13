@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
+import Link from "@/components/i18n/LocaleLink";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { GoldRule } from "@/components/Deco";
 import { Arrow, Glasses } from "@/components/Icons";

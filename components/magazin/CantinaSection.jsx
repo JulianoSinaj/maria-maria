@@ -4,6 +4,8 @@ import { Reveal, Stagger, StaggerItem } from "@/components/motion/Reveal";
 import { Aura, GhostWord } from "@/components/Atmosphere";
 import { WINE_PAGES } from "@/components/weine/wineRegistry";
 import { WINES } from "@/components/data";
+import { localizeWines } from "@/lib/i18n/catalogue";
+import deCommon from "@/content/de/common";
 import { pairingPhotoSrc, pairingSrcSet } from "@/components/weine/pairingPhoto";
 import { MAGAZIN_CANTINA_SLUGS } from "./magazinData";
 import CantinaCard from "./CantinaCard";
@@ -24,19 +26,26 @@ import CantinaCard from "./CantinaCard";
    Die Karten-Motion (Hebung, Zoom, Konnektor-Linie) lebt in CantinaCard
    und folgt dem Food-Pairing-Card-Guide: dezent, 150–250 ms, kein 3D. */
 
-const COLOR_LABEL = { Rotwein: "Rot", Weißwein: "Weiß", Roséwein: "Rosé" };
+/* Kurzform der Weinart für die Kartenzeile, geschlüsselt auf typeKey.
+   Region und Charakterworte liegen seit der Mehrsprachigkeit im Wörterbuch
+   und nicht mehr im Katalog. Das Magazin ist noch nicht übersetzt, deshalb
+   greift dieser Abschnitt bewusst fest auf das deutsche zu — sobald
+   content/<sprache>/magazin.js existiert, wird daraus eine Prop. */
+const COLOR_LABEL = { red: "Rot", white: "Weiß", rose: "Rosé" };
+
+const CATALOGUE = localizeWines(deCommon.catalogue, WINES);
 
 const CANTINA_WINES = MAGAZIN_CANTINA_SLUGS.map((slug) => {
   const page = WINE_PAGES[slug];
-  const catalog = WINES.find((w) => w.slug === slug);
+  const catalog = CATALOGUE.find((w) => w.slug === slug);
   const photoSrc = pairingPhotoSrc(slug);
   if (!photoSrc || !catalog) return null;
   return {
     slug,
     name: catalog.name,
     region: catalog.region,
-    color: COLOR_LABEL[catalog.type] || catalog.type,
-    words: Array.isArray(page?.heroWords) ? page.heroWords.join(" ") : catalog.notes,
+    color: COLOR_LABEL[catalog.typeKey] || catalog.type,
+    words: Array.isArray(page?.heroWords) ? page.heroWords.join(" ") : catalog.notes.join(" "),
     photoSrc,
     photoSrcSet: pairingSrcSet(slug),
   };

@@ -1,90 +1,79 @@
 "use client";
-import { useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { motion, useInView, useReducedMotion } from "motion/react";
 import { Reveal } from "@/components/motion/Reveal";
 import SplitText from "@/components/motion/SplitText";
-import { useTouchDevice } from "@/components/motion/useMediaQuery";
 
-/* „Die Farbe" — links die Typo-Bühne, rechts eine moderne Glaskarte mit einem
-   Motiv aus der Kunstgeschichte (oder einem Loop-Video), dessen Palette den
-   Weinton spiegelt (wine.colorMoment.artwork). Die Karte schwebt federnd aus
-   der rechten unteren Ecke in die Sektion und bleibt danach ruhig stehen —
-   sie reagiert nicht auf Scroll oder Cursor. Chips auf dem Bild (Farbton
-   + Serviertemperatur) und die Bildleiste mit den Swatches greifen die
-   Chip-Sprache der Sektion auf. */
+/* „Die Farbe" — eine Bühne statt einer Karte. Der Clip vom eingeschenkten
+   Wein läuft randlos über die ganze Sektion, in halber Geschwindigkeit, und
+   die Typo liegt darin. Es gibt bewusst keinen Rahmen mehr: die Aufnahme
+   steht auf hellem Grau, und über Schleier in Elfenbein läuft sie an allen
+   Kanten in die Seite aus — das Glas steht am Ende in einer Lichtinsel,
+   nicht in einem Kasten.
 
-const ENTRY_SPRING = { type: "spring", stiffness: 48, damping: 14.5, mass: 1.05 };
+   Die Kadrierung folgt dem Motiv: das Glas sitzt mittig im Clip und füllt
+   ihn fast über die volle Höhe. Beschnitten wird darum quer, nie hoch. Ab lg
+   rückt das Bild nach rechts (translate), damit das Glas neben der Typo
+   steht statt hinter ihr — und das Sternchen, das unten rechts im Material
+   steckt, aus dem Bild läuft. Darunter besorgt der schmalere Ausschnitt das
+   Gleiche; wo er es knapp verfehlt, deckt der Schleier an der Kante zu.
 
-const mixHex = (a, b, t) => {
-  const pa = parseInt(a.slice(1), 16);
-  const pb = parseInt(b.slice(1), 16);
-  const ch = (sh) => Math.round(((pa >> sh) & 255) * (1 - t) + ((pb >> sh) & 255) * t);
-  return `#${((ch(16) << 16) | (ch(8) << 8) | ch(0)).toString(16).padStart(6, "0")}`;
-};
+   Serviertemperatur und Farbtöne bleiben als schmale Zeile unter dem Text:
+   sie tragen den Inhalt des Kapitels, den das Bild allein nicht erzählt. */
 
-const FALLBACK_ARTWORK = {
-  src: "/img/art/farbe-rot-fantin-latour.webp",
-  alt: "Ölgemälde „Roses in a Bowl“ von Henri Fantin-Latour",
-  title: "Roses in a Bowl",
-  artist: "Henri Fantin-Latour",
-  year: "1883",
-  focus: "50% 40%",
-};
+/* Halbes Tempo — der Guss soll fallen, nicht stürzen */
+const POUR_RATE = 0.55;
+/* Der Clip beginnt mit leerem und endet mit vollem Glas. Am Schnitt würde
+   das Glas hart zurückspringen; die letzten Zehntel blenden darum weg und
+   nach dem Rücksprung wieder auf. */
+const SEAM_LEAD = 0.5;
 
 export default function ColorBand({ wine }) {
   const reduced = useReducedMotion();
-  const touch = useTouchDevice();
   const c = wine.colorMoment;
-  const art = c.artwork ?? FALLBACK_ARTWORK;
-  /* Das Loop-Video (~4 MB) erst mounten, wenn die Sektion in Sichtweite ist —
-     sonst lädt jede Weinseite den kompletten Clip schon beim Seitenaufruf.
-     Bis dahin (und bei Reduced Motion) steht das Gemälde als Poster. */
+  const art = c.artwork ?? {};
+  /* Den Clip (~4 MB) erst mounten, wenn die Sektion in Sichtweite kommt —
+     sonst lädt jede Weinseite ihn schon beim Seitenaufruf. Bis dahin und bei
+     Reduced Motion steht das Standbild aus demselben Material. */
+  const sectionRef = useRef(null);
   const videoRef = useRef(null);
-  const nearView = useInView(videoRef, { once: true, margin: "0px 0px 600px 0px" });
+  const nearView = useInView(sectionRef, { once: true, margin: "0px 0px 700px 0px" });
   const hasVideo = Boolean(art.video) && !reduced && nearView;
+  const [atSeam, setAtSeam] = useState(false);
+
   const accent = wine.accent ?? { base: "#C8B77A", deep: "#8A2B2F", light: "#E3D9B8" };
-  const [s0, s1, s2] = [c.swatches[0], c.swatches[1], c.swatches[2] ?? c.swatches[1]];
-
-  /* abgeleitete Töne — funktionieren für helle wie dunkle Weine */
-  const inkFrom = mixHex(s2.hex, "#1B1B1B", 0.5);
-  const inkTo = mixHex(s2.hex, "#1B1B1B", 0.75);
-  const frameDeep = mixHex(s2.hex, "#1B1B1B", 0.72);
+  const [s1, s2] = [c.swatches[1], c.swatches[2] ?? c.swatches[1]];
   const tempFact = (wine.facts ?? []).find((f) => f.icon === "thermometer");
+  /* Standbild aus demselben Clip (public/img/pour) — nicht artwork.src: die
+     Gemälde, die dort stehen, liegen nicht im Repo und laufen ins 404. */
+  const poster = art.videoPoster;
 
-  /* Auftritt aus der rechten unteren Ecke — federnd, mit leichtem Eindrehen;
-     auf schmalen Screens deutlich kürzer, sonst wirkt der Einflug ruckhaft */
-  const entryV = reduced
-    ? {
-        hidden: { opacity: 0 },
-        visible: { opacity: 1, transition: { duration: 0.5 } },
-      }
-    : {
-        hidden: touch
-          ? { opacity: 0, x: 44, y: 84, rotate: 4, scale: 0.94 }
-          : { opacity: 0, x: 140, y: 170, rotate: 7, scale: 0.88 },
-        visible: { opacity: 1, x: 0, y: 0, rotate: 0, scale: 1, transition: ENTRY_SPRING },
-      };
-  const plaqueV = reduced
-    ? {
-        hidden: { opacity: 0 },
-        visible: { opacity: 1, transition: { duration: 0.5, delay: 0.2 } },
-      }
-    : {
-        hidden: { opacity: 0, y: 14 },
-        visible: { opacity: 1, y: 0, transition: { ...ENTRY_SPRING, delay: 0.28 } },
-      };
+  /* playbackRate überlebt keinen Quellenwechsel und steht vor dem Laden der
+     Metadaten noch nicht — darum bei jedem Start neu setzen. */
+  const slowDown = useCallback(() => {
+    const v = videoRef.current;
+    if (v) v.playbackRate = POUR_RATE;
+  }, []);
+
+  useEffect(() => {
+    if (hasVideo) slowDown();
+  }, [hasVideo, slowDown]);
+
+  const watchSeam = (e) => {
+    const v = e.currentTarget;
+    if (!v.duration) return;
+    setAtSeam(v.duration - v.currentTime < SEAM_LEAD);
+  };
 
   return (
     <section
+      ref={sectionRef}
       id="geschmack"
-      className="relative scroll-mt-36 overflow-hidden"
-      style={{
-        background: `linear-gradient(180deg, #FBF9F4 0%, ${s0.hex}26 62%, ${s0.hex}45 100%)`,
-      }}
+      className="relative isolate scroll-mt-36 overflow-hidden bg-ivory"
     >
-      <div className="mx-auto grid max-w-content items-center gap-8 px-6 py-12 sm:gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-8 lg:px-10 lg:py-14">
-        {/* ---------- Typo-Bühne ---------- */}
-        <div className="relative z-10">
+      {/* ---------- Typo in der Bühne ---------- */}
+      <div className="relative z-10 mx-auto grid max-w-content px-6 pb-2 pt-12 sm:pt-14 lg:min-h-[min(88vh,880px)] lg:grid-cols-[0.92fr_1.08fr] lg:items-center lg:px-10 lg:pb-14 lg:pt-14">
+        <div>
           <Reveal blur={false}>
             <span
               className="text-[11px] font-semibold uppercase tracking-[0.3em]"
@@ -93,193 +82,162 @@ export default function ColorBand({ wine }) {
               {c.kicker}
             </span>
           </Reveal>
-          <h2 className="mt-3 font-playfair text-[clamp(1.95rem,3.6vw,2.9rem)] leading-[1.05] text-charcoal">
+          <h2 className="mt-3 font-playfair text-[clamp(2.1rem,4.4vw,3.4rem)] leading-[1.03] text-charcoal">
             <SplitText text={c.lines[0]} className="block" delay={0.08} />
             <SplitText
               text={c.lines[1]}
               className="block italic"
               wordClassName="bg-clip-text text-transparent"
-              wordStyle={{ backgroundImage: `linear-gradient(95deg, ${inkFrom}, ${inkTo})` }}
+              wordStyle={{ backgroundImage: `linear-gradient(95deg, ${accent.deep}, #2B2724)` }}
               delay={0.24}
             />
           </h2>
           <Reveal delay={0.15} y={18}>
             <p
-              className="mt-4 max-w-md border-l pl-5 text-[14px] leading-relaxed text-charcoal/70"
+              className="mt-5 max-w-md border-l pl-5 text-[14.5px] leading-relaxed text-charcoal/75"
               style={{ borderColor: `${accent.base}59` }}
             >
               {c.text}
             </p>
           </Reveal>
-          {tempFact && (
-            <Reveal delay={0.24} y={14} blur={false}>
-              <div className="mt-5 inline-flex items-center gap-3 rounded-full border border-charcoal/10 bg-white/70 py-2 pl-3 pr-5 shadow-chip backdrop-blur-sm">
-                <span
-                  className="grid h-8 w-8 place-items-center rounded-full"
-                  style={{ backgroundColor: `${s1.hex}66`, color: inkTo }}
-                >
-                  <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
-                    <path d="M12 4a2 2 0 0 0-2 2v7.2a4 4 0 1 0 4 0V6a2 2 0 0 0-2-2Z" />
-                    <path d="M12 11v5" strokeLinecap="round" />
-                  </svg>
-                </span>
-                <span className="flex flex-col leading-tight">
-                  <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-charcoal/50">
-                    {tempFact.label}
+
+          {/* Serviertemperatur und Farbtöne in einer Zeile — die Sachangaben
+              des Kapitels, ohne sie in eine Karte zu sperren */}
+          <Reveal delay={0.24} y={14} blur={false}>
+            <div className="mt-7 flex flex-wrap items-center gap-x-5 gap-y-3">
+              {tempFact && (
+                <span className="inline-flex items-center gap-3 rounded-full border border-charcoal/10 bg-white/70 py-2 pl-3 pr-5 shadow-chip backdrop-blur-sm">
+                  <span
+                    className="grid h-8 w-8 place-items-center rounded-full"
+                    style={{ backgroundColor: `${s1.hex}66`, color: accent.deep }}
+                  >
+                    <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
+                      <path d="M12 4a2 2 0 0 0-2 2v7.2a4 4 0 1 0 4 0V6a2 2 0 0 0-2-2Z" />
+                      <path d="M12 11v5" strokeLinecap="round" />
+                    </svg>
                   </span>
-                  <span className="text-[13px] font-semibold text-charcoal">{tempFact.value}</span>
+                  <span className="flex flex-col leading-tight">
+                    <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-charcoal/50">
+                      {tempFact.label}
+                    </span>
+                    <span className="text-[13px] font-semibold text-charcoal">{tempFact.value}</span>
+                  </span>
                 </span>
-              </div>
-            </Reveal>
-          )}
-        </div>
+              )}
 
-        {/* ---------- Das Gemälde ---------- */}
-        <div className="relative flex items-center justify-center lg:pb-0">
-          {/* weiche Lichtaura hinter dem Rahmen */}
-          <div
-            aria-hidden="true"
-            className="absolute left-1/2 top-1/2 h-[280px] w-[280px] -translate-x-1/2 -translate-y-1/2 rounded-full blur-3xl"
-            style={{ background: `radial-gradient(closest-side, ${s1.hex}59, transparent 72%)` }}
-          />
-            <motion.figure
-              variants={entryV}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.35 }}
-              className="relative will-transform"
-            >
-              {/* weicher Farbschein hinter der Karte — greift den Weinton auf */}
-              <div
-                aria-hidden="true"
-                className="absolute -bottom-8 -right-8 h-[85%] w-[85%] rounded-[48px] blur-2xl"
-                style={{
-                  background: `linear-gradient(135deg, ${s1.hex}, ${s2.hex})`,
-                  opacity: 0.55,
-                }}
-              />
-
-              {/* Moderne Glaskarte: Gradient-Haarlinie → frostiges Panel → Bild.
-                  Spricht dieselbe Sprache wie die Chips der Sektion (weißes
-                  Glas, weiche Radien, Weinton-Akzente). */}
-              {/* Die Karte trägt die Breite; Video/Bild füllen sie mit w-full.
-                  Läge die Breite auf dem Medium, könnte die Bildleiste die
-                  Karte auf schmalen Screens breiter drücken als das Video —
-                  rechts bliebe ein leerer Streifen. */}
-              <div
-                className="relative w-[min(88vw,352px)] max-w-full rounded-[26px] p-[1.5px] sm:w-[367px] lg:w-[407px]"
-                style={{
-                  background: `linear-gradient(140deg, rgba(255,255,255,0.95), ${s1.hex}66 45%, ${s2.hex}99)`,
-                  boxShadow: `0 30px 64px -24px ${s2.hex}73, 0 12px 26px -14px rgba(27,27,27,0.2)`,
-                }}
-              >
-                <div className="rounded-[24.5px] border border-white/50 bg-white/60 p-2.5 backdrop-blur-xl sm:p-3">
-                  <div
-                    ref={videoRef}
-                    className="relative overflow-hidden rounded-[18px]"
-                    style={{ border: `1px solid ${frameDeep}24` }}
-                  >
-                    {/* Bewegte Leinwand: liegt in artwork.video ein Clip (mp4/webm),
-                        läuft er stumm in Endlosschleife im Rahmen — das Gemälde
-                        (artwork.src) bleibt Poster und Reduced-Motion-Fallback */}
-                    {hasVideo ? (
-                      <video
-                        src={art.video}
-                        poster={art.src}
-                        autoPlay
-                        muted
-                        loop
-                        playsInline
-                        preload="metadata"
-                        aria-label={art.alt}
-                        className="block aspect-[5/4] w-full object-cover sm:aspect-[4/3.4]"
-                        style={{ objectPosition: art.videoFocus ?? art.focus ?? "50% 50%" }}
-                      />
-                    ) : (
-                      <img
-                        src={art.src}
-                        alt={art.alt}
-                        loading="lazy"
-                        className="block aspect-[5/4] w-full object-cover sm:aspect-[4/3.4]"
-                        style={{ objectPosition: art.focus ?? "50% 50%" }}
-                      />
-                    )}
-                    {/* Vignette im Weinton verankert das Bild in der Sektion */}
-                    <div
-                      aria-hidden="true"
-                      className="pointer-events-none absolute inset-0"
-                      style={{
-                        background: `linear-gradient(160deg, transparent 55%, ${s2.hex}2E 100%)`,
-                        mixBlendMode: "multiply",
-                      }}
+              <span className="flex items-center gap-2.5" aria-label="Die Töne des Weins">
+                {c.swatches.map((s) => (
+                  <span key={s.hex} className="flex items-center gap-1.5">
+                    <span
+                      className="h-3.5 w-3.5 rounded-full border border-white/70 shadow-sm"
+                      style={{ backgroundColor: s.hex }}
                     />
-
-                    {/* Farb-Chip — Echo der Kicker/Swatch-Sprache links */}
-                    <span className="absolute left-3 top-3 inline-flex items-center gap-2 rounded-full border border-white/60 bg-white/75 px-3 py-1.5 shadow-chip backdrop-blur-md">
-                      <span
-                        className="h-2.5 w-2.5 rounded-full shadow-sm"
-                        style={{ backgroundColor: s0.hex }}
-                      />
-                      <span className="text-[9px] font-semibold uppercase tracking-[0.2em] text-charcoal/70">
-                        {s0.label}
-                      </span>
+                    <span className="whitespace-nowrap text-[10px] font-semibold uppercase tracking-[0.14em] text-charcoal/45">
+                      {s.label}
                     </span>
-
-                    {/* Temperatur-Chip — Echo des Serviertemperatur-Chips links */}
-                    {tempFact && (
-                      <span className="absolute right-3 top-3 inline-flex items-center gap-1.5 rounded-full border border-white/60 bg-white/75 px-3 py-1.5 shadow-chip backdrop-blur-md">
-                        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true" style={{ color: accent.deep }}>
-                          <path d="M12 4a2 2 0 0 0-2 2v7.2a4 4 0 1 0 4 0V6a2 2 0 0 0-2-2Z" />
-                          <path d="M12 11v5" strokeLinecap="round" />
-                        </svg>
-                        <span className="text-[10px] font-semibold text-charcoal/80">{tempFact.value}</span>
-                      </span>
-                    )}
-                  </div>
-
-                  {/* Bildleiste — verbindet Motiv und Weinfarbe, sitzt in der Karte.
-                      Eigene initial/whileInView-Props statt Variant-Propagation:
-                      die läuft nur über motion-Kinder, und dazwischen liegen
-                      plain <div>s — über die Figure kam der Trigger nie an. */}
-                  <motion.div
-                    variants={plaqueV}
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true, amount: 0.35 }}
-                    className="flex items-center justify-between gap-3 px-2.5 pb-1 pt-2.5 sm:px-3"
-                  >
-                    <span className="min-w-0 leading-tight">
-                      <span
-                        className="block text-[8.5px] font-semibold uppercase tracking-[0.22em]"
-                        style={{ color: accent.deep }}
-                      >
-                        Farbverwandt · {hasVideo ? "Bewegtbild in Schleife" : art.medium ?? "Öl auf Leinwand"}
-                      </span>
-                      <span className="mt-0.5 block truncate font-playfair text-[13.5px] italic text-charcoal">
-                        „{hasVideo && art.videoTitle ? art.videoTitle : art.title}"{" "}
-                        {!(hasVideo && art.videoTitle) && (
-                          <span className="font-sans text-[10.5px] not-italic text-charcoal/55">
-                            — {art.artist}
-                            {art.year ? `, ${art.year}` : ""}
-                          </span>
-                        )}
-                      </span>
-                    </span>
-                    <span className="flex shrink-0 items-center gap-1.5" aria-label="Die Töne des Weins">
-                      {c.swatches.map((s) => (
-                        <span
-                          key={s.hex}
-                          title={s.label}
-                          className="h-3 w-3 rounded-full border border-white/70 shadow-sm"
-                          style={{ backgroundColor: s.hex }}
-                        />
-                      ))}
-                    </span>
-                  </motion.div>
-                </div>
-              </div>
-            </motion.figure>
+                  </span>
+                ))}
+              </span>
+            </div>
+          </Reveal>
         </div>
+      </div>
+
+      {/* ---------- Die Bühne ---------- */}
+      {/* Unterhalb lg steht der Guss als hohes Bild unter dem Text — dort
+          liegt das Glas mittig im Bild und hätte die Typo sonst im Rücken.
+          Ab lg füllt dieselbe Aufnahme die ganze Sektion. */}
+      <div className="relative z-0 aspect-[4/5] w-full sm:aspect-[3/2] lg:absolute lg:inset-0 lg:aspect-auto lg:h-full">
+        <motion.div
+          className="absolute inset-0"
+          initial={reduced ? false : { scale: 1.06 }}
+          whileInView={reduced ? undefined : { scale: 1 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 2.2, ease: [0.16, 1, 0.3, 1] }}
+        >
+          {hasVideo ? (
+            <video
+              ref={videoRef}
+              src={art.video}
+              poster={poster}
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              onLoadedMetadata={slowDown}
+              onPlay={slowDown}
+              onTimeUpdate={watchSeam}
+              aria-label={art.videoTitle ?? `${wine.name} wird eingeschenkt`}
+              className={`h-full w-full origin-[50%_24%] scale-[1.16] object-cover [object-position:50%_50%] transition-opacity duration-500 sm:scale-[1.2] sm:[object-position:40%_50%] lg:origin-[46%_22%] lg:translate-x-[9%] lg:scale-[1.26] ${
+                atSeam ? "opacity-0" : "opacity-100"
+              }`}
+              style={{ filter: "saturate(1.12) contrast(1.03)" }}
+            />
+          ) : (
+            poster && (
+              <img
+                src={poster}
+                alt={art.videoTitle ?? `${wine.name} im Glas`}
+                loading="lazy"
+                className="h-full w-full origin-[50%_24%] scale-[1.16] object-cover [object-position:50%_50%] sm:scale-[1.2] sm:[object-position:40%_50%] lg:origin-[46%_22%] lg:translate-x-[9%] lg:scale-[1.26]"
+                style={{ filter: "saturate(1.12) contrast(1.03)" }}
+              />
+            )
+          )}
+        </motion.div>
+
+        {/* Wärme: das Material steht auf neutralem Grau, die Seite auf
+            Elfenbein — ein Hauch Weinton legt beide auf dieselbe Temperatur */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0"
+          style={{
+            background: `linear-gradient(125deg, ${s1.hex}66, transparent 42%, ${s2.hex}4D)`,
+            mixBlendMode: "soft-light",
+          }}
+        />
+
+        {/* Lichtinsel: von der Mitte nach außen läuft das Bild in Elfenbein
+            aus — an der rechten Kante am dichtesten. Ab lg ist das Bild um
+            9 % nach rechts gerückt (siehe oben), damit das Glas rechts der
+            Typo steht; das Sternchen im Material wandert dabei aus dem Bild.
+            Darunter, wo die Kadrierung es noch erwischt, deckt der Schleier
+            an der Kante es zu. */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(126% 100% at 58% 46%, transparent 34%, rgba(251,249,244,0.26) 64%, rgba(251,249,244,0.78) 88%, #FBF9F4 100%)",
+          }}
+        />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(to left, #FBF9F4 1%, rgba(251,249,244,0.92) 9%, rgba(251,249,244,0.45) 22%, transparent 38%)",
+          }}
+        />
+        {/* Ober- und Unterkante lösen sich in die Nachbarkapitel auf */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(to bottom, #FBF9F4 0%, rgba(251,249,244,0.35) 14%, transparent 34%, transparent 68%, rgba(251,249,244,0.5) 88%, #FBF9F4 100%)",
+          }}
+        />
+        {/* Ab lg liegt die Typo im Bild: die linke Hälfte wird zur Lesefläche */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 hidden lg:block"
+          style={{
+            background:
+              "linear-gradient(100deg, #FBF9F4 6%, rgba(251,249,244,0.93) 30%, rgba(251,249,244,0.55) 46%, transparent 62%)",
+          }}
+        />
       </div>
     </section>
   );

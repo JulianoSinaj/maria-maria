@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/i18n/LocaleLink";
 import Parallax from "@/components/motion/Parallax";
 import TiltCard from "@/components/motion/TiltCard";
 import Photo from "@/components/media/Photo";

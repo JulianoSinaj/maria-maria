@@ -1,62 +1,60 @@
-import { absoluteUrl, ORGANIZATION, SITE_NAME } from "@/lib/site";
+import JsonLd from "@/components/seo/JsonLd";
+import { graph, webPageNode, breadcrumbNode, faqNode } from "@/lib/seo/jsonLd";
+import { localePath } from "@/lib/i18n/routing";
+import { absoluteUrl } from "@/lib/site";
 
-/* Strukturierte Daten der Magazin-Seite — gleiche Bauform wie das
-   ProductJsonLd der Wein-Landingpages (ein <script type="application/ld+json">
-   pro Seite, aus den vorhandenen Daten abgeleitet, nie handgepflegt).
+/* Strukturierte Daten der Magazin-Seite.
 
-   Zwei Graphen in einem Block:
-   - CollectionPage: beschreibt /magazin als das, was die Seite tatsächlich
-     zeigt — Marke, Genussmomente, Bacheca und die Weine dahinter. Bewusst
-     KEIN Blog mit `blogPost`: Artikelkarten stehen derzeit nicht auf der
-     Seite, und strukturierte Daten dürfen nur beschreiben, was sichtbar ist.
-     Sobald es Artikelrouten gibt, wird hier wieder ein Blog daraus.
-   - BreadcrumbList: Start › Magazin, damit die Seite in der SERP ihren Pfad
-     zeigt statt der nackten URL.
+   Baut jetzt auf denselben Knoten-Bauteilen auf wie der Rest der Seite
+   (lib/seo/jsonLd.js) statt das Schema selbst zusammenzuschreiben. Der
+   Unterschied ist nicht kosmetisch: Vorher trug der Block einen eigenen,
+   verkürzten Organisationsknoten und ein hart codiertes `inLanguage:
+   "de-DE"` — auf /it/magazin, /en/magazin und /cs/magazin meldete die Seite
+   damit deutsche Sprache und ein zweites, unvollständiges Unternehmen unter
+   derselben Adresse. Beides zieht die Signale auseinander, die der
+   Layout-Knoten sammelt.
 
-   Kein FAQPage-Markup: die FAQ-Sektion trägt dieselbe Entscheidung schon
-   (components/faq/FaqSection) — seit Mai 2026 ohne Rich-Result-Effekt. */
+   Weiterhin bewusst KEIN Blog mit `blogPost`: Artikelkarten stehen nicht auf
+   der Seite, und strukturierte Daten dürfen nur beschreiben, was sichtbar
+   ist. Sobald es Artikelrouten gibt, wird hier wieder ein Blog daraus.
 
-export default function MagazinJsonLd({ description }) {
-  const url = absoluteUrl("/magazin");
+   Die FAQ ist dagegen neu — und die Begründung hat sich geändert: Es geht
+   nicht mehr um das Aufklapp-Rich-Result (das gibt Google für Weinseiten
+   seit 2023 nicht mehr aus), sondern um KI-Antwortmaschinen, die Frage und
+   Antwort als Paar lesen. „Welche Trinktemperatur ist ideal?" ist genau die
+   Art Frage, die dort gestellt wird. */
 
-  const data = {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "CollectionPage",
-        "@id": `${url}#magazin`,
-        url,
-        name: `Magazin — ${SITE_NAME}`,
-        description,
-        inLanguage: "de-DE",
-        isPartOf: { "@type": "WebSite", name: SITE_NAME, url: absoluteUrl("/") },
-        publisher: ORGANIZATION,
-      },
-      {
-        "@type": "BreadcrumbList",
-        "@id": `${url}#breadcrumb`,
-        itemListElement: [
-          {
-            "@type": "ListItem",
-            position: 1,
-            name: "Start",
-            item: absoluteUrl("/"),
-          },
-          {
-            "@type": "ListItem",
-            position: 2,
-            name: "Magazin",
-            item: url,
-          },
-        ],
-      },
+export default function MagazinJsonLd({ locale, dict, faq = [] }) {
+  const url = absoluteUrl(localePath(locale, "/magazin"));
+  const nav = dict?.common?.nav ?? {};
+  const meta = dict?.meta?.magazin ?? {};
+  const localize = (href) => localePath(locale, href);
+
+  const crumbs = breadcrumbNode(
+    [
+      { label: nav.home || "Home", href: "/" },
+      { label: nav.magazine || "Magazin", href: "/magazin" },
     ],
-  };
+    { url, localize }
+  );
 
   return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+    <JsonLd
+      data={graph(
+        webPageNode({
+          url,
+          name: meta.title,
+          description: meta.description,
+          locale,
+          type: "CollectionPage",
+          image: { url: "/img/og/magazin.jpg", alt: meta.ogImageAlt },
+          breadcrumbId: crumbs?.["@id"] ?? null,
+        }),
+        crumbs,
+        /* Noch deutsch (I18N.md, Abschnitt 7) — Markup nur dort, wo der
+           Besucher denselben Text auch liest. */
+        locale === "de" ? faqNode({ url, items: faq }) : null
+      )}
     />
   );
 }

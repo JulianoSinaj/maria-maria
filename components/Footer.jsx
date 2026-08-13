@@ -1,30 +1,36 @@
 "use client";
 import { useEffect, useState } from "react";
-import Link from "next/link";
+import Link from "@/components/i18n/LocaleLink";
 import { Reveal, Stagger, StaggerItem } from "./motion/Reveal";
 import Button from "./ui/Button";
 import { Instagram, Facebook, Mail, Arrow, Check, Grapes } from "./Icons";
+import LanguageSwitcher from "./i18n/LanguageSwitcher";
+import { useCommon } from "@/lib/i18n/context";
 
 const EXPLORE = [
-  { label: "Unsere Weine", href: "/unsere-weine" },
-  { label: "Regionen Italiens", href: "/regionen" },
-  { label: "Magazin", href: "/magazin" },
-  { label: "Kontakt", href: "/kontakt" },
+  { key: "wines", href: "/unsere-weine" },
+  { key: "regions", href: "/regionen" },
+  { key: "magazine", href: "/magazin" },
+  { key: "contact", href: "/kontakt" },
 ];
 
+/* Netzwerknamen sind Eigennamen und bleiben in jeder Sprache stehen — nur
+   „E-Mail" ist ein Wort und kommt daher aus dem Wörterbuch. */
 const SOCIALS = [
-  { label: "Instagram", href: "https://www.instagram.com/mariamaria.wine", Icon: Instagram },
-  { label: "Facebook", href: "https://www.facebook.com/mariamaria.wine", Icon: Facebook },
-  { label: "E-Mail", href: "mailto:info@maria-maria.wine", Icon: Mail },
+  { key: "instagram", label: "Instagram", href: "https://www.instagram.com/mariamaria.wine", Icon: Instagram },
+  { key: "facebook", label: "Facebook", href: "https://www.facebook.com/mariamaria.wine", Icon: Facebook },
+  { key: "mail", label: null, href: "mailto:info@maria-maria.wine", Icon: Mail },
 ];
 
 const LEGAL = [
-  { label: "Datenschutz", href: "/datenschutz" },
-  { label: "Impressum", href: "/impressum" },
-  { label: "AGB", href: "/agb" },
+  { key: "privacy", href: "/datenschutz" },
+  { key: "imprint", href: "/impressum" },
+  { key: "terms", href: "/agb" },
 ];
 
 export default function Footer() {
+  const t = useCommon("footer");
+  const a11y = useCommon("a11y");
   const [sent, setSent] = useState(false);
   // deterministic for SSR/hydration, corrected to the visitor's year after mount
   const [year, setYear] = useState(2026);
@@ -47,17 +53,17 @@ export default function Footer() {
         <Reveal className="mx-auto max-w-2xl text-center">
           <Grapes className="mx-auto h-7 w-7 text-champagne" />
           <h3 className="mt-4 text-balance font-playfair text-[clamp(1.6rem,3vw,2.2rem)] leading-tight">
-            Geschichten aus Italien, <span className="italic text-champagne">direkt ins Postfach</span>
+            {t.newsletter.title} <span className="italic text-champagne">{t.newsletter.titleAccent}</span>
           </h3>
           <p className="mx-auto mt-3 max-w-md text-[13px] leading-relaxed text-ivory/65">
-            Neuigkeiten, exklusive Angebote und Genussmomente — etwa einmal im Monat, ohne Lärm.
+            {t.newsletter.text}
           </p>
           {sent ? (
             <p
               className="mx-auto mt-6 inline-flex items-center gap-2 rounded-full border border-champagne/40 bg-champagne/10 px-5 py-3 text-[13px] text-champagne"
               role="status"
             >
-              <Check className="h-4 w-4" /> Danke! Bitte bestätigen Sie Ihre Anmeldung im Posteingang.
+              <Check className="h-4 w-4" /> {t.newsletter.success}
             </p>
           ) : (
             <form
@@ -68,18 +74,18 @@ export default function Footer() {
               }}
             >
               <label htmlFor="footer-newsletter" className="sr-only">
-                E-Mail-Adresse
+                {t.newsletter.emailLabel}
               </label>
               <input
                 id="footer-newsletter"
                 type="email"
                 required
                 autoComplete="email"
-                placeholder="E-Mail-Adresse eingeben"
+                placeholder={t.newsletter.placeholder}
                 className="h-11 min-w-0 flex-1 bg-transparent px-4 text-[13px] text-ivory outline-none placeholder:text-ivory/40"
               />
               <Button type="submit" className="shrink-0">
-                Anmelden
+                {t.newsletter.submit}
               </Button>
             </form>
           )}
@@ -92,14 +98,14 @@ export default function Footer() {
               Maria <span className="italic text-champagne">Maria</span>
             </p>
             <p className="mt-4 max-w-[230px] text-[12.5px] leading-relaxed text-ivory/60">
-              Italienische Boutique-Weine für bewusst gewählte Genussmomente.
+              {t.tagline}
             </p>
             <div className="mt-6 flex items-center gap-3">
-              {SOCIALS.map(({ label, href, Icon }) => (
+              {SOCIALS.map(({ key, label, href, Icon }) => (
                 <a
-                  key={label}
+                  key={key}
                   href={href}
-                  aria-label={label}
+                  aria-label={label ?? t.newsletter.emailLabel}
                   className="flex h-11 w-11 items-center justify-center rounded-full border border-ivory/15 text-ivory/75 transition-colors duration-300 hover:border-champagne hover:text-champagne"
                 >
                   <Icon className="h-[18px] w-[18px]" />
@@ -109,7 +115,7 @@ export default function Footer() {
           </StaggerItem>
 
           <StaggerItem>
-            <h4 className="text-[11px] font-semibold uppercase tracking-[0.22em] text-champagne">Entdecken</h4>
+            <h4 className="text-[11px] font-semibold uppercase tracking-[0.22em] text-champagne">{t.exploreHeading}</h4>
             <ul className="mt-5 space-y-3">
               {EXPLORE.map((l) => (
                 <li key={l.href}>
@@ -118,7 +124,7 @@ export default function Footer() {
                     className="group inline-flex items-center gap-2 text-[13px] text-ivory/75 transition-colors hover:text-ivory"
                   >
                     <span className="h-px w-4 origin-left scale-x-0 bg-champagne transition-transform duration-400 ease-out-expo group-hover:scale-x-100" />
-                    {l.label}
+                    {t.explore[l.key]}
                   </Link>
                 </li>
               ))}
@@ -126,7 +132,7 @@ export default function Footer() {
           </StaggerItem>
 
           <StaggerItem>
-            <h4 className="text-[11px] font-semibold uppercase tracking-[0.22em] text-champagne">Kontakt</h4>
+            <h4 className="text-[11px] font-semibold uppercase tracking-[0.22em] text-champagne">{t.contactHeading}</h4>
             <div className="mt-5 space-y-2 text-[12.5px] leading-relaxed text-ivory/65">
               <p>Maria Maria Wines</p>
               <p>Kaiserswerther Straße 12</p>
@@ -141,16 +147,16 @@ export default function Footer() {
           </StaggerItem>
 
           <StaggerItem>
-            <h4 className="text-[11px] font-semibold uppercase tracking-[0.22em] text-champagne">Offizieller Shop</h4>
+            <h4 className="text-[11px] font-semibold uppercase tracking-[0.22em] text-champagne">{t.shopHeading}</h4>
             <p className="mt-5 max-w-[220px] text-[12.5px] leading-relaxed text-ivory/65">
-              Entdecken und bestellen Sie unsere Weine direkt im Maria Maria Shop.
+              {t.shopText}
             </p>
             <Link
               href="/shop"
               className="group mt-5 inline-flex items-center gap-2 text-[13px] font-medium text-champagne"
             >
               <span className="relative">
-                Zum Shop
+                {t.shopLink}
                 <span className="absolute -bottom-1 left-0 right-0 h-px origin-left scale-x-0 bg-champagne transition-transform duration-400 ease-out-expo group-hover:scale-x-100" />
               </span>
               <Arrow className="h-4 w-4 transition-transform duration-500 ease-out-expo group-hover:translate-x-1" />
@@ -161,14 +167,17 @@ export default function Footer() {
 
       {/* bottom bar */}
       <div className="relative">
-        <div className="mx-auto flex max-w-content flex-wrap items-center justify-between gap-x-6 gap-y-2 px-6 py-5 text-[11px] text-ivory/60 lg:px-10">
-          <span>© {year} Maria Maria Wines — Il piacere del vino</span>
-          <div className="flex items-center gap-5">
+        <div className="mx-auto flex max-w-content flex-wrap items-center justify-between gap-x-6 gap-y-3 px-6 py-5 text-[11px] text-ivory/60 lg:px-10">
+          <span>© {year} {t.copyright}</span>
+          <div className="flex flex-wrap items-center gap-5">
             {LEGAL.map((l) => (
               <Link key={l.href} href={l.href} className="transition-colors hover:text-champagne">
-                {l.label}
+                {t.legal[l.key]}
               </Link>
             ))}
+            {/* Zweiter Zugang zur Sprachwahl: Wer unten ankommt, soll nicht
+                erst wieder nach oben scrollen müssen. */}
+            <LanguageSwitcher variant="inline" />
           </div>
         </div>
       </div>

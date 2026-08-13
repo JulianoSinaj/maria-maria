@@ -9,9 +9,9 @@ import useMediaQuery from "@/components/motion/useMediaQuery";
 import { IconChip } from "@/components/Deco";
 import { Cart, Close, Check, Plus, Grapes } from "@/components/Icons";
 import { Minus, Shield } from "./ShopIcons";
-import { fmtPrice } from "@/components/data";
+import { useCommon, useLocaleTools } from "@/lib/i18n/context";
 import { useCart } from "./CartContext";
-import { PRODUCTS } from "./shopData";
+import { PRODUCTS, productSub } from "./shopData";
 
 /* Warenkorb — on desktop a spring slide-over from the right; on phones a
    bottom sheet with a grab handle that can be flicked shut. A floating glass
@@ -22,6 +22,9 @@ const SPRING = { type: "spring", stiffness: 300, damping: 32 };
 
 function ItemRow({ item }) {
   const { add, decrement, remove } = useCart();
+  const { price: fmtPrice } = useLocaleTools();
+  const common = useCommon();
+  const t = common.cart ?? {};
   const product = PRODUCTS[item.id];
   if (!product) return null;
 
@@ -65,13 +68,13 @@ function ItemRow({ item }) {
 
       <div className="min-w-0 flex-1">
         <p className="truncate font-playfair text-[14.5px] leading-snug text-charcoal">{product.name}</p>
-        <p className="mt-0.5 text-[10.5px] uppercase tracking-[0.12em] text-charcoal/55">{product.sub}</p>
+        <p className="mt-0.5 text-[10.5px] uppercase tracking-[0.12em] text-charcoal/55">{productSub(product, common)}</p>
         <div className="mt-2 flex items-center justify-between gap-3">
           <div className="flex items-center gap-1 rounded-full border border-stone/70 bg-white/70 p-0.5">
             <button
               type="button"
               onClick={() => decrement(item.id)}
-              aria-label={`Menge von ${product.name} verringern`}
+              aria-label={t.decrease?.replace("{name}", product.name)}
               className="flex h-7 w-7 items-center justify-center rounded-full text-charcoal/70 transition-colors hover:bg-champagne-light/50 hover:text-bordeaux"
             >
               <Minus className="h-3.5 w-3.5" />
@@ -80,7 +83,7 @@ function ItemRow({ item }) {
             <button
               type="button"
               onClick={() => add(item.id)}
-              aria-label={`Menge von ${product.name} erhöhen`}
+              aria-label={t.increase?.replace("{name}", product.name)}
               className="flex h-7 w-7 items-center justify-center rounded-full text-charcoal/70 transition-colors hover:bg-champagne-light/50 hover:text-bordeaux"
             >
               <Plus className="h-3.5 w-3.5" />
@@ -95,7 +98,7 @@ function ItemRow({ item }) {
       <button
         type="button"
         onClick={() => remove(item.id)}
-        aria-label={`${product.name} aus dem Warenkorb entfernen`}
+        aria-label={t.remove?.replace("{name}", product.name)}
         className="flex h-8 w-8 shrink-0 items-center justify-center self-start rounded-full text-charcoal/40 transition-colors hover:bg-bordeaux/10 hover:text-bordeaux"
       >
         <Close className="h-4 w-4" />
@@ -105,6 +108,8 @@ function ItemRow({ item }) {
 }
 
 export default function CartDrawer() {
+  const { price: fmtPrice } = useLocaleTools();
+  const t = useCommon("cart");
   const reduced = useReducedMotion();
   const lenisRef = useLenis();
   /* below sm the drawer becomes a bottom sheet — the natural cart shape
@@ -198,7 +203,7 @@ export default function CartDrawer() {
               <button
                 type="button"
                 onClick={openCart}
-                aria-label={`Warenkorb öffnen — ${count} Artikel, ${fmtPrice(subtotal)}`}
+                aria-label={`${t.open} — ${count} ${t.items}, ${fmtPrice(subtotal)}`}
                 className="glass group pointer-events-auto flex h-14 items-center gap-4 rounded-full pl-5 pr-6 shadow-lift transition-shadow duration-300"
               >
                 <span className="relative text-charcoal">
@@ -216,7 +221,7 @@ export default function CartDrawer() {
                 <span aria-hidden="true" className="h-5 w-px bg-charcoal/15" />
                 <span className="text-[14px] font-semibold tabular-nums text-charcoal">{fmtPrice(subtotal)}</span>
                 <span className="text-[10.5px] font-semibold uppercase tracking-[0.16em] text-charcoal/60 transition-colors duration-300 group-hover:text-bordeaux">
-                  Warenkorb
+                  {t.label}
                 </span>
               </button>
             </div>
@@ -273,10 +278,10 @@ export default function CartDrawer() {
               {/* head */}
               <div className="flex items-center justify-between border-b border-stone/50 px-6 py-3.5 sm:py-5">
                 <p className="font-playfair text-[21px] text-charcoal">
-                  Ihr Warenkorb
+                  {t.title}
                   {count > 0 && (
                     <span className="ml-2 align-middle font-montserrat text-[11px] uppercase tracking-[0.16em] text-charcoal/50">
-                      {count} {count === 1 ? "Artikel" : "Artikel"}
+                      {count} {t.items}
                     </span>
                   )}
                 </p>
@@ -284,7 +289,7 @@ export default function CartDrawer() {
                   ref={closeRef}
                   type="button"
                   onClick={closeCart}
-                  aria-label="Warenkorb schließen"
+                  aria-label={t.close}
                   className="flex h-10 w-10 items-center justify-center rounded-full border border-charcoal/15 text-charcoal transition-colors hover:border-champagne hover:text-bordeaux"
                 >
                   <Close className="h-5 w-5" />
@@ -304,17 +309,17 @@ export default function CartDrawer() {
                     </IconChip>
                   </motion.div>
                   <h3 className="mt-6 font-playfair text-[26px] text-charcoal">
-                    Grazie <span className="italic text-bordeaux">mille!</span>
+                    {t.success.title} <span className="italic text-bordeaux">{t.success.titleAccent}</span>
                   </h3>
                   <p className="mt-3 max-w-[280px] text-[13px] leading-relaxed text-charcoal/70">
-                    Vielen Dank für Ihre Bestellung. Eine Bestätigung ist unterwegs in Ihr Postfach.
+                    {t.success.text}
                   </p>
                   <p className="mt-5 rounded-full border border-stone/60 bg-white/70 px-4 py-2 text-[11px] uppercase tracking-[0.18em] text-charcoal/60">
-                    Bestellnummer <span className="font-semibold text-bordeaux">{order}</span>
+                    {t.success.orderNumber} <span className="font-semibold text-bordeaux">{order}</span>
                   </p>
                   <div className="mt-8">
                     <Button onClick={finish} variant="outline" magnetic={false}>
-                      Weiter stöbern
+                      {t.success.cta}
                     </Button>
                   </div>
                 </div>
@@ -323,14 +328,14 @@ export default function CartDrawer() {
                 <div className="flex flex-1 flex-col items-center justify-center px-8 pb-[calc(3rem+env(safe-area-inset-bottom))] pt-10 text-center sm:py-0">
                   <Grapes className="h-10 w-10 text-champagne" />
                   <h3 className="mt-5 font-playfair text-[22px] text-charcoal">
-                    Noch ganz <span className="italic text-bordeaux">leer.</span>
+                    {t.empty.title} <span className="italic text-bordeaux">{t.empty.titleAccent}</span>
                   </h3>
                   <p className="mt-3 max-w-[280px] text-[13px] leading-relaxed text-charcoal/70">
-                    Entdecken Sie unsere Boutique-Weine und Probierpakete – Ihr Maria-Moment wartet schon.
+                    {t.empty.text}
                   </p>
                   <div className="mt-8">
                     <Button onClick={closeCart} magnetic={false}>
-                      Weine entdecken
+                      {t.empty.cta}
                     </Button>
                   </div>
                 </div>
@@ -340,13 +345,20 @@ export default function CartDrawer() {
                   <div className="border-b border-stone/50 px-6 py-4">
                     <p aria-live="polite" className="text-[12px] text-charcoal/75">
                       {missingForFreeShipping > 0 ? (
+                        /* Der Satz wird an {amount} geteilt statt zusammengestückelt:
+                           Im Englischen steht der Betrag vorn, im Deutschen mitten
+                           im Satz. Nur so sitzt die Hervorhebung in jeder Sprache
+                           auf dem Betrag und nicht auf einem Zufallswort. */
                         <>
-                          Noch <span className="font-semibold tabular-nums text-bordeaux">{fmtPrice(missingForFreeShipping)}</span> bis
-                          zum <span className="font-semibold">kostenfreien Versand</span>
+                          {t.missingForFreeShipping.split("{amount}")[0]}
+                          <span className="font-semibold tabular-nums text-bordeaux">
+                            {fmtPrice(missingForFreeShipping)}
+                          </span>
+                          {t.missingForFreeShipping.split("{amount}")[1]}
                         </>
                       ) : (
                         <span className="inline-flex items-center gap-1.5 font-semibold text-bordeaux">
-                          <Check className="h-4 w-4" /> Ihre Bestellung ist versandkostenfrei
+                          <Check className="h-4 w-4" /> {t.freeShippingReached}
                         </span>
                       )}
                     </p>
@@ -383,27 +395,27 @@ export default function CartDrawer() {
                   <div className="border-t border-stone/50 bg-cream/80 px-6 pb-[calc(1.25rem+env(safe-area-inset-bottom))] pt-5 sm:pb-6">
                     <dl className="space-y-1.5 text-[12.5px] text-charcoal/75">
                       <div className="flex items-center justify-between">
-                        <dt>Zwischensumme</dt>
+                        <dt>{t.summary.subtotal}</dt>
                         <dd className="tabular-nums">{fmtPrice(subtotal)}</dd>
                       </div>
                       <div className="flex items-center justify-between">
-                        <dt>Versand</dt>
-                        <dd className="tabular-nums">{shipping === 0 ? "Kostenfrei" : fmtPrice(shipping)}</dd>
+                        <dt>{t.summary.shipping}</dt>
+                        <dd className="tabular-nums">{shipping === 0 ? t.summary.free : fmtPrice(shipping)}</dd>
                       </div>
                       <div className="flex items-baseline justify-between border-t border-dashed border-stone/60 pt-3 text-charcoal">
                         <dt className="text-[13px] font-semibold">
-                          Gesamt <span className="font-normal text-charcoal/50">inkl. MwSt.</span>
+                          {t.summary.total} <span className="font-normal text-charcoal/50">{t.summary.vat}</span>
                         </dt>
                         <dd className="font-playfair text-[24px] tabular-nums text-bordeaux">{fmtPrice(total)}</dd>
                       </div>
                     </dl>
                     <div className="mt-5">
                       <Button onClick={checkout} size="lg" className="w-full" magnetic={false}>
-                        Zur Kasse
+                        {t.summary.checkout}
                       </Button>
                     </div>
                     <p className="mt-3.5 flex items-center justify-center gap-1.5 text-[10.5px] uppercase tracking-[0.14em] text-charcoal/50">
-                      <Shield className="h-4 w-4 text-champagne" /> Sichere Bezahlung · SSL-verschlüsselt
+                      <Shield className="h-4 w-4 text-champagne" /> {t.summary.secure}
                     </p>
                   </div>
                 </>

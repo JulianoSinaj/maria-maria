@@ -1,9 +1,8 @@
 "use client";
-import { useRef, useState } from "react";
-import Link from "next/link";
+import { useState } from "react";
+import Link from "@/components/i18n/LocaleLink";
 import { motion, useReducedMotion } from "motion/react";
 import { Reveal } from "@/components/motion/Reveal";
-import Button from "@/components/ui/Button";
 import { Arrow, Grapes } from "@/components/Icons";
 
 /* Box Curiosità — das Abschlussband des Magazins, gesetzt als eigenständiger
@@ -15,6 +14,54 @@ import { Arrow, Grapes } from "@/components/Icons";
    Die Fußzeile bleibt zweigleisig: links zu den Interviews (Winzer & Kunden),
    rechts der Passaggio zurück in die Artikel des Magazins. */
 
+/* Drei Farbwelten aus der bestehenden Palette, je eine pro Kärtchen — die
+   Farbe ist hier keine Dekoration, sie sortiert: die frühe rote Traube, der
+   kühle Keller, das grüne Flaschenglas. Vorn eine Tinte des Akzents auf Creme
+   #FBF9F4, hinten derselbe Ton satt ausgespielt. Die Anteile sind nicht gleich
+   (13 / 14 / 22 %, beim Hover 20 / 22 / 31 %), sondern nach Augenmaß
+   ausgeglichen: Bordeaux ist dunkel und satt und trägt schon wenig, das
+   entsättigte Olivgrün braucht mehr für denselben Auftritt. So stehen die drei
+   Flächen perzeptuell gleich weit auseinander (ΔE 6–9).
+   Gold bleibt über alle drei die Konstante: Kanten, Stempel, Rückseiten-
+   schimmer — aber nur dort, wo es keine Schrift tragen muss: Champagner auf
+   Elfenbein liegt bei 1,8:1. Gemessen am gerenderten Ergebnis liegt der
+   schlechteste Textkontrast dieses Abschnitts bei 5,3:1 (WCAG AA: 4,5). */
+const TONES = {
+  /* Primitivo — Bordeauxglas */
+  rosso: {
+    face: "bg-[#E8DBD8] group-hover:bg-[#DECAC8]",
+    edge: "border-bordeaux/25 group-hover:border-bordeaux/55",
+    ink: "text-bordeaux",
+    stamp: "text-bordeaux/[0.11]",
+    ring: "border-bordeaux/30",
+    fill: "bg-bordeaux/[0.12]",
+    focus: "focus-visible:ring-bordeaux/50",
+    back: "bg-bordeaux",
+  },
+  /* Serviertemperatur — der kühle Keller */
+  fresco: {
+    face: "bg-[#DDE7E1] group-hover:bg-[#CBDDD6]",
+    edge: "border-acqua-deep/25 group-hover:border-acqua-deep/55",
+    ink: "text-acqua-ink",
+    stamp: "text-acqua-ink/[0.11]",
+    ring: "border-acqua-deep/30",
+    fill: "bg-acqua-deep/[0.12]",
+    focus: "focus-visible:ring-acqua-deep/50",
+    back: "bg-acqua-ink",
+  },
+  /* Die Träne im Glas — Flaschenglasgrün */
+  verde: {
+    face: "bg-[#D6D9CC] group-hover:bg-[#C8CCBC]",
+    edge: "border-vine/30 group-hover:border-vine/60",
+    ink: "text-vine-deep",
+    stamp: "text-vine-deep/[0.11]",
+    ring: "border-vine/40",
+    fill: "bg-vine/[0.14]",
+    focus: "focus-visible:ring-vine/60",
+    back: "bg-vine-deep",
+  },
+};
+
 const CURIOSITIES = [
   {
     kicker: "Nomen est omen",
@@ -22,6 +69,7 @@ const CURIOSITIES = [
     answer:
       "Nicht weil er urtümlich wäre — sondern weil er als einer der ersten reift. „Primo“: der Frühe. Im August ist er schon fertig, während andere noch hängen.",
     stamp: "Nº I",
+    tone: TONES.rosso,
   },
   {
     kicker: "Küchenwissen",
@@ -29,6 +77,7 @@ const CURIOSITIES = [
     answer:
       "Kühler, als Sie denken. 16–18 °C — also Keller, nicht Wohnzimmer. Zwanzig Minuten im Kühlschrank vor dem Öffnen, und der Wein wird plötzlich präzise.",
     stamp: "Nº II",
+    tone: TONES.fresco,
   },
   {
     kicker: "Aus dem Keller",
@@ -36,6 +85,7 @@ const CURIOSITIES = [
     answer:
       "Die Schlieren, die nach dem Schwenken zurücklaufen. Sie verraten den Alkohol, nicht die Qualität — ein guter Wein weint nicht schöner, nur langsamer.",
     stamp: "Nº III",
+    tone: TONES.verde,
   },
 ];
 
@@ -45,6 +95,7 @@ const FLIP_SPRING = { type: "spring", stiffness: 260, damping: 26, mass: 0.8 };
 function CuriosityCard({ item, index }) {
   const reduced = useReducedMotion();
   const [flipped, setFlipped] = useState(false);
+  const tone = item.tone;
 
   return (
     <motion.button
@@ -53,7 +104,7 @@ function CuriosityCard({ item, index }) {
       aria-expanded={flipped}
       whileTap={reduced ? undefined : { scale: 0.96 }}
       transition={FLIP_SPRING}
-      className="group relative block h-[13.5rem] w-full rounded-card-lg text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-bordeaux/50 focus-visible:ring-offset-4 focus-visible:ring-offset-cream sm:h-[14rem]"
+      className={`group relative block h-[13.5rem] w-full rounded-card-lg text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-4 focus-visible:ring-offset-ivory sm:h-[14rem] ${tone.focus}`}
       style={{ perspective: 1200, willChange: "transform" }}
     >
       <motion.div
@@ -64,18 +115,20 @@ function CuriosityCard({ item, index }) {
       >
         {/* ---- Vorderseite: die Frage ---- */}
         <span
-          className="absolute inset-0 flex flex-col justify-between overflow-hidden rounded-card-lg border border-champagne/45 bg-cream p-5 transition-colors duration-300 ease-out group-hover:border-champagne"
+          className={`absolute inset-0 flex flex-col justify-between overflow-hidden rounded-card-lg border p-5 transition-colors duration-300 ease-out ${tone.face} ${tone.edge}`}
           style={{ backfaceVisibility: "hidden" }}
         >
           {/* die Nummer als Prägestempel im Hintergrund */}
           <span
             aria-hidden="true"
-            className="pointer-events-none absolute -bottom-3 -right-1 select-none font-playfair text-[5.5rem] italic leading-none text-bordeaux/[0.055]"
+            className={`pointer-events-none absolute -bottom-3 -right-1 select-none font-playfair text-[5.5rem] italic leading-none ${tone.stamp}`}
           >
             {index + 1}
           </span>
 
-          <span className="relative flex items-center gap-2 text-[9.5px] font-semibold uppercase tracking-[0.22em] text-champagne">
+          <span
+            className={`relative flex items-center gap-2 text-[9.5px] font-semibold uppercase tracking-[0.22em] ${tone.ink}`}
+          >
             <Grapes className="h-3.5 w-3.5" />
             {item.kicker}
           </span>
@@ -84,12 +137,16 @@ function CuriosityCard({ item, index }) {
             {item.question}
           </span>
 
-          <span className="relative inline-flex items-center gap-2 text-[10.5px] font-semibold uppercase tracking-[0.18em] text-bordeaux/75">
+          <span
+            className={`relative inline-flex items-center gap-2 text-[10.5px] font-semibold uppercase tracking-[0.18em] ${tone.ink}`}
+          >
             {/* Kreis schwillt beim Hover an — der Hinweis „hier wird gedreht“ */}
-            <span className="relative flex h-7 w-7 items-center justify-center overflow-hidden rounded-full border border-bordeaux/25">
+            <span
+              className={`relative flex h-7 w-7 items-center justify-center overflow-hidden rounded-full border ${tone.ring}`}
+            >
               <span
                 aria-hidden="true"
-                className="absolute inset-0 scale-0 rounded-full bg-bordeaux/10 transition-transform duration-500 ease-out-expo group-hover:scale-100"
+                className={`absolute inset-0 scale-0 rounded-full transition-transform duration-500 ease-out-expo group-hover:scale-100 ${tone.fill}`}
               />
               <Arrow
                 aria-hidden="true"
@@ -102,7 +159,7 @@ function CuriosityCard({ item, index }) {
 
         {/* ---- Rückseite: die Auflösung ---- */}
         <span
-          className="absolute inset-0 flex flex-col justify-between overflow-hidden rounded-card-lg border border-bordeaux/20 bg-bordeaux p-5"
+          className={`absolute inset-0 flex flex-col justify-between overflow-hidden rounded-card-lg border border-champagne/25 p-5 ${tone.back}`}
           style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
         >
           <span
@@ -149,7 +206,7 @@ function FooterLink({ item }) {
         right ? "items-start sm:items-end sm:text-right" : "items-start"
       }`}
     >
-      <span className="text-[9.5px] font-semibold uppercase tracking-[0.22em] text-champagne">
+      <span className="text-[9.5px] font-semibold uppercase tracking-[0.22em] text-bordeaux">
         {item.kicker}
       </span>
       <span
@@ -211,11 +268,24 @@ export default function CuriosityBand({
                 "radial-gradient(circle, rgba(107,15,26,0.16) 0%, rgba(107,15,26,0) 70%)",
             }}
           />
+          {/* der dritte Schimmer greift die kühle Karte auf — so trägt der
+              Kasten dieselben drei Töne wie die Kärtchen darin */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute -bottom-32 right-[12%] h-[20rem] w-[20rem] rounded-full opacity-45 blur-3xl"
+            style={{
+              background:
+                "radial-gradient(circle, rgba(35,120,107,0.15) 0%, rgba(35,120,107,0) 70%)",
+            }}
+          />
 
           {/* ---- Kopf des Kastens: eine schlanke Zeile statt gestapelter Mitte ---- */}
           <div className="relative flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
             <div>
-              <span className="inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-champagne">
+              {/* Bordeaux statt Champagner: Gold liegt auf Elfenbein bei 1,8:1
+                  und war als Schrift schlicht nicht lesbar. Gold bleibt für
+                  Kanten und die dunklen Rückseiten reserviert. */}
+              <span className="inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-bordeaux">
                 <Grapes className="h-3.5 w-3.5" />
                 Curiosità
               </span>

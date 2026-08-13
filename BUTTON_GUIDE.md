@@ -40,9 +40,9 @@ Your button component now features **10 vibrant variants** with sophisticated mi
   - Use for: Grounded, natural feel
   - Best for: Wine/vineyard themed sections
   
-- **`outline`** - Minimal outline with charcoal
-  - Use for: Minimal, clean designs
-  - Best for: Text-heavy layouts
+- **`outline`** - Bordeaux outline + text on a frosted champagne pane
+  - Use for: Secondary CTAs beside a `primary` button
+  - Best for: Hero rows over photos — carries brand colour, still yields to the primary
   
 - **`glass`** - Frosted glass with transparent shine
   - Use for: Modern, sophisticated feel

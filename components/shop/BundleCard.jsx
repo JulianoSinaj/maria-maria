@@ -6,7 +6,7 @@ import Photo from "@/components/media/Photo";
 import Button from "@/components/ui/Button";
 import TiltCard from "@/components/motion/TiltCard";
 import { Check } from "@/components/Icons";
-import { fmtPrice } from "@/components/data";
+import { useCommon, useLocaleTools } from "@/lib/i18n/context";
 import { useCart } from "./CartContext";
 import { bundleWines, bundleSum, bundleSaving } from "./shopData";
 
@@ -27,6 +27,9 @@ const FAN = {
 };
 
 export default function BundleCard({ bundle, className = "" }) {
+  const { price: fmtPrice } = useLocaleTools();
+  const shop = useCommon("shop");
+  const copy = shop.bundles?.[bundle.id] ?? {};
   const reduced = useReducedMotion();
   const { add, openCart } = useCart();
   const wines = bundleWines(bundle);
@@ -56,7 +59,7 @@ export default function BundleCard({ bundle, className = "" }) {
       >
         {bundle.featured && (
           <span className="pointer-events-none absolute right-4 top-4 z-10 rounded-full bg-gradient-to-br from-champagne to-champagne-light px-3 py-1.5 text-[9.5px] font-semibold uppercase tracking-[0.16em] text-charcoal shadow-chip">
-            {bundle.tag}
+            {copy.tag}
           </span>
         )}
 
@@ -99,15 +102,15 @@ export default function BundleCard({ bundle, className = "" }) {
 
         <div className="flex flex-1 flex-col border-t border-stone/40 px-6 pb-6 pt-5">
           {!bundle.featured && (
-            <p className="text-[10px] uppercase tracking-[0.22em] text-champagne">{bundle.tag}</p>
+            <p className="text-[10px] uppercase tracking-[0.22em] text-champagne">{copy.tag}</p>
           )}
           <h3 className={`font-playfair text-[22px] text-charcoal ${bundle.featured ? "" : "mt-1.5"}`}>
             {bundle.name}
             <span className="ml-2 align-middle font-montserrat text-[11px] uppercase tracking-[0.14em] text-charcoal/50">
-              {wines.length} Flaschen
+              {shop.bottles?.replace("{count}", wines.length)}
             </span>
           </h3>
-          <p className="mt-2 text-[12.5px] leading-relaxed text-charcoal/65">{bundle.desc}</p>
+          <p className="mt-2 text-[12.5px] leading-relaxed text-charcoal/65">{copy.desc}</p>
 
           <ul className="mt-4 space-y-1.5">
             {wines.map((w) => (
@@ -123,14 +126,14 @@ export default function BundleCard({ bundle, className = "" }) {
             <div className="flex items-end justify-between border-t border-dashed border-stone/60 pt-4">
               <div>
                 <p className="text-[11px] text-charcoal/50">
-                  Einzeln <span className="tabular-nums line-through">{fmtPrice(sum)}</span>
+                  {shop.single} <span className="tabular-nums line-through">{fmtPrice(sum)}</span>
                 </p>
                 <p className="mt-0.5 font-playfair text-[26px] leading-none text-bordeaux">
                   {fmtPrice(bundle.price)}
                 </p>
               </div>
               <span className="inline-flex items-center gap-1.5 rounded-full bg-champagne/25 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-bordeaux">
-                Sie sparen {fmtPrice(saving)}
+                {shop.save?.replace("{amount}", fmtPrice(saving))}
               </span>
             </div>
             <div className="mt-5">

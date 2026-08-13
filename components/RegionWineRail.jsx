@@ -4,6 +4,7 @@ import { useRef, useState, useCallback, useEffect } from "react";
 import { motion, useReducedMotion } from "motion/react";
 import WineCard from "@/components/WineCard";
 import { ChevronRight } from "@/components/Icons";
+import { useLocalizedWines } from "@/lib/i18n/context";
 
 /* Region wine rail — full-width, snap-scrolling strip of mini wine cards.
    Card widths are responsive: a fixed peek-width on mobile (so the next card
@@ -11,7 +12,9 @@ import { ChevronRight } from "@/components/Icons";
    Paging arrows appear only when the track actually overflows and advance by
    one full visible page. */
 
-export default function RegionWineRail({ wines, label = "Unsere Weine aus dieser Region" }) {
+export default function RegionWineRail({ wines: incoming, label }) {
+  /* siehe WineRail — die Struktur kommt als Prop, der Text aus dem Wörterbuch */
+  const wines = useLocalizedWines(incoming);
   const trackRef = useRef(null);
   const reduced = useReducedMotion();
   const [atStart, setAtStart] = useState(true);

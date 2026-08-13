@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Link from "@/components/i18n/LocaleLink";
 import { Arrow } from "@/components/Icons";
 import { pushEvent, pageLocation, REGION_CTA_CLICK } from "@/lib/analytics";
 

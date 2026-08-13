@@ -131,6 +131,15 @@ export const PHOTO_MANIFEST = {
       1400
     ]
   },
+  "/img/magazin/tavolata.jpg": {
+    "base": "/img/magazin/tavolata",
+    "widths": [
+      160,
+      320,
+      640,
+      915
+    ]
+  },
   "/img/magazin/trauben-hand.jpg": {
     "base": "/img/magazin/trauben-hand",
     "widths": [

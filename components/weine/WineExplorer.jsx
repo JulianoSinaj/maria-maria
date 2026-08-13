@@ -5,7 +5,8 @@ import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import WineCard from "@/components/WineCard";
 import Button from "@/components/ui/Button";
 import WineFilterBar from "@/components/weine/WineFilterBar";
-import { WINES } from "@/components/data";
+import { TYPE_KEYS, REGION_KEYS } from "@/components/data";
+import { useWines, useCommon } from "@/lib/i18n/context";
 
 /* Interactive collection explorer — die Filterleiste (WineFilterBar) legt die
    beiden Achsen nebeneinander statt übereinander: links die Weinart als
@@ -13,25 +14,34 @@ import { WINES } from "@/components/data";
    ein layout-animiertes Raster. Alle Bewegung federgetrieben, kein Layout-Shift
    in den Bedienelementen selbst. */
 
-const TYPES = ["Alle Weine", "Rotwein", "Weißwein", "Roséwein"];
-/* ?art=… deep-links from the header dropdown straight into a filtered view */
-export const ART_PARAM = { rot: "Rotwein", weiss: "Weißwein", rose: "Roséwein" };
+/* Gefiltert wird auf SCHLÜSSELN, beschriftet aus dem Wörterbuch. Vorher
+   standen hier die deutschen Bezeichnungen und der Vergleich lautete
+   `w.type === "Rotwein"` — außerhalb des Deutschen hätte jeder Filter eine
+   leere Kollektion ergeben. "all" ist die Ruhestellung beider Achsen. */
+const TYPES = ["all", ...TYPE_KEYS];
+const REGIONS = ["all", ...REGION_KEYS];
+
+/* ?art=… deep-links from the header dropdown straight into a filtered view.
+   Die Query-Werte bleiben unverändert (rot/weiss/rose), damit bestehende
+   Links und QR-Codes weiter funktionieren — sie zeigen jetzt nur auf einen
+   Schlüssel statt auf einen deutschen Anzeigetext. */
+export const ART_PARAM = { rot: "red", weiss: "white", rose: "rose" };
 /* ?region=… tut dasselbe für die Herkunft — die Regionen-Seite verlinkt ihre
    Blöcke laut Regionen-Guide (Abschnitt 8) auf eine bereits gefilterte
    Auswahl statt auf die ungefilterte Übersicht. Slug statt Klartext, damit
    die URL keine Umlaute trägt. */
 export const REGION_PARAM = {
-  apulien: "Apulien",
-  kampanien: "Kampanien",
-  garda: "Gardasee",
-  lugana: "Gardasee",
+  apulien: "puglia",
+  kampanien: "campania",
+  garda: "garda",
+  lugana: "garda",
 };
-// derived from the catalogue so a chip can never point at zero wines
-const REGIONS = ["Alle Regionen", ...new Set(WINES.map((w) => w.region))];
 
 const GRID_SPRING = { type: "spring", stiffness: 300, damping: 30 };
 
 export default function WineExplorer() {
+  const allWines = useWines();
+  const catalogue = useCommon("catalogue");
   const reduced = useReducedMotion();
   const params = useSearchParams();
   const art = params.get("art");
@@ -52,23 +62,23 @@ export default function WineExplorer() {
 
   const wines = useMemo(
     () =>
-      WINES.filter(
+      allWines.filter(
         (w) =>
-          (type === "Alle Weine" || w.type === type) &&
-          (region === "Alle Regionen" || w.region === region)
+          (type === "all" || w.typeKey === type) &&
+          (region === "all" || w.regionKey === region)
       ),
-    [type, region]
+    [allWines, type, region]
   );
 
   /* Anzahl je Region unter der *aktuellen* Weinart — das Popover zeigt so
      vorab, wohin ein Klick führt, und nie eine leere Auswahl als Überraschung */
   const regionCounts = useMemo(() => {
-    const pool = WINES.filter((w) => type === TYPES[0] || w.type === type);
+    const pool = allWines.filter((w) => type === "all" || w.typeKey === type);
     return REGIONS.reduce(
-      (acc, r) => ({ ...acc, [r]: r === REGIONS[0] ? pool.length : pool.filter((w) => w.region === r).length }),
+      (acc, r) => ({ ...acc, [r]: r === "all" ? pool.length : pool.filter((w) => w.regionKey === r).length }),
       {}
     );
-  }, [type]);
+  }, [allWines, type]);
 
   const reset = () => {
     setType(TYPES[0]);
@@ -89,6 +99,9 @@ export default function WineExplorer() {
     <div>
       {/* ---- filter head ---- */}
       <WineFilterBar
+        labels={catalogue.filters}
+        typeLabels={{ all: catalogue.filters?.allWines, ...(catalogue.typesPlural ?? {}) }}
+        regionLabels={{ all: catalogue.filters?.allRegions, ...(catalogue.regions ?? {}) }}
         types={TYPES}
         type={type}
         onType={setType}
@@ -128,14 +141,15 @@ export default function WineExplorer() {
           className="rounded-card-lg border border-dashed border-stone/80 bg-white/50 px-8 py-16 text-center"
         >
           <p className="font-playfair text-[22px] text-charcoal">
-            Für diese Auswahl führen wir <span className="italic text-bordeaux">derzeit keinen Wein.</span>
+            {catalogue.filters?.emptyTitle}{" "}
+            <span className="italic text-bordeaux">{catalogue.filters?.emptyTitleAccent}</span>
           </p>
           <p className="mx-auto mt-3 max-w-md text-[13px] leading-relaxed text-charcoal/65">
-            Probieren Sie eine andere Kombination aus Weinart und Region – oder entdecken Sie die gesamte Kollektion.
+            {catalogue.filters?.emptyText}
           </p>
           <div className="mt-7 flex justify-center">
             <Button variant="outline" size="sm" iconType="none" onClick={reset}>
-              Filter zurücksetzen
+              {catalogue.filters?.reset}
             </Button>
           </div>
         </motion.div>

@@ -12,16 +12,87 @@ import HomeHeroFx from "@/components/home/HomeHeroFx";
 import FaqSection from "@/components/faq/FaqSection";
 import { WEINE_FAQ } from "@/components/faq/faqData";
 import Atmosphere, { GhostWord } from "@/components/Atmosphere";
+import JsonLd from "@/components/seo/JsonLd";
+import { wineHref } from "@/components/data";
+import { getDictionary } from "@/lib/i18n/dictionaries";
+import { pageMetadata } from "@/lib/i18n/metadata";
+import { localePath } from "@/lib/i18n/routing";
+import { absoluteUrl } from "@/lib/site";
+import { graph, webPageNode, itemListNode, breadcrumbNode, faqNode } from "@/lib/seo/jsonLd";
 
-export const metadata = {
-  title: "Unsere Weine — Maria Maria",
-  description:
-    "Handverlesene italienische Boutique-Weine von kleinen Weingütern – Rotwein, Weißwein und Rosé aus Apulien, Kampanien und vom Gardasee.",
-};
+/* Titel und Description je Sprache aus dem Wörterbuch; hreflang,
+   Canonical und OpenGraph baut pageMetadata() daraus auf. */
+export async function generateMetadata({ params }) {
+  const dict = await getDictionary(params.locale);
+  return pageMetadata({
+    locale: params.locale,
+    path: "/unsere-weine",
+    meta: dict.meta.collection,
+    image: {
+      url: "/img/og/collection.jpg",
+      width: 1200,
+      height: 630,
+      alt: dict.meta.collection.description,
+    },
+  });
+}
 
-export default function WeinePage() {
+/* Die Kollektion beschreibt sich als CollectionPage mit der geordneten Liste
+   ihrer neun Produkte — nicht als Textseite.
+
+   Der Unterschied ist praktisch: Ohne ItemList konkurriert /unsere-weine mit
+   den Produktseiten um dieselben Suchwörter („italienische Weine",
+   „Primitivo"), und Google entscheidet selbst, welche der zehn Adressen es
+   zeigt. Mit ItemList ist die Rolle geklärt — die Übersicht ist der
+   Verteiler, die Produktseite das Ziel.
+
+   Die Filter-Varianten (?art=rot, ?region=apulien) tragen denselben
+   Canonical wie diese Seite und bekommen deshalb bewusst KEINEN eigenen
+   Listen-Knoten: Sie sind Ansichten derselben Sammlung, keine eigenen. */
+function CollectionJsonLd({ locale, dict, wines }) {
+  const url = absoluteUrl(localePath(locale, "/unsere-weine"));
+  const nav = dict?.common?.nav ?? {};
+  const localize = (href) => localePath(locale, href);
+
+  const crumbs = breadcrumbNode(
+    [
+      { label: nav.home || "Home", href: "/" },
+      { label: nav.wines || "Unsere Weine", href: "/unsere-weine" },
+    ],
+    { url, localize }
+  );
+
+  return (
+    <JsonLd
+      data={graph(
+        webPageNode({
+          url,
+          name: dict.meta.collection.title,
+          description: dict.meta.collection.description,
+          locale,
+          type: "CollectionPage",
+          breadcrumbId: crumbs?.["@id"] ?? null,
+        }),
+        itemListNode({
+          url,
+          name: dict.meta.collection.title,
+          items: wines.map((w) => ({ name: w.name, url: localePath(locale, wineHref(w)) })),
+        }),
+        crumbs,
+        /* WEINE_FAQ ist noch deutsch — dieselbe Regel wie auf der
+           Startseite: Markup nur dort, wo der Besucher den Text auch liest. */
+        locale === "de" ? faqNode({ url, items: WEINE_FAQ }) : null
+      )}
+    />
+  );
+}
+
+export default async function WeinePage({ params }) {
+  const dict = await getDictionary(params.locale);
+
   return (
     <div className="relative min-h-screen">
+      <CollectionJsonLd locale={params.locale} dict={dict} wines={WINES} />
       {/* ============ HERO ============ */}
       <WeineHeroPreload />
       <section className="grain relative overflow-hidden">

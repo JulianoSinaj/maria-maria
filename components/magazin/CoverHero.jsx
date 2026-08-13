@@ -1,5 +1,5 @@
 import { Fragment } from "react";
-import Link from "next/link";
+import Link from "@/components/i18n/LocaleLink";
 import SplitText from "@/components/motion/SplitText";
 import TiltCard from "@/components/motion/TiltCard";
 import { Reveal } from "@/components/motion/Reveal";

@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState, useEffect } from "react";
-import Link from "next/link";
+import Link from "@/components/i18n/LocaleLink";
 import { motion, useReducedMotion, useScroll, useSpring, useTransform } from "motion/react";
 import TiltCard from "@/components/motion/TiltCard";
 import SplitText from "@/components/motion/SplitText";

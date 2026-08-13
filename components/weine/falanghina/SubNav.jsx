@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
 import Button from "@/components/ui/Button";
-import { byName, fmtPrice } from "@/components/data";
+import { useWines, useLocaleTools } from "@/lib/i18n/context";
 
 /* Apple-Produktseiten-Subnav: eine schlanke Glas-Pille, die nach dem Hero
    andockt und für den Rest der Seite haften bleibt. Scrollspy markiert das
@@ -18,9 +18,11 @@ import { byName, fmtPrice } from "@/components/data";
    federgedämpft von Punkt zu Punkt, statt hart umzuspringen. */
 
 export default function SubNav({ wine }) {
+  const { price: fmtPrice } = useLocaleTools();
+  const wines = useWines();
   const reduced = useReducedMotion();
   const [activeId, setActiveId] = useState(null);
-  const catalog = byName(wine.catalogName);
+  const catalog = wines.find((w) => w.name === wine.catalogName);
   const ids = wine.subnav.map((l) => l.href.slice(1));
 
   useEffect(() => {

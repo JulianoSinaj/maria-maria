@@ -1,0 +1,180 @@
+import "../../globals.css";
+import { Playfair_Display, Montserrat } from "next/font/google";
+import { notFound } from "next/navigation";
+import SmoothScroll from "@/components/motion/SmoothScroll";
+import { MagneticRouteProvider } from "@/components/motion/MagneticContext";
+import { CartProvider } from "@/components/shop/CartContext";
+import StorefrontChrome from "@/components/StorefrontChrome";
+import JsonLd from "@/components/seo/JsonLd";
+import { graph, organizationNode, websiteNode } from "@/lib/seo/jsonLd";
+import { I18nProvider } from "@/lib/i18n/context";
+import { getDictionary } from "@/lib/i18n/dictionaries";
+import { LOCALES, LOCALE_META, isLocale } from "@/lib/i18n/config";
+import { alternatePaths } from "@/lib/i18n/routing";
+import { SITE_URL, SITE_NAME, absoluteUrl } from "@/lib/site";
+
+/* Root-Layout der Storefront.
+
+   Es liegt unter (site)/[locale]/ und nicht mehr in app/ — die Seite hat seit
+   der Mehrsprachigkeit ZWEI Wurzeln: diese hier und app/(admin)/layout.jsx.
+   Grund ist das lang-Attribut: <html lang> muss die tatsächliche Sprache des
+   Dokuments nennen (Screenreader wählen danach die Stimme, Suchmaschinen die
+   Sprachversion). Ein einzelnes Root-Layout in app/ kennt die Locale aber
+   nicht — die steht erst im Segment darunter. Man könnte sie über headers()
+   hereinholen, das macht jedoch den gesamten Baum dynamisch und kostet die
+   statische Generierung. Zwei Wurzeln über Route-Groups sind der dokumentierte
+   Weg und behalten das Pre-Rendering.
+
+   Route-Groups tauchen nicht in der URL auf: (site) und (admin) ändern keinen
+   einzigen Pfad. */
+
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  style: ["normal", "italic"],
+  variable: "--font-playfair",
+  display: "swap",
+});
+
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-montserrat",
+  display: "swap",
+});
+
+/* Alle vier Sprachen werden zur Build-Zeit erzeugt … */
+export function generateStaticParams() {
+  return LOCALES.map((locale) => ({ locale }));
+}
+
+/* … und nur diese vier. Ohne den Riegel würde /xx/shop eine leere fünfte
+   Sprachversion rendern statt 404 zu liefern. */
+export const dynamicParams = false;
+
+export async function generateMetadata({ params }) {
+  const locale = params.locale;
+  if (!isLocale(locale)) return {};
+
+  const dict = await getDictionary(locale);
+  const meta = dict.meta ?? {};
+  const langs = alternatePaths("/");
+
+  return {
+    metadataBase: new URL(SITE_URL),
+    title: {
+      default: meta.siteTitle,
+      template: `%s — ${SITE_NAME}`,
+    },
+    description: meta.siteDescription,
+    applicationName: SITE_NAME,
+    alternates: {
+      canonical: langs[locale],
+      /* hreflang meldet Google die Geschwister einer Seite. `x-default` zeigt
+         auf die deutsche Wurzel — das ist die Version für alle Sprachen, die
+         wir nicht führen. */
+      languages: {
+        ...Object.fromEntries(
+          LOCALES.map((l) => [LOCALE_META[l].hreflang, absoluteUrl(langs[l])])
+        ),
+        "x-default": absoluteUrl("/"),
+      },
+    },
+    openGraph: {
+      type: "website",
+      siteName: SITE_NAME,
+      locale: LOCALE_META[locale].ogLocale,
+      alternateLocale: LOCALES.filter((l) => l !== locale).map((l) => LOCALE_META[l].ogLocale),
+    },
+    twitter: { card: "summary_large_image" },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        /* Ohne diese drei Angaben entscheidet Google konservativ: kleines
+           Vorschaubild, gekürzter Textausschnitt. Für eine Seite, die von
+           Fotografie lebt, ist „large" der Unterschied zwischen einer
+           Bildkachel und einer Textzeile in Discover und der Bildersuche. */
+        "max-image-preview": "large",
+        "max-snippet": -1,
+        "max-video-preview": -1,
+      },
+    },
+    /* Dateien liegen in public/ statt als app/icon.*: Die Storefront hat mit
+       (site)/[locale] und (admin) zwei Wurzeln, und ein Icon im dynamischen
+       Segment käme als /de/icon.png heraus — vier Adressen für dasselbe
+       Symbol. Aus public/ ist es eine, und der Middleware-Matcher lässt
+       Pfade mit Dateiendung ohnehin unberührt. */
+    icons: {
+      icon: [
+        { url: "/favicon.ico", sizes: "any" },
+        { url: "/icon.svg", type: "image/svg+xml" },
+      ],
+      apple: [{ url: "/apple-touch-icon.png", sizes: "180x180" }],
+    },
+    manifest: "/site.webmanifest",
+    /* Die Telefonnummer im Impressum und im Footer soll auf iOS nicht
+       automatisch zum Link umgebaut werden — Safari setzt dabei eigenes
+       Markup mitten in den Text und verändert damit, was Crawler dort
+       lesen. Die echten Kontaktlinks sind ohnehin ausgezeichnet. */
+    formatDetection: { telephone: false, address: false, email: false },
+    /* Search Console und Bing Webmaster Tools verlangen zur Bestätigung des
+       Eigentums ein Meta-Tag. Über Umgebungsvariablen statt fest im Code:
+       Der Token ist ein Konto-Geheimnis, gehört nicht ins Repository, und
+       so lässt sich die Domain bestätigen, ohne dass jemand eine Zeile
+       Code anfassen und neu deployen muss. Ohne gesetzte Variable erscheint
+       schlicht kein Tag. */
+    verification: {
+      ...(process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
+        ? { google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION }
+        : null),
+      ...(process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION
+        ? { other: { "msvalidate.01": process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION } }
+        : null),
+    },
+  };
+}
+
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: "#F7F4EF",
+  /* lets env(safe-area-inset-*) work on notched phones — the floating cart
+     pill, cart summary and mobile menu pad themselves off the home indicator */
+  viewportFit: "cover",
+};
+
+export default async function LocaleLayout({ children, params }) {
+  const { locale } = params;
+  if (!isLocale(locale)) notFound();
+
+  const dict = await getDictionary(locale);
+
+  return (
+    <html lang={LOCALE_META[locale].htmlLang} className={`${playfair.variable} ${montserrat.variable}`}>
+      <body className="font-montserrat">
+        {/* Unternehmen und Website — die beiden Knoten, an denen alles
+            andere hängt. Sie stehen im Layout und damit auf JEDER Seite:
+            Google entscheidet nicht anhand einer einzelnen Seite, welche
+            Entität hinter einer Domain steht, sondern anhand der
+            Wiederholung. Die Seiten-Knoten (Produkt, Breadcrumb, FAQ)
+            verweisen per @id hierher zurück statt Adresse und Profile
+            achtzigmal zu wiederholen. */}
+        <JsonLd data={graph(organizationNode(), websiteNode(locale))} />
+        {/* Der Provider trägt nur Locale + gemeinsamen Rahmen-Text ins
+            Client-Bundle. Seitentexte reichen die Server-Components als Prop —
+            siehe lib/i18n/context.jsx. */}
+        <I18nProvider locale={locale} common={dict.common}>
+          <SmoothScroll>
+            <MagneticRouteProvider>
+              <CartProvider>
+                <StorefrontChrome>{children}</StorefrontChrome>
+              </CartProvider>
+            </MagneticRouteProvider>
+          </SmoothScroll>
+        </I18nProvider>
+      </body>
+    </html>
+  );
+}

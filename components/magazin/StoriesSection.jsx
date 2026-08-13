@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import Link from "next/link";
+import Link from "@/components/i18n/LocaleLink";
 import Parallax from "@/components/motion/Parallax";
 import Photo from "@/components/media/Photo";
 import { Reveal } from "@/components/motion/Reveal";

@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/i18n/LocaleLink";
 import SplitText from "@/components/motion/SplitText";
 import { Reveal } from "@/components/motion/Reveal";
 import TiltCard from "@/components/motion/TiltCard";
@@ -14,6 +14,12 @@ import StoryChapterNav from "@/components/geschichte/StoryChapterNav";
 import StoryStats from "@/components/geschichte/StoryStats";
 import StoryCta from "@/components/geschichte/StoryCta";
 import { STORY_CHAPTERS, STORY_TODAY } from "@/components/geschichte/storyData";
+import JsonLd from "@/components/seo/JsonLd";
+import { getDictionary } from "@/lib/i18n/dictionaries";
+import { pageMetadata } from "@/lib/i18n/metadata";
+import { localePath } from "@/lib/i18n/routing";
+import { absoluteUrl } from "@/lib/site";
+import { graph, webPageNode, breadcrumbNode, ORG_ID } from "@/lib/seo/jsonLd";
 
 /* ============================================================================
    GESCHICHTE — die Erzählseite der Marke, Sprungziel aus Capitolo I
@@ -45,51 +51,73 @@ import { STORY_CHAPTERS, STORY_TODAY } from "@/components/geschichte/storyData";
    springt zu #der-name, dem Kapitel über den Namen.
    ========================================================================== */
 
-const DESCRIPTION =
-  "Zwei Frauen. Zwei Generationen. Eine Haltung zum Wein. Die Geschichte von Maria Maria führt von Lizzano im Salento über Irpinien und den Gardasee nach Düsseldorf — persönlich ausgewählte italienische Weine, seit 2019 in Deutschland zu Hause.";
+/* Titel und Description je Sprache aus dem Wörterbuch; hreflang,
+   Canonical und OpenGraph baut pageMetadata() daraus auf. */
+export async function generateMetadata({ params }) {
+  const dict = await getDictionary(params.locale);
+  return pageMetadata({
+    locale: params.locale,
+    path: "/geschichte",
+    meta: dict.meta.geschichte,
+    /* Zeigte vorher auf /img/stilllife.jpg und behauptete 1200 × 630 — das
+       Foto misst 700 × 676. Jetzt auf den echten Zuschnitt aus
+       scripts/og-images.mjs, gleiches Motiv, gleiche Bildbeschreibung. */
+    image: { url: "/img/og/geschichte.jpg", width: 1200, height: 630, alt: dict.meta.geschichte.ogImageAlt },
+  });
+}
 
-export const metadata = {
-  /* Der Marken-Suffix kommt aus dem title.template des Root-Layouts */
-  title: "Unsere Geschichte",
-  description: DESCRIPTION,
-  keywords: [
-    "Maria Maria",
-    "Geschichte",
-    "italienische Weine",
-    "Salento",
-    "Lizzano",
-    "Lago di Garda",
-    "Kampanien",
-    "Düsseldorf",
-  ],
-  alternates: { canonical: "/geschichte" },
-  openGraph: {
-    type: "website",
-    url: "/geschichte",
-    title: "Unsere Geschichte — Maria Maria",
-    description: DESCRIPTION,
-    images: [
-      {
-        url: "/img/stilllife.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Maria-Maria-Flasche mit Rotweinglas und Oliven auf einer sonnigen Steinterrasse",
-      },
+/* Die Markenerzählung — als AboutPage ausgezeichnet und über `mainEntity`
+   mit der Organisation verbunden. Das ist der Knoten, aus dem Google die
+   Herkunftsgeschichte einer Marke zieht: zwei Generationen, Gründung 2019,
+   Sitz Düsseldorf, Herkunft Italien. Für den Wissensgraph-Eintrag zählt
+   nicht die Länge des Textes, sondern dass die Seite sich als „das hier
+   handelt von diesem Unternehmen" zu erkennen gibt. */
+function GeschichteJsonLd({ locale, dict }) {
+  const url = absoluteUrl(localePath(locale, "/geschichte"));
+  const nav = dict?.common?.nav ?? {};
+  const localize = (href) => localePath(locale, href);
+
+  const crumbs = breadcrumbNode(
+    [
+      { label: nav.home || "Home", href: "/" },
+      { label: dict.meta.geschichte.title, href: "/geschichte" },
     ],
-  },
-  twitter: {
-    title: "Unsere Geschichte — Maria Maria",
-    description: DESCRIPTION,
-    images: ["/img/stilllife.jpg"],
-  },
-};
+    { url, localize }
+  );
+
+  return (
+    <JsonLd
+      data={graph(
+        {
+          ...webPageNode({
+            url,
+            name: dict.meta.geschichte.title,
+            description: dict.meta.geschichte.description,
+            locale,
+            type: "AboutPage",
+            image: {
+              url: "/img/og/geschichte.jpg",
+              alt: dict.meta.geschichte.ogImageAlt,
+            },
+            breadcrumbId: crumbs?.["@id"] ?? null,
+          }),
+          mainEntity: { "@id": ORG_ID },
+        },
+        crumbs
+      )}
+    />
+  );
+}
 
 /* Die Eckdaten der Marke — als Zeile unter dem Text */
 const JOURNEY = ["Seit 2019 in Deutschland", "Sitz in Düsseldorf", "Italienische Herkunft"];
 
-export default function GeschichtePage() {
+export default async function GeschichtePage({ params }) {
+  const dict = await getDictionary(params.locale);
+
   return (
     <main className="relative min-h-screen pt-[calc(96px+env(safe-area-inset-top))]">
+      <GeschichteJsonLd locale={params.locale} dict={dict} />
       {/* ================= AUFTAKT: LE ORIGINI ============================ */}
       <section id="geschichte" aria-labelledby="geschichte-titel" className="relative overflow-hidden">
         <Aura tint="gold" className="-left-56 top-16 h-[38rem] w-[38rem]" />
@@ -165,14 +193,14 @@ export default function GeschichtePage() {
                 Layoutsprünge ab. */}
             <Reveal y={24}>
               <TiltCard className="group" max={4} radius="rounded-card-lg">
-                <figure className="relative aspect-[10/11] overflow-hidden rounded-card-lg shadow-luxe transition-shadow duration-500 group-hover:shadow-lift">
+                <figure className="relative aspect-[4/3] overflow-hidden rounded-card-lg shadow-luxe transition-shadow duration-500 group-hover:shadow-lift">
                   <Parallax speed={0.08} overscan className="absolute inset-0">
                     <Photo
-                      src="/img/magazin/cover-story.jpg"
-                      alt="Maria mit originalen Maria-Maria-Weinflaschen an einem gedeckten Tisch"
+                      src="/img/magazin/tavolata.jpg"
+                      alt="Zwei Generationen an einer langen Tafel unter der Pergola, davor zwei Flaschen Maria Maria"
                       sizes="(min-width: 1024px) 45vw, 100vw"
-                      width={875}
-                      height={823}
+                      width={915}
+                      height={686}
                       loading="eager"
                       fetchpriority="high"
                       className="h-full w-full object-cover transition-transform duration-700 ease-out-expo group-hover:scale-[1.04]"

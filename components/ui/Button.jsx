@@ -1,5 +1,5 @@
 "use client";
-import Link from "next/link";
+import Link from "@/components/i18n/LocaleLink";
 import { motion } from "motion/react";
 import { Arrow, ArrowUpRight } from "../Icons";
 
@@ -8,7 +8,7 @@ import { Arrow, ArrowUpRight } from "../Icons";
    VARIANTS:
    - primary: Deep wine gradient (default, prominent CTAs)
    - dark: Charcoal with bordeaux fill
-   - outline: Minimal outline with charcoal border
+   - outline: Bordeaux outline on a champagne pane (secondary CTAs on photos)
    - glass: Frosted glass effect with transparent shine
    - light: Soft champagne gradient (neutral, secondary actions)
    - premium: Gold/champagne gradient (luxury, elegant feel)
@@ -42,9 +42,13 @@ const VARIANTS = {
     labelIn: "text-ivory",
     iconHover: "",
   },
+  /* Sekundär-CTA, aber nicht farblos: Bordeaux-Rand und -Schrift auf einer
+     champagnerfarbenen Scheibe. Über den Hero-Fotos stand die Pille vorher
+     als graue Kontur im Bild — mit Frost und Weinfarbe trägt sie den Ton der
+     Marke, ohne dem primären Button den Rang abzulaufen. */
   outline: {
-    base: "border border-charcoal/25 text-charcoal",
-    fill: "bg-charcoal",
+    base: "border border-bordeaux/40 bg-gradient-to-br from-ivory/85 to-champagne-light/55 text-bordeaux shadow-chip backdrop-blur-[6px]",
+    fill: "bg-gradient-to-br from-bordeaux to-wine",
     labelIn: "text-ivory",
     iconHover: "group-hover:text-ivory",
   },

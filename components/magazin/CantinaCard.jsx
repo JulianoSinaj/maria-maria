@@ -1,5 +1,5 @@
 "use client";
-import Link from "next/link";
+import Link from "@/components/i18n/LocaleLink";
 import { motion, useReducedMotion } from "motion/react";
 import { Arrow } from "@/components/Icons";
 

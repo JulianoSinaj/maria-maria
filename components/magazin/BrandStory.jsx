@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/i18n/LocaleLink";
 import Parallax from "@/components/motion/Parallax";
 import Photo from "@/components/media/Photo";
 import { Reveal, Stagger, StaggerItem } from "@/components/motion/Reveal";

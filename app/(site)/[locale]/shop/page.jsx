@@ -18,13 +18,80 @@ import SoulCards from "@/components/SoulCards";
 import FaqSection from "@/components/faq/FaqSection";
 import { SHOP_FAQ } from "@/components/faq/faqData";
 import Atmosphere, { Aura, GhostWord, Vines } from "@/components/Atmosphere";
-import Link from "next/link";
+import Link from "@/components/i18n/LocaleLink";
+import JsonLd from "@/components/seo/JsonLd";
+import { wineHref } from "@/components/data";
+import { getDictionary } from "@/lib/i18n/dictionaries";
+import { pageMetadata } from "@/lib/i18n/metadata";
+import { localePath } from "@/lib/i18n/routing";
+import { absoluteUrl } from "@/lib/site";
+import { graph, webPageNode, itemListNode, breadcrumbNode, faqNode } from "@/lib/seo/jsonLd";
 
-export const metadata = {
-  title: "Shop — Maria Maria",
-  description:
-    "Italian wine, personal selection, share the pleasure – der offizielle Maria Maria Online-Shop. Boutique-Weine in limitierter Auflage und Probierpakete, ab 69 € versandkostenfrei.",
-};
+/* Titel und Description je Sprache aus dem Wörterbuch; hreflang,
+   Canonical und OpenGraph baut pageMetadata() daraus auf. */
+export async function generateMetadata({ params }) {
+  const dict = await getDictionary(params.locale);
+  return pageMetadata({
+    locale: params.locale,
+    path: "/shop",
+    meta: dict.meta.shop,
+    image: {
+      url: "/img/og/shop.jpg",
+      width: 1200,
+      height: 630,
+      alt: dict.meta.shop.description,
+    },
+  });
+}
+
+/* Der Shop führt dieselben neun Weine wie die Kollektion — deshalb hier
+   KEINE zweiten Product-Knoten. Jedes Produkt hat genau eine Adresse, unter
+   der es vollständig beschrieben wird (die Landingpage); ein zweiter
+   Product-Knoten mit derselben sku unter einer anderen URL macht aus einem
+   Wein zwei Produkte und teilt die Signale zwischen beiden auf.
+
+   Der Shop beschreibt sich stattdessen als das, was er ist: eine
+   CollectionPage, die auf die neun Produktseiten verteilt. Die Probierpakete
+   stehen bewusst nicht in der Liste — sie haben keine eigene Adresse, und
+   ein Listeneintrag ohne Ziel-URL ist für Google ein toter Eintrag. */
+function ShopJsonLd({ locale, dict, wines }) {
+  const url = absoluteUrl(localePath(locale, "/shop"));
+  const nav = dict?.common?.nav ?? {};
+  const localize = (href) => localePath(locale, href);
+
+  const crumbs = breadcrumbNode(
+    [
+      { label: nav.home || "Home", href: "/" },
+      { label: dict.meta.shop.title, href: "/shop" },
+    ],
+    { url, localize }
+  );
+
+  return (
+    <JsonLd
+      data={graph(
+        webPageNode({
+          url,
+          name: dict.meta.shop.title,
+          description: dict.meta.shop.description,
+          locale,
+          type: "CollectionPage",
+          breadcrumbId: crumbs?.["@id"] ?? null,
+        }),
+        itemListNode({
+          url,
+          name: dict.meta.shop.title,
+          items: wines.map((w) => ({ name: w.name, url: localePath(locale, wineHref(w)) })),
+        }),
+        crumbs,
+        /* SHOP_FAQ beantwortet Versand, Zahlung und Rückgabe — genau die
+           Fragen, die KI-Antwortmaschinen vor einem Kauf stellen. Noch
+           deutsch, deshalb nur auf der deutschen Fassung. */
+        locale === "de" ? faqNode({ url, items: SHOP_FAQ }) : null
+      )}
+    />
+  );
+}
 
 const USPS = [
   { icon: <Truck className="h-6 w-6" />, text: "Versand in 1–3 Werktagen" },
@@ -72,9 +139,12 @@ const HERO_BOTTLES = [
 
 const heroWine = (slug) => WINES.find((w) => w.slug === slug);
 
-export default function ShopPage() {
+export default async function ShopPage({ params }) {
+  const dict = await getDictionary(params.locale);
+
   return (
       <div className="relative min-h-screen">
+        <ShopJsonLd locale={params.locale} dict={dict} wines={WINES} />
         {/* ============ HERO ============ */}
         <section className="grain relative overflow-hidden">
           <ShaderGradient palette="dawn" />

@@ -1,14 +1,13 @@
 import Link from "@/components/i18n/LocaleLink";
 import SplitText from "@/components/motion/SplitText";
 import { Reveal } from "@/components/motion/Reveal";
+import TiltCard from "@/components/motion/TiltCard";
+import Parallax from "@/components/motion/Parallax";
 import Button from "@/components/ui/Button";
+import Photo from "@/components/media/Photo";
 import { Eyebrow } from "@/components/Deco";
 import { Aura, GhostWord } from "@/components/Atmosphere";
 import { Arrow } from "@/components/Icons";
-import HomeHeroFx from "@/components/home/HomeHeroFx";
-import GeschichteHeroPhoto, {
-  GeschichteHeroPreload,
-} from "@/components/geschichte/GeschichteHeroPhoto";
 import SoulCards from "@/components/SoulCards";
 import StoryChapter from "@/components/geschichte/StoryChapter";
 import StoryChapterNav from "@/components/geschichte/StoryChapterNav";
@@ -29,9 +28,8 @@ import { graph, webPageNode, breadcrumbNode, ORG_ID } from "@/lib/seo/jsonLd";
    Die Seite ist als Reise in sechs Kapiteln gesetzt:
 
    Auftakt        „Zwei Frauen. Zwei Generationen. Eine Haltung zum Wein."
-                  — dieselbe randlose Foto-Bühne wie auf Startseite und
-                  Kollektion: die Tavolata trägt den Hero über volle
-                  100svh, der Kanon der Marke steht links im Schleierlicht.
+                  — links der Kanon der Marke mit den beiden CTAs, rechts
+                  das Foto „Persönlich ausgewählt".
    Der Name       „Zwei Marias. Erinnerung und Gegenwart." — die zwei
                   Generationen hinter dem Namen, daneben das Seelen-Paar
                   (SoulCards) mit dem goldenen „&".
@@ -118,152 +116,102 @@ export default async function GeschichtePage({ params }) {
   const dict = await getDictionary(params.locale);
 
   return (
-    /* Kein eigenes <main> mehr: StorefrontChrome setzt bereits eines um die
-       Seite, und der Hero läuft jetzt randlos unter dem Header hindurch —
-       die frühere Kopfhöhen-Polsterung würde ihn nach unten wegdrücken. */
-    <div className="relative min-h-screen">
+    <main className="relative min-h-screen pt-[calc(96px+env(safe-area-inset-top))]">
       <GeschichteJsonLd locale={params.locale} dict={dict} />
       {/* ================= AUFTAKT: LE ORIGINI ============================ */}
-      <GeschichteHeroPreload />
-      <section
-        id="geschichte"
-        aria-labelledby="geschichte-titel"
-        className="grain relative overflow-hidden"
-      >
-        {/* Volle Foto-Bühne wie auf Startseite und Kollektion: die Tavolata
-            trägt den Hero randlos, HomeHeroFx liefert den federgewichteten
-            Zoom beim Verlassen des Heros und den Scroll-Cue.
+      <section id="geschichte" aria-labelledby="geschichte-titel" className="relative overflow-hidden">
+        <Aura tint="gold" className="-left-56 top-16 h-[38rem] w-[38rem]" />
+        <Aura tint="blush" drift={2} className="-right-56 top-[45%] h-[34rem] w-[34rem]" />
+        {/* der Geisterzug hinter den Karten — wie „Due anime" der Startseite */}
+        <GhostWord className="right-[-3vw] top-8 text-[13vw]">storia</GhostWord>
 
-            Die Bühne ist auf dem Telefon auf EIN 100svh gedeckelt, statt wie
-            dort der ganzen Sektion zu folgen. Der Grund: der Kanon dieser
-            Seite ist länger als der der anderen Heroes, die Sektion wächst
-            im Hochkant über den Bildschirm hinaus — und ein Foto, das über
-            volle 1100 px hochkant zieht, schneidet vom 4:3-Original nur noch
-            ein Viertel der Bildbreite heraus. Gedeckelt bleibt der Schnitt
-            breit genug für beide Gesichter; darunter läuft der Text auf dem
-            Elfenbein der Seite weiter. */}
-        <div className="absolute inset-x-0 top-0 h-[100svh] lg:h-full">
-          <HomeHeroFx photo={<GeschichteHeroPhoto />} />
+        <div className="relative mx-auto max-w-content px-6 pb-14 pt-10 lg:px-10 lg:pb-20 lg:pt-14">
+          <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
+            {/* ---- links: der Kanon der Marke ---- */}
+            <div>
+              <Reveal y={12} blur={false}>
+                <Eyebrow>Maria Maria · Unsere Geschichte</Eyebrow>
+              </Reveal>
+              <h1
+                id="geschichte-titel"
+                className="mt-4 text-balance font-playfair text-[clamp(2.1rem,4.4vw,3.3rem)] leading-[1.08] text-charcoal"
+              >
+                <SplitText as="span" className="block" text="Zwei Frauen." delay={0.12} />
+                <SplitText as="span" className="block" text="Zwei Generationen." delay={0.24} />
+                <SplitText as="span" className="block" text="Eine Haltung" delay={0.36} />
+                <SplitText as="span" className="block" text="zum Wein." delay={0.48} />
+              </h1>
+              <Reveal delay={0.35} y={16}>
+                <p className="mt-6 max-w-lg text-[13.5px] leading-relaxed text-charcoal/70">
+                  Der Name Maria Maria verbindet Erinnerung und Gegenwart. Persönliche Wurzeln im
+                  Salento prägen eine Haltung, die Herkunft, Charakter und gemeinsamen Genuss
+                  verbindet.
+                </p>
+                <p className="mt-4 max-w-lg text-[13.5px] leading-relaxed text-charcoal/70">
+                  Seit 2019 ist Maria Maria in Deutschland aktiv, mit Sitz in Düsseldorf und einer
+                  Auswahl, die für Deutschland und weitere Länder gedacht ist.
+                </p>
+              </Reveal>
 
-          {/* Schleier für Lesbarkeit: mobil von unten, ab lg als Lichtpfütze
-              in der UNTEREN RECHTEN Ecke — gespiegelt und abgesenkt gegenüber
-              Startseite und Kollektion. Der Grund steht im Foto: die beiden
-              Marias sitzen links und in der oberen Bildhälfte. Der übliche
-              Schleier von links würde ausgerechnet die zwei Gesichter
-              auswaschen, um die es auf dieser Seite geht; die Pfütze legt
-              sich stattdessen über die auslaufende Tafel. Gemessen liegt der
-              Kontrast von Charcoal auf diesem Grund bei mindestens 4,8:1, im
-              Mittel über 9:1.
+              {/* die beiden Ausgänge: zum Namen, in die Auswahl */}
+              <Reveal delay={0.45}>
+                <div className="mt-8 flex flex-wrap items-center gap-x-7 gap-y-4">
+                  <Button href="#der-name" variant="primary" size="md" iconType="none">
+                    Geschichte entdecken
+                  </Button>
+                  <Link
+                    href="/unsere-weine"
+                    className="group/link inline-flex min-h-[44px] items-center gap-1.5 text-[13px] font-semibold text-bordeaux"
+                  >
+                    Unsere Weine kennenlernen
+                    <Arrow className="h-4 w-4 transition-transform duration-500 ease-out-expo group-hover/link:translate-x-1" />
+                  </Link>
+                </div>
+              </Reveal>
 
-              Als radial-gradient() in eckigen Klammern statt als
-              bg-gradient-to-*: Tailwinds Verlaufs-Kurzformen kennen nur
-              lineare Verläufe. Die Prozentwerte der linearen Fassung müssen
-              dagegen auf dem Fünferraster liegen — via-52% o. ä. fällt still
-              aus dem Kompilat. */}
-          <div className="pointer-events-none absolute inset-0" aria-hidden="true">
-            <div className="absolute inset-0 bg-gradient-to-t from-ivory from-40% via-ivory/65 via-45% to-transparent to-50% lg:hidden" />
-            <div className="absolute inset-0 hidden bg-[radial-gradient(105%_155%_at_95%_102%,rgba(247,244,239,0.98)_0%,rgba(247,244,239,0.95)_48%,rgba(247,244,239,0)_76%)] lg:block" />
-          </div>
+              {/* die Eckdaten der Marke — als stille Zeile unter den CTAs */}
+              <Reveal delay={0.52}>
+                <ol className="mt-7 flex flex-wrap items-center gap-y-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-charcoal/55">
+                  {JOURNEY.map((stop, i) => (
+                    <li key={stop} className="flex items-center">
+                      {i > 0 && (
+                        <span aria-hidden="true" className="mx-2.5 text-charcoal/35">
+                          ·
+                        </span>
+                      )}
+                      <span>{stop}</span>
+                    </li>
+                  ))}
+                </ol>
+              </Reveal>
+            </div>
 
-          {/* Elfenbein-Hauch oben, damit die Navigation über der Pergola
-              lesbar bleibt */}
-          <div
-            className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-ivory/80 via-ivory/30 to-transparent"
-            aria-hidden="true"
-          />
-
-          {/* settle into the page colour */}
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-b from-transparent to-ivory sm:h-44"
-          />
-        </div>
-
-        {/* Der Textblock steht auf ALLEN Breiten unten (kein
-            lg:justify-center wie in den anderen Heroes): oben im Bild sitzen
-            die Gesichter, unten die Tafel — nur dort trägt der Schleier
-            Text.
-
-            Im Hochkant hält das pt-[58svh] den Block unter den beiden
-            Gesichtern — genau dort, wo der Schleier bereits deckt. Der Kanon dieser Seite ist länger als der der anderen
-            Heroes (vier Headline-Zeilen, zwei Absätze, zwei CTAs, die
-            Eckdaten) — in EIN Telefon-100svh passt er zusammen mit dem
-            Foto nicht, ohne den Frauen ins Gesicht zu schreiben. Also darf
-            die Sektion auf dem Telefon über den Bildschirm hinauswachsen:
-            erst das Foto, dann der Text auf Elfenbein. */}
-        <div className="relative mx-auto flex min-h-[100svh] max-w-content flex-col justify-end px-6 pb-24 pt-[58svh] lg:px-10 lg:pb-16 lg:pt-32">
-          <div className="lg:ml-auto lg:max-w-lg">
-            <Reveal y={12} blur={false}>
-              <Eyebrow>Maria Maria · Unsere Geschichte</Eyebrow>
-            </Reveal>
-            <h1
-              id="geschichte-titel"
-              /* Obergrenze 3,1 rem: „Zwei Generationen." muss in die 32 rem
-                 breite Spalte der Lichtpfütze passen, ohne zu brechen. */
-              className="mt-4 text-balance font-playfair text-[clamp(2.1rem,4.2vw,3.1rem)] leading-[1.07] tracking-[-0.015em] text-charcoal sm:mt-6"
-            >
-              <SplitText as="span" className="block" text="Zwei Frauen." delay={0.12} />
-              <SplitText as="span" className="block" text="Zwei Generationen." delay={0.24} />
-              <SplitText
-                as="span"
-                className="block italic"
-                wordClassName="bg-gradient-to-r from-bordeaux via-wine to-bordeaux bg-clip-text text-transparent"
-                text="Eine Haltung"
-                delay={0.36}
-              />
-              <SplitText
-                as="span"
-                className="block italic"
-                wordClassName="bg-gradient-to-r from-bordeaux via-wine to-bordeaux bg-clip-text text-transparent"
-                text="zum Wein."
-                delay={0.48}
-              />
-            </h1>
-            {/* Ohne die GrapeRule der anderen Heroes: der Kanon hier ist
-                zwei Zeilen länger, und jede Zierzeile schiebt die Headline
-                weiter aus der Lichtpfütze heraus in die Gesichter hinein. */}
-            <Reveal delay={0.35} y={16}>
-              <p className="mt-6 max-w-lg text-[14px] leading-relaxed text-charcoal/75">
-                Der Name Maria Maria verbindet Erinnerung und Gegenwart. Persönliche Wurzeln im
-                Salento prägen eine Haltung, die Herkunft, Charakter und gemeinsamen Genuss
-                verbindet.
-              </p>
-              <p className="mt-4 max-w-lg text-[14px] leading-relaxed text-charcoal/75">
-                Seit 2019 ist Maria Maria in Deutschland aktiv, mit Sitz in Düsseldorf und einer
-                Auswahl, die für Deutschland und weitere Länder gedacht ist.
-              </p>
-            </Reveal>
-
-            {/* die beiden Ausgänge: zum Namen, in die Auswahl */}
-            <Reveal delay={0.45}>
-              <div className="mt-7 flex flex-wrap items-center gap-x-7 gap-y-4 sm:mt-8">
-                <Button href="#der-name" variant="primary" size="md" iconType="none">
-                  Geschichte entdecken
-                </Button>
-                <Link
-                  href="/unsere-weine"
-                  className="group/link inline-flex min-h-[44px] items-center gap-1.5 text-[13px] font-semibold text-bordeaux"
-                >
-                  Unsere Weine kennenlernen
-                  <Arrow className="h-4 w-4 transition-transform duration-500 ease-out-expo group-hover/link:translate-x-1" />
-                </Link>
-              </div>
-            </Reveal>
-
-            {/* die Eckdaten der Marke — als stille Zeile unter den CTAs */}
-            <Reveal delay={0.52}>
-              <ol className="mt-6 flex flex-wrap items-center gap-y-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-charcoal/60 sm:mt-8">
-                {JOURNEY.map((stop, i) => (
-                  <li key={stop} className="flex items-center">
-                    {i > 0 && (
-                      <span aria-hidden="true" className="mx-2.5 text-charcoal/35">
-                        ·
-                      </span>
-                    )}
-                    <span>{stop}</span>
-                  </li>
-                ))}
-              </ol>
+            {/* ---- rechts: das Foto „Persönlich ausgewählt" ----
+                Das einzige Bild über dem Falz: es lädt eager mit hoher
+                Priorität, alles Weitere bleibt bei der lazy-Vorgabe von
+                <Photo>. width/height sichern das Seitenverhältnis gegen
+                Layoutsprünge ab. */}
+            <Reveal y={24}>
+              <TiltCard className="group" max={4} radius="rounded-card-lg">
+                <figure className="relative aspect-[4/3] overflow-hidden rounded-card-lg shadow-luxe transition-shadow duration-500 group-hover:shadow-lift">
+                  <Parallax speed={0.08} overscan className="absolute inset-0">
+                    <Photo
+                      src="/img/magazin/tavolata.jpg"
+                      alt="Zwei Generationen an einer langen Tafel unter der Pergola, davor zwei Flaschen Maria Maria"
+                      sizes="(min-width: 1024px) 45vw, 100vw"
+                      width={915}
+                      height={686}
+                      loading="eager"
+                      fetchpriority="high"
+                      className="h-full w-full object-cover transition-transform duration-700 ease-out-expo group-hover:scale-[1.04]"
+                    />
+                  </Parallax>
+                  {/* das Siegel der Auswahl — als stilles Etikett auf dem Foto */}
+                  <figcaption className="absolute bottom-5 left-5 rounded-full bg-ivory/90 px-4 py-2 text-[9.5px] font-semibold uppercase tracking-[0.22em] text-bordeaux shadow-chip backdrop-blur-sm">
+                    Persönlich ausgewählt
+                  </figcaption>
+                </figure>
+              </TiltCard>
             </Reveal>
           </div>
         </div>
@@ -370,6 +318,6 @@ export default async function GeschichtePage({ params }) {
           </div>
         </div>
       </section>
-    </div>
+    </main>
   );
 }

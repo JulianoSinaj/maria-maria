@@ -2,14 +2,14 @@
 import { useRef } from "react";
 import Link from "@/components/i18n/LocaleLink";
 import { motion, useMotionValue, useSpring, useReducedMotion } from "motion/react";
-import { Arrow, Plate, GrapeVine, Mountains, Grapes } from "@/components/Icons";
+import { Arrow, Plate, Mountains, Grapes } from "@/components/Icons";
 import { Reveal } from "@/components/motion/Reveal";
 
 /* Beratungs-Trio als dunkle Editorial-Bühne.
 
-   Die drei Karten lagen vorher als flache weiße Kacheln auf hellem Grund –
+   Die Karten lagen vorher als flache weiße Kacheln auf hellem Grund –
    gleiche Fläche, gleiches Gewicht, kein Blickanker. Jetzt trägt ein
-   espresso-getöntes Band die kompakte Reihe: drei gleich hohe Karten, jede
+   espresso-getöntes Band die kompakte Reihe: gleich hohe Karten, jede
    kippt federgedämpft zum Cursor. */
 
 const HELP = [
@@ -17,13 +17,6 @@ const HELP = [
     icon: Plate,
     title: "Food Pairing",
     text: "Entdecken Sie passende Speisen zu unseren Weinen – für den perfekten Genussmoment.",
-    link: "Mehr erfahren",
-    href: "/magazin",
-  },
-  {
-    icon: GrapeVine,
-    title: "Rebsorten",
-    text: "Lernen Sie die wichtigsten italienischen Rebsorten kennen und ihre Besonderheiten.",
     link: "Mehr erfahren",
     href: "/magazin",
   },
@@ -209,13 +202,13 @@ export default function HelpStrip() {
             </h2>
             <p className="mt-3 max-w-lg text-[13px] leading-relaxed text-ivory/60">
               Wissen und Antworten rund um Ihre Auswahl – vom passenden Gericht bis zur
-              richtigen Rebsorte.
+              richtigen Herkunft.
             </p>
           </Reveal>
         </div>
 
         {/* Karten auf einer Linie, gleiche Höhe – die Reihe wirkt als Block */}
-        <div className="mt-9 grid grid-cols-1 gap-5 md:grid-cols-3 lg:gap-6">
+        <div className="mt-9 grid grid-cols-1 gap-5 md:grid-cols-2 lg:gap-6">
           {HELP.map((h, i) => (
             <Reveal key={h.title} delay={i * 0.09} y={34} className="h-full">
               <HelpCard item={h} />

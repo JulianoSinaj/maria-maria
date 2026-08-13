@@ -18,6 +18,7 @@
     "test:gallery": "node lib/gallery/__tests__/api.test.mjs",
     "og": "node scripts/og-images.mjs",
     "optimize:heroes": "node scripts/optimize-heroes.mjs",
+    "optimize:geschichte-hero": "node scripts/optimize-geschichte-hero.mjs",
     "optimize:pairing": "node scripts/optimize-pairing.mjs",
     "optimize:pairing-cards": "node scripts/optimize-pairing-cards.mjs",
     "optimize:pages": "node scripts/optimize-pages.mjs",

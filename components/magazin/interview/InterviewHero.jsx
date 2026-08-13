@@ -213,9 +213,7 @@ function PortraitFigure({ interview }) {
 
 /* ---- 3. Kapitelleiste -------------------------------------------------- */
 /* Nummerierte Anker auf die H2-Kapitel darunter. Bewusst nackte <a> statt
-   LocaleLink: Die Ziele sind Fragmente derselben Seite — auch im
-   Lesefenster (InterviewDialog) scrollt der native Sprung den richtigen
-   Container. */
+   LocaleLink: Die Ziele sind Fragmente derselben Seite. */
 function ChapterIndex({ chapters, label }) {
   if (chapters.length < 2 || !label) return null;
 

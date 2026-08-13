@@ -116,7 +116,6 @@ export default function InterviewTeaser({ interview, wineHref = "/unsere-weine/l
             <div className="mt-6 flex flex-wrap items-center gap-x-8 gap-y-3">
               <Link
                 href={interviewPath(interview.slug)}
-                data-interview-card={interview.slug}
                 data-interview-source="regionen"
                 className="group inline-flex min-h-[48px] items-center gap-2.5 rounded-full bg-gradient-to-br from-bordeaux to-wine px-8 py-4 text-[12px] font-semibold uppercase tracking-[0.14em] text-ivory transition-shadow duration-300 hover:shadow-lift focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bordeaux"
               >

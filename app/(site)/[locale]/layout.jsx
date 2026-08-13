@@ -145,12 +145,7 @@ export const viewport = {
   viewportFit: "cover",
 };
 
-/* `modal` ist der Parallel-Slot für abgefangene Navigationen — heute genau
-   eine: der Klick auf ein Interview (app/(site)/[locale]/@modal/…). Auf allen
-   anderen Seiten liefert @modal/default.jsx `null`, der Slot kostet dort also
-   kein Markup. Er steht bewusst NEBEN StorefrontChrome und nicht darin: Ein
-   Dialog gehört nicht in das <main> der Seite, über der er liegt. */
-export default async function LocaleLayout({ children, modal, params }) {
+export default async function LocaleLayout({ children, params }) {
   const { locale } = params;
   if (!isLocale(locale)) notFound();
 
@@ -180,7 +175,6 @@ export default async function LocaleLayout({ children, modal, params }) {
             <MagneticRouteProvider>
               <CartProvider>
                 <StorefrontChrome>{children}</StorefrontChrome>
-                {modal}
               </CartProvider>
             </MagneticRouteProvider>
           </SmoothScroll>

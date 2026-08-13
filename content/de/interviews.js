@@ -54,15 +54,12 @@ const interviews = {
       "Winzerinnen, Kellermeister und Erzeuger erzählen von ihrer Region, ihrem Handwerk und davon, was einen Wein wirklich ausmacht.",
   },
 
-  /* Beschriftungen der Artikelseite und des Lesefensters. */
+  /* Beschriftungen der Artikelseite. */
   ui: {
     magazin: "Magazin",
     interviews: "Interviews",
     interview: "Interview",
     editorial: "Redaktion",
-    readingProgress: "Lesefortschritt",
-    close: "Gespräch schließen",
-    readDirectly: "Artikel direkt lesen",
     aboutPerson: "Über den Gesprächspartner",
     continueReading: "Weiterlesen",
     tasted: "Im Gespräch verkostet",
@@ -188,6 +185,8 @@ const interviews = {
         media: {
           src: "/img/magazin/interviews/lugana-risotto.jpg",
           alt: "Cremiges Risotto mit Gardasee-Fisch, Zitrone und Kräutern neben einem Glas Lugana",
+          /* Native Ratio des Fotos — zeigt das volle Bild statt des 16:9-Beschnitts. */
+          aspect: "4/3",
         },
         paragraphs: [
           "Bei der Speisenbegleitung beginnt Daniele dort, wo auch der Wein beginnt: am Gardasee. Zu seinen Empfehlungen gehören heimische Süßwasserfische wie Lavarello und getrocknete Sardinen sowie fein abgestimmte Risotti.",

@@ -53,7 +53,6 @@ export default function InterviewCard({ interview, featured = false, delay = 0 }
   const cta = (
     <Link
       href={href}
-      data-interview-card={interview.slug}
       className="group/cta relative z-[1] inline-flex min-h-[48px] lg:min-h-[44px] items-center gap-2.5 rounded-full bg-gradient-to-br from-bordeaux to-wine px-6 py-3 text-[11.5px] font-semibold uppercase tracking-[0.14em] text-ivory transition-shadow duration-300 after:absolute after:inset-0 after:z-[2] after:content-[''] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bordeaux"
     >
       {t.cta}

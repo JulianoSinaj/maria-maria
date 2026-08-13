@@ -19,8 +19,7 @@ import { graph, webPageNode, breadcrumbNode, articleNode, personNode } from "@/l
    Text existiert genau hier, die Karte im Magazin und der Teaser auf
    /regionen verlinken beide auf DIESE URL. Deshalb ist die Seite eine echte
    Route und kein Modal-State: Sie ist teilbar, indexierbar und funktioniert
-   ohne JavaScript. Das Lesefenster auf dem Desktop (siehe
-   components/magazin/InterviewDialog) legt sich später nur darüber.
+   ohne JavaScript.
 
    Der Slug ist in allen vier Sprachen gleich, die Sprache steht im Präfix.
    Damit bilden die vier Fassungen eine saubere hreflang-Gruppe, und

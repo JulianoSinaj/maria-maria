@@ -24,9 +24,6 @@ const interviews = {
     interviews: "Interviste",
     interview: "Intervista",
     editorial: "Redazione",
-    readingProgress: "Avanzamento lettura",
-    close: "Chiudi il colloquio",
-    readDirectly: "Leggi l'articolo",
     aboutPerson: "L'intervistato",
     continueReading: "Continua a leggere",
     tasted: "Degustati nel colloquio",
@@ -139,6 +136,8 @@ const interviews = {
         media: {
           src: "/img/magazin/interviews/lugana-risotto.jpg",
           alt: "Risotto cremoso con pesce di lago, limone ed erbe accanto a un calice di Lugana",
+          /* Native Ratio des Fotos — zeigt das volle Bild statt des 16:9-Beschnitts. */
+          aspect: "4/3",
         },
         paragraphs: [
           "Negli abbinamenti Daniele parte da dove parte anche il vino: dal Lago di Garda. Tra i suoi consigli ci sono i pesci d'acqua dolce del lago come il lavarello e le sardine essiccate, oltre a risotti dal tocco delicato.",

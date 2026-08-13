@@ -24,9 +24,6 @@ const interviews = {
     interviews: "Rozhovory",
     interview: "Rozhovor",
     editorial: "Redakce",
-    readingProgress: "Postup čtení",
-    close: "Zavřít rozhovor",
-    readDirectly: "Číst článek",
     aboutPerson: "O hostovi",
     continueReading: "Číst dál",
     tasted: "Ochutnáno v rozhovoru",
@@ -138,6 +135,8 @@ const interviews = {
         media: {
           src: "/img/magazin/interviews/lugana-risotto.jpg",
           alt: "Krémové rizoto s jezerní rybou, citronem a bylinkami vedle sklenky Lugany",
+          /* Native Ratio des Fotos — zeigt das volle Bild statt des 16:9-Beschnitts. */
+          aspect: "4/3",
         },
         paragraphs: [
           "U snoubení s jídlem začíná Daniele tam, kde začíná i víno: u Gardského jezera. Mezi jeho doporučení patří místní sladkovodní ryby jako lavarello a sušené sardinky a také jemně vyladěná rizota.",

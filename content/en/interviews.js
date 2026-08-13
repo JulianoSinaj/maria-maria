@@ -24,9 +24,6 @@ const interviews = {
     interviews: "Interviews",
     interview: "Interview",
     editorial: "Editorial",
-    readingProgress: "Reading progress",
-    close: "Close conversation",
-    readDirectly: "Read the article",
     aboutPerson: "About our guest",
     continueReading: "Keep reading",
     tasted: "Tasted in this conversation",
@@ -139,6 +136,8 @@ const interviews = {
         media: {
           src: "/img/magazin/interviews/lugana-risotto.jpg",
           alt: "Creamy risotto with lake fish, lemon and herbs beside a glass of Lugana",
+          /* Native Ratio des Fotos — zeigt das volle Bild statt des 16:9-Beschnitts. */
+          aspect: "4/3",
         },
         paragraphs: [
           "When it comes to food, Daniele starts where the wine starts: at Lake Garda. His recommendations include local freshwater fish such as lavarello and dried sardines, as well as finely balanced risottos.",

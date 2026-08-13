@@ -46,6 +46,17 @@ export const PHOTO_MANIFEST = {
       1400
     ]
   },
+  "/img/home/Maria Maria zwischen Reben und Meer.png": {
+    "base": "/img/home/Maria Maria zwischen Reben und Meer",
+    "widths": [
+      160,
+      320,
+      640,
+      1024,
+      1600,
+      1672
+    ]
+  },
   "/img/home/moment-bg.jpg": {
     "base": "/img/home/moment-bg",
     "widths": [
@@ -104,6 +115,16 @@ export const PHOTO_MANIFEST = {
       1400
     ]
   },
+  "/img/magazin/campagnia1.jpg": {
+    "base": "/img/magazin/campagnia1",
+    "widths": [
+      160,
+      320,
+      640,
+      1024,
+      1536
+    ]
+  },
   "/img/magazin/cover-story.jpg": {
     "base": "/img/magazin/cover-story",
     "widths": [
@@ -121,6 +142,65 @@ export const PHOTO_MANIFEST = {
       592
     ]
   },
+  "/img/magazin/imag3.jpeg": {
+    "base": "/img/magazin/imag3",
+    "widths": [
+      160,
+      320,
+      640,
+      1024,
+      1508
+    ]
+  },
+  "/img/magazin/interviews/daniele-malavasi.jpg": {
+    "base": "/img/magazin/interviews/daniele-malavasi",
+    "widths": [
+      160,
+      320,
+      640,
+      652
+    ]
+  },
+  "/img/magazin/interviews/lugana-risotto.jpg": {
+    "base": "/img/magazin/interviews/lugana-risotto",
+    "widths": [
+      160,
+      320,
+      640,
+      1024,
+      1448
+    ]
+  },
+  "/img/magazin/interviews/terroir-pozzolengo.jpg": {
+    "base": "/img/magazin/interviews/terroir-pozzolengo",
+    "widths": [
+      160,
+      320,
+      640,
+      1024,
+      1536
+    ]
+  },
+  "/img/magazin/interviews/turbiana-trauben.jpg": {
+    "base": "/img/magazin/interviews/turbiana-trauben",
+    "widths": [
+      160,
+      320,
+      640,
+      1024,
+      1508
+    ]
+  },
+  "/img/magazin/lagoDG.jpg": {
+    "base": "/img/magazin/lagoDG",
+    "widths": [
+      160,
+      320,
+      640,
+      1024,
+      1536
+    ]
+  },
   "/img/magazin/pranzo.jpg": {
     "base": "/img/magazin/pranzo",
     "widths": [
@@ -129,6 +209,16 @@ export const PHOTO_MANIFEST = {
       640,
       1024,
       1400
+    ]
+  },
+  "/img/magazin/puglia1.jpg": {
+    "base": "/img/magazin/puglia1",
+    "widths": [
+      160,
+      320,
+      640,
+      1024,
+      1536
     ]
   },
   "/img/magazin/tavolata.jpg": {
@@ -164,6 +254,146 @@ export const PHOTO_MANIFEST = {
       320,
       640,
       677
+    ]
+  },
+  "/img/og/collection.jpg": {
+    "base": "/img/og/collection",
+    "widths": [
+      160,
+      320,
+      640,
+      1024,
+      1200
+    ]
+  },
+  "/img/og/default.jpg": {
+    "base": "/img/og/default",
+    "widths": [
+      160,
+      320,
+      640,
+      1024,
+      1200
+    ]
+  },
+  "/img/og/geschichte.jpg": {
+    "base": "/img/og/geschichte",
+    "widths": [
+      160,
+      320,
+      640,
+      1024,
+      1200
+    ]
+  },
+  "/img/og/magazin.jpg": {
+    "base": "/img/og/magazin",
+    "widths": [
+      160,
+      320,
+      640,
+      1024,
+      1200
+    ]
+  },
+  "/img/og/shop.jpg": {
+    "base": "/img/og/shop",
+    "widths": [
+      160,
+      320,
+      640,
+      1024,
+      1200
+    ]
+  },
+  "/img/og/wines/falanghina.jpg": {
+    "base": "/img/og/wines/falanghina",
+    "widths": [
+      160,
+      320,
+      640,
+      1024,
+      1200
+    ]
+  },
+  "/img/og/wines/greco-di-tufo.jpg": {
+    "base": "/img/og/wines/greco-di-tufo",
+    "widths": [
+      160,
+      320,
+      640,
+      1024,
+      1200
+    ]
+  },
+  "/img/og/wines/il-bianco-greco-cuvee.jpg": {
+    "base": "/img/og/wines/il-bianco-greco-cuvee",
+    "widths": [
+      160,
+      320,
+      640,
+      1024,
+      1200
+    ]
+  },
+  "/img/og/wines/il-rosso-aglianico.jpg": {
+    "base": "/img/og/wines/il-rosso-aglianico",
+    "widths": [
+      160,
+      320,
+      640,
+      1024,
+      1200
+    ]
+  },
+  "/img/og/wines/lugana.jpg": {
+    "base": "/img/og/wines/lugana",
+    "widths": [
+      160,
+      320,
+      640,
+      1024,
+      1200
+    ]
+  },
+  "/img/og/wines/primitivo-14-5.jpg": {
+    "base": "/img/og/wines/primitivo-14-5",
+    "widths": [
+      160,
+      320,
+      640,
+      1024,
+      1200
+    ]
+  },
+  "/img/og/wines/primitivo-15-5.jpg": {
+    "base": "/img/og/wines/primitivo-15-5",
+    "widths": [
+      160,
+      320,
+      640,
+      1024,
+      1200
+    ]
+  },
+  "/img/og/wines/primitivo-salento.jpg": {
+    "base": "/img/og/wines/primitivo-salento",
+    "widths": [
+      160,
+      320,
+      640,
+      1024,
+      1200
+    ]
+  },
+  "/img/og/wines/rosato-puglia.jpg": {
+    "base": "/img/og/wines/rosato-puglia",
+    "widths": [
+      160,
+      320,
+      640,
+      1024,
+      1200
     ]
   },
   "/img/pranzo.webp": {

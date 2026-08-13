@@ -12,7 +12,8 @@ import common from "./common";
 import meta from "./meta";
 import legal from "./legal";
 import kontakt from "./kontakt";
+import interviews from "./interviews";
 
-const dictionary = { common, meta, legal, kontakt };
+const dictionary = { common, meta, legal, kontakt, interviews };
 
 export default dictionary;

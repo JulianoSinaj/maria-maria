@@ -164,15 +164,23 @@ export const REGIONEN_FAQ_GROUPS = [
     key: "garda",
     label: "Lugana am Gardasee",
     items: [
+      /* Die fünf Gardasee-Fragen aus dem Handoff „Interview Daniele
+         Malavasi" (Seiten 18–19) — dort ausdrücklich als aktualisierte
+         Fassung geliefert und ausdrücklich HIER verortet: Der Artikel
+         wiederholt sie nicht, er verlinkt hierher.
+
+         „Wie schmeckt Lugana?" stand schon vorher hier und bleibt: Die
+         Frage ist indexiert, und der Handoff ergänzt die Rubrik, statt sie
+         zu ersetzen. */
       {
         id: "reg-garda-gebiet",
         q: "Wo liegt das Lugana-Weingebiet?",
-        a: "Das Lugana-DOC-Gebiet liegt südlich des Gardasees und erstreckt sich über Teile der Lombardei und Venetiens. Es ist deshalb präziser, von „Lugana am Gardasee – zwischen Lombardei und Venetien“ zu sprechen.",
+        a: "Das Lugana-Weingebiet liegt am südlichen Gardasee und erstreckt sich über Teile der Lombardei und Venetiens. Zur abgegrenzten DOC-Zone gehören Gebiete in den Provinzen Brescia und Verona. Pozzolengo ist einer der Orte, an denen die lehmigen Moränenböden und der Einfluss des Sees besonders prägend sind.",
       },
       {
         id: "reg-garda-turbiana",
-        q: "Aus welcher Rebsorte wird Lugana hergestellt?",
-        a: "Lugana wird überwiegend aus Turbiana erzeugt, der charakteristischen weißen Rebsorte des Gebiets. Die tonreichen Böden und das vom Gardasee beeinflusste Klima prägen Frische, Struktur und feine Mineralität.",
+        q: "Welche Rebsorte prägt den Lugana DOC?",
+        a: "Die wichtigste Rebsorte des Lugana DOC ist Turbiana, lokal auch Trebbiano di Lugana genannt. Nach dem Produktionsreglement muss Lugana DOC zu mindestens 90 Prozent aus Turbiana bestehen; andere zugelassene, nicht aromatische weiße Rebsorten dürfen zusammen höchstens 10 Prozent ausmachen. In der Wahrnehmung des Weins steht Turbiana klar im Mittelpunkt.",
         link: { label: "Zum Lugana", href: "/unsere-weine/lugana" },
       },
       {
@@ -181,10 +189,24 @@ export const REGIONEN_FAQ_GROUPS = [
         a: "Lugana zeigt sich häufig frisch, elegant und fein mineralisch, mit Aromen von Zitrusfrüchten, weißen Blüten und je nach Stil auch reiferem Kernobst. Alter, Ausbau und Jahrgang beeinflussen das Profil.",
       },
       {
+        id: "reg-garda-aperitif",
+        q: "Warum ist Lugana mehr als ein Aperitifwein?",
+        a: "Lugana wird oft als frischer Wein zum Aperitif wahrgenommen. Daniele Malavasi betont jedoch seine Struktur, Salzigkeit und sein Entwicklungspotenzial. Gerade diese Eigenschaften machen ihn zu einem gastronomisch vielseitigen Weißwein, der nicht nur vor dem Essen, sondern als Begleiter über das Menü hinweg funktioniert.",
+        link: {
+          label: "Das Gespräch mit Daniele Malavasi lesen",
+          href: "/magazin/interviews/daniele-malavasi-lugana-doc",
+        },
+      },
+      {
         id: "reg-garda-mm",
-        q: "Zu welchen Speisen und Anlässen passt Lugana?",
-        a: "Lugana eignet sich für Aperitivo, Fisch, Meeresfrüchte, leichte Pasta, Gemüsegerichte und viele mediterrane Speisen. Durch seinen eleganten Stil passt er auch zu Empfängen, Events und stilvollen Geschenkmomenten.",
-        link: { label: "Maria Maria als Partner entdecken", href: "/kontakt" },
+        q: "Zu welchen Speisen passt Lugana?",
+        a: "Zu Lugana passen Fisch aus dem Gardasee, Risotto, cremig aufgeschlagener Stockfisch und helles Fleisch mit leichten Saucen. Entscheidend ist weniger eine starre Regel als das Gleichgewicht zwischen Frische, Salzigkeit und der Textur des Gerichts.",
+        link: { label: "Food Pairings im Magazin entdecken", href: "/magazin#food-pairing" },
+      },
+      {
+        id: "reg-garda-temperatur",
+        q: "Warum sollte Lugana nicht zu kalt serviert werden?",
+        a: "Wenn Lugana zu kalt serviert wird, können genau jene Eigenschaften weniger deutlich wahrgenommen werden, die seine Identität prägen: Salzigkeit, Mineralität und aromatische Feinheit. Deshalb sollte er nicht eiskalt ins Glas kommen. Die genaue Serviertemperatur richtet sich nach Stil und Herstellerempfehlung.",
       },
     ],
   },

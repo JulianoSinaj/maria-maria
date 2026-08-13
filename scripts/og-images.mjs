@@ -54,6 +54,23 @@ const PAGES = [
      bekommen hier nur endlich den Zuschnitt, den sie vorgeben zu haben. */
   { name: "geschichte", src: "img/stilllife.jpg", focus: "attention" },
   { name: "magazin", src: "img/magazin/weinkeller.jpg", focus: "attention" },
+  /* Interview Daniele Malavasi — der Handoff (Seite 23) führt den
+     1200-×-630-Zuschnitt als „DA PRODURRE".
+
+     Quelle ist bewusst das Terroir-Panorama und nicht das Portrait: Das
+     Portrait liegt nur als 652 × 819 vor (Ausschnitt aus dem gelieferten
+     Mockup, kein Originalfoto). Auf 1200 px Breite gezogen wäre die
+     Teaserkarte sichtbar weich — ausgerechnet das Bild, das in WhatsApp und
+     LinkedIn für den Artikel wirbt. Sobald das Originalfoto vorliegt, ist
+     hier nur der `src` zu tauschen. */
+  {
+    /* Dateiname = "interview-" + Slug des Gesprächs. Die Route baut den Pfad
+       nach derselben Regel; ein neues Interview braucht hier genau eine
+       Zeile mehr. */
+    name: "interview-daniele-malavasi-lugana-doc",
+    src: "img/magazin/interviews/terroir-pozzolengo.jpg",
+    focus: "attention",
+  },
 ];
 
 async function exists(file) {

@@ -11,6 +11,8 @@ import { REGIONEN_FAQ_GROUPS } from "@/components/faq/faqData";
 import Atmosphere, { Aura, GhostWord } from "@/components/Atmosphere";
 import TerroirManifest from "@/components/regionen/TerroirManifest";
 import RegionCta from "@/components/regionen/RegionCta";
+import InterviewTeaser from "@/components/regionen/InterviewTeaser";
+import { publishedInterviews } from "@/components/magazin/interviewRegistry";
 import JsonLd from "@/components/seo/JsonLd";
 import { getDictionary } from "@/lib/i18n/dictionaries";
 import { pageMetadata } from "@/lib/i18n/metadata";
@@ -150,6 +152,17 @@ const REGIONS = [
 
 export default async function RegionenPage({ params }) {
   const dict = await getDictionary(params.locale);
+
+  /* Die Gespräche, die zu einem Gebiet gehören — Schlüssel ist
+     `teaserRegion.region` und damit derselbe Anker wie oben in REGIONS.
+     Steht kein Interview zu einer Region an, bleibt der Platz leer statt
+     einen Platzhalter zu zeigen. */
+  const interviewByRegion = Object.fromEntries(
+    publishedInterviews(dict)
+      .filter((i) => i.teaserRegion?.region)
+      .map((i) => [i.teaserRegion.region, i])
+  );
+
   return (
     <div className="relative min-h-screen">
       <RegionenJsonLd locale={params.locale} dict={dict} />
@@ -302,7 +315,14 @@ export default async function RegionenPage({ params }) {
                   </Reveal>
                 </div>
 
-                {/* Hier folgt die Interview-Sektion zu dieser Region. */}
+                {/* Das Gespräch zu dieser Region — Handoff Seite 7: direkt
+                    unter dem Regionenblock, vor Terroir-Manifest und FAQ. */}
+                {interviewByRegion[r.region] && (
+                  <InterviewTeaser
+                    interview={interviewByRegion[r.region]}
+                    wineHref={r.cta.href}
+                  />
+                )}
               </article>
             );
           })}

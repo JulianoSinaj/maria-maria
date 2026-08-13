@@ -163,3 +163,50 @@ export const LinkedIn = (p) => (
 export const MailCircle = (p) => (
   <svg viewBox="0 0 48 48" {...F} {...p}><rect x="8" y="13" width="32" height="22" rx="2" /><path d="m8 16 16 11 16-11" /></svg>
 );
+
+/* ---- Speisen-Motive der Interview-Strecke („Lugana am Tisch") ----
+   Vier Gerichtsgruppen aus dem Gespräch mit Daniele Malavasi: Seefisch,
+   Risotto, Baccalà mantecato und helles Fleisch. Bewusst als Linienmotive im
+   48er-Raster wie die übrigen Feature-Icons — sie stehen in Karten neben
+   Fließtext, nicht als Piktogramme in einer Leiste. */
+export const Fish = (p) => (
+  <svg viewBox="0 0 48 48" {...F} {...p}>
+    <path d="M6 24c5-7 12-10 18-10s11 3 14 10c-3 7-8 10-14 10S11 31 6 24z" />
+    <path d="M38 24l5-6v12l-5-6z" />
+    <circle cx="16" cy="21.5" r="1.2" fill="currentColor" stroke="none" />
+    <path d="M24 15c-2 4-2 14 0 18M30 17c-1.5 3-1.5 11 0 14" />
+  </svg>
+);
+export const Risotto = (p) => (
+  <svg viewBox="0 0 48 48" {...F} {...p}>
+    <path d="M9 24h30c0 8-6.7 13-15 13S9 32 9 24z" />
+    <path d="M9 24H5M39 24h4" />
+    <path d="M18 19c0-2 2-2 2-4s-2-2-2-4M24 18c0-2 2-2 2-4s-2-2-2-4M30 19c0-2 2-2 2-4s-2-2-2-4" />
+  </svg>
+);
+export const Stockfish = (p) => (
+  <svg viewBox="0 0 48 48" {...F} {...p}>
+    <path d="M11 22h26v4c0 6-5.8 11-13 11s-13-5-13-11v-4z" />
+    <path d="M17 22c0-4 3-6 7-6s7 2 7 6" />
+    <path d="M24 16c0-2.5 3-2.5 3-5" />
+    <path d="M8 40h32" />
+  </svg>
+);
+export const Poultry = (p) => (
+  <svg viewBox="0 0 48 48" {...F} {...p}>
+    <path d="M31 12a9 9 0 0 1 5 8c0 6-5 9-11 10-4 1-7 3-8 6" />
+    <path d="M36 20c3 1 5 3 5 6s-2 6-6 7" />
+    <circle cx="30" cy="14" r="1.1" fill="currentColor" stroke="none" />
+    <path d="M17 36c-3 0-5 2-5 4h10c0-2-2-4-5-4z" />
+    <path d="M31 12l4-3" />
+  </svg>
+);
+/* Servierhinweis: „zu kalt" ist der häufigste Fehler beim Lugana. */
+export const Thermometer = (p) => (
+  <svg viewBox="0 0 48 48" {...F} {...p}>
+    <path d="M20 28V13a4 4 0 0 1 8 0v15a7 7 0 1 1-8 0z" />
+    <circle cx="24" cy="34" r="3" fill="currentColor" stroke="none" />
+    <path d="M24 20v11" />
+    <path d="M31 15h4M31 20h3M31 25h4" />
+  </svg>
+);

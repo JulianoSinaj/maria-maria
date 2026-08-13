@@ -15,7 +15,7 @@ import { MAGAZIN_FAQ } from "@/components/faq/faqData";
 import RegionWineRail from "@/components/RegionWineRail";
 import { WINES } from "@/components/data";
 import { Aura, GhostWord } from "@/components/Atmosphere";
-import { PUBLISHED_INTERVIEWS } from "@/components/magazin/interviewData";
+import { publishedInterviews } from "@/components/magazin/interviewRegistry";
 import { MAGAZIN_WINE_SLUGS } from "@/components/magazin/magazinData";
 import { getDictionary } from "@/lib/i18n/dictionaries";
 import { pageMetadata } from "@/lib/i18n/metadata";
@@ -101,11 +101,14 @@ const MARQUEE_WORDS = [
 ];
 
 export default async function MagazinPage({ params }) {
+  const dict = await getDictionary(params.locale);
+
   /* Die Interview-Sektion und ihr Sprungziel erscheinen nur, wenn wirklich ein
      Gespräch veröffentlicht ist — sonst zeigte die Fußzeile von Kapitel IV auf
-     eine Platzhalterkarte. */
-  const hasInterviews = PUBLISHED_INTERVIEWS.length > 0;
-  const dict = await getDictionary(params.locale);
+     eine Platzhalterkarte. Die Texte kommen aus dem Wörterbuch der jeweiligen
+     Sprache (content/<sprache>/interviews.js). */
+  const interviews = publishedInterviews(dict);
+  const hasInterviews = interviews.length > 0;
 
   return (
     <>
@@ -179,7 +182,11 @@ export default async function MagazinPage({ params }) {
             {/* ---- Im Gespräch — nur mit veröffentlichten Interviews ---- */}
             {hasInterviews && (
               <div id="interviste" className="scroll-mt-28">
-                <InterviewSection />
+                <InterviewSection
+                  interviews={interviews}
+                  section={dict.interviews?.section ?? {}}
+                  headingId="magazin-interviews"
+                />
               </div>
             )}
 

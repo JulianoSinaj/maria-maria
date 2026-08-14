@@ -33,7 +33,7 @@ export const legal = {
         title: "Údaje podle § 5 TMG",
         body: [
           "Maria Maria Wines GmbH",
-          "Kaiserswerther Straße 12, 40477 Düsseldorf, Německo",
+          "Ellerfelderstrasse 78, 40822 Mettmann, Německo",
           "Zastoupena jednatelstvím.",
         ],
       },
@@ -50,7 +50,7 @@ export const legal = {
       },
       {
         title: "Odpovědnost za obsah podle § 55 odst. 2 RStV",
-        body: ["Maria Maria Wines GmbH, Kaiserswerther Straße 12, 40477 Düsseldorf."],
+        body: ["Maria Maria Wines GmbH, Ellerfelderstrasse 78, 40822 Mettmann."],
       },
       {
         title: "Ochrana mladistvých",
@@ -82,7 +82,7 @@ export const legal = {
       {
         title: "1. Správce",
         body: [
-          "Správcem zpracování údajů na těchto webových stránkách je Maria Maria Wines GmbH, Kaiserswerther Straße 12, 40477 Düsseldorf, Německo, e-mail: info@maria-maria.wine, telefon: +49 211 976 420.",
+          "Správcem zpracování údajů na těchto webových stránkách je Maria Maria Wines GmbH, Ellerfelderstrasse 78, 40822 Mettmann, Německo, e-mail: info@maria-maria.wine, telefon: +49 211 976 420.",
         ],
       },
       {
@@ -135,7 +135,7 @@ export const legal = {
       {
         title: "§ 1 Rozsah platnosti",
         body: [
-          "Tyto všeobecné obchodní podmínky platí pro všechny objednávky učiněné prostřednictvím e-shopu společnosti Maria Maria Wines GmbH, Kaiserswerther Straße 12, 40477 Düsseldorf (dále jen „Maria Maria“), ze strany spotřebitelů i podnikatelů.",
+          "Tyto všeobecné obchodní podmínky platí pro všechny objednávky učiněné prostřednictvím e-shopu společnosti Maria Maria Wines GmbH, Ellerfelderstrasse 78, 40822 Mettmann (dále jen „Maria Maria“), ze strany spotřebitelů i podnikatelů.",
         ],
       },
       {

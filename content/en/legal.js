@@ -33,7 +33,7 @@ export const legal = {
         title: "Information pursuant to § 5 TMG",
         body: [
           "Maria Maria Wines GmbH",
-          "Kaiserswerther Straße 12, 40477 Düsseldorf, Germany",
+          "Ellerfelderstrasse 78, 40822 Mettmann, Germany",
           "Represented by the management.",
         ],
       },
@@ -50,7 +50,7 @@ export const legal = {
       },
       {
         title: "Responsible for content pursuant to § 55 (2) RStV",
-        body: ["Maria Maria Wines GmbH, Kaiserswerther Straße 12, 40477 Düsseldorf."],
+        body: ["Maria Maria Wines GmbH, Ellerfelderstrasse 78, 40822 Mettmann."],
       },
       {
         title: "Protection of minors",
@@ -82,7 +82,7 @@ export const legal = {
       {
         title: "1. Controller",
         body: [
-          "The controller for data processing on this website is Maria Maria Wines GmbH, Kaiserswerther Straße 12, 40477 Düsseldorf, Germany, email: info@maria-maria.wine, phone: +49 211 976 420.",
+          "The controller for data processing on this website is Maria Maria Wines GmbH, Ellerfelderstrasse 78, 40822 Mettmann, Germany, email: info@maria-maria.wine, phone: +49 211 976 420.",
         ],
       },
       {
@@ -135,7 +135,7 @@ export const legal = {
       {
         title: "§ 1 Scope",
         body: [
-          "These general terms and conditions apply to all orders placed through the online shop of Maria Maria Wines GmbH, Kaiserswerther Straße 12, 40477 Düsseldorf (hereinafter “Maria Maria”), by consumers and business customers.",
+          "These general terms and conditions apply to all orders placed through the online shop of Maria Maria Wines GmbH, Ellerfelderstrasse 78, 40822 Mettmann (hereinafter “Maria Maria”), by consumers and business customers.",
         ],
       },
       {

@@ -1,7 +1,7 @@
 /* Rechtstexte: Impressum, Datenschutzerklärung, AGB.
 
    Deutsch ist hier nicht nur Ausgangssprache, sondern die RECHTLICH
-   VERBINDLICHE Fassung: Die Maria Maria Wines GmbH sitzt in Düsseldorf, es
+   VERBINDLICHE Fassung: Die Maria Maria Wines GmbH sitzt in Mettmann, es
    gilt deutsches Recht (§ 9 AGB). Die drei anderen Sprachfassungen sind
    Übersetzungen zur Verständlichkeit und tragen deshalb einen Hinweis darauf
    (`bindingNotice`) — im Deutschen fehlt der Schlüssel bewusst, weil das
@@ -28,7 +28,7 @@ export const legal = {
         title: "Angaben gemäß § 5 TMG",
         body: [
           "Maria Maria Wines GmbH",
-          "Kaiserswerther Straße 12, 40477 Düsseldorf, Deutschland",
+          "Ellerfelderstrasse 78, 40822 Mettmann, Deutschland",
           "Vertreten durch die Geschäftsführung.",
         ],
       },
@@ -45,7 +45,7 @@ export const legal = {
       },
       {
         title: "Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV",
-        body: ["Maria Maria Wines GmbH, Kaiserswerther Straße 12, 40477 Düsseldorf."],
+        body: ["Maria Maria Wines GmbH, Ellerfelderstrasse 78, 40822 Mettmann."],
       },
       {
         title: "Jugendschutz",
@@ -77,7 +77,7 @@ export const legal = {
       {
         title: "1. Verantwortlicher",
         body: [
-          "Verantwortlich für die Datenverarbeitung auf dieser Website ist die Maria Maria Wines GmbH, Kaiserswerther Straße 12, 40477 Düsseldorf, Deutschland, E-Mail: info@maria-maria.wine, Telefon: +49 211 976 420.",
+          "Verantwortlich für die Datenverarbeitung auf dieser Website ist die Maria Maria Wines GmbH, Ellerfelderstrasse 78, 40822 Mettmann, Deutschland, E-Mail: info@maria-maria.wine, Telefon: +49 211 976 420.",
         ],
       },
       {
@@ -130,7 +130,7 @@ export const legal = {
       {
         title: "§ 1 Geltungsbereich",
         body: [
-          "Diese Allgemeinen Geschäftsbedingungen gelten für alle Bestellungen über den Online-Shop der Maria Maria Wines GmbH, Kaiserswerther Straße 12, 40477 Düsseldorf (nachfolgend „Maria Maria“), durch Verbraucher und Unternehmer.",
+          "Diese Allgemeinen Geschäftsbedingungen gelten für alle Bestellungen über den Online-Shop der Maria Maria Wines GmbH, Ellerfelderstrasse 78, 40822 Mettmann (nachfolgend „Maria Maria“), durch Verbraucher und Unternehmer.",
         ],
       },
       {

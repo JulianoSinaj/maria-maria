@@ -180,6 +180,10 @@ const interviews = {
 
       wine: {
         slug: "lugana",
+        photo: {
+          src: "/img/magazin/interviews/lugana-vino-bianco-magazine-cutout.png",
+          alt: "Bottle of Lugana DOC by Maria Maria",
+        },
         heading: "Discover Lugana DOC by Maria Maria",
         text: "Discover the Lugana DOC by Maria Maria – vinified by Daniele Malavasi in Pozzolengo. A wine that holds origin, grape and craft in balance.",
         cta: "To the Lugana",

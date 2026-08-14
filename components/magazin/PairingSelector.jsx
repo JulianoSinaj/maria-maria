@@ -292,8 +292,11 @@ export default function PairingSelector({ className = "", t = {} }) {
                     <GoldRule className="w-10" />
                   </span>
                   {/* Frost-Pille statt nackter Zeile: bleibt auch über hellem
-                      Wasser und Himmel lesbar, egal welches Motiv liegt. */}
-                  <span className="mt-3.5 inline-flex items-center gap-2 rounded-full bg-espresso/35 px-4 py-1.5 text-[10px] font-semibold uppercase tracking-[0.22em] text-ivory backdrop-blur-[6px] transition-colors duration-[250ms] ease-out group-hover/hero:bg-espresso/50">
+                      Wasser und Himmel lesbar, egal welches Motiv liegt.
+                      Mobil wandert sie an den unteren Bildrand (eigener Block
+                      unten), damit sie Flasche und Glas nicht verdeckt —
+                      display:none hält sie hier aus dem Accessibility-Baum. */}
+                  <span className="mt-3.5 hidden items-center gap-2 rounded-full bg-espresso/35 px-4 py-1.5 text-[10px] font-semibold uppercase tracking-[0.22em] text-ivory backdrop-blur-[6px] transition-colors duration-[250ms] ease-out group-hover/hero:bg-espresso/50 sm:inline-flex">
                     {t.toWine}
                     <Arrow
                       aria-hidden="true"
@@ -302,6 +305,20 @@ export default function PairingSelector({ className = "", t = {} }) {
                   </span>
                 </motion.span>
               </AnimatePresence>
+            </span>
+
+            {/* Mobil sitzt „Zum Wein" zentriert am unteren Bildrand, frei von
+                Flasche und Teller; der Text ist anlassunabhängig und bleibt
+                deshalb außerhalb der Karten-Blende stehen. Ab sm übernimmt
+                wieder die Pille im Schlagzeilen-Block. */}
+            <span className="absolute inset-x-0 bottom-0 flex justify-center p-5 sm:hidden">
+              <span className="inline-flex items-center gap-2 rounded-full bg-espresso/35 px-4 py-1.5 text-[10px] font-semibold uppercase tracking-[0.22em] text-ivory backdrop-blur-[6px] transition-colors duration-[250ms] ease-out group-hover/hero:bg-espresso/50">
+                {t.toWine}
+                <Arrow
+                  aria-hidden="true"
+                  className="h-3.5 w-3.5 text-champagne-light transition-transform duration-[250ms] ease-out group-hover/hero:translate-x-[5px]"
+                />
+              </span>
             </span>
           </Link>
 

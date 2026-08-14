@@ -183,6 +183,10 @@ const interviews = {
 
       wine: {
         slug: "lugana",
+        photo: {
+          src: "/img/magazin/interviews/lugana-vino-bianco-magazine-cutout.png",
+          alt: "Láhev Lugana DOC od Maria Maria",
+        },
         heading: "Objevte Lugana DOC od Maria Maria",
         text: "Objevte Lugana DOC od Maria Maria – vinifikovanou Danielem Malavasim v Pozzolengu. Víno, které drží v rovnováze původ, odrůdu a řemeslo.",
         cta: "K Luganě",

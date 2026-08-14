@@ -424,20 +424,22 @@ export default function InterviewArticle({ interview, ui = {}, wine = null, head
                   <div className="relative">
                     <span
                       aria-hidden="true"
-                      className="absolute -bottom-1.5 left-1/2 h-3.5 w-24 -translate-x-1/2 rounded-full transition-[transform,opacity] duration-700 ease-out-expo group-hover:scale-x-[0.92] group-hover:opacity-70 sm:w-32"
+                      className="absolute -bottom-1.5 left-1/2 h-3 w-20 -translate-x-1/2 rounded-full transition-[transform,opacity] duration-700 ease-out-expo group-hover:scale-x-[0.92] group-hover:opacity-70 sm:w-24"
                       style={{
                         background:
                           "radial-gradient(ellipse at center, rgba(31,29,26,0.28) 0%, transparent 70%)",
                       }}
                     />
-                    {/* Freigestelltes Karten-Packshot (391 × 1400) —
-                        dieselbe Datei, die auch die Weinkarten tragen. */}
+                    {/* Freigestellter Packshot: bringt das Stück ein eigenes
+                        Magazin-Foto mit (interview.wine.photo, ebenfalls
+                        freigestellt), ersetzt es das Karten-Packshot
+                        (391 × 1400) aus dem Katalog. */}
                     <Photo
-                      src={wine.photos.front}
-                      alt=""
-                      sizes="(min-width: 640px) 176px, 128px"
+                      src={interview.wine.photo?.src ?? wine.photos.front}
+                      alt={interview.wine.photo?.alt ?? ""}
+                      sizes="120px"
                       draggable={false}
-                      className="relative mx-auto h-auto w-full max-w-[11rem] select-none object-contain will-transform transition-transform duration-700 ease-out-expo group-hover:-translate-y-1.5 group-hover:rotate-[0.5deg]"
+                      className="relative mx-auto h-auto w-full max-w-[7.5rem] select-none object-contain will-transform transition-transform duration-700 ease-out-expo group-hover:-translate-y-1.5 group-hover:rotate-[0.5deg]"
                     />
                   </div>
                 </Parallax>

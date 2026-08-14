@@ -184,6 +184,10 @@ const interviews = {
 
       wine: {
         slug: "lugana",
+        photo: {
+          src: "/img/magazin/interviews/lugana-vino-bianco-magazine-cutout.png",
+          alt: "Bottiglia di Lugana DOC di Maria Maria",
+        },
         heading: "Scoprite il Lugana DOC di Maria Maria",
         text: "Scoprite il Lugana DOC di Maria Maria – vinificato da Daniele Malavasi a Pozzolengo. Un vino che tiene in equilibrio origine, vitigno e artigianalità.",
         cta: "Vai al Lugana",

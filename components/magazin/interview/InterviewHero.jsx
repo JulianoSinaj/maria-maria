@@ -1,6 +1,5 @@
 import Link from "@/components/i18n/LocaleLink";
 import Photo from "@/components/media/Photo";
-import Parallax from "@/components/motion/Parallax";
 import SplitText from "@/components/motion/SplitText";
 import { Reveal, Stagger, StaggerItem } from "@/components/motion/Reveal";
 import { Eyebrow } from "@/components/Deco";
@@ -18,7 +17,8 @@ import { Pin } from "@/components/Icons";
    - KEINE kommerzielle CTA im Aufmacher — die Flasche steht erst unter dem
      Fazit (siehe InterviewArticle).
    - Bewegung ausschließlich über die Motion-Primitiven (Reveal, Stagger,
-     SplitText, Parallax) — sie respektieren prefers-reduced-motion selbst.
+     SplitText) — sie respektieren prefers-reduced-motion selbst. Das
+     Aufmacherfoto steht bewusst still (kein Reveal, kein Parallax).
 
    Gliederung, von oben nach unten:
    1. Brotkrume
@@ -161,53 +161,45 @@ function PortraitFigure({ interview }) {
   const src = ARTICLE_PORTRAITS[interview.slug] ?? portrait.src;
 
   return (
-    <Reveal y={22} delay={0.1}>
-      <figure className="relative">
-        {/* Versetzter Haarlinien-Rahmen — reine Zier, verschiebt nichts. */}
-        <span
-          aria-hidden="true"
-          className="pointer-events-none absolute -inset-3 hidden rounded-card-lg border border-champagne/45 lg:block"
-        />
+    <figure className="relative lg:mt-14">
+      {/* Versetzter Haarlinien-Rahmen — reine Zier, verschiebt nichts. */}
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute -inset-3 hidden rounded-card-lg border border-champagne/45 lg:block"
+      />
 
-        <Parallax
-          speed={0.07}
-          overscan
-          className="relative aspect-[4/5] overflow-hidden rounded-card-lg bg-cream shadow-luxe"
-        >
-          <Photo
-            src={src}
-            alt={portrait.alt ?? ""}
-            sizes="(min-width: 1024px) 44vw, 100vw"
-            /* Der Aufmacher ist der LCP dieser Seite — er lädt sofort. */
-            loading="eager"
-            fetchPriority="high"
-            className="absolute inset-0 h-full w-full object-cover"
-          />
-        </Parallax>
-
-        {/* Schleier + Chip liegen außerhalb der Parallax-Ebene und bleiben
-            beim Scrollen stehen — das Foto driftet dahinter. */}
-        <span
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-x-0 bottom-0 h-32 rounded-b-card-lg bg-gradient-to-t from-espresso/50 via-espresso/15 to-transparent"
+      <div className="relative aspect-square overflow-hidden rounded-card-lg bg-cream shadow-luxe">
+        <Photo
+          src={src}
+          alt={portrait.alt ?? ""}
+          sizes="(min-width: 1024px) 44vw, 100vw"
+          /* Der Aufmacher ist der LCP dieser Seite — er lädt sofort. */
+          loading="eager"
+          fetchPriority="high"
+          className="absolute inset-0 h-full w-full object-cover object-top"
         />
-        {profile.name && (
-          <figcaption className="absolute inset-x-4 bottom-4 sm:inset-x-5 sm:bottom-5">
-            <span className="inline-flex max-w-full flex-col rounded-card border border-white/25 bg-white/10 px-4 py-3 backdrop-blur-md">
-              <span className="font-playfair text-[16px] leading-snug text-ivory">
-                {profile.name}
-              </span>
-              {profile.role && (
-                <span className="mt-1 inline-flex items-center gap-1.5 text-[9.5px] font-semibold uppercase tracking-[0.16em] text-ivory/80">
-                  <Pin aria-hidden="true" className="h-3 w-3 shrink-0 text-champagne" />
-                  {profile.role}
-                </span>
-              )}
+      </div>
+
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-32 rounded-b-card-lg bg-gradient-to-t from-espresso/50 via-espresso/15 to-transparent"
+      />
+      {profile.name && (
+        <figcaption className="absolute inset-x-4 bottom-4 sm:inset-x-5 sm:bottom-5">
+          <span className="inline-flex max-w-full flex-col rounded-card border border-white/25 bg-white/10 px-4 py-3 backdrop-blur-md">
+            <span className="font-playfair text-[16px] leading-snug text-ivory">
+              {profile.name}
             </span>
-          </figcaption>
-        )}
-      </figure>
-    </Reveal>
+            {profile.role && (
+              <span className="mt-1 inline-flex items-center gap-1.5 text-[9.5px] font-semibold uppercase tracking-[0.16em] text-ivory/80">
+                <Pin aria-hidden="true" className="h-3 w-3 shrink-0 text-champagne" />
+                {profile.role}
+              </span>
+            )}
+          </span>
+        </figcaption>
+      )}
+    </figure>
   );
 }
 

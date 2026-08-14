@@ -235,10 +235,17 @@ const interviews = {
         link: { label: "Cantina Malavasi", href: "https://www.malavasivini.com/it/azienda" },
       },
 
-      /* Der Wein des Abschlussbands — Packshot und Preis kommen aus
-         components/data.js, nicht aus dem Wörterbuch. */
+      /* Der Wein des Abschlussbands — Preis und Ziel-Link kommen aus
+         components/data.js, nicht aus dem Wörterbuch. `photo` ersetzt den
+         Katalog-Freisteller durch das eigene (ebenfalls freigestellte)
+         Magazin-Foto des Stücks; fehlt es, fällt das Band auf
+         wine.photos.front zurück. */
       wine: {
         slug: "lugana",
+        photo: {
+          src: "/img/magazin/interviews/lugana-vino-bianco-magazine-cutout.png",
+          alt: "Flasche Lugana DOC von Maria Maria",
+        },
         heading: "Lugana DOC von Maria Maria entdecken",
         text: "Entdecken Sie den Lugana DOC von Maria Maria – vinifiziert von Daniele Malavasi in Pozzolengo. Ein Wein, der Herkunft, Rebsorte und Handwerk in Balance vereint.",
         cta: "Zum Lugana",

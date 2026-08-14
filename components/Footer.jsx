@@ -6,6 +6,7 @@ import Button from "./ui/Button";
 import { Instagram, Facebook, Mail, Arrow, Check, Grapes } from "./Icons";
 import LanguageSwitcher from "./i18n/LanguageSwitcher";
 import { useCommon } from "@/lib/i18n/context";
+import { AGENCY } from "@/lib/agency";
 
 const EXPLORE = [
   { key: "wines", href: "/unsere-weine" },
@@ -179,6 +180,48 @@ export default function Footer() {
             {/* Zweiter Zugang zur Sprachwahl: Wer unten ankommt, soll nicht
                 erst wieder nach oben scrollen müssen. */}
             <LanguageSwitcher variant="inline" />
+          </div>
+        </div>
+
+        {/* Agentur-Zeile.
+
+            Bewusst eine eigene Stufe unter der Rechts-Leiste und blasser
+            gesetzt: Der Hinweis gehört sichtbar zur Seite, darf aber nicht
+            mit Impressum und Datenschutz um Aufmerksamkeit konkurrieren.
+
+            „Powered by" steht wie die Netzwerknamen weiter oben in jeder
+            Sprache gleich da — eine feste Kreditzeile, kein Fließtext, und
+            deshalb nicht im Wörterbuch. */}
+        <div className="border-t border-ivory/10">
+          <div className="mx-auto flex max-w-content flex-wrap items-center justify-center gap-x-2 gap-y-1 px-6 py-4 text-[11px] text-ivory/45 lg:px-10">
+            <span>
+              Powered by{" "}
+              {AGENCY.url ? (
+                <a
+                  href={AGENCY.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-ivory/70 underline-offset-4 transition-colors hover:text-champagne hover:underline"
+                >
+                  {AGENCY.name}
+                </a>
+              ) : (
+                <span className="text-ivory/70">{AGENCY.name}</span>
+              )}
+            </span>
+            {AGENCY.email && (
+              <>
+                <span aria-hidden="true" className="text-ivory/25">
+                  ·
+                </span>
+                <a
+                  href={`mailto:${AGENCY.email}`}
+                  className="underline-offset-4 transition-colors hover:text-champagne hover:underline"
+                >
+                  {AGENCY.email}
+                </a>
+              </>
+            )}
           </div>
         </div>
       </div>

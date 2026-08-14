@@ -134,9 +134,10 @@ export default function Footer() {
           <StaggerItem>
             <h4 className="text-[11px] font-semibold uppercase tracking-[0.22em] text-champagne">{t.contactHeading}</h4>
             <div className="mt-5 space-y-2 text-[12.5px] leading-relaxed text-ivory/65">
-              <p>Maria Maria Wines</p>
-              <p>Kaiserswerther Straße 12</p>
-              <p>40477 Düsseldorf, Deutschland</p>
+              <p>Senso Valerio Weinhandel</p>
+              <p>Von Valerio Caniglia</p>
+              <p>Ellerfelderstrasse 78</p>
+              <p>40822 Mettmann</p>
               <a href="mailto:info@maria-maria.wine" className="block transition-colors hover:text-champagne">
                 info@maria-maria.wine
               </a>

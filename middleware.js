@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { DEFAULT_LOCALE, isLocale } from "@/lib/i18n/config";
 import { internalPath } from "@/lib/i18n/routing";
+import { SHOP_ENABLED, EXTERNAL_SHOP_URL, isShopPath } from "@/lib/shop/config";
 
 /* Sprach-Routing.
 
@@ -81,6 +82,20 @@ export function middleware(request) {
   const { pathname, search } = request.nextUrl;
   const [, first = ""] = pathname.split("/");
   const crawler = isCrawler(request.headers.get("user-agent"));
+
+  /* --- 0. Der eigene Shop ist stillgelegt: zum Partner-Shop ---
+
+     Steht VOR allen Sprachregeln, damit jede Schreibweise dasselbe Ziel
+     bekommt: /shop, /de/shop, /it/shop, /shop#pakete, /shop?sort=bestseller.
+
+     307, nicht 308: Die Weiterleitung beschreibt einen Zustand („die Kasse
+     läuft noch nicht"), keinen Umzug. Ein permanenter Code würde sich in
+     Browser-Caches und bei Google festsetzen — der eigene Shop wäre nach dem
+     Wiederanschalten für Wiederkehrer unerreichbar, ohne dass irgendwer den
+     Fehler sähe. Siehe lib/shop/config.js. */
+  if (!SHOP_ENABLED && isShopPath(pathname)) {
+    return NextResponse.redirect(new URL(EXTERNAL_SHOP_URL), 307);
+  }
 
   /* --- 3. Das Default-Präfix ist redundant: dauerhaft auf die kurze URL --- */
   if (first === DEFAULT_LOCALE) {

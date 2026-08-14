@@ -18,7 +18,7 @@ export const kontakt = {
     email: "E-mail",
     phone: "Telefon",
     address: "Adresa",
-    addressValue: "Maria Maria Wines · Düsseldorf, Německo",
+    addressValue: "Senso Valerio Weinhandel · Mettmann, Německo",
   },
 
   help: {

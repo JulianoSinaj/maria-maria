@@ -25,7 +25,7 @@ export const kontakt = {
     email: "E-Mail",
     phone: "Telefon",
     address: "Adresse",
-    addressValue: "Maria Maria Wines · Düsseldorf, Deutschland",
+    addressValue: "Senso Valerio Weinhandel · Mettmann, Deutschland",
   },
 
   help: {

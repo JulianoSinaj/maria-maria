@@ -12,8 +12,12 @@
    Mit [BESTÄTIGEN] markierte Felder sind rebsortentypisch formulierte
    Erzähltexte, die der Kunde vor Go-live bestätigen sollte. */
 
+import { shopHref } from "@/lib/shop/config";
+
+const SLUG = "greco-di-tufo";
+
 export const GRECO_DI_TUFO = {
-  slug: "greco-di-tufo",
+  slug: SLUG,
   catalogName: "Greco di Tufo D.O.C.G.", // key into components/data.js WINES via byName()
 
   name: "Greco di Tufo D.O.C.G.",
@@ -222,7 +226,7 @@ export const GRECO_DI_TUFO = {
     },
     maria: {
       text: "Für Abende, an denen niemand auf die Uhr schaut — ein Glas Greco, gute Gespräche und Zeit, die stehen bleibt.",
-      link: { label: "Mehr entdecken", href: "/shop" },
+      link: { label: "Mehr entdecken", href: shopHref(SLUG) },
     },
     essence: [
       {
@@ -298,7 +302,7 @@ export const GRECO_DI_TUFO = {
   cta: {
     title: "Noch mehr entdecken?",
     text: "Entdecken Sie alle unsere Weine im offiziellen Maria Maria Shop.",
-    button: { label: "Zum offiziellen Shop", href: "/shop" },
+    button: { label: "Zum offiziellen Shop", href: shopHref(SLUG) },
   },
 
   /* ---- Seitennavigation (Apple-Stil Subnav) ---- */

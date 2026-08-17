@@ -9,8 +9,12 @@
    Fields marked [BESTÄTIGEN] sind plausible, aber nicht aus dem Datenblatt
    belegte Storytelling-Passagen. */
 
+import { shopHref } from "@/lib/shop/config";
+
+const SLUG = "il-rosso-aglianico";
+
 export const IL_ROSSO = {
-  slug: "il-rosso-aglianico",
+  slug: SLUG,
   catalogName: "Il Rosso – Aglianico", // key into components/data.js WINES via byName()
 
   name: "Il Rosso — Campania Rosso IGP",
@@ -219,7 +223,7 @@ export const IL_ROSSO = {
     },
     maria: {
       text: "La poesia in bottiglia — für lange Abende, volle Tische und Gespräche, die nicht enden wollen.",
-      link: { label: "Mehr entdecken", href: "/shop" },
+      link: { label: "Mehr entdecken", href: shopHref(SLUG) },
     },
     essence: [
       {
@@ -299,7 +303,7 @@ export const IL_ROSSO = {
   cta: {
     title: "Noch mehr entdecken?",
     text: "Entdecken Sie alle unsere Weine im offiziellen Maria Maria Shop.",
-    button: { label: "Zum offiziellen Shop", href: "/shop" },
+    button: { label: "Zum offiziellen Shop", href: shopHref(SLUG) },
   },
 
   /* ---- Seitennavigation (Apple-Stil Subnav) ---- */

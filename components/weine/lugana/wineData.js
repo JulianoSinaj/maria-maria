@@ -14,8 +14,12 @@
    Füllung). Mit [BESTÄTIGEN] markierte Felder sind erzählerisch ergänzt und
    sollten vor Go-live bestätigt werden. */
 
+import { shopHref } from "@/lib/shop/config";
+
+const SLUG = "lugana";
+
 export const LUGANA = {
-  slug: "lugana",
+  slug: SLUG,
   catalogName: "Lugana D.O.P.", // key into components/data.js WINES via byName()
 
   name: "Lugana DOC",
@@ -227,7 +231,7 @@ export const LUGANA = {
     },
     maria: {
       text: "Für weite Abende am Wasser — wenn der Tisch draußen steht und der See im Glas liegt: weit, warm und ruhig.",
-      link: { label: "Mehr entdecken", href: "/shop" },
+      link: { label: "Mehr entdecken", href: shopHref(SLUG) },
     },
     essence: [
       {
@@ -304,7 +308,7 @@ export const LUGANA = {
   cta: {
     title: "Noch mehr entdecken?",
     text: "Entdecken Sie alle unsere Weine im offiziellen Maria Maria Shop.",
-    button: { label: "Zum offiziellen Shop", href: "/shop" },
+    button: { label: "Zum offiziellen Shop", href: shopHref(SLUG) },
   },
 
   /* ---- Seitennavigation (Apple-Stil Subnav) ---- */

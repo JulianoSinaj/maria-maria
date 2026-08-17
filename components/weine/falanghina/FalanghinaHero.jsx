@@ -13,6 +13,7 @@ import SplitText from "@/components/motion/SplitText";
 import { Eyebrow, GrapeRule } from "@/components/Deco";
 import { Aura } from "@/components/Atmosphere";
 import { useWines, useLocaleTools, useCommon } from "@/lib/i18n/context";
+import { shopHref } from "@/lib/shop/config";
 import FalanghinaBottle from "./FalanghinaBottle";
 
 /* Gepinnter Apple-Stil-Hero in zwei Akten.
@@ -129,7 +130,7 @@ export default function FalanghinaHero({ wine, photo }) {
         {wine.lede}
       </p>
       <div className={`mt-8 flex flex-col items-stretch gap-3 sm:mt-9 sm:flex-row sm:items-center sm:gap-3.5 ${m("lg:justify-end")}`}>
-        <Button href="/shop" size="lg" className="w-full sm:w-auto">
+        <Button href={shopHref(wine.slug)} size="lg" className="w-full sm:w-auto">
           {winePage.heroCtaShop}
         </Button>
         <Button href="#geschmack" variant="outline" size="lg" iconType="none" className="w-full sm:w-auto">

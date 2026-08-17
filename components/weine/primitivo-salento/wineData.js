@@ -10,8 +10,12 @@
    Fields marked [BESTÄTIGEN] sind plausible, aber nicht aus dem Datenblatt
    belegte Storytelling-Passagen. */
 
+import { shopHref } from "@/lib/shop/config";
+
+const SLUG = "primitivo-salento";
+
 export const PRIMITIVO_SALENTO = {
-  slug: "primitivo-salento",
+  slug: SLUG,
   catalogName: "Primitivo Salento IGP", // key into components/data.js WINES via byName()
 
   name: "Primitivo IGP Salento",
@@ -212,7 +216,7 @@ export const PRIMITIVO_SALENTO = {
     },
     maria: {
       text: "Für spontane Abende ohne Anlass — ein unkomplizierter Wein für volle Tische und leere Flaschen.",
-      link: { label: "Mehr entdecken", href: "/shop" },
+      link: { label: "Mehr entdecken", href: shopHref(SLUG) },
     },
     essence: [
       {
@@ -288,7 +292,7 @@ export const PRIMITIVO_SALENTO = {
   cta: {
     title: "Noch mehr entdecken?",
     text: "Entdecken Sie alle unsere Weine im offiziellen Maria Maria Shop.",
-    button: { label: "Zum offiziellen Shop", href: "/shop" },
+    button: { label: "Zum offiziellen Shop", href: shopHref(SLUG) },
   },
 
   /* ---- Seitennavigation (Apple-Stil Subnav) ---- */

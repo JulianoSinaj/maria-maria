@@ -10,8 +10,12 @@
    Fields marked [BESTÄTIGEN] sind plausible, aber nicht aus dem Datenblatt
    belegte Storytelling-Passagen. */
 
+import { shopHref } from "@/lib/shop/config";
+
+const SLUG = "rosato-puglia";
+
 export const ROSATO_NEGROAMARO = {
-  slug: "rosato-puglia",
+  slug: SLUG,
   catalogName: "Rosato Puglia", // key into components/data.js WINES via byName()
 
   name: "Rosato Negroamaro IGP Salento",
@@ -218,7 +222,7 @@ export const ROSATO_NEGROAMARO = {
     },
     maria: {
       text: "Für Sommerabende auf der Terrasse — wenn der Tag noch nachhallt, das Licht warm wird und das Essen leicht bleibt.",
-      link: { label: "Mehr entdecken", href: "/shop" },
+      link: { label: "Mehr entdecken", href: shopHref(SLUG) },
     },
     essence: [
       {
@@ -298,7 +302,7 @@ export const ROSATO_NEGROAMARO = {
   cta: {
     title: "Noch mehr entdecken?",
     text: "Entdecken Sie alle unsere Weine im offiziellen Maria Maria Shop.",
-    button: { label: "Zum offiziellen Shop", href: "/shop" },
+    button: { label: "Zum offiziellen Shop", href: shopHref(SLUG) },
   },
 
   /* ---- Seitennavigation (Apple-Stil Subnav) ---- */

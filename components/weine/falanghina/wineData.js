@@ -9,8 +9,12 @@
    Fields marked [BESTÄTIGEN] are plausible-but-unverified copy (aroma notes,
    storytelling) that the client should confirm before go-live. */
 
+import { shopHref } from "@/lib/shop/config";
+
+const SLUG = "falanghina";
+
 export const FALANGHINA = {
-  slug: "falanghina",
+  slug: SLUG,
   catalogName: "Falanghina I.G.P.", // key into components/data.js WINES via byName()
 
   name: "Beneventano Falanghina IGP",
@@ -226,7 +230,7 @@ export const FALANGHINA = {
     },
     maria: {
       text: "Für lange Mittage im Freien, frische Küche und ehrliche Gespräche — die Falanghina ist der Wein für die hellen Momente.",
-      link: { label: "Mehr entdecken", href: "/shop" },
+      link: { label: "Mehr entdecken", href: shopHref(SLUG) },
     },
     essence: [
       {
@@ -305,7 +309,7 @@ export const FALANGHINA = {
   cta: {
     title: "Noch mehr entdecken?",
     text: "Entdecken Sie alle unsere Weine im offiziellen Maria Maria Shop.",
-    button: { label: "Zum offiziellen Shop", href: "/shop" },
+    button: { label: "Zum offiziellen Shop", href: shopHref(SLUG) },
   },
 
   /* ---- Seitennavigation (Apple-Stil Subnav) ---- */

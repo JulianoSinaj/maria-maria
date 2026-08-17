@@ -13,8 +13,12 @@
    Felder mit [BESTÄTIGEN] sind plausibel formulierte, aber nicht aus dem
    Datenblatt belegte Texte (Aromatik, Storytelling) — vor Go-live prüfen. */
 
+import { shopHref } from "@/lib/shop/config";
+
+const SLUG = "il-bianco-greco-cuvee";
+
 export const IL_BIANCO = {
-  slug: "il-bianco-greco-cuvee",
+  slug: SLUG,
   catalogName: "Il Bianco – Greco Cuvée", // key in components/data.js WINES
 
   name: "Il Bianco — Campania Bianco IGP",
@@ -211,7 +215,7 @@ export const IL_BIANCO = {
     },
     maria: {
       text: "Für ruhige Abende, an denen es nichts zu beweisen gibt — ein Wein, der leise geworden ist und genau deshalb bleibt.",
-      link: { label: "Mehr entdecken", href: "/shop" },
+      link: { label: "Mehr entdecken", href: shopHref(SLUG) },
     },
     essence: [
       {
@@ -285,7 +289,7 @@ export const IL_BIANCO = {
   cta: {
     title: "Noch mehr entdecken?",
     text: "Entdecken Sie alle unsere Weine im offiziellen Maria Maria Shop.",
-    button: { label: "Zum offiziellen Shop", href: "/shop" },
+    button: { label: "Zum offiziellen Shop", href: shopHref(SLUG) },
   },
 
   subnav: [

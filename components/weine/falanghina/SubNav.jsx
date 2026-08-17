@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
 import Button from "@/components/ui/Button";
 import { useWines, useLocaleTools } from "@/lib/i18n/context";
+import { shopHref } from "@/lib/shop/config";
 
 /* Apple-Produktseiten-Subnav: eine schlanke Glas-Pille, die nach dem Hero
    andockt und für den Rest der Seite haften bleibt. Scrollspy markiert das
@@ -109,7 +110,7 @@ export default function SubNav({ wine }) {
             </span>
           )}
           <span className="hidden sm:block">
-            <Button href="/shop" size="sm">
+            <Button href={shopHref(wine.slug)} size="sm">
               Entdecken
             </Button>
           </span>

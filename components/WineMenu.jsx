@@ -33,7 +33,7 @@ const OVERVIEW = [
 const PANEL_SPRING = { type: "spring", stiffness: 300, damping: 30, mass: 0.55 };
 const CLOSE_DELAY = 160;
 
-export default function WineMenu({ active, scrolled = false }) {
+export default function WineMenu({ active, scrolled = false, onDark = false }) {
   const wines = useWines();
   const nav = useCommon("nav");
   const t = useCommon("wineMenu");
@@ -102,7 +102,13 @@ export default function WineMenu({ active, scrolled = false }) {
         aria-current={active ? "page" : undefined}
         aria-expanded={open}
         className={`group relative flex items-center gap-1.5 py-2 text-[12.5px] tracking-[0.08em] transition-colors duration-300 ${
-          active || open ? "font-semibold text-bordeaux" : "text-charcoal/75 hover:text-bordeaux"
+          onDark
+            ? active || open
+              ? "font-semibold text-white"
+              : "text-white/80 hover:text-white"
+            : active || open
+              ? "font-semibold text-bordeaux"
+              : "text-charcoal/75 hover:text-bordeaux"
         }`}
       >
         {nav.wines}

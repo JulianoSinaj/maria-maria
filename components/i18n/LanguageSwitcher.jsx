@@ -43,7 +43,7 @@ const rememberChoice = (locale) => {
   document.cookie = `${LOCALE_COOKIE}=${locale}; path=/; max-age=${COOKIE_MAX_AGE}; samesite=lax`;
 };
 
-export default function LanguageSwitcher({ variant = "menu", className = "" }) {
+export default function LanguageSwitcher({ variant = "menu", className = "", onDark = false }) {
   const locale = useLocale();
   const t = useCommon("language");
   const pathname = usePathname();
@@ -109,7 +109,11 @@ export default function LanguageSwitcher({ variant = "menu", className = "" }) {
         /* h-11 unterhalb md: dort steht die Pille neben dem Menü-Knopf und
            muss dessen Höhe und das 44px-Touch-Ziel teilen. Ab md bleibt sie
            bei h-9 — die Desktop-Kopfzeile ist unverändert. */
-        className="flex h-11 items-center gap-1.5 rounded-full border border-charcoal/15 px-3 text-[11px] font-semibold uppercase tracking-[0.14em] text-charcoal/75 transition-colors duration-300 hover:border-champagne hover:text-bordeaux md:h-9"
+        className={`flex h-11 items-center gap-1.5 rounded-full border px-3 text-[11px] font-semibold uppercase tracking-[0.14em] transition-colors duration-300 md:h-9 ${
+          onDark
+            ? "border-white/30 text-white/85 hover:border-champagne hover:text-white"
+            : "border-charcoal/15 text-charcoal/75 hover:border-champagne hover:text-bordeaux"
+        }`}
       >
         {LOCALE_META[locale].short}
         <ChevronRight

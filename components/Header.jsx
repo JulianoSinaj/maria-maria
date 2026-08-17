@@ -107,6 +107,13 @@ export default function Header() {
   const here = pathWithoutLocale(pathname || "/");
   const isActive = (href) => (href === "/" ? here === "/" : here.startsWith(href));
 
+  /* Weiße Kopfzeile nur auf der Regionen-Seite: Dort liegt die Leiste ohne
+     hellen Schleier direkt auf dem dunklen Weinberg-Video, Anthrazit und
+     Bordeaux gehen darin unter. Sobald die Glas-Pille beim Scrollen
+     erscheint (heller Grund), fällt die Leiste auf die normalen Farben
+     zurück. Alle anderen Seiten bleiben unberührt. */
+  const onDark = here.startsWith("/regionen") && !scrolled;
+
   return (
     <header className="fixed inset-x-0 top-0 z-50 pt-[env(safe-area-inset-top)]">
       {/* reading progress */}
@@ -130,14 +137,22 @@ export default function Header() {
           <nav className="hidden items-center gap-8 md:flex" aria-label={a11y.mainNav}>
             {NAV.map((item) => {
               const active = isActive(item.href);
-              if (item.href === "/unsere-weine") return <WineMenu key={item.href} active={active} scrolled={scrolled} />;
+              if (item.href === "/unsere-weine")
+                return <WineMenu key={item.href} active={active} scrolled={scrolled} onDark={onDark} />;
               return (
                 <Link
                   key={item.href}
                   href={item.href}
                   aria-current={active ? "page" : undefined}
-                  className={`group relative py-2 text-[12.5px] tracking-[0.08em] transition-colors duration-300 ${active ? "font-semibold text-bordeaux" : "text-charcoal/75 hover:text-bordeaux"
-                    }`}
+                  className={`group relative py-2 text-[12.5px] tracking-[0.08em] transition-colors duration-300 ${
+                    onDark
+                      ? active
+                        ? "font-semibold text-white"
+                        : "text-white/80 hover:text-white"
+                      : active
+                        ? "font-semibold text-bordeaux"
+                        : "text-charcoal/75 hover:text-bordeaux"
+                  }`}
                 >
                   {nav[item.key]}
                   {active ? (
@@ -159,7 +174,7 @@ export default function Header() {
                 Handlungsaufforderung, und darf der primären CTA nicht die
                 Aufmerksamkeit nehmen. */}
             <div className="hidden md:block">
-              <LanguageSwitcher />
+              <LanguageSwitcher onDark={onDark} />
             </div>
             <div className="hidden md:block">
               <Button href="/shop" size="sm">
@@ -171,7 +186,7 @@ export default function Header() {
                 wechseln können, ohne erst ein Menü zu suchen. Im Menü bleibt
                 die Reihe zusätzlich stehen — dort für alle, die schon drin sind. */}
             <div className="md:hidden">
-              <LanguageSwitcher />
+              <LanguageSwitcher onDark={onDark} />
             </div>
             <button
               ref={triggerRef}
@@ -179,7 +194,11 @@ export default function Header() {
               aria-label={a11y.openMenu}
               aria-expanded={open}
               aria-controls="mobile-menu"
-              className="flex h-11 w-11 items-center justify-center rounded-full border border-charcoal/15 text-charcoal transition-colors hover:border-champagne hover:text-bordeaux md:hidden"
+              className={`flex h-11 w-11 items-center justify-center rounded-full border transition-colors md:hidden ${
+                onDark
+                  ? "border-white/30 text-white hover:border-champagne hover:text-champagne-light"
+                  : "border-charcoal/15 text-charcoal hover:border-champagne hover:text-bordeaux"
+              }`}
             >
               <Menu className="h-5 w-5" />
             </button>

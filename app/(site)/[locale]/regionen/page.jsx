@@ -194,18 +194,6 @@ export default async function RegionenPage({ params }) {
           className="absolute inset-0 bg-[radial-gradient(120%_90%_at_50%_38%,transparent_55%,rgba(33,21,17,0.38)_100%)]"
         />
 
-        {/* Elfenbein-Hauch oben für die Navigation, unten der weiche Übergang in die Seite */}
-        <div
-          aria-hidden="true"
-          className="absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-ivory/55 via-ivory/15 to-transparent"
-        />
-        {/* Eased-Scrim statt 3-Stop-Verlauf: viele Zwischenstufen entlang einer
-            Smoothstep-Kurve, damit weder Anfangs- noch Endkante sichtbar ist */}
-        <div
-          aria-hidden="true"
-          className="absolute inset-x-0 bottom-0 h-36 bg-[linear-gradient(to_bottom,rgba(247,244,239,0)_0%,rgba(247,244,239,0.02)_14%,rgba(247,244,239,0.06)_27%,rgba(247,244,239,0.13)_39%,rgba(247,244,239,0.25)_50%,rgba(247,244,239,0.42)_61%,rgba(247,244,239,0.63)_73%,rgba(247,244,239,0.85)_86%,rgba(247,244,239,1)_100%)]"
-        />
-
         <div className="relative mx-auto flex min-h-[100svh] max-w-content flex-col justify-center px-6 pb-24 pt-32 lg:px-10 lg:pt-36">
           <div className="max-w-2xl">
             <Reveal y={18} delay={0.05}>

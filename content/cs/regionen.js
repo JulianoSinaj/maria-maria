@@ -37,7 +37,7 @@ export const regionen = {
       alt: "Terasovité vinice na pobřeží Kampánie ve večerním světle",
       label: "Vína z Kampánie",
       desc: "Ve vyšších polohách Irpinie a v dalších tradičních pěstitelských oblastech Kampánie vznikají charakterní vína z odrůd jako Greco, Falanghina a Aglianico. Rozdílné nadmořské výšky, vápenité a jílovité půdy i výrazné teplotní rozdíly jim dodávají svěžest, mineralitu a aromatickou hloubku.",
-      cta: "Objevte bílá vína Kampánie",
+      cta: "Objevte vína Kampánie",
     },
     garda: {
       name: "Lugana u Gardského jezera",
@@ -45,7 +45,7 @@ export const regionen = {
       alt: "Vinice a mírné kopce jižně od Gardského jezera",
       label: "Lugana u Gardského jezera",
       desc: "Jižně od Gardského jezera, mezi Lombardií a Benátskem, leží vinařská oblast Lugana DOC. Odrůda Turbiana a jílovité půdy utvářejí bílá vína se svěžestí, jemnou mineralitou a elegantním charakterem – ideální k aperitivu, lehké kuchyni a výjimečným chvílím požitku.",
-      cta: "Objevte Luganu a její charakter",
+      cta: "Objevte vína od Gardského jezera",
     },
   },
 

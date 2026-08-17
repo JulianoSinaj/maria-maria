@@ -37,7 +37,7 @@ export const regionen = {
       alt: "Vigneti terrazzati sulla costa della Campania nella luce della sera",
       label: "Vini di Campania",
       desc: "Sulle alture dell'Irpinia e in altre zone di grande tradizione della Campania nascono vini di carattere da vitigni come Greco, Falanghina e Aglianico. Le diverse altitudini, i suoli calcarei e argillosi e le forti escursioni termiche donano loro freschezza, mineralità e profondità aromatica.",
-      cta: "Scopri i bianchi della Campania",
+      cta: "Scopri i vini della Campania",
     },
     garda: {
       name: "Lugana sul Garda",
@@ -45,7 +45,7 @@ export const regionen = {
       alt: "Vigneti e dolci colline a sud del Lago di Garda",
       label: "Lugana sul Garda",
       desc: "A sud del Lago di Garda, tra Lombardia e Veneto, si estende la zona del Lugana DOC. Il vitigno Turbiana e i suoli ricchi di argilla danno vita a vini bianchi freschi, finemente minerali e di carattere elegante – ideali per l'aperitivo, la cucina leggera e le occasioni di piacere più speciali.",
-      cta: "Scopri il Lugana e il suo carattere",
+      cta: "Scopri i vini del Garda",
     },
   },
 

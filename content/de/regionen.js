@@ -43,7 +43,7 @@ export const regionen = {
       alt: "Terrassierte Weinberge an der Küste Kampaniens im Abendlicht",
       label: "Weine aus Kampanien",
       desc: "In den Höhenlagen Irpiniens und in weiteren traditionsreichen Anbaugebieten Kampaniens entstehen charaktervolle Weine aus Rebsorten wie Greco, Falanghina und Aglianico. Unterschiedliche Höhenlagen, kalk- und tonhaltige Böden sowie deutliche Temperaturunterschiede verleihen ihnen Frische, Mineralität und aromatische Tiefe.",
-      cta: "Kampaniens Weißweine entdecken",
+      cta: "Kampaniens Weine entdecken",
     },
     garda: {
       name: "Lugana am Gardasee",
@@ -51,7 +51,7 @@ export const regionen = {
       alt: "Weinberge und sanfte Hügel südlich des Gardasees",
       label: "Lugana am Gardasee",
       desc: "Südlich des Gardasees, zwischen Lombardei und Venetien, liegt das Anbaugebiet Lugana DOC. Die Rebsorte Turbiana und die tonreichen Böden prägen Weißweine mit Frische, feiner Mineralität und elegantem Charakter – ideal für Aperitivo, leichte Küche und besondere Genussmomente.",
-      cta: "Lugana und seinen Charakter entdecken",
+      cta: "Weine vom Gardasee entdecken",
     },
   },
 

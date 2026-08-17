@@ -95,7 +95,15 @@ function RegionenJsonLd({ locale, dict }) {
    P1 — Primitivo heißt „eine der prägendsten Rebsorten Apuliens“, nicht
         „autochthone Rebsorte“.
    P1 — Jede CTA führt an ein eigenes Ziel; früher zeigten alle drei auf
-        /magazin. `cta.type` unterscheidet in GA4 Wein- von Magazin-Zielen. */
+        /magazin. `cta.type` unterscheidet in GA4 Wein- von Magazin-Zielen.
+
+   Seit 08/2026 zeigen alle drei CTAs auf dasselbe Muster: die Kollektion,
+   vorgefiltert auf die Herkunft (?region=…, ausgewertet in WineExplorer).
+   Vorher führte Apulien auf die Liste, Kampanien und Garda dagegen direkt
+   auf eine Produktseite — der Besucher konnte nicht vorhersagen, wo der
+   Knopf landet. Kampanien hat vier Weine, Garda nur den Lugana; der eine
+   Treffer ist bewusst hingenommen, damit „Region-Knopf = Weine dieser
+   Region" überall gilt. */
 /* Struktur der drei Regionsporträts: Anker, Bild und Ziel der CTA. Der
    sichtbare Text (Name, Rubrik, Beschreibung, Beschriftungen) steht je
    Sprache in content/<sprache>/regionen.js unter demselben Schlüssel.
@@ -115,14 +123,14 @@ const REGION_SHAPE = [
     anchor: "kampanien",
     region: "kampanien",
     img: "/img/regions/kampanien.webp",
-    cta: { href: "/unsere-weine/greco-di-tufo", type: "wine_detail" },
+    cta: { href: "/unsere-weine?region=kampanien", type: "wine_overview" },
   },
   {
     key: "garda",
     anchor: "garda",
     region: "garda",
     img: "/img/regions/lugana.webp",
-    cta: { href: "/unsere-weine/lugana", type: "wine_detail" },
+    cta: { href: "/unsere-weine?region=garda", type: "wine_overview" },
   },
 ];
 

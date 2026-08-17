@@ -37,7 +37,7 @@ export const regionen = {
       alt: "Terraced vineyards on the Campanian coast in evening light",
       label: "Wines from Campania",
       desc: "In the high-altitude vineyards of Irpinia and other tradition-rich growing areas of Campania, characterful wines are made from grape varieties such as Greco, Falanghina and Aglianico. Varying altitudes, limestone and clay soils and marked temperature differences lend them freshness, minerality and aromatic depth.",
-      cta: "Discover Campania's white wines",
+      cta: "Discover the wines of Campania",
     },
     garda: {
       name: "Lugana on Lake Garda",
@@ -45,7 +45,7 @@ export const regionen = {
       alt: "Vineyards and gentle hills south of Lake Garda",
       label: "Lugana on Lake Garda",
       desc: "South of Lake Garda, between Lombardy and Veneto, lies the Lugana DOC growing area. The Turbiana grape and clay-rich soils shape white wines of freshness, fine minerality and elegant character – ideal for aperitivo, light cuisine and special moments of pleasure.",
-      cta: "Discover Lugana and its character",
+      cta: "Discover the wines of Lake Garda",
     },
   },
 

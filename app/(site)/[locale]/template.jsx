@@ -1,14 +1,13 @@
 "use client";
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
-import { motion, useReducedMotion } from "motion/react";
+import { motion } from "motion/react";
 import { useLenis } from "@/components/motion/SmoothScroll";
 
 /* Route-change entrance — a weighted fade-rise so navigation keeps spatial
    continuity. Remounts per navigation (App Router template semantics). */
 
 export default function Template({ children }) {
-  const reduced = useReducedMotion();
   const pathname = usePathname();
   const lenis = useLenis();
 
@@ -31,7 +30,20 @@ export default function Template({ children }) {
 
   /* the admin frame is fixed-height; a transformed wrapper around it would
      break the sticky header and the scroll container */
-  if (reduced || isAdmin) return children;
+  if (isAdmin) return children;
+
+  /* Reduced Motion wird NICHT hier abgezweigt, sondern von der
+     <MotionConfig reducedMotion="user"> in SmoothScroll erledigt: sie lässt
+     die Bewegung (y) fallen und behält die Blende.
+
+     Ein `if (reduced) return children` sah harmloser aus, entfernte aber je
+     nach Systemeinstellung ein <div> aus dem Baum — der Server rendert immer
+     mit reduced=false, der Client bei aktivierter Einstellung ohne Wrapper.
+     Solange die Seite darunter selbst mit einem <div> anfing, hydrierte
+     React notgedrungen den Wrapper als Seitenwurzel und schwieg. Die
+     Kontaktseite beginnt mit dem JSON-LD-<script> — dort brach die
+     Hydration mit „Expected server HTML to contain a matching <script> in
+     <main>" ab und die Seite wurde clientseitig neu aufgebaut. */
   return (
     <motion.div
       initial={{ opacity: 0, y: 22 }}

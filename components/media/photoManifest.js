@@ -97,6 +97,35 @@ export const PHOTO_MANIFEST = {
       1600
     ]
   },
+  "/img/kontakt/kontakt-hero-375ml.webp": {
+    "base": "/img/kontakt/kontakt-hero-375ml",
+    "widths": [
+      320,
+      640,
+      1024,
+      1600,
+      1672
+    ]
+  },
+  "/img/kontakt/kontakt-momente.webp": {
+    "base": "/img/kontakt/kontakt-momente",
+    "widths": [
+      320,
+      640,
+      1024,
+      1600,
+      1942
+    ]
+  },
+  "/img/kontakt/kontakt-weinberatung.webp": {
+    "base": "/img/kontakt/kontakt-weinberatung",
+    "widths": [
+      320,
+      640,
+      1024,
+      1448
+    ]
+  },
   "/img/logo.png": {
     "base": "/img/logo",
     "widths": [
@@ -471,16 +500,6 @@ export const PHOTO_MANIFEST = {
       700
     ]
   },
-  "/img/weine/moment-aperitivo.jpg": {
-    "base": "/img/weine/moment-aperitivo",
-    "widths": [
-      160,
-      320,
-      640,
-      1024,
-      1200
-    ]
-  },
   "/img/weine-hero.jpg": {
     "base": "/img/weine-hero",
     "widths": [
@@ -490,6 +509,16 @@ export const PHOTO_MANIFEST = {
       1024,
       1600,
       3076
+    ]
+  },
+  "/img/weine/moment-aperitivo.jpg": {
+    "base": "/img/weine/moment-aperitivo",
+    "widths": [
+      160,
+      320,
+      640,
+      1024,
+      1200
     ]
   },
   "/img/wines/falanghina/back.jpg": {

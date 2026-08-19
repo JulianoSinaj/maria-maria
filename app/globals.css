@@ -216,4 +216,25 @@ a,
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+
+  /* Scroll-Reveals (components/motion/Reveal.jsx) sofort sichtbar.
+
+     Die Reveals starten serverseitig auf `opacity: 0` und werden erst
+     sichtbar, wenn sie in den Viewport laufen. Wer weniger Bewegung
+     eingestellt hat, soll den Text stattdessen einfach dastehen sehen —
+     ohne Einblendung, ohne Scroll-Trigger und ohne die Abhängigkeit von
+     IntersectionObserver, Motion-Framelauf oder JavaScript überhaupt.
+
+     Bewusst in CSS statt als `if (reduced)` in der Komponente: Der Server
+     kennt die Einstellung des Besuchers nicht und rendert immer den
+     Bewegungs-Zustand. Ein abweichender Client-Zweig hinterlässt beim
+     Hydrieren das serverseitige `style="opacity:0"` im DOM (React räumt
+     fremde Attribute nicht weg, es warnt nur) — der Inhalt bliebe für
+     genau diese Besucher dauerhaft unsichtbar. CSS greift nach der
+     Hydration und ist von ihr unabhängig. */
+  [data-reveal] {
+    opacity: 1 !important;
+    filter: none !important;
+    transform: none !important;
+  }
 }

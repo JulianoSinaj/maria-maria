@@ -33,6 +33,22 @@ module.exports = {
         vine: "#55683F",
         /* Flaschenglas: die dunkle Stufe von `vine`, trägt helle Schrift */
         "vine-deep": "#3D4B2D",
+        /* Kontaktseite — Terrakotta-Palette aus dem freigegebenen Mockup
+           („landing page contatti.png", Werte direkt aus der Datei gemessen).
+           Sie steht bewusst neben Bordeaux statt an seiner Stelle: die
+           Kontaktseite ist die einzige Strecke, die der Kunde in diesem Ton
+           abgenommen hat, und Bordeaux trägt weiterhin Shop, Weine und
+           Magazin. Zwei Rot-Familien im selben Projekt sind nur dann ein
+           Fehler, wenn sie sich auf derselben Seite begegnen — hier tun sie
+           es nicht. */
+        terracotta: "#A03116",
+        "terracotta-deep": "#7E2611",
+        /* Beige der Kontext-Kästchen neben dem Formular */
+        "terracotta-soft": "#F4EBE1",
+        /* Haarlinie der Karten und Akkordeon-Rahmen */
+        sand: "#EFE4D9",
+        /* Off-White der Seitenfläche */
+        linen: "#FAF8F4",
       },
       fontFamily: {
         playfair: ["var(--font-playfair)", "serif"],

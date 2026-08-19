@@ -231,7 +231,7 @@ export const faq = {
     {
       id: "shop-beratung",
       q: "Who helps me with my order or choosing a wine?",
-      a: "We do, personally: by contact form or telephone we advise you on menu, occasion or gift — and help with any question about your order. We reply within 1–2 working days.",
+      a: "We do, personally: by contact form or e-mail we advise you on menu, occasion or gift — and help with any question about your order. We reply within 1–2 working days.",
       link: { label: "Get in touch", href: "/kontakt" },
     },
   ],
@@ -244,7 +244,7 @@ export const faq = {
         {
           id: "kontakt-erreichen",
           q: "How can I get in touch with Maria Maria?",
-          a: "Quickest is the contact form — simply choose your subject there. Alternatively you can reach us by e-mail at info@maria-maria.wine or by telephone on +49 211 976 420. We reply within 1–2 working days.",
+          a: "Quickest is the contact form — simply choose your subject there. Alternatively you can reach us by e-mail at info@maria-maria.wine. We reply within 1–2 working days.",
         },
         {
           id: "kontakt-weininfo",

@@ -24,15 +24,15 @@ const cardPhotos = (slug) => ({
 });
 
 const CATALOGUE = [
-  { slug: "primitivo-15-5", name: "Primitivo di Manduria D.O.C. 15,5", regionKey: "puglia", variant: "redsoft", typeKey: "red", price: 16.9, year: 2020, dot: "#6B0F1A" },
-  { slug: "lugana", name: "Lugana D.O.P.", regionKey: "garda", variant: "white", typeKey: "white", price: 14.9, year: 2023, dot: "#C8B77A" },
-  { slug: "greco-di-tufo", name: "Greco di Tufo D.O.C.G.", regionKey: "campania", variant: "white", typeKey: "white", price: 18.9, year: 2022, dot: "#C8B77A" },
-  { slug: "primitivo-14-5", name: "Primitivo di Manduria D.O.C. 14,5", regionKey: "puglia", variant: "red", typeKey: "red", price: 12.9, year: 2021, dot: "#6B0F1A" },
-  { slug: "primitivo-salento", name: "Primitivo Salento IGP", regionKey: "puglia", variant: "amber", typeKey: "red", price: 11.5, year: 2022, dot: "#6B0F1A" },
-  { slug: "falanghina", name: "Falanghina I.G.P.", regionKey: "campania", variant: "white", typeKey: "white", price: 13.9, year: 2023, dot: "#C8B77A" },
-  { slug: "rosato-puglia", name: "Rosato Puglia", regionKey: "puglia", variant: "rose", typeKey: "rose", price: 10.9, year: 2023, dot: "#c67f78" },
-  { slug: "il-rosso-aglianico", name: "Il Rosso – Aglianico", regionKey: "campania", variant: "red", typeKey: "red", price: 17.5, year: 2020, dot: "#6B0F1A" },
-  { slug: "il-bianco-greco-cuvee", name: "Il Bianco – Greco Cuvée", regionKey: "campania", variant: "white", typeKey: "white", price: 15.5, year: 2022, dot: "#C8B77A" },
+  { slug: "primitivo-15-5", name: "Primitivo di Manduria D.O.C. 15,5", regionKey: "puglia", variant: "redsoft", typeKey: "red", price: 28.95, year: 2020, dot: "#6B0F1A" },
+  { slug: "lugana", name: "Lugana D.O.P.", regionKey: "garda", variant: "white", typeKey: "white", price: 12.95, year: 2023, dot: "#C8B77A" },
+  { slug: "greco-di-tufo", name: "Greco di Tufo D.O.C.G.", regionKey: "campania", variant: "white", typeKey: "white", price: 13.95, year: 2022, dot: "#C8B77A" },
+  { slug: "primitivo-14-5", name: "Primitivo di Manduria D.O.C. 14,5", regionKey: "puglia", variant: "red", typeKey: "red", price: 25.95, year: 2021, dot: "#6B0F1A" },
+  { slug: "primitivo-salento", name: "Primitivo Salento IGP", regionKey: "puglia", variant: "amber", typeKey: "red", price: 12.95, year: 2022, dot: "#6B0F1A" },
+  { slug: "falanghina", name: "Falanghina I.G.P.", regionKey: "campania", variant: "white", typeKey: "white", price: 11.49, year: 2023, dot: "#C8B77A" },
+  { slug: "rosato-puglia", name: "Rosato Puglia", regionKey: "puglia", variant: "rose", typeKey: "rose", price: 11.95, year: 2023, dot: "#c67f78" },
+  { slug: "il-rosso-aglianico", name: "Il Rosso – Aglianico", regionKey: "campania", variant: "red", typeKey: "red", price: 16.95, year: 2020, dot: "#6B0F1A" },
+  { slug: "il-bianco-greco-cuvee", name: "Il Bianco – Greco Cuvée", regionKey: "campania", variant: "white", typeKey: "white", price: 11.95, year: 2022, dot: "#C8B77A" },
 ];
 
 export const WINES = CATALOGUE.map((w) => ({ ...w, photos: cardPhotos(w.slug) }));

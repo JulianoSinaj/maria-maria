@@ -37,7 +37,7 @@ export const BUNDLES = [
     id: "paket-trio-rosso",
     name: "Trio Rosso",
     wines: ["Primitivo di Manduria D.O.C. 14,5", "Primitivo Salento IGP", "Il Rosso – Aglianico"],
-    price: 37.9,
+    price: 50.9,
   },
   {
     id: "paket-grande-selezione",
@@ -50,14 +50,14 @@ export const BUNDLES = [
       "Greco di Tufo D.O.C.G.",
       "Falanghina I.G.P.",
     ],
-    price: 79.9,
+    price: 84.9,
     featured: true,
   },
   {
     id: "paket-trio-bianco",
     name: "Trio Bianco",
     wines: ["Lugana D.O.P.", "Greco di Tufo D.O.C.G.", "Falanghina I.G.P."],
-    price: 42.9,
+    price: 34.9,
   },
 ];
 

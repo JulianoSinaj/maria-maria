@@ -136,14 +136,11 @@ export default function Footer() {
             <h4 className="text-[11px] font-semibold uppercase tracking-[0.22em] text-champagne">{t.contactHeading}</h4>
             <div className="mt-5 space-y-2 text-[12.5px] leading-relaxed text-ivory/65">
               <p>Senso Valerio Weinhandel</p>
-              <p>Von Valerio Caniglia</p>
-              <p>Ellerfelderstrasse 78</p>
+              <p>Valerio Caniglia</p>
+              <p>Ellerfelderstrasse 78d</p>
               <p>40822 Mettmann</p>
               <a href="mailto:info@maria-maria.wine" className="block transition-colors hover:text-champagne">
                 info@maria-maria.wine
-              </a>
-              <a href="tel:+49211976420" className="block transition-colors hover:text-champagne">
-                +49 211 976 420
               </a>
             </div>
           </StaggerItem>

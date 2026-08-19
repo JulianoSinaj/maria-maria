@@ -231,7 +231,7 @@ export const faq = {
     {
       id: "shop-beratung",
       q: "Kdo mi pomůže s objednávkou nebo výběrem vína?",
-      a: "My osobně: přes kontaktní formulář nebo telefonicky vám poradíme s menu, příležitostí i dárkem — a pomůžeme i s dotazy k vaší objednávce. Odpovídáme do 1–2 pracovních dnů.",
+      a: "My osobně: přes kontaktní formulář nebo e-mailem vám poradíme s menu, příležitostí i dárkem — a pomůžeme i s dotazy k vaší objednávce. Odpovídáme do 1–2 pracovních dnů.",
       link: { label: "Kontaktovat nás", href: "/kontakt" },
     },
   ],
@@ -244,7 +244,7 @@ export const faq = {
         {
           id: "kontakt-erreichen",
           q: "Jak mohu Maria Maria kontaktovat?",
-          a: "Nejrychleji přes kontaktní formulář — stačí zvolit téma dotazu. Zastihnete nás také e-mailem na info@maria-maria.wine nebo telefonicky na +49 211 976 420. Odpovídáme do 1–2 pracovních dnů.",
+          a: "Nejrychleji přes kontaktní formulář — stačí zvolit téma dotazu. Zastihnete nás také e-mailem na info@maria-maria.wine. Odpovídáme do 1–2 pracovních dnů.",
         },
         {
           id: "kontakt-weininfo",

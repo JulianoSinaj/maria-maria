@@ -247,7 +247,7 @@ export const faq = {
     {
       id: "shop-beratung",
       q: "Wer hilft mir bei Bestellung oder Weinauswahl?",
-      a: "Wir persönlich: Über das Kontaktformular oder telefonisch beraten wir Sie zu Menü, Anlass oder Geschenk — und helfen ebenso bei Fragen rund um Ihre Bestellung. Wir antworten innerhalb von 1–2 Werktagen.",
+      a: "Wir persönlich: Über das Kontaktformular oder per E-Mail beraten wir Sie zu Menü, Anlass oder Geschenk — und helfen ebenso bei Fragen rund um Ihre Bestellung. Wir antworten innerhalb von 1–2 Werktagen.",
       link: { label: "Kontakt aufnehmen", href: "/kontakt" },
     },
   ],
@@ -261,7 +261,7 @@ export const faq = {
         {
           id: "kontakt-erreichen",
           q: "Wie kann ich Maria Maria kontaktieren?",
-          a: "Am schnellsten über das Kontaktformular — wählen Sie dort einfach Ihr Anliegen. Alternativ erreichen Sie uns per E-Mail an info@maria-maria.wine oder telefonisch unter +49 211 976 420. Wir antworten innerhalb von 1–2 Werktagen.",
+          a: "Am schnellsten über das Kontaktformular — wählen Sie dort einfach Ihr Anliegen. Alternativ erreichen Sie uns per E-Mail an info@maria-maria.wine. Wir antworten innerhalb von 1–2 Werktagen.",
         },
         {
           id: "kontakt-weininfo",

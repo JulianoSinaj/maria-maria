@@ -231,7 +231,7 @@ export const faq = {
     {
       id: "shop-beratung",
       q: "Chi mi aiuta con l'ordine o con la scelta del vino?",
-      a: "Noi, di persona: tramite il modulo di contatto o per telefono ti consigliamo su menu, occasione o regalo — e ti aiutiamo anche per qualsiasi domanda sul tuo ordine. Rispondiamo entro 1–2 giorni lavorativi.",
+      a: "Noi, di persona: tramite il modulo di contatto o per e-mail ti consigliamo su menu, occasione o regalo — e ti aiutiamo anche per qualsiasi domanda sul tuo ordine. Rispondiamo entro 1–2 giorni lavorativi.",
       link: { label: "Contattaci", href: "/kontakt" },
     },
   ],
@@ -244,7 +244,7 @@ export const faq = {
         {
           id: "kontakt-erreichen",
           q: "Come posso contattare Maria Maria?",
-          a: "Il modo più rapido è il modulo di contatto — basta scegliere il motivo della richiesta. In alternativa ci trovi via e-mail a info@maria-maria.wine o al telefono +49 211 976 420. Rispondiamo entro 1–2 giorni lavorativi.",
+          a: "Il modo più rapido è il modulo di contatto — basta scegliere il motivo della richiesta. In alternativa ci trovi via e-mail a info@maria-maria.wine. Rispondiamo entro 1–2 giorni lavorativi.",
         },
         {
           id: "kontakt-weininfo",

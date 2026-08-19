@@ -261,7 +261,7 @@ export const faq = {
         {
           id: "kontakt-erreichen",
           q: "Wie kann ich Maria Maria kontaktieren?",
-          a: "Am schnellsten über das Kontaktformular — wählen Sie dort einfach Ihr Anliegen. Alternativ erreichen Sie uns per E-Mail an info@maria-maria.wine. Wir antworten innerhalb von 1–2 Werktagen.",
+          a: "Am schnellsten über das Kontaktformular — wählen Sie dort einfach Ihr Anliegen. Alternativ erreichen Sie uns per E-Mail an info@maria-maria.de. Wir antworten innerhalb von 1–2 Werktagen.",
         },
         {
           id: "kontakt-weininfo",
@@ -326,7 +326,7 @@ export const faq = {
         {
           id: "kontakt-presse",
           q: "An wen richte ich Presseanfragen?",
-          a: "Direkt an uns: über das Kontaktformular (Anliegen „Presse & Kooperationen“) oder per E-Mail an info@maria-maria.wine. Wir melden uns persönlich zurück.",
+          a: "Direkt an uns: über das Kontaktformular (Anliegen „Presse & Kooperationen“) oder per E-Mail an info@maria-maria.de. Wir melden uns persönlich zurück.",
         },
         {
           id: "kontakt-kooperationen",

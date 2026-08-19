@@ -244,7 +244,7 @@ export const faq = {
         {
           id: "kontakt-erreichen",
           q: "Jak mohu Maria Maria kontaktovat?",
-          a: "Nejrychleji přes kontaktní formulář — stačí zvolit téma dotazu. Zastihnete nás také e-mailem na info@maria-maria.wine. Odpovídáme do 1–2 pracovních dnů.",
+          a: "Nejrychleji přes kontaktní formulář — stačí zvolit téma dotazu. Zastihnete nás také e-mailem na info@maria-maria.de. Odpovídáme do 1–2 pracovních dnů.",
         },
         {
           id: "kontakt-weininfo",
@@ -309,7 +309,7 @@ export const faq = {
         {
           id: "kontakt-presse",
           q: "Na koho mám směřovat dotazy médií?",
-          a: "Přímo na nás: přes kontaktní formulář (téma „Tisk a spolupráce“) nebo e-mailem na info@maria-maria.wine. Ozveme se osobně.",
+          a: "Přímo na nás: přes kontaktní formulář (téma „Tisk a spolupráce“) nebo e-mailem na info@maria-maria.de. Ozveme se osobně.",
         },
         {
           id: "kontakt-kooperationen",

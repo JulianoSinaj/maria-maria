@@ -244,7 +244,7 @@ export const faq = {
         {
           id: "kontakt-erreichen",
           q: "How can I get in touch with Maria Maria?",
-          a: "Quickest is the contact form — simply choose your subject there. Alternatively you can reach us by e-mail at info@maria-maria.wine. We reply within 1–2 working days.",
+          a: "Quickest is the contact form — simply choose your subject there. Alternatively you can reach us by e-mail at info@maria-maria.de. We reply within 1–2 working days.",
         },
         {
           id: "kontakt-weininfo",
@@ -309,7 +309,7 @@ export const faq = {
         {
           id: "kontakt-presse",
           q: "Who do I address press enquiries to?",
-          a: "Directly to us: via the contact form (subject “Press & collaborations”) or by e-mail to info@maria-maria.wine. We will get back to you personally.",
+          a: "Directly to us: via the contact form (subject “Press & collaborations”) or by e-mail to info@maria-maria.de. We will get back to you personally.",
         },
         {
           id: "kontakt-kooperationen",

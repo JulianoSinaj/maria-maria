@@ -62,10 +62,10 @@ export default function LegalShell({ shell, title, intro, sections }) {
             </Link>{" "}
             {shell.contactMid}{" "}
             <a
-              href="mailto:info@maria-maria.wine"
+              href="mailto:info@maria-maria.de"
               className="font-medium text-bordeaux underline decoration-bordeaux/30 underline-offset-2 transition-colors duration-300 hover:decoration-bordeaux"
             >
-              info@maria-maria.wine
+              info@maria-maria.de
             </a>
             .
           </p>

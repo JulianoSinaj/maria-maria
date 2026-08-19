@@ -277,7 +277,7 @@ export default function Header() {
               {/* Flache Reihe statt Aufklapp-Panel: Im mobilen Overlay wäre
                   ein zweites Overlay darüber nur eine Falle. */}
               <LanguageSwitcher variant="inline" className="mb-6" />
-              <p className="text-[12px] tracking-wide text-ivory/60">info@maria-maria.wine</p>
+              <p className="text-[12px] tracking-wide text-ivory/60">info@maria-maria.de</p>
               <p className="mt-1 font-playfair text-[15px] italic text-champagne/90">Il piacere del vino</p>
             </motion.div>
           </motion.div>

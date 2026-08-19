@@ -32,15 +32,22 @@ export const SHELL = "mx-auto w-full max-w-[1104px] px-6 lg:px-8";
    lesbar ist daran nichts mehr. */
 export const HERO_INSET = { paddingLeft: "max(1.5rem, calc((100vw - 1340px) / 2 + 2.5rem))" };
 
-/* Primär-CTA — gefülltes Terrakotta-Rechteck. */
+/* Primär-CTA — gefülltes Terrakotta-Rechteck.
+
+   px-6 statt px-7: Bei px-7 waren die beiden Hero-Schaltflächen im
+   Italienischen zusammen 555 px breit und passten um EIN Pixel nicht in die
+   554 px der Textspalte — sie klappten untereinander, während Deutsch,
+   Englisch und Tschechisch nebeneinander blieben. Vier Pixel Polsterung je
+   Seite geben 16 px zurück und damit allen vier Sprachen dieselbe Zeile.
+   Das Mockup zeigt sie nebeneinander. */
 export const CTA_PRIMARY =
-  "inline-flex min-h-[48px] items-center justify-center gap-2 rounded-[4px] bg-terracotta px-7 py-3 " +
+  "inline-flex min-h-[48px] items-center justify-center gap-2 rounded-[4px] bg-terracotta px-6 py-3 " +
   "text-[11.5px] font-semibold uppercase tracking-[0.13em] text-linen " +
   "transition-colors duration-300 hover:bg-terracotta-deep";
 
 /* Sekundär-CTA — dieselbe Silhouette als Kontur. */
 export const CTA_OUTLINE =
-  "inline-flex min-h-[48px] items-center justify-center gap-2 rounded-[4px] border border-terracotta/45 bg-transparent px-7 py-3 " +
+  "inline-flex min-h-[48px] items-center justify-center gap-2 rounded-[4px] border border-terracotta/45 bg-transparent px-6 py-3 " +
   "text-[11.5px] font-semibold uppercase tracking-[0.13em] text-terracotta " +
   "transition-colors duration-300 hover:border-terracotta hover:bg-terracotta/[0.06]";
 

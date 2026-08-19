@@ -98,7 +98,12 @@ export default async function KontaktPage({ params }) {
             rechts randlos bis zum Bildschirmrand. */}
         <section className="relative overflow-hidden pt-24 lg:pt-28">
           <div className="grid grid-cols-1 items-stretch lg:grid-cols-[minmax(0,48fr)_minmax(0,52fr)]">
-            <div style={HERO_INSET} className="pb-14 pr-6 lg:pb-20 lg:pr-10">
+            {/* lg:pb-14 statt pb-20: Die Fusszeile der Textspalte bestimmt die
+                Hoehe der ganzen Zeile und damit die des randlosen Fotos
+                daneben (items-stretch). Mit 80 px stand das Foto auf 585 px,
+                die Referenz „landing page contatti.png" zeigt es bei 1440 px
+                Fensterbreite auf 562 px. 24 px weniger treffen das Mockup. */}
+            <div style={HERO_INSET} className="pb-14 pr-6 lg:pb-14 lg:pr-10">
               <div className="lg:max-w-[560px]">
                 <Reveal y={16}>
                   <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-terracotta">
@@ -169,9 +174,13 @@ export default async function KontaktPage({ params }) {
                 height={941}
                 /* Das Motiv ist 16:9, die Spalte ist deutlich hochkantiger —
                    ein zentrierter Zuschnitt schneidet die rechte Flasche an.
-                   64 % rückt das Fenster so weit nach rechts, dass Gläser
-                   UND beide Flaschen ganz im Bild bleiben. */
-                className="absolute inset-0 h-full w-full object-cover object-[64%_center]"
+                   64 % waren dafür zu weit rechts: Bei 741 x 675 lag das
+                   Fenster auf Quell-x 408–1441, und „il bianco" endet erst bei
+                   1445 — die Flasche stand senkrecht angeschnitten am Rand.
+                   57 % zeigt bei der korrigierten Höhe x 244–1487: beide
+                   Flaschen mit Luft, die Gläser und die Karte auf dem Tisch
+                   ganz im Bild, das Windlicht (ab x 1490) sauber draußen. */
+                className="absolute inset-0 h-full w-full object-cover object-[57%_center]"
               />
             </div>
           </div>

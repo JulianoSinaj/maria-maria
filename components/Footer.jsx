@@ -20,7 +20,7 @@ const EXPLORE = [
 const SOCIALS = [
   { key: "instagram", label: "Instagram", href: "https://www.instagram.com/mariamaria.wine", Icon: Instagram },
   { key: "facebook", label: "Facebook", href: "https://www.facebook.com/mariamaria.wine", Icon: Facebook },
-  { key: "mail", label: null, href: "mailto:info@maria-maria.wine", Icon: Mail },
+  { key: "mail", label: null, href: "mailto:info@maria-maria.de", Icon: Mail },
 ];
 
 const LEGAL = [
@@ -139,8 +139,8 @@ export default function Footer() {
               <p>Valerio Caniglia</p>
               <p>Ellerfelderstrasse 78d</p>
               <p>40822 Mettmann</p>
-              <a href="mailto:info@maria-maria.wine" className="block transition-colors hover:text-champagne">
-                info@maria-maria.wine
+              <a href="mailto:info@maria-maria.de" className="block transition-colors hover:text-champagne">
+                info@maria-maria.de
               </a>
             </div>
           </StaggerItem>

@@ -244,7 +244,7 @@ export const faq = {
         {
           id: "kontakt-erreichen",
           q: "Come posso contattare Maria Maria?",
-          a: "Il modo più rapido è il modulo di contatto — basta scegliere il motivo della richiesta. In alternativa ci trovi via e-mail a info@maria-maria.wine. Rispondiamo entro 1–2 giorni lavorativi.",
+          a: "Il modo più rapido è il modulo di contatto — basta scegliere il motivo della richiesta. In alternativa ci trovi via e-mail a info@maria-maria.de. Rispondiamo entro 1–2 giorni lavorativi.",
         },
         {
           id: "kontakt-weininfo",
@@ -309,7 +309,7 @@ export const faq = {
         {
           id: "kontakt-presse",
           q: "A chi rivolgo le richieste stampa?",
-          a: "Direttamente a noi: tramite il modulo di contatto (motivo „Stampa e collaborazioni“) o via e-mail a info@maria-maria.wine. Ti rispondiamo personalmente.",
+          a: "Direttamente a noi: tramite il modulo di contatto (motivo „Stampa e collaborazioni“) o via e-mail a info@maria-maria.de. Ti rispondiamo personalmente.",
         },
         {
           id: "kontakt-kooperationen",

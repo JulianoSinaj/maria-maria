@@ -1,23 +1,24 @@
-/* Die Bauteile des Kontakt-Mockups an einer Stelle.
+/* Die Bauteile der Kontaktseite an einer Stelle.
 
-   Die Kontaktseite bricht bewusst mit zwei Konventionen der Storefront: Ihre
-   Schaltflächen sind Rechtecke mit 4-px-Radius statt Pillen, und ihr Akzent
-   ist Terrakotta statt Bordeaux. Beides steht so im freigegebenen Mockup.
+   Bis August 2026 sprach die Seite den Terrakotta-Dialekt ihres Mockups —
+   Rechtecke mit 4-px-Radius, eigene Akzentfarbe, Sand-Haarlinien. Seit dem
+   Angleich (20.08.2026) trägt sie dieselbe Sprache wie der Rest der
+   Storefront: Bordeaux als Akzent, Champagner für Dekor und Fokus,
+   Stone-Haarlinien, die Kartenradien aus tailwind.config (rounded-card).
+   Struktur und Texte der Seite sind unverändert — nur der Ton.
 
-   Damit das eine bewusste Entscheidung bleibt und nicht als Schludrigkeit
-   durch die Seite sickert, liegen die Klassen hier zusammen statt an zwölf
-   Stellen im JSX. Wer den Ton der Seite ändern will, ändert diese Datei. */
+   Die Klassen liegen weiterhin hier zusammen statt an zwölf Stellen im JSX:
+   Wer den Ton der Seite ändern will, ändert diese Datei. Die beiden großen
+   CTAs (Hero, Absenden) laufen inzwischen über components/ui/Button und
+   stehen deshalb nicht mehr hier. */
 
-/* Das Mockup arbeitet mit ZWEI Breiten, und der Unterschied ist Absicht:
+/* Das Layout arbeitet mit ZWEI Breiten, und der Unterschied ist Absicht:
 
    SHELL_WIDE (~1250 px) trägt Hero, Formular und FAQ — die Blöcke, die
    links auf derselben Kante sitzen wie die H1.
    SHELL (~1040 px) trägt die Anliegen-Kachel und den Prozess. Beide sind
    zentrierte Lesestrecken; in voller Breite zerfiele die 2×2-Kachel in vier
-   weit auseinanderliegende Inseln.
-
-   Gemessen an der Referenz „landing page contatti.png" bei 1440 px: äußere
-   Kante 85 px, innerer Block 202 px. */
+   weit auseinanderliegende Inseln. */
 export const SHELL_WIDE = "mx-auto w-full max-w-[1340px] px-6 lg:px-10";
 export const SHELL = "mx-auto w-full max-w-[1104px] px-6 lg:px-8";
 
@@ -32,48 +33,40 @@ export const SHELL = "mx-auto w-full max-w-[1104px] px-6 lg:px-8";
    lesbar ist daran nichts mehr. */
 export const HERO_INSET = { paddingLeft: "max(1.5rem, calc((100vw - 1340px) / 2 + 2.5rem))" };
 
-/* Primär-CTA — gefülltes Terrakotta-Rechteck.
+/* Sichtbarer Fokus für Tastaturbedienung — dieselbe Champagner-Marke wie in
+   components/faq/FaqSection.jsx, mit dem Seitengrund (Ivory) als Offset. */
+export const FOCUS_RING =
+  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-champagne " +
+  "focus-visible:ring-offset-2 focus-visible:ring-offset-ivory";
 
-   px-6 statt px-7: Bei px-7 waren die beiden Hero-Schaltflächen im
-   Italienischen zusammen 555 px breit und passten um EIN Pixel nicht in die
-   554 px der Textspalte — sie klappten untereinander, während Deutsch,
-   Englisch und Tschechisch nebeneinander blieben. Vier Pixel Polsterung je
-   Seite geben 16 px zurück und damit allen vier Sprachen dieselbe Zeile.
-   Das Mockup zeigt sie nebeneinander. */
-export const CTA_PRIMARY =
-  "inline-flex min-h-[48px] items-center justify-center gap-2 rounded-[4px] bg-terracotta px-6 py-3 " +
-  "text-[11.5px] font-semibold uppercase tracking-[0.13em] text-linen " +
-  "transition-colors duration-300 hover:bg-terracotta-deep";
-
-/* Sekundär-CTA — dieselbe Silhouette als Kontur. */
-export const CTA_OUTLINE =
-  "inline-flex min-h-[48px] items-center justify-center gap-2 rounded-[4px] border border-terracotta/45 bg-transparent px-6 py-3 " +
-  "text-[11.5px] font-semibold uppercase tracking-[0.13em] text-terracotta " +
-  "transition-colors duration-300 hover:border-terracotta hover:bg-terracotta/[0.06]";
-
-/* Textlink in Versalien mit Pfeil — die CTA der Anliegen-Karten und der FAQ.
-   Ohne Mindesthöhe: In den Karten ist er nur Beschriftung (die ganze Karte
-   ist das Ziel), als eigenständige Schaltfläche bekommt er sie am Einsatzort
-   über `min-h-[44px]` dazu. */
+/* Textlink mit Pfeil — die CTA der Anliegen-Karten und der FAQ. Bordeaux,
+   halbfett, ohne Versalien: die Bauform der Antwort-Links in FaqSection und
+   der Hero-Nebenlinks (geschichte). Ohne Mindesthöhe und ohne Fokusring: In
+   den Karten ist er nur Beschriftung (die ganze Karte ist das Ziel und trägt
+   den Fokusrahmen über has-[:focus-visible]); als eigenständige Schaltfläche
+   bekommt er `min-h-[44px]` und FOCUS_RING am Einsatzort dazu. */
 export const CTA_LINK =
-  "group/link inline-flex items-center gap-2 text-[11.5px] font-semibold uppercase " +
-  "tracking-[0.13em] text-terracotta transition-colors duration-300 hover:text-terracotta-deep";
+  "group/link inline-flex items-center gap-1.5 text-[13px] font-semibold text-bordeaux " +
+  "transition-colors duration-300 hover:text-bordeaux-deep";
 
-/* Karten und Panels: Haarlinie in Sand, weicher Radius, keine Schatten —
-   Handoff §13: „Bordi card e form: 1 px caldo/chiaro, radius leggero;
-   niente ombre pesanti." */
-export const CARD = "rounded-[10px] border border-sand bg-white/70";
-export const PANEL = "rounded-[12px] border border-sand bg-white";
+/* Karten und Panels: Haarlinie in Stone, die Kartenradien der Storefront
+   (rounded-card = 1.5 rem, rounded-card-lg = 2 rem), keine Schatten —
+   dieselbe Fläche wie die Karten auf Startseite und Regionen. */
+export const CARD = "rounded-card border border-stone/60 bg-white/70";
+export const PANEL = "rounded-card-lg border border-stone/60 bg-white";
 
 /* Formularfelder. Die 16-px-Regel für Touch-Geräte steht global in
-   globals.css; hier bleibt die Desktop-Größe. */
+   globals.css; hier bleibt die Desktop-Größe. Ruhelage Stone, beim Zeigen
+   Champagner, im Fokus Bordeaux — die Reihenfolge, in der auch die
+   FAQ-Schaltflächen der übrigen Seiten ihre Ringe färben. */
 export const FIELD =
-  "w-full rounded-[4px] border border-sand bg-white px-3.5 py-2.5 text-[13.5px] text-charcoal " +
+  "w-full rounded-[10px] border border-stone/70 bg-white px-3.5 py-2.5 text-[13.5px] text-charcoal " +
   "outline-none transition-colors duration-200 placeholder:text-charcoal/35 " +
-  "focus:border-terracotta/60 hover:border-terracotta/35";
+  "hover:border-champagne focus:border-bordeaux/50";
 
 export const FIELD_LABEL = "mb-1.5 block text-[12.5px] font-medium text-charcoal/85";
 
-/* Sektionsüberschrift — Playfair, zentriert, in der Größe des Mockups. */
+/* Sektionsüberschrift — Playfair, zentriert, auf der Typo-Rampe von
+   components/Deco.jsx (SectionTitle). */
 export const SECTION_TITLE =
-  "text-balance text-center font-playfair text-[clamp(1.6rem,3.2vw,2.15rem)] leading-[1.18] text-charcoal";
+  "text-balance text-center font-playfair text-[clamp(1.75rem,3.4vw,2.6rem)] leading-[1.12] text-charcoal";

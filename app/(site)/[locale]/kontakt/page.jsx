@@ -1,10 +1,12 @@
 import Photo from "@/components/media/Photo";
 import { Reveal } from "@/components/motion/Reveal";
+import { Eyebrow } from "@/components/Deco";
 import { Clock, Mail, Pin } from "@/components/Icons";
 import IntentProvider from "@/components/kontakt/IntentContext";
 import HeroActions from "@/components/kontakt/HeroActions";
 import IntentCards from "@/components/kontakt/IntentCards";
 import ContactForm from "@/components/kontakt/ContactForm";
+import EmailLink from "@/components/kontakt/EmailLink";
 import KontaktFaq from "@/components/kontakt/KontaktFaq";
 import { Calendar, Heart, Storefront } from "@/components/kontakt/icons";
 import { FORM_ANCHOR, INTENT_CARDS } from "@/components/kontakt/intents";
@@ -16,8 +18,11 @@ import { localePath } from "@/lib/i18n/routing";
 import { absoluteUrl } from "@/lib/site";
 import { graph, webPageNode, breadcrumbNode, faqNode, serviceNode, ORG_ID } from "@/lib/seo/jsonLd";
 
-/* Kontaktseite — Neubau nach dem freigegebenen Mockup
-   („landing page contatti.png") und dem Handoff-Dokument vom 18.08.2026.
+/* Kontaktseite — Struktur und Texte nach dem Handoff-Dokument vom
+   18.08.2026, visuelle Sprache seit dem 20.08.2026 die der Storefront:
+   Bordeaux/Champagner statt des Terrakotta-Dialekts aus dem Mockup, die
+   Pillen aus components/ui/Button, Stone-Haarlinien und die Kartenradien
+   der übrigen Seiten. Der Ton liegt gesammelt in components/kontakt/styles.js.
 
    Die Reihenfolge der Sektionen ist der Kern der Seite und nicht verhandelbar
    (Handoff §1): Hero → vier Anlässe → drei Schritte → Brand Bridge → Formular
@@ -124,7 +129,9 @@ export default async function KontaktPage({ params }) {
       <KontaktJsonLd locale={params.locale} dict={dict} />
 
       <IntentProvider>
-      <div className="-mb-12 bg-linen lg:-mb-16">
+      {/* Kein eigener Seitengrund mehr: Die Seite liegt wie alle anderen auf
+          dem Ivory des <body> (globals.css) statt auf einem eigenen Linen. */}
+      <div className="-mb-12 lg:-mb-16">
         {/* ═══════ 01 — HERO ═══════════════════════════════════════════
             50/52 wie im Mockup: Text links auf der äußeren Kante, Foto
             rechts randlos bis zum Bildschirmrand. */}
@@ -138,14 +145,15 @@ export default async function KontaktPage({ params }) {
             <div style={HERO_INSET} className="pb-14 pr-6 lg:pb-14 lg:pr-10">
               <div className="lg:max-w-[560px]">
                 <Reveal y={16}>
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-terracotta">
-                    {t.hero.eyebrow}
-                  </p>
-                  <h1 className="mt-5 font-playfair text-[clamp(2rem,3.6vw,2.9rem)] font-normal leading-[1.13] text-charcoal">
+                  {/* Der Sektions-Öffner der Storefront: Champagner-Versalien
+                      mit Traubenmarke (components/Deco.jsx) statt der
+                      Terrakotta-Zeile des Mockups. */}
+                  <Eyebrow>{t.hero.eyebrow}</Eyebrow>
+                  <h1 className="mt-5 text-balance font-playfair text-[clamp(2.1rem,4vw,3.1rem)] font-normal leading-[1.1] text-charcoal">
                     {t.hero.title}
                     <span className="block">{t.hero.titleSecond}</span>
                   </h1>
-                  <p className="mt-5 max-w-[29rem] text-[14px] leading-[1.75] text-charcoal/75">
+                  <p className="mt-5 max-w-[29rem] text-[13.5px] leading-relaxed text-charcoal/70">
                     {t.hero.text}
                   </p>
                 </Reveal>
@@ -162,31 +170,32 @@ export default async function KontaktPage({ params }) {
                   <dl className="mt-11 flex flex-wrap gap-x-14 gap-y-6">
                     <div>
                       <dt className="flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-charcoal/55">
-                        <Mail aria-hidden="true" className="h-4 w-4 text-terracotta" />
+                        <Mail aria-hidden="true" className="h-4 w-4 text-bordeaux" />
                         {t.details.emailLabel}
                       </dt>
                       <dd className="mt-1.5">
-                        <a
-                          href={`mailto:${t.details.email}`}
-                          className="text-[13.5px] text-charcoal transition-colors duration-300 hover:text-terracotta"
-                        >
-                          {t.details.email}
-                        </a>
+                        {/* Client-Inselchen für das click_email-Event —
+                            Handoff §16, direkter Kontakt am Formular vorbei. */}
+                        <EmailLink
+                          email={t.details.email}
+                          location="hero"
+                          className="text-[13.5px] text-charcoal transition-colors duration-300 hover:text-bordeaux"
+                        />
                       </dd>
                     </div>
                     <div>
                       <dt className="flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-charcoal/55">
-                        <Pin aria-hidden="true" className="h-4 w-4 text-terracotta" />
+                        <Pin aria-hidden="true" className="h-4 w-4 text-bordeaux" />
                         {t.details.locationLabel}
                       </dt>
                       <dd className="mt-1.5 text-[13.5px] text-charcoal">{t.details.location}</dd>
                     </div>
                   </dl>
 
-                  <hr className="mt-8 border-t border-sand" />
+                  <hr className="mt-8 border-t border-stone/60" />
 
                   <p className="mt-5 flex items-center gap-2.5 text-[12.5px] text-charcoal/70">
-                    <Clock aria-hidden="true" className="h-4 w-4 shrink-0 text-terracotta" />
+                    <Clock aria-hidden="true" className="h-4 w-4 shrink-0 text-bordeaux" />
                     {t.hero.promise}
                   </p>
                 </Reveal>
@@ -268,10 +277,13 @@ export default async function KontaktPage({ params }) {
                     {i > 0 && (
                       <span
                         aria-hidden="true"
-                        className="absolute -left-7 top-[21px] hidden w-7 border-t border-dotted border-terracotta/45 md:block"
+                        className="absolute -left-7 top-[21px] hidden w-7 border-t border-dotted border-champagne md:block"
                       />
                     )}
-                    <span className="flex h-[44px] w-[44px] shrink-0 items-center justify-center rounded-full bg-terracotta font-playfair text-[17px] text-linen">
+                    {/* Der Verlauf des Primär-Buttons (bordeaux → wine) als
+                        Ziffernmedaillon — dieselbe Fläche, die auf allen
+                        Seiten „hier geht es weiter" bedeutet. */}
+                    <span className="flex h-[44px] w-[44px] shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-bordeaux to-wine font-playfair text-[17px] text-ivory">
                       {i + 1}
                     </span>
                     <div className="min-w-0">
@@ -359,11 +371,11 @@ export default async function KontaktPage({ params }) {
                       return (
                         <li
                           key={hint.title}
-                          className="flex items-start gap-3.5 rounded-[6px] bg-terracotta-soft px-4 py-3.5"
+                          className="flex items-start gap-3.5 rounded-2xl bg-champagne-light/25 px-4 py-3.5"
                         >
                           <Icon
                             aria-hidden="true"
-                            className="mt-0.5 h-[22px] w-[22px] shrink-0 text-terracotta"
+                            className="mt-0.5 h-[22px] w-[22px] shrink-0 text-bordeaux"
                           />
                           <p className="text-[12.5px] leading-[1.6] text-charcoal/80">
                             <span className="font-semibold text-charcoal">{hint.title}:</span>{" "}
@@ -375,7 +387,7 @@ export default async function KontaktPage({ params }) {
                   </ul>
 
                   <p className="mt-8 flex items-start gap-3.5 text-[12.5px] leading-[1.6] text-charcoal/75">
-                    <Heart aria-hidden="true" className="h-[22px] w-[22px] shrink-0 text-terracotta" />
+                    <Heart aria-hidden="true" className="h-[22px] w-[22px] shrink-0 text-bordeaux" />
                     {t.form.trust}
                   </p>
                 </div>
@@ -409,7 +421,7 @@ export default async function KontaktPage({ params }) {
                   sizes="(min-width: 1024px) 30vw, 100vw"
                   width={1448}
                   height={1086}
-                  className="h-full max-h-[360px] w-full rounded-[10px] object-cover"
+                  className="h-full max-h-[360px] w-full rounded-card-lg object-cover"
                 />
               </Reveal>
             </div>

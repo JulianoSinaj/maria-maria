@@ -1,16 +1,26 @@
 "use client";
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import Link from "@/components/i18n/LocaleLink";
+import Button from "@/components/ui/Button";
 import { Check, ChevronDown } from "@/components/Icons";
+import {
+  pushEvent,
+  pageLanguage,
+  CONTACT_FORM_NAME,
+  FORM_START,
+  FORM_SUBMIT,
+  GENERATE_LEAD,
+} from "@/lib/analytics";
 import { useIntentTarget } from "./IntentContext";
 import {
   CONDITIONAL_FIELDS,
   CONDITIONAL_TYPES,
   CONDITIONAL_WIDE,
+  FORM_ANCHOR,
   FORM_INTENTS,
 } from "./intents";
-import { CTA_PRIMARY, FIELD, FIELD_LABEL, PANEL } from "./styles";
+import { FIELD, FIELD_LABEL, FOCUS_RING, PANEL } from "./styles";
 
 /* Das Anfrageformular der Kontaktseite.
 
@@ -62,12 +72,12 @@ function validateField(field, value, e = {}) {
   }
 }
 
-/* Sternchen am Label statt „(Pflichtfeld)" hinter jedem Feld — im Mockup ist
-   es ein terrakottafarbenes *, für Screenreader bleibt das Wort. */
+/* Sternchen am Label statt „(Pflichtfeld)" hinter jedem Feld — sichtbar in
+   Bordeaux, für Screenreader bleibt das Wort. */
 function Required({ label }) {
   return (
     <>
-      <span aria-hidden="true" className="text-terracotta">
+      <span aria-hidden="true" className="text-bordeaux">
         *
       </span>
       <span className="sr-only"> ({label})</span>
@@ -127,7 +137,21 @@ export default function ContactForm({ copy }) {
 
   const all = useMemo(() => ({ ...values, intent }), [values, intent]);
 
+  /* Handoff §16: form_start feuert bei der ERSTEN echten Interaktion mit dem
+     Formular (Tippen oder Auswahl), einmal pro Seitenaufruf. Als Ref statt
+     State: das Ereignis braucht keinen Re-Render, nur ein Gedächtnis. */
+  const startedRef = useRef(false);
+  const markStarted = () => {
+    if (startedRef.current) return;
+    startedRef.current = true;
+    pushEvent(FORM_START, {
+      form_name: CONTACT_FORM_NAME,
+      initial_intent: intent || null,
+    });
+  };
+
   const setField = (field, value) => {
+    markStarted();
     if (field === "intent") setIntent(value);
     else setValues((v) => ({ ...v, [field]: value }));
     /* Einen bereits gemeldeten Fehler sofort zurücknehmen, sobald die
@@ -137,12 +161,25 @@ export default function ContactForm({ copy }) {
     }
   };
 
+  const setExtraField = (key, value) => {
+    markStarted();
+    setExtra((x) => ({ ...x, [key]: value }));
+  };
+
   const onBlurField = (field) =>
     setErrors((e) => ({ ...e, [field]: validateField(field, all[field], err) }));
 
   const onSubmit = async (event) => {
     event.preventDefault();
     if (status === "sending") return;
+
+    /* Absende-VERSUCH, unabhängig vom Ergebnis — die Diagnosezahl neben dem
+       Lead (Handoff §16). Der Lead selbst (generate_lead) feuert erst nach
+       der Erfolgsantwort des Endpunkts. */
+    pushEvent(FORM_SUBMIT, {
+      form_name: CONTACT_FORM_NAME,
+      intent: intent || null,
+    });
 
     const next = {};
     REQUIRED.forEach((f) => {
@@ -193,6 +230,14 @@ export default function ContactForm({ copy }) {
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok || !data.ok) throw new Error(err.send);
+      /* Das Key Event in GA4 — genau einmal, erst nach dem 200 des
+         Endpunkts. Nutzlast ohne personenbezogene Daten. */
+      pushEvent(GENERATE_LEAD, {
+        lead_type: intent,
+        form_name: CONTACT_FORM_NAME,
+        source_section: FORM_ANCHOR,
+        language: pageLanguage(),
+      });
       setStatus("sent");
     } catch (error) {
       setStatus("idle");
@@ -251,7 +296,7 @@ export default function ContactForm({ copy }) {
             transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
             className="flex flex-col items-center py-14 text-center"
           >
-            <span className="flex h-14 w-14 items-center justify-center rounded-full border border-terracotta/30 text-terracotta">
+            <span className="ring-hairline flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-cream to-champagne-light/40 text-bordeaux">
               <Check className="h-6 w-6" />
             </span>
             <h3 className="mt-6 font-playfair text-[22px] text-charcoal">{t.success.title}</h3>
@@ -261,7 +306,7 @@ export default function ContactForm({ copy }) {
             <button
               type="button"
               onClick={reset}
-              className="mt-7 min-h-[44px] text-[11.5px] font-semibold uppercase tracking-[0.13em] text-terracotta transition-colors hover:text-terracotta-deep"
+              className={`mt-7 min-h-[44px] text-[13px] font-semibold text-bordeaux transition-colors duration-300 hover:text-bordeaux-deep ${FOCUS_RING}`}
             >
               {t.success.again}
             </button>
@@ -317,7 +362,7 @@ export default function ContactForm({ copy }) {
                   transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                   className="overflow-hidden sm:col-span-2"
                 >
-                  <div className="grid grid-cols-1 gap-x-6 gap-y-5 rounded-[8px] border border-sand bg-terracotta-soft/40 p-5 sm:grid-cols-2">
+                  <div className="grid grid-cols-1 gap-x-6 gap-y-5 rounded-2xl border border-stone/60 bg-champagne-light/20 p-5 sm:grid-cols-2">
                     {conditional.map((key) => {
                       const field = t.conditional[key];
                       const type = CONDITIONAL_TYPES[key] ?? "text";
@@ -333,7 +378,7 @@ export default function ContactForm({ copy }) {
                             <Select
                               id={id}
                               value={extra[key] ?? ""}
-                              onChange={(e) => setExtra((x) => ({ ...x, [key]: e.target.value }))}
+                              onChange={(e) => setExtraField(key, e.target.value)}
                               placeholder={field.placeholder}
                               options={Object.entries(field.options)}
                             />
@@ -347,7 +392,7 @@ export default function ContactForm({ copy }) {
                               placeholder={field.placeholder}
                               className={FIELD}
                               value={extra[key] ?? ""}
-                              onChange={(e) => setExtra((x) => ({ ...x, [key]: e.target.value }))}
+                              onChange={(e) => setExtraField(key, e.target.value)}
                             />
                           )}
                         </div>
@@ -403,13 +448,13 @@ export default function ContactForm({ copy }) {
                   onBlur={() => onBlurField("privacy")}
                   aria-invalid={errors.privacy ? true : undefined}
                   aria-describedby={describe("privacy")}
-                  className="mt-0.5 h-4 w-4 shrink-0 cursor-pointer rounded-[2px] accent-terracotta"
+                  className="mt-0.5 h-4 w-4 shrink-0 cursor-pointer rounded-[2px] accent-bordeaux"
                 />
                 <span>
                   {t.privacyPre}{" "}
                   <Link
                     href="/datenschutz"
-                    className="text-terracotta underline decoration-terracotta/40 underline-offset-2 transition-colors hover:decoration-terracotta"
+                    className="text-bordeaux underline decoration-bordeaux/40 underline-offset-2 transition-colors hover:decoration-bordeaux"
                   >
                     {t.privacyLink}
                   </Link>{" "}
@@ -420,14 +465,16 @@ export default function ContactForm({ copy }) {
               <FieldError id="kf-privacy-error">{errors.privacy}</FieldError>
 
               <div className="mt-6 flex justify-end">
-                <button
+                <Button
                   type="submit"
+                  variant="primary"
+                  iconType="none"
                   disabled={sending}
                   aria-busy={sending}
-                  className={`${CTA_PRIMARY} disabled:cursor-not-allowed disabled:opacity-60`}
+                  className="disabled:cursor-not-allowed disabled:opacity-60"
                 >
                   {sending ? t.sending : t.submit}
-                </button>
+                </Button>
               </div>
             </div>
           </motion.form>

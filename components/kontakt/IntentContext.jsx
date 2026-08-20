@@ -1,6 +1,7 @@
 "use client";
 import { createContext, useCallback, useContext, useMemo, useRef, useState } from "react";
 import { useLenis } from "@/components/motion/SmoothScroll";
+import { pushEvent, CONTACT_INTENT_CLICK } from "@/lib/analytics";
 import { FORM_ANCHOR } from "./intents";
 
 /* Verbindet die vier Anliegen-Karten mit dem Formular weiter unten.
@@ -44,7 +45,17 @@ export default function IntentProvider({ children }) {
      dabei per CSS abgeschaltet und würde hart springen. Läuft Lenis nicht
      (Reduced Motion, noch nicht montiert), übernimmt scrollIntoView. */
   const requestIntent = useCallback(
-    (value) => {
+    (value, meta = {}) => {
+      /* Handoff §16: die Mikro-Konversion vor dem Lead. Hier statt in den
+         Karten und Hero-CTAs einzeln — jeder Weg zum Formular läuft durch
+         diese Funktion, also kann keiner das Event verlieren. Nutzlast ohne
+         personenbezogene Daten: Schlüssel, CTA-Beschriftung, Sektion. */
+      pushEvent(CONTACT_INTENT_CLICK, {
+        intent: value ?? null,
+        cta_label: meta.label ?? null,
+        section: meta.section ?? null,
+      });
+
       if (value) setIntent(value);
 
       const target = document.getElementById(FORM_ANCHOR);

@@ -53,9 +53,12 @@ export default function IntentCards({ copy }) {
                 eine kurze Textzeile, während das eigentliche Ziel die ganze
                 Kachel ist. */}
             <div
-              className={`${CARD} group relative flex h-full w-full items-start gap-5 p-6 text-left transition-colors duration-400 hover:border-terracotta/35 hover:bg-white has-[:focus-visible]:border-terracotta/50 sm:gap-6 sm:p-7`}
+              className={`${CARD} group relative flex h-full w-full items-start gap-5 p-6 text-left transition-colors duration-400 hover:border-champagne/70 hover:bg-white has-[:focus-visible]:border-champagne sm:gap-6 sm:p-7`}
             >
-              <span className="mt-0.5 flex h-[58px] w-[58px] shrink-0 items-center justify-center rounded-full border border-terracotta/25 text-terracotta transition-colors duration-400 group-hover:border-terracotta/50 sm:h-[64px] sm:w-[64px]">
+              {/* Die Bauform von IconChip (components/Deco.jsx): Champagner-
+                  Verlauf, Haarlinien-Ring, Bordeaux-Zeichnung — nur in der
+                  Kachelgröße des Mockups statt der festen Chip-Maße. */}
+              <span className="ring-hairline mt-0.5 flex h-[58px] w-[58px] shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-cream to-champagne-light/40 text-bordeaux sm:h-[64px] sm:w-[64px]">
                 <Icon className="h-[28px] w-[28px]" aria-hidden="true" />
               </span>
 
@@ -75,7 +78,7 @@ export default function IntentCards({ copy }) {
                     sie herum bläht nur die Kachel auf. */}
                 <button
                   type="button"
-                  onClick={() => requestIntent(value)}
+                  onClick={() => requestIntent(value, { label: item.cta, section: "intent_cards" })}
                   className={`${CTA_LINK} mt-auto pt-4 before:absolute before:inset-0 before:content-['']`}
                 >
                   {item.cta}

@@ -113,6 +113,17 @@ export const geschichte = {
     ariaLabel: "Pokračovat k regionům",
     text: "Každé víno začíná na jednom místě. Jeho příběh se dál píše u stolu.",
   },
+
+  /* Kopf der B2B-FAQ am Seitenende — die Fragen selbst liegen in faq.js
+     (faq.geschichte). */
+  faq: {
+    eyebrow: "Otázky & odpovědi",
+    title: "Časté otázky gastronomie,",
+    titleAccent: "obchodu & partnerů.",
+    description:
+      "Na co se nás ptají restaurace, vinné bary, hotely, obchodníci a pořadatelé, než začneme spolupracovat — zodpovězeno z praxe. Co zde zůstane otevřené, vyjasníme osobně.",
+    footerLabel: "Vaše otázka tu není? Napište nám",
+  },
 };
 
 export default geschichte;

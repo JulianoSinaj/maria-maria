@@ -202,6 +202,99 @@ export const faq = {
     },
   ],
 
+  geschichte: [
+    {
+      key: "hospitality",
+      label: "Ristorazione indipendente",
+      items: [
+        {
+          id: "b2b-konzept",
+          q: "Quali vini italiani sono adatti a un piccolo format gastronomico?",
+          a: "Una selezione piccola e curata dalla nostra collezione: un bianco fresco come Falanghina o Lugana, il Rosato Puglia per l'aperitivo e un Primitivo o Il Rosso per la cucina di carattere. Quali vini si adattano alla tua cucina, alla tua fascia di prezzo e al servizio al calice lo definiamo insieme, di persona — proponiamo solo ciò che è davvero a catalogo.",
+          link: { label: "Invia una richiesta per la ristorazione", href: "/kontakt#kontakt-gastronomie" },
+        },
+        {
+          id: "b2b-einstieg",
+          q: "Posso iniziare con una piccola selezione curata?",
+          a: "Partire con poche referenze scelte con cura è la via che consigliamo: due bianchi, un rosato, due rossi — e la carta cresce con i tuoi ospiti. Da quale volume e a quali condizioni sia possibile partire lo discutiamo di persona; dipende dal locale e dalla selezione.",
+          link: { label: "Raccontaci del tuo locale", href: "/kontakt#kontakt-gastronomie" },
+        },
+        {
+          id: "b2b-aperitivo",
+          q: "Quali vini sono adatti all'aperitivo e al servizio al calice?",
+          a: "I vini freschi della collezione: il Rosato Puglia, la Falanghina, Il Bianco e il Lugana — serviti ben freddi, semplici da proporre al calice e con abbinamenti reali dall'aperitivo al pesce. Quali formati e quantità sono disponibili per la tua mescita lo chiariamo a voce.",
+          link: { label: "L'aperitivo negli abbinamenti", href: "/magazin#food-pairing" },
+        },
+        {
+          id: "b2b-beratung",
+          q: "Come può Maria Maria aiutarmi a scegliere per il mio locale?",
+          a: "Di persona, in tre passi: ci racconti del tuo locale, della tua cucina e dei tuoi ospiti. Ti consigliamo e, se lo desideri, organizziamo una degustazione a Düsseldorf e dintorni. Dai tuoi preferiti nasce la selezione per la tua carta — il primo riscontro arriva entro 1–2 giorni lavorativi.",
+          link: { label: "Come funziona la selezione personalizzata", href: "/kontakt#kontakt-individuelle-auswahl" },
+        },
+      ],
+    },
+    {
+      key: "premium",
+      label: "Alta ristorazione & hotellerie",
+      items: [
+        {
+          id: "b2b-speisekarte",
+          q: "Quali vini Maria Maria si abbinano al nostro menu?",
+          a: "Preferiamo rispondere partendo dalla tua carta: inviaci menu e stile di servizio e ti proporremo vini con abbinamenti verificati dalle schede tecniche. Una prima idea la danno il selettore per occasione nel magazine e i consigli su ogni scheda vino.",
+          link: { label: "Scopri gli abbinamenti per occasione", href: "/magazin#food-pairing" },
+        },
+        {
+          id: "b2b-belieferung",
+          q: "Maria Maria rifornisce ristoranti, enoteche e boutique hotel?",
+          a: "Sì — Maria Maria collabora con partner selezionati della ristorazione, del commercio specializzato e dell'hospitality che vogliono integrare vini boutique italiani nel proprio concept. Consulenza e degustazioni le offriamo a Düsseldorf e nel Nordreno-Vestfalia; area di consegna, ritmo e quantità li definiamo di persona per ogni attività, perché la nostra produzione è volutamente limitata.",
+          link: { label: "Richiedi una partnership", href: "/kontakt#kontakt-sortiment" },
+        },
+        {
+          id: "b2b-herkunft",
+          q: "Sono disponibili informazioni su origine e produttori per il personale di sala?",
+          a: "Sì. Ogni scheda vino riporta vitigno, origine, affinamento e temperatura di servizio, la pagina delle regioni racconta cosa caratterizza Puglia, Campania e Lago di Garda, e nelle interviste del magazine parlano i produttori stessi — materiale con cui la tua sala consiglia con sicurezza al tavolo. Ulteriori materiali o una formazione per il tuo team li concordiamo di persona.",
+          link: { label: "Le regioni e i loro vini", href: "/regionen" },
+        },
+        {
+          id: "b2b-konditionen",
+          q: "Quali condizioni si applicano a ristorazione e commercio specializzato?",
+          a: "Condizioni, quantità e scaglioni li discutiamo di persona — calibrati sulla tua attività, sulla tua selezione e sul tuo fabbisogno, non come listino. Raccontaci in breve della tua attività e della selezione che desideri; ti rispondiamo entro 1–2 giorni lavorativi con tutti i dettagli.",
+          link: { label: "Invia una richiesta commerciale", href: "/kontakt#kontakt-sortiment" },
+        },
+      ],
+    },
+    {
+      key: "partner",
+      label: "Eventi, retail & partner",
+      items: [
+        {
+          id: "b2b-events",
+          q: "Quali vini sono adatti a eventi aziendali o occasioni speciali?",
+          a: "Dipende da occasione, menu e numero di ospiti: per il ricevimento i bianchi freschi e il Rosato, per la cena Lugana o Greco di Tufo con il pesce, Primitivo o Il Rosso con la carne. Indicaci data, numero di ospiti, luogo e carattere dell'evento — quantità e logistica le chiariamo su questa base, di persona.",
+          link: { label: "Richiedi i vini per il tuo evento", href: "/kontakt#kontakt-firmenveranstaltungen" },
+        },
+        {
+          id: "b2b-geschenke",
+          q: "Sono disponibili confezioni regalo o presentazioni personalizzate?",
+          a: "Sì. Confezione regalo elegante e biglietto personale sono disponibili direttamente nello shop — per singole bottiglie come per le confezioni degustazione curate. Per quantità maggiori o una presentazione personalizzata per i tuoi clienti business parlane con noi: possibilità, tempi e quantità li chiariamo di persona.",
+          link: { label: "Il regalo nello shop", href: "/shop#shop-geschenk" },
+        },
+        {
+          id: "b2b-weinkonzept",
+          q: "Maria Maria può creare un concept vino per un'attivazione?",
+          a: "Un concept vino per un'attivazione, un progetto di brand o una serie di eventi parte da noi con un briefing: obiettivo, formato, numero di ospiti e tempi. Su questa base chiariamo insieme quali vini, quale portata e quali servizi abbiano senso — e chi si occupa di cosa. Descrivici in breve la tua idea.",
+          link: { label: "Raccontaci la tua idea", href: "/kontakt" },
+        },
+        {
+          id: "b2b-verkostung",
+          q: "È possibile organizzare una degustazione prima di collaborare?",
+          a: "Sì. Conosci Maria Maria nel calice prima di decidere: in una degustazione personale a Düsseldorf e dintorni scopri i tuoi preferiti, da cui nasce poi la tua selezione. Luogo, formato e data li concordiamo con te — ricevi una proposta entro 1–2 giorni lavorativi.",
+          link: { label: "Prenota una degustazione", href: "/kontakt#kontakt-verkostung-buchen" },
+        },
+      ],
+    },
+  ],
+
   shop: [
     {
       id: "shop-kaufen",

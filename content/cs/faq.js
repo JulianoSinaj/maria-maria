@@ -202,6 +202,99 @@ export const faq = {
     },
   ],
 
+  geschichte: [
+    {
+      key: "hospitality",
+      label: "Nezávislá gastronomie",
+      items: [
+        {
+          id: "b2b-konzept",
+          q: "Která italská vína se hodí k malému gastronomickému konceptu?",
+          a: "Malý, pečlivě sestavený výběr z naší kolekce: svěží bílé víno jako Falanghina nebo Lugana, Rosato Puglia k aperitivu a Primitivo nebo Il Rosso k výrazné kuchyni. Která vína se hodí k vaší kuchyni, cenové hladině a rozlévání po skleničkách, domluvíme s vámi osobně — navrhujeme jen to, co je skutečně v sortimentu.",
+          link: { label: "Odeslat poptávku pro gastronomii", href: "/kontakt#kontakt-gastronomie" },
+        },
+        {
+          id: "b2b-einstieg",
+          q: "Mohu začít s malým, pečlivě sestaveným výběrem?",
+          a: "Začít s několika promyšleně zvolenými položkami je cesta, kterou doporučujeme: dvě bílá, jedno rosato, dvě červená — a lístek roste s vašimi hosty. Od jakého objemu a za jakých podmínek je start možný, probereme osobně; záleží na podniku a výběru.",
+          link: { label: "Povězte nám o svém podniku", href: "/kontakt#kontakt-gastronomie" },
+        },
+        {
+          id: "b2b-aperitivo",
+          q: "Která vína se hodí k aperitivu a k rozlévání po skleničkách?",
+          a: "Svěží vína kolekce: Rosato Puglia, Falanghina, Il Bianco a Lugana — podávaná dobře vychlazená, nekomplikovaná na skleničku a se skutečnými párováními od aperitivu po rybu. Které formáty a množství jsou pro váš výčep k dispozici, upřesníme osobně.",
+          link: { label: "Aperitiv ve snoubení s jídlem", href: "/magazin#food-pairing" },
+        },
+        {
+          id: "b2b-beratung",
+          q: "Jak může Maria Maria pomoci s výběrem pro můj koncept?",
+          a: "Osobně, ve třech krocích: povíte nám o svém podniku, kuchyni a hostech. Poradíme vám a na přání zorganizujeme degustaci v Düsseldorfu a okolí. Z vašich favoritů vznikne výběr pro váš lístek — první odpověď dostanete do 1–2 pracovních dnů.",
+          link: { label: "Jak funguje individuální výběr", href: "/kontakt#kontakt-individuelle-auswahl" },
+        },
+      ],
+    },
+    {
+      key: "premium",
+      label: "Prémiová gastronomie & hotely",
+      items: [
+        {
+          id: "b2b-speisekarte",
+          q: "Která vína Maria Maria se hodí k našemu menu?",
+          a: "Nejraději odpovídáme podle vašeho skutečného lístku: pošlete nám menu a styl servisu a navrhneme vína s ověřenými párováními z technických karet. První představu dá přepínač příležitostí v magazínu a doporučení na každé stránce vína.",
+          link: { label: "Objevit snoubení podle příležitosti", href: "/magazin#food-pairing" },
+        },
+        {
+          id: "b2b-belieferung",
+          q: "Zásobuje Maria Maria restaurace, vinotéky a butikové hotely?",
+          a: "Ano — Maria Maria spolupracuje s vybranými partnery z gastronomie, specializovaného obchodu a hospitality, kteří chtějí italská butiková vína začlenit do svého konceptu. Poradenství a degustace nabízíme v Düsseldorfu a Severním Porýní-Vestfálsku; oblast rozvozu, rytmus a množství domlouváme s každým podnikem osobně, protože naše produkce je záměrně limitovaná.",
+          link: { label: "Poptat partnerství", href: "/kontakt#kontakt-sortiment" },
+        },
+        {
+          id: "b2b-herkunft",
+          q: "Jsou k dispozici informace o původu a výrobcích pro obsluhu?",
+          a: "Ano. Každá stránka vína nese technickou kartu s odrůdou, původem, zráním a teplotou podávání, stránka regionů vypráví, co utváří Apulii, Kampánii a Gardské jezero, a v rozhovorech v magazínu promlouvají sami výrobci — podklady, s nimiž váš tým doporučuje u stolu s jistotou. Další materiály nebo školení pro váš tým domluvíme osobně.",
+          link: { label: "Regiony a jejich vína", href: "/regionen" },
+        },
+        {
+          id: "b2b-konditionen",
+          q: "Jaké podmínky platí pro gastronomii a specializovaný obchod?",
+          a: "Podmínky, množství a odběrové stupně probíráme osobně — přizpůsobené vašemu podniku, výběru a potřebě, ne jako ceník. Povězte nám krátce o svém podnikání a požadovaném výběru; ozveme se do 1–2 pracovních dnů se všemi podrobnostmi.",
+          link: { label: "Odeslat obchodní poptávku", href: "/kontakt#kontakt-sortiment" },
+        },
+      ],
+    },
+    {
+      key: "partner",
+      label: "Eventy, retail & partneři",
+      items: [
+        {
+          id: "b2b-events",
+          q: "Která vína se hodí na firemní akce nebo zvláštní příležitosti?",
+          a: "Řídí se to příležitostí, menu a počtem hostů: na přivítání svěží bílá a Rosato, k večeři Lugana nebo Greco di Tufo k rybě, Primitivo nebo Il Rosso k masu. Sdělte nám datum, počet hostů, místo a charakter akce — množství a logistiku na tomto základě vyjasníme osobně.",
+          link: { label: "Poptat vína na akci", href: "/kontakt#kontakt-firmenveranstaltungen" },
+        },
+        {
+          id: "b2b-geschenke",
+          q: "Jsou možné dárkové sady nebo individuální prezentace?",
+          a: "Ano. Elegantní dárkové balení a osobní přáníčko jsou k dispozici přímo v e-shopu — pro jednotlivé láhve i pro sestavené degustační balíčky. Pro větší počty kusů nebo individuální prezentaci pro vaše firemní zákazníky se nám ozvěte: možnosti, termíny a množství upřesníme osobně.",
+          link: { label: "Dárkové doručení v e-shopu", href: "/shop#shop-geschenk" },
+        },
+        {
+          id: "b2b-weinkonzept",
+          q: "Může Maria Maria sestavit vinný koncept pro aktivaci?",
+          a: "Vinný koncept pro aktivaci, značkový projekt nebo sérii akcí u nás začíná briefingem: cíl, formát, počet hostů a časový rámec. Na tomto základě společně vyjasníme, která vína, jaký rozsah a jaké služby dávají smysl — a kdo za co odpovídá. Popište nám krátce svůj nápad.",
+          link: { label: "Popsat svůj nápad", href: "/kontakt" },
+        },
+        {
+          id: "b2b-verkostung",
+          q: "Je možná degustace před zahájením spolupráce?",
+          a: "Ano. Poznejte Maria Maria ve sklenici, než se rozhodnete: při osobní degustaci v Düsseldorfu a okolí objevíte své favority, z nichž pak vznikne váš výběr. Místo, formát a termín domluvíme s vámi — návrh obdržíte do 1–2 pracovních dnů.",
+          link: { label: "Domluvit degustaci", href: "/kontakt#kontakt-verkostung-buchen" },
+        },
+      ],
+    },
+  ],
+
   shop: [
     {
       id: "shop-kaufen",

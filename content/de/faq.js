@@ -217,6 +217,112 @@ export const faq = {
     },
   ],
 
+  /* ---- Geschichte: B2B-FAQ in drei Clustern (Index links) ----
+     Fängt die Suchanfragen der drei Zielsegmente ab — inhabergeführte
+     Gastronomie, Premium-Gastronomie & Hotellerie, Events/Retail/Partner
+     (italienische Weine für Gastronomie, kleines Weinsortiment, Wein für
+     Aperitivo, Weinkarte, Firmenevent, Boutique-Hotel, Weingeschenke
+     Geschäftskunden …) —, ohne die Erzählung der Seite oder die
+     Kontaktseite zu wiederholen. Jede Antwort nennt nur, was die Seite an
+     anderer Stelle bereits zusagt (Beratung, Verkostung in Düsseldorf/NRW,
+     Geschenkverpackung im Shop, 1–2 Werktage) und verweist mit genau einem
+     Link auf den Owner. Bewusst NICHT veröffentlicht, bis operativ bestätigt:
+     Listenpreise, Mindestmengen, Staffeln, Liefergebiet, Formate für den
+     Ausschank, Schulungsunterlagen, Leistungsumfang für Aktivierungen —
+     diese Antworten verweisen ausdrücklich auf das persönliche Gespräch. */
+  geschichte: [
+    {
+      key: "hospitality",
+      label: "Inhabergeführte Gastronomie",
+      items: [
+        {
+          id: "b2b-konzept",
+          q: "Welche italienischen Weine passen zu einem kleinen Gastronomie-Konzept?",
+          a: "Eine kleine, kuratierte Auswahl aus unserer Kollektion: ein frischer Weißwein wie Falanghina oder Lugana, der Rosato Puglia für den Aperitivo und ein Primitivo oder Il Rosso für die kräftige Küche. Welche Weine zu Ihrer Küche, Ihrer Preislage und Ihrem Service am Glas passen, stimmen wir persönlich mit Ihnen ab — wir schlagen nur vor, was wirklich im Sortiment ist.",
+          link: { label: "Gastronomie-Anfrage stellen", href: "/kontakt#kontakt-gastronomie" },
+        },
+        {
+          id: "b2b-einstieg",
+          q: "Kann ich mit einer kleinen, kuratierten Weinauswahl starten?",
+          a: "Ein Einstieg mit wenigen, bewusst gewählten Positionen ist der Weg, den wir empfehlen: zwei Weiße, ein Rosato, zwei Rote — und die Karte wächst mit Ihren Gästen. Ab welchem Umfang und zu welchen Konditionen der Start möglich ist, besprechen wir persönlich; das hängt von Betrieb und Auswahl ab.",
+          link: { label: "Erzählen Sie uns von Ihrem Betrieb", href: "/kontakt#kontakt-gastronomie" },
+        },
+        {
+          id: "b2b-aperitivo",
+          q: "Welche Weine eignen sich für Aperitivo und offenen Ausschank?",
+          a: "Die frischen Weine der Kollektion: der Rosato Puglia, die Falanghina, Il Bianco und der Lugana — gut gekühlt serviert, unkompliziert am Glas und mit echten Pairings vom Aperitivo bis zum Fisch. Welche Formate und Mengen für Ihren Ausschank verfügbar sind, klären wir im Gespräch.",
+          link: { label: "Zum Aperitivo im Food Pairing", href: "/magazin#food-pairing" },
+        },
+        {
+          id: "b2b-beratung",
+          q: "Wie kann Maria Maria bei der Auswahl für mein Konzept helfen?",
+          a: "Persönlich, in drei Schritten: Sie erzählen uns von Ihrem Betrieb, Ihrer Küche und Ihren Gästen. Wir beraten Sie und organisieren auf Wunsch eine Verkostung in Düsseldorf und Umgebung. Aus Ihren Favoriten entsteht die Auswahl für Ihre Karte — die erste Rückmeldung erhalten Sie innerhalb von 1–2 Werktagen.",
+          link: { label: "So funktioniert die individuelle Auswahl", href: "/kontakt#kontakt-individuelle-auswahl" },
+        },
+      ],
+    },
+    {
+      key: "premium",
+      label: "Premium-Gastronomie & Hotellerie",
+      items: [
+        {
+          id: "b2b-speisekarte",
+          q: "Welche Maria-Maria-Weine passen zu unserer Speisekarte?",
+          a: "Das beantworten wir am liebsten anhand Ihrer Karte: Schicken Sie uns Menü und Servicestil, und wir schlagen Ihnen Weine mit geprüften Food Pairings aus den Datenblättern vor. Einen ersten Eindruck geben der Anlass-Schalter im Magazin und die Empfehlungen auf jeder Weinseite.",
+          link: { label: "Food Pairings nach Anlass entdecken", href: "/magazin#food-pairing" },
+        },
+        {
+          id: "b2b-belieferung",
+          q: "Beliefert Maria Maria Restaurants, Enotheken und Boutique-Hotels?",
+          a: "Ja — Maria Maria arbeitet mit ausgewählten Partnern aus Gastronomie, Fachhandel und Hospitality zusammen, die italienische Boutique-Weine in ihr Konzept integrieren möchten. Beratung und Verkostung bieten wir in Düsseldorf und NRW an; Liefergebiet, Rhythmus und Mengen stimmen wir je Betrieb persönlich ab, denn unsere Produktion ist bewusst limitiert.",
+          link: { label: "Partnerschaft anfragen", href: "/kontakt#kontakt-sortiment" },
+        },
+        {
+          id: "b2b-herkunft",
+          q: "Gibt es Informationen zu Herkunft und Produzenten für das Servicepersonal?",
+          a: "Ja. Jede Weinseite trägt ihr Datenblatt mit Rebsorte, Herkunft, Ausbau und Serviertemperatur, die Regionenseite erzählt, was Apulien, Kampanien und den Gardasee prägt, und in den Gesprächen im Magazin kommen die Produzenten selbst zu Wort — Stoff, mit dem Ihr Team am Tisch sicher empfiehlt. Weitere Unterlagen oder eine Schulung für Ihr Team besprechen wir persönlich.",
+          link: { label: "Die Regionen und ihre Weine", href: "/regionen" },
+        },
+        {
+          id: "b2b-konditionen",
+          q: "Welche Konditionen gelten für Gastronomie und Fachhandel?",
+          a: "Konditionen, Mengen und Staffeln besprechen wir persönlich — abgestimmt auf Ihren Betrieb, Ihre Auswahl und Ihren Bedarf, nicht als Listenpreis. Erzählen Sie uns kurz von Ihrem Geschäft und Ihrer gewünschten Auswahl; wir melden uns innerhalb von 1–2 Werktagen mit allen Details.",
+          link: { label: "Händleranfrage stellen", href: "/kontakt#kontakt-sortiment" },
+        },
+      ],
+    },
+    {
+      key: "partner",
+      label: "Events, Retail & Partner",
+      items: [
+        {
+          id: "b2b-events",
+          q: "Welche Weine eignen sich für Firmenveranstaltungen oder besondere Anlässe?",
+          a: "Das richtet sich nach Anlass, Menü und Gästezahl: zum Empfang die frischen Weißen und der Rosato, zum Dinner Lugana oder Greco di Tufo zu Fisch, Primitivo oder Il Rosso zu Fleisch. Nennen Sie uns Datum, Gästezahl, Ort und Charakter der Veranstaltung — Mengen und Logistik klären wir auf dieser Basis persönlich.",
+          link: { label: "Event-Weine anfragen", href: "/kontakt#kontakt-firmenveranstaltungen" },
+        },
+        {
+          id: "b2b-geschenke",
+          q: "Sind Geschenksets oder individuelle Präsentationen möglich?",
+          a: "Ja. Elegante Geschenkverpackung und eine persönliche Grußkarte gibt es direkt im Shop — für einzelne Flaschen wie für die kuratierten Probierpakete. Für größere Stückzahlen oder eine individuelle Präsentation für Ihre Geschäftskunden sprechen Sie uns an: Möglichkeiten, Zeitrahmen und Mengen klären wir persönlich.",
+          link: { label: "Geschenkversand im Shop", href: "/shop#shop-geschenk" },
+        },
+        {
+          id: "b2b-weinkonzept",
+          q: "Kann Maria Maria ein Weinkonzept für eine Aktivierung zusammenstellen?",
+          a: "Ein Weinkonzept für eine Aktivierung, ein Markenprojekt oder eine Veranstaltungsreihe beginnt bei uns mit einem Briefing: Ziel, Format, Gästezahl und Zeitrahmen. Auf dieser Basis klären wir gemeinsam, welche Weine, welcher Umfang und welche Leistungen sinnvoll sind — und wer was verantwortet. Beschreiben Sie uns kurz Ihre Idee.",
+          link: { label: "Ihre Idee schildern", href: "/kontakt" },
+        },
+        {
+          id: "b2b-verkostung",
+          q: "Sind Verkostungen vor einer Zusammenarbeit möglich?",
+          a: "Ja. Lernen Sie Maria Maria im Glas kennen, bevor Sie sich entscheiden: Bei einer persönlichen Verkostung in Düsseldorf und Umgebung entdecken Sie Ihre Favoriten, aus denen anschließend Ihre Auswahl entsteht. Ort, Format und Termin stimmen wir mit Ihnen ab — Sie erhalten innerhalb von 1–2 Werktagen einen Vorschlag.",
+          link: { label: "Verkostung vereinbaren", href: "/kontakt#kontakt-verkostung-buchen" },
+        },
+      ],
+    },
+  ],
+
   /* ---- Shop: Service-FAQ (Owner für Kauf-, Versand- und Geschenkfragen) ---- */
   shop: [
     {

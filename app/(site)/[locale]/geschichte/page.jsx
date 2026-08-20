@@ -12,13 +12,14 @@ import StoryChapterNav from "@/components/geschichte/StoryChapterNav";
 import StoryStats from "@/components/geschichte/StoryStats";
 import StoryCta from "@/components/geschichte/StoryCta";
 import ValerioSection from "@/components/geschichte/ValerioSection";
+import FaqSection from "@/components/faq/FaqSection";
 import { STORY_CHAPTERS, STORY_TODAY, STORY_STATS } from "@/components/geschichte/storyData";
 import JsonLd from "@/components/seo/JsonLd";
 import { getDictionary } from "@/lib/i18n/dictionaries";
 import { pageMetadata } from "@/lib/i18n/metadata";
 import { localePath } from "@/lib/i18n/routing";
 import { absoluteUrl } from "@/lib/site";
-import { graph, webPageNode, breadcrumbNode, ORG_ID } from "@/lib/seo/jsonLd";
+import { graph, webPageNode, breadcrumbNode, faqNode, ORG_ID } from "@/lib/seo/jsonLd";
 
 /* ============================================================================
    GESCHICHTE — die Erzählseite der Marke, Sprungziel aus Capitolo I
@@ -42,6 +43,11 @@ import { graph, webPageNode, breadcrumbNode, ORG_ID } from "@/lib/seo/jsonLd";
    Passaggio      das Bordeaux-Schlussband (StoryCta) führt weiter in
                   die Regionen — derselbe Ausgang, den auch Startseite
                   und Magazin nehmen.
+   FAQ            „Fragen von Gastronomie, Handel & Partnern" — drei
+                  Cluster nach Zielsegment (FaqSection mit Themen-Index),
+                  die B2B-Suchanfragen, ohne die Erzählung zu wiederholen.
+                  Fragen in content/<sprache>/faq.js (faq.geschichte),
+                  Kopfzeile in geschichte.js (faq).
 
    Überschriften-Gliederung: ein <h1> (Zwei Frauen, zwei Generationen),
    jedes Kapitel eine <section> mit <h2> über aria-labelledby. Die Anker
@@ -71,7 +77,7 @@ export async function generateMetadata({ params }) {
    Sitz Düsseldorf, Herkunft Italien. Für den Wissensgraph-Eintrag zählt
    nicht die Länge des Textes, sondern dass die Seite sich als „das hier
    handelt von diesem Unternehmen" zu erkennen gibt. */
-function GeschichteJsonLd({ locale, dict }) {
+function GeschichteJsonLd({ locale, dict, faq = [] }) {
   const url = absoluteUrl(localePath(locale, "/geschichte"));
   const nav = dict?.common?.nav ?? {};
   const localize = (href) => localePath(locale, href);
@@ -102,7 +108,10 @@ function GeschichteJsonLd({ locale, dict }) {
           }),
           mainEntity: { "@id": ORG_ID },
         },
-        crumbs
+        crumbs,
+        /* FAQ-Paare nur dort, wo der Besucher denselben Text liest — wie
+           auf /magazin noch deutsch (I18N.md, Abschnitt 7). */
+        locale === "de" ? faqNode({ url, items: faq }) : null
       )}
     />
   );
@@ -130,9 +139,14 @@ export default async function GeschichtePage({ params }) {
 
   const stats = STORY_STATS.map((stat, i) => ({ ...stat, ...(t.stats?.[i] ?? {}) }));
 
+  /* Die B2B-FAQ in drei Clustern — das FAQPage-Markup bekommt dieselben
+     Fragen als flache Liste. */
+  const faqGroups = dict.faq?.geschichte ?? [];
+  const faqItems = faqGroups.flatMap((g) => g.items ?? []);
+
   return (
     <main className="relative min-h-screen pt-[calc(96px+env(safe-area-inset-top))]">
-      <GeschichteJsonLd locale={params.locale} dict={dict} />
+      <GeschichteJsonLd locale={params.locale} dict={dict} faq={faqItems} />
       {/* ================= AUFTAKT: LE ORIGINI ============================ */}
       <section id="geschichte" aria-labelledby="geschichte-titel" className="relative overflow-hidden">
         <Aura tint="gold" className="-left-56 top-16 h-[38rem] w-[38rem]" />
@@ -276,10 +290,15 @@ export default async function GeschichtePage({ params }) {
         </div>
       </section>
 
+      {/* ================= DIE ERZÄHLUNG: KOMPASS BIS KAPITEL 04 ==========
+          Der klassenlose Wrapper ist der Haftbereich der Sticky-Leiste: sie
+          begleitet die Erzählung bis zum Ende von Kapitel 04 und lässt dann
+          los, bevor die FAQ beginnt — sonst stünde sie auf Telefonen mit
+          „Die Auswahl" als Dauer-Markierung über den Fragen. Auf dem
+          Desktop ändert der Wrapper nichts (keine Klassen, kein Overflow). */}
+      <div>
       {/* ================= KAPITEL-KOMPASS (nur Telefone) =================
-          Direktes Kind von <main>, damit die Sticky-Leiste bis zum Ende der
-          Erzählung haftet — ein Wrapper würde sie auf seine eigene Höhe
-          begrenzen. Ab md rendert die Komponente nichts Sichtbares. */}
+          Ab md rendert die Komponente nichts Sichtbares. */}
       <StoryChapterNav chapters={chapters} today={{ ...STORY_TODAY, ...today }} t={t.nav} />
 
       {/* ================= KAPITEL 01–03: DIE REISE ======================= */}
@@ -304,12 +323,12 @@ export default async function GeschichtePage({ params }) {
       <section
         id={STORY_TODAY.id}
         aria-labelledby="story-auswahl"
-        className="relative -mb-12 scroll-mt-40 overflow-hidden lg:-mb-16"
+        className="relative scroll-mt-40 overflow-hidden"
       >
         <Aura tint="olive" className="-right-48 top-[10%] h-[30rem] w-[30rem]" />
         <GhostWord className="left-[-2vw] bottom-[-6%] text-[11vw]">selezione</GhostWord>
 
-        <div className="relative mx-auto max-w-content px-6 pb-2 pt-8 lg:px-10 lg:pb-3 lg:pt-10">
+        <div className="relative mx-auto max-w-content px-6 pb-6 pt-8 lg:px-10 lg:pb-8 lg:pt-10">
           <Reveal className="text-center">
             <p className="flex items-center justify-center gap-3 text-[10.5px] font-semibold uppercase tracking-[0.26em] text-champagne">
               <span className="text-bordeaux/80">{today.label}</span>
@@ -330,6 +349,29 @@ export default async function GeschichtePage({ params }) {
           </div>
         </div>
       </section>
+      </div>
+
+      {/* ================= FAQ: GASTRONOMIE, HANDEL & PARTNER =============
+          Schließt die Seite — deshalb trägt der Wrapper den Unterzug
+          (-mb), den vorher Kapitel 04 hatte. Drei Cluster nach Zielsegment,
+          Themen-Index links; Inhalte und Veröffentlichungsregeln in
+          content/de/faq.js. */}
+      <div className="relative -mb-12 overflow-hidden bg-gradient-to-b from-cream via-champagne-light/25 to-ivory lg:-mb-16">
+        <GhostWord className="right-[-2vw] bottom-6 text-[11vw]">Insieme</GhostWord>
+        <FaqSection
+          className="relative"
+          pageType="geschichte"
+          eyebrow={t.faq?.eyebrow}
+          title={
+            <>
+              {t.faq?.title} <span className="italic text-bordeaux">{t.faq?.titleAccent}</span>
+            </>
+          }
+          description={t.faq?.description}
+          groups={faqGroups}
+          footer={{ label: t.faq?.footerLabel, href: "/kontakt" }}
+        />
+      </div>
     </main>
   );
 }

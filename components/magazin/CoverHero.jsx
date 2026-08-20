@@ -149,7 +149,7 @@ export default function CoverHero({ hasInterviews = false, t = {}, vision }) {
             <Reveal delay={0.7} y={12} blur={false}>
               <Link
                 href="/geschichte"
-                className="group mt-4 inline-flex min-h-[44px] items-center gap-1.5 text-[12px] font-medium text-bordeaux"
+                className="group mt-4 inline-flex min-h-[40px] items-center gap-2 rounded-full bg-champagne-light px-5 py-2 text-[11px] font-medium uppercase tracking-[0.18em] text-bordeaux shadow-luxe transition-colors duration-300 hover:bg-champagne"
               >
                 {t.cta}
                 <Arrow className="h-3.5 w-3.5 transition-transform duration-500 ease-out-expo group-hover:translate-x-1" />

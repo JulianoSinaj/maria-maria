@@ -113,6 +113,17 @@ export const geschichte = {
     ariaLabel: "Prosegui verso le regioni",
     text: "Ogni vino comincia in un luogo. La sua storia continua a scriversi a tavola.",
   },
+
+  /* Kopf der B2B-FAQ am Seitenende — die Fragen selbst liegen in faq.js
+     (faq.geschichte). */
+  faq: {
+    eyebrow: "Domande & risposte",
+    title: "Le domande frequenti di ristorazione,",
+    titleAccent: "commercio & partner.",
+    description:
+      "Ciò che ristoranti, wine bar, hotel, rivenditori e organizzatori ci chiedono prima di collaborare — risposte dalla pratica. Quello che qui resta aperto, lo chiariamo di persona.",
+    footerLabel: "La tua domanda non c'è? Scrivici",
+  },
 };
 
 export default geschichte;

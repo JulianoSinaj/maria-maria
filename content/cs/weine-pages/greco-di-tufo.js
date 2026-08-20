@@ -135,7 +135,7 @@ const grecoDiTufo = {
       {
         kicker: "Chuť",
         title: "Svěží, jemná a svůdná",
-        text: "Žluté peckoviny, citrusová kůra a jemná minerální tón — bílé víno se strukturou, které svádí potichu.",
+        text: "Žluté peckoviny, citrusová kůra a jemný minerální tón — bílé víno se strukturou, které svádí potichu.",
       },
       {
         kicker: "Původ",
@@ -161,7 +161,7 @@ const grecoDiTufo = {
     },
     {
       q: "Je Greco di Tufo minerální?",
-      a: "Ano. Vinice kolem vesnice Tufo leží na vulkanickém tufu, který vínu dodává jemnou minerální tón a napětí. Spolu s nadmořskou výškou a chladnými nocemi tak vzniká jeho typická struktura – svěžest s hloubkou.",
+      a: "Ano. Vinice kolem vesnice Tufo leží na vulkanickém tufu, který vínu dodává jemný minerální tón a napětí. Spolu s nadmořskou výškou a chladnými nocemi tak vzniká jeho typická struktura – svěžest s hloubkou.",
     },
     {
       q: "K jakému jídlu se hodí Greco di Tufo?",

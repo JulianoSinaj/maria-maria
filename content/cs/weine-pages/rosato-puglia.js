@@ -124,7 +124,7 @@ const rosatoPuglia = {
       items: [
         { title: "Teplota podávání", text: "12–14 °C — dobře vychlazené" },
         { title: "Kdy pít", text: "Vychutnat mladé — nejlépe během 1–2 let" },
-        { title: "Předehra", text: "Vyndejte z lednice těsně před podáváním — svěžest je jeho charakter" },
+        { title: "Úvod", text: "Vyndat z lednice těsně před podáváním — svěžest je jeho charakter" },
       ],
     },
     maria: {

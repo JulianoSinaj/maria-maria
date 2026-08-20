@@ -139,6 +139,8 @@ export const common = {
   cart: {
     title: "Váš košík",
     items: "položek",
+    itemOne: "položka",
+    itemFew: "položky",
     open: "Otevřít košík",
     close: "Zavřít košík",
     label: "Košík",
@@ -179,12 +181,15 @@ export const common = {
       summer: "Letní víno",
     },
     edition: "{count} lahví",
-    bottles: "{count} lahve",
+    /* 3 lahve (Trio) vs. 6 lahví (Grande Selezione) — dva různé tvary. */
+    bottles: "{count} lahví",
+    bottlesFew: "{count} lahve",
     limitedEdition: "Limitovaná edice · {count} lahví",
     scarce: "Zbývá jen několik lahví",
     single: "Jednotlivě",
     save: "Ušetříte {amount}",
-    bundleSub: "Degustační balíček · {count} lahve",
+    bundleSub: "Degustační balíček · {count} lahví",
+    bundleSubFew: "Degustační balíček · {count} lahve",
     bundles: {
       "paket-trio-rosso": {
         tag: "Síla jihu",

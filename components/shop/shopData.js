@@ -11,6 +11,7 @@
    Produktnamen, keine Beschreibungen. */
 
 import { WINES } from "@/components/data";
+import { pickPlural } from "@/lib/i18n/format";
 
 export const FREE_SHIPPING_FROM = 69;
 export const SHIPPING_COST = 4.9;
@@ -111,7 +112,10 @@ BUNDLES.forEach((b) => {
 export function productSub(product, common = {}) {
   if (!product) return "";
   if (product.kind === "bundle") {
-    return (common.shop?.bundleSub ?? "").replace("{count}", product.bottles);
+    return pickPlural(
+      { few: common.shop?.bundleSubFew, many: common.shop?.bundleSub },
+      product.bottles
+    ).replace("{count}", product.bottles);
   }
   const cat = common.catalogue ?? {};
   const structure = WINES.find((w) => w.slug === product.slug);

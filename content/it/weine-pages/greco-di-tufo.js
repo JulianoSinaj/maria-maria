@@ -84,7 +84,7 @@ const grecoDiTufo = {
     title: "Una vite greca su suolo vulcanico",
     paragraphs: [
       "Secondo la tradizione il Greco giunse nel Sud Italia con i coloni greci – e trovò la sua patria attorno al villaggio di Tufo, in Irpinia. Il nome del luogo è al tempo stesso il suo segreto: il tufo, la roccia vulcanica porosa che dona alle viti mineralità e tensione.",
-      "Il Greco di Tufo è uno dei pochi bianchi d'Italia a fregiarsi della D.O.C.G. – il livello più alto di denominazione del Paese. Le uve si vendemmiano solo a fine della prima metà di ottobre, si pressano delicatamente a grappolo intero e affinano poi un anno in acciaio.",
+      "Il Greco di Tufo è uno dei pochi bianchi d'Italia a fregiarsi della D.O.C.G. – il livello più alto di denominazione del Paese. Le uve si vendemmiano solo alla fine della prima metà di ottobre, si pressano delicatamente a grappolo intero e affinano poi un anno in acciaio.",
     ],
     quote: {
       text: "Un vino di carattere e di quiete – per le sere in cui nessuno guarda l'orologio.",

@@ -136,6 +136,7 @@ export const common = {
   cart: {
     title: "Il tuo carrello",
     items: "articoli",
+    itemOne: "articolo",
     open: "Apri il carrello",
     close: "Chiudi il carrello",
     label: "Carrello",

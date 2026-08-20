@@ -83,7 +83,7 @@ const ilBianco = {
     kicker: "La storia",
     title: "Due anni di pazienza",
     paragraphs: [
-      "Il Bianco non è una solista, ma un insieme: vitigni bianchi selezionati della Campania che trovano il proprio carattere solo insieme. Le uve vengono pressate a grappolo intero, in modo soffice e delicato — nulla viene forzato.",
+      "Il Bianco non è un solista, ma un insieme: vitigni bianchi selezionati della Campania che trovano il proprio carattere solo insieme. Le uve vengono pressate a grappolo intero, in modo soffice e delicato — nulla viene forzato.",
       "Poi arriva la parte che non si può abbreviare: due anni in silo d'acciaio. Niente legno, nessuna distrazione. Ciò che resta è un bouquet molto intenso e un gusto che si è fatto delicato invece che rumoroso.",
     ],
     quote: {

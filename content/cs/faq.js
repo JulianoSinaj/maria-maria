@@ -175,7 +175,7 @@ export const faq = {
     {
       id: "wissen-dekantieren",
       q: "Musí se Primitivo dekantovat?",
-      a: "Ne, nutné to není. Silná mladá červená vína ale trocha vzduchu před podáváním prospěje — konkrétní doporučení z technické karty najdete na stránce daného vína.",
+      a: "Ne, nutné to není. Silným mladým červeným vínům ale trocha vzduchu před podáváním prospěje — konkrétní doporučení z technické karty najdete na stránce daného vína.",
       link: { label: "K doporučení podávání Primitivo 15,5", href: "/unsere-weine/primitivo-15-5" },
     },
     {
@@ -216,7 +216,7 @@ export const faq = {
     {
       id: "shop-international",
       q: "Posíláte i do zahraničí?",
-      a: "Ano — kromě Německa doručujeme do vybraných evropských zemí. Cena a doba dodání závisí na cílové zemi a jsou transparentně uvedeny v objednávkovém procesu. Zda doručujeme do vaší země, rádi ověříme předem — stačí nám napsat.",
+      a: "Ano — kromě Německa doručujeme do vybraných evropských zemí. Cena dopravy a doba dodání závisí na cílové zemi a jsou transparentně uvedeny v objednávkovém procesu. Zda doručujeme do vaší země, rádi ověříme předem — stačí nám napsat.",
     },
     {
       id: "shop-bezahlung",

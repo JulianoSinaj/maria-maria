@@ -158,7 +158,11 @@ export const common = {
   /* Warenkorb — läuft site-weit mit, daher im gemeinsamen Abschnitt. */
   cart: {
     title: "Ihr Warenkorb",
+    /* Deutsch ist hier formgleich; die anderen Sprachen brauchen den
+       Singular, Tschechisch zusätzlich die Form für 2–4.
+       pickPlural() in lib/i18n/format.js wählt. */
     items: "Artikel",
+    itemOne: "Artikel",
     open: "Warenkorb öffnen",
     close: "Warenkorb schließen",
     label: "Warenkorb",

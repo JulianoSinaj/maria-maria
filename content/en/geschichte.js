@@ -85,7 +85,7 @@ export const geschichte = {
     },
     duesseldorf: {
       label: "Since 2019 · Düsseldorf",
-      title: "At home in Germany. Thought beyond borders.",
+      title: "At home in Germany. Thinking beyond borders.",
       paragraphs: [
         "The Maria Maria brand has been active in Germany since 2019 and is based in Düsseldorf. From here, personally selected Italian wines become accessible to people in Germany and other countries.",
         "Düsseldorf is the brand's home – not the boundary of its selection. What matters remains the origin, the character and the story behind every wine.",

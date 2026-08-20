@@ -9,6 +9,7 @@ import { Check } from "@/components/Icons";
 import { useCommon, useLocaleTools } from "@/lib/i18n/context";
 import { useCart } from "./CartContext";
 import { bundleWines, bundleSum, bundleSaving } from "./shopData";
+import { pickPlural } from "@/lib/i18n/format";
 
 /* Probierpaket card — a fanned bottle still that spreads on hover, the
    contents as a checked list, and a bundle price with visible savings.
@@ -108,7 +109,10 @@ export default function BundleCard({ bundle, className = "" }) {
           <h3 className={`font-playfair text-[22px] text-charcoal ${bundle.featured ? "" : "mt-1.5"}`}>
             {bundle.name}
             <span className="ml-2 align-middle font-montserrat text-[11px] uppercase tracking-[0.14em] text-charcoal/50">
-              {shop.bottles?.replace("{count}", wines.length)}
+              {pickPlural({ few: shop.bottlesFew, many: shop.bottles }, wines.length)?.replace(
+                "{count}",
+                wines.length
+              )}
             </span>
           </h3>
           <p className="mt-2 text-[12.5px] leading-relaxed text-charcoal/65">{copy.desc}</p>

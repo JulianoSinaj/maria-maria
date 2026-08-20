@@ -12,6 +12,7 @@ import { Minus, Shield } from "./ShopIcons";
 import { useCommon, useLocaleTools } from "@/lib/i18n/context";
 import { useCart } from "./CartContext";
 import { PRODUCTS, productSub } from "./shopData";
+import { pickPlural } from "@/lib/i18n/format";
 
 /* Warenkorb — on desktop a spring slide-over from the right; on phones a
    bottom sheet with a grab handle that can be flicked shut. A floating glass
@@ -106,6 +107,12 @@ function ItemRow({ item }) {
     </div>
   );
 }
+
+/* „1 Artikel" / „1 item" / „1 položka" — vorher stand hier eine einzige
+   Form, was außerhalb des Deutschen bei jeder Anzahl außer der Mehrzahl
+   danebentraf („1 items", „1 položek"). */
+const itemLabel = (t, count) =>
+  pickPlural({ one: t.itemOne, few: t.itemFew, many: t.items }, count);
 
 export default function CartDrawer() {
   const { price: fmtPrice } = useLocaleTools();
@@ -203,7 +210,7 @@ export default function CartDrawer() {
               <button
                 type="button"
                 onClick={openCart}
-                aria-label={`${t.open} — ${count} ${t.items}, ${fmtPrice(subtotal)}`}
+                aria-label={`${t.open} — ${count} ${itemLabel(t, count)}, ${fmtPrice(subtotal)}`}
                 className="glass group pointer-events-auto flex h-14 items-center gap-4 rounded-full pl-5 pr-6 shadow-lift transition-shadow duration-300"
               >
                 <span className="relative text-charcoal">
@@ -281,7 +288,7 @@ export default function CartDrawer() {
                   {t.title}
                   {count > 0 && (
                     <span className="ml-2 align-middle font-montserrat text-[11px] uppercase tracking-[0.16em] text-charcoal/50">
-                      {count} {t.items}
+                      {count} {itemLabel(t, count)}
                     </span>
                   )}
                 </p>

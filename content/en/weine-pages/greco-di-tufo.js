@@ -108,7 +108,7 @@ const grecoDiTufo = {
   pairing: {
     scene: {
       dish: "Spaghetti alle Vongole",
-      copy: "Spaghetti alle vongole live on clarity: clams, olive oil, garlic and a breath of sea aroma. That is precisely where the strength of the Greco di Tufo DOCG lies. Its mineral tension, its freshness and its precise structure pick up the saline elegance of the dish without pushing itself forward. The result is a pairing that makes the coast of Campania tangible in a particularly authentic way.",
+      copy: "Spaghetti alle vongole live on clarity: clams, olive oil, garlic and a breath of sea aroma. That is precisely where the strength of the Greco di Tufo DOCG lies. Its mineral tension, its freshness and its precise structure pick up the saline elegance of the dish without pushing themselves forward. The result is a pairing that makes the coast of Campania tangible in a particularly authentic way.",
       imageAlt:
         "Spaghetti alle vongole on a plate in the trattoria, beside it a glass of Greco di Tufo and the bottle",
       regionLink: {

@@ -1,5 +1,5 @@
 import { DISALLOWED_PATHS } from "@/lib/seo/routes";
-import { SITE_URL, absoluteUrl } from "@/lib/site";
+import { SITE_URL, INDEXABLE, absoluteUrl } from "@/lib/site";
 
 /* /robots.txt
 
@@ -35,7 +35,17 @@ export default function robots() {
         disallow: DISALLOWED_PATHS,
       },
     ],
-    sitemap: absoluteUrl("/sitemap.xml"),
+    /* Die Sitemap NUR auf der Live-Domain. Eine Vorschau-Instanz trägt in
+       jeder Seite `noindex` (INDEXABLE in lib/site.js) — würde sie daneben
+       achtzig Adressen zur Indexierung anbieten, widerspräche die eine Datei
+       der anderen.
+
+       Bewusst KEIN `Disallow: /` auf der Vorschau: Ein gesperrter Pfad
+       verhindert, dass der Crawler die Seite lädt — und damit auch, dass er
+       das `noindex` darin überhaupt zu Gesicht bekommt. Adressen, die er
+       anderswo verlinkt findet, blieben so als nackte Zeile im Index stehen,
+       genau das Gegenteil des Ziels. Erst lesen lassen, dann ausschließen. */
+    ...(INDEXABLE ? { sitemap: absoluteUrl("/sitemap.xml") } : null),
     /* `host` löst für Crawler auf, welche Schreibweise die maßgebliche ist,
        falls die Seite unter mehreren Adressen erreichbar bleibt. */
     host: SITE_URL,

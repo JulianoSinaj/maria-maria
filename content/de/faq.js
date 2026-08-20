@@ -37,7 +37,7 @@ export const faq = {
       id: "home-partner",
       q: "Arbeitet Maria Maria mit Gastronomie, Hospitality und Lifestyle-Partnern zusammen?",
       a: "Ja. Maria Maria richtet sich auch an ausgewählte Partner aus Gastronomie, Hospitality, Events, Retail und Lifestyle, die italienische Boutique-Weine in ihr Konzept integrieren möchten. Anfragen und mögliche Kooperationen besprechen wir persönlich.",
-      link: { label: "Maria Maria als Partner entdecken", href: "/kontakt#kontakt-haendler" },
+      link: { label: "Maria Maria als Partner entdecken", href: "/kontakt#kontakt-sortiment" },
     },
     {
       id: "home-kontakt",

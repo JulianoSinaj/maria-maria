@@ -200,6 +200,7 @@ export const kontakt = {
         id: "kontakt-sortiment",
         q: "Can I add Maria Maria to my range?",
         a: "Yes. Choose “Retail & resale” and tell us briefly about your business, your location and the selection you have in mind. We then discuss the right next steps personally.",
+        link: { label: "See the full range", href: "/unsere-weine" },
       },
       {
         id: "kontakt-firmenveranstaltungen",
@@ -210,16 +211,19 @@ export const kontakt = {
         id: "kontakt-gastronomie",
         q: "Can I offer Maria Maria wines in my restaurant or delicatessen?",
         a: "Yes. Choose “Restaurants & delicatessen” and tell us briefly about your business, your kitchen or concept and your location. Together we find a selection that suits your guests.",
+        link: { label: "Discover origin and food pairing", href: "/regionen" },
       },
       {
         id: "kontakt-individuelle-auswahl",
         q: "How does an individual wine selection work?",
         a: "First you tell us what you have in mind. If you like, you get to know the wines at a tasting. From your favourites comes a selection that suits your concept, your menu or your occasion.",
+        link: { label: "All wines at a glance", href: "/unsere-weine" },
       },
       {
         id: "kontakt-kaufen",
         q: "Where can I buy Maria Maria wines?",
         a: "The wines can be ordered through the official Maria Maria shop. On the contact page the shop stays a secondary route, so that advice, event and B2B enquiries are not drawn away from the contact funnel.",
+        link: { label: "To the shop", href: "/shop" },
       },
     ],
   },

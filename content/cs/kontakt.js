@@ -200,6 +200,7 @@ export const kontakt = {
         id: "kontakt-sortiment",
         q: "Mohu Maria Maria zařadit do svého sortimentu?",
         a: "Ano. Zvolte „Obchod a další prodej“ a napište nám krátce o svém obchodě, své lokalitě a požadovaném výběru. Následně osobně probereme vhodné další kroky.",
+        link: { label: "Prohlédnout celý sortiment", href: "/unsere-weine" },
       },
       {
         id: "kontakt-firmenveranstaltungen",
@@ -210,16 +211,19 @@ export const kontakt = {
         id: "kontakt-gastronomie",
         q: "Mohu vína Maria Maria nabízet ve své restauraci nebo v lahůdkářství?",
         a: "Ano. Zvolte „Gastronomie a lahůdky“ a napište nám krátce o svém provozu, své kuchyni či konceptu a své lokalitě. Společně najdeme výběr, který sedne vašim hostům.",
+        link: { label: "Objevte původ a snoubení s jídlem", href: "/regionen" },
       },
       {
         id: "kontakt-individuelle-auswahl",
         q: "Jak funguje výběr vín na míru?",
         a: "Nejprve nám řeknete o svém záměru. Na přání vína poznáte při degustaci. Z vašich favoritů poté vznikne výběr, který sedne vašemu konceptu, vašemu menu nebo vaší příležitosti.",
+        link: { label: "Všechna vína v přehledu", href: "/unsere-weine" },
       },
       {
         id: "kontakt-kaufen",
         q: "Kde mohu vína Maria Maria koupit?",
         a: "Vína lze objednat v oficiálním obchodě Maria Maria. Na kontaktní stránce zůstává obchod druhotnou cestou, aby poptávky na poradenství, akce a B2B neodváděly pozornost od kontaktního toku.",
+        link: { label: "Do e-shopu", href: "/shop" },
       },
     ],
   },

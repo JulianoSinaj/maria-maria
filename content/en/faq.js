@@ -25,7 +25,7 @@ export const faq = {
       id: "home-partner",
       q: "Does Maria Maria work with restaurants, hospitality and lifestyle partners?",
       a: "Yes. Maria Maria also works with selected partners in gastronomy, hospitality, events, retail and lifestyle who want to bring Italian boutique wines into their concept. We discuss enquiries and possible collaborations personally.",
-      link: { label: "Discover Maria Maria as a partner", href: "/kontakt#kontakt-haendler" },
+      link: { label: "Discover Maria Maria as a partner", href: "/kontakt#kontakt-sortiment" },
     },
     {
       id: "home-kontakt",

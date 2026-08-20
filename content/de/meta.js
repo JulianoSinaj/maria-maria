@@ -85,9 +85,23 @@ export const meta = {
   },
 
   kontakt: {
-    title: "Kontakt",
+    /* Titel und Description nach dem freigegebenen SEO-Paket des Handoffs
+       (§3). Der alte Titel war das blosse Wort „Kontakt“ — er beschrieb das
+       Formular, nicht das Geschäft dahinter, und ließ in der Ergebniszeile
+       vierzig Zeichen ungenutzt. Die Seite qualifiziert seit dem Relaunch
+       vier kommerzielle Anliegen; genau die stehen jetzt im Titel.
+
+       `titleAbsolute`, weil das Muster des Handoffs die Marke selbst trägt
+       („… | Maria Maria“) — das title.template hängte sonst ein zweites Mal
+       „— Maria Maria“ an. 67 Zeichen: Google schneidet im Zweifel hinten den
+       Markennamen ab, und das ist die richtige Stelle dafür — die Suchwörter
+       stehen alle in den ersten 53. */
+    titleAbsolute: "Kontakt | Italienische Weine für Gastronomie & Events | Maria Maria",
     description:
-      "Wir freuen uns auf Ihre Nachricht – Weinverkostungen in Düsseldorf, Fragen zu unseren Weinen, Partnerschaften oder Händleranfragen.",
+      /* Die alte Description stammte aus der Zeit vor dem Relaunch und nannte
+         nur Verkostungen und Händleranfragen — Gastronomie, Feinkost und
+         Events, also drei der vier Anliegen der Seite, fehlten darin. */
+      "Italienische Boutique-Weine für Gastronomie, Feinkost, Handel, Events und Verkostungen in Düsseldorf & NRW. Persönliche Beratung und individuelle Weinauswahl.",
   },
 
   agb: {
@@ -98,12 +112,12 @@ export const meta = {
   datenschutz: {
     title: "Datenschutzerklärung",
     description:
-      "Informationen zur Verarbeitung personenbezogener Daten auf maria-maria.wine gemäß DSGVO.",
+      "Informationen zur Verarbeitung personenbezogener Daten auf maria-maria.de gemäß DSGVO.",
   },
 
   impressum: {
     title: "Impressum",
-    description: "Impressum und Anbieterkennzeichnung der Maria Maria Wines GmbH, Düsseldorf.",
+    description: "Impressum und Anbieterkennzeichnung der Maria Maria Wines GmbH, Mettmann.",
   },
 
   /* Die neun Produktseiten. Anders als oben stehen hier keine fertigen

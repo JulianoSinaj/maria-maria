@@ -7,14 +7,14 @@ import IntentCards from "@/components/kontakt/IntentCards";
 import ContactForm from "@/components/kontakt/ContactForm";
 import KontaktFaq from "@/components/kontakt/KontaktFaq";
 import { Calendar, Heart, Storefront } from "@/components/kontakt/icons";
-import { FORM_ANCHOR } from "@/components/kontakt/intents";
+import { FORM_ANCHOR, INTENT_CARDS } from "@/components/kontakt/intents";
 import { HERO_INSET, SECTION_TITLE, SHELL, SHELL_WIDE } from "@/components/kontakt/styles";
 import JsonLd from "@/components/seo/JsonLd";
 import { getDictionary } from "@/lib/i18n/dictionaries";
 import { pageMetadata } from "@/lib/i18n/metadata";
 import { localePath } from "@/lib/i18n/routing";
 import { absoluteUrl } from "@/lib/site";
-import { graph, webPageNode, breadcrumbNode, faqNode, ORG_ID } from "@/lib/seo/jsonLd";
+import { graph, webPageNode, breadcrumbNode, faqNode, serviceNode, ORG_ID } from "@/lib/seo/jsonLd";
 
 /* Kontaktseite — Neubau nach dem freigegebenen Mockup
    („landing page contatti.png") und dem Handoff-Dokument vom 18.08.2026.
@@ -36,6 +36,13 @@ export async function generateMetadata({ params }) {
     locale: params.locale,
     path: "/kontakt",
     meta: dict.meta.kontakt,
+    /* Eigenes Teaserbild statt des Marken-Standardmotivs: Diese Seite wird
+       per Link weitergereicht — an Restaurantleitungen, Einkauf, Agenturen.
+       Was in WhatsApp oder LinkedIn aufklappt, soll dasselbe Motiv sein, das
+       nach dem Klick oben auf der Seite steht. Die Bildbeschreibung ist
+       dieselbe wie am Hero-Foto; ein zweiter, gepflegter Alt-Text daneben
+       wäre eine Stelle mehr, an der die beiden auseinanderlaufen. */
+    image: { ...KONTAKT_OG_IMAGE, alt: dict.kontakt.hero.imageAlt },
   });
 }
 
@@ -52,21 +59,44 @@ function KontaktJsonLd({ locale, dict }) {
     { url, localize }
   );
 
+  /* Die vier Anliegen der Kachel als Dienstleistungen — dieselben Titel und
+     Texte, die auf der Seite stehen, mit dem Formular als Anfrageweg. Der
+     technische Wert (gastronomie_feinkost …) trägt die @id, damit sie eine
+     Umformulierung der Kachel überlebt. */
+  const services = INTENT_CARDS.map(({ key, value }) => {
+    const item = dict.kontakt.intents?.items?.[key];
+    if (!item) return null;
+
+    return serviceNode({
+      url,
+      slug: value,
+      name: item.title,
+      description: item.text,
+      channelUrl: `${url}#${FORM_ANCHOR}`,
+      channelName: item.cta,
+    });
+  });
+
   return (
     <JsonLd
       data={graph(
         {
           ...webPageNode({
             url,
-            name: dict.meta.kontakt.title,
+            /* `titleAbsolute`, weil das SEO-Paket des Handoffs die Marke im
+               Titel selbst führt — meta.kontakt.title gibt es hier nicht
+               mehr. */
+            name: dict.meta.kontakt.titleAbsolute ?? dict.meta.kontakt.title,
             description: dict.meta.kontakt.description,
             locale,
             type: "ContactPage",
+            image: { url: HERO_IMG, alt: dict.kontakt.hero.imageAlt },
             breadcrumbId: crumbs?.["@id"] ?? null,
           }),
           mainEntity: { "@id": ORG_ID },
         },
         crumbs,
+        services,
         faqNode({ url, items: dict.kontakt.faq.items ?? [] })
       )}
     />
@@ -74,6 +104,8 @@ function KontaktJsonLd({ locale, dict }) {
 }
 
 const HERO_IMG = "/img/kontakt/kontakt-hero-375ml.webp";
+/* 1200 × 630, erzeugt von scripts/og-images.mjs aus HERO_IMG (`npm run og`). */
+const KONTAKT_OG_IMAGE = { url: "/img/og/kontakt.jpg", width: 1200, height: 630 };
 const BRIDGE_IMG = "/img/kontakt/kontakt-momente.webp";
 const FAQ_IMG = "/img/kontakt/kontakt-weinberatung.webp";
 
@@ -173,14 +205,27 @@ export default async function KontaktPage({ params }) {
                 width={1672}
                 height={941}
                 /* Das Motiv ist 16:9, die Spalte ist deutlich hochkantiger —
-                   ein zentrierter Zuschnitt schneidet die rechte Flasche an.
-                   64 % waren dafür zu weit rechts: Bei 741 x 675 lag das
-                   Fenster auf Quell-x 408–1441, und „il bianco" endet erst bei
-                   1445 — die Flasche stand senkrecht angeschnitten am Rand.
-                   57 % zeigt bei der korrigierten Höhe x 244–1487: beide
-                   Flaschen mit Luft, die Gläser und die Karte auf dem Tisch
-                   ganz im Bild, das Windlicht (ab x 1490) sauber draußen. */
-                className="absolute inset-0 h-full w-full object-cover object-[57%_center]"
+                   der Zuschnitt entscheidet hier allein über links und rechts.
+                   Der Rahmen bleibt, wo er ist; nur das Fenster wandert.
+
+                   90 % schiebt es fast an die rechte Kante der Quelle und
+                   trifft damit den Ausschnitt der zweiten, freigegebenen
+                   Fassung des Fotos (1102 × 941 — 570 px links abgeschnitten,
+                   rechts bündig): Die Gläser stehen um die Bildmitte statt am
+                   rechten Rand, beide Flaschen behalten Luft, das Windlicht
+                   kommt rechts mit herein. Bei 1440 px liegt das Fenster auf
+                   Quell-x 386–1629, bei 1280 px auf 557–1610.
+
+                   Nicht 100 %: Bei 1024 px trägt die italienische Textspalte
+                   die höchste Zeile (Foto 525 × 619), das Fenster ist dort nur
+                   798 Quell-Pixel breit und begänne bei x 874 — das linke Glas
+                   (ab x 866) stünde angeschnitten an der Kante. 90 % setzt
+                   dort bei 787 an und lässt ihm gut 50 px Luft.
+
+                   Die 57 % davor saßen zu weit links: Die Gläser lagen bei
+                   61 % der Bildbreite, und unter ~1200 px Fensterbreite
+                   schnitt der rechte Rand „il bianco" an. */
+                className="absolute inset-0 h-full w-full object-cover object-[90%_center]"
               />
             </div>
           </div>

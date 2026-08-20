@@ -227,6 +227,7 @@ export const kontakt = {
         id: "kontakt-sortiment",
         q: "Kann ich Maria Maria in mein Sortiment aufnehmen?",
         a: "Ja. Wählen Sie „Handel & Wiederverkauf“ und erzählen Sie uns kurz von Ihrem Geschäft, Ihrem Standort und Ihrer gewünschten Auswahl. Anschließend besprechen wir persönlich die passenden nächsten Schritte.",
+        link: { label: "Das komplette Sortiment ansehen", href: "/unsere-weine" },
       },
       {
         id: "kontakt-firmenveranstaltungen",
@@ -237,16 +238,19 @@ export const kontakt = {
         id: "kontakt-gastronomie",
         q: "Kann ich Maria-Maria-Weine in meinem Restaurant oder Feinkostgeschäft anbieten?",
         a: "Ja. Wählen Sie „Gastronomie & Feinkost“ und erzählen Sie uns kurz von Ihrem Betrieb, Ihrer Küche bzw. Ihrem Konzept und Ihrem Standort. Gemeinsam finden wir eine Auswahl, die zu Ihren Gästen passt.",
+        link: { label: "Herkunft und Food Pairing entdecken", href: "/regionen" },
       },
       {
         id: "kontakt-individuelle-auswahl",
         q: "Wie funktioniert eine individuelle Weinauswahl?",
         a: "Sie erzählen uns zunächst von Ihrem Vorhaben. Auf Wunsch lernen Sie die Weine bei einer Verkostung kennen. Aus Ihren Favoriten entsteht anschließend eine Auswahl, die zu Ihrem Konzept, Ihrem Menü oder Ihrem Anlass passt.",
+        link: { label: "Alle Weine im Überblick", href: "/unsere-weine" },
       },
       {
         id: "kontakt-kaufen",
         q: "Wo kann ich Maria-Maria-Weine kaufen?",
         a: "Die Weine können über den offiziellen Maria-Maria-Shop bestellt werden. Auf der Kontaktseite bleibt der Shop ein sekundärer Weg, damit Beratungs-, Event- und B2B-Anfragen nicht vom Kontakt-Funnel abgelenkt werden.",
+        link: { label: "Zum Shop", href: "/shop" },
       },
     ],
   },

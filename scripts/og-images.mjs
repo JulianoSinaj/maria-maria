@@ -54,6 +54,18 @@ const PAGES = [
      bekommen hier nur endlich den Zuschnitt, den sie vorgeben zu haben. */
   { name: "geschichte", src: "img/stilllife.jpg", focus: "attention" },
   { name: "magazin", src: "img/magazin/weinkeller.jpg", focus: "attention" },
+  /* /kontakt teilte bis hierher das Standardmotiv der Startseite. Die Seite
+     ist seit dem Relaunch aber die Lead-Strecke fuer Gastronomie, Handel,
+     Events und Verkostungen — und genau die wird per Link weitergereicht,
+     an Restaurantleitungen und Eventagenturen. Sie soll dabei ihr eigenes
+     Hero-Motiv zeigen, dieselben 375-ml-Flaschen auf dem gedeckten Tisch,
+     die der Empfaenger nach dem Klick wiedersieht.
+
+     Quelle ist die WebP-Variante in voller Breite (1672 x 941): ein
+     JPEG-Original des Motivs liegt nicht im Repo, und bei 1,78 : 1 zu
+     1,91 : 1 faellt beim Zuschnitt so wenig weg, dass die zweite
+     Kompression nicht sichtbar wird. */
+  { name: "kontakt", src: "img/kontakt/kontakt-hero-375ml.webp", focus: "attention" },
   /* Interview Daniele Malavasi — der Handoff (Seite 23) führt den
      1200-×-630-Zuschnitt als „DA PRODURRE".
 

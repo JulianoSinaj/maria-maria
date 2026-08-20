@@ -65,9 +65,9 @@ export const meta = {
   },
 
   kontakt: {
-    title: "Contatti",
+    titleAbsolute: "Contatti | Vini italiani per ristorazione ed eventi | Maria Maria",
     description:
-      "Saremo felici di leggerti – degustazioni a Düsseldorf, domande sui nostri vini, collaborazioni o richieste da rivenditori.",
+      "Vini boutique italiani per ristorazione, gastronomia, distribuzione, eventi e degustazioni a Düsseldorf e in NRW. Consulenza personale e selezione su misura.",
   },
 
   agb: {
@@ -78,12 +78,12 @@ export const meta = {
   datenschutz: {
     title: "Informativa sulla privacy",
     description:
-      "Informazioni sul trattamento dei dati personali su maria-maria.wine ai sensi del GDPR.",
+      "Informazioni sul trattamento dei dati personali su maria-maria.de ai sensi del GDPR.",
   },
 
   impressum: {
     title: "Note legali",
-    description: "Note legali e dati societari di Maria Maria Wines GmbH, Düsseldorf.",
+    description: "Note legali e dati societari di Maria Maria Wines GmbH, Mettmann.",
   },
 
   /* Le nove pagine prodotto — modelli, non frasi finite: nome, annata,

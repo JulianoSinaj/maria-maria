@@ -1,7 +1,9 @@
 "use client";
-import { useId, useState } from "react";
+import { useEffect, useId, useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
+import Link from "@/components/i18n/LocaleLink";
 import { Arrow, ChevronDown } from "@/components/Icons";
+import { useLenis } from "@/components/motion/SmoothScroll";
 import { CTA_LINK } from "./styles";
 
 /* Akkordeon der Kontakt-FAQ.
@@ -16,7 +18,25 @@ import { CTA_LINK } from "./styles";
    sind sie nur nicht sichtbar.
 
    Eine Frage offen zur Zeit: zwei aufgeklappte Antworten schieben die dritte
-   aus dem Bild, und der Nutzer scrollt hinter seiner eigenen Frage her. */
+   aus dem Bild, und der Nutzer scrollt hinter seiner eigenen Frage her.
+
+   ZWEI DINGE, die dieses Akkordeon mit dem der übrigen Seiten teilt
+   (components/faq/FaqSection.jsx) und die hier zunächst fehlten:
+
+   1. Höchstens EIN weiterführender Link je Antwort (`item.link`), mit
+      beschreibendem Anchor-Text. Die Kontaktseite war bis dahin eine
+      Sackgasse: Sie empfängt Verweise aus der Kopfzeile, der Fußzeile und
+      der Startseiten-FAQ, gab aber selbst keinen einzigen weiter — weder auf
+      die Kollektion noch auf die Regionen, obwohl vier ihrer Antworten genau
+      davon sprechen. Der Link steht unter der Antwort statt im Satz: Er
+      lässt den freigegebenen Text unangetastet und ist beim Überfliegen als
+      Weg erkennbar.
+
+   2. Ein Anker je Frage (`id={item.id}`), damit /kontakt#kontakt-sortiment
+      die richtige Antwort aufschlägt. Die Startseiten-FAQ verlinkt seit dem
+      Relaunch genau so hierher; ohne Anker landete der Besucher stumm am
+      Seitenanfang. Liegt die Frage hinter „Alle Fragen ansehen", klappt der
+      Deep-Link den Rest zuerst auf. */
 
 const VISIBLE = 4;
 
@@ -25,7 +45,9 @@ function Row({ item, open, onToggle, uid, reduced }) {
   const buttonId = `${uid}-button-${item.id}`;
 
   return (
-    <div className="border-b border-sand last:border-b-0">
+    /* scroll-mt-24 wie die Formularsektion: Ohne den Abstand schiebt die
+       Kopfzeile die angesprungene Frage unter sich. */
+    <div id={item.id} className="scroll-mt-24 border-b border-sand last:border-b-0">
       <h3>
         <button
           id={buttonId}
@@ -56,9 +78,24 @@ function Row({ item, open, onToggle, uid, reduced }) {
         transition={reduced ? { duration: 0 } : { duration: 0.42, ease: [0.16, 1, 0.3, 1] }}
         className="overflow-hidden"
       >
-        <p className="px-5 pb-5 pr-10 text-[13.5px] leading-[1.7] text-charcoal/72 sm:px-6 sm:pb-6">
-          {item.a}
-        </p>
+        <div className="px-5 pb-5 pr-10 sm:px-6 sm:pb-6">
+          <p className="text-[13.5px] leading-[1.7] text-charcoal/72">{item.a}</p>
+
+          {/* `tabIndex` folgt dem Öffnungszustand: Das Panel bleibt im DOM
+              (die Antwort soll im HTML stehen), ist geschlossen aber nur auf
+              Höhe 0 gefaltet — ein Link darin wäre sonst mit der Tabulator-
+              taste erreichbar, ohne dass irgendwo etwas zu sehen ist. */}
+          {item.link && (
+            <Link
+              href={item.link.href}
+              tabIndex={open ? 0 : -1}
+              className={`${CTA_LINK} mt-3.5 min-h-[44px]`}
+            >
+              {item.link.label}
+              <Arrow className="h-3.5 w-3.5 transition-transform duration-500 ease-out-expo group-hover/link:translate-x-1" />
+            </Link>
+          )}
+        </div>
       </motion.div>
     </div>
   );
@@ -67,12 +104,69 @@ function Row({ item, open, onToggle, uid, reduced }) {
 export default function KontaktFaq({ copy }) {
   const uid = useId().replace(/:/g, "");
   const reduced = useReducedMotion();
+  const lenis = useLenis();
   const [open, setOpen] = useState(null);
   const [expanded, setExpanded] = useState(false);
 
   const items = copy.items ?? [];
   const head = items.slice(0, VISIBLE);
   const tail = items.slice(VISIBLE);
+
+  /* Deep-Link: /kontakt#kontakt-sortiment schlägt die Frage auf und springt
+     sie an. Die Startseiten-FAQ verlinkt genau so hierher.
+
+     BEWUSST IN ZWEI SCHRITTEN, mit `pending` als Staffelstab dazwischen.
+     Liegt die Frage hinter „Alle Fragen ansehen", muss der hintere Block
+     erst sichtbar sein, bevor irgendwer ihn anspringen kann: Ein `hidden`
+     Element hat keine Geometrie, `getBoundingClientRect()` liefert Nullen,
+     und Lenis bekäme die Position 0 gemeldet — der Besucher bliebe am
+     Seitenanfang stehen.
+
+     Die naheliegende Abhilfe wäre ein requestAnimationFrame (oder zwei) nach
+     `setExpanded`. Sie wäre eine Wette darauf, wann React den Commit
+     einspielt. Der zweite Effekt unten dagegen KANN gar nicht zu früh
+     laufen: `pending` wird erst in dem Render wahr, in dem `expanded` schon
+     gilt — React garantiert die Reihenfolge, kein Timing nötig.
+
+     Nur beim Montieren: Ein späterer Hash-Wechsel stammt vom Besucher selbst
+     und soll das offene Panel nicht unter ihm wegschalten. */
+  const [pending, setPending] = useState(null);
+
+  useEffect(() => {
+    const hash = decodeURIComponent(window.location.hash.slice(1));
+    if (!hash) return;
+
+    const index = items.findIndex((item) => item.id === hash);
+    if (index === -1) return;
+
+    if (index >= VISIBLE) setExpanded(true);
+    setPending(hash);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (!pending) return;
+    setOpen(pending);
+    setPending(null);
+
+    const target = document.getElementById(pending);
+    if (!target) return;
+
+    /* `scrollTo` von Lenis statt scrollIntoView, aus demselben Grund wie in
+       IntentContext: Die Storefront hat das Wurzel-Scrolling an Lenis
+       abgegeben, natives Smooth-Scrolling ist per CSS abgeschaltet und würde
+       hart springen. Ohne Lenis (Reduced Motion, noch nicht montiert) ist der
+       harte Sprung genau das, was ein Anker sonst auch tut — richtig, nur
+       unhübsch. */
+    const isReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const instance = lenis?.current;
+
+    if (instance && !isReduced) {
+      instance.scrollTo(target, { offset: -96, duration: 1.1 });
+    } else {
+      target.scrollIntoView({ behavior: isReduced ? "auto" : "smooth", block: "start" });
+    }
+  }, [pending, lenis]);
 
   const row = (item) => (
     <Row

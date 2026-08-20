@@ -65,9 +65,9 @@ export const meta = {
   },
 
   kontakt: {
-    title: "Kontakt",
+    titleAbsolute: "Kontakt | Italská vína pro gastronomii a akce | Maria Maria",
     description:
-      "Těšíme se na vaši zprávu – degustace vín v Düsseldorfu, dotazy k našim vínům, spolupráce nebo poptávky prodejců.",
+      "Italská butiková vína pro gastronomii, lahůdky, obchod, akce a degustace v Düsseldorfu a NRW. Osobní poradenství a individuální výběr vín.",
   },
 
   agb: {
@@ -78,12 +78,12 @@ export const meta = {
   datenschutz: {
     title: "Zásady ochrany osobních údajů",
     description:
-      "Informace o zpracování osobních údajů na maria-maria.wine v souladu s GDPR.",
+      "Informace o zpracování osobních údajů na maria-maria.de v souladu s GDPR.",
   },
 
   impressum: {
     title: "Tiráž",
-    description: "Tiráž a údaje o společnosti Maria Maria Wines GmbH, Düsseldorf.",
+    description: "Tiráž a údaje o společnosti Maria Maria Wines GmbH, Mettmann.",
   },
 
   /* Devět stránek vín — šablony, nikoli hotové věty: název, ročník, druh,

@@ -25,7 +25,7 @@ export const faq = {
       id: "home-partner",
       q: "Spolupracuje Maria Maria s gastronomií, hotelnictvím a lifestylovými partnery?",
       a: "Ano. Maria Maria se obrací i na vybrané partnery z gastronomie, hotelnictví, event branže, retailu a lifestylu, kteří chtějí italská butiková vína zapojit do svého konceptu. Poptávky a možnou spolupráci probíráme osobně.",
-      link: { label: "Poznejte Maria Maria jako partnera", href: "/kontakt#kontakt-haendler" },
+      link: { label: "Poznejte Maria Maria jako partnera", href: "/kontakt#kontakt-sortiment" },
     },
     {
       id: "home-kontakt",

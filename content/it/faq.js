@@ -25,7 +25,7 @@ export const faq = {
       id: "home-partner",
       q: "Maria Maria collabora con ristorazione, hospitality e partner lifestyle?",
       a: "Sì. Maria Maria si rivolge anche a partner selezionati di ristorazione, hospitality, eventi, retail e lifestyle che desiderano integrare vini boutique italiani nel proprio concept. Richieste e possibili collaborazioni le discutiamo di persona.",
-      link: { label: "Scopri Maria Maria come partner", href: "/kontakt#kontakt-haendler" },
+      link: { label: "Scopri Maria Maria come partner", href: "/kontakt#kontakt-sortiment" },
     },
     {
       id: "home-kontakt",

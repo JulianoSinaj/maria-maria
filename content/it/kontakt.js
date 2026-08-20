@@ -208,6 +208,7 @@ export const kontakt = {
         id: "kontakt-sortiment",
         q: "Posso inserire Maria Maria nel mio assortimento?",
         a: "Sì. Scegliete „Distribuzione & rivendita“ e raccontateci brevemente della vostra attività, della vostra sede e della selezione desiderata. Poi discutiamo personalmente i passi successivi.",
+        link: { label: "Vedi l'assortimento completo", href: "/unsere-weine" },
       },
       {
         id: "kontakt-firmenveranstaltungen",
@@ -218,16 +219,19 @@ export const kontakt = {
         id: "kontakt-gastronomie",
         q: "Posso proporre i vini Maria Maria nel mio ristorante o negozio gourmet?",
         a: "Sì. Scegliete „Ristorazione & gastronomia“ e raccontateci brevemente della vostra attività, della vostra cucina o del vostro concept e della vostra sede. Insieme troviamo una selezione adatta ai vostri ospiti.",
+        link: { label: "Scopri origini e abbinamenti", href: "/regionen" },
       },
       {
         id: "kontakt-individuelle-auswahl",
         q: "Come funziona una selezione di vini su misura?",
         a: "Prima ci raccontate il vostro progetto. Se lo desiderate, conoscete i vini durante una degustazione. Dai vostri preferiti nasce poi una selezione adatta al vostro concept, al vostro menù o alla vostra occasione.",
+        link: { label: "Tutti i vini in sintesi", href: "/unsere-weine" },
       },
       {
         id: "kontakt-kaufen",
         q: "Dove posso acquistare i vini Maria Maria?",
         a: "I vini si possono ordinare nello shop ufficiale Maria Maria. Nella pagina Contatti lo shop resta una via secondaria, così le richieste di consulenza, eventi e B2B non vengono distolte dal percorso di contatto.",
+        link: { label: "Vai allo shop", href: "/shop" },
       },
     ],
   },

@@ -35,7 +35,7 @@ const interviews = {
       slug: "daniele-malavasi-lugana-doc",
       draft: false,
 
-      eyebrow: "Maria Maria × Lago di Garda · V dialogu",
+      eyebrow: "Maria Maria × Gardské jezero · V dialogu",
       badge: "Lugana DOC · Turbiana · Pozzolengo",
       name: "Daniele Malavasi",
       headline: "Lugana vzniká z terroiru, ne z etikety",

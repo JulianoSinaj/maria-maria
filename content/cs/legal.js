@@ -34,7 +34,7 @@ export const legal = {
         body: [
           "Maria Maria Wines GmbH",
           "Ellerfelderstrasse 78d, 40822 Mettmann, Německo",
-          "Zastoupena jednatelstvím.",
+          "Zastoupena jednateli společnosti.",
         ],
       },
       {
@@ -45,7 +45,7 @@ export const legal = {
         title: "Zápis v rejstříku",
         body: [
           "Zápis v obchodním rejstříku. Rejstříkový soud: Amtsgericht Düsseldorf.",
-          "Číslo zápisu a DIČ podle § 27 a německého zákona o DPH budou na tomto místě doplněny po dokončení zápisu.",
+          "Číslo zápisu a DIČ podle § 27a německého zákona o DPH (UStG) budou na tomto místě doplněny po dokončení zápisu.",
         ],
       },
       {
@@ -183,7 +183,7 @@ export const legal = {
       {
         title: "§ 9 Závěrečná ustanovení",
         body: [
-          "Platí právo Spolkové republiky Německo s vyloučením Úmluvy OSN o smlouvách o mezinárodní koupi zboží. Vůči spotřebitelům platí tato volba práva jen v rozsahu, v němž nezbavuje ochrany kogentních ustanovení státu jejich obvyklého pobytu.",
+          "Platí právo Spolkové republiky Německo s vyloučením Úmluvy OSN o smlouvách o mezinárodní koupi zboží. Vůči spotřebitelům platí tato volba práva jen v rozsahu, v němž je nezbavuje ochrany, kterou jim poskytují kogentní ustanovení práva státu jejich obvyklého pobytu.",
         ],
       },
     ],

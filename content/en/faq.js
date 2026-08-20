@@ -50,7 +50,7 @@ export const faq = {
     {
       id: "weine-geschenk",
       q: "Which wine makes a good gift?",
-      a: "For connoisseurs: the Primitivo 15.5 from the terracotta amphora or the Greco di Tufo with D.O.C.G. status. For newcomers: the approachable Falanghina or the Primitivo Salento IGP. And a curated tasting case is always a safe choice — elegantly packaged, with a greeting card on request.",
+      a: "For connoisseurs: the Primitivo 15,5 from the terracotta amphora or the Greco di Tufo with D.O.C.G. status. For newcomers: the approachable Falanghina or the Primitivo Salento IGP. And a curated tasting case is always a safe choice — elegantly packaged, with a greeting card on request.",
       link: { label: "To the tasting cases", href: "/shop#pakete" },
     },
     {
@@ -88,7 +88,7 @@ export const faq = {
           id: "reg-apulien-pairing",
           q: "Which dishes suit red wines from Puglia?",
           a: "Powerful reds from Puglia often suit braised dishes, grilled meat, hearty pasta and mature cheese. What matters is the intensity, seasoning and preparation of the dish; the specific recommendation is on each wine's own page.",
-          link: { label: "Primitivo 15.5 and its food pairing", href: "/unsere-weine/primitivo-15-5" },
+          link: { label: "Primitivo 15,5 and its food pairing", href: "/unsere-weine/primitivo-15-5" },
         },
       ],
     },
@@ -176,7 +176,7 @@ export const faq = {
       id: "wissen-dekantieren",
       q: "Does Primitivo need decanting?",
       a: "No, it is not a must. Powerful young reds do benefit from a little air before serving, though — the specific recommendation from the data sheet is on each wine's own page.",
-      link: { label: "Serving the Primitivo 15.5", href: "/unsere-weine/primitivo-15-5" },
+      link: { label: "Serving the Primitivo 15,5", href: "/unsere-weine/primitivo-15-5" },
     },
     {
       id: "wissen-glas",

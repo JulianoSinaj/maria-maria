@@ -46,7 +46,7 @@ const primitivo145 = {
     {
       kicker: "Vůně",
       title: "Ostružina a švestka",
-      text: "Komplexní kytice, která překvapí výrazným aroma ostružin a švestek — intenzivní vůně zralého ovoce.",
+      text: "Komplexní buket, který překvapí výrazným aroma ostružin a švestek — intenzivní vůně zralého ovoce.",
       artwork: {
         alt: "Zadní etiketa láhve Primitivo di Manduria DOP 14,50 od Maria Maria",
         medium: "Zadní etiketa",
@@ -127,7 +127,7 @@ const primitivo145 = {
       items: [
         { title: "Teplota podávání", text: "16–18 °C — ve velké sklenici na červené víno" },
         { title: "Kdy pít", text: "Vychutnat nyní nebo během 3–5 let" },
-        { title: "Rituál", text: "Otevřít dobrou hodinu předem — ovoce a koření vystoupí zřetelněji" },
+        { title: "Rituál", text: "Otevřít necelou hodinu předem — ovoce a koření vystoupí zřetelněji" },
       ],
     },
     maria: {

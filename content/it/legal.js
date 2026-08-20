@@ -153,7 +153,7 @@ export const legal = {
       {
         title: "§ 4 Prezzi e spese di spedizione",
         body: [
-          "Tutti i prezzi sono in euro e comprendono l'IVA di legge, oltre alle spese di spedizione. Le spese applicabili sono indicate in modo trasparente durante il processo d'ordine, prima dell'invio dello stesso.",
+          "Tutti i prezzi si intendono in euro, IVA di legge inclusa, al netto delle spese di spedizione. Le spese applicabili sono indicate in modo trasparente durante il processo d'ordine, prima dell'invio dello stesso.",
         ],
       },
       {

@@ -64,7 +64,7 @@ export const shop = {
       },
       limited: {
         title: "Limited editions",
-        text: "Only 18,000 bottles of the Primitivo 14.5 exist, and just 12,000 of the Primitivo 15.5 – exclusivity that starts in the vineyard.",
+        text: "Only 18,000 bottles of the Primitivo 14,5 exist, and just 12,000 of the Primitivo 15,5 – exclusivity that starts in the vineyard.",
       },
     },
   },

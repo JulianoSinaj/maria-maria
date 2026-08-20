@@ -16,7 +16,7 @@ export const meta = {
   collection: {
     title: "Naše vína",
     description:
-      "Ručně vybíraná italská butiková vína z malých vinařství – červená, bílá a růžová z Apulie, Kampánie a od Lago di Garda.",
+      "Ručně vybíraná italská butiková vína z malých vinařství – červená, bílá a růžová z Apulie, Kampánie a od Gardského jezera.",
   },
 
   shop: {
@@ -28,14 +28,14 @@ export const meta = {
   geschichte: {
     title: "Náš příběh",
     description:
-      "Dvě ženy, dvě generace, jeden postoj k vínu: z Lizzana v Salentu přes Irpinii a Lago di Garda až do Düsseldorfu — osobně vybíraná vína, v Německu od roku 2019.",
+      "Dvě ženy, dvě generace, jeden postoj k vínu: z Lizzana v Salentu přes Irpinii a Gardské jezero až do Düsseldorfu — osobně vybíraná vína, v Německu od roku 2019.",
     keywords: [
       "Maria Maria",
       "příběh",
       "italská vína",
       "Salento",
       "Lizzano",
-      "Lago di Garda",
+      "Gardské jezero",
       "Kampánie",
       "Düsseldorf",
     ],
@@ -61,7 +61,7 @@ export const meta = {
   regionen: {
     titleAbsolute: "Italské vinařské regiony: Apulie, Kampánie a Lugana | Maria Maria",
     description:
-      "Objevte vybraná vína z Apulie, Kampánie a oblasti Lugana u Lago di Garda – odrůdy, původ, chuť a tipy na snoubení s jídlem.",
+      "Objevte vybraná vína z Apulie, Kampánie a oblasti Lugana u Gardského jezera – odrůdy, původ, chuť a tipy na snoubení s jídlem.",
   },
 
   kontakt: {

@@ -5,7 +5,7 @@ const ilBianco = {
   shortNameGen: "vína Il Bianco",
   eyebrow: "Italská butiková vína",
   lede:
-    "Cuvée z vybraných bílých odrůd Kampánie. Dva roky klidu v nerezové nádrži mu dávají intenzivní kytici a jemnou, svůdnou chuť.",
+    "Cuvée z vybraných bílých odrůd Kampánie. Dva roky klidu v nerezové nádrži mu dávají intenzivní buket a jemnou, svůdnou chuť.",
   heroWords: ["Intenzivní.", "Jemné.", "Svůdné."],
 
   breadcrumb: [{ label: "Domů" }, { label: "Naše vína" }, {}],
@@ -46,7 +46,7 @@ const ilBianco = {
     {
       kicker: "Vůně",
       title: "Velmi intenzivní a příjemná",
-      text: "Technický list ji označuje prostě jako „profumo molto intenso e gradevole“: široce otevřená, vtahující kytice, která naplní celou místnost.",
+      text: "Technický list ji označuje prostě jako „profumo molto intenso e gradevole“: široce otevřený, vtahující buket, který naplní celou místnost.",
       artwork: {
         alt: "Zadní etiketa láhve Il Bianco — Campania Bianco IGP od Maria Maria",
         medium: "Zadní etiketa",
@@ -84,7 +84,7 @@ const ilBianco = {
     title: "Dva roky trpělivosti",
     paragraphs: [
       "Il Bianco není sólistka, ale souhra: vybrané bílé odrůdy Kampánie, které svůj charakter nacházejí teprve společně. Hrozny se lisují vcelku, šetrně a měkce — nic se nevynucuje.",
-      "Pak přijde část, kterou nelze zkrátit: dva roky v nerezovém silu. Žádné dřevo, žádné rozptýlení. Zůstává velmi intenzivní kytice a chuť, která se stala jemnou místo hlasité.",
+      "Pak přijde část, kterou nelze zkrátit: dva roky v nerezovém silu. Žádné dřevo, žádné rozptýlení. Zůstává velmi intenzivní buket a chuť, která se stala jemnou místo hlasité.",
     ],
     quote: {
       text: "Některá vína je třeba nechat čekat, aby ztichla.",
@@ -101,6 +101,7 @@ const ilBianco = {
       { label: "Sběr", value: "Konec září" },
       { label: "Zrání", value: "2 roky v nerezu" },
     ],
+    photoAlt: "Vinice nad Neapolským zálivem s výhledem na Vesuv",
     chip: { subtitle: "Kampánie · Itálie" },
   },
 
@@ -121,9 +122,9 @@ const ilBianco = {
     serve: {
       title: "Podávání a požitek",
       items: [
-        { title: "Teplota podávání", text: "cca 10 °C — ne příliš studené, jinak se kytice uzavře" },
+        { title: "Teplota podávání", text: "cca 10 °C — ne příliš studené, jinak se buket uzavře" },
         { title: "Kdy pít", text: "Již vyzrálé — vychutnat nyní nebo během 2–3 let" },
-        { title: "Sklenice", text: "V baňaté sklenici na bílé víno se intenzivní kytice rozvine nejkrásněji" },
+        { title: "Sklenice", text: "V baňaté sklenici na bílé víno se intenzivní buket rozvine nejkrásněji" },
       ],
     },
     maria: {
@@ -134,7 +135,7 @@ const ilBianco = {
       {
         kicker: "Chuť",
         title: "Jemná a svůdná",
-        text: "Velmi intenzivní kytice, na patře delikátní a zdrženlivé — víno, které netlačí, ale zve.",
+        text: "Velmi intenzivní buket, na patře delikátní a zdrženlivé víno — nabízí se, ale netlačí.",
       },
       {
         kicker: "Původ",
@@ -160,7 +161,7 @@ const ilBianco = {
     },
     {
       q: "Hodí se Greco Cuvée k aperitivu?",
-      a: "Ano — dobře vychlazená kolem 10 °C je elegantním úvodem večera. Nepodávejte ji příliš studenou, jinak se intenzivní kytice uzavře; v baňaté sklenici na bílé víno se rozvine nejkrásněji.",
+      a: "Ano — dobře vychlazená kolem 10 °C je elegantním úvodem večera. Nepodávejte ji příliš studenou, jinak se intenzivní buket uzavře; v baňaté sklenici na bílé víno se rozvine nejkrásněji.",
     },
     {
       q: "Pro jakou příležitost se Il Bianco Greco Cuvée hodí?",

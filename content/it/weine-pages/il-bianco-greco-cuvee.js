@@ -101,6 +101,7 @@ const ilBianco = {
       { label: "Vendemmia", value: "Fine settembre" },
       { label: "Maturazione", value: "2 anni in acciaio" },
     ],
+    photoAlt: "Vigneti sopra il Golfo di Napoli con vista sul Vesuvio",
     chip: { subtitle: "Campania · Italia" },
   },
 

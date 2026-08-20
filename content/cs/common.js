@@ -77,12 +77,15 @@ export const common = {
   catalogue: {
     types: { red: "Červené víno", white: "Bílé víno", rose: "Růžové víno" },
     typesPlural: { red: "Červená vína", white: "Bílá vína", rose: "Růžová vína" },
-    regions: { puglia: "Apulie", campania: "Kampánie", garda: "Lago di Garda" },
+    regions: { puglia: "Apulie", campania: "Kampánie", garda: "Gardské jezero" },
     filters: {
       allWines: "Všechna vína",
       allRegions: "Všechny regiony",
       reset: "Zrušit filtry",
+      /* Čeština má tři tvary: 1 víno, 2–4 vína, od 5 vín.
+         pluralUnit() v lib/i18n/format.js vybírá podle počtu. */
       wineOne: "víno",
+      wineFew: "vína",
       wineMany: "vín",
       byType: "Filtrovat vína podle druhu",
       byRegion: "Filtrovat vína podle regionu",
@@ -193,7 +196,7 @@ export const common = {
       },
       "paket-trio-bianco": {
         tag: "Svěžest a elegance",
-        desc: "Tři elegantní bílá vína od Lago di Garda a z Kampánie – minerální, jemná a živá ve sklenici.",
+        desc: "Tři elegantní bílá vína od Gardského jezera a z Kampánie – minerální, jemná a živá ve sklenici.",
       },
     },
   },
@@ -264,6 +267,25 @@ export const common = {
     nextCard: "Další karta",
     cards: "Karty",
     sections: "Části této stránky",
+
+    /* Viz content/de/common.js — podtitul sekce SimilarWines.
+       Čeština klade před vztažnou větu čárku, similarJoin je proto „, ".
+       Podstatná jména jsou střední rod množného čísla („vína"), protože se
+       na ně váže vztažné zájmeno „která" a přívlastky v wine.similar.trait.
+       similarCounts uvádí jen 2–4: od pěti výš by čeština vyžadovala genitiv
+       („pět vín"), a tím i jinou shodu. Seznam similar.names má vždy tři
+       položky; mimo rozsah kód vypíše číslici. */
+    similarLead: "{count} {noun} z naší kolekce",
+    similarJoin: ", ",
+    similarCounts: { 2: "Dvě", 3: "Tři", 4: "Čtyři" },
+    similarNouns: {
+      all: "vína",
+      red: "červená vína",
+      white: "bílá vína",
+      rose: "růžová vína",
+    },
+    allWinesCta: "Zobrazit všechna vína",
+    subnavCta: "Objevit",
   },
 
   language: {

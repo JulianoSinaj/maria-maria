@@ -8,15 +8,10 @@ import { byName } from "@/components/data";
 /* „Ähnliche Weine entdecken" — drei Empfehlungen aus der Kollektion,
    wie auf der Referenzseite der Kundin. */
 
-/* Zahlwörter statt Ziffern — die Unterzeile ist Fließtext, kein Datenfeld. */
-const COUNT_WORD = ["Keine", "Ein", "Zwei", "Drei", "Vier", "Fünf", "Sechs"];
-
-/* Plural der Katalog-Typen aus components/data.js („Rotwein" → „Rotweine"). */
-const PLURAL = {
-  Rotwein: "Rotweine",
-  Weißwein: "Weißweine",
-  Roséwein: "Roséweine",
-};
+/* Zahlwörter, Substantive und Satzbau kommen aus common.winePage — die
+   Unterzeile ist Fließtext und muss deshalb in der Sprache der Seite stehen.
+   Vorher standen sie als deutsche Konstanten hier, wodurch jede übersetzte
+   Weinseite einen deutschen Hauptsatz vor den übersetzten Halbsatz setzte. */
 
 /* Die Unterzeile beschrieb früher fest „Drei Weißweine …" — auf den Rotwein-
    und Rosé-Seiten war das schlicht falsch. Sie wird jetzt aus den tatsächlich
@@ -24,20 +19,25 @@ const PLURAL = {
    Text ihn („Drei Rotweine aus unserer Kollektion …"); ist die Auswahl gemischt
    (Il Rosso empfiehlt zwei Rote und einen Rosé), bleibt sie beim neutralen
    „Drei Weine". Der Charakter-Halbsatz kommt aus wine.similar.trait, damit jede
-   Seite ihren eigenen Ton behalten kann. */
-function describe(wines, trait) {
-  if (!wines.length) return null;
-  const types = [...new Set(wines.map((w) => w.type).filter(Boolean))];
-  const noun =
-    types.length === 1 && PLURAL[types[0]] ? PLURAL[types[0]] : "Weine";
-  const count = COUNT_WORD[wines.length] ?? String(wines.length);
-  const lead = `${count} ${noun} aus unserer Kollektion`;
-  return trait ? `${lead}, ${trait}` : `${lead}.`;
+   Seite ihren eigenen Ton behalten kann.
+
+   Der Typ wird über `typeKey` gelesen, nicht über `type`: components/data.js
+   führt seit der Umstellung auf Schlüssel nur noch `typeKey` („red"), womit
+   die frühere Abfrage ins Leere lief — auch die deutsche Seite sagte deshalb
+   „Drei Weine", wo sie „Drei Weißweine" meinte. */
+function describe(wines, trait, t) {
+  if (!wines.length || !t?.similarLead) return null;
+  const types = [...new Set(wines.map((w) => w.typeKey).filter(Boolean))];
+  const nouns = t.similarNouns ?? {};
+  const noun = (types.length === 1 && nouns[types[0]]) || nouns.all || "";
+  const count = t.similarCounts?.[wines.length] ?? String(wines.length);
+  const lead = t.similarLead.replace("{count}", count).replace("{noun}", noun);
+  return trait ? `${lead}${t.similarJoin ?? ", "}${trait}` : `${lead}.`;
 }
 
-export default function SimilarWines({ wine }) {
+export default function SimilarWines({ wine, t }) {
   const wines = wine.similar.names.map((n) => byName(n)).filter(Boolean);
-  const description = describe(wines, wine.similar.trait);
+  const description = describe(wines, wine.similar.trait, t);
 
   return (
     <section className="relative overflow-hidden py-16 sm:py-24">
@@ -69,7 +69,7 @@ export default function SimilarWines({ wine }) {
 
         <div className="mt-12 flex justify-center">
           <Button href="/unsere-weine" variant="outline">
-            Alle Weine ansehen
+            {t?.allWinesCta}
           </Button>
         </div>
       </div>

@@ -101,13 +101,14 @@ const rosatoPuglia = {
       { label: "Vedení révy", value: "Alberello, bez závlahy" },
       { label: "Klasifikace", value: "Negroamaro I.G.P. Salento" },
     ],
+    photoAlt: "Trulli a olivové háje v Apulii ve večerním světle",
     chip: { subtitle: "Apulie · Itálie" },
   },
 
   pairing: {
     scene: {
       dish: "Burrata s rajčaty a focacciou",
-      copy: "Krémová burrata, sluncem zrálá rajčata a teplá focaccia jsou aperitivem, které žije z jednoduchosti a rovnováhy. Rosato Puglia IGP doprovází tento okamžik svěžestí, jemným ovocem a lehkostí, která nepřekryje ani jemnost sýra, ani sladkost rajčat. Právě tato harmonie z něj dělá ideální víno pro časný večer — nekomplikované, středomořské a plné požitku.",
+      copy: "Krémová burrata, sluncem vyzrálá rajčata a teplá focaccia jsou aperitivem, který žije z jednoduchosti a rovnováhy. Rosato Puglia IGP doprovází tento okamžik svěžestí, jemným ovocem a lehkostí, která nepřekryje ani jemnost sýra, ani sladkost rajčat. Právě tato harmonie z něj dělá ideální víno pro časný večer — nekomplikované, středomořské a plné požitku.",
       imageAlt:
         "Burrata s cherry rajčaty, olivami a focacciou na střešní terase ve večerním světle, vedle sklenka Rosata a láhev",
       regionLink: {
@@ -123,7 +124,7 @@ const rosatoPuglia = {
       items: [
         { title: "Teplota podávání", text: "12–14 °C — dobře vychlazené" },
         { title: "Kdy pít", text: "Vychutnat mladé — nejlépe během 1–2 let" },
-        { title: "Rituál", text: "Nalévat po troškách a častěji, aby zůstalo ve sklenici svěží" },
+        { title: "Předehra", text: "Vyndejte z lednice těsně před podáváním — svěžest je jeho charakter" },
       ],
     },
     maria: {

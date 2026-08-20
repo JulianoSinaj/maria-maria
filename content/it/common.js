@@ -264,6 +264,22 @@ export const common = {
     nextCard: "Scheda successiva",
     cards: "Schede",
     sections: "Sezioni di questa pagina",
+
+    /* Vedi content/de/common.js — il sottotitolo di SimilarWines.
+       In italiano la relativa restrittiva con „che" non vuole la virgola:
+       similarJoin è quindi uno spazio, non „, ". */
+    similarLead: "{count} {noun} della nostra collezione",
+    similarJoin: " ",
+    similarCounts: { 2: "Due", 3: "Tre", 4: "Quattro", 5: "Cinque", 6: "Sei" },
+    similarNouns: {
+      all: "vini",
+      red: "vini rossi",
+      white: "vini bianchi",
+      rose: "vini rosati",
+    },
+    allWinesCta: "Vedi tutti i vini",
+    /* Forma „tu", come heroCtaShop sulla stessa pagina. */
+    subnavCta: "Scopri",
   },
 
   language: {

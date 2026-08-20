@@ -46,7 +46,7 @@ const grecoDiTufo = {
     {
       kicker: "Vůně",
       title: "Intenzivní a příjemná",
-      text: "Výrazná kytice: žluté peckoviny, citrusová kůra a jemná minerální linka z tufové půdy.",
+      text: "Výrazný buket: žluté peckoviny, citrusová kůra a jemný minerální tón z tufové půdy.",
       artwork: {
         alt: "Zadní etiketa láhve Greco di Tufo D.O.C.G. od Maria Maria",
         medium: "Zadní etiketa",
@@ -135,7 +135,7 @@ const grecoDiTufo = {
       {
         kicker: "Chuť",
         title: "Svěží, jemná a svůdná",
-        text: "Žluté peckoviny, citrusová kůra a jemná minerální linka — bílé víno se strukturou, které svádí potichu.",
+        text: "Žluté peckoviny, citrusová kůra a jemná minerální tón — bílé víno se strukturou, které svádí potichu.",
       },
       {
         kicker: "Původ",
@@ -161,7 +161,7 @@ const grecoDiTufo = {
     },
     {
       q: "Je Greco di Tufo minerální?",
-      a: "Ano. Vinice kolem vesnice Tufo leží na vulkanickém tufu, který vínu dodává jemnou minerální linku a napětí. Spolu s nadmořskou výškou a chladnými nocemi tak vzniká jeho typická struktura – svěžest s hloubkou.",
+      a: "Ano. Vinice kolem vesnice Tufo leží na vulkanickém tufu, který vínu dodává jemnou minerální tón a napětí. Spolu s nadmořskou výškou a chladnými nocemi tak vzniká jeho typická struktura – svěžest s hloubkou.",
     },
     {
       q: "K jakému jídlu se hodí Greco di Tufo?",
@@ -169,7 +169,7 @@ const grecoDiTufo = {
     },
     {
       q: "Jaký je rozdíl oproti Falanghině?",
-      a: "Greco přináší strukturu, zlatavé odlesky a minerální linku z tufové půdy – bílé víno se statusem D.O.C.G., které svádí potichu. Falanghina z Beneventana je měkčí, světlejší v ovoci a bezprostřednější. Krátce: Greco pro hloubku, Falanghina pro lehký začátek.",
+      a: "Greco přináší strukturu, zlatavé odlesky a minerální tón z tufové půdy – bílé víno se statusem D.O.C.G., které svádí potichu. Falanghina z Beneventana je měkčí, světlejší v ovoci a bezprostřednější. Krátce: Greco pro hloubku, Falanghina pro lehký začátek.",
       link: { label: "Objevte Falanghinu" },
     },
   ],

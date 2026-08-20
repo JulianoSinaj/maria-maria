@@ -101,6 +101,7 @@ const ilBianco = {
       { label: "Harvest", value: "End of September" },
       { label: "Maturation", value: "2 years in steel" },
     ],
+    photoAlt: "Vineyards above the Gulf of Naples with a view of Vesuvius",
     chip: { subtitle: "Campania · Italy" },
   },
 

@@ -103,6 +103,7 @@ const primitivo155 = {
       { label: "Vine training", value: "Alberello, without irrigation" },
       { label: "Ageing", value: "12 months in capasoni" },
     ],
+    photoAlt: "Trulli and olive groves in Puglia in the evening light",
     chip: { subtitle: "Puglia · Italy" },
   },
 

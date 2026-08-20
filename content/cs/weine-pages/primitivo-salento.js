@@ -45,7 +45,7 @@ const primitivoSalento = {
     {
       kicker: "Vůně",
       title: "Švestka a sušené ovoce",
-      text: "Komplexní kytice s výraznými tóny švestky a sušeného ovoce — zralá strana Salenta.",
+      text: "Komplexní buket s výraznými tóny švestky a sušeného ovoce — zralá strana Salenta.",
       artwork: {
         alt: "Zadní etiketa láhve Primitivo IGP Salento od Maria Maria",
         medium: "Zadní etiketa",
@@ -101,6 +101,7 @@ const primitivoSalento = {
       { label: "Klasifikace", value: "Primitivo I.G.P. Salento" },
       { label: "Vedení révy", value: "Alberello, bez závlahy" },
     ],
+    photoAlt: "Trulli a olivové háje v Apulii ve večerním světle",
     chip: { subtitle: "Apulie · Itálie" },
   },
 
@@ -152,7 +153,7 @@ const primitivoSalento = {
   faq: [
     {
       q: "Jak chutná Primitivo Salento IGP od Maria Maria?",
-      a: "V chuti intenzivní a dlouze přetrvávající, přitom bezprostředně pitelné a příjemně přístupné. V nose komplexní kytice s tóny švestky a sušeného ovoce.",
+      a: "V chuti intenzivní a dlouze přetrvávající, přitom bezprostředně pitelné a příjemně přístupné. V nose komplexní buket s tóny švestky a sušeného ovoce.",
     },
     {
       q: "Co znamená Salento IGP?",

@@ -101,6 +101,7 @@ const rosatoPuglia = {
       { label: "Vine training", value: "Alberello, without irrigation" },
       { label: "Classification", value: "Negroamaro I.G.P. Salento" },
     ],
+    photoAlt: "Trulli and olive groves in Puglia in the evening light",
     chip: { subtitle: "Puglia · Italy" },
   },
 
@@ -123,7 +124,7 @@ const rosatoPuglia = {
       items: [
         { title: "Serving temperature", text: "12–14 °C — well chilled" },
         { title: "Drinking window", text: "Enjoy it young — at its best within 1–2 years" },
-        { title: "The ritual", text: "Pour little and often, so it stays fresh in the glass" },
+        { title: "The prelude", text: "Take it out of the fridge just before serving — freshness is its character" },
       ],
     },
     maria: {

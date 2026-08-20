@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
 import Button from "@/components/ui/Button";
-import { useWines, useLocaleTools } from "@/lib/i18n/context";
+import { useWines, useLocaleTools, useCommon } from "@/lib/i18n/context";
 import { shopHref } from "@/lib/shop/config";
 
 /* Apple-Produktseiten-Subnav: eine schlanke Glas-Pille, die nach dem Hero
@@ -20,6 +20,7 @@ import { shopHref } from "@/lib/shop/config";
 
 export default function SubNav({ wine }) {
   const { price: fmtPrice } = useLocaleTools();
+  const winePage = useCommon("winePage");
   const wines = useWines();
   const reduced = useReducedMotion();
   const [activeId, setActiveId] = useState(null);
@@ -43,7 +44,7 @@ export default function SubNav({ wine }) {
   return (
     <div className="sticky top-[calc(86px+env(safe-area-inset-top))] z-30 px-3 lg:px-6">
       <motion.nav
-        aria-label="Abschnitte dieser Seite"
+        aria-label={winePage.sections}
         initial={reduced ? false : { opacity: 0, y: -10 }}
         whileInView={reduced ? undefined : { opacity: 1, y: 0 }}
         viewport={{ once: true }}
@@ -111,7 +112,7 @@ export default function SubNav({ wine }) {
           )}
           <span className="hidden sm:block">
             <Button href={shopHref(wine.slug)} size="sm">
-              Entdecken
+              {winePage.subnavCta}
             </Button>
           </span>
         </div>

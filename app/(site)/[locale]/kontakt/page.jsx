@@ -414,7 +414,10 @@ export default async function KontaktPage({ params }) {
                 <KontaktFaq copy={t.faq} />
               </Reveal>
 
-              <Reveal y={18} delay={0.08}>
+              {/* Auf dem Telefon ausgeblendet (`hidden`) statt entfernt:
+                  das Foto passte nicht zur Sektion, das Markup für Desktop
+                  soll aber unangetastet bleiben. */}
+              <Reveal y={18} delay={0.08} className="hidden lg:block">
                 <Photo
                   src={FAQ_IMG}
                   alt={t.faq.imageAlt}

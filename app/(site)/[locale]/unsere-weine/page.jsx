@@ -177,7 +177,7 @@ export default async function WeinePage({ params }) {
       <section id="kollektion" className="relative scroll-mt-28 overflow-hidden">
         <Atmosphere variant="warm" />
         <GhostWord className="right-[-2vw] top-4 text-[11vw]">La Cantina</GhostWord>
-        <div className="relative mx-auto max-w-content px-6 pb-24 pt-2 lg:px-10">
+        <div className="relative mx-auto max-w-content px-6 pb-10 pt-2 lg:px-10 lg:pb-24">
           <h2 className="sr-only">{t.hero?.collectionHeading}</h2>
           <Suspense fallback={null}>
             <WineExplorer />

@@ -1,9 +1,8 @@
 "use client";
 import { useEffect, useState } from "react";
 import Link from "@/components/i18n/LocaleLink";
-import { Reveal, Stagger, StaggerItem } from "./motion/Reveal";
-import Button from "./ui/Button";
-import { Instagram, Facebook, Mail, Arrow, Check, Grapes } from "./Icons";
+import { Stagger, StaggerItem } from "./motion/Reveal";
+import { Instagram, Facebook, Mail, Arrow } from "./Icons";
 import LanguageSwitcher from "./i18n/LanguageSwitcher";
 import { useCommon } from "@/lib/i18n/context";
 import { AGENCY } from "@/lib/agency";
@@ -32,7 +31,6 @@ const LEGAL = [
 export default function Footer() {
   const t = useCommon("footer");
   const a11y = useCommon("a11y");
-  const [sent, setSent] = useState(false);
   // deterministic for SSR/hydration, corrected to the visitor's year after mount
   const [year, setYear] = useState(2026);
   useEffect(() => {
@@ -50,50 +48,8 @@ export default function Footer() {
       </p>
 
       <div className="relative mx-auto max-w-content px-6 pb-12 pt-16 lg:px-10">
-        {/* newsletter band */}
-        <Reveal className="mx-auto max-w-2xl text-center">
-          <Grapes className="mx-auto h-7 w-7 text-champagne" />
-          <h3 className="mt-4 text-balance font-playfair text-[clamp(1.6rem,3vw,2.2rem)] leading-tight">
-            {t.newsletter.title} <span className="italic text-champagne">{t.newsletter.titleAccent}</span>
-          </h3>
-          <p className="mx-auto mt-3 max-w-md text-[13px] leading-relaxed text-ivory/65">
-            {t.newsletter.text}
-          </p>
-          {sent ? (
-            <p
-              className="mx-auto mt-6 inline-flex items-center gap-2 rounded-full border border-champagne/40 bg-champagne/10 px-5 py-3 text-[13px] text-champagne"
-              role="status"
-            >
-              <Check className="h-4 w-4" /> {t.newsletter.success}
-            </p>
-          ) : (
-            <form
-              className="mx-auto mt-6 flex max-w-md items-center gap-1.5 rounded-full border border-ivory/15 bg-white/[0.06] p-1.5 backdrop-blur-sm transition-colors focus-within:border-champagne/60"
-              onSubmit={(e) => {
-                e.preventDefault();
-                setSent(true);
-              }}
-            >
-              <label htmlFor="footer-newsletter" className="sr-only">
-                {t.newsletter.emailLabel}
-              </label>
-              <input
-                id="footer-newsletter"
-                type="email"
-                required
-                autoComplete="email"
-                placeholder={t.newsletter.placeholder}
-                className="h-11 min-w-0 flex-1 bg-transparent px-4 text-[13px] text-ivory outline-none placeholder:text-ivory/40"
-              />
-              <Button type="submit" className="shrink-0">
-                {t.newsletter.submit}
-              </Button>
-            </form>
-          )}
-        </Reveal>
-
         {/* columns */}
-        <Stagger className="mt-12 grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4" gap={0.07}>
+        <Stagger className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4" gap={0.07}>
           <StaggerItem>
             <p className="font-playfair text-[24px] leading-none">
               Maria <span className="italic text-champagne">Maria</span>
@@ -106,7 +62,7 @@ export default function Footer() {
                 <a
                   key={key}
                   href={href}
-                  aria-label={label ?? t.newsletter.emailLabel}
+                  aria-label={label ?? t.mailLabel}
                   className="flex h-11 w-11 items-center justify-center rounded-full border border-ivory/15 text-ivory/75 transition-colors duration-300 hover:border-champagne hover:text-champagne"
                 >
                   <Icon className="h-[18px] w-[18px]" />

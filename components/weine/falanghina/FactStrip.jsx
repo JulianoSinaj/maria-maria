@@ -72,7 +72,7 @@ function FactTile({ fact, index, accent }) {
         />
       )}
 
-      <div className="relative flex h-full items-center gap-0 sm:gap-4" style={{ transform: "translateZ(24px)" }}>
+      <div className="relative flex h-full items-center gap-3 sm:gap-4" style={{ transform: "translateZ(24px)" }}>
         <span
           className="ring-hairline hidden h-10 w-10 shrink-0 items-center justify-center rounded-full border bg-white/60 shadow-chip transition-transform duration-400 ease-out-expo group-hover:-translate-y-0.5 group-hover:scale-105 sm:inline-flex lg:h-11 lg:w-11"
           style={{ borderColor: `${accent.base}40`, color: accent.deep }}
@@ -93,6 +93,16 @@ function FactTile({ fact, index, accent }) {
             style={{ background: `linear-gradient(90deg, ${accent.base}, transparent)` }}
           />
         </div>
+
+        {/* Mobil (< sm): Icon als Abschluss der Zeile, rechtsbündig — das
+            linke Icon ist dort ausgeblendet. Ab sm nicht gerendert, Desktop
+            bleibt unverändert. */}
+        <span
+          className="ring-hairline ml-auto inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border bg-white/60 shadow-chip sm:hidden"
+          style={{ borderColor: `${accent.base}40`, color: accent.deep }}
+        >
+          {Icon && <Icon className="h-5 w-5" aria-hidden="true" />}
+        </span>
       </div>
     </motion.div>
   );

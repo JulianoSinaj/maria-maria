@@ -46,7 +46,7 @@ import { pageMetadata } from "@/lib/i18n/metadata";
    IV  — Curiosità   Abschlussband mit zweigleisiger Fußzeile.
 
    Zwischen III und IV liegt das Archiv (#artikel): die Gespräche (sobald
-   veröffentlicht), die Weine aus den Geschichten und der Newsletter. Die FAQ
+   veröffentlicht) und die Weine aus den Geschichten. Die FAQ
    schließt die Seite nach Kapitel IV ab. Kapitel IV verlinkt ins Archiv zurück.
 
    Die Artikelstrecke (Themenwelten, „Neueste Artikel") und die Sektion
@@ -168,7 +168,7 @@ export default async function MagazinPage({ params }) {
           <GhostWord className="left-[-2vw] top-[38%] text-[11vw]">Storie</GhostWord>
           <GhostWord className="right-[-2vw] bottom-[2%] text-[10vw]">Sapori</GhostWord>
 
-          <div className="relative mx-auto max-w-content px-6 pb-16 pt-10 lg:px-10">
+          <div className="relative mx-auto max-w-content px-6 pb-6 pt-10 lg:px-10 lg:pb-16">
             {/* ---- Ornament-Auftakt: das Archiv stellt sich vor ---- */}
             <Reveal y={12} blur={false}>
               <div aria-hidden="true" className="flex items-center gap-4 pb-5">
@@ -208,18 +208,17 @@ export default async function MagazinPage({ params }) {
               </div>
             </section>
 
-            {/* Newsletter läuft ausschließlich über das Band im Footer — keine Dublette hier. */}
+            {/* Kein Newsletter-Block: der Versand ist vorerst nicht vorgesehen. */}
           </div>
         </div>
 
         {/* ================= CAPITOLO IV: BOX CURIOSITÀ & PASSAGGIO ========= */}
-        <ChapterBreak number="IV" title="Curiosità" word="Il congedo" className="pb-6" />
+        <ChapterBreak number="IV" title="Curiosità" word="Il congedo" className="pb-2 lg:pb-6" />
         <div id="curiosita" className="scroll-mt-12">
           <CuriosityBand
             headingId="magazin-curiosita"
             showInterviewLink={hasInterviews}
             t={t.curiosity}
-            className="py-8 lg:py-10"
           />
         </div>
 

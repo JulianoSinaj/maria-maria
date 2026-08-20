@@ -287,9 +287,42 @@ export default async function RegionenPage({ params }) {
                 id={r.anchor}
                 className={`scroll-mt-32 ${i > 0 ? "mt-16 pt-16 lg:mt-24 lg:pt-24" : ""}`}
               >
-                {/* photo + intro */}
-                <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-2 lg:gap-16">
-                  <Reveal className={flipped ? "lg:order-2" : ""}>
+                {/* photo + intro
+
+                    Mobil liest sich das Porträt wie ein Artikel: Titel,
+                    Text, dann das Bild, zuletzt der Knopf — in dieser
+                    DOM-Reihenfolge stehen die vier Zellen. Ab lg baut das
+                    Grid daraus wieder das zweispaltige Bild: das Foto
+                    spannt alle fünf Zeilen einer Spalte, die drei Textzellen
+                    sitzen in den auto-Zeilen 2–4 der anderen, und die
+                    beiden 1fr-Zeilen außen teilen den Rest gleich auf —
+                    der Textblock bleibt damit mittig zum Foto wie zuvor.
+                    `lg:gap-y-0` plus die alten mt-4-Abstände halten die
+                    Desktop-Maße unverändert; mobil trägt `gap-4` den Abstand
+                    Titel→Text, Bild und Knopf legen mt-4 obendrauf. */}
+                <div className="grid grid-cols-1 items-center gap-4 lg:grid-cols-2 lg:grid-rows-[1fr_auto_auto_auto_1fr] lg:gap-x-16 lg:gap-y-0">
+                  <Reveal
+                    delay={0.12}
+                    className={`lg:row-start-2 ${flipped ? "lg:col-start-1" : "lg:col-start-2"}`}
+                  >
+                    <div>
+                      <Eyebrow>{r.label}</Eyebrow>
+                    </div>
+                    <h2 className="mt-4 font-playfair text-[clamp(1.9rem,3.2vw,2.5rem)] leading-[1.12] text-charcoal">
+                      {r.name}
+                    </h2>
+                  </Reveal>
+
+                  <Reveal
+                    delay={0.12}
+                    className={`lg:row-start-3 ${flipped ? "lg:col-start-1" : "lg:col-start-2"}`}
+                  >
+                    <p className="max-w-lg text-[16px] leading-relaxed text-charcoal/70 lg:mt-4">{r.desc}</p>
+                  </Reveal>
+
+                  <Reveal
+                    className={`mt-4 lg:row-span-5 lg:row-start-1 lg:mt-0 ${flipped ? "lg:col-start-2" : "lg:col-start-1"}`}
+                  >
                     <TiltCard className="group h-full" max={4} radius="rounded-card-lg">
                       <div className="relative aspect-[1672/941] overflow-hidden rounded-card-lg shadow-luxe transition-shadow duration-500 group-hover:shadow-lift">
                         {/* Zweispaltig ab lg, darunter volle Breite */}
@@ -317,14 +350,10 @@ export default async function RegionenPage({ params }) {
                     </TiltCard>
                   </Reveal>
 
-                  <Reveal delay={0.12} className={flipped ? "lg:order-1" : ""}>
-                    <div>
-                      <Eyebrow>{r.label}</Eyebrow>
-                    </div>
-                    <h2 className="mt-4 font-playfair text-[clamp(1.9rem,3.2vw,2.5rem)] leading-[1.12] text-charcoal">
-                      {r.name}
-                    </h2>
-                    <p className="mt-4 max-w-lg text-[16px] leading-relaxed text-charcoal/70">{r.desc}</p>
+                  <Reveal
+                    delay={0.12}
+                    className={`lg:row-start-4 ${flipped ? "lg:col-start-1" : "lg:col-start-2"}`}
+                  >
                     <RegionCta
                       region={r.name}
                       label={r.cta.label}

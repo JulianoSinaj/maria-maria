@@ -23,7 +23,10 @@ import { useCommon } from "@/lib/i18n/context";
    Farbtöne wandern ab lg auf die rechte Seite der Bühne: dort stehen sie
    untereinander in der Lichtinsel neben dem Glas — die Textspalte wird
    leichter, und die leere Kante trägt wieder Inhalt. Unterhalb lg gibt es
-   diese Kante nicht; dort bleiben die Töne in der Zeile beim Text. */
+   diese Kante nicht; dort stehen die Töne als eigene Zeile aus Chips unter
+   der Temperatur — in derselben Sprache wie die Pille, und sie umbrechen
+   sauber, wo die Etiketten (it: „Giallo paglierino") nicht in eine Zeile
+   passen. */
 
 /* Halbes Tempo — der Guss soll fallen, nicht stürzen */
 const POUR_RATE = 0.55;
@@ -150,14 +153,23 @@ export default function ColorBand({ wine }) {
                 </span>
               )}
 
-              <span className="flex items-center gap-2.5 lg:hidden" aria-label={winePage.tones}>
+              {/* Unterhalb lg: die Töne als eigene Zeile (basis-full) aus
+                  Chips — nie neben der Pille eingequetscht, und bei langen
+                  Etiketten bricht ein ganzer Chip um, nicht ein Wort. */}
+              <span
+                className="flex basis-full flex-wrap items-center gap-2 lg:hidden"
+                aria-label={winePage.tones}
+              >
                 {c.swatches.map((s) => (
-                  <span key={s.hex} className="flex items-center gap-1.5">
+                  <span
+                    key={s.hex}
+                    className="inline-flex items-center gap-2 rounded-full border border-charcoal/10 bg-white/70 py-1.5 pl-1.5 pr-3 shadow-chip backdrop-blur-sm"
+                  >
                     <span
-                      className="h-3.5 w-3.5 rounded-full border border-white/70 shadow-sm"
+                      className="h-4 w-4 shrink-0 rounded-full shadow-sm ring-1 ring-white/80"
                       style={{ backgroundColor: s.hex }}
                     />
-                    <span className="whitespace-nowrap text-[10px] font-semibold uppercase tracking-[0.14em] text-charcoal/45">
+                    <span className="whitespace-nowrap text-[10px] font-semibold uppercase tracking-[0.14em] text-charcoal/60">
                       {s.label}
                     </span>
                   </span>
@@ -193,8 +205,15 @@ export default function ColorBand({ wine }) {
       {/* ---------- Die Bühne ---------- */}
       {/* Unterhalb lg steht der Guss als hohes Bild unter dem Text — dort
           liegt das Glas mittig im Bild und hätte die Typo sonst im Rücken.
-          Ab lg füllt dieselbe Aufnahme die ganze Sektion. */}
-      <div className="relative z-0 aspect-[4/5] w-full sm:aspect-[3/2] lg:absolute lg:inset-0 lg:aspect-auto lg:h-full">
+          Ab lg füllt dieselbe Aufnahme die ganze Sektion.
+
+          Die Bühne schneidet unterhalb lg selbst: die Aufnahme ist um den
+          Punkt 50 %/24 % vergrößert und ragte sonst oben über den Rahmen —
+          genau dorthin, wo die Schleier (inset-0) nicht mehr hinreichen. Das
+          gab einen grauen Streifen hinter den Tönen und eine harte Kante am
+          Beginn der Bühne. Ab lg liegt die Bühne in der Sektion, die ohnehin
+          schneidet — dort bleibt alles, wie es war. */}
+      <div className="relative z-0 aspect-[4/5] w-full overflow-hidden sm:aspect-[3/2] lg:absolute lg:inset-0 lg:aspect-auto lg:h-full lg:overflow-visible">
         <motion.div
           className="absolute inset-0"
           initial={reduced ? false : { scale: 1.06 }}

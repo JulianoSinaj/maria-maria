@@ -42,15 +42,8 @@ export const common = {
   },
 
   footer: {
-    newsletter: {
-      title: "Storie dall'Italia,",
-      titleAccent: "direttamente nella tua casella",
-      text: "Novità, offerte esclusive e momenti di piacere — circa una volta al mese, senza rumore.",
-      success: "Grazie! Conferma l'iscrizione nella tua casella di posta.",
-      emailLabel: "Indirizzo e-mail",
-      placeholder: "Inserisci il tuo indirizzo e-mail",
-      submit: "Iscriviti",
-    },
+    /* aria-label des Mail-Icons in der Social-Reihe */
+    mailLabel: "Indirizzo e-mail",
     tagline: "Vini boutique italiani per momenti di piacere scelti con cura.",
     exploreHeading: "Scopri",
     explore: {

@@ -42,15 +42,8 @@ export const common = {
   },
 
   footer: {
-    newsletter: {
-      title: "Příběhy z Itálie,",
-      titleAccent: "přímo do vaší schránky",
-      text: "Novinky, exkluzivní nabídky a chvíle potěšení — přibližně jednou měsíčně, bez zbytečného hluku.",
-      success: "Děkujeme! Potvrďte prosím přihlášení ve své e-mailové schránce.",
-      emailLabel: "E-mailová adresa",
-      placeholder: "Zadejte e-mailovou adresu",
-      submit: "Přihlásit se",
-    },
+    /* aria-label des Mail-Icons in der Social-Reihe */
+    mailLabel: "E-mailová adresa",
     tagline: "Italská butiková vína pro vědomě zvolené chvíle potěšení.",
     exploreHeading: "Objevujte",
     explore: {

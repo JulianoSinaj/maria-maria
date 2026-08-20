@@ -85,7 +85,7 @@ function CuriosityCard({ item, index, labels = {} }) {
       aria-expanded={flipped}
       whileTap={reduced ? undefined : { scale: 0.96 }}
       transition={FLIP_SPRING}
-      className={`group relative block h-[13.5rem] w-full rounded-card-lg text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-4 focus-visible:ring-offset-ivory sm:h-[14rem] ${tone.focus}`}
+      className={`group relative block h-44 w-full rounded-card-lg text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-4 focus-visible:ring-offset-ivory sm:h-[13.5rem] lg:h-[14rem] ${tone.focus}`}
       style={{ perspective: 1200, willChange: "transform" }}
     >
       <motion.div
@@ -96,17 +96,9 @@ function CuriosityCard({ item, index, labels = {} }) {
       >
         {/* ---- Vorderseite: die Frage ---- */}
         <span
-          className={`absolute inset-0 flex flex-col justify-between overflow-hidden rounded-card-lg border p-5 transition-colors duration-300 ease-out ${tone.face} ${tone.edge}`}
+          className={`absolute inset-0 flex flex-col justify-between overflow-hidden rounded-card-lg border p-4 transition-colors duration-300 ease-out sm:p-5 ${tone.face} ${tone.edge}`}
           style={{ backfaceVisibility: "hidden" }}
         >
-          {/* die Nummer als Prägestempel im Hintergrund */}
-          <span
-            aria-hidden="true"
-            className={`pointer-events-none absolute -bottom-3 -right-1 select-none font-playfair text-[5.5rem] italic leading-none ${tone.stamp}`}
-          >
-            {index + 1}
-          </span>
-
           <span
             className={`relative flex items-center gap-2 text-[9.5px] font-semibold uppercase tracking-[0.22em] ${tone.ink}`}
           >
@@ -140,7 +132,7 @@ function CuriosityCard({ item, index, labels = {} }) {
 
         {/* ---- Rückseite: die Auflösung ---- */}
         <span
-          className={`absolute inset-0 flex flex-col justify-between overflow-hidden rounded-card-lg border border-champagne/25 p-5 ${tone.back}`}
+          className={`absolute inset-0 flex flex-col justify-between overflow-hidden rounded-card-lg border border-champagne/25 p-4 sm:p-5 ${tone.back}`}
           style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
         >
           <span
@@ -232,7 +224,7 @@ export default function CuriosityBand({
   return (
     <section
       aria-labelledby={headingId}
-      className={`mx-auto max-w-content px-6 py-8 lg:px-10 lg:py-10 ${className}`}
+      className={`mx-auto max-w-content px-6 pb-8 pt-4 lg:px-10 lg:py-10 ${className}`}
     >
       {/* Der Kasten selbst — Elfenbein auf hellem Grund, umlaufende
           Champagnerkante, keine randlose Bühne mehr. */}

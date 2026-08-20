@@ -53,16 +53,8 @@ export const common = {
   },
 
   footer: {
-    newsletter: {
-      title: "Geschichten aus Italien,",
-      /* kursiv gesetzter Nachsatz — im Markup ein eigenes <span> */
-      titleAccent: "direkt ins Postfach",
-      text: "Neuigkeiten, exklusive Angebote und Genussmomente — etwa einmal im Monat, ohne Lärm.",
-      success: "Danke! Bitte bestätigen Sie Ihre Anmeldung im Posteingang.",
-      emailLabel: "E-Mail-Adresse",
-      placeholder: "E-Mail-Adresse eingeben",
-      submit: "Anmelden",
-    },
+    /* aria-label des Mail-Icons in der Social-Reihe */
+    mailLabel: "E-Mail-Adresse",
     tagline: "Italienische Boutique-Weine für bewusst gewählte Genussmomente.",
     exploreHeading: "Entdecken",
     explore: {

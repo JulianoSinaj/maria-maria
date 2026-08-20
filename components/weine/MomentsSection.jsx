@@ -47,7 +47,7 @@ export default function MomentsSection({ t = {}, className = "", headingId, id }
       <GhostWord className="right-[-4vw] top-[6%] text-[13vw]">Occasioni</GhostWord>
       <Vines className="inset-x-0 -bottom-12 h-[280px] w-full opacity-35" />
 
-      <div className="relative mx-auto max-w-content px-6 py-20 lg:px-10 lg:py-24">
+      <div className="relative mx-auto max-w-content px-6 pb-20 pt-10 lg:px-10 lg:py-24">
         {/* Zeitungskopf zwischen Haarlinien — das Echo der Rivista, in die
             diese Sektion führt: wer die Zeile im Magazin wiedererkennt, weiß,
             dass er angekommen ist. */}

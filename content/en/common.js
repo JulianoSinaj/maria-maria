@@ -42,15 +42,8 @@ export const common = {
   },
 
   footer: {
-    newsletter: {
-      title: "Stories from Italy,",
-      titleAccent: "straight to your inbox",
-      text: "News, exclusive offers and moments worth savouring — about once a month, without the noise.",
-      success: "Thank you! Please confirm your subscription in your inbox.",
-      emailLabel: "Email address",
-      placeholder: "Enter your email address",
-      submit: "Subscribe",
-    },
+    /* aria-label des Mail-Icons in der Social-Reihe */
+    mailLabel: "Email address",
     tagline: "Italian boutique wines for moments chosen with care.",
     exploreHeading: "Explore",
     explore: {

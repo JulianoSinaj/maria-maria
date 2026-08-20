@@ -101,6 +101,7 @@ const rosatoPuglia = {
       { label: "Sistema di allevamento", value: "Alberello, senza irrigazione" },
       { label: "Classificazione", value: "Negroamaro I.G.P. Salento" },
     ],
+    photoAlt: "Trulli e uliveti in Puglia nella luce della sera",
     chip: { subtitle: "Puglia · Italia" },
   },
 
@@ -123,7 +124,7 @@ const rosatoPuglia = {
       items: [
         { title: "Temperatura di servizio", text: "12–14 °C — ben fresco" },
         { title: "Quando berlo", text: "Da gustare giovane — al meglio entro 1–2 anni" },
-        { title: "Il rituale", text: "Versare poco e spesso, così resta fresco nel calice" },
+        { title: "Il preludio", text: "Toglierlo dal frigorifero poco prima di servire — la freschezza è il suo carattere" },
       ],
     },
     maria: {

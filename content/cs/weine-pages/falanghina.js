@@ -46,7 +46,7 @@ const falanghina = {
     {
       kicker: "Vůně",
       title: "Bílé květy, hruška a závan citrusů",
-      text: "Jemná, světlá kytice: květy, žluté ovoce a středomořská lehkost stoupající ze sklenice.",
+      text: "Jemný, světlý buket: květy, žluté ovoce a středomořská lehkost stoupající ze sklenice.",
       artwork: {
         alt: "Zadní etiketa láhve Beneventano Falanghina IGP od Maria Maria",
         medium: "Zadní etiketa",
@@ -174,7 +174,7 @@ const falanghina = {
     },
     {
       q: "Jaký je rozdíl mezi Falanghinou a Greco di Tufo?",
-      a: "Obě jsou bílé odrůdy Kampánie, ale každá s vlastním charakterem: Falanghina z Beneventana je měkká, harmonická a bezprostředně svěží. Greco di Tufo roste na vulkanickém tufu, přináší více struktury a minerální linku – a jako jedno z mála bílých vín Itálie nese pečeť D.O.C.G.",
+      a: "Obě jsou bílé odrůdy Kampánie, ale každá s vlastním charakterem: Falanghina z Beneventana je měkká, harmonická a bezprostředně svěží. Greco di Tufo roste na vulkanickém tufu, přináší více struktury a minerální tón – a jako jedno z mála bílých vín Itálie nese pečeť D.O.C.G.",
       link: { label: "Objevte Greco di Tufo" },
     },
   ],

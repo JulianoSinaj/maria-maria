@@ -11,7 +11,7 @@ import { useCommon } from "@/lib/i18n/context";
 import { pathWithoutLocale } from "@/lib/i18n/routing";
 import { useLenis } from "./motion/SmoothScroll";
 import { Close, Menu, Grapes } from "./Icons";
-import { BUSINESS } from "@/lib/site";
+import { topsellerHref } from "@/lib/shop/config";
 
 /* Pfad und Wörterbuch-Schlüssel gehören zusammen, die Beschriftung nicht:
    Routen sind in allen vier Sprachen identisch (/unsere-weine bleibt
@@ -178,7 +178,10 @@ export default function Header() {
               <LanguageSwitcher onDark={onDark} />
             </div>
             <div className="hidden md:block">
-              <Button href="/shop" size="sm">
+              {/* Nicht die Sammelseite, sondern die Topseller: der Knopf steht
+                  auf jeder Seite und trifft niemanden, der schon eine Flasche
+                  gewählt hat — siehe lib/shop/config. */}
+              <Button href={topsellerHref()} size="sm">
                 {nav.shop}
               </Button>
             </div>
@@ -235,7 +238,7 @@ export default function Header() {
               </button>
             </div>
             <nav className="flex flex-1 flex-col justify-center gap-1 px-8" aria-label={a11y.mobileNav}>
-              {[...NAV, { key: "shop", href: "/shop" }].map((item, i) => (
+              {[...NAV, { key: "shop", href: topsellerHref() }].map((item, i) => (
                 <motion.div
                   key={item.href}
                   initial={{ opacity: 0, y: 32 }}
@@ -274,7 +277,7 @@ export default function Header() {
               {/* Flache Reihe statt Aufklapp-Panel: Im mobilen Overlay wäre
                   ein zweites Overlay darüber nur eine Falle. */}
               <LanguageSwitcher variant="inline" className="mb-6" />
-              <p className="text-[12px] tracking-wide text-ivory/60">{BUSINESS.email}</p>
+              <p className="text-[12px] tracking-wide text-ivory/60">info@maria-maria.de</p>
               <p className="mt-1 font-playfair text-[15px] italic text-champagne/90">Il piacere del vino</p>
             </motion.div>
           </motion.div>

@@ -16,7 +16,7 @@ export const meta = {
   collection: {
     title: "Naše vína",
     description:
-      "Ručně vybíraná italská butiková vína z malých vinařství – červená, bílá a růžová z Apulie, Kampánie a od Lago di Garda.",
+      "Ručně vybíraná italská butiková vína z malých vinařství – červená, bílá a růžová z Apulie, Kampánie a od Gardského jezera.",
   },
 
   shop: {
@@ -28,14 +28,14 @@ export const meta = {
   geschichte: {
     title: "Náš příběh",
     description:
-      "Dvě ženy, dvě generace, jeden postoj k vínu: z Lizzana v Salentu přes Irpinii a Lago di Garda až do Düsseldorfu — osobně vybíraná vína, v Německu od roku 2019.",
+      "Dvě ženy, dvě generace, jeden postoj k vínu: z Lizzana v Salentu přes Irpinii a Gardské jezero až do Düsseldorfu — osobně vybíraná vína, v Německu od roku 2019.",
     keywords: [
       "Maria Maria",
       "příběh",
       "italská vína",
       "Salento",
       "Lizzano",
-      "Lago di Garda",
+      "Gardské jezero",
       "Kampánie",
       "Düsseldorf",
     ],
@@ -61,14 +61,13 @@ export const meta = {
   regionen: {
     titleAbsolute: "Italské vinařské regiony: Apulie, Kampánie a Lugana | Maria Maria",
     description:
-      "Objevte vybraná vína z Apulie, Kampánie a oblasti Lugana u Lago di Garda – odrůdy, původ, chuť a tipy na snoubení s jídlem.",
+      "Objevte vybraná vína z Apulie, Kampánie a oblasti Lugana u Gardského jezera – odrůdy, původ, chuť a tipy na snoubení s jídlem.",
   },
 
   kontakt: {
-    /* jako v content/de/meta.js: úplný titulek nesoucí značku */
-    titleAbsolute: "Kontakt | Italská vína pro gastronomii & akce | Maria Maria",
+    titleAbsolute: "Kontakt | Italská vína pro gastronomii a akce | Maria Maria",
     description:
-      "Italská butiková vína pro gastronomii, lahůdky, obchod, akce a degustace v Düsseldorfu & NRW. Osobní poradenství a individuální výběr vín.",
+      "Italská butiková vína pro gastronomii, lahůdky, obchod, akce a degustace v Düsseldorfu a NRW. Osobní poradenství a individuální výběr vín.",
   },
 
   agb: {
@@ -79,12 +78,12 @@ export const meta = {
   datenschutz: {
     title: "Zásady ochrany osobních údajů",
     description:
-      "Informace o zpracování osobních údajů na maria-maria.wine v souladu s GDPR.",
+      "Informace o zpracování osobních údajů na maria-maria.de v souladu s GDPR.",
   },
 
   impressum: {
     title: "Tiráž",
-    description: "Tiráž a údaje o společnosti Maria Maria Wines GmbH, Düsseldorf.",
+    description: "Tiráž a údaje o společnosti Maria Maria Wines GmbH, Mettmann.",
   },
 
   /* Devět stránek vín — šablony, nikoli hotové věty: název, ročník, druh,

@@ -5,10 +5,8 @@ import { Reveal, Stagger, StaggerItem } from "./motion/Reveal";
 import Button from "./ui/Button";
 import { Instagram, Facebook, Mail, Arrow, Check, Grapes } from "./Icons";
 import LanguageSwitcher from "./i18n/LanguageSwitcher";
-import { useCommon, useLocale } from "@/lib/i18n/context";
+import { useCommon } from "@/lib/i18n/context";
 import { AGENCY } from "@/lib/agency";
-import { BUSINESS } from "@/lib/site";
-import { pushEvent, CLICK_EMAIL, CLICK_PHONE } from "@/lib/analytics";
 
 const EXPLORE = [
   { key: "wines", href: "/unsere-weine" },
@@ -22,9 +20,7 @@ const EXPLORE = [
 const SOCIALS = [
   { key: "instagram", label: "Instagram", href: "https://www.instagram.com/mariamaria.wine", Icon: Instagram },
   { key: "facebook", label: "Facebook", href: "https://www.facebook.com/mariamaria.wine", Icon: Facebook },
-  /* E-Mail-Adresse aus lib/site.js — dieselbe Quelle wie Kontaktseite,
-     Rechtstexte und JSON-LD (Kontakt-Handoff 18.08.2026). */
-  { key: "mail", label: null, href: `mailto:${BUSINESS.email}`, Icon: Mail },
+  { key: "mail", label: null, href: "mailto:info@maria-maria.de", Icon: Mail },
 ];
 
 const LEGAL = [
@@ -36,7 +32,6 @@ const LEGAL = [
 export default function Footer() {
   const t = useCommon("footer");
   const a11y = useCommon("a11y");
-  const locale = useLocale();
   const [sent, setSent] = useState(false);
   // deterministic for SSR/hydration, corrected to the visitor's year after mount
   const [year, setYear] = useState(2026);
@@ -141,27 +136,12 @@ export default function Footer() {
             <h4 className="text-[11px] font-semibold uppercase tracking-[0.22em] text-champagne">{t.contactHeading}</h4>
             <div className="mt-5 space-y-2 text-[12.5px] leading-relaxed text-ivory/65">
               <p>Senso Valerio Weinhandel</p>
-              <p>Von Valerio Caniglia</p>
-              <p>Ellerfelderstrasse 78</p>
+              <p>Valerio Caniglia</p>
+              <p>Ellerfelderstrasse 78d</p>
               <p>40822 Mettmann</p>
-              <a
-                href={`mailto:${BUSINESS.email}`}
-                onClick={() => pushEvent(CLICK_EMAIL, { location: "footer", language: locale })}
-                className="block transition-colors hover:text-champagne"
-              >
-                {BUSINESS.email}
+              <a href="mailto:info@maria-maria.de" className="block transition-colors hover:text-champagne">
+                info@maria-maria.de
               </a>
-              {/* Telefon erst, wenn eine bestätigte Nummer in lib/site.js steht —
-                  bis dahin keine Zeile statt einer falschen. */}
-              {BUSINESS.phone && (
-                <a
-                  href={`tel:${BUSINESS.phone}`}
-                  onClick={() => pushEvent(CLICK_PHONE, { location: "footer", language: locale })}
-                  className="block transition-colors hover:text-champagne"
-                >
-                  {BUSINESS.phoneDisplay ?? BUSINESS.phone}
-                </a>
-              )}
             </div>
           </StaggerItem>
 

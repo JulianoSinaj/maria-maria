@@ -3,6 +3,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { motion, useInView, useReducedMotion } from "motion/react";
 import { Reveal } from "@/components/motion/Reveal";
 import SplitText from "@/components/motion/SplitText";
+import { useCommon } from "@/lib/i18n/context";
 
 /* „Die Farbe" — eine Bühne statt einer Karte. Der Clip vom eingeschenkten
    Wein läuft randlos über die ganze Sektion, in halber Geschwindigkeit, und
@@ -41,6 +42,7 @@ const MEDIA_FILTER = { filter: "saturate(1.12) contrast(1.03)" };
 
 export default function ColorBand({ wine }) {
   const reduced = useReducedMotion();
+  const winePage = useCommon("winePage");
   const c = wine.colorMoment;
   const art = c.artwork ?? {};
   /* Den Clip (~4 MB) erst mounten, wenn die Sektion in Sichtweite kommt —
@@ -145,7 +147,7 @@ export default function ColorBand({ wine }) {
                 </span>
               )}
 
-              <span className="flex items-center gap-2.5" aria-label="Die Töne des Weins">
+              <span className="flex items-center gap-2.5" aria-label={winePage.tones}>
                 {c.swatches.map((s) => (
                   <span key={s.hex} className="flex items-center gap-1.5">
                     <span

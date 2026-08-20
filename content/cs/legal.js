@@ -33,8 +33,8 @@ export const legal = {
         title: "Údaje podle § 5 TMG",
         body: [
           "Maria Maria Wines GmbH",
-          "Ellerfelderstrasse 78, 40822 Mettmann, Německo",
-          "Zastoupena jednatelstvím.",
+          "Ellerfelderstrasse 78d, 40822 Mettmann, Německo",
+          "Zastoupena jednateli společnosti.",
         ],
       },
       {
@@ -45,12 +45,12 @@ export const legal = {
         title: "Zápis v rejstříku",
         body: [
           "Zápis v obchodním rejstříku. Rejstříkový soud: Amtsgericht Düsseldorf.",
-          "Číslo zápisu a DIČ podle § 27 a německého zákona o DPH budou na tomto místě doplněny po dokončení zápisu.",
+          "Číslo zápisu a DIČ podle § 27a německého zákona o DPH (UStG) budou na tomto místě doplněny po dokončení zápisu.",
         ],
       },
       {
         title: "Odpovědnost za obsah podle § 55 odst. 2 RStV",
-        body: ["Maria Maria Wines GmbH, Ellerfelderstrasse 78, 40822 Mettmann."],
+        body: ["Maria Maria Wines GmbH, Ellerfelderstrasse 78d, 40822 Mettmann."],
       },
       {
         title: "Ochrana mladistvých",
@@ -82,7 +82,7 @@ export const legal = {
       {
         title: "1. Správce",
         body: [
-          "Správcem zpracování údajů na těchto webových stránkách je Maria Maria Wines GmbH, Ellerfelderstrasse 78, 40822 Mettmann, Německo, e-mail: info@maria-maria.de.",
+          "Správcem zpracování údajů na těchto webových stránkách je Maria Maria Wines GmbH, Ellerfelderstrasse 78d, 40822 Mettmann, Německo, e-mail: info@maria-maria.de.",
         ],
       },
       {
@@ -135,7 +135,7 @@ export const legal = {
       {
         title: "§ 1 Rozsah platnosti",
         body: [
-          "Tyto všeobecné obchodní podmínky platí pro všechny objednávky učiněné prostřednictvím e-shopu společnosti Maria Maria Wines GmbH, Ellerfelderstrasse 78, 40822 Mettmann (dále jen „Maria Maria“), ze strany spotřebitelů i podnikatelů.",
+          "Tyto všeobecné obchodní podmínky platí pro všechny objednávky učiněné prostřednictvím e-shopu společnosti Maria Maria Wines GmbH, Ellerfelderstrasse 78d, 40822 Mettmann (dále jen „Maria Maria“), ze strany spotřebitelů i podnikatelů.",
         ],
       },
       {
@@ -183,7 +183,7 @@ export const legal = {
       {
         title: "§ 9 Závěrečná ustanovení",
         body: [
-          "Platí právo Spolkové republiky Německo s vyloučením Úmluvy OSN o smlouvách o mezinárodní koupi zboží. Vůči spotřebitelům platí tato volba práva jen v rozsahu, v němž nezbavuje ochrany kogentních ustanovení státu jejich obvyklého pobytu.",
+          "Platí právo Spolkové republiky Německo s vyloučením Úmluvy OSN o smlouvách o mezinárodní koupi zboží. Vůči spotřebitelům platí tato volba práva jen v rozsahu, v němž je nezbavuje ochrany, kterou jim poskytují kogentní ustanovení práva státu jejich obvyklého pobytu.",
         ],
       },
     ],

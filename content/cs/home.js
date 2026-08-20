@@ -6,8 +6,11 @@ export const home = {
     lede: "Ručně vybíraná vína z malých rodinných vinařství – pro vědomě zvolené chvíle, od aperitivu po velký večer.",
     ctaWines: "Objevit vína",
     ctaShop: "Do e-shopu",
-    statWines: "Butiková vína",
-    statRegions: "Regionů Itálie",
+    /* Číslovky se do popisků dosazují za běhu (9 vín, 3 regiony), takže
+       tvar musí sedět: u 9 čeština žádá genitiv množného čísla, u 3
+       nominativ. Správné tvary nese už content/cs/shop.js. */
+    statWines: "Butikových vín",
+    statRegions: "Regiony Itálie",
     statSince: "od založení",
     photoAlt:
       "Láhev Maria Maria a sklenka červeného vína na kamenné zídce mezi vinicemi a mořem, za nimi žena v bílých šatech hledící na pobřeží",

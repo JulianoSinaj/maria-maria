@@ -33,7 +33,7 @@ export const legal = {
         title: "Informazioni ai sensi del § 5 TMG",
         body: [
           "Maria Maria Wines GmbH",
-          "Ellerfelderstrasse 78, 40822 Mettmann, Germania",
+          "Ellerfelderstrasse 78d, 40822 Mettmann, Germania",
           "Rappresentata dalla direzione.",
         ],
       },
@@ -50,7 +50,7 @@ export const legal = {
       },
       {
         title: "Responsabile dei contenuti ai sensi del § 55 c. 2 RStV",
-        body: ["Maria Maria Wines GmbH, Ellerfelderstrasse 78, 40822 Mettmann."],
+        body: ["Maria Maria Wines GmbH, Ellerfelderstrasse 78d, 40822 Mettmann."],
       },
       {
         title: "Tutela dei minori",
@@ -82,7 +82,7 @@ export const legal = {
       {
         title: "1. Titolare del trattamento",
         body: [
-          "Il titolare del trattamento dei dati su questo sito è Maria Maria Wines GmbH, Ellerfelderstrasse 78, 40822 Mettmann, Germania, e-mail: info@maria-maria.de.",
+          "Il titolare del trattamento dei dati su questo sito è Maria Maria Wines GmbH, Ellerfelderstrasse 78d, 40822 Mettmann, Germania, e-mail: info@maria-maria.de.",
         ],
       },
       {
@@ -135,7 +135,7 @@ export const legal = {
       {
         title: "§ 1 Ambito di applicazione",
         body: [
-          "Le presenti condizioni generali si applicano a tutti gli ordini effettuati tramite lo shop online di Maria Maria Wines GmbH, Ellerfelderstrasse 78, 40822 Mettmann (di seguito «Maria Maria»), da parte di consumatori e imprese.",
+          "Le presenti condizioni generali si applicano a tutti gli ordini effettuati tramite lo shop online di Maria Maria Wines GmbH, Ellerfelderstrasse 78d, 40822 Mettmann (di seguito «Maria Maria»), da parte di consumatori e imprese.",
         ],
       },
       {
@@ -153,7 +153,7 @@ export const legal = {
       {
         title: "§ 4 Prezzi e spese di spedizione",
         body: [
-          "Tutti i prezzi sono in euro e comprendono l'IVA di legge, oltre alle spese di spedizione. Le spese applicabili sono indicate in modo trasparente durante il processo d'ordine, prima dell'invio dello stesso.",
+          "Tutti i prezzi si intendono in euro, IVA di legge inclusa, al netto delle spese di spedizione. Le spese applicabili sono indicate in modo trasparente durante il processo d'ordine, prima dell'invio dello stesso.",
         ],
       },
       {

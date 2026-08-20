@@ -127,7 +127,7 @@ const primitivo145 = {
       items: [
         { title: "Serving temperature", text: "16–18 °C — in a large red wine glass" },
         { title: "Drinking window", text: "Enjoy now or within 3–5 years" },
-        { title: "The ritual", text: "Open it a good hour ahead — fruit and spice come through more clearly" },
+        { title: "The ritual", text: "Let it breathe briefly before drinking — open it a scant hour ahead" },
       ],
     },
     maria: {
@@ -164,7 +164,7 @@ const primitivo145 = {
     },
     {
       q: "At what temperature should the Primitivo 14,5 be served?",
-      a: "16 to 18 °C in a red wine glass. Opened a good hour beforehand, the dark fruit and the soft texture come through most clearly.",
+      a: "16 to 18 °C in a red wine glass. Opened a scant hour beforehand, the dark fruit and the soft texture come through most clearly.",
     },
     {
       q: "What distinguishes the Primitivo 14,5 from the Primitivo 15,5?",

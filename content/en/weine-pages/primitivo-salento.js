@@ -101,6 +101,7 @@ const primitivoSalento = {
       { label: "Classification", value: "Primitivo I.G.P. Salento" },
       { label: "Vine training", value: "Alberello, without irrigation" },
     ],
+    photoAlt: "Trulli and olive groves in Puglia in the evening light",
     chip: { subtitle: "Puglia · Italy" },
   },
 

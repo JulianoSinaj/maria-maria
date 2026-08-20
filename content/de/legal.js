@@ -28,7 +28,7 @@ export const legal = {
         title: "Angaben gemäß § 5 TMG",
         body: [
           "Maria Maria Wines GmbH",
-          "Ellerfelderstrasse 78, 40822 Mettmann, Deutschland",
+          "Ellerfelderstrasse 78d, 40822 Mettmann, Deutschland",
           "Vertreten durch die Geschäftsführung.",
         ],
       },
@@ -45,7 +45,7 @@ export const legal = {
       },
       {
         title: "Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV",
-        body: ["Maria Maria Wines GmbH, Ellerfelderstrasse 78, 40822 Mettmann."],
+        body: ["Maria Maria Wines GmbH, Ellerfelderstrasse 78d, 40822 Mettmann."],
       },
       {
         title: "Jugendschutz",
@@ -77,7 +77,7 @@ export const legal = {
       {
         title: "1. Verantwortlicher",
         body: [
-          "Verantwortlich für die Datenverarbeitung auf dieser Website ist die Maria Maria Wines GmbH, Ellerfelderstrasse 78, 40822 Mettmann, Deutschland, E-Mail: info@maria-maria.de.",
+          "Verantwortlich für die Datenverarbeitung auf dieser Website ist die Maria Maria Wines GmbH, Ellerfelderstrasse 78d, 40822 Mettmann, Deutschland, E-Mail: info@maria-maria.de.",
         ],
       },
       {
@@ -130,7 +130,7 @@ export const legal = {
       {
         title: "§ 1 Geltungsbereich",
         body: [
-          "Diese Allgemeinen Geschäftsbedingungen gelten für alle Bestellungen über den Online-Shop der Maria Maria Wines GmbH, Ellerfelderstrasse 78, 40822 Mettmann (nachfolgend „Maria Maria“), durch Verbraucher und Unternehmer.",
+          "Diese Allgemeinen Geschäftsbedingungen gelten für alle Bestellungen über den Online-Shop der Maria Maria Wines GmbH, Ellerfelderstrasse 78d, 40822 Mettmann (nachfolgend „Maria Maria“), durch Verbraucher und Unternehmer.",
         ],
       },
       {

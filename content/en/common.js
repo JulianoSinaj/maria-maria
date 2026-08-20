@@ -264,6 +264,20 @@ export const common = {
     nextCard: "Next card",
     cards: "Cards",
     sections: "Sections of this page",
+
+    /* See content/de/common.js — the SimilarWines subtitle. English takes no
+       comma before a restrictive „that" clause, so similarJoin is a space. */
+    similarLead: "{count} {noun} from our collection",
+    similarJoin: " ",
+    similarCounts: { 2: "Two", 3: "Three", 4: "Four", 5: "Five", 6: "Six" },
+    similarNouns: {
+      all: "wines",
+      red: "red wines",
+      white: "white wines",
+      rose: "rosé wines",
+    },
+    allWinesCta: "See all wines",
+    subnavCta: "Discover",
   },
 
   language: {

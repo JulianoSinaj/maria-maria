@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useId, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { pluralUnit } from "@/lib/i18n/format";
 
 /* Filterleiste der Kollektion.
 
@@ -304,7 +305,7 @@ export default function WineFilterBar({
           <span className="font-playfair text-[26px] normal-case tabular-nums tracking-normal text-bordeaux">
             {count}
           </span>
-          {count === 1 ? labels?.wineOne : labels?.wineMany}
+          {pluralUnit(labels, count)}
         </p>
       </div>
 

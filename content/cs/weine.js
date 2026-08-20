@@ -8,8 +8,9 @@ export const weine = {
     lede: "Maria Maria znamená ručně vybíraná italská butiková vína z malých vinařství – zvolená pro vědomé chvíle a opravdový požitek.",
     ctaCollection: "Ke kolekci",
     ctaShop: "Do e-shopu",
-    statWines: "Vybraná vína",
-    statRegions: "Regionů Itálie",
+    /* Viz content/cs/home.js — 9 žádá genitiv, 3 nominativ. */
+    statWines: "Vybraných vín",
+    statRegions: "Regiony z Itálie",
     statSinceValue: "od roku 2019",
     statSince: "Pro vědomé chvíle požitku",
     collectionHeading: "Kolekce",

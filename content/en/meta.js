@@ -65,10 +65,9 @@ export const meta = {
   },
 
   kontakt: {
-    /* as in content/de/meta.js: full title carrying the brand itself */
-    titleAbsolute: "Contact | Italian wines for restaurants & events | Maria Maria",
+    titleAbsolute: "Contact | Italian Wines for Restaurants & Events | Maria Maria",
     description:
-      "Italian boutique wines for restaurants, fine food, trade, events and tastings in Düsseldorf & NRW. Personal advice and individual wine selection.",
+      "Italian boutique wines for restaurants, delicatessens, retail, events and tastings in Düsseldorf & NRW. Personal advice and an individual wine selection.",
   },
 
   agb: {
@@ -79,12 +78,12 @@ export const meta = {
   datenschutz: {
     title: "Privacy Policy",
     description:
-      "Information on the processing of personal data on maria-maria.wine in accordance with the GDPR.",
+      "Information on the processing of personal data on maria-maria.de in accordance with the GDPR.",
   },
 
   impressum: {
     title: "Legal Notice",
-    description: "Legal notice and company details of Maria Maria Wines GmbH, Düsseldorf.",
+    description: "Legal notice and company details of Maria Maria Wines GmbH, Mettmann.",
   },
 
   /* The nine product pages — templates, not finished sentences: name,

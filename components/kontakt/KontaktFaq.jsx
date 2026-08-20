@@ -2,208 +2,211 @@
 import { useEffect, useId, useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
 import Link from "@/components/i18n/LocaleLink";
-import { Arrow } from "@/components/Icons";
-import { useLocale } from "@/lib/i18n/context";
-import { pushEvent, pageLocation, FAQ_OPEN, FAQ_CTA_CLICK } from "@/lib/analytics";
+import { Arrow, ChevronDown } from "@/components/Icons";
+import { useLenis } from "@/components/motion/SmoothScroll";
+import { CTA_LINK } from "./styles";
 
-/* Sektion 06 — Akkordeon „Häufige Fragen" der Kontaktseite (Handoff §10).
+/* Akkordeon der Kontakt-FAQ.
 
-   Warum nicht FaqSection: die teilt sich das Zwei-Spalten-Layout mit
-   Sektionstext und Themen-Index. Das Mockup will etwas anderes — zentrierte
-   H2, Akkordeon links, Foto rechts, vier Fragen sichtbar und „Alle Fragen
-   ansehen". Dieses Stück ist NUR das Akkordeon; das Raster und das Foto
-   setzt die Seite.
+   Handoff §10: „La risposta deve essere presente nell'HTML iniziale, non
+   caricata solo al click." Deshalb steht jede Antwort im Markup und wird
+   beim Öffnen nur in der Höhe entfaltet — kein Fetch, kein Unmount.
 
-   Regeln (Handoff §15/§17 + FAQ-Guide):
-   - Alle sechs Antworten stehen im initialen HTML. Geschlossene Panels sind
-     auf Höhe 0 gefaltet, nicht ausgehängt; die Fragen 5–6 liegen in einem
-     zweiten gefalteten Block, den „Alle Fragen ansehen" aufklappt. Crawler
-     lesen alles, Besucher sehen erst vier.
-   - <button> + aria-expanded/aria-controls, Panel als role="region".
-   - Stabile IDs je Frage (`item.id`) für Deep-Links (/kontakt#kontakt-
-     haendler kommt von der Startseiten-FAQ) und für faq_id im dataLayer.
-   - faq_open trägt faq_id, category, language (Handoff §16) — kein Fragetext
-     nötig, die ID ist sprachneutral.
-   - Eine offene Frage zugleich; Touch-Ziel ≥ 44 px; + geschlossen, – offen. */
+   Im Mockup stehen vier Fragen und darunter „Alle Fragen ansehen". Der
+   Schalter blendet die übrigen ein, statt auf eine zweite Seite zu führen,
+   die es nicht gibt. Auch sie stehen von Anfang an im HTML; bis zum Klick
+   sind sie nur nicht sichtbar.
+
+   Eine Frage offen zur Zeit: zwei aufgeklappte Antworten schieben die dritte
+   aus dem Bild, und der Nutzer scrollt hinter seiner eigenen Frage her.
+
+   ZWEI DINGE, die dieses Akkordeon mit dem der übrigen Seiten teilt
+   (components/faq/FaqSection.jsx) und die hier zunächst fehlten:
+
+   1. Höchstens EIN weiterführender Link je Antwort (`item.link`), mit
+      beschreibendem Anchor-Text. Die Kontaktseite war bis dahin eine
+      Sackgasse: Sie empfängt Verweise aus der Kopfzeile, der Fußzeile und
+      der Startseiten-FAQ, gab aber selbst keinen einzigen weiter — weder auf
+      die Kollektion noch auf die Regionen, obwohl vier ihrer Antworten genau
+      davon sprechen. Der Link steht unter der Antwort statt im Satz: Er
+      lässt den freigegebenen Text unangetastet und ist beim Überfliegen als
+      Weg erkennbar.
+
+   2. Ein Anker je Frage (`id={item.id}`), damit /kontakt#kontakt-sortiment
+      die richtige Antwort aufschlägt. Die Startseiten-FAQ verlinkt seit dem
+      Relaunch genau so hierher; ohne Anker landete der Besucher stumm am
+      Seitenanfang. Liegt die Frage hinter „Alle Fragen ansehen", klappt der
+      Deep-Link den Rest zuerst auf. */
 
 const VISIBLE = 4;
-const CATEGORY = "kontakt";
 
-const FOCUS =
-  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-terracotta focus-visible:ring-offset-2 focus-visible:ring-offset-ivory";
+function Row({ item, open, onToggle, uid, reduced }) {
+  const panelId = `${uid}-panel-${item.id}`;
+  const buttonId = `${uid}-button-${item.id}`;
 
-export default function KontaktFaq({ items = [], copy }) {
-  const uid = useId();
+  return (
+    /* scroll-mt-24 wie die Formularsektion: Ohne den Abstand schiebt die
+       Kopfzeile die angesprungene Frage unter sich. */
+    <div id={item.id} className="scroll-mt-24 border-b border-sand last:border-b-0">
+      <h3>
+        <button
+          id={buttonId}
+          type="button"
+          onClick={onToggle}
+          aria-expanded={open}
+          aria-controls={panelId}
+          className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left transition-colors duration-300 hover:bg-terracotta-soft/35 sm:px-6"
+        >
+          <span className="font-playfair text-[16.5px] leading-snug text-charcoal sm:text-[17.5px]">
+            {item.q}
+          </span>
+          <ChevronDown
+            aria-hidden="true"
+            className={`h-4 w-4 shrink-0 text-terracotta transition-transform duration-400 ease-out-expo ${
+              open ? "rotate-180" : ""
+            }`}
+          />
+        </button>
+      </h3>
+
+      <motion.div
+        id={panelId}
+        role="region"
+        aria-labelledby={buttonId}
+        initial={false}
+        animate={{ height: open ? "auto" : 0, opacity: open ? 1 : 0 }}
+        transition={reduced ? { duration: 0 } : { duration: 0.42, ease: [0.16, 1, 0.3, 1] }}
+        className="overflow-hidden"
+      >
+        <div className="px-5 pb-5 pr-10 sm:px-6 sm:pb-6">
+          <p className="text-[13.5px] leading-[1.7] text-charcoal/72">{item.a}</p>
+
+          {/* `tabIndex` folgt dem Öffnungszustand: Das Panel bleibt im DOM
+              (die Antwort soll im HTML stehen), ist geschlossen aber nur auf
+              Höhe 0 gefaltet — ein Link darin wäre sonst mit der Tabulator-
+              taste erreichbar, ohne dass irgendwo etwas zu sehen ist. */}
+          {item.link && (
+            <Link
+              href={item.link.href}
+              tabIndex={open ? 0 : -1}
+              className={`${CTA_LINK} mt-3.5 min-h-[44px]`}
+            >
+              {item.link.label}
+              <Arrow className="h-3.5 w-3.5 transition-transform duration-500 ease-out-expo group-hover/link:translate-x-1" />
+            </Link>
+          )}
+        </div>
+      </motion.div>
+    </div>
+  );
+}
+
+export default function KontaktFaq({ copy }) {
+  const uid = useId().replace(/:/g, "");
   const reduced = useReducedMotion();
-  const locale = useLocale();
+  const lenis = useLenis();
   const [open, setOpen] = useState(null);
   const [expanded, setExpanded] = useState(false);
 
+  const items = copy.items ?? [];
   const head = items.slice(0, VISIBLE);
   const tail = items.slice(VISIBLE);
 
-  /* Deep-Link: /kontakt#<id> öffnet die Frage — liegt sie hinter der
-     Vierergrenze, klappt zuerst der Rest auf. */
+  /* Deep-Link: /kontakt#kontakt-sortiment schlägt die Frage auf und springt
+     sie an. Die Startseiten-FAQ verlinkt genau so hierher.
+
+     BEWUSST IN ZWEI SCHRITTEN, mit `pending` als Staffelstab dazwischen.
+     Liegt die Frage hinter „Alle Fragen ansehen", muss der hintere Block
+     erst sichtbar sein, bevor irgendwer ihn anspringen kann: Ein `hidden`
+     Element hat keine Geometrie, `getBoundingClientRect()` liefert Nullen,
+     und Lenis bekäme die Position 0 gemeldet — der Besucher bliebe am
+     Seitenanfang stehen.
+
+     Die naheliegende Abhilfe wäre ein requestAnimationFrame (oder zwei) nach
+     `setExpanded`. Sie wäre eine Wette darauf, wann React den Commit
+     einspielt. Der zweite Effekt unten dagegen KANN gar nicht zu früh
+     laufen: `pending` wird erst in dem Render wahr, in dem `expanded` schon
+     gilt — React garantiert die Reihenfolge, kein Timing nötig.
+
+     Nur beim Montieren: Ein späterer Hash-Wechsel stammt vom Besucher selbst
+     und soll das offene Panel nicht unter ihm wegschalten. */
+  const [pending, setPending] = useState(null);
+
   useEffect(() => {
-    const hash = window.location.hash.slice(1);
+    const hash = decodeURIComponent(window.location.hash.slice(1));
     if (!hash) return;
-    const idx = items.findIndex((it) => it.id === hash);
-    if (idx === -1) return;
-    if (idx >= VISIBLE) setExpanded(true);
-    setOpen(idx);
-    requestAnimationFrame(() => document.getElementById(hash)?.scrollIntoView({ block: "start" }));
+
+    const index = items.findIndex((item) => item.id === hash);
+    if (index === -1) return;
+
+    if (index >= VISIBLE) setExpanded(true);
+    setPending(hash);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const toggle = (index, item) => {
-    const willOpen = open !== index;
-    setOpen(willOpen ? index : null);
-    if (willOpen) {
-      pushEvent(FAQ_OPEN, {
-        faq_id: item.id ?? `${CATEGORY}-${index}`,
-        category: CATEGORY,
-        language: locale,
-        page_type: CATEGORY,
-        position: index + 1,
-        page_location: pageLocation(),
-      });
+  useEffect(() => {
+    if (!pending) return;
+    setOpen(pending);
+    setPending(null);
+
+    const target = document.getElementById(pending);
+    if (!target) return;
+
+    /* `scrollTo` von Lenis statt scrollIntoView, aus demselben Grund wie in
+       IntentContext: Die Storefront hat das Wurzel-Scrolling an Lenis
+       abgegeben, natives Smooth-Scrolling ist per CSS abgeschaltet und würde
+       hart springen. Ohne Lenis (Reduced Motion, noch nicht montiert) ist der
+       harte Sprung genau das, was ein Anker sonst auch tut — richtig, nur
+       unhübsch. */
+    const isReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const instance = lenis?.current;
+
+    if (instance && !isReduced) {
+      instance.scrollTo(target, { offset: -96, duration: 1.1 });
+    } else {
+      target.scrollIntoView({ behavior: isReduced ? "auto" : "smooth", block: "start" });
     }
-  };
+  }, [pending, lenis]);
 
-  const trackCta = (text, href) =>
-    pushEvent(FAQ_CTA_CLICK, {
-      cta_text: text,
-      cta_destination: href,
-      cta_position: `${CATEGORY}_faq`,
-      page_type: CATEGORY,
-    });
-
-  const heightTransition = reduced
-    ? { duration: 0 }
-    : {
-        height: { duration: 0.45, ease: [0.16, 1, 0.3, 1] },
-        opacity: { duration: 0.32, ease: [0.16, 1, 0.3, 1] },
-      };
-
-  const renderItem = (item, index, { reachable = true } = {}) => {
-    const isOpen = open === index;
-    const itemKey = item.id ?? `faq-${index}`;
-    const panelId = `${uid}-panel-${itemKey}`;
-    const triggerId = `${uid}-trigger-${itemKey}`;
-    return (
-      <div key={itemKey} id={item.id} className="scroll-mt-36">
-        <h3 className="m-0">
-          <button
-            type="button"
-            id={triggerId}
-            aria-expanded={isOpen}
-            aria-controls={panelId}
-            tabIndex={reachable ? 0 : -1}
-            onClick={() => toggle(index, item)}
-            className={`group flex min-h-[44px] w-full items-center justify-between gap-5 py-4 text-left ${FOCUS}`}
-          >
-            <span
-              className={`font-playfair text-[17px] leading-snug transition-colors duration-300 sm:text-[18px] ${
-                isOpen ? "text-terracotta" : "text-charcoal group-hover:text-terracotta"
-              }`}
-            >
-              {item.q}
-            </span>
-            {/* + geschlossen, – geöffnet: der senkrechte Balken fährt über
-                scaleY ein — Transform, kein Layout */}
-            <span
-              aria-hidden="true"
-              className={`relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full border transition-colors duration-300 ${
-                isOpen
-                  ? "border-terracotta/50 bg-terracotta-light/60 text-terracotta"
-                  : "border-stone/80 text-charcoal/55 group-hover:border-terracotta/50 group-hover:text-terracotta"
-              }`}
-            >
-              <span className="absolute h-[1.5px] w-4 rounded-full bg-current" />
-              <span
-                className={`absolute h-4 w-[1.5px] origin-center rounded-full bg-current will-change-transform ${
-                  reduced ? "" : "transition-transform duration-500 ease-out-expo"
-                } ${isOpen ? "scale-y-0" : "scale-y-100"}`}
-              />
-            </span>
-          </button>
-        </h3>
-        {/* Panel bleibt gemountet: Antwort steht im HTML, wird nur gefaltet */}
-        <motion.div
-          id={panelId}
-          role="region"
-          aria-labelledby={triggerId}
-          aria-hidden={!isOpen}
-          initial={false}
-          animate={{ height: isOpen ? "auto" : 0, opacity: isOpen ? 1 : 0 }}
-          transition={heightTransition}
-          className="overflow-hidden"
-        >
-          <div className="pb-5 pr-2 sm:pr-12">
-            <p className="text-[15px] leading-relaxed text-charcoal/70">{item.a}</p>
-            {item.link && (
-              <Link
-                href={item.link.href}
-                tabIndex={isOpen && reachable ? 0 : -1}
-                onClick={() => trackCta(item.link.label, item.link.href)}
-                className={`group/faql mt-2 inline-flex min-h-[44px] items-center gap-1.5 text-[13px] font-semibold uppercase tracking-[0.14em] text-terracotta ${FOCUS}`}
-              >
-                {item.link.label}
-                <Arrow className="h-3.5 w-3.5 transition-transform duration-500 ease-out-expo group-hover/faql:translate-x-1" />
-              </Link>
-            )}
-          </div>
-        </motion.div>
-      </div>
-    );
-  };
-
-  const toggleId = `${uid}-faq-more`;
+  const row = (item) => (
+    <Row
+      key={item.id}
+      item={item}
+      uid={uid}
+      reduced={reduced}
+      open={open === item.id}
+      onToggle={() => setOpen((current) => (current === item.id ? null : item.id))}
+    />
+  );
 
   return (
     <div>
-      <div className="divide-y divide-stone/60 border-y border-stone/60">
-        {head.map((item, i) => renderItem(item, i))}
+      <div className="overflow-hidden rounded-[10px] border border-sand bg-white/70">
+        {head.map(row)}
+
+        {/* Die restlichen Fragen stehen im HTML und sind bis zum Klick nur
+            nicht sichtbar — `hidden` nimmt sie sauber aus Tastaturreihenfolge
+            und Screenreader, ohne sie dem Crawler vorzuenthalten. */}
+        {tail.length > 0 && (
+          <div hidden={!expanded} className="border-t border-sand first:border-t-0">
+            {tail.map(row)}
+          </div>
+        )}
       </div>
 
       {tail.length > 0 && (
-        <>
-          {/* Fragen 5–6: im HTML, aber gefaltet, bis „Alle Fragen ansehen"
-              gedrückt wird. Geschlossen aus der Tab-Reihenfolge genommen. */}
-          <motion.div
-            id={toggleId}
-            aria-hidden={!expanded}
-            initial={false}
-            animate={{ height: expanded ? "auto" : 0, opacity: expanded ? 1 : 0 }}
-            transition={heightTransition}
-            className="overflow-hidden"
-          >
-            <div className="divide-y divide-stone/60 border-b border-stone/60">
-              {tail.map((item, i) => renderItem(item, VISIBLE + i, { reachable: expanded }))}
-            </div>
-          </motion.div>
-
-          <button
-            type="button"
-            aria-expanded={expanded}
-            aria-controls={toggleId}
-            onClick={() => setExpanded((v) => !v)}
-            className={`group mt-5 inline-flex min-h-[44px] items-center gap-2 text-[12px] font-semibold uppercase tracking-[0.16em] text-terracotta ${FOCUS}`}
-          >
-            <span className="relative">
-              {expanded ? copy.showLess : copy.showAll}
-              <span
-                aria-hidden="true"
-                className="absolute -bottom-1 left-0 right-0 h-px origin-left scale-x-0 bg-terracotta transition-transform duration-500 ease-out-expo group-hover:scale-x-100"
-              />
-            </span>
-            <Arrow
-              className={`h-3.5 w-3.5 transition-transform duration-500 ease-out-expo ${
-                expanded ? "-rotate-90" : "rotate-90 group-hover:translate-y-0.5"
-              }`}
-            />
-          </button>
-        </>
+        <button
+          type="button"
+          onClick={() => setExpanded((v) => !v)}
+          className={`${CTA_LINK} mt-4 min-h-[44px]`}
+        >
+          {expanded ? copy.less : copy.more}
+          <Arrow
+            className={`h-3.5 w-3.5 transition-transform duration-500 ease-out-expo ${
+              expanded ? "-rotate-90" : "group-hover/link:translate-x-1"
+            }`}
+          />
+        </button>
       )}
     </div>
   );

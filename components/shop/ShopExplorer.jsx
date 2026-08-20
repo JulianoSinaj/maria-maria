@@ -2,6 +2,7 @@
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import ShopCard from "./ShopCard";
 import { useCommon, useWines } from "@/lib/i18n/context";
+import { pluralUnit } from "@/lib/i18n/format";
 
 /* Maria Maria Selection — die ganze Selection in einem layout-animierten Grid. */
 
@@ -32,9 +33,7 @@ export default function ShopExplorer() {
             <span className="mr-1.5 font-playfair text-[24px] normal-case tabular-nums tracking-normal text-bordeaux">
               {wines.length}
             </span>
-            {wines.length === 1
-              ? catalogue.filters?.wineOne
-              : catalogue.filters?.wineMany}
+            {pluralUnit(catalogue.filters, wines.length)}
           </p>
           <p className="mt-1 flex h-4 items-center justify-end text-[10.5px] text-charcoal/45">
             {ui.priceNote}

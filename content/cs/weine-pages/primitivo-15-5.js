@@ -103,6 +103,7 @@ const primitivo155 = {
       { label: "Vedení révy", value: "Alberello, bez závlahy" },
       { label: "Zrání", value: "12 měsíců v capasoni" },
     ],
+    photoAlt: "Trulli a olivové háje v Apulii ve večerním světle",
     chip: { subtitle: "Apulie · Itálie" },
   },
 

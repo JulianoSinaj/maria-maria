@@ -11,7 +11,7 @@ import { I18nProvider } from "@/lib/i18n/context";
 import { getDictionary } from "@/lib/i18n/dictionaries";
 import { LOCALES, LOCALE_META, isLocale } from "@/lib/i18n/config";
 import { alternatePaths } from "@/lib/i18n/routing";
-import { SITE_URL, SITE_NAME, IS_PREVIEW, absoluteUrl } from "@/lib/site";
+import { SITE_URL, SITE_NAME, INDEXABLE, absoluteUrl } from "@/lib/site";
 
 /* Root-Layout der Storefront.
 
@@ -86,25 +86,27 @@ export async function generateMetadata({ params }) {
       alternateLocale: LOCALES.filter((l) => l !== locale).map((l) => LOCALE_META[l].ogLocale),
     },
     twitter: { card: "summary_large_image" },
-    /* Vorschau- und Staging-Deployments (Vercel Preview, NEXT_PUBLIC_NOINDEX=1)
-       melden noindex,nofollow — sie dürfen nicht neben der Live-Domain im
-       Index stehen. In Produktion sind beide Variablen ungesetzt, IS_PREVIEW
-       ist false und die Angaben bleiben wie zuvor (lib/site.js). */
-    robots: {
-      index: !IS_PREVIEW,
-      follow: !IS_PREVIEW,
-      googleBot: {
-        index: !IS_PREVIEW,
-        follow: !IS_PREVIEW,
-        /* Ohne diese drei Angaben entscheidet Google konservativ: kleines
-           Vorschaubild, gekürzter Textausschnitt. Für eine Seite, die von
-           Fotografie lebt, ist „large" der Unterschied zwischen einer
-           Bildkachel und einer Textzeile in Discover und der Bildersuche. */
-        "max-image-preview": "large",
-        "max-snippet": -1,
-        "max-video-preview": -1,
-      },
-    },
+    /* Vorschau- und Staging-Instanzen bleiben draußen (INDEXABLE in
+       lib/site.js). Die Angabe steht hier im Layout und gilt damit für jede
+       Seite der Storefront — einzelne Seiten überschreiben sie nur, wenn sie
+       robots selbst setzen (404 und Fehlerseite tun das). */
+    robots: INDEXABLE
+      ? {
+          index: true,
+          follow: true,
+          googleBot: {
+            index: true,
+            follow: true,
+            /* Ohne diese drei Angaben entscheidet Google konservativ: kleines
+               Vorschaubild, gekürzter Textausschnitt. Für eine Seite, die von
+               Fotografie lebt, ist „large" der Unterschied zwischen einer
+               Bildkachel und einer Textzeile in Discover und der Bildersuche. */
+            "max-image-preview": "large",
+            "max-snippet": -1,
+            "max-video-preview": -1,
+          },
+        }
+      : { index: false, follow: false, nocache: true },
     /* Dateien liegen in public/ statt als app/icon.*: Die Storefront hat mit
        (site)/[locale] und (admin) zwei Wurzeln, und ein Icon im dynamischen
        Segment käme als /de/icon.png heraus — vier Adressen für dasselbe

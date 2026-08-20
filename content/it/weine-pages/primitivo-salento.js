@@ -101,6 +101,7 @@ const primitivoSalento = {
       { label: "Classificazione", value: "Primitivo I.G.P. Salento" },
       { label: "Sistema di allevamento", value: "Alberello, senza irrigazione" },
     ],
+    photoAlt: "Trulli e uliveti in Puglia nella luce della sera",
     chip: { subtitle: "Puglia · Italia" },
   },
 

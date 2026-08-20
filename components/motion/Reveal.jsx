@@ -1,10 +1,26 @@
 "use client";
-import { motion, useReducedMotion } from "motion/react";
+import { motion } from "motion/react";
 import { useTouchDevice } from "./useMediaQuery";
 
 /* Scroll-reveal primitives — physics springs, subtle blur-in, viewport-once.
    On touch devices the animated blur is dropped (it forces expensive repaints
-   on mobile GPUs) and travel is shortened, so reveals stay crisp mid-scroll. */
+   on mobile GPUs) and travel is shortened, so reveals stay crisp mid-scroll.
+
+   REDUCED MOTION liegt in CSS, nicht im Render-Zweig: `[data-reveal]` wird
+   unter `prefers-reduced-motion: reduce` in globals.css sofort auf volle
+   Deckkraft gesetzt. Der Inhalt ist damit ohne Scroll-Trigger, ohne
+   IntersectionObserver und selbst ohne JavaScript da.
+
+   Vorher stand hier `if (reduced) return <div>{children}</div>`. Gut gemeint,
+   aber kaputt: Der Server rendert immer mit reduced=false und schreibt
+   `style="opacity:0;filter:blur(8px);transform:translateY(28px)"` ins HTML.
+   Beim Hydrieren lieferte der Client ein nacktes <div> ohne style — und React
+   ENTFERNT serverseitige Attribute nicht, es warnt nur („Extra attributes
+   from the server: style"). Für genau die Besucher, die weniger Bewegung
+   eingestellt haben, wäre der halbe Seiteninhalt dauerhaft unsichtbar
+   geblieben. Aufgefallen ist es nie, weil eine zweite Unstimmigkeit im
+   Route-Template die Hydration ohnehin abbrechen ließ und React die Seite
+   clientseitig neu aufbaute — ein Fehler hat den anderen zugedeckt. */
 
 const SPRING = { type: "spring", stiffness: 90, damping: 20, mass: 1 };
 
@@ -17,13 +33,12 @@ export function Reveal({
   once = true,
   amount = 0.25,
 }) {
-  const reduced = useReducedMotion();
   const touch = useTouchDevice();
-  if (reduced) return <div className={className}>{children}</div>;
   const useBlur = blur && !touch;
   const travel = touch ? Math.min(y, 20) : y;
   return (
     <motion.div
+      data-reveal=""
       className={className}
       initial={{ opacity: 0, y: travel, filter: useBlur ? "blur(8px)" : "blur(0px)" }}
       whileInView={{ opacity: 1, y: 0, filter: "blur(0px)", transitionEnd: { filter: "none" } }}
@@ -41,10 +56,9 @@ export function Reveal({
 }
 
 export function Stagger({ children, className = "", style, delay = 0, gap = 0.09, once = true, amount = 0.18 }) {
-  const reduced = useReducedMotion();
-  if (reduced) return <div className={className} style={style}>{children}</div>;
   return (
     <motion.div
+      data-reveal=""
       className={className}
       style={style}
       initial="hidden"
@@ -58,12 +72,11 @@ export function Stagger({ children, className = "", style, delay = 0, gap = 0.09
 }
 
 export function StaggerItem({ children, className = "", y = 26 }) {
-  const reduced = useReducedMotion();
   const touch = useTouchDevice();
-  if (reduced) return <div className={className}>{children}</div>;
   const blurFrom = touch ? "blur(0px)" : "blur(6px)";
   return (
     <motion.div
+      data-reveal=""
       className={className}
       variants={{
         hidden: { opacity: 0, y: touch ? Math.min(y, 20) : y, filter: blurFrom },

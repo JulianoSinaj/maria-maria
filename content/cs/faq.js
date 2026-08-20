@@ -25,7 +25,7 @@ export const faq = {
       id: "home-partner",
       q: "Spolupracuje Maria Maria s gastronomií, hotelnictvím a lifestylovými partnery?",
       a: "Ano. Maria Maria se obrací i na vybrané partnery z gastronomie, hotelnictví, event branže, retailu a lifestylu, kteří chtějí italská butiková vína zapojit do svého konceptu. Poptávky a možnou spolupráci probíráme osobně.",
-      link: { label: "Poznejte Maria Maria jako partnera", href: "/kontakt#kontakt-haendler" },
+      link: { label: "Poznejte Maria Maria jako partnera", href: "/kontakt#kontakt-sortiment" },
     },
     {
       id: "home-kontakt",
@@ -231,46 +231,110 @@ export const faq = {
     {
       id: "shop-beratung",
       q: "Kdo mi pomůže s objednávkou nebo výběrem vína?",
-      a: "My osobně: přes kontaktní formulář nebo telefonicky vám poradíme s menu, příležitostí i dárkem — a pomůžeme i s dotazy k vaší objednávce. Odpovídáme do 1–2 pracovních dnů.",
+      a: "My osobně: přes kontaktní formulář nebo e-mailem vám poradíme s menu, příležitostí i dárkem — a pomůžeme i s dotazy k vaší objednávce. Odpovídáme do 1–2 pracovních dnů.",
       link: { label: "Kontaktovat nás", href: "/kontakt" },
     },
   ],
 
-  /* ---- Kontakt: šest otázek z Kontakt-Handoffu (18. 8. 2026) ----
-     Plochý seznam bez indexu klastrů: schválený mockup ukazuje jeden
-     akordeon vedle obrázku. `kontakt-haendler` si ponechává své ID, protože
-     na něj odkazuje FAQ na úvodní stránce. ---- */
   kontakt: [
     {
-      id: "kontakt-verkostung-buchen",
-      q: "Jak si zarezervuji degustaci vín v Düsseldorfu?",
-      a: "V kontaktním formuláři zvolte „Degustace“ a sdělte nám požadovaný termín, přibližný počet osob a příležitost. Místo a formát s vámi domluvíme osobně a do 1–2 pracovních dnů se ozveme s návrhem.",
+      key: "allgemein",
+      label: "Obecné dotazy",
+      items: [
+        {
+          id: "kontakt-erreichen",
+          q: "Jak mohu Maria Maria kontaktovat?",
+          a: "Nejrychleji přes kontaktní formulář — stačí zvolit téma dotazu. Zastihnete nás také e-mailem na info@maria-maria.de. Odpovídáme do 1–2 pracovních dnů.",
+        },
+        {
+          id: "kontakt-weininfo",
+          q: "Kde najdu informace o vínech?",
+          a: "Každé víno má vlastní stránku s chuťovým profilem, původem, technickými údaji, snoubením s jídlem a častými dotazy — od Primitiva po Luganu.",
+          link: { label: "K našim vínům", href: "/unsere-weine" },
+        },
+      ],
     },
     {
-      id: "kontakt-haendler",
-      q: "Mohu zařadit Maria Maria do svého sortimentu?",
-      a: "Ano. Zvolte „Obchod & další prodej“ a stručně nám řekněte o svém obchodě, sídle a požadovaném výběru. Poté osobně probereme vhodné další kroky.",
+      key: "verkostungen",
+      label: "Degustace",
+      items: [
+        {
+          id: "kontakt-verkostung-buchen",
+          q: "Jak si mohu objednat degustaci vína v Düsseldorfu?",
+          a: "V kontaktním formuláři zvolte „Poptávka degustace“ — pak můžete rovnou uvést požadovaný termín a počet hostů. Do 1–2 pracovních dnů se ozveme s osobním návrhem.",
+        },
+        {
+          id: "kontakt-verkostung-ort",
+          q: "Kde se degustace konají?",
+          a: "V Düsseldorfu a okolí. Místo a formát s vámi domluvíme osobně — stačí nám ve formuláři popsat vaši příležitost.",
+        },
+        {
+          id: "kontakt-verkostung-privat",
+          q: "Mohu si objednat soukromou degustaci?",
+          a: "Ano — soukromé degustace jsou možné stejně jako firemní termíny. Uveďte ve formuláři požadovaný termín a počet hostů; odpovíme osobním návrhem.",
+        },
+        {
+          id: "kontakt-verkostung-corporate",
+          q: "Nabízí Maria Maria firemní degustace?",
+          a: "Ano, pro firemní příležitosti a týmy. Napište nám krátce o příležitosti a velikosti skupiny — připravíme vhodný návrh a ozveme se do 1–2 pracovních dnů.",
+        },
+        {
+          id: "kontakt-verkostung-kaufen",
+          q: "Mohu degustovaná vína následně koupit?",
+          a: "Ano — všechna vína kolekce najdete v oficiálním e-shopu. Po degustaci vám rádi osobně poradíme s vašimi favority.",
+          link: { label: "Do oficiálního e-shopu", href: "/shop" },
+        },
+      ],
     },
     {
-      id: "kontakt-firmenveranstaltungen",
-      q: "Nabízíte vína pro firemní akce?",
-      a: "Ano. Pro firemní akce, konference a zvláštní příležitosti vám poradíme s výběrem vín. Sdělte nám datum, počet hostů, místo a charakter akce, abychom mohli vaši poptávku cíleně probrat.",
+      key: "haendler",
+      label: "Prodejci",
+      items: [
+        {
+          id: "kontakt-haendler",
+          q: "Jak zařadím vína Maria Maria do svého sortimentu?",
+          a: "Zvolte ve formuláři „Poptávka prodejce“ a napište nám krátce o svém obchodě nebo podniku a o svém regionu. Ozveme se osobně se všemi detaily.",
+        },
+        {
+          id: "kontakt-haendler-finden",
+          q: "Najdu vína v místním obchodě?",
+          a: "Naše vína jsou k dispozici u vybraných specializovaných prodejců a v gastronomii. Protože je produkce omezená, rádi vám na vyžádání doporučíme partnera ve vašem okolí.",
+        },
+      ],
     },
     {
-      id: "kontakt-gastronomie",
-      q: "Mohu nabízet vína Maria Maria ve své restauraci nebo lahůdkářství?",
-      a: "Ano. Zvolte „Gastronomie & lahůdky“ a stručně nám řekněte o svém podniku, kuchyni či konceptu a sídle. Společně najdeme výběr, který se hodí k vašim hostům.",
+      key: "presse",
+      label: "Tisk a spolupráce",
+      items: [
+        {
+          id: "kontakt-presse",
+          q: "Na koho mám směřovat dotazy médií?",
+          a: "Přímo na nás: přes kontaktní formulář (téma „Tisk a spolupráce“) nebo e-mailem na info@maria-maria.de. Ozveme se osobně.",
+        },
+        {
+          id: "kontakt-kooperationen",
+          q: "Je Maria Maria otevřená spolupráci?",
+          a: "Ano — spolupráci a společným projektům jsme otevřeni. Popište nám krátce svůj nápad; odpovídáme do 1–2 pracovních dnů.",
+        },
+      ],
     },
     {
-      id: "kontakt-individuelle-auswahl",
-      q: "Jak funguje individuální výběr vín?",
-      a: "Nejprve nám řeknete o svém záměru. Na přání poznáte vína při degustaci. Z vašich favoritů pak vznikne výběr, který se hodí k vašemu konceptu, menu nebo příležitosti.",
-    },
-    {
-      id: "kontakt-kaufen",
-      q: "Kde mohu vína Maria Maria koupit?",
-      a: "Vína lze objednat v oficiálním e-shopu Maria Maria. Na kontaktní stránce zůstává e-shop vedlejší cestou, aby poptávky na poradenství, akce a B2B nebyly odváděny z kontaktního funnelu.",
-      link: { label: "Do oficiálního e-shopu", href: "/shop" },
+      key: "shop",
+      label: "E-shop a doprava",
+      items: [
+        {
+          id: "kontakt-kaufen",
+          q: "Kde mohu vína koupit?",
+          a: "V oficiálním e-shopu Maria Maria. Všechny detaily k sortimentu, degustačním balíčkům a objednávce najdete v servisních dotazech přímo v e-shopu.",
+          link: { label: "K dotazům e-shopu", href: "/shop#fragen" },
+        },
+        {
+          id: "kontakt-versand",
+          q: "Nabízíte mezinárodní dopravu?",
+          a: "Ano — kromě Německa doručujeme do vybraných evropských zemí. Všechny detaily k době dodání a ceně dopravy najdete v servisních dotazech e-shopu a v objednávkovém procesu.",
+          link: { label: "K dotazům e-shopu", href: "/shop#fragen" },
+        },
+      ],
     },
   ],
 };

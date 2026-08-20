@@ -103,6 +103,7 @@ const primitivo155 = {
       { label: "Sistema di allevamento", value: "Alberello, senza irrigazione" },
       { label: "Affinamento", value: "12 mesi in capasoni" },
     ],
+    photoAlt: "Trulli e uliveti in Puglia nella luce della sera",
     chip: { subtitle: "Puglia · Italia" },
   },
 

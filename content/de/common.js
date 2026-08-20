@@ -310,6 +310,27 @@ export const common = {
     nextCard: "Nächste Karte",
     cards: "Karten",
     sections: "Abschnitte dieser Seite",
+
+    /* Unterzeile und Knopf der Sektion „Ähnliche Weine" (SimilarWines).
+       Der Satz entsteht aus drei Teilen: Zahlwort + Substantiv + Lead, dann
+       der Charakter-Halbsatz aus wine.similar.trait. `similarJoin` trennt
+       beide — Deutsch und Tschechisch setzen vor den Relativsatz ein Komma,
+       Italienisch und Englisch nicht.
+       `similarNouns` steht hier statt in catalogue.typesPlural, weil es
+       mitten im Satz klein geschrieben werden muss („Drei Rotweine …"). */
+    similarLead: "{count} {noun} aus unserer Kollektion",
+    similarJoin: ", ",
+    similarCounts: { 2: "Zwei", 3: "Drei", 4: "Vier", 5: "Fünf", 6: "Sechs" },
+    similarNouns: {
+      all: "Weine",
+      red: "Rotweine",
+      white: "Weißweine",
+      rose: "Roséweine",
+    },
+    allWinesCta: "Alle Weine ansehen",
+    /* Knopf der klebenden Sektionsleiste — steht neben dem Preis und muss
+       deshalb kurz bleiben. */
+    subnavCta: "Entdecken",
   },
 
   /* Sprachumschalter — neu mit der Mehrsprachigkeit. */

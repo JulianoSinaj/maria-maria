@@ -145,7 +145,7 @@ export default async function WinePage({ params }) {
       <FactStrip wine={wine} />
       <ColorBand wine={wine} />
       <PairingScene wine={wine} />
-      <SimilarWines wine={wine} />
+      <SimilarWines wine={wine} t={dict.common?.winePage} />
       <CtaBand wine={wine} t={dict.common?.winePage} />
       <WineFaq wine={wine} t={dict.common?.winePage} />
     </>

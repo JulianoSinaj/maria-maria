@@ -25,7 +25,7 @@ export const faq = {
       id: "home-partner",
       q: "Does Maria Maria work with restaurants, hospitality and lifestyle partners?",
       a: "Yes. Maria Maria also works with selected partners in gastronomy, hospitality, events, retail and lifestyle who want to bring Italian boutique wines into their concept. We discuss enquiries and possible collaborations personally.",
-      link: { label: "Discover Maria Maria as a partner", href: "/kontakt#kontakt-haendler" },
+      link: { label: "Discover Maria Maria as a partner", href: "/kontakt#kontakt-sortiment" },
     },
     {
       id: "home-kontakt",
@@ -50,7 +50,7 @@ export const faq = {
     {
       id: "weine-geschenk",
       q: "Which wine makes a good gift?",
-      a: "For connoisseurs: the Primitivo 15.5 from the terracotta amphora or the Greco di Tufo with D.O.C.G. status. For newcomers: the approachable Falanghina or the Primitivo Salento IGP. And a curated tasting case is always a safe choice — elegantly packaged, with a greeting card on request.",
+      a: "For connoisseurs: the Primitivo 15,5 from the terracotta amphora or the Greco di Tufo with D.O.C.G. status. For newcomers: the approachable Falanghina or the Primitivo Salento IGP. And a curated tasting case is always a safe choice — elegantly packaged, with a greeting card on request.",
       link: { label: "To the tasting cases", href: "/shop#pakete" },
     },
     {
@@ -88,7 +88,7 @@ export const faq = {
           id: "reg-apulien-pairing",
           q: "Which dishes suit red wines from Puglia?",
           a: "Powerful reds from Puglia often suit braised dishes, grilled meat, hearty pasta and mature cheese. What matters is the intensity, seasoning and preparation of the dish; the specific recommendation is on each wine's own page.",
-          link: { label: "Primitivo 15.5 and its food pairing", href: "/unsere-weine/primitivo-15-5" },
+          link: { label: "Primitivo 15,5 and its food pairing", href: "/unsere-weine/primitivo-15-5" },
         },
       ],
     },
@@ -176,7 +176,7 @@ export const faq = {
       id: "wissen-dekantieren",
       q: "Does Primitivo need decanting?",
       a: "No, it is not a must. Powerful young reds do benefit from a little air before serving, though — the specific recommendation from the data sheet is on each wine's own page.",
-      link: { label: "Serving the Primitivo 15.5", href: "/unsere-weine/primitivo-15-5" },
+      link: { label: "Serving the Primitivo 15,5", href: "/unsere-weine/primitivo-15-5" },
     },
     {
       id: "wissen-glas",
@@ -231,46 +231,110 @@ export const faq = {
     {
       id: "shop-beratung",
       q: "Who helps me with my order or choosing a wine?",
-      a: "We do, personally: by contact form or telephone we advise you on menu, occasion or gift — and help with any question about your order. We reply within 1–2 working days.",
+      a: "We do, personally: by contact form or e-mail we advise you on menu, occasion or gift — and help with any question about your order. We reply within 1–2 working days.",
       link: { label: "Get in touch", href: "/kontakt" },
     },
   ],
 
-  /* ---- Contact: the six questions of the contact handoff (18 Aug 2026) ----
-     Flat list, no cluster index: the approved mockup shows one accordion
-     next to the image. `kontakt-haendler` keeps its ID because the home
-     FAQ deep-links to it. ---- */
   kontakt: [
     {
-      id: "kontakt-verkostung-buchen",
-      q: "How do I book a wine tasting in Düsseldorf?",
-      a: "Choose “Tasting” in the contact form and tell us your preferred date, the approximate number of people and the occasion. We agree the place and format with you personally and get back to you within 1–2 working days with a proposal.",
+      key: "allgemein",
+      label: "General questions",
+      items: [
+        {
+          id: "kontakt-erreichen",
+          q: "How can I get in touch with Maria Maria?",
+          a: "Quickest is the contact form — simply choose your subject there. Alternatively you can reach us by e-mail at info@maria-maria.de. We reply within 1–2 working days.",
+        },
+        {
+          id: "kontakt-weininfo",
+          q: "Where do I find information about the wines?",
+          a: "Every wine has its own page with taste profile, origin, technical data, food pairing and frequently asked questions — from the Primitivo to the Lugana.",
+          link: { label: "To our wines", href: "/unsere-weine" },
+        },
+      ],
     },
     {
-      id: "kontakt-haendler",
-      q: "Can I add Maria Maria to my range?",
-      a: "Yes. Choose “Trade & resale” and tell us briefly about your business, your location and the selection you have in mind. We then discuss the right next steps with you personally.",
+      key: "verkostungen",
+      label: "Tastings",
+      items: [
+        {
+          id: "kontakt-verkostung-buchen",
+          q: "How can I book a wine tasting in Düsseldorf?",
+          a: "In the contact form simply choose “Tasting enquiry” — you can then give your preferred date and the number of guests directly. We come back to you within 1–2 working days with a personal proposal.",
+        },
+        {
+          id: "kontakt-verkostung-ort",
+          q: "Where do the tastings take place?",
+          a: "In Düsseldorf and the surrounding area. We agree the venue and format with you personally — just describe your occasion in the form.",
+        },
+        {
+          id: "kontakt-verkostung-privat",
+          q: "Can I book a private tasting?",
+          a: "Yes — private tastings are just as possible as corporate dates. Give your preferred date and number of guests in the form; we reply with a personal proposal.",
+        },
+        {
+          id: "kontakt-verkostung-corporate",
+          q: "Does Maria Maria offer corporate tastings?",
+          a: "Yes, for company occasions and teams. Tell us briefly about the occasion and the size of the group — we will put together a fitting proposal and reply within 1–2 working days.",
+        },
+        {
+          id: "kontakt-verkostung-kaufen",
+          q: "Can I buy the wines I tasted afterwards?",
+          a: "Yes — all wines in the collection are in the official online shop. After the tasting we are glad to advise you personally on your favourites.",
+          link: { label: "To the official shop", href: "/shop" },
+        },
+      ],
     },
     {
-      id: "kontakt-firmenveranstaltungen",
-      q: "Do you offer wines for corporate events?",
-      a: "Yes. For corporate events, conventions and special occasions we advise you on the wine selection. Tell us the date, number of guests, location and character of the event so we can discuss your enquiry precisely.",
+      key: "haendler",
+      label: "Trade",
+      items: [
+        {
+          id: "kontakt-haendler",
+          q: "How do I take Maria Maria wines into my range?",
+          a: "Choose “Trade enquiry” in the form and tell us briefly about your shop or restaurant and your region. We will get back to you personally with all the details.",
+        },
+        {
+          id: "kontakt-haendler-finden",
+          q: "Can I find the wines in local shops?",
+          a: "Our wines are available at selected specialist merchants and in restaurants. As our production is limited, we are glad to name a partner near you on request.",
+        },
+      ],
     },
     {
-      id: "kontakt-gastronomie",
-      q: "Can I offer Maria Maria wines in my restaurant or delicatessen?",
-      a: "Yes. Choose “Restaurants & fine food” and tell us briefly about your business, your kitchen or concept and your location. Together we find a selection that suits your guests.",
+      key: "presse",
+      label: "Press & collaborations",
+      items: [
+        {
+          id: "kontakt-presse",
+          q: "Who do I address press enquiries to?",
+          a: "Directly to us: via the contact form (subject “Press & collaborations”) or by e-mail to info@maria-maria.de. We will get back to you personally.",
+        },
+        {
+          id: "kontakt-kooperationen",
+          q: "Is Maria Maria open to collaborations?",
+          a: "Yes — we are open to collaborations and joint projects. Describe your idea briefly; we reply within 1–2 working days.",
+        },
+      ],
     },
     {
-      id: "kontakt-individuelle-auswahl",
-      q: "How does an individual wine selection work?",
-      a: "First you tell us about your plans. If you like, you get to know the wines at a tasting. From your favourites we then put together a selection that suits your concept, your menu or your occasion.",
-    },
-    {
-      id: "kontakt-kaufen",
-      q: "Where can I buy Maria Maria wines?",
-      a: "The wines can be ordered via the official Maria Maria shop. On the contact page the shop remains a secondary route, so that advice, event and B2B enquiries are not drawn away from the contact funnel.",
-      link: { label: "To the official shop", href: "/shop" },
+      key: "shop",
+      label: "Shop & shipping",
+      items: [
+        {
+          id: "kontakt-kaufen",
+          q: "Where can I buy the wines?",
+          a: "In the official Maria Maria online shop. All details on the range, tasting cases and ordering are answered by the service FAQ right there in the shop.",
+          link: { label: "To the shop FAQ", href: "/shop#fragen" },
+        },
+        {
+          id: "kontakt-versand",
+          q: "Do you offer international shipping?",
+          a: "Yes — besides Germany we deliver to selected European countries. All details on delivery times and shipping costs are answered by the service FAQ in the shop and during checkout.",
+          link: { label: "To the shop FAQ", href: "/shop#fragen" },
+        },
+      ],
     },
   ],
 };

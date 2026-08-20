@@ -1,114 +1,78 @@
 "use client";
-import { createContext, useCallback, useContext, useMemo, useState } from "react";
-import { useReducedMotion } from "motion/react";
+import { createContext, useCallback, useContext, useMemo, useRef, useState } from "react";
 import { useLenis } from "@/components/motion/SmoothScroll";
-import { pushEvent, CONTACT_INTENT_CLICK } from "@/lib/analytics";
+import { FORM_ANCHOR } from "./intents";
 
-/* Das Anliegen reist zwischen den Sektionen der Kontaktseite.
+/* Verbindet die vier Anliegen-Karten mit dem Formular weiter unten.
 
-   Hero-CTAs (Sektion 01), die vier Intent-Karten (Sektion 02) und das
-   Formular (Sektion 05) sind getrennte Inseln im server-gerenderten Baum.
-   Ein Klick auf „Event-Weine anfragen" muss trotzdem zwei Dinge auf einmal
-   tun: zum Formular scrollen UND dort das Anliegen vorbelegen — sichtbar im
-   Select, nicht nur im Hintergrund (Handoff §14, „Regola tecnica").
+   Handoff §14: „Dopo il click su una card il valore selezionato deve
+   risultare visibile nel form." Die Karten stehen in einer Sektion, das
+   Formular in einer anderen — ohne gemeinsamen Zustand müsste eine der
+   beiden die andere kennen. Der Provider hängt stattdessen um die ganze
+   Seite; Karten und Formular reden nur mit ihm.
 
-   Dieser Provider ist die Leitung dazwischen. Er hält nur die letzte
-   ANFORDERUNG (`request`), nicht den Formularzustand: Das Formular bleibt
-   Herr seiner Werte und übernimmt eine Anforderung genau einmal. `seq`
-   zählt hoch, damit derselbe Intent zweimal hintereinander wieder wirkt —
-   wer nach dem Abschicken erneut „Verkostung vereinbaren" drückt, soll
-   wieder landen, wo er hinwollte.
-
-   Stabile Schlüssel (Handoff §14): Beschriftungen sind Sprache, diese Werte
-   sind Vertrag mit Backend, Analytics und Lead-Routing. */
-
-export const INTENT_KEYS = [
-  "gastronomie_feinkost",
-  "handel_wiederverkauf",
-  "event_feier",
-  "verkostung",
-  "individuelle_auswahl",
-  "sonstiges",
-];
-
-/* Die vier Karten der Sektion 02, in Mockup-Reihenfolge. `individuelle_auswahl`
-   und `sonstiges` gibt es nur im Select — sie haben keine Karte. */
-export const CARD_INTENTS = ["gastronomie_feinkost", "handel_wiederverkauf", "event_feier", "verkostung"];
-
-/* Anker des Formulars — Ziel aller CTAs (Handoff §14: „#anfrage"). */
-export const FORM_ANCHOR = "anfrage";
-
-/* Abstand zur fixierten Kopfzeile (Glas-Pille 64 px + Luft), damit die
-   Überschrift des Formulars nicht darunter verschwindet. */
-const SCROLL_OFFSET = -96;
-
-/* Sanft zu einem Element scrollen — über Lenis, wenn es läuft, sonst nativ.
-
-   Bewusst mit einer ZAHL als Ziel statt mit dem Element: Lenis berechnet
-   Element-Ziele aus seinem internen `animatedScroll` und zieht zusätzlich
-   die scroll-margin des Elements ab. Beides ist hier unpassend — der interne
-   Stand kann nach einem nativen Scroll (Anker, scrollIntoView, Zurück-Taste)
-   um einige Pixel hinterherhinken, und das Formular trägt für den Anker-
-   Fallback ohne JavaScript bereits `scroll-mt-24`, der Abstand würde doppelt
-   gerechnet. Die Dokumentposition aus getBoundingClientRect() + window.scrollY
-   ist dagegen immer die Wahrheit. `lerp: 0` schaltet Lenis von der
-   Wheel-Dämpfung auf die eingestellte Dauer mit Ease-out um — ein Klick soll
-   berechenbar landen, nicht exponentiell austrudeln. */
-export function smoothScrollTo(el, { lenis, reduced = false, offset = SCROLL_OFFSET, duration = 1.1 } = {}) {
-  if (!el || typeof window === "undefined") return;
-  if (reduced || !lenis) {
-    el.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" });
-    return;
-  }
-  const top = Math.max(0, Math.round(el.getBoundingClientRect().top + window.scrollY + offset));
-  /* Lenis auf die echte Position einnorden (unsichtbar), dann animieren —
-     sonst startete die Animation von einem veralteten internen Stand. */
-  lenis.scrollTo(window.scrollY, { immediate: true, force: true });
-  lenis.scrollTo(top, { duration, lerp: 0, force: true });
-}
+   Der Provider ist eine Client-Komponente mit `children`. Die Seite selbst
+   bleibt dadurch eine Server-Komponente: durchgereichte Kinder werden auf
+   dem Server gerendert und als fertige Baumstücke übergeben, sie wandern
+   nicht ins Browser-Bundle. */
 
 const IntentContext = createContext(null);
 
-export function KontaktIntentProvider({ children }) {
-  const [request, setRequest] = useState({ intent: null, seq: 0 });
-  const lenisRef = useLenis();
-  const reduced = useReducedMotion();
+export function useIntentTarget() {
+  const ctx = useContext(IntentContext);
+  if (!ctx) {
+    throw new Error(
+      "useIntentTarget() außerhalb von <IntentProvider> — Karten und Formular der Kontaktseite brauchen beide den Provider."
+    );
+  }
+  return ctx;
+}
 
-  /* Sanft zum Formular — über Lenis, wenn es läuft (sonst stritten sich
-     natives smooth-scroll und der Lenis-Loop um die Position); bei
-     Reduced Motion ohne Animation, wie der Rest der Seite. */
-  const scrollToForm = useCallback(() => {
-    if (typeof document === "undefined") return;
-    smoothScrollTo(document.getElementById(FORM_ANCHOR), { lenis: lenisRef?.current, reduced });
-  }, [lenisRef, reduced]);
+export default function IntentProvider({ children }) {
+  const [intent, setIntent] = useState("");
+  const lenis = useLenis();
+  /* Das Formular meldet hier seinen Fokus-Einstieg an: nach dem Klick auf
+     eine Karte soll die Auswahl nicht nur gesetzt, sondern auch sichtbar
+     angesprungen sein. */
+  const focusRef = useRef(null);
 
-  /* `intent` null = „Beratung anfragen": nur scrollen und den Select
-     fokussieren, nichts vorbelegen (Handoff §14). */
+  /* Klick auf eine Karte oder einen Hero-CTA: Wert setzen, zum Formular
+     scrollen, Fokus in die Auswahl.
+
+     `scrollTo` von Lenis statt scrollIntoView, weil die Storefront das
+     Wurzel-Scrolling an Lenis abgegeben hat — natives Smooth-Scrolling ist
+     dabei per CSS abgeschaltet und würde hart springen. Läuft Lenis nicht
+     (Reduced Motion, noch nicht montiert), übernimmt scrollIntoView. */
   const requestIntent = useCallback(
-    (intent, { ctaLabel = null, section = null } = {}) => {
-      pushEvent(CONTACT_INTENT_CLICK, {
-        intent: intent ?? null,
-        cta_label: ctaLabel,
-        section,
-      });
-      setRequest((r) => ({ intent: intent ?? null, seq: r.seq + 1 }));
-      scrollToForm();
+    (value) => {
+      if (value) setIntent(value);
+
+      const target = document.getElementById(FORM_ANCHOR);
+      if (!target) return;
+
+      const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const instance = lenis?.current;
+      if (instance && !reduced) {
+        instance.scrollTo(target, { offset: -96, duration: 1.1 });
+      } else {
+        target.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" });
+      }
+
+      /* Fokus erst nach dem Scrollen — ein sofortiger focus() zieht die
+         Seite selbst an die Zielposition und würde die Animation von Lenis
+         im ersten Frame überholen. `preventScroll` hält den zweiten Sprung
+         zusätzlich auf. */
+      window.setTimeout(() => {
+        focusRef.current?.focus?.({ preventScroll: true });
+      }, reduced ? 0 : 700);
     },
-    [scrollToForm]
+    [lenis]
   );
 
   const value = useMemo(
-    () => ({ request, requestIntent, scrollToForm }),
-    [request, requestIntent, scrollToForm]
+    () => ({ intent, setIntent, requestIntent, focusRef }),
+    [intent, requestIntent]
   );
 
   return <IntentContext.Provider value={value}>{children}</IntentContext.Provider>;
-}
-
-/* Ohne Provider (z. B. Formular einzeln eingebettet) bleibt alles still
-   funktionsfähig: keine Vorbelegung, kein Scroll, kein Fehler. */
-const NOOP = { request: { intent: null, seq: 0 }, requestIntent: () => {}, scrollToForm: () => {} };
-
-export function useKontaktIntent() {
-  return useContext(IntentContext) ?? NOOP;
 }

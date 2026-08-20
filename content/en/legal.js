@@ -33,7 +33,7 @@ export const legal = {
         title: "Information pursuant to § 5 TMG",
         body: [
           "Maria Maria Wines GmbH",
-          "Ellerfelderstrasse 78, 40822 Mettmann, Germany",
+          "Ellerfelderstrasse 78d, 40822 Mettmann, Germany",
           "Represented by the management.",
         ],
       },
@@ -50,7 +50,7 @@ export const legal = {
       },
       {
         title: "Responsible for content pursuant to § 55 (2) RStV",
-        body: ["Maria Maria Wines GmbH, Ellerfelderstrasse 78, 40822 Mettmann."],
+        body: ["Maria Maria Wines GmbH, Ellerfelderstrasse 78d, 40822 Mettmann."],
       },
       {
         title: "Protection of minors",
@@ -82,7 +82,7 @@ export const legal = {
       {
         title: "1. Controller",
         body: [
-          "The controller for data processing on this website is Maria Maria Wines GmbH, Ellerfelderstrasse 78, 40822 Mettmann, Germany, email: info@maria-maria.de.",
+          "The controller for data processing on this website is Maria Maria Wines GmbH, Ellerfelderstrasse 78d, 40822 Mettmann, Germany, email: info@maria-maria.de.",
         ],
       },
       {
@@ -135,7 +135,7 @@ export const legal = {
       {
         title: "§ 1 Scope",
         body: [
-          "These general terms and conditions apply to all orders placed through the online shop of Maria Maria Wines GmbH, Ellerfelderstrasse 78, 40822 Mettmann (hereinafter “Maria Maria”), by consumers and business customers.",
+          "These general terms and conditions apply to all orders placed through the online shop of Maria Maria Wines GmbH, Ellerfelderstrasse 78d, 40822 Mettmann (hereinafter “Maria Maria”), by consumers and business customers.",
         ],
       },
       {

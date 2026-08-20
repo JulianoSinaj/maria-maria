@@ -236,105 +236,41 @@ export const faq = {
     },
   ],
 
+  /* ---- Contact: the six questions of the contact handoff (18 Aug 2026) ----
+     Flat list, no cluster index: the approved mockup shows one accordion
+     next to the image. `kontakt-haendler` keeps its ID because the home
+     FAQ deep-links to it. ---- */
   kontakt: [
     {
-      key: "allgemein",
-      label: "General questions",
-      items: [
-        {
-          id: "kontakt-erreichen",
-          q: "How can I get in touch with Maria Maria?",
-          a: "Quickest is the contact form — simply choose your subject there. Alternatively you can reach us by e-mail at info@maria-maria.wine or by telephone on +49 211 976 420. We reply within 1–2 working days.",
-        },
-        {
-          id: "kontakt-weininfo",
-          q: "Where do I find information about the wines?",
-          a: "Every wine has its own page with taste profile, origin, technical data, food pairing and frequently asked questions — from the Primitivo to the Lugana.",
-          link: { label: "To our wines", href: "/unsere-weine" },
-        },
-      ],
+      id: "kontakt-verkostung-buchen",
+      q: "How do I book a wine tasting in Düsseldorf?",
+      a: "Choose “Tasting” in the contact form and tell us your preferred date, the approximate number of people and the occasion. We agree the place and format with you personally and get back to you within 1–2 working days with a proposal.",
     },
     {
-      key: "verkostungen",
-      label: "Tastings",
-      items: [
-        {
-          id: "kontakt-verkostung-buchen",
-          q: "How can I book a wine tasting in Düsseldorf?",
-          a: "In the contact form simply choose “Tasting enquiry” — you can then give your preferred date and the number of guests directly. We come back to you within 1–2 working days with a personal proposal.",
-        },
-        {
-          id: "kontakt-verkostung-ort",
-          q: "Where do the tastings take place?",
-          a: "In Düsseldorf and the surrounding area. We agree the venue and format with you personally — just describe your occasion in the form.",
-        },
-        {
-          id: "kontakt-verkostung-privat",
-          q: "Can I book a private tasting?",
-          a: "Yes — private tastings are just as possible as corporate dates. Give your preferred date and number of guests in the form; we reply with a personal proposal.",
-        },
-        {
-          id: "kontakt-verkostung-corporate",
-          q: "Does Maria Maria offer corporate tastings?",
-          a: "Yes, for company occasions and teams. Tell us briefly about the occasion and the size of the group — we will put together a fitting proposal and reply within 1–2 working days.",
-        },
-        {
-          id: "kontakt-verkostung-kaufen",
-          q: "Can I buy the wines I tasted afterwards?",
-          a: "Yes — all wines in the collection are in the official online shop. After the tasting we are glad to advise you personally on your favourites.",
-          link: { label: "To the official shop", href: "/shop" },
-        },
-      ],
+      id: "kontakt-haendler",
+      q: "Can I add Maria Maria to my range?",
+      a: "Yes. Choose “Trade & resale” and tell us briefly about your business, your location and the selection you have in mind. We then discuss the right next steps with you personally.",
     },
     {
-      key: "haendler",
-      label: "Trade",
-      items: [
-        {
-          id: "kontakt-haendler",
-          q: "How do I take Maria Maria wines into my range?",
-          a: "Choose “Trade enquiry” in the form and tell us briefly about your shop or restaurant and your region. We will get back to you personally with all the details.",
-        },
-        {
-          id: "kontakt-haendler-finden",
-          q: "Can I find the wines in local shops?",
-          a: "Our wines are available at selected specialist merchants and in restaurants. As our production is limited, we are glad to name a partner near you on request.",
-        },
-      ],
+      id: "kontakt-firmenveranstaltungen",
+      q: "Do you offer wines for corporate events?",
+      a: "Yes. For corporate events, conventions and special occasions we advise you on the wine selection. Tell us the date, number of guests, location and character of the event so we can discuss your enquiry precisely.",
     },
     {
-      key: "presse",
-      label: "Press & collaborations",
-      items: [
-        {
-          id: "kontakt-presse",
-          q: "Who do I address press enquiries to?",
-          a: "Directly to us: via the contact form (subject “Press & collaborations”) or by e-mail to info@maria-maria.wine. We will get back to you personally.",
-        },
-        {
-          id: "kontakt-kooperationen",
-          q: "Is Maria Maria open to collaborations?",
-          a: "Yes — we are open to collaborations and joint projects. Describe your idea briefly; we reply within 1–2 working days.",
-        },
-      ],
+      id: "kontakt-gastronomie",
+      q: "Can I offer Maria Maria wines in my restaurant or delicatessen?",
+      a: "Yes. Choose “Restaurants & fine food” and tell us briefly about your business, your kitchen or concept and your location. Together we find a selection that suits your guests.",
     },
     {
-      key: "shop",
-      label: "Shop & shipping",
-      items: [
-        {
-          id: "kontakt-kaufen",
-          q: "Where can I buy the wines?",
-          a: "In the official Maria Maria online shop. All details on the range, tasting cases and ordering are answered by the service FAQ right there in the shop.",
-          link: { label: "To the shop FAQ", href: "/shop#fragen" },
-        },
-        {
-          id: "kontakt-versand",
-          q: "Do you offer international shipping?",
-          a: "Yes — besides Germany we deliver to selected European countries. All details on delivery times and shipping costs are answered by the service FAQ in the shop and during checkout.",
-          link: { label: "To the shop FAQ", href: "/shop#fragen" },
-        },
-      ],
+      id: "kontakt-individuelle-auswahl",
+      q: "How does an individual wine selection work?",
+      a: "First you tell us about your plans. If you like, you get to know the wines at a tasting. From your favourites we then put together a selection that suits your concept, your menu or your occasion.",
+    },
+    {
+      id: "kontakt-kaufen",
+      q: "Where can I buy Maria Maria wines?",
+      a: "The wines can be ordered via the official Maria Maria shop. On the contact page the shop remains a secondary route, so that advice, event and B2B enquiries are not drawn away from the contact funnel.",
+      link: { label: "To the official shop", href: "/shop" },
     },
   ],
 };

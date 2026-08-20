@@ -39,7 +39,7 @@ export const legal = {
       },
       {
         title: "Kontakt",
-        body: ["Telefon: +49 211 976 420", "E-mail: info@maria-maria.wine"],
+        body: ["E-mail: info@maria-maria.de"],
       },
       {
         title: "Zápis v rejstříku",
@@ -82,7 +82,7 @@ export const legal = {
       {
         title: "1. Správce",
         body: [
-          "Správcem zpracování údajů na těchto webových stránkách je Maria Maria Wines GmbH, Ellerfelderstrasse 78, 40822 Mettmann, Německo, e-mail: info@maria-maria.wine, telefon: +49 211 976 420.",
+          "Správcem zpracování údajů na těchto webových stránkách je Maria Maria Wines GmbH, Ellerfelderstrasse 78, 40822 Mettmann, Německo, e-mail: info@maria-maria.de.",
         ],
       },
       {
@@ -171,7 +171,7 @@ export const legal = {
       {
         title: "§ 7 Právo na odstoupení od smlouvy",
         body: [
-          "Spotřebitelům náleží zákonné právo odstoupit od smlouvy ve lhůtě 14 dnů. Lhůta začíná běžet převzetím zboží. K uplatnění postačí jednoznačné prohlášení na info@maria-maria.wine. Náklady na vrácení zboží nese kupující, pokud dodané zboží odpovídá objednanému.",
+          "Spotřebitelům náleží zákonné právo odstoupit od smlouvy ve lhůtě 14 dnů. Lhůta začíná běžet převzetím zboží. K uplatnění postačí jednoznačné prohlášení na info@maria-maria.de. Náklady na vrácení zboží nese kupující, pokud dodané zboží odpovídá objednanému.",
         ],
       },
       {

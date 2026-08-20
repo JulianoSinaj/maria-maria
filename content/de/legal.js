@@ -34,7 +34,7 @@ export const legal = {
       },
       {
         title: "Kontakt",
-        body: ["Telefon: +49 211 976 420", "E-Mail: info@maria-maria.wine"],
+        body: ["E-Mail: info@maria-maria.de"],
       },
       {
         title: "Registereintrag",
@@ -77,7 +77,7 @@ export const legal = {
       {
         title: "1. Verantwortlicher",
         body: [
-          "Verantwortlich für die Datenverarbeitung auf dieser Website ist die Maria Maria Wines GmbH, Ellerfelderstrasse 78, 40822 Mettmann, Deutschland, E-Mail: info@maria-maria.wine, Telefon: +49 211 976 420.",
+          "Verantwortlich für die Datenverarbeitung auf dieser Website ist die Maria Maria Wines GmbH, Ellerfelderstrasse 78, 40822 Mettmann, Deutschland, E-Mail: info@maria-maria.de.",
         ],
       },
       {
@@ -166,7 +166,7 @@ export const legal = {
       {
         title: "§ 7 Widerrufsrecht",
         body: [
-          "Verbrauchern steht ein gesetzliches Widerrufsrecht von 14 Tagen zu. Die Frist beginnt mit Erhalt der Ware. Zur Ausübung genügt eine eindeutige Erklärung an info@maria-maria.wine. Die Kosten der Rücksendung trägt der Käufer, sofern die gelieferte Ware der bestellten entspricht.",
+          "Verbrauchern steht ein gesetzliches Widerrufsrecht von 14 Tagen zu. Die Frist beginnt mit Erhalt der Ware. Zur Ausübung genügt eine eindeutige Erklärung an info@maria-maria.de. Die Kosten der Rücksendung trägt der Käufer, sofern die gelieferte Ware der bestellten entspricht.",
         ],
       },
       {

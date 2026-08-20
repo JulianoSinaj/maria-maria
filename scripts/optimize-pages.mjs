@@ -44,7 +44,7 @@ const MIN_BYTES = 20 * 1024;
 
 /* Diese Verzeichnisse haben eigene Skripte (siehe Kopf) und werden hier
    komplett übersprungen, damit sich die Pipelines nicht überschreiben. */
-const SKIP_DIRS = new Set(["food-pairing"]);
+const SKIP_DIRS = new Set(["food-pairing", "kontakt"]);
 
 /* Erzeugte Varianten erkennen — sonst optimiert der zweite Lauf die Ausgabe
    des ersten und legt hero-1280-640.webp an. Trifft auch die Dateien der

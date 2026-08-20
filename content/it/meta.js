@@ -65,9 +65,10 @@ export const meta = {
   },
 
   kontakt: {
-    title: "Contatti",
+    /* come in content/de/meta.js: titolo completo con il marchio */
+    titleAbsolute: "Contatti | Vini italiani per ristorazione & eventi | Maria Maria",
     description:
-      "Saremo felici di leggerti – degustazioni a Düsseldorf, domande sui nostri vini, collaborazioni o richieste da rivenditori.",
+      "Vini boutique italiani per ristorazione, gastronomia, commercio, eventi e degustazioni a Düsseldorf & NRW. Consulenza personale e selezione di vini su misura.",
   },
 
   agb: {

@@ -125,7 +125,11 @@ app/
   weine/            Wine catalogue with interactive explorer/filters
   regionen/         The four Italian regions
   magazin/          Magazine — articles, filter panel, newsletter card
-  kontakt/          Contact — form + FAQ
+  kontakt/          Contact — relaunch 08/2026 (Kontakt-Handoff v2.0): hero 50/50,
+                    intent grid 2×2, 3-step process, photographic brand bridge,
+                    lead form with per-intent fields, FAQ + image. Terracotta accent
+                    tokens, photos via scripts/optimize-kontakt.mjs, contact data
+                    from lib/site.js (BUSINESS)
 
 content/
   de|it|en|cs/      The dictionaries — one directory per language, same shape.

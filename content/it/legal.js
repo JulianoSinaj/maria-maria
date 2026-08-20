@@ -39,7 +39,7 @@ export const legal = {
       },
       {
         title: "Contatti",
-        body: ["Telefono: +49 211 976 420", "E-mail: info@maria-maria.wine"],
+        body: ["E-mail: info@maria-maria.de"],
       },
       {
         title: "Iscrizione al registro",
@@ -82,7 +82,7 @@ export const legal = {
       {
         title: "1. Titolare del trattamento",
         body: [
-          "Il titolare del trattamento dei dati su questo sito è Maria Maria Wines GmbH, Ellerfelderstrasse 78, 40822 Mettmann, Germania, e-mail: info@maria-maria.wine, telefono: +49 211 976 420.",
+          "Il titolare del trattamento dei dati su questo sito è Maria Maria Wines GmbH, Ellerfelderstrasse 78, 40822 Mettmann, Germania, e-mail: info@maria-maria.de.",
         ],
       },
       {
@@ -171,7 +171,7 @@ export const legal = {
       {
         title: "§ 7 Diritto di recesso",
         body: [
-          "Ai consumatori spetta un diritto di recesso legale di 14 giorni. Il termine decorre dal ricevimento della merce. Per esercitarlo è sufficiente una dichiarazione inequivocabile a info@maria-maria.wine. Le spese di restituzione sono a carico dell'acquirente, purché la merce consegnata corrisponda a quella ordinata.",
+          "Ai consumatori spetta un diritto di recesso legale di 14 giorni. Il termine decorre dal ricevimento della merce. Per esercitarlo è sufficiente una dichiarazione inequivocabile a info@maria-maria.de. Le spese di restituzione sono a carico dell'acquirente, purché la merce consegnata corrisponda a quella ordinata.",
         ],
       },
       {

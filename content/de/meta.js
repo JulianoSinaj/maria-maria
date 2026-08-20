@@ -85,9 +85,12 @@ export const meta = {
   },
 
   kontakt: {
-    title: "Kontakt",
+    /* Kontakt-Handoff 18.08.2026 (SEO package): trägt die Marke selbst und
+       wird deshalb als `title.absolute` gesetzt — sonst hinge das Layout
+       ein zweites „— Maria Maria" an. */
+    titleAbsolute: "Kontakt | Italienische Weine für Gastronomie & Events | Maria Maria",
     description:
-      "Wir freuen uns auf Ihre Nachricht – Weinverkostungen in Düsseldorf, Fragen zu unseren Weinen, Partnerschaften oder Händleranfragen.",
+      "Italienische Boutique-Weine für Gastronomie, Feinkost, Handel, Events und Verkostungen in Düsseldorf & NRW. Persönliche Beratung und individuelle Weinauswahl.",
   },
 
   agb: {

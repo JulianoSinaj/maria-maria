@@ -94,6 +94,24 @@ const VARIANTS = {
     labelIn: "text-ivory",
     iconHover: "",
   },
+  /* Kontaktseite (Handoff 18.08.2026): primäre CTA in Terrakotta, gefüllt —
+     die Akzentfarbe des freigegebenen Mockups. Der Schatten ist in derselben
+     Farbe getönt statt in Bordeaux, sonst läge ein weinroter Schein unter
+     einer rostroten Pille. */
+  terracotta: {
+    base: "bg-gradient-to-br from-terracotta to-terracotta-deep text-ivory shadow-[inset_0_1px_0_rgba(255,255,255,.45),0_10px_24px_-12px_rgba(180,83,47,.45)]",
+    fill: "bg-terracotta-deep",
+    labelIn: "text-ivory",
+    iconHover: "",
+  },
+  /* … und die sekundäre daneben als Kontur: Terrakotta-Rand und -Schrift auf
+     Creme, beim Hover füllt sich die Pille in derselben Farbe. */
+  "terracotta-outline": {
+    base: "border border-terracotta/50 bg-cream/80 text-terracotta backdrop-blur-[6px]",
+    fill: "bg-gradient-to-br from-terracotta to-terracotta-deep",
+    labelIn: "text-ivory",
+    iconHover: "group-hover:text-ivory",
+  },
 };
 
 /* min-h statt h: eine feste Höhe schneidet jedes Label ab, das in einer

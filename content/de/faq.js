@@ -252,106 +252,42 @@ export const faq = {
     },
   ],
 
-  /* ---- Kontakt: Service-FAQ in Clustern (Index links nach Anliegen) ---- */
+  /* ---- Kontakt: die sechs Fragen des Kontakt-Handoffs (18.08.2026) ----
+     Flache Liste, kein Cluster-Index: Das freigegebene Mockup zeigt ein
+     Akkordeon neben dem Bild. `kontakt-haendler` behält seine ID, weil die
+     Startseiten-FAQ per Deep-Link darauf verweist. Kontaktdaten stehen hier
+     bewusst nicht im Text — sie kommen aus lib/site.js. ---- */
   kontakt: [
     {
-      key: "allgemein",
-      label: "Allgemeine Fragen",
-      items: [
-        {
-          id: "kontakt-erreichen",
-          q: "Wie kann ich Maria Maria kontaktieren?",
-          a: "Am schnellsten über das Kontaktformular — wählen Sie dort einfach Ihr Anliegen. Alternativ erreichen Sie uns per E-Mail an info@maria-maria.wine oder telefonisch unter +49 211 976 420. Wir antworten innerhalb von 1–2 Werktagen.",
-        },
-        {
-          id: "kontakt-weininfo",
-          q: "Wo finde ich Informationen zu den Weinen?",
-          a: "Jeder Wein hat eine eigene Seite mit Geschmacksprofil, Herkunft, technischen Daten, Food-Pairing und häufigen Fragen — vom Primitivo bis zum Lugana.",
-          link: { label: "Zu unseren Weinen", href: "/unsere-weine" },
-        },
-      ],
+      id: "kontakt-verkostung-buchen",
+      q: "Wie buche ich eine Weinverkostung in Düsseldorf?",
+      a: "Wählen Sie im Kontaktformular „Verkostung“ und nennen Sie uns Ihren Wunschtermin, die ungefähre Personenzahl und den Anlass. Wir stimmen Ort und Format persönlich mit Ihnen ab und melden uns innerhalb von 1–2 Werktagen mit einem Vorschlag.",
     },
     {
-      key: "verkostungen",
-      label: "Verkostungen",
-      items: [
-        {
-          id: "kontakt-verkostung-buchen",
-          q: "Wie kann ich eine Weinverkostung in Düsseldorf buchen?",
-          a: "Wählen Sie im Kontaktformular einfach „Verkostungsanfrage“ — dann können Sie Wunschtermin und Gästezahl direkt angeben. Wir melden uns innerhalb von 1–2 Werktagen mit einem persönlichen Vorschlag zurück.",
-        },
-        {
-          id: "kontakt-verkostung-ort",
-          q: "Wo finden die Verkostungen statt?",
-          a: "In Düsseldorf und Umgebung. Ort und Format stimmen wir persönlich mit Ihnen ab — schildern Sie uns einfach Ihren Anlass über das Formular.",
-        },
-        {
-          id: "kontakt-verkostung-privat",
-          q: "Kann ich eine private Weinprobe buchen?",
-          a: "Ja — private Verkostungen sind ebenso möglich wie Termine für Firmen. Geben Sie im Formular Wunschtermin und Gästezahl an; wir antworten mit einem persönlichen Vorschlag.",
-        },
-        {
-          id: "kontakt-verkostung-corporate",
-          q: "Bietet Maria Maria Corporate-Verkostungen an?",
-          a: "Ja, für Firmenanlässe und Teams. Erzählen Sie uns kurz von Anlass und Gruppengröße — wir gestalten einen passenden Vorschlag und melden uns innerhalb von 1–2 Werktagen.",
-        },
-        {
-          id: "kontakt-verkostung-kaufen",
-          q: "Kann ich die verkosteten Weine anschließend kaufen?",
-          a: "Ja — alle Weine der Kollektion finden Sie im offiziellen Online-Shop. Gern beraten wir Sie nach der Verkostung persönlich zu Ihren Favoriten.",
-          link: { label: "Zum offiziellen Shop", href: "/shop" },
-        },
-      ],
+      id: "kontakt-haendler",
+      q: "Kann ich Maria Maria in mein Sortiment aufnehmen?",
+      a: "Ja. Wählen Sie „Handel & Wiederverkauf“ und erzählen Sie uns kurz von Ihrem Geschäft, Ihrem Standort und Ihrer gewünschten Auswahl. Anschließend besprechen wir persönlich die passenden nächsten Schritte.",
     },
     {
-      key: "haendler",
-      label: "Händler",
-      items: [
-        {
-          id: "kontakt-haendler",
-          q: "Wie nehme ich Maria-Maria-Weine in mein Sortiment auf?",
-          a: "Wählen Sie im Formular „Händleranfrage“ und erzählen Sie uns kurz von Ihrem Geschäft oder Ihrer Gastronomie und Ihrer Region. Wir melden uns persönlich mit allen Details.",
-        },
-        {
-          id: "kontakt-haendler-finden",
-          q: "Kann ich die Weine im lokalen Handel finden?",
-          a: "Unsere Weine sind bei ausgewählten Fachhändlern und in der Gastronomie erhältlich. Da unsere Produktion limitiert ist, nennen wir Ihnen auf Anfrage gerne einen Partner in Ihrer Nähe.",
-        },
-      ],
+      id: "kontakt-firmenveranstaltungen",
+      q: "Bieten Sie Weine für Firmenveranstaltungen an?",
+      a: "Ja. Für Firmenveranstaltungen, Conventions und besondere Anlässe beraten wir Sie bei der Weinauswahl. Nennen Sie uns Datum, Gästezahl, Ort und den Charakter der Veranstaltung, damit wir Ihre Anfrage gezielt besprechen können.",
     },
     {
-      key: "presse",
-      label: "Presse & Kooperationen",
-      items: [
-        {
-          id: "kontakt-presse",
-          q: "An wen richte ich Presseanfragen?",
-          a: "Direkt an uns: über das Kontaktformular (Anliegen „Presse & Kooperationen“) oder per E-Mail an info@maria-maria.wine. Wir melden uns persönlich zurück.",
-        },
-        {
-          id: "kontakt-kooperationen",
-          q: "Ist Maria Maria offen für Kooperationen?",
-          a: "Ja — für Kooperationen und gemeinsame Projekte sind wir offen. Beschreiben Sie uns kurz Ihre Idee; wir antworten innerhalb von 1–2 Werktagen.",
-        },
-      ],
+      id: "kontakt-gastronomie",
+      q: "Kann ich Maria-Maria-Weine in meinem Restaurant oder Feinkostgeschäft anbieten?",
+      a: "Ja. Wählen Sie „Gastronomie & Feinkost“ und erzählen Sie uns kurz von Ihrem Betrieb, Ihrer Küche bzw. Ihrem Konzept und Ihrem Standort. Gemeinsam finden wir eine Auswahl, die zu Ihren Gästen passt.",
     },
     {
-      key: "shop",
-      label: "Shop & Versand",
-      items: [
-        {
-          id: "kontakt-kaufen",
-          q: "Wo kann ich die Weine kaufen?",
-          a: "Im offiziellen Online-Shop von Maria Maria. Alle Details zu Sortiment, Probierpaketen und Bestellung beantwortet die Service-FAQ direkt im Shop.",
-          link: { label: "Zur Shop-FAQ", href: "/shop#fragen" },
-        },
-        {
-          id: "kontakt-versand",
-          q: "Bieten Sie internationalen Versand an?",
-          a: "Ja — neben Deutschland liefern wir in ausgewählte europäische Länder. Alle Details zu Lieferzeiten und Versandkosten beantwortet die Service-FAQ direkt im Shop und im Bestellprozess.",
-          link: { label: "Zur Shop-FAQ", href: "/shop#fragen" },
-        },
-      ],
+      id: "kontakt-individuelle-auswahl",
+      q: "Wie funktioniert eine individuelle Weinauswahl?",
+      a: "Sie erzählen uns zunächst von Ihrem Vorhaben. Auf Wunsch lernen Sie die Weine bei einer Verkostung kennen. Aus Ihren Favoriten entsteht anschließend eine Auswahl, die zu Ihrem Konzept, Ihrem Menü oder Ihrem Anlass passt.",
+    },
+    {
+      id: "kontakt-kaufen",
+      q: "Wo kann ich Maria-Maria-Weine kaufen?",
+      a: "Die Weine können über den offiziellen Maria-Maria-Shop bestellt werden. Auf der Kontaktseite bleibt der Shop ein sekundärer Weg, damit Beratungs-, Event- und B2B-Anfragen nicht vom Kontakt-Funnel abgelenkt werden.",
+      link: { label: "Zum offiziellen Shop", href: "/shop" },
     },
   ],
 };

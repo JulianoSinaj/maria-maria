@@ -65,9 +65,10 @@ export const meta = {
   },
 
   kontakt: {
-    title: "Contact",
+    /* as in content/de/meta.js: full title carrying the brand itself */
+    titleAbsolute: "Contact | Italian wines for restaurants & events | Maria Maria",
     description:
-      "We look forward to hearing from you – wine tastings in Düsseldorf, questions about our wines, partnerships or trade enquiries.",
+      "Italian boutique wines for restaurants, fine food, trade, events and tastings in Düsseldorf & NRW. Personal advice and individual wine selection.",
   },
 
   agb: {

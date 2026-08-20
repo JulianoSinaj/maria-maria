@@ -65,9 +65,10 @@ export const meta = {
   },
 
   kontakt: {
-    title: "Kontakt",
+    /* jako v content/de/meta.js: úplný titulek nesoucí značku */
+    titleAbsolute: "Kontakt | Italská vína pro gastronomii & akce | Maria Maria",
     description:
-      "Těšíme se na vaši zprávu – degustace vín v Düsseldorfu, dotazy k našim vínům, spolupráce nebo poptávky prodejců.",
+      "Italská butiková vína pro gastronomii, lahůdky, obchod, akce a degustace v Düsseldorfu & NRW. Osobní poradenství a individuální výběr vín.",
   },
 
   agb: {

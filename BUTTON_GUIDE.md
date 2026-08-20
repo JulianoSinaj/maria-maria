@@ -48,6 +48,13 @@ Your button component now features **10 vibrant variants** with sophisticated mi
   - Use for: Modern, sophisticated feel
   - Best for: Overlay buttons, premium contexts
 
+### Contact page (Kontakt-Handoff 18.08.2026)
+- **`terracotta`** - Filled terracotta → terracotta-deep gradient, ivory text
+  - Use for: Primary CTAs on /kontakt (the mockup's accent colour)
+
+- **`terracotta-outline`** - Terracotta outline on cream, fills on hover
+  - Use for: The secondary CTA next to a `terracotta` button
+
 ## Usage Examples
 
 ### Basic Button

@@ -1,37 +1,69 @@
-import ShaderGradient from "@/components/motion/ShaderGradient";
 import SplitText from "@/components/motion/SplitText";
-import TiltCard from "@/components/motion/TiltCard";
-import { Reveal, Stagger, StaggerItem } from "@/components/motion/Reveal";
-import { SectionTitle, Eyebrow, GrapeRule, IconChip } from "@/components/Deco";
-import ContactForm from "@/components/kontakt/ContactForm";
-import FaqSection from "@/components/faq/FaqSection";
-import { Mail, Phone, Pin, Instagram, Facebook, LinkedIn, Arrow, Clock } from "@/components/Icons";
-import Atmosphere, { Aura, GhostWord, Vines } from "@/components/Atmosphere";
+import { Reveal } from "@/components/motion/Reveal";
+import { Eyebrow } from "@/components/Deco";
+import Atmosphere, { Aura } from "@/components/Atmosphere";
 import JsonLd from "@/components/seo/JsonLd";
+import KontaktHeroPhoto, { KontaktHeroPreload } from "@/components/kontakt/KontaktHeroPhoto";
+import HeroActions from "@/components/kontakt/HeroActions";
+import IntentGrid from "@/components/kontakt/IntentGrid";
+import ProcessSteps from "@/components/kontakt/ProcessSteps";
+import BrandBridge from "@/components/kontakt/BrandBridge";
+import ContactForm from "@/components/kontakt/ContactForm";
+import KontaktFaq from "@/components/kontakt/KontaktFaq";
+import { KontaktIntentProvider, FORM_ANCHOR } from "@/components/kontakt/IntentContext";
+import { Calendar, Storefront, Heart } from "@/components/kontakt/KontaktIcons";
+import { photoSources, KONTAKT_DIR, variantFile } from "@/components/kontakt/kontaktPhotos";
+import { kontaktBlurFor } from "@/components/kontakt/kontaktBlur";
 import { getDictionary } from "@/lib/i18n/dictionaries";
 import { pageMetadata } from "@/lib/i18n/metadata";
 import { localePath } from "@/lib/i18n/routing";
 import { absoluteUrl } from "@/lib/site";
 import { graph, webPageNode, breadcrumbNode, faqNode, ORG_ID } from "@/lib/seo/jsonLd";
 
-/* Titel und Description je Sprache aus dem Wörterbuch; hreflang,
-   Canonical und OpenGraph baut pageMetadata() daraus auf. */
+/* /kontakt — Relaunch nach dem Kontakt-Handoff vom 18.08.2026 (v2.0).
+
+   Sechs Sektionen in fester Reihenfolge (Handoff §1, §18): Hero 50/50 →
+   Intent-Raster 2×2 → Prozess in drei Schritten → fotografische Brand Bridge
+   → Lead-Formular (Split-Layout) → FAQ mit Bild → Footer (global). Das
+   Formular kommt bewusst ERST nach Intents und Prozess: Wer es erreicht, weiß
+   warum er schreibt und was er davon hat (Handoff §2, „Regola UX").
+
+   Farbe: Terrakotta für CTAs, Zahlen, Linien und Icon-Kreise — die Akzent-
+   farbe des freigegebenen Mockups (§13); Schrift bleibt Playfair/Montserrat
+   aus dem Design-System. Kontaktdaten (E-Mail, Telefon) kommen ausschließlich
+   aus lib/site.js — dieselbe Quelle wie Footer, Rechtstexte und JSON-LD.
+
+   Der Intent-Provider verbindet Hero-CTAs, Karten und Formular: Klick →
+   sanfter Scroll zu #anfrage → Anliegen sichtbar im Select (Handoff §14). */
+
+/* Titel und Description je Sprache aus dem Wörterbuch; hreflang, Canonical
+   und OpenGraph baut pageMetadata() daraus auf. Das OG-Bild ist das Hero-
+   Motiv in seiner größten Breite. */
 export async function generateMetadata({ params }) {
   const dict = await getDictionary(params.locale);
+  const hero = photoSources("hero");
   return pageMetadata({
     locale: params.locale,
     path: "/kontakt",
     meta: dict.meta.kontakt,
+    image: {
+      url: `${KONTAKT_DIR}/${variantFile("hero", 1672)}`,
+      width: hero.width,
+      height: hero.height,
+      alt: dict.kontakt?.hero?.imageAlt,
+    },
   });
 }
 
-/* Als ContactPage ausgezeichnet und über `mainEntity` an die Organisation
-   gebunden: Google entnimmt Telefonnummer, E-Mail und Anschrift dem
-   Organisationsknoten im Layout — sie stehen deshalb hier nicht ein zweites
-   Mal. Zwei Kontaktangaben unter zwei @ids wären zwei Unternehmen. */
+/* ContactPage, an die Organisation gebunden: E-Mail (und Telefon, sobald
+   bestätigt) stehen im Organisationsknoten des Layouts — nicht ein zweites
+   Mal hier, zwei Kontaktangaben unter zwei @ids wären zwei Unternehmen.
+   Die FAQ-Knoten beschreiben exakt die sechs Fragen, die im Akkordeon unten
+   im initialen HTML stehen — ein Schema, kein doppeltes aus Plugin + Code. */
 function KontaktJsonLd({ locale, dict }) {
   const url = absoluteUrl(localePath(locale, "/kontakt"));
   const nav = dict?.common?.nav ?? {};
+  const meta = dict.meta.kontakt;
   const localize = (href) => localePath(locale, href);
 
   const crumbs = breadcrumbNode(
@@ -48,224 +80,221 @@ function KontaktJsonLd({ locale, dict }) {
         {
           ...webPageNode({
             url,
-            name: dict.meta.kontakt.title,
-            description: dict.meta.kontakt.description,
+            name: meta.titleAbsolute ?? meta.title,
+            description: meta.description,
             locale,
             type: "ContactPage",
+            image: {
+              url: `${KONTAKT_DIR}/${variantFile("hero", 1672)}`,
+              alt: dict.kontakt?.hero?.imageAlt,
+            },
             breadcrumbId: crumbs?.["@id"] ?? null,
           }),
           mainEntity: { "@id": ORG_ID },
         },
         crumbs,
-        faqNode({ url, items: (dict.faq?.kontakt ?? []).flatMap((g) => g.items ?? []) })
+        faqNode({ url, items: dict.faq?.kontakt ?? [] })
       )}
     />
   );
 }
 
-/* lokale Feature-Icons (48er-Viewbox, gleicher Strichstil wie Icons.jsx) */
-const F = { fill: "none", stroke: "currentColor", strokeWidth: 1.3, strokeLinecap: "round", strokeLinejoin: "round" };
+/* Überschriften-Stil der Sektionen 02–06 — zentriert, serif, eine Zeile
+   Beschreibung darunter. Als Funktion statt SectionTitle aus Deco, weil die
+   Kontaktseite ohne Eyebrow auskommt (Mockup) und die Zahlen-/Linienakzente
+   in Terrakotta statt Champagner trägt. */
+function SectionHeading({ id, title, intro, light = false }) {
+  return (
+    <Reveal className="mx-auto max-w-3xl text-center">
+      <h2
+        id={id}
+        className={`text-balance font-playfair text-[clamp(1.75rem,3.2vw,2.5rem)] leading-[1.12] ${
+          light ? "text-ivory" : "text-charcoal"
+        }`}
+      >
+        {title}
+      </h2>
+      <span aria-hidden="true" className="mx-auto mt-5 block h-px w-12 bg-terracotta/70" />
+      {intro && (
+        <p
+          className={`mx-auto mt-4 max-w-2xl text-[14px] leading-relaxed ${
+            light ? "text-ivory/70" : "text-charcoal/70"
+          }`}
+        >
+          {intro}
+        </p>
+      )}
+    </Reveal>
+  );
+}
 
-const TastingIcon = (p) => (
-  <svg viewBox="0 0 48 48" {...F} {...p}>
-    <path d="M14 10c-2 6-2 9 2 11 0 4-2 12-4 14M28 10c2 6 2 9-2 11 0 4 2 12 4 14" />
-    <path d="M9 35h10M27 35h10" />
-    <path d="M17 21h6" />
-  </svg>
-);
-const MerchantIcon = (p) => (
-  <svg viewBox="0 0 48 48" {...F} {...p}>
-    <path d="M9 19l2-9h26l2 9z" />
-    <path d="M11 19v19h26V19" />
-    <path d="M20 38v-9h8v9" />
-    <path d="M9 19h30" />
-  </svg>
-);
-const PressIcon = (p) => (
-  <svg viewBox="0 0 48 48" {...F} {...p}>
-    <path d="M6 18l7-2 5 4M42 18l-7-2-5 4" />
-    <path d="M18 20c2 2.5 4 4 6 4s4-1.5 6-4" />
-    <path d="M6 18v9l6 2M42 18v9l-6 2" />
-  </svg>
-);
-const QuestionIcon = (p) => (
-  <svg viewBox="0 0 48 48" {...F} {...p}>
-    <path d="M6 11h20a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H14l-6 4v-4H6a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2z" />
-    <path d="M32 18h8a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2v3l-4-3h-4" />
-  </svg>
-);
-
-/* Nur Schlüssel und Icon — Überschrift und Text kommen aus dem Wörterbuch.
-   Die Reihenfolge ist bewusst hier und nicht im Text festgelegt: Sie soll in
-   allen vier Sprachen dieselbe sein. */
-const HELP = [
-  { key: "tasting", icon: <TastingIcon className="h-7 w-7" /> },
-  { key: "merchant", icon: <MerchantIcon className="h-7 w-7" /> },
-  { key: "press", icon: <PressIcon className="h-7 w-7" /> },
-  { key: "general", icon: <QuestionIcon className="h-7 w-7" /> },
-];
-
-/* E-Mail-Adresse und Rufnummer sind sprachneutral — nur ihre Beschriftung
-   und die Anschriftszeile wechseln. */
-const CONTACT = [
-  { key: "email", value: "info@maria-maria.wine", href: "mailto:info@maria-maria.wine", Icon: Mail },
-  { key: "phone", value: "+49 211 976 420", href: "tel:+49211976420", Icon: Phone },
-  { key: "address", value: null, Icon: Pin },
-];
-
-const SOCIALS = [
-  { label: "Instagram", href: "https://www.instagram.com/mariamaria.wine", Icon: Instagram },
-  { label: "Facebook", href: "https://www.facebook.com/mariamaria.wine", Icon: Facebook },
-  { label: "LinkedIn", href: "https://www.linkedin.com/company/mariamaria-wine", Icon: LinkedIn },
-];
+const FAQ_PHOTO = photoSources("faq");
 
 export default async function KontaktPage({ params }) {
   const dict = await getDictionary(params.locale);
   const t = dict.kontakt;
+  const faqItems = dict.faq?.kontakt ?? [];
+  const faqBlur = kontaktBlurFor("faq");
 
   return (
-    <div className="relative min-h-screen">
-      <KontaktJsonLd locale={params.locale} dict={dict} />
-      {/* ============ HERO — Intro + Formular ============ */}
-      <section className="grain relative overflow-hidden">
-        <ShaderGradient palette="dawn" />
-        {/* settle into the page colour */}
-        <div aria-hidden="true" className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-ivory" />
+    <KontaktIntentProvider>
+      <div className="relative">
+        <KontaktHeroPreload />
+        <KontaktJsonLd locale={params.locale} dict={dict} />
 
-        <div className="relative mx-auto grid max-w-content grid-cols-1 items-start gap-14 px-6 pb-24 pt-32 lg:grid-cols-[1.02fr_0.98fr] lg:gap-16 lg:px-10 lg:pb-28 lg:pt-36">
-          {/* left — copy + contact details */}
-          <div className="max-w-xl">
-            <Reveal y={18} delay={0.05}>
-              <Eyebrow>{t.hero.eyebrow}</Eyebrow>
-            </Reveal>
-            <h1 className="mt-6 font-playfair text-[clamp(2.6rem,5.5vw,4.2rem)] leading-[1.05] text-charcoal">
-              <SplitText text={t.hero.title} className="block" delay={0.12} />
-              <SplitText
-                text={t.hero.titleItalic}
-                className="block italic"
-                wordClassName="bg-gradient-to-r from-bordeaux via-wine to-bordeaux bg-clip-text text-transparent"
-                delay={0.26}
-              />
-            </h1>
-            <Reveal delay={0.45} y={16}>
-              <GrapeRule className="mt-7" />
-              <p className="mt-6 max-w-md text-[15px] leading-relaxed text-charcoal/75">
-                {t.hero.text}
-              </p>
-            </Reveal>
+        {/* ============ 01 — HERO (50/50, Copy links, Foto bis zum Rand) ============
+            Handoff §1 nennt „hero 50/50", §12 „48/52 circa" — 50/50, weil die
+            beiden CTAs auf 1440 px sonst untereinander rutschen (48 % minus
+            Container-Einzug lassen ~490 px, die Pillen brauchen ~505). */}
+        <section aria-labelledby="kontakt-hero-title" className="relative overflow-hidden pt-20 lg:pt-24">
+          <div className="relative grid grid-cols-1 lg:min-h-[min(calc(100svh-6rem),820px)] lg:grid-cols-2">
+            {/* ---- Copy ---- */}
+            <div className="relative flex items-center px-6 pb-14 pt-10 sm:px-10 lg:py-16 lg:pl-[max(2.5rem,calc((100vw-75rem)/2+2.5rem))] lg:pr-10">
+              {/* ein ruhiger warmer Schein hinter dem Text — keine flache Fläche,
+                  aber auch kein Farbfeld, das mit dem Foto konkurriert */}
+              <Aura tint="terracotta" drift={1} className="-left-40 -top-32 h-[30rem] w-[30rem] opacity-60" />
+              <Aura tint="gold" drift={2} className="-bottom-48 left-1/3 h-[28rem] w-[28rem] opacity-60" />
 
-            <Reveal delay={0.58} y={14}>
-              <ul className="mt-10 space-y-4">
-                {CONTACT.map(({ key, value, href, Icon }) => (
-                  <li key={key} className="flex items-center gap-4">
-                    <span className="ring-hairline flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-cream to-champagne-light/40 text-bordeaux shadow-chip">
-                      <Icon className="h-[18px] w-[18px]" />
-                    </span>
-                    <span className="min-w-0">
-                      <span className="block text-[10px] uppercase tracking-[0.18em] text-charcoal/50">
-                        {t.details[key]}
-                      </span>
-                      {href ? (
-                        <a
-                          href={href}
-                          className="inline-block py-0.5 text-[13.5px] font-medium text-charcoal transition-colors duration-300 hover:text-bordeaux"
-                        >
-                          {value}
-                        </a>
-                      ) : (
-                        <span className="inline-block py-0.5 text-[13.5px] font-medium text-charcoal">
-                          {t.details.addressValue}
-                        </span>
-                      )}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </Reveal>
-
-            <Reveal delay={0.7} y={12}>
-              <div className="mt-8 flex items-center gap-3">
-                {SOCIALS.map(({ label, href, Icon }) => (
-                  <a
-                    key={label}
-                    href={href}
-                    aria-label={label}
-                    className="flex h-11 w-11 items-center justify-center rounded-full border border-charcoal/15 text-charcoal/70 transition-colors duration-300 hover:border-champagne hover:text-bordeaux"
-                  >
-                    <Icon className="h-[18px] w-[18px]" />
-                  </a>
-                ))}
+              <div className="relative w-full max-w-[36rem]">
+                <Reveal y={14} delay={0.05}>
+                  <Eyebrow tone="text-terracotta">{t.hero.eyebrow}</Eyebrow>
+                </Reveal>
+                <h1
+                  id="kontakt-hero-title"
+                  className="mt-5 font-playfair text-[clamp(2rem,3vw,2.65rem)] leading-[1.1] text-charcoal"
+                >
+                  <SplitText text={t.hero.title} className="block" delay={0.12} />
+                  <SplitText text={t.hero.titleAccent} className="block italic text-terracotta" delay={0.3} />
+                </h1>
+                <Reveal delay={0.42} y={14}>
+                  <p className="mt-6 max-w-[30rem] text-[15px] leading-relaxed text-charcoal/75">{t.hero.text}</p>
+                </Reveal>
+                <Reveal delay={0.54} y={12}>
+                  <HeroActions copy={t.hero} details={t.details} />
+                </Reveal>
               </div>
-              <div className="mt-10 flex max-w-md items-start gap-3.5 rounded-card border border-stone/50 bg-white/50 p-5 shadow-luxe">
-                <Clock aria-hidden="true" className="mt-0.5 h-5 w-5 shrink-0 text-champagne" />
-                <p className="text-[12.5px] leading-relaxed text-charcoal/75">
-                  <span className="font-semibold text-charcoal">{t.hero.promiseLabel}</span>{" "}
-                  {t.hero.promise}
+            </div>
+
+            {/* ---- Foto: edge-to-edge rechts, LCP ---- */}
+            <div className="relative aspect-[16/10] w-full overflow-hidden bg-sand sm:aspect-[16/9] lg:aspect-auto lg:min-h-[520px]">
+              <KontaktHeroPhoto alt={t.hero.imageAlt} />
+            </div>
+          </div>
+        </section>
+
+        {/* ============ 02 — WARUM MÖCHTEN SIE UNS KONTAKTIEREN? (2×2) ============ */}
+        <section aria-labelledby="kontakt-intents-title" className="relative overflow-hidden bg-cream">
+          <Atmosphere variant="dusk" className="opacity-60" />
+          <div className="relative mx-auto max-w-content px-6 py-20 lg:px-10 lg:py-28">
+            <SectionHeading id="kontakt-intents-title" title={t.intents.title} intro={t.intents.intro} />
+            <IntentGrid copy={t.intents} />
+          </div>
+        </section>
+
+        {/* ============ 03 — SO EINFACH FINDEN WIR IHREN WEIN (3 Schritte) ============ */}
+        <section aria-labelledby="kontakt-process-title" className="relative overflow-hidden">
+          <div className="relative mx-auto max-w-content px-6 py-20 lg:px-10 lg:py-28">
+            <SectionHeading id="kontakt-process-title" title={t.process.title} />
+            <ProcessSteps copy={t.process} />
+          </div>
+        </section>
+
+        {/* ============ 04 — EMOTIONAL BRAND BRIDGE (full-bleed) ============ */}
+        <BrandBridge copy={t.bridge} />
+
+        {/* ============ 05 — LEAD FORM (Split 30/70) ============ */}
+        <section
+          id={FORM_ANCHOR}
+          aria-labelledby="kontakt-form-title"
+          className="relative scroll-mt-24 overflow-hidden bg-cream"
+        >
+          <Atmosphere variant="warm" className="opacity-50" />
+          <div className="relative mx-auto grid max-w-content grid-cols-1 gap-10 px-6 py-20 lg:grid-cols-[30fr_70fr] lg:gap-14 lg:px-10 lg:py-28">
+            {/* ---- Panel links: H2, Intro, Hinweiskästen, Vertrauenszeile ---- */}
+            <div className="lg:sticky lg:top-32 lg:self-start">
+              <Reveal>
+                <h2
+                  id="kontakt-form-title"
+                  className="font-playfair text-[clamp(1.75rem,3vw,2.4rem)] leading-[1.12] text-charcoal"
+                >
+                  {t.form.title}
+                </h2>
+                <p className="mt-4 max-w-md text-[14px] leading-relaxed text-charcoal/70">{t.form.intro}</p>
+
+                <ul className="mt-8 space-y-3">
+                  {[
+                    { key: "event", Icon: Calendar },
+                    { key: "trade", Icon: Storefront },
+                  ].map(({ key, Icon }) => {
+                    const hint = t.form.hints?.[key];
+                    if (!hint) return null;
+                    return (
+                      <li
+                        key={key}
+                        className="flex items-start gap-3.5 rounded-xl border border-stone/60 bg-sand/70 px-4 py-3.5"
+                      >
+                        <Icon aria-hidden="true" className="mt-px h-6 w-6 shrink-0 text-terracotta" />
+                        <p className="text-[12.5px] leading-snug text-charcoal/75">
+                          <span className="font-semibold text-charcoal">{hint.label}</span> {hint.text}
+                        </p>
+                      </li>
+                    );
+                  })}
+                </ul>
+
+                <p className="mt-8 inline-flex items-center gap-2.5 font-playfair text-[15px] italic text-charcoal/75">
+                  <Heart aria-hidden="true" className="h-5 w-5 shrink-0 text-terracotta" />
+                  {t.form.trust}
                 </p>
-              </div>
+              </Reveal>
+            </div>
+
+            {/* ---- Formular rechts ---- */}
+            <Reveal delay={0.1} y={20} className="min-w-0">
+              <ContactForm copy={t.form} />
             </Reveal>
           </div>
+        </section>
 
-          {/* right — glass form */}
-          <Reveal delay={0.3} y={26}>
-            <ContactForm copy={t.form} />
-          </Reveal>
-        </div>
-      </section>
-
-      {/* ============ HILFE-THEMEN ============ */}
-      <section className="relative overflow-hidden">
-        <Atmosphere variant="warm" />
-        <GhostWord className="right-[-2vw] top-10 text-[11vw]">Benvenuti</GhostWord>
-        <div className="relative mx-auto max-w-content px-6 py-24 lg:px-10">
-        <SectionTitle eyebrow={t.help.eyebrow} description={t.help.description}>
-          {t.help.title}
-        </SectionTitle>
-        <Stagger className="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {HELP.map((h) => (
-            <StaggerItem key={h.key} className="h-full">
-              <TiltCard className="group h-full" max={5} radius="rounded-card-lg">
-                <div className="ring-hairline flex h-full flex-col rounded-card-lg border border-stone/40 bg-white/70 p-7 shadow-luxe transition-[box-shadow,border-color] duration-500 group-hover:border-champagne/60 group-hover:shadow-lift">
-                  <IconChip>{h.icon}</IconChip>
-                  <h3 className="mt-6 font-playfair text-[18px] leading-snug text-charcoal">
-                    {t.help.items[h.key].title}
-                  </h3>
-                  <p className="mt-2.5 text-[12.5px] leading-relaxed text-charcoal/70">
-                    {t.help.items[h.key].text}
-                  </p>
-                  <a
-                    href="#kontakt-formular"
-                    className="group/link mt-auto inline-flex min-h-[44px] items-center gap-1.5 pt-5 text-[12px] font-medium text-bordeaux"
-                  >
-                    {t.help.cta}
-                    <Arrow className="h-3.5 w-3.5 transition-transform duration-500 ease-out-expo group-hover/link:translate-x-1" />
-                  </a>
-                </div>
-              </TiltCard>
-            </StaggerItem>
-          ))}
-        </Stagger>
-        </div>
-      </section>
-
-      {/* ============ FAQ (Service-Cluster, Index links) ============ */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-cream via-champagne-light/25 to-ivory">
-        <Vines className="inset-x-0 bottom-0 h-72 w-full" />
-        <Aura tint="blush" drift={2} className="-left-56 -top-44 h-[34rem] w-[34rem]" />
-        <FaqSection
-          className="relative"
-          pageType="kontakt"
-          eyebrow={t.faq.eyebrow}
-          title={
-            <>
-              {t.faq.title} <span className="italic text-bordeaux">{t.faq.titleAccent}</span>
-            </>
-          }
-          description={t.faq.description}
-          groups={dict.faq?.kontakt ?? []}
-          footer={{ label: t.faq.footer, href: "#kontakt-formular" }}
-        />
-      </section>
-    </div>
+        {/* ============ 06 — HÄUFIGE FRAGEN (Akkordeon + Bild) ============ */}
+        <section id="fragen" aria-labelledby="kontakt-faq-title" className="relative scroll-mt-24 overflow-hidden">
+          <div className="relative mx-auto max-w-content px-6 py-20 lg:px-10 lg:py-28">
+            <SectionHeading id="kontakt-faq-title" title={t.faq.title} />
+            <div className="mt-12 grid grid-cols-1 gap-10 lg:grid-cols-[2fr_1fr] lg:gap-14">
+              <Reveal delay={0.08} className="min-w-0">
+                <KontaktFaq items={faqItems} copy={t.faq} />
+              </Reveal>
+              {/* Mobile: FAQ zuerst, Bild darunter (Handoff §12) */}
+              <Reveal delay={0.16} className="lg:sticky lg:top-32 lg:self-start">
+                <figure className="relative aspect-[4/3] overflow-hidden rounded-card bg-sand">
+                  {faqBlur && (
+                    <img
+                      src={faqBlur}
+                      alt=""
+                      aria-hidden="true"
+                      draggable={false}
+                      className="absolute inset-0 h-full w-full scale-[1.04] select-none object-cover blur-xl"
+                    />
+                  )}
+                  <picture>
+                    <source type="image/webp" srcSet={FAQ_PHOTO.srcSet} sizes={FAQ_PHOTO.sizes} />
+                    <img
+                      src={FAQ_PHOTO.fallback}
+                      width={FAQ_PHOTO.width}
+                      height={FAQ_PHOTO.height}
+                      alt={t.faq.imageAlt}
+                      loading="lazy"
+                      decoding="async"
+                      draggable={false}
+                      className="absolute inset-0 h-full w-full select-none object-cover"
+                    />
+                  </picture>
+                </figure>
+              </Reveal>
+            </div>
+          </div>
+        </section>
+      </div>
+    </KontaktIntentProvider>
   );
 }

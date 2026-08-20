@@ -114,8 +114,8 @@ export default function HomeContent({ t = {}, faq = [], souls }) {
             </Reveal>
             {/* Markenname und Claim bleiben in jeder Sprache stehen. */}
             <h1 className="mt-4 font-playfair text-[clamp(2.8rem,6vw,4.6rem)] leading-[1.05] tracking-[-0.015em] text-ivory sm:mt-6">
-              <SplitText text="Maria Maria" className="block" delay={0.12} />
-              <SplitText text="Il piacere del vino." className="block italic" delay={0.3} />
+              <SplitText text="Maria Maria" className="block text-[1.15em]" delay={0.12} />
+              <SplitText text="Il piacere del vino." className="mt-1 block text-[0.62em] italic tracking-[-0.005em] text-champagne" delay={0.3} />
             </h1>
             <Reveal delay={0.5} y={16}>
               {/* wie im Wein-Hero: die Zierlinie weicht auf Telefonen dem Platz */}

@@ -21,6 +21,7 @@
     "optimize:pairing": "node scripts/optimize-pairing.mjs",
     "optimize:pairing-cards": "node scripts/optimize-pairing-cards.mjs",
     "optimize:pages": "node scripts/optimize-pages.mjs",
+    "optimize:kontakt": "node scripts/optimize-kontakt.mjs",
     "optimize:art": "node scripts/optimize-art.mjs",
     "crop:cards": "node scripts/crop-cards.mjs",
     "crop:sheet": "node scripts/sheet-shots.mjs"

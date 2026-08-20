@@ -11,6 +11,7 @@ import { useCommon } from "@/lib/i18n/context";
 import { pathWithoutLocale } from "@/lib/i18n/routing";
 import { useLenis } from "./motion/SmoothScroll";
 import { Close, Menu, Grapes } from "./Icons";
+import { BUSINESS } from "@/lib/site";
 
 /* Pfad und Wörterbuch-Schlüssel gehören zusammen, die Beschriftung nicht:
    Routen sind in allen vier Sprachen identisch (/unsere-weine bleibt
@@ -273,7 +274,7 @@ export default function Header() {
               {/* Flache Reihe statt Aufklapp-Panel: Im mobilen Overlay wäre
                   ein zweites Overlay darüber nur eine Falle. */}
               <LanguageSwitcher variant="inline" className="mb-6" />
-              <p className="text-[12px] tracking-wide text-ivory/60">info@maria-maria.wine</p>
+              <p className="text-[12px] tracking-wide text-ivory/60">{BUSINESS.email}</p>
               <p className="mt-1 font-playfair text-[15px] italic text-champagne/90">Il piacere del vino</p>
             </motion.div>
           </motion.div>

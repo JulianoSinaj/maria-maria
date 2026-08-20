@@ -236,105 +236,41 @@ export const faq = {
     },
   ],
 
+  /* ---- Contatti: le sei domande del Kontakt-Handoff (18.08.2026) ----
+     Lista piatta, nessun indice per cluster: il mockup approvato mostra un
+     accordion accanto all'immagine. `kontakt-haendler` conserva il suo ID
+     perché la FAQ della home vi punta con un deep link. ---- */
   kontakt: [
     {
-      key: "allgemein",
-      label: "Domande generali",
-      items: [
-        {
-          id: "kontakt-erreichen",
-          q: "Come posso contattare Maria Maria?",
-          a: "Il modo più rapido è il modulo di contatto — basta scegliere il motivo della richiesta. In alternativa ci trovi via e-mail a info@maria-maria.wine o al telefono +49 211 976 420. Rispondiamo entro 1–2 giorni lavorativi.",
-        },
-        {
-          id: "kontakt-weininfo",
-          q: "Dove trovo le informazioni sui vini?",
-          a: "Ogni vino ha una pagina dedicata con profilo gustativo, origine, dati tecnici, abbinamenti e domande frequenti — dal Primitivo al Lugana.",
-          link: { label: "Vai ai nostri vini", href: "/unsere-weine" },
-        },
-      ],
+      id: "kontakt-verkostung-buchen",
+      q: "Come prenoto una degustazione di vini a Düsseldorf?",
+      a: "Nel modulo di contatto scegli „Degustazione“ e indicaci la data desiderata, il numero approssimativo di persone e l'occasione. Concordiamo luogo e formato personalmente con te e ti rispondiamo entro 1–2 giorni lavorativi con una proposta.",
     },
     {
-      key: "verkostungen",
-      label: "Degustazioni",
-      items: [
-        {
-          id: "kontakt-verkostung-buchen",
-          q: "Come posso prenotare una degustazione a Düsseldorf?",
-          a: "Nel modulo di contatto scegli „Richiesta di degustazione“ — potrai indicare direttamente la data desiderata e il numero di ospiti. Ti rispondiamo entro 1–2 giorni lavorativi con una proposta personale.",
-        },
-        {
-          id: "kontakt-verkostung-ort",
-          q: "Dove si svolgono le degustazioni?",
-          a: "A Düsseldorf e dintorni. Luogo e formato li concordiamo personalmente con te — raccontaci semplicemente la tua occasione nel modulo.",
-        },
-        {
-          id: "kontakt-verkostung-privat",
-          q: "Posso prenotare una degustazione privata?",
-          a: "Sì — le degustazioni private sono possibili quanto quelle aziendali. Indica nel modulo la data desiderata e il numero di ospiti; ti rispondiamo con una proposta personale.",
-        },
-        {
-          id: "kontakt-verkostung-corporate",
-          q: "Maria Maria propone degustazioni aziendali?",
-          a: "Sì, per occasioni aziendali e team. Raccontaci brevemente l'occasione e la dimensione del gruppo — prepariamo una proposta su misura e rispondiamo entro 1–2 giorni lavorativi.",
-        },
-        {
-          id: "kontakt-verkostung-kaufen",
-          q: "Posso acquistare i vini degustati?",
-          a: "Sì — tutti i vini della collezione sono nello shop ufficiale online. Dopo la degustazione ti consigliamo volentieri di persona sui tuoi preferiti.",
-          link: { label: "Vai allo shop ufficiale", href: "/shop" },
-        },
-      ],
+      id: "kontakt-haendler",
+      q: "Posso inserire Maria Maria nel mio assortimento?",
+      a: "Sì. Scegli „Commercio & rivendita“ e raccontaci brevemente della tua attività, della tua sede e della selezione che desideri. Poi discutiamo personalmente i prossimi passi più adatti.",
     },
     {
-      key: "haendler",
-      label: "Rivenditori",
-      items: [
-        {
-          id: "kontakt-haendler",
-          q: "Come inserisco i vini Maria Maria nel mio assortimento?",
-          a: "Scegli nel modulo „Richiesta rivenditori“ e raccontaci brevemente del tuo negozio o del tuo locale e della tua zona. Ti rispondiamo personalmente con tutti i dettagli.",
-        },
-        {
-          id: "kontakt-haendler-finden",
-          q: "Posso trovare i vini nel commercio locale?",
-          a: "I nostri vini sono disponibili presso enoteche selezionate e nella ristorazione. Poiché la produzione è limitata, su richiesta ti indichiamo volentieri un partner vicino a te.",
-        },
-      ],
+      id: "kontakt-firmenveranstaltungen",
+      q: "Offrite vini per eventi aziendali?",
+      a: "Sì. Per eventi aziendali, convention e occasioni speciali ti consigliamo nella scelta dei vini. Indicaci data, numero di ospiti, luogo e carattere dell'evento, così possiamo discutere la tua richiesta in modo mirato.",
     },
     {
-      key: "presse",
-      label: "Stampa e collaborazioni",
-      items: [
-        {
-          id: "kontakt-presse",
-          q: "A chi rivolgo le richieste stampa?",
-          a: "Direttamente a noi: tramite il modulo di contatto (motivo „Stampa e collaborazioni“) o via e-mail a info@maria-maria.wine. Ti rispondiamo personalmente.",
-        },
-        {
-          id: "kontakt-kooperationen",
-          q: "Maria Maria è aperta a collaborazioni?",
-          a: "Sì — siamo aperti a collaborazioni e progetti comuni. Descrivici brevemente la tua idea; rispondiamo entro 1–2 giorni lavorativi.",
-        },
-      ],
+      id: "kontakt-gastronomie",
+      q: "Posso proporre i vini Maria Maria nel mio ristorante o negozio di gastronomia?",
+      a: "Sì. Scegli „Ristorazione & gastronomia“ e raccontaci brevemente del tuo locale, della tua cucina o del tuo concept e della tua sede. Insieme troviamo una selezione adatta ai tuoi ospiti.",
     },
     {
-      key: "shop",
-      label: "Shop e spedizione",
-      items: [
-        {
-          id: "kontakt-kaufen",
-          q: "Dove posso acquistare i vini?",
-          a: "Nello shop ufficiale online di Maria Maria. Tutti i dettagli su assortimento, confezioni degustazione e ordine sono nelle domande frequenti dello shop.",
-          link: { label: "Vai alle domande dello shop", href: "/shop#fragen" },
-        },
-        {
-          id: "kontakt-versand",
-          q: "Offrite la spedizione internazionale?",
-          a: "Sì — oltre alla Germania consegniamo in Paesi europei selezionati. Tutti i dettagli su tempi e costi sono nelle domande frequenti dello shop e durante l'ordine.",
-          link: { label: "Vai alle domande dello shop", href: "/shop#fragen" },
-        },
-      ],
+      id: "kontakt-individuelle-auswahl",
+      q: "Come funziona una selezione di vini personalizzata?",
+      a: "Prima ci racconti il tuo progetto. Se vuoi, conosci i vini in una degustazione. Dai tuoi preferiti nasce poi una selezione adatta al tuo concept, al tuo menu o alla tua occasione.",
+    },
+    {
+      id: "kontakt-kaufen",
+      q: "Dove posso acquistare i vini Maria Maria?",
+      a: "I vini si possono ordinare nello shop ufficiale Maria Maria. Sulla pagina Contatti lo shop resta una via secondaria, così le richieste di consulenza, eventi e B2B non vengono distolte dal funnel di contatto.",
+      link: { label: "Allo shop ufficiale", href: "/shop" },
     },
   ],
 };

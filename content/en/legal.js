@@ -39,7 +39,7 @@ export const legal = {
       },
       {
         title: "Contact",
-        body: ["Phone: +49 211 976 420", "Email: info@maria-maria.wine"],
+        body: ["Email: info@maria-maria.de"],
       },
       {
         title: "Register entry",
@@ -82,7 +82,7 @@ export const legal = {
       {
         title: "1. Controller",
         body: [
-          "The controller for data processing on this website is Maria Maria Wines GmbH, Ellerfelderstrasse 78, 40822 Mettmann, Germany, email: info@maria-maria.wine, phone: +49 211 976 420.",
+          "The controller for data processing on this website is Maria Maria Wines GmbH, Ellerfelderstrasse 78, 40822 Mettmann, Germany, email: info@maria-maria.de.",
         ],
       },
       {
@@ -171,7 +171,7 @@ export const legal = {
       {
         title: "§ 7 Right of withdrawal",
         body: [
-          "Consumers have a statutory right of withdrawal of 14 days. The period begins on receipt of the goods. A clear statement to info@maria-maria.wine is sufficient to exercise it. The buyer bears the cost of return shipping, provided the goods delivered match those ordered.",
+          "Consumers have a statutory right of withdrawal of 14 days. The period begins on receipt of the goods. A clear statement to info@maria-maria.de is sufficient to exercise it. The buyer bears the cost of return shipping, provided the goods delivered match those ordered.",
         ],
       },
       {

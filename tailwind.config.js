@@ -33,6 +33,17 @@ module.exports = {
         vine: "#55683F",
         /* Flaschenglas: die dunkle Stufe von `vine`, trägt helle Schrift */
         "vine-deep": "#3D4B2D",
+        /* Kontaktseite (Handoff 18.08.2026, §13): Terrakotta/Rost für CTAs,
+           Unterstreichungen, Schrittzahlen und Icon-Kreise — die Akzentfarbe
+           des freigegebenen Mockups. Bewusst eine eigene Familie neben
+           Bordeaux: Ein Wechsel zurück auf Bordeaux wäre ein Tausch dieser
+           drei Hex-Werte, keine Suche durch die Seite. Auf Creme erreicht
+           `terracotta` mit Elfenbein-Schrift 4,5:1 (AA für Fließtext). */
+        terracotta: "#B4532F",
+        "terracotta-deep": "#8F3F22",
+        "terracotta-light": "#F1DED3",
+        /* beiges Feld für sekundäre Kästen (Hinweisboxen neben dem Formular) */
+        sand: "#F2EBE0",
       },
       fontFamily: {
         playfair: ["var(--font-playfair)", "serif"],

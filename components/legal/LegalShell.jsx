@@ -1,6 +1,7 @@
 import Link from "@/components/i18n/LocaleLink";
 import { Eyebrow, GrapeRule } from "@/components/Deco";
 import Atmosphere from "@/components/Atmosphere";
+import { BUSINESS } from "@/lib/site";
 
 /* Gemeinsame Hülle der Rechtsseiten — ruhige, editoriale Textseite im
    Ivory-Look. Inhalte kommen als Abschnitts-Array, damit alle drei Seiten
@@ -62,10 +63,10 @@ export default function LegalShell({ shell, title, intro, sections }) {
             </Link>{" "}
             {shell.contactMid}{" "}
             <a
-              href="mailto:info@maria-maria.wine"
+              href={`mailto:${BUSINESS.email}`}
               className="font-medium text-bordeaux underline decoration-bordeaux/30 underline-offset-2 transition-colors duration-300 hover:decoration-bordeaux"
             >
-              info@maria-maria.wine
+              {BUSINESS.email}
             </a>
             .
           </p>

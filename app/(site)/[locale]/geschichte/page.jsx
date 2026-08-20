@@ -11,6 +11,7 @@ import StoryChapter from "@/components/geschichte/StoryChapter";
 import StoryChapterNav from "@/components/geschichte/StoryChapterNav";
 import StoryStats from "@/components/geschichte/StoryStats";
 import StoryCta from "@/components/geschichte/StoryCta";
+import ValerioSection from "@/components/geschichte/ValerioSection";
 import { STORY_CHAPTERS, STORY_TODAY, STORY_STATS } from "@/components/geschichte/storyData";
 import JsonLd from "@/components/seo/JsonLd";
 import { getDictionary } from "@/lib/i18n/dictionaries";
@@ -23,7 +24,7 @@ import { graph, webPageNode, breadcrumbNode, ORG_ID } from "@/lib/seo/jsonLd";
    GESCHICHTE — die Erzählseite der Marke, Sprungziel aus Capitolo I
    („La storia") des Magazins.
    ----------------------------------------------------------------------------
-   Die Seite ist als Reise in sechs Kapiteln gesetzt:
+   Die Seite ist als Reise in vier Kapiteln gesetzt:
 
    Auftakt        „Zwei Frauen. Zwei Generationen. Eine Haltung zum Wein."
                   — links der Kanon der Marke mit den beiden CTAs, rechts
@@ -31,12 +32,12 @@ import { graph, webPageNode, breadcrumbNode, ORG_ID } from "@/lib/seo/jsonLd";
    Der Name       „Zwei Marias. Erinnerung und Gegenwart." — die zwei
                   Generationen hinter dem Namen, daneben das Seelen-Paar
                   (SoulCards) mit dem goldenen „&".
-   01–05          die Stationen der Reise als Bild/Text-Wechselgriff
-                  (StoryChapter): der Anfang von Deutschland aus, Salento,
-                  Kampanien, Gardasee, die Ankunft in Düsseldorf. Jedes
-                  Kapitel verlinkt in die Tiefe (Regionen, Lugana,
+   01–03          die Stationen der Reise als Bild/Text-Wechselgriff
+                  (StoryChapter): der Anfang von Deutschland aus, Salento
+                  (ValerioSection), die Ankunft in Düsseldorf. Jedes
+                  Kapitel verlinkt in die Tiefe (Regionen,
                   Kollektion).
-   06             „Die Auswahl" — Intro-Satz und die drei Prinzipien
+   04             „Die Auswahl" — Intro-Satz und die drei Prinzipien
                   zwischen Haarlinien (StoryStats).
    Passaggio      das Bordeaux-Schlussband (StoryCta) führt weiter in
                   die Regionen — derselbe Ausgang, den auch Startseite
@@ -281,17 +282,21 @@ export default async function GeschichtePage({ params }) {
           begrenzen. Ab md rendert die Komponente nichts Sichtbares. */}
       <StoryChapterNav chapters={chapters} today={{ ...STORY_TODAY, ...today }} t={t.nav} />
 
-      {/* ================= KAPITEL 01–05: DIE REISE ======================= */}
+      {/* ================= KAPITEL 01–03: DIE REISE ======================= */}
       {chapters.map((chapter, i) => (
-        <StoryChapter key={chapter.id} chapter={chapter} flipped={i % 2 === 1} />
+        chapter.id === "salento" ? (
+          <ValerioSection key={chapter.id} id={chapter.id} t={t.valerio} />
+        ) : (
+          <StoryChapter key={chapter.id} chapter={chapter} flipped={i % 2 === 1} />
+        )
       ))}
 
       {/* ================= PASSAGGIO: WEITER IN DIE REGIONEN ==============
-          Das Bordeaux-Band schließt die Reise der fünf Stationen ab —
+          Das Bordeaux-Band schließt die Reise der drei Stationen ab —
           danach klingt die Seite mit dem Zahlen-Kapitel „Heute" aus. */}
       <StoryCta t={t.cta} />
 
-      {/* ================= KAPITEL 06: DIE AUSWAHL ========================
+      {/* ================= KAPITEL 04: DIE AUSWAHL ========================
           Warum ein Wein zu Maria Maria kommt — im ruhigen, hellen Kleid
           der Seite. Der Intro-Satz („Nicht eine einzelne Stadt …") steht
           bewusst sichtbar vor den drei Prinzipien — er verhindert, dass

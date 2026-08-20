@@ -40,6 +40,18 @@ export const geschichte = {
     quote: "„Was bleibt, wird mit einer neuen Perspektive weitergetragen.“",
   },
 
+  valerio: {
+    eyebrow: "Der Inhaber · Weinimport & Auswahl",
+    title: "Valerio Caniglia: der Unternehmer hinter Maria Maria",
+    paragraphs: [
+      "Valerio Caniglia bringt mehr als 30 Jahre Erfahrung im Weingeschäft mit. Er versteht Märkte, Menschen und Weine und wählt mit sicherem Gespür die Produzenten aus, die zu Maria Maria passen.",
+      "Mit Feingefühl, Verlässlichkeit und einem internationalen Netzwerk sorgt er dafür, dass jede Flasche unsere Werte ins Glas bringt.",
+    ],
+    cta: "Maria Maria für Gastronomie und Fachhandel",
+    href: "/kontakt",
+    imageLabel: "Portrait von Valerio Caniglia",
+  },
+
   /* Das Kapitel-Menü der Telefone (StoryChapterNav). */
   nav: {
     ariaLabel: "Die Kapitel dieser Geschichte",
@@ -50,14 +62,13 @@ export const geschichte = {
      die Didascalia darunter, `linkLabel` beschriftet den Tiefen-Link. */
   chapters: {
     anfang: {
-      label: "Der Anfang · 2019",
-      title: "Von Deutschland aus. Mit italienischen Wurzeln.",
+      label: "Heute · Mettmann bei Düsseldorf",
+      title: "In Deutschland zu Hause. Italien persönlich verbunden.",
       paragraphs: [
-        "Seit 2019 ist Maria Maria in Deutschland aktiv. Die Marke hat ihren Sitz in Düsseldorf – ihre persönliche und kulturelle Herkunft führt nach Lizzano im Salento.",
-        "Aus der Verbindung zweier Generationen entstand eine Auswahl, in der jede Flasche für einen Ort, eine Rebsorte und eine bewusste Entscheidung steht.",
+        "Von Mettmann aus bringen wir ausgewählte Weine italienischer Winzer in die Gastronomie und in Weinbars – persönlich, verlässlich und mit echter Nähe.",
+        "Jede Bestellung wird mit Sorgfalt zusammengestellt, damit unsere Weine dort ankommen, wo sie ihren Platz haben: am Tisch.",
       ],
-      quote:
-        "„Der Wein beginnt bei seiner Herkunft – und findet seinen Platz dort, wo Menschen ihn miteinander teilen.“",
+      linkLabel: "Unsere Weinauswahl entdecken",
       alt: "Gedeckter Tisch mit Weingläsern und einer originalen Maria-Maria-Weinflasche",
       micro: "La tavola lunga",
     },
@@ -73,37 +84,14 @@ export const geschichte = {
       micro: "Terra rossa",
       caption: "Reben, mediterranes Licht und die Nähe zum Ionischen Meer.",
     },
-    kampanien: {
-      label: "Kampanien · Irpinien",
-      title: "Autochthone Rebsorten. Unverwechselbare Herkunft.",
-      paragraphs: [
-        "Mit Kampanien erweitert sich die Geschichte um eine Weinlandschaft, die von Höhenlagen, Mikroklimata und autochthonen Rebsorten geprägt ist.",
-        "Greco di Tufo DOCG, Falanghina und Aglianico stehen für eigenständige Charaktere und eine traditionsreiche Weinkultur.",
-        "Der fachliche Austausch mit dem Önologen Francesco De Stefano vertieft den Blick auf Rebsorten, Herkunft und Entscheidungen.",
-      ],
-      linkLabel: "Irpinien und seine Weine entdecken",
-      alt: "Hügelige Weinlandschaft der Irpinia in Kampanien",
-      micro: "Vento di collina",
-      caption: "Höhenlagen und autochthone Rebsorten prägen Irpiniens Weinlandschaft.",
-    },
-    gardasee: {
-      label: "Gardasee · Lugana DOC",
-      title: "Eleganz, die aus dem Ort kommt",
-      paragraphs: [
-        "Am Südufer des Gardasees begegnet Maria Maria einer anderen Ausdrucksform italienischer Weinkultur.",
-        "Auf kalkhaltigen, lehmreichen Moränenböden und unter dem Einfluss des milden Seeklimas entsteht aus der Rebsorte Turbiana ein Wein mit Klarheit, Frische und eleganter Struktur. Der Lugana DOC ergänzt die Auswahl um eine Herkunft, deren Charakter nicht laut sein muss, um in Erinnerung zu bleiben.",
-      ],
-      linkLabel: "Lugana und den Gardasee entdecken",
-      alt: "Weinberge des Lugana-Gebiets am Gardasee",
-      micro: "Luce sul Garda",
-    },
     duesseldorf: {
-      label: "Seit 2019 · Düsseldorf",
-      title: "In Deutschland zu Hause. Über Grenzen hinweg gedacht.",
+      label: "Der Anfang · Sommer 2019",
+      title: "Manche Ideen entstehen am Tisch.",
       paragraphs: [
-        "Die Marke Maria Maria ist seit 2019 in Deutschland aktiv und hat ihren Sitz in Düsseldorf. Von hier aus werden persönlich ausgewählte italienische Weine für Menschen in Deutschland und weiteren Ländern zugänglich.",
-        "Düsseldorf ist der Standort der Marke – nicht die Grenze ihrer Auswahl. Entscheidend bleiben Herkunft, Charakter und die Geschichte hinter jedem Wein.",
+        "Zwischen gutem Essen, offenen Gesprächen und besonderen Weinen wächst eine Idee: Weine zu finden, die Herkunft zeigen, Charakter haben und Menschen zusammenbringen.",
+        "Aus diesem Abend wird mehr als eine Erinnerung – es wird Maria Maria.",
       ],
+      quote: "„Manche Ideen brauchen keinen Businessplan. Nur den richtigen Tisch.“",
       linkLabel: "Unsere Weinauswahl entdecken",
       alt: "Gedeckter Abendtisch mit Maria-Maria-Rotwein in der Abenddämmerung",
       micro: "Dall’Italia, oltre i confini",

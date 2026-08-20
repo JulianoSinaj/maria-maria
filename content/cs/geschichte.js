@@ -29,6 +29,18 @@ export const geschichte = {
     quote: "„Co zůstává, nese se dál s novým pohledem.“",
   },
 
+  valerio: {
+    eyebrow: "Majitel · Dovoz a výběr vín",
+    title: "Valerio Caniglia: podnikatel za značkou Maria Maria",
+    paragraphs: [
+      "Valerio Caniglia přináší více než 30 let zkušeností ze světa vína. Rozumí trhům, lidem i vínům a s jistým instinktem vybírá producenty, kteří se hodí k Maria Maria.",
+      "Díky citlivosti, spolehlivosti a mezinárodní síti zajišťuje, aby každá láhev přenesla naše hodnoty do sklenky.",
+    ],
+    cta: "Maria Maria pro gastronomii a specializovaný maloobchod",
+    href: "/kontakt",
+    imageLabel: "Portrét Valeria Caniglii",
+  },
+
   nav: {
     ariaLabel: "Kapitoly tohoto příběhu",
   },
@@ -43,6 +55,7 @@ export const geschichte = {
       ],
       quote:
         "„Víno začíná u svého původu – a své místo nachází tam, kde ho lidé sdílejí.“",
+      linkLabel: "Objevit náš výběr vín",
       alt: "Prostřený stůl se sklenicemi vína a originální lahví Maria Maria",
       micro: "La tavola lunga",
     },
@@ -57,30 +70,6 @@ export const geschichte = {
       alt: "Červená země a vinice u Lizzana v Salentu",
       micro: "Terra rossa",
       caption: "Réva, středomořské světlo a blízkost Jónského moře.",
-    },
-    kampanien: {
-      label: "Kampánie · Irpinie",
-      title: "Autochtonní odrůdy. Nezaměnitelný původ.",
-      paragraphs: [
-        "S Kampánií se příběh rozšiřuje o vinařskou krajinu, kterou utvářejí vyšší polohy, mikroklimata a autochtonní odrůdy.",
-        "Greco di Tufo DOCG, Falanghina a Aglianico představují svébytné charaktery a vinařskou kulturu bohatou na tradici.",
-        "Odborný dialog s enologem Francescem De Stefanem prohlubuje pohled na odrůdy, původ a rozhodnutí.",
-      ],
-      linkLabel: "Objevit Irpinii a její vína",
-      alt: "Zvlněná vinařská krajina Irpinie v Kampánii",
-      micro: "Vento di collina",
-      caption: "Vyšší polohy a autochtonní odrůdy utvářejí vinařskou krajinu Irpinie.",
-    },
-    gardasee: {
-      label: "Gardské jezero · Lugana DOC",
-      title: "Elegance, která vychází z místa",
-      paragraphs: [
-        "Na jižním břehu Gardského jezera se Maria Maria setkává s jinou podobou italské vinařské kultury.",
-        "Na vápenitých, jílovitých morénových půdách a pod vlivem mírného jezerního klimatu vzniká z odrůdy Turbiana víno plné čistoty, svěžesti a elegantní struktury. Lugana DOC doplňuje výběr o původ, jehož charakter nemusí být hlasitý, aby zůstal v paměti.",
-      ],
-      linkLabel: "Objevit Luganu a Gardské jezero",
-      alt: "Vinice oblasti Lugana u Gardského jezera",
-      micro: "Luce sul Garda",
     },
     duesseldorf: {
       label: "Od roku 2019 · Düsseldorf",

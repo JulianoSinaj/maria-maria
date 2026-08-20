@@ -30,29 +30,16 @@ export const STORY_CHAPTERS = [
     img: "/img/magazin/puglia1.jpg",
   },
   {
-    num: "03",
-    id: "kampanien",
-    rebsorten: "Greco di Tufo DOCG · Falanghina · Aglianico",
-    link: { href: "/regionen#kampanien" },
-    img: "/img/magazin/campagnia1.jpg",
-  },
-  {
-    num: "04",
-    id: "gardasee",
-    rebsorten: "Turbiana · Lugana DOC",
-    link: { href: "/unsere-weine/lugana" },
-    img: "/img/magazin/eleganca.jpg",
-  },
-  {
     num: "01",
     id: "anfang",
+    link: { href: "/unsere-weine" },
     img: "/img/maria1-con-vino.jpeg",
     preserveFormat: true,
   },
 ];
 
-/* ---- Kapitel 06 „Die Auswahl" — Text unter `today` im Wörterbuch ---- */
-export const STORY_TODAY = { num: "06", id: "auswahl" };
+/* ---- Kapitel 04 „Die Auswahl" — Text unter `today` im Wörterbuch ---- */
+export const STORY_TODAY = { num: "04", id: "auswahl" };
 
 /* Die drei Auswahl-Prinzipien — `value` ist die dekorative Prinzip-Nummer
    (für Screenreader verborgen, die Reihenfolge steckt schon in der Liste),

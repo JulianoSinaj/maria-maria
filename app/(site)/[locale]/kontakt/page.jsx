@@ -1,16 +1,19 @@
 import Photo from "@/components/media/Photo";
 import { Reveal } from "@/components/motion/Reveal";
-import { Eyebrow } from "@/components/Deco";
+import { Eyebrow, GrapeRule } from "@/components/Deco";
+import SplitText from "@/components/motion/SplitText";
+import HomeHeroFx from "@/components/home/HomeHeroFx";
 import { Clock, Mail, Pin } from "@/components/Icons";
 import IntentProvider from "@/components/kontakt/IntentContext";
 import HeroActions from "@/components/kontakt/HeroActions";
+import KontaktHeroPhoto, { KontaktHeroPreload } from "@/components/kontakt/KontaktHeroPhoto";
 import IntentCards from "@/components/kontakt/IntentCards";
 import ContactForm from "@/components/kontakt/ContactForm";
 import EmailLink from "@/components/kontakt/EmailLink";
 import KontaktFaq from "@/components/kontakt/KontaktFaq";
 import { Calendar, Heart, Storefront } from "@/components/kontakt/icons";
 import { FORM_ANCHOR, INTENT_CARDS } from "@/components/kontakt/intents";
-import { HERO_INSET, SECTION_TITLE, SHELL, SHELL_WIDE } from "@/components/kontakt/styles";
+import { SECTION_TITLE, SHELL, SHELL_WIDE } from "@/components/kontakt/styles";
 import JsonLd from "@/components/seo/JsonLd";
 import { getDictionary } from "@/lib/i18n/dictionaries";
 import { pageMetadata } from "@/lib/i18n/metadata";
@@ -108,6 +111,9 @@ function KontaktJsonLd({ locale, dict }) {
   );
 }
 
+/* Das Hero-Motiv — fürs JSON-LD und als Quelle des OG-Bilds. Das <picture>
+   der Hero selbst baut components/kontakt/KontaktHeroPhoto aus denselben
+   Varianten. */
 const HERO_IMG = "/img/kontakt/kontakt-hero-375ml.webp";
 /* 1200 × 630, erzeugt von scripts/og-images.mjs aus HERO_IMG (`npm run og`). */
 const KONTAKT_OG_IMAGE = { url: "/img/og/kontakt.jpg", width: 1200, height: 630 };
@@ -128,120 +134,123 @@ export default async function KontaktPage({ params }) {
           „Expected server HTML to contain a matching <script> in <div>". */}
       <KontaktJsonLd locale={params.locale} dict={dict} />
 
+      {/* Wie HomeHeroPreload / WeineHeroPreload: das Hero-Foto in der ersten
+
+
+          Netzwerk-Runde, vor der Hydration. */}
+      <KontaktHeroPreload />
+
       <IntentProvider>
       {/* Kein eigener Seitengrund mehr: Die Seite liegt wie alle anderen auf
           dem Ivory des <body> (globals.css) statt auf einem eigenen Linen. */}
       <div className="-mb-12 lg:-mb-16">
         {/* ═══════ 01 — HERO ═══════════════════════════════════════════
-            50/52 wie im Mockup: Text links auf der äußeren Kante, Foto
-            rechts randlos bis zum Bildschirmrand. */}
-        <section className="relative overflow-hidden pt-24 lg:pt-28">
-          <div className="grid grid-cols-1 items-stretch lg:grid-cols-[minmax(0,48fr)_minmax(0,52fr)]">
-            {/* lg:pb-14 statt pb-20: Die Fusszeile der Textspalte bestimmt die
-                Hoehe der ganzen Zeile und damit die des randlosen Fotos
-                daneben (items-stretch). Mit 80 px stand das Foto auf 585 px,
-                die Referenz „landing page contatti.png" zeigt es bei 1440 px
-                Fensterbreite auf 562 px. 24 px weniger treffen das Mockup. */}
-            <div style={HERO_INSET} className="pb-14 pr-6 lg:pb-14 lg:pr-10">
-              <div className="lg:max-w-[560px]">
-                <Reveal y={16}>
-                  {/* Der Sektions-Öffner der Storefront: Champagner-Versalien
-                      mit Traubenmarke (components/Deco.jsx) statt der
-                      Terrakotta-Zeile des Mockups. */}
-                  <Eyebrow>{t.hero.eyebrow}</Eyebrow>
-                  <h1 className="mt-5 text-balance font-playfair text-[clamp(2.1rem,4vw,3.1rem)] font-normal leading-[1.1] text-charcoal">
-                    {t.hero.title}
-                    <span className="block">{t.hero.titleSecond}</span>
-                  </h1>
-                  <p className="mt-5 max-w-[29rem] text-[13.5px] leading-relaxed text-charcoal/70">
-                    {t.hero.text}
-                  </p>
-                </Reveal>
+            Seit dem 20.08.2026 dieselbe Bühne wie auf Startseite, Weinen und
+            Regionen: Das Tischfoto trägt den Hero randlos über die volle
+            Höhe, die Headline steht links im Schleierlicht. Die helle Fassung
+            der Weine-Seite (Elfenbein-Schleier, Charcoal-Text) statt der
+            dunklen der Startseite — das Motiv ist hell, und links ist leere
+            Wand, auf der der Text ohnehin steht. Der 48/52-Split aus dem
+            Mockup ist damit Geschichte; die Inhalte der Hero sind dieselben. */}
+        <section className="grain relative overflow-hidden">
+          <HomeHeroFx photo={<KontaktHeroPhoto alt={t.hero.imageAlt} />} />
 
-                <Reveal y={14} delay={0.12}>
-                  <HeroActions primary={t.hero.ctaPrimary} secondary={t.hero.ctaSecondary} />
-                </Reveal>
+          {/* Schleier für Lesbarkeit: mobil von unten, ab lg von links. Unten
+              etwas dichter als auf der Weine-Seite — die Hero trägt hier
+              zusätzlich Kontaktzeilen und Versprechen, also mehr Text auf
+              dem Foto. */}
+          <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+            <div className="absolute inset-0 bg-gradient-to-t from-ivory via-ivory/70 via-55% to-transparent lg:hidden" />
+            <div className="absolute inset-0 hidden bg-gradient-to-r from-ivory/90 via-ivory/30 via-35% to-transparent to-70% lg:block" />
+          </div>
 
-                {/* Kontaktzeilen. Die Telefonnummer aus dem Mockup ist laut
-                    Handoff falsch und darf nicht erscheinen — bis die
-                    richtige bestätigt ist, stehen hier zwei Angaben statt
-                    drei, nicht ein Platzhalter. */}
-                <Reveal y={12} delay={0.2}>
-                  <dl className="mt-11 flex flex-wrap gap-x-14 gap-y-6">
-                    <div>
-                      <dt className="flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-charcoal/55">
-                        <Mail aria-hidden="true" className="h-4 w-4 text-bordeaux" />
-                        {t.details.emailLabel}
-                      </dt>
-                      <dd className="mt-1.5">
-                        {/* Client-Inselchen für das click_email-Event —
-                            Handoff §16, direkter Kontakt am Formular vorbei. */}
-                        <EmailLink
-                          email={t.details.email}
-                          location="hero"
-                          className="text-[13.5px] text-charcoal transition-colors duration-300 hover:text-bordeaux"
-                        />
-                      </dd>
-                    </div>
-                    <div>
-                      <dt className="flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-charcoal/55">
-                        <Pin aria-hidden="true" className="h-4 w-4 text-bordeaux" />
-                        {t.details.locationLabel}
-                      </dt>
-                      <dd className="mt-1.5 text-[13.5px] text-charcoal">{t.details.location}</dd>
-                    </div>
-                  </dl>
+          {/* Elfenbein-Hauch oben, damit die Navigation über dem Foto lesbar
+              bleibt */}
+          <div
+            className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-ivory/80 via-ivory/30 to-transparent"
+            aria-hidden="true"
+          />
 
-                  <hr className="mt-8 border-t border-stone/60" />
+          {/* settle into the page colour */}
+          <div aria-hidden="true" className="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-b from-transparent to-ivory" />
 
-                  <p className="mt-5 flex items-center gap-2.5 text-[12.5px] text-charcoal/70">
-                    <Clock aria-hidden="true" className="h-4 w-4 shrink-0 text-bordeaux" />
-                    {t.hero.promise}
-                  </p>
-                </Reveal>
-              </div>
-            </div>
+          {/* SHELL_WIDE statt max-w-content: Überschrift, Formular und FAQ
+              stehen auf derselben linken Kante — das war schon die Absicht
+              des alten Hero-Einzugs. */}
+          <div className={`${SHELL_WIDE} relative flex min-h-[100svh] flex-col justify-end pb-24 pt-32 lg:justify-center lg:pb-16`}>
+            <div className="lg:max-w-2xl">
+              <Reveal y={18} delay={0.05}>
+                <Eyebrow>{t.hero.eyebrow}</Eyebrow>
+              </Reveal>
+              <h1 className="mt-6 font-playfair text-[clamp(2.4rem,4.8vw,3.6rem)] leading-[1.06] tracking-[-0.015em] text-charcoal">
+                <SplitText text={t.hero.title} className="block" delay={0.12} />
+                <SplitText
+                  text={t.hero.titleSecond}
+                  className="block italic"
+                  wordClassName="bg-gradient-to-r from-bordeaux via-wine to-bordeaux bg-clip-text text-transparent"
+                  delay={0.3}
+                />
+              </h1>
+              <Reveal delay={0.5} y={16}>
+                <GrapeRule className="mt-6 hidden sm:flex" />
+                <p className="mt-5 max-w-md text-[15px] leading-relaxed text-charcoal/75">{t.hero.text}</p>
+              </Reveal>
 
-            {/* Das LCP-Bild: eager, hohe Priorität, kein Lazy-Load
-                (Handoff §17). */}
-            <div className="relative min-h-[300px] sm:min-h-[380px] lg:min-h-[560px]">
-              <Photo
-                src={HERO_IMG}
-                alt={t.hero.imageAlt}
-                sizes="(min-width: 1024px) 52vw, 100vw"
-                loading="eager"
-                fetchPriority="high"
-                width={1672}
-                height={941}
-                /* Das Motiv ist 16:9, die Spalte ist deutlich hochkantiger —
-                   der Zuschnitt entscheidet hier allein über links und rechts.
-                   Der Rahmen bleibt, wo er ist; nur das Fenster wandert.
+              <Reveal y={16} delay={0.62}>
+                <HeroActions primary={t.hero.ctaPrimary} secondary={t.hero.ctaSecondary} />
+              </Reveal>
 
-                   90 % schiebt es fast an die rechte Kante der Quelle und
-                   trifft damit den Ausschnitt der zweiten, freigegebenen
-                   Fassung des Fotos (1102 × 941 — 570 px links abgeschnitten,
-                   rechts bündig): Die Gläser stehen um die Bildmitte statt am
-                   rechten Rand, beide Flaschen behalten Luft, das Windlicht
-                   kommt rechts mit herein. Bei 1440 px liegt das Fenster auf
-                   Quell-x 386–1629, bei 1280 px auf 557–1610.
+              {/* Kontaktzeilen. Die Telefonnummer aus dem Mockup ist laut
+                  Handoff falsch und darf nicht erscheinen — bis die
+                  richtige bestätigt ist, stehen hier zwei Angaben statt
+                  drei, nicht ein Platzhalter. */}
+              <Reveal y={12} delay={0.78}>
+                <dl className="mt-9 flex max-w-md flex-wrap gap-x-14 gap-y-6 sm:mt-11">
+                  <div>
+                    <dt className="flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-charcoal/55">
+                      <Mail aria-hidden="true" className="h-4 w-4 text-bordeaux" />
+                      {t.details.emailLabel}
+                    </dt>
+                    <dd className="mt-1.5">
+                      {/* Client-Inselchen für das click_email-Event —
+                          Handoff §16, direkter Kontakt am Formular vorbei. */}
+                      <EmailLink
+                        email={t.details.email}
+                        location="hero"
+                        className="text-[13.5px] text-charcoal transition-colors duration-300 hover:text-bordeaux"
+                      />
+                    </dd>
+                  </div>
+                  <div>
+                    <dt className="flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-charcoal/55">
+                      <Pin aria-hidden="true" className="h-4 w-4 text-bordeaux" />
+                      {t.details.locationLabel}
+                    </dt>
+                    <dd className="mt-1.5 text-[13.5px] text-charcoal">{t.details.location}</dd>
+                  </div>
+                </dl>
 
-                   Nicht 100 %: Bei 1024 px trägt die italienische Textspalte
-                   die höchste Zeile (Foto 525 × 619), das Fenster ist dort nur
-                   798 Quell-Pixel breit und begänne bei x 874 — das linke Glas
-                   (ab x 866) stünde angeschnitten an der Kante. 90 % setzt
-                   dort bei 787 an und lässt ihm gut 50 px Luft.
+                <hr className="mt-8 max-w-md border-t border-charcoal/10" />
 
-                   Die 57 % davor saßen zu weit links: Die Gläser lagen bei
-                   61 % der Bildbreite, und unter ~1200 px Fensterbreite
-                   schnitt der rechte Rand „il bianco" an. */
-                className="absolute inset-0 h-full w-full object-cover object-[90%_center]"
-              />
+                <p className="mt-5 flex items-center gap-2.5 text-[12.5px] text-charcoal/70">
+                  <Clock aria-hidden="true" className="h-4 w-4 shrink-0 text-bordeaux" />
+                  {t.hero.promise}
+                </p>
+              </Reveal>
             </div>
           </div>
         </section>
 
         {/* ═══════ 02 — WARUM MÖCHTEN SIE UNS KONTAKTIEREN? ═══════════ */}
-        <section aria-labelledby="anliegen" className="py-20 lg:py-24">
+        <section aria-labelledby="anliegen" className="relative isolate overflow-hidden py-20 lg:py-24">
+          <Photo
+            src="/img/kontakt/maria-black-white.jpeg"
+            alt=""
+            sizes="100vw"
+            aria-hidden="true"
+            className="absolute inset-0 -z-10 h-full w-full object-cover object-[72%_center] opacity-50 lg:opacity-40"
+          />
+          <div aria-hidden="true" className="absolute inset-0 -z-10 bg-ivory/45 lg:bg-ivory/55" />
           <div className={SHELL}>
             <Reveal>
               <h2 id="anliegen" className={SECTION_TITLE}>

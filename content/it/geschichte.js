@@ -29,6 +29,18 @@ export const geschichte = {
     quote: "«Ciò che resta si tramanda con uno sguardo nuovo.»",
   },
 
+  valerio: {
+    eyebrow: "Il titolare · Importazione e selezione",
+    title: "Valerio Caniglia: l'imprenditore dietro Maria Maria",
+    paragraphs: [
+      "Valerio Caniglia porta con sé più di 30 anni di esperienza nel mondo del vino. Conosce mercati, persone e vini e sceglie con sicurezza i produttori che si adattano a Maria Maria.",
+      "Con sensibilità, affidabilità e una rete internazionale fa sì che ogni bottiglia porti i nostri valori nel calice.",
+    ],
+    cta: "Maria Maria per ristorazione e rivenditori specializzati",
+    href: "/kontakt",
+    imageLabel: "Ritratto di Valerio Caniglia",
+  },
+
   nav: {
     ariaLabel: "I capitoli di questa storia",
   },
@@ -43,6 +55,7 @@ export const geschichte = {
       ],
       quote:
         "«Il vino comincia dalla sua origine – e trova il suo posto dove le persone lo condividono.»",
+      linkLabel: "Scopri la nostra selezione di vini",
       alt: "Tavola apparecchiata con calici e una bottiglia originale Maria Maria",
       micro: "La tavola lunga",
     },
@@ -57,30 +70,6 @@ export const geschichte = {
       alt: "Terra rossa e vigneti nei pressi di Lizzano, nel Salento",
       micro: "Terra rossa",
       caption: "Vigne, luce mediterranea e la vicinanza del Mar Ionio.",
-    },
-    kampanien: {
-      label: "Campania · Irpinia",
-      title: "Vitigni autoctoni. Un'origine inconfondibile.",
-      paragraphs: [
-        "Con la Campania la storia si allarga a un paesaggio del vino segnato da altitudini, microclimi e vitigni autoctoni.",
-        "Greco di Tufo DOCG, Falanghina e Aglianico rappresentano personalità ben distinte e una cultura del vino ricca di tradizione.",
-        "Il dialogo con l'enologo Francesco De Stefano approfondisce lo sguardo su vitigni, origine e scelte.",
-      ],
-      linkLabel: "Scopri l'Irpinia e i suoi vini",
-      alt: "Paesaggio collinare di vigneti dell'Irpinia, in Campania",
-      micro: "Vento di collina",
-      caption: "Altitudini e vitigni autoctoni segnano il paesaggio dell'Irpinia.",
-    },
-    gardasee: {
-      label: "Lago di Garda · Lugana DOC",
-      title: "Un'eleganza che nasce dal luogo",
-      paragraphs: [
-        "Sulla sponda meridionale del Lago di Garda Maria Maria incontra un'altra espressione della cultura del vino italiana.",
-        "Su suoli morenici calcarei e ricchi di argilla, sotto l'influsso del clima mite del lago, dal vitigno Turbiana nasce un vino nitido, fresco e di elegante struttura. Il Lugana DOC aggiunge alla selezione un'origine il cui carattere non ha bisogno di alzare la voce per restare nella memoria.",
-      ],
-      linkLabel: "Scopri il Lugana e il Lago di Garda",
-      alt: "Vigneti della zona del Lugana sul Lago di Garda",
-      micro: "Luce sul Garda",
     },
     duesseldorf: {
       label: "Dal 2019 · Düsseldorf",

@@ -15,23 +15,14 @@
 /* Das Layout arbeitet mit ZWEI Breiten, und der Unterschied ist Absicht:
 
    SHELL_WIDE (~1250 px) trägt Hero, Formular und FAQ — die Blöcke, die
-   links auf derselben Kante sitzen wie die H1.
+   links auf derselben Kante sitzen wie die H1. Seit die Hero eine volle
+   Foto-Bühne ist (20.08.2026), liegt ihr Textblock direkt in SHELL_WIDE;
+   den einseitig nachgerechneten Hero-Einzug von früher gibt es nicht mehr.
    SHELL (~1040 px) trägt die Anliegen-Kachel und den Prozess. Beide sind
    zentrierte Lesestrecken; in voller Breite zerfiele die 2×2-Kachel in vier
    weit auseinanderliegende Inseln. */
 export const SHELL_WIDE = "mx-auto w-full max-w-[1340px] px-6 lg:px-10";
 export const SHELL = "mx-auto w-full max-w-[1104px] px-6 lg:px-8";
-
-/* Die linke Kante der Hero. Sie ist KEIN Shell: die Hero läuft rechts unter
-   das randlose Foto und darf deshalb keinen zentrierten Container haben.
-   Damit Überschrift, Formular und FAQ trotzdem auf derselben Linie stehen,
-   rechnet sie den linken Rand von SHELL_WIDE nach — dieselbe Formel, die
-   `mx-auto max-w-[1340px] px-10` erzeugt, nur einseitig.
-
-   Als Inline-Style statt als Tailwind-Klasse, weil die Klasse dafür
-   `lg:pl-[max(1.5rem,calc((100vw_-_1340px)/2_+_2.5rem))]` heißen müsste —
-   lesbar ist daran nichts mehr. */
-export const HERO_INSET = { paddingLeft: "max(1.5rem, calc((100vw - 1340px) / 2 + 2.5rem))" };
 
 /* Sichtbarer Fokus für Tastaturbedienung — dieselbe Champagner-Marke wie in
    components/faq/FaqSection.jsx, mit dem Seitengrund (Ivory) als Offset. */

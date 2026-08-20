@@ -115,7 +115,7 @@ export default function CoverHero({ hasInterviews = false, t = {}, vision }) {
           {/* rechts: Rubrik, Schlagzeile, Stationen, CTA, Leitbild */}
           <div className="flex flex-col justify-center">
             <Reveal y={14} delay={0.2} blur={false}>
-              <p className="text-[10.5px] font-semibold uppercase tracking-[0.3em] text-champagne-deep">
+              <p className="text-[10.5px] font-semibold uppercase tracking-[0.3em] text-bordeaux">
                 Cover Story
               </p>
             </Reveal>

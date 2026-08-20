@@ -29,6 +29,18 @@ export const geschichte = {
     quote: "“What remains is carried forward with a new perspective.”",
   },
 
+  valerio: {
+    eyebrow: "The owner · Wine import & selection",
+    title: "Valerio Caniglia: the entrepreneur behind Maria Maria",
+    paragraphs: [
+      "Valerio Caniglia brings more than 30 years of experience in the wine business. He understands markets, people and wines, and selects with a sure instinct the producers who fit Maria Maria.",
+      "With sensitivity, reliability and an international network, he ensures that every bottle brings our values into the glass.",
+    ],
+    cta: "Maria Maria for restaurants and specialist retail",
+    href: "/kontakt",
+    imageLabel: "Portrait of Valerio Caniglia",
+  },
+
   nav: {
     ariaLabel: "The chapters of this story",
   },
@@ -43,6 +55,7 @@ export const geschichte = {
       ],
       quote:
         "“Wine begins with its origin – and finds its place wherever people share it with one another.”",
+      linkLabel: "Discover our selection of wines",
       alt: "A laid table with wine glasses and an original bottle of Maria Maria",
       micro: "La tavola lunga",
     },
@@ -58,37 +71,14 @@ export const geschichte = {
       micro: "Terra rossa",
       caption: "Vines, Mediterranean light and the closeness of the Ionian Sea.",
     },
-    kampanien: {
-      label: "Campania · Irpinia",
-      title: "Indigenous grape varieties. Unmistakable origin.",
-      paragraphs: [
-        "With Campania, the story widens to a wine landscape defined by altitude, microclimates and indigenous grape varieties.",
-        "Greco di Tufo DOCG, Falanghina and Aglianico stand for characters all their own and a wine culture rich in tradition.",
-        "The professional dialogue with oenologist Francesco De Stefano deepens the view of grape varieties, origin and choices.",
-      ],
-      linkLabel: "Discover Irpinia and its wines",
-      alt: "Rolling wine country of Irpinia in Campania",
-      micro: "Vento di collina",
-      caption: "Altitude and indigenous grape varieties shape Irpinia's wine landscape.",
-    },
-    gardasee: {
-      label: "Lake Garda · Lugana DOC",
-      title: "Elegance that comes from the place",
-      paragraphs: [
-        "On the southern shore of Lake Garda, Maria Maria encounters another expression of Italian wine culture.",
-        "On calcareous, clay-rich morainic soils and under the influence of the mild lake climate, the Turbiana grape yields a wine of clarity, freshness and elegant structure. Lugana DOC adds to the selection an origin whose character does not need to be loud to be remembered.",
-      ],
-      linkLabel: "Discover Lugana and Lake Garda",
-      alt: "Vineyards of the Lugana area on Lake Garda",
-      micro: "Luce sul Garda",
-    },
     duesseldorf: {
-      label: "Since 2019 · Düsseldorf",
-      title: "At home in Germany. Thinking beyond borders.",
+      label: "Der Anfang · Sommer 2019",
+      title: "Manche Ideen entstehen am Tisch.",
       paragraphs: [
-        "The Maria Maria brand has been active in Germany since 2019 and is based in Düsseldorf. From here, personally selected Italian wines become accessible to people in Germany and other countries.",
-        "Düsseldorf is the brand's home – not the boundary of its selection. What matters remains the origin, the character and the story behind every wine.",
+        "Zwischen gutem Essen, offenen Gesprächen und besonderen Weinen wächst eine Idee: Weine zu finden, die Herkunft zeigen, Charakter haben und Menschen zusammenbringen.",
+        "Aus diesem Abend wird mehr als eine Erinnerung – es wird Maria Maria.",
       ],
+      quote: "„Manche Ideen brauchen keinen Businessplan. Nur den richtigen Tisch.“",
       linkLabel: "Discover our selection of wines",
       alt: "An evening table set with Maria Maria red wine at dusk",
       micro: "Dall’Italia, oltre i confini",

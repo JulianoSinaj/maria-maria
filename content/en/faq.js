@@ -50,8 +50,8 @@ export const faq = {
     {
       id: "weine-geschenk",
       q: "Which wine makes a good gift?",
-      a: "For connoisseurs: the Primitivo 15,5 from the terracotta amphora or the Greco di Tufo with D.O.C.G. status. For newcomers: the approachable Falanghina or the Primitivo Salento IGP. And a curated tasting case is always a safe choice — elegantly packaged, with a greeting card on request.",
-      link: { label: "To the tasting cases", href: "/shop#pakete" },
+      a: "For connoisseurs: the Primitivo 15,5 from the terracotta amphora or the Greco di Tufo with D.O.C.G. status. For newcomers: the approachable Falanghina or the Primitivo Salento IGP. And a curated tasting set is always a safe choice — elegantly packaged, with a greeting card on request.",
+      link: { label: "To the tasting sets", href: "/shop#pakete" },
     },
     {
       id: "weine-essen",
@@ -154,13 +154,13 @@ export const faq = {
         {
           id: "reg-garda-mm",
           q: "Which dishes suit Lugana?",
-          a: "Lugana suits fish from Lake Garda, risotto, whipped salt cod and white meat in light sauces. What matters is less a fixed rule than the balance between freshness, salinity and the texture of the dish.",
+          a: "Lugana suits fish from Lake Garda, risotto, creamy whipped stockfish and white meat in light sauces. What matters is less a fixed rule than the balance between freshness, salinity and the texture of the dish.",
           link: { label: "Discover food pairings in the magazine", href: "/magazin#food-pairing" },
         },
         {
           id: "reg-garda-temperatur",
           q: "Why should Lugana not be served too cold?",
-          a: "Served too cold, the very qualities that define its identity come through less clearly: salinity, minerality and aromatic finesse. It should therefore not reach the glass ice-cold. The exact serving temperature depends on the style and the producer's recommendation.",
+          a: "If Lugana is served too cold, the very qualities that define its identity come through less clearly: salinity, minerality and aromatic finesse. It should therefore not reach the glass ice-cold. The exact serving temperature depends on the style and the producer's recommendation.",
         },
       ],
     },
@@ -181,12 +181,12 @@ export const faq = {
     {
       id: "wissen-glas",
       q: "Which glass for which wine?",
-      a: "Powerful reds like a large red-wine glass with plenty of air; whites a slimmer glass that concentrates the freshness. For aromatic whites such as the Greco cuvée a rounder white-wine glass is worth it — that is where the bouquet opens up best.",
+      a: "Powerful reds call for a large red-wine glass with plenty of air; whites for a slimmer glass that concentrates the freshness. For aromatic whites such as the Greco cuvée a rounder white-wine glass is worth it — that is where the bouquet opens up best.",
     },
     {
       id: "wissen-lagerung",
       q: "How should wine be stored?",
-      a: "Cool, dark and undisturbed — constant temperatures without sharp swings are ideal, and bottles with natural cork should lie down. Our wines are made to be enjoyed: the serving recommendations are on every wine page in the “Taste” chapter.",
+      a: "Cool, dark and undisturbed — constant temperatures without sharp swings are ideal, and bottles with natural corks should be stored on their side. Our wines are made to be enjoyed: the serving recommendations are on every wine page in the “Taste” chapter.",
     },
     {
       id: "wissen-docg",
@@ -206,7 +206,7 @@ export const faq = {
     {
       id: "shop-kaufen",
       q: "Where can I buy Maria Maria wines?",
-      a: "Right here in the official online shop — with the full range and curated tasting cases at a favourable price. We are happy to advise you personally on the choice for your moment, your menu or your gift.",
+      a: "Right here in the official online shop — with the full range and curated tasting sets at a favourable price. We are happy to advise you personally on the choice for your moment, your menu or your gift.",
     },
     {
       id: "shop-versand",
@@ -221,7 +221,7 @@ export const faq = {
     {
       id: "shop-bezahlung",
       q: "How can I pay in the shop?",
-      a: "Conveniently and securely: we accept all common payment methods — SSL-encrypted and without detours. The available options are shown transparently during checkout.",
+      a: "Conveniently and securely: we accept all common payment methods — SSL-encrypted, with no unnecessary steps. The available options are shown transparently during checkout.",
     },
     {
       id: "shop-geschenk",
@@ -231,7 +231,7 @@ export const faq = {
     {
       id: "shop-beratung",
       q: "Who helps me with my order or choosing a wine?",
-      a: "We do, personally: by contact form or e-mail we advise you on menu, occasion or gift — and help with any question about your order. We reply within 1–2 working days.",
+      a: "We do, personally: by contact form or email we advise you on menu, occasion or gift — and help with any question about your order. We reply within 1–2 working days.",
       link: { label: "Get in touch", href: "/kontakt" },
     },
   ],
@@ -244,7 +244,7 @@ export const faq = {
         {
           id: "kontakt-erreichen",
           q: "How can I get in touch with Maria Maria?",
-          a: "Quickest is the contact form — simply choose your subject there. Alternatively you can reach us by e-mail at info@maria-maria.de. We reply within 1–2 working days.",
+          a: "Quickest is the contact form — simply choose your subject there. Alternatively you can reach us by email at info@maria-maria.de. We reply within 1–2 working days.",
         },
         {
           id: "kontakt-weininfo",
@@ -292,7 +292,7 @@ export const faq = {
       items: [
         {
           id: "kontakt-haendler",
-          q: "How do I take Maria Maria wines into my range?",
+          q: "How do I add Maria Maria wines to my range?",
           a: "Choose “Trade enquiry” in the form and tell us briefly about your shop or restaurant and your region. We will get back to you personally with all the details.",
         },
         {
@@ -309,7 +309,7 @@ export const faq = {
         {
           id: "kontakt-presse",
           q: "Who do I address press enquiries to?",
-          a: "Directly to us: via the contact form (subject “Press & collaborations”) or by e-mail to info@maria-maria.de. We will get back to you personally.",
+          a: "Directly to us: via the contact form (subject “Press & collaborations”) or by email to info@maria-maria.de. We will get back to you personally.",
         },
         {
           id: "kontakt-kooperationen",
@@ -325,13 +325,13 @@ export const faq = {
         {
           id: "kontakt-kaufen",
           q: "Where can I buy the wines?",
-          a: "In the official Maria Maria online shop. All details on the range, tasting cases and ordering are answered by the service FAQ right there in the shop.",
+          a: "In the official Maria Maria online shop. The service FAQ right there in the shop answers everything about the range, the tasting sets and ordering.",
           link: { label: "To the shop FAQ", href: "/shop#fragen" },
         },
         {
           id: "kontakt-versand",
           q: "Do you offer international shipping?",
-          a: "Yes — besides Germany we deliver to selected European countries. All details on delivery times and shipping costs are answered by the service FAQ in the shop and during checkout.",
+          a: "Yes — besides Germany we deliver to selected European countries. The service FAQ in the shop and the checkout give all the details on delivery times and shipping costs.",
           link: { label: "To the shop FAQ", href: "/shop#fragen" },
         },
       ],

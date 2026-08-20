@@ -54,7 +54,7 @@ const rosatoPuglia = {
     {
       kicker: "Taste",
       title: "Fresh, balanced, elegantly fruity",
-      text: "Fresh and coherent on the palate — a rosé whose fruit stays elegant instead of turning sweet.",
+      text: "Fresh and harmonious on the palate — a rosé whose fruit stays elegant instead of turning sweet.",
       artwork: {
         alt: "Bottle of Rosato Negroamaro IGP Salento by Maria Maria in the winery",
         medium: "In the winery",
@@ -108,7 +108,7 @@ const rosatoPuglia = {
   pairing: {
     scene: {
       dish: "Burrata with tomatoes and focaccia",
-      copy: "Creamy burrata, sun-ripened tomatoes and warm focaccia make an aperitivo that lives on simplicity and balance. The Rosato Puglia IGP accompanies this moment with freshness, fine fruit and a lightness that covers neither the mildness of the cheese nor the sweetness of the tomatoes. It is precisely this harmony that makes it the ideal wine for the early evening — uncomplicated, Mediterranean and full of pleasure.",
+      copy: "Creamy burrata, sun-ripened tomatoes and warm focaccia make an aperitivo that lives on simplicity and balance. The Rosato Puglia IGP accompanies this moment with freshness, fine fruit and a lightness that masks neither the mildness of the cheese nor the sweetness of the tomatoes. It is precisely this harmony that makes it the ideal wine for the early evening — uncomplicated, Mediterranean and full of pleasure.",
       imageAlt:
         "Burrata with cherry tomatoes, olives and focaccia on a roof terrace in the evening light, beside it a glass of Rosato and the bottle",
       regionLink: {
@@ -161,7 +161,7 @@ const rosatoPuglia = {
     },
     {
       q: "Does Rosato work as an aperitivo?",
-      a: "It is practically made for it: well chilled at 12 to 14 °C it is the classic before dinner. It accompanies antipasti, simple first courses and main courses of oily fish or white meat just as beautifully.",
+      a: "It is practically made for it: well chilled at 12 to 14 °C it is the classic before dinner. It accompanies antipasti, simple primi and main courses of oily fish or white meat just as beautifully.",
     },
     {
       q: "What is the difference between rosato and rosé?",

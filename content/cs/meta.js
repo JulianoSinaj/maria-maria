@@ -46,7 +46,7 @@ export const meta = {
   magazin: {
     title: "Magazín",
     description:
-      "Znalosti o víně, snoubení s jídlem, regiony a příběhy ze světa Maria Maria — inspirace pro další chvíli potěšení.",
+      "Znalosti o víně, snoubení s jídlem, regiony a příběhy ze světa Maria Maria — inspirace pro další chvíli požitku.",
     keywords: [
       "vinařský magazín",
       "znalosti o víně",

@@ -54,7 +54,7 @@ const rosatoPuglia = {
     {
       kicker: "Gusto",
       title: "Fresco, equilibrato, elegantemente fruttato",
-      text: "Al palato fresco e coerente in sé — un rosato il cui frutto resta elegante invece di farsi dolce.",
+      text: "Al palato fresco e armonico — un rosato il cui frutto resta elegante invece di farsi dolce.",
       artwork: {
         alt: "Bottiglia di Rosato Negroamaro IGP Salento di Maria Maria in cantina",
         medium: "In cantina",
@@ -108,7 +108,7 @@ const rosatoPuglia = {
   pairing: {
     scene: {
       dish: "Burrata con pomodori e focaccia",
-      copy: "Burrata cremosa, pomodori maturati al sole e focaccia calda sono un aperitivo che vive di semplicità ed equilibrio. Il Rosato Puglia IGP accompagna questo momento con freschezza, frutto fine e una leggerezza che non copre né la dolcezza del formaggio né quella dei pomodori. È proprio questa armonia a renderlo il vino ideale per la prima sera — immediato, mediterraneo e pieno di piacere.",
+      copy: "Burrata cremosa, pomodori maturati al sole e focaccia calda sono un aperitivo che vive di semplicità ed equilibrio. Il Rosato Puglia IGP accompagna questo momento con freschezza, frutto fine e una leggerezza che non copre né la delicatezza del formaggio né la dolcezza dei pomodori. È proprio questa armonia a renderlo il vino ideale per le prime ore della sera — immediato, mediterraneo e pieno di piacere.",
       imageAlt:
         "Burrata con pomodorini, olive e focaccia su una terrazza nella luce della sera, accanto un calice di Rosato e la bottiglia",
       regionLink: {
@@ -169,7 +169,7 @@ const rosatoPuglia = {
     },
     {
       q: "Che cosa significa «IGP Salento»?",
-      a: "IGP sta per «Indicazione Geografica Protetta», l'indicazione geografica protetta. Le uve provengono dal Salento, la parte più meridionale della Puglia.",
+      a: "IGP sta per «Indicazione Geografica Protetta». Le uve provengono dal Salento, la parte più meridionale della Puglia.",
     },
   ],
 

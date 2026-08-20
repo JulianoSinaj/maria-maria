@@ -24,7 +24,7 @@ export const weine = {
     cta: "Scopri gli abbinamenti",
     ctaAria: "Vai agli abbinamenti consigliati nel magazine",
     moments: {
-      aperitivo: { title: "Aperitivo", text: "Leggero, fresco e generoso." },
+      aperitivo: { title: "Aperitivo", text: "Leggero, fresco e appagante." },
       dinner: { title: "Cena", text: "Compagni eleganti per piatti speciali." },
       friends: { title: "Amici", text: "Per belle conversazioni e serate indimenticabili." },
     },
@@ -53,10 +53,10 @@ export const weine = {
   faq: {
     eyebrow: "Domande frequenti",
     title: "Quale vino",
-    titleAccent: "fa per voi?",
+    titleAccent: "fa per te?",
     description:
-      "Un orientamento per la vostra scelta — dal colore all'occasione fino al regalo giusto. Ogni risposta vi avvicina di un passo alla bottiglia giusta.",
-    footerLabel: "Volete un consiglio personale? Scriveteci",
+      "Un orientamento per la tua scelta — dal colore all'occasione fino al regalo giusto. Ogni risposta ti avvicina di un passo alla bottiglia giusta.",
+    footerLabel: "Vuoi un consiglio personale? Scrivici",
   },
 };
 

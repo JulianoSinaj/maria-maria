@@ -20,7 +20,7 @@ const ilBianco = {
   colorMoment: {
     kicker: "Il colore",
     lines: ["Giallo paglierino.", "Chiaro e quieto."],
-    text: "Nel calice il Bianco si presenta giallo paglierino e limpido — un bianco la cui quiete si vede prima ancora di annusarla.",
+    text: "Nel calice il Bianco si presenta giallo paglierino e limpido — un bianco la cui quiete si vede prima ancora di annusarlo.",
     swatches: [
       { label: "Paglia chiara" },
       { label: "Giallo paglierino" },
@@ -70,7 +70,7 @@ const ilBianco = {
     { label: "Vendemmia", value: "Fine settembre / inizio ottobre" },
     {
       label: "Vinificazione",
-      value: "Pressatura soffice e delicata dei grappoli interi. Seguono due anni di affinamento in silo d'acciaio.",
+      value: "Pressatura soffice e delicata dei grappoli interi. Seguono due anni di affinamento in serbatoio d'acciaio.",
     },
     { label: "Affinamento", value: "2 anni in acciaio" },
     { label: "Gradazione alcolica", value: "13,0 % vol." },
@@ -169,14 +169,14 @@ const ilBianco = {
     },
     {
       q: "Che cosa significa «Campania Bianco IGP»?",
-      a: "IGP sta per «Indicazione Geografica Protetta», l'indicazione geografica protetta. Le uve provengono dalla regione Campania, nel Sud Italia.",
+      a: "IGP sta per «Indicazione Geografica Protetta». Le uve provengono dalla regione Campania, nel Sud Italia.",
     },
   ],
 
   similar: {
     kicker: "Scopri vini simili",
     title: "Se ti piace il Bianco",
-    trait: "che portano la stessa scrittura luminosa: freschi, eleganti, equilibrati.",
+    trait: "che portano la stessa firma luminosa: freschi, eleganti, equilibrati.",
   },
 
   cta: {

@@ -103,7 +103,7 @@ export const legal = {
         title: "4. Objednávky v e-shopu",
         body: [
           "Pro vyřízení objednávek zpracováváme údaje nezbytné k uzavření smlouvy, doručení a platbě (jméno, adresa, e-mail, platební údaje). Právním základem je čl. 6 odst. 1 písm. b GDPR.",
-          "Předání probíhá pouze poskytovatelům zapojeným do vyřízení (např. přepravci a poskytovatelé platebních služeb) a vždy jen v nezbytném rozsahu.",
+          "Údaje předáváme pouze poskytovatelům služeb zapojeným do vyřízení objednávky (např. přepravcům a poskytovatelům platebních služeb) a vždy jen v nezbytném rozsahu.",
         ],
       },
       {

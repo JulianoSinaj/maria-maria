@@ -58,7 +58,7 @@ export const magazin = {
     description:
       "Don't choose the wine first, choose the moment — pick your occasion and Maria Maria shows you the wine that fits.",
     toWine: "To the wine",
-    alsoFits: "Also fitting",
+    alsoFits: "Also a good match",
     cards: {
       aperitivo: {
         anlass: "Aperitivo",
@@ -93,7 +93,7 @@ export const magazin = {
       grillabend: {
         anlass: "Grill night",
         dish: "Involtini · Rosemary · Grilled vegetables",
-        caption: "Aglianico for the grill night – meat rolls and rosemary",
+        caption: "Aglianico for the grill night – involtini and rosemary",
         hints: {
           "primitivo-salento": "Bombette from the grill",
           "primitivo-14-5": "Orecchiette with braciole ragù",
@@ -146,7 +146,7 @@ export const magazin = {
       },
       temperature: {
         kicker: "Kitchen knowledge",
-        question: "How cold may a red wine be?",
+        question: "How cold can red wine be?",
         answer:
           "Cooler than you think. 16–18 °C — cellar, not living room. Twenty minutes in the fridge before opening and the wine turns suddenly precise.",
       },
@@ -162,7 +162,7 @@ export const magazin = {
   interviewEmpty: {
     title: "The first conversations are taking shape.",
     text: "We visit winemakers, cellar masters and sommeliers in their vineyards and cellars — and bring their answers here: about soils and vintages, about taste, craft and the people behind every bottle.",
-    badge: "To be read here soon",
+    badge: "Coming soon",
   },
 
   wines: {
@@ -175,11 +175,11 @@ export const magazin = {
 
   faq: {
     eyebrow: "Wine knowledge",
-    title: "Frequent questions from",
+    title: "Frequently asked questions about",
     titleAccent: "wine knowledge.",
     description:
       "The evergreens around temperature, glass, storage and origin classifications — answered from the data sheets of our wines, without the jargon.",
-    footerLabel: "Your question is missing? Write to us",
+    footerLabel: "Still have a question? Write to us",
   },
 };
 

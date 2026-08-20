@@ -18,7 +18,7 @@ export const legal = {
   shell: {
     eyebrow: "Informazioni legali",
     updatedLabel: "Aggiornato:",
-    updated: "Luglio 2026",
+    updated: "luglio 2026",
     contactPre: "Domande in merito? Scrivici quando vuoi tramite la",
     contactLink: "pagina dei contatti",
     contactMid: "oppure a",
@@ -88,7 +88,7 @@ export const legal = {
       {
         title: "2. Raccolta e conservazione dei dati personali",
         body: [
-          "Durante la visita di questo sito il server registra automaticamente informazioni tecniche (ad es. indirizzo IP, data e ora dell'accesso, pagina richiesta, tipo di browser). Questi dati servono esclusivamente a garantire un funzionamento privo di disturbi e non vengono combinati con altre fonti di dati.",
+          "Durante la visita di questo sito il server registra automaticamente informazioni tecniche (ad es. indirizzo IP, data e ora dell'accesso, pagina richiesta, tipo di browser). Questi dati servono esclusivamente a garantire il regolare funzionamento del sito e non vengono combinati con altre fonti di dati.",
           "La base giuridica è l'art. 6 par. 1 lett. f GDPR (legittimo interesse alla fornitura sicura del sito).",
         ],
       },

@@ -14,9 +14,9 @@
 export const kontakt = {
   hero: {
     eyebrow: "Contatti · Consulenza vini per Düsseldorf & NRW",
-    title: "Il vino per il vostro momento.",
+    title: "Il vino per il tuo momento.",
     titleSecond: "Scelto personalmente.",
-    text: "Per ristorazione, distribuzione, eventi e occasioni speciali. Conoscete Maria Maria e trovate insieme a noi i vini giusti per il vostro concept, i vostri ospiti o la vostra occasione.",
+    text: "Per ristorazione, distribuzione, eventi e occasioni speciali. Conosci Maria Maria e trova insieme a noi i vini giusti per il tuo concept, i tuoi ospiti o la tua occasione.",
     ctaPrimary: "Richiedi una consulenza",
     ctaSecondary: "Prenota una degustazione",
     promise: "Risposta personale entro 1–2 giorni lavorativi.",
@@ -32,69 +32,69 @@ export const kontakt = {
   },
 
   intents: {
-    title: "Perché volete contattarci?",
-    intro: "Scegliete l'occasione che corrisponde meglio al vostro progetto.",
+    title: "Perché vuoi contattarci?",
+    intro: "Scegli l'occasione che corrisponde meglio al tuo progetto.",
     items: {
       gastronomie: {
         title: "Ristorazione & gastronomia",
-        text: "Volete proporre Maria Maria nel vostro ristorante, caffè, wine bar o negozio gourmet? Insieme troviamo una selezione adatta al vostro concept, alla vostra cucina e ai vostri ospiti.",
+        text: "Vuoi proporre Maria Maria nel tuo ristorante, caffè, wine bar o negozio gourmet? Insieme troviamo una selezione adatta al tuo concept, alla tua cucina e ai tuoi ospiti.",
         cta: "Richiesta ristorazione",
       },
       handel: {
         title: "Distribuzione & rivendita",
-        text: "Volete inserire Maria Maria nel vostro assortimento? Parliamone insieme: selezione dei vini, quantità e modalità di una collaborazione personale.",
+        text: "Vuoi inserire Maria Maria nel tuo assortimento? Parliamone insieme: selezione dei vini, quantità e modalità di una collaborazione personale.",
         cta: "Richiesta partnership",
       },
       event: {
         title: "Eventi & occasioni speciali",
-        text: "Da eventi aziendali e convention fino a matrimoni, compleanni e feste private: vi consigliamo nella scelta dei vini adatti all'occasione, al menù e al numero di ospiti.",
+        text: "Da eventi aziendali e convention fino a matrimoni, compleanni e feste private: ti consigliamo nella scelta dei vini adatti all'occasione, al menù e al numero di ospiti.",
         cta: "Richiesta vini per eventi",
       },
       verkostung: {
         title: "Degustazione & selezione su misura",
-        text: "Conoscete Maria Maria nel bicchiere. Durante una degustazione personale scoprite i vostri preferiti; poi componiamo insieme la vostra selezione su misura.",
+        text: "Conosci Maria Maria nel bicchiere. Durante una degustazione personale scopri i tuoi preferiti; poi componiamo insieme la tua selezione su misura.",
         cta: "Prenota una degustazione",
       },
     },
   },
 
   process: {
-    title: "Ecco come troviamo il vostro vino",
+    title: "Ecco come troviamo il tuo vino",
     steps: [
       {
-        title: "Ci raccontate il vostro progetto",
-        text: "Ristorante, assortimento, evento, degustazione o occasione speciale: più conosciamo il vostro progetto, più mirata sarà la consulenza.",
+        title: "Ci racconti il tuo progetto",
+        text: "Ristorante, assortimento, evento, degustazione o occasione speciale: più conosciamo il tuo progetto, più mirata sarà la consulenza.",
       },
       {
-        title: "Vi consigliamo di persona",
-        text: "Parliamo dei vostri desideri e, se lo desiderate, organizziamo una degustazione a Düsseldorf e dintorni, per farvi conoscere i vini di persona.",
+        title: "Ti consigliamo di persona",
+        text: "Parliamo dei tuoi desideri e, se lo desideri, organizziamo una degustazione a Düsseldorf e dintorni, per farti conoscere i vini di persona.",
       },
       {
         title: "Scegliamo insieme",
-        text: "Dai vostri preferiti nasce una selezione adatta al vostro concept, ai vostri ospiti, al vostro menù o alla vostra occasione.",
+        text: "Dai tuoi preferiti nasce una selezione adatta al tuo concept, ai tuoi ospiti, al tuo menù o alla tua occasione.",
       },
     ],
     closing:
-      "Dalla prima richiesta fino alla selezione giusta vi accompagniamo personalmente.",
+      "Dalla prima richiesta fino alla selezione giusta ti accompagniamo personalmente.",
   },
 
   bridge: {
     title: "Il vino accompagna i momenti che si ricordano.",
     text: "A cena a casa, al tavolo del ristorante, a un evento aziendale o a una festa speciale: Maria Maria unisce persone, piacere e vini italiani di carattere.",
-    claim: "La vostra selezione. La vostra occasione. I nostri vini.",
+    claim: "La tua selezione. La tua occasione. I nostri vini.",
     imageAlt:
       "Vino Maria Maria su una tavola apparecchiata per cene e occasioni speciali.",
   },
 
   form: {
-    title: "Raccontateci il vostro progetto.",
+    title: "Raccontaci il tuo progetto.",
     intro:
-      "Più conosciamo la vostra occasione, meglio possiamo consigliarvi. Scegliete prima il tema: dopo mostriamo solo i campi davvero rilevanti per la vostra richiesta.",
+      "Più conosciamo la tua occasione, meglio possiamo consigliarti. Scegli prima il tema: dopo mostriamo solo i campi davvero rilevanti per la tua richiesta.",
     hints: [
       { title: "Per eventi", text: "data, numero di ospiti, tipo di evento" },
       { title: "Per ristorazione/distribuzione", text: "tipo di attività, selezione desiderata" },
     ],
-    trust: "Personali. Sinceri. Con passione per il vino.",
+    trust: "Di persona. Con sincerità. Con passione per il vino.",
 
     intent: {
       label: "Di cosa si tratta?",
@@ -108,12 +108,12 @@ export const kontakt = {
         sonstiges: "Altro",
       },
     },
-    name: { label: "Nome", placeholder: "Il vostro nome" },
-    email: { label: "E-mail", placeholder: "vostra@email.it" },
+    name: { label: "Nome", placeholder: "Il tuo nome" },
+    email: { label: "E-mail", placeholder: "tua@email.it" },
     company: { label: "Azienda / location", placeholder: "es. ristorante, hotel, distribuzione" },
     city: { label: "Città / CAP", placeholder: "es. Düsseldorf, 40210" },
     phone: { label: "Telefono (facoltativo)", placeholder: "es. 0176 12345678" },
-    message: { label: "Messaggio", placeholder: "Descrivete brevemente il vostro progetto…" },
+    message: { label: "Messaggio", placeholder: "Descrivi brevemente il tuo progetto…" },
 
     conditional: {
       eventDate: { label: "Data / data desiderata" },
@@ -152,13 +152,13 @@ export const kontakt = {
         options: {
           weinhandel: "Enoteca",
           feinkost: "Gastronomia",
-          fachhandel: "Dettaglio specializzato",
+          fachhandel: "Negozio specializzato",
           sonstiges: "Altro",
         },
       },
       selection: {
         label: "Interesse / selezione desiderata",
-        placeholder: "es. rossi pugliesi, cassa degustazione",
+        placeholder: "es. rossi pugliesi, confezione degustazione",
       },
       context: { label: "Occasione / contesto", placeholder: "es. abbinamento al menù, regalo" },
       guestsOptional: { label: "Numero di ospiti (facoltativo)", placeholder: "es. 12" },
@@ -168,26 +168,26 @@ export const kontakt = {
       },
     },
 
-    privacyPre: "Ho letto l'",
-    privacyLink: "informativa sulla privacy",
+    privacyPre: "Ho letto",
+    privacyLink: "l'informativa sulla privacy",
     privacyPost: "e acconsento al trattamento dei miei dati per la gestione della mia richiesta.",
     required: "campo obbligatorio",
     submit: "Invia richiesta",
     sending: "Invio in corso…",
 
     errors: {
-      intent: "Indicate di cosa si tratta.",
-      name: "Indicate il vostro nome.",
-      email: "Indicate il vostro indirizzo e-mail.",
-      emailInvalid: "Indicate un indirizzo e-mail valido.",
-      message: "Descrivete brevemente il vostro progetto.",
-      privacy: "Accettate l'informativa sulla privacy.",
-      send: "Non è stato possibile inviare la richiesta. Riprovate.",
+      intent: "Indica di cosa si tratta.",
+      name: "Indica il tuo nome.",
+      email: "Indica il tuo indirizzo e-mail.",
+      emailInvalid: "Indica un indirizzo e-mail valido.",
+      message: "Descrivi brevemente il tuo progetto.",
+      privacy: "Accetta l'informativa sulla privacy.",
+      send: "Non è stato possibile inviare la richiesta. Riprova.",
     },
 
     success: {
-      title: "Grazie per la vostra richiesta.",
-      text: "Vi ricontattiamo personalmente entro 1–2 giorni lavorativi.",
+      title: "Grazie per la tua richiesta.",
+      text: "Ti ricontattiamo personalmente entro 1–2 giorni lavorativi.",
       again: "Nuova richiesta",
     },
   },
@@ -202,29 +202,29 @@ export const kontakt = {
       {
         id: "kontakt-verkostung-buchen",
         q: "Come prenoto una degustazione a Düsseldorf?",
-        a: "Scegliete „Degustazione“ nel modulo di contatto e indicateci la data desiderata, il numero indicativo di persone e l'occasione. Concordiamo luogo e formato personalmente con voi e vi rispondiamo entro 1–2 giorni lavorativi con una proposta.",
+        a: "Scegli «Degustazione» nel modulo di contatto e indicaci la data desiderata, il numero indicativo di persone e l'occasione. Concordiamo luogo e formato personalmente con te e ti rispondiamo entro 1–2 giorni lavorativi con una proposta.",
       },
       {
         id: "kontakt-sortiment",
         q: "Posso inserire Maria Maria nel mio assortimento?",
-        a: "Sì. Scegliete „Distribuzione & rivendita“ e raccontateci brevemente della vostra attività, della vostra sede e della selezione desiderata. Poi discutiamo personalmente i passi successivi.",
+        a: "Sì. Scegli «Distribuzione & rivendita» e raccontaci brevemente della tua attività, della tua sede e della selezione desiderata. Poi discutiamo personalmente i passi successivi.",
         link: { label: "Vedi l'assortimento completo", href: "/unsere-weine" },
       },
       {
         id: "kontakt-firmenveranstaltungen",
         q: "Offrite vini per eventi aziendali?",
-        a: "Sì. Per eventi aziendali, convention e occasioni speciali vi consigliamo nella scelta dei vini. Indicateci data, numero di ospiti, luogo e carattere dell'evento, così possiamo valutare la vostra richiesta in modo mirato.",
+        a: "Sì. Per eventi aziendali, convention e occasioni speciali ti consigliamo nella scelta dei vini. Indicaci data, numero di ospiti, luogo e carattere dell'evento, così possiamo valutare la tua richiesta in modo mirato.",
       },
       {
         id: "kontakt-gastronomie",
         q: "Posso proporre i vini Maria Maria nel mio ristorante o negozio gourmet?",
-        a: "Sì. Scegliete „Ristorazione & gastronomia“ e raccontateci brevemente della vostra attività, della vostra cucina o del vostro concept e della vostra sede. Insieme troviamo una selezione adatta ai vostri ospiti.",
+        a: "Sì. Scegli «Ristorazione & gastronomia» e raccontaci brevemente della tua attività, della tua cucina o del tuo concept e della tua sede. Insieme troviamo una selezione adatta ai tuoi ospiti.",
         link: { label: "Scopri origini e abbinamenti", href: "/regionen" },
       },
       {
         id: "kontakt-individuelle-auswahl",
         q: "Come funziona una selezione di vini su misura?",
-        a: "Prima ci raccontate il vostro progetto. Se lo desiderate, conoscete i vini durante una degustazione. Dai vostri preferiti nasce poi una selezione adatta al vostro concept, al vostro menù o alla vostra occasione.",
+        a: "Prima ci racconti il tuo progetto. Se lo desideri, conosci i vini durante una degustazione. Dai tuoi preferiti nasce poi una selezione adatta al tuo concept, al tuo menù o alla tua occasione.",
         link: { label: "Tutti i vini in sintesi", href: "/unsere-weine" },
       },
       {

@@ -25,7 +25,7 @@ export const home = {
       },
       origin: {
         title: "Un'origine con una firma",
-        text: "Lavoriamo con cantine familiari selezionate in tutta Italia. Regione, vitigno e le persone dietro al vino danno a ogni bottiglia una storia credibile e degna di essere raccontata.",
+        text: "Lavoriamo con cantine familiari selezionate in Italia. Regione, vitigno e le persone dietro al vino danno a ogni bottiglia una storia credibile e degna di essere raccontata.",
       },
       occasion: {
         title: "Fatti per i momenti di piacere",
@@ -54,7 +54,7 @@ export const home = {
       "Da allora il nostro viaggio va dai filari assolati del Salento ai suoli vulcanici della Campania, fino alla sponda meridionale del Lago di Garda — ogni bottiglia una tappa, ogni regione una lingua diversa.",
     ],
     journey: ["Salento", "Puglia", "Campania", "Lago di Garda"],
-    quote: "„Italian wine, personal selection, share the pleasure.“",
+    quote: "«Italian wine, personal selection, share the pleasure.»",
     cta: "Magazine",
   },
 
@@ -62,7 +62,7 @@ export const home = {
     eyebrow: "Origine",
     title: "Dove i nostri vini sono di casa",
     description:
-      "Suolo, luce e clima segnano ogni uva – alla fine nel calice si assapora il paesaggio.",
+      "Suolo, luce e clima plasmano ogni uva – alla fine nel calice si assapora il paesaggio.",
     cta: "Tutte le regioni",
     detailCta: "Scopri di più",
     items: {
@@ -89,9 +89,9 @@ export const home = {
 
   shopBand: {
     eyebrow: "Lo shop ufficiale",
-    title: "Pronti per il gusto che",
-    titleAccent: "vi ispira?",
-    text: "Scoprite e ordinate i nostri vini comodamente online – direttamente dalla cantina a casa vostra.",
+    title: "Pronto per il gusto che",
+    titleAccent: "ti ispira?",
+    text: "Scopri e ordina i nostri vini comodamente online – direttamente dalla cantina a casa tua.",
     primary: "Vai allo shop",
     secondary: "Contattaci",
   },
@@ -101,7 +101,7 @@ export const home = {
     title: "Maria Maria,",
     titleAccent: "in breve.",
     description:
-      "Tutto quello che volete sapere sui nostri vini, sull'acquisto e su una possibile collaborazione con Maria Maria.",
+      "Tutto quello che vuoi sapere sui nostri vini, sull'acquisto e su una possibile collaborazione con Maria Maria.",
     footerNote: "Altre domande o interesse per una collaborazione?",
     footerLabel: "Contattaci di persona",
   },

@@ -69,7 +69,7 @@ const ilRossoAglianico = {
         "Around 12 days of maceration on the skins, fermentation partly with indigenous yeast starters. Malolactic fermentation carried out entirely in French oak.",
     },
     { label: "Ageing", value: "6 months in French oak barrels" },
-    { label: "Alcohol content", value: "14.00% vol." },
+    { label: "Alcohol content", value: "14.00 % vol." },
     { label: "Serving temperature", value: "approx. 16–18 °C" },
     { label: "Volume" },
     { label: "Note", value: "Contains sulphites" },

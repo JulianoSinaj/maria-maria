@@ -51,7 +51,7 @@ export const common = {
       placeholder: "Inserisci il tuo indirizzo e-mail",
       submit: "Iscriviti",
     },
-    tagline: "Vini italiani di boutique per momenti di piacere scelti con cura.",
+    tagline: "Vini boutique italiani per momenti di piacere scelti con cura.",
     exploreHeading: "Scopri",
     explore: {
       wines: "I nostri vini",
@@ -146,7 +146,7 @@ export const common = {
     empty: {
       title: "Ancora tutto",
       titleAccent: "vuoto.",
-      text: "Scopri i nostri vini di boutique e le confezioni degustazione – il tuo momento Maria ti aspetta.",
+      text: "Scopri i nostri vini boutique e le confezioni degustazione – il tuo momento Maria ti aspetta.",
       cta: "Scopri i vini",
     },
     success: {
@@ -245,7 +245,7 @@ export const common = {
 
   winePage: {
     atAGlance: "In sintesi",
-    factsHeading: "L'essenziale {wine} in sintesi",
+    factsHeading: "L'essenziale {wine} a colpo d'occhio",
     vintage: "Annata",
     limitedEdition: "Edizione limitata · solo",
     shopEyebrow: "Lo shop ufficiale",

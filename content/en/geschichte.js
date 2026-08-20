@@ -64,7 +64,7 @@ export const geschichte = {
       title: "Indigenous grape varieties. Unmistakable origin.",
       paragraphs: [
         "With Campania, the story widens to a wine landscape defined by altitude, microclimates and indigenous grape varieties.",
-        "Greco di Tufo DOCG, Falanghina and Aglianico stand for independent characters and a wine culture rich in tradition.",
+        "Greco di Tufo DOCG, Falanghina and Aglianico stand for characters all their own and a wine culture rich in tradition.",
         "The professional dialogue with oenologist Francesco De Stefano deepens the view of grape varieties, origin and choices.",
       ],
       linkLabel: "Discover Irpinia and its wines",

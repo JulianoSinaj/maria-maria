@@ -102,7 +102,7 @@ export const legal = {
       {
         title: "4. Orders in the online shop",
         body: [
-          "To process orders we handle the data required for contract conclusion, delivery and payment (name, address, email address, payment details). The legal basis is Art. 6 (1) (b) GDPR.",
+          "To fulfil orders we process the data required in order to conclude the contract, deliver the goods and take payment (name, address, email address, payment details). The legal basis is Art. 6 (1) (b) GDPR.",
           "Data is passed on only to the service providers involved in fulfilment (e.g. shipping and payment providers) and only to the extent required in each case.",
         ],
       },
@@ -147,13 +147,13 @@ export const legal = {
       {
         title: "§ 3 Sale to adults only",
         body: [
-          "We sell alcoholic beverages exclusively to persons who have reached the age of 18. By ordering you confirm that you are of legal age. Delivery takes place only against a visual age check by the courier.",
+          "We sell alcoholic beverages exclusively to persons who have reached the age of 18. By ordering you confirm that you are of legal age. Delivery is made only after the courier has carried out a visual age check.",
         ],
       },
       {
         title: "§ 4 Prices and shipping costs",
         body: [
-          "All prices are in euros and include statutory VAT, plus shipping costs. The applicable shipping costs are shown transparently during the order process before the order is placed.",
+          "All prices are in euros and include statutory VAT; shipping costs are added on top. The applicable shipping costs are shown transparently during the order process before the order is placed.",
         ],
       },
       {

@@ -57,7 +57,7 @@ export const kontakt = {
   },
 
   process: {
-    title: "This is how we find your wine",
+    title: "Finding your wine is this simple",
     steps: [
       {
         title: "You tell us what you have in mind",
@@ -72,7 +72,7 @@ export const kontakt = {
         text: "From your favourites comes a selection that suits your concept, your guests, your menu or your occasion.",
       },
     ],
-    closing: "From the first enquiry to the right selection, we accompany you personally.",
+    closing: "From the first enquiry to the right selection, we look after you personally.",
   },
 
   bridge: {
@@ -151,7 +151,7 @@ export const kontakt = {
       },
       selection: {
         label: "Interest / desired selection",
-        placeholder: "e.g. reds from Puglia, tasting case",
+        placeholder: "e.g. reds from Puglia, tasting set",
       },
       context: { label: "Occasion / context", placeholder: "e.g. menu pairing, gift" },
       guestsOptional: { label: "Number of guests (optional)", placeholder: "e.g. 12" },
@@ -194,7 +194,7 @@ export const kontakt = {
       {
         id: "kontakt-verkostung-buchen",
         q: "How do I book a wine tasting in Düsseldorf?",
-        a: "Choose “Tasting” in the contact form and tell us your preferred date, the approximate number of people and the occasion. We agree place and format personally with you and come back within 1–2 working days with a proposal.",
+        a: "Choose “Tasting” in the contact form and tell us your preferred date, the approximate number of people and the occasion. We agree the venue and format with you personally and come back to you within 1–2 working days with a proposal.",
       },
       {
         id: "kontakt-sortiment",

@@ -68,8 +68,8 @@ export const faq = {
       items: [
         {
           id: "reg-apulien-weine",
-          q: "Che cosa segna il carattere dei vini pugliesi?",
-          a: "Molto sole, temperature calde, suoli rossi e calcarei e la vicinanza al mare segnano molti vini della Puglia. A seconda del vitigno e dell'affinamento nascono vini fruttati, speziati e potenti, che possono però risultare molto diversi tra loro.",
+          q: "Che cosa definisce il carattere dei vini pugliesi?",
+          a: "Molto sole, temperature calde, suoli rossi e calcarei e la vicinanza al mare caratterizzano molti vini della Puglia. A seconda del vitigno e dell'affinamento nascono vini fruttati, speziati e potenti, che possono però risultare molto diversi tra loro.",
           link: { label: "Vedi i vini della Puglia", href: "/unsere-weine?region=apulien" },
         },
         {
@@ -116,8 +116,8 @@ export const faq = {
         },
         {
           id: "reg-kampanien-aglianico",
-          q: "Che cos'è l'Aglianico e che stile ha „Il Rosso“?",
-          a: "L'Aglianico è un importante vitigno rosso del Sud Italia. „Il Rosso“ di Maria Maria è 100 % Aglianico – non un uvaggio – e rappresenta uno stile di rosso di carattere, con struttura e profondità speziata.",
+          q: "Che cos'è l'Aglianico e che stile ha «Il Rosso»?",
+          a: "L'Aglianico è un importante vitigno rosso del Sud Italia. «Il Rosso» di Maria Maria è 100 % Aglianico – non un uvaggio – e rappresenta uno stile di rosso di carattere, con struttura e profondità speziata.",
           link: { label: "Scopri Il Rosso", href: "/unsere-weine/il-rosso-aglianico" },
         },
       ],
@@ -186,12 +186,12 @@ export const faq = {
     {
       id: "wissen-lagerung",
       q: "Come si conserva correttamente il vino?",
-      a: "Al fresco, al buio e senza vibrazioni — ideali sono temperature costanti senza forti sbalzi, le bottiglie con tappo di sughero coricate. I nostri vini sono pensati per essere goduti: i consigli di servizio sono su ogni scheda vino, nel capitolo „Il gusto“.",
+      a: "Al fresco, al buio e senza vibrazioni — ideali sono temperature costanti senza forti sbalzi, le bottiglie con tappo di sughero coricate. I nostri vini sono pensati per essere goduti: i consigli di servizio sono su ogni scheda vino, nel capitolo «Il gusto».",
     },
     {
       id: "wissen-docg",
       q: "Che differenza c'è tra DOC, DOCG e IGP?",
-      a: "Sono tre livelli del sistema italiano delle denominazioni: l'IGP (indicazione geografica protetta) è il più ampio, la DOC ovvero DOP (denominazione di origine protetta) è più stretta, la DOCG è il livello più alto — controllata e garantita. Nella nostra collezione si va dal Salento IGP al Greco di Tufo DOCG.",
+      a: "Sono tre livelli del sistema italiano delle denominazioni: l'IGP (indicazione geografica protetta) è la più ampia, la DOC ovvero DOP (denominazione di origine protetta) è più stretta, la DOCG è il livello più alto — controllata e garantita. Nella nostra collezione si va dal Salento IGP al Greco di Tufo DOCG.",
       link: { label: "Scopri la collezione per origine", href: "/unsere-weine" },
     },
     {
@@ -211,7 +211,7 @@ export const faq = {
     {
       id: "shop-versand",
       q: "Quanto è veloce la consegna — e quanto costa la spedizione?",
-      a: "I vini arrivano in 1–3 giorni lavorativi, imballati con eleganza e in sicurezza. Da 69 € di ordine la spedizione è gratuita.",
+      a: "I vini arrivano in 1–3 giorni lavorativi, imballati in modo antiurto ed elegante. Da 69 € di spesa la spedizione è gratuita.",
     },
     {
       id: "shop-international",
@@ -261,7 +261,7 @@ export const faq = {
         {
           id: "kontakt-verkostung-buchen",
           q: "Come posso prenotare una degustazione a Düsseldorf?",
-          a: "Nel modulo di contatto scegli „Richiesta di degustazione“ — potrai indicare direttamente la data desiderata e il numero di ospiti. Ti rispondiamo entro 1–2 giorni lavorativi con una proposta personale.",
+          a: "Nel modulo di contatto scegli «Richiesta di degustazione» — potrai indicare direttamente la data desiderata e il numero di ospiti. Ti rispondiamo entro 1–2 giorni lavorativi con una proposta personale.",
         },
         {
           id: "kontakt-verkostung-ort",
@@ -293,7 +293,7 @@ export const faq = {
         {
           id: "kontakt-haendler",
           q: "Come inserisco i vini Maria Maria nel mio assortimento?",
-          a: "Scegli nel modulo „Richiesta rivenditori“ e raccontaci brevemente del tuo negozio o del tuo locale e della tua zona. Ti rispondiamo personalmente con tutti i dettagli.",
+          a: "Scegli nel modulo «Richiesta rivenditori» e raccontaci brevemente del tuo negozio o del tuo locale e della tua zona. Ti rispondiamo personalmente con tutti i dettagli.",
         },
         {
           id: "kontakt-haendler-finden",
@@ -309,7 +309,7 @@ export const faq = {
         {
           id: "kontakt-presse",
           q: "A chi rivolgo le richieste stampa?",
-          a: "Direttamente a noi: tramite il modulo di contatto (motivo „Stampa e collaborazioni“) o via e-mail a info@maria-maria.de. Ti rispondiamo personalmente.",
+          a: "Direttamente a noi: tramite il modulo di contatto (motivo «Stampa e collaborazioni») o via e-mail a info@maria-maria.de. Ti rispondiamo personalmente.",
         },
         {
           id: "kontakt-kooperationen",

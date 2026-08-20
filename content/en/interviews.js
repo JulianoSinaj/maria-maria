@@ -123,7 +123,7 @@ const interviews = {
           },
           paragraphs: [
             "If Lugana is seen only as a fresh, easily approachable white from Lake Garda, that falls short for Daniele. Such a description overlooks precisely the qualities that make the wine interesting: structure, the ability to develop and a clear territorial identity.",
-            "He would therefore introduce Lugana to a German audience as a white that can mature and evolve. Not as an arbitrary “easy drinking” wine, but as a serious companion at the table – comparable in ambition to the characterful whites many German wine drinkers already appreciate.",
+            "He would therefore introduce Lugana to a German audience as a white that can mature and evolve. Not as just another “easy drinking” wine, but as a serious companion at the table – comparable in ambition to the characterful whites many German wine drinkers already appreciate.",
             "This perspective also changes the moment of enjoyment. The wine need not be confined to the terrace, to summer and to the aperitif. Its acidity, structure and saline tension earn it a firm place at the dining table.",
           ],
           quote:

@@ -23,7 +23,7 @@ const primitivo145 = {
     text: "Nel calice il Primitivo si presenta profondo e impenetrabile — i riflessi violacei sul bordo tradiscono la giovinezza e la forza delle uve baciate dal sole del Salento.",
     swatches: [{ label: "Rubino" }, { label: "Mora scura" }, { label: "Riflesso violaceo" }],
     artwork: {
-      alt: "Dipinto a olio “Roses in a Bowl” di Henri Fantin-Latour: rose nei toni del rubino e del crema su fondo scurissimo",
+      alt: "Dipinto a olio «Roses in a Bowl» di Henri Fantin-Latour: rose nei toni del rubino e del crema su fondo scurissimo",
       videoTitle: "Rubino nel calice",
     },
   },
@@ -106,7 +106,7 @@ const primitivo145 = {
   pairing: {
     scene: {
       dish: "Orecchiette al ragù di braciole",
-      copy: "Le braciole sono involtini di manzo battuti sottili, farciti di pecorino e prezzemolo, che sobbollono per ore nel sugo di pomodoro fino a disfarsi. Il ragù che ne nasce è il piatto della domenica pugliese, e le orecchiette lo raccolgono nelle loro conche. Con i suoi 14,5% vol., il Primitivo porta il peso che una salsa brasata così a lungo richiede. Il grasso della carne lega il suo tannino e lo arrotonda, mentre il frutto scuro tiene testa all’acidità del pomodoro.",
+      copy: "Le braciole sono involtini di manzo battuti sottili, farciti di pecorino e prezzemolo, che sobbollono per ore nel sugo di pomodoro fino a disfarsi. Il ragù che ne nasce è il piatto della domenica pugliese, e le orecchiette lo raccolgono nelle loro conche. Con i suoi 14,5% vol., il Primitivo porta il peso che richiede un sugo di così lunga cottura. Il grasso della carne lega il suo tannino e lo arrotonda, mentre il frutto scuro tiene testa all’acidità del pomodoro.",
       imageAlt:
         "Orecchiette al ragù di braciole in una ciotola, accanto un calice di Primitivo e la bottiglia aperta",
       regionLink: {
@@ -166,8 +166,8 @@ const primitivo145 = {
       link: { label: "Al Primitivo 15,5" },
     },
     {
-      q: "Che cosa significa “Primitivo di Manduria D.O.P.”?",
-      a: "DOP sta per “Denominazione di Origine Protetta”. Il nome è riservato al solo Primitivo prodotto nella zona strettamente delimitata attorno a Manduria, nel Salento pugliese.",
+      q: "Che cosa significa «Primitivo di Manduria D.O.P.»?",
+      a: "DOP sta per «Denominazione di Origine Protetta». Il nome è riservato al solo Primitivo prodotto nella zona strettamente delimitata attorno a Manduria, nel Salento pugliese.",
     },
   ],
 

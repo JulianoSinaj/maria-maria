@@ -89,7 +89,7 @@ export const regionen = {
     title: "Otázky k",
     titleAccent: "původu.",
     description:
-      "Zvolte region a najděte odpovědi k oblastem, odrůdám, chuti a food pairingu – jako orientaci při volbě správného vína.",
+      "Zvolte region a najděte odpovědi na otázky o oblastech, odrůdách, chuti a food pairingu – jako orientaci při volbě vhodného vína.",
     footerLabel: "Objevte food pairingy v magazínu",
   },
 };

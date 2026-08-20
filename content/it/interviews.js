@@ -26,7 +26,7 @@ const interviews = {
     editorial: "Redazione",
     aboutPerson: "L'intervistato",
     continueReading: "Continua a leggere",
-    tasted: "Degustati nel colloquio",
+    tasted: "Degustato nella conversazione",
     inThisConversation: "In questa conversazione",
   },
 
@@ -170,7 +170,7 @@ const interviews = {
         paragraphs: [
           "Che cosa dovrebbe portarsi via il pubblico di Maria Maria dopo questo colloquio? Per Daniele soprattutto una consapevolezza: dietro un Lugana c'è un territorio definito con precisione. Non è un bianco generico del Nord Italia, ma l'espressione di un incontro tra Turbiana, suoli di matrice morenica, clima del lago e lavoro quotidiano.",
           "Vale quindi la pena avvicinarsi al Lugana con la stessa curiosità che si riserva ai grandi bianchi europei. Non perché ogni Lugana debba essere uguale, ma proprio perché origine, vigneto e decisioni possono rendere visibili le differenze.",
-          "Anche il suo ruolo futuro in Maria Maria Daniele lo intende in questo senso. Vuole portare lo sguardo di un produttore che vive il territorio ogni giorno – e che perciò non può parlare soltanto di vino, ma delle persone e delle decisioni che gli stanno dietro.",
+          "Anche il suo ruolo futuro in Maria Maria, Daniele lo intende in questo senso. Vuole portare lo sguardo di un produttore che vive il territorio ogni giorno – e che perciò può parlare non soltanto di vino, ma anche delle persone e delle decisioni che gli stanno dietro.",
           "Per Maria Maria il cerchio si chiude così: l'etichetta rende un vino riconoscibile. Il suo significato nasce però dove suolo, clima, vitigno e persone si incontrano.",
         ],
       },
@@ -188,8 +188,8 @@ const interviews = {
           src: "/img/magazin/interviews/lugana-vino-bianco-magazine-cutout.png",
           alt: "Bottiglia di Lugana DOC di Maria Maria",
         },
-        heading: "Scoprite il Lugana DOC di Maria Maria",
-        text: "Scoprite il Lugana DOC di Maria Maria – vinificato da Daniele Malavasi a Pozzolengo. Un vino che tiene in equilibrio origine, vitigno e artigianalità.",
+        heading: "Scopri il Lugana DOC di Maria Maria",
+        text: "Scopri il Lugana DOC di Maria Maria – vinificato da Daniele Malavasi a Pozzolengo. Un vino che tiene in equilibrio origine, vitigno e artigianalità.",
         cta: "Vai al Lugana",
       },
 
@@ -198,7 +198,7 @@ const interviews = {
           id: "region",
           icon: "region",
           title: "Regione Lago di Garda",
-          text: "Scoprite il terroir.",
+          text: "Scopri il terroir.",
           href: "/regionen#garda",
         },
         {
@@ -212,7 +212,7 @@ const interviews = {
           id: "interviews",
           icon: "interviews",
           title: "Altre interviste",
-          text: "Leggete tutti i colloqui.",
+          text: "Leggi tutte le conversazioni.",
           href: "/magazin#interviste",
         },
       ],
@@ -224,7 +224,7 @@ const interviews = {
         teaser:
           "Turbiana, suoli argillosi di origine morenica e il clima del Lago di Garda – e il motivo per cui a tavola il Lugana sa fare più dell'aperitivo.",
         meta: "Intervista · 6 min di lettura",
-        cta: "Leggi il colloquio",
+        cta: "Leggi la conversazione",
       },
 
       teaserRegion: {
@@ -235,7 +235,7 @@ const interviews = {
           "Cosa rende così speciale questo bianco del Garda? Daniele Malavasi racconta i suoli morenici, la Turbiana, il clima del lago — e il Lugana che dalla sua cantina è arrivato nella collezione Maria Maria.",
         ],
         pull: "Il vino deve raccontare il luogo più della tecnica di cantina.",
-        ctaPrimary: "Leggi il colloquio",
+        ctaPrimary: "Leggi la conversazione",
         ctaSecondary: "Scopri il Lugana",
       },
     },

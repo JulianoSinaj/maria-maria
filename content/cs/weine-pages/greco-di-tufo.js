@@ -110,7 +110,7 @@ const grecoDiTufo = {
       dish: "Spaghetti alle Vongole",
       copy: "Spaghetti alle vongole žijí z čistoty: mušle, olivový olej, česnek a závan mořského aroma. Právě v tom spočívá síla Greco di Tufo DOCG. Jeho minerální napětí, svěžest a přesná struktura zachytí slanou eleganci pokrmu, aniž by se draly do popředí. Vzniká tak spojení, které dává obzvlášť autenticky pocítit pobřeží Kampánie.",
       imageAlt:
-        "Spaghetti alle vongole na talíři v tratorii, vedle sklenka Greco di Tufo a láhev",
+        "Spaghetti alle vongole na talíři v trattorii, vedle sklenka Greco di Tufo a láhev",
       regionLink: {
         label: "Objevte více o Kampánii",
       },

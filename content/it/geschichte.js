@@ -26,7 +26,7 @@ export const geschichte = {
       "La Maria più grande rappresenta Lizzano, la famiglia, l'ospitalità e una cultura del vino che si vive intorno alla tavola.",
       "La Maria più giovane porta questa visione nel presente: con uno sguardo contemporaneo e una selezione personale di vini italiani.",
     ],
-    quote: "„Ciò che resta si tramanda con uno sguardo nuovo.“",
+    quote: "«Ciò che resta si tramanda con uno sguardo nuovo.»",
   },
 
   nav: {
@@ -42,7 +42,7 @@ export const geschichte = {
         "Dall'incontro tra due generazioni è nata una selezione in cui ogni bottiglia rappresenta un luogo, un vitigno e una scelta consapevole.",
       ],
       quote:
-        "„Il vino comincia dalla sua origine – e trova il suo posto dove le persone lo condividono.“",
+        "«Il vino comincia dalla sua origine – e trova il suo posto dove le persone lo condividono.»",
       alt: "Tavola apparecchiata con calici e una bottiglia originale Maria Maria",
       micro: "La tavola lunga",
       caption: "Radici italiane, portate avanti in Germania dal 2019.",
@@ -64,7 +64,7 @@ export const geschichte = {
       title: "Vitigni autoctoni. Un'origine inconfondibile.",
       paragraphs: [
         "Con la Campania la storia si allarga a un paesaggio del vino segnato da altitudini, microclimi e vitigni autoctoni.",
-        "Greco di Tufo DOCG, Falanghina e Aglianico rappresentano caratteri indipendenti e una cultura del vino ricca di tradizione.",
+        "Greco di Tufo DOCG, Falanghina e Aglianico rappresentano personalità ben distinte e una cultura del vino ricca di tradizione.",
         "Il dialogo con l'enologo Francesco De Stefano approfondisce lo sguardo su vitigni, origine e scelte.",
       ],
       linkLabel: "Scopri l'Irpinia e i suoi vini",
@@ -77,7 +77,7 @@ export const geschichte = {
       title: "Un'eleganza che nasce dal luogo",
       paragraphs: [
         "Sulla sponda meridionale del Lago di Garda Maria Maria incontra un'altra espressione della cultura del vino italiana.",
-        "Su suoli morenici calcarei e ricchi di argilla, sotto l'influsso del clima mite del lago, dal vitigno Turbiana nasce un vino di chiarezza, freschezza e struttura elegante. Il Lugana DOC aggiunge alla selezione un'origine il cui carattere non ha bisogno di alzare la voce per restare nella memoria.",
+        "Su suoli morenici calcarei e ricchi di argilla, sotto l'influsso del clima mite del lago, dal vitigno Turbiana nasce un vino nitido, fresco e di elegante struttura. Il Lugana DOC aggiunge alla selezione un'origine il cui carattere non ha bisogno di alzare la voce per restare nella memoria.",
       ],
       linkLabel: "Scopri il Lugana e il Lago di Garda",
       alt: "Vigneti della zona del Lugana sul Lago di Garda",
@@ -98,7 +98,7 @@ export const geschichte = {
 
   today: {
     label: "La selezione",
-    title: "Che cosa porta un vino da Maria Maria",
+    title: "Che cosa fa entrare un vino nella selezione Maria Maria",
     intro:
       "A determinare la selezione non sono una singola città né una tendenza passeggera. Contano l'origine, il carattere e il modo in cui un vino accompagna il momento a tavola.",
   },

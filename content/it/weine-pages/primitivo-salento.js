@@ -108,7 +108,7 @@ const primitivoSalento = {
   pairing: {
     scene: {
       dish: "Bombette della Valle d'Itria",
-      copy: "Le bombette sono piccoli involtini di capocollo di maiale, farciti con caciocavallo e pepe, grigliati sulla brace in macelleria. Il formaggio si scioglie all'interno, all'esterno la carne diventa scura e croccante. Un piatto senza cerimonie — ed è esattamente per questo che è fatto questo Primitivo. Regge l'intensità, ma resta abbastanza morbido da non entrarvi in competizione. La sapidità del formaggio stagionato porta chiaramente avanti il suo frutto scuro.",
+      copy: "Le bombette sono piccoli involtini di capocollo di maiale, farciti con caciocavallo e pepe, grigliati sulla brace in macelleria. Il formaggio si scioglie all'interno, all'esterno la carne diventa scura e croccante. Un piatto senza cerimonie — ed è esattamente per questo che è fatto questo Primitivo. Regge l'intensità, ma resta abbastanza morbido da non entrare in competizione con essa. La sapidità del formaggio stagionato mette nettamente in primo piano il suo frutto scuro.",
       imageAlt:
         "Bombette grigliate della Valle d'Itria su un tagliere di legno, accanto un calice di Primitivo e la bottiglia aperta",
       regionLink: {
@@ -157,7 +157,7 @@ const primitivoSalento = {
     },
     {
       q: "Che cosa significa Salento IGP?",
-      a: "IGP sta per «Indicazione Geografica Protetta», l'indicazione geografica protetta. Il Salento è la penisola del sud della Puglia — il tacco dello stivale italiano.",
+      a: "IGP sta per «Indicazione Geografica Protetta». Il Salento è la penisola del sud della Puglia — il tacco dello stivale italiano.",
     },
     {
       q: "Che cosa distingue il Primitivo Salento dal Primitivo di Manduria?",

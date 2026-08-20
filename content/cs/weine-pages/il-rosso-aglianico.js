@@ -20,7 +20,7 @@ const ilRosso = {
   colorMoment: {
     kicker: "Barva",
     lines: ["Hluboce rubínová.", "S granátovým okrajem."],
-    text: "Ve sklenici stojí Il Rosso hustě a tmavě — víno, na němž je vidět kampánské slunce i šest měsíců ve francouzském dřevě.",
+    text: "Ve sklenici působí Il Rosso hustě a temně — víno, na němž je vidět kampánské slunce i šest měsíců ve francouzském dřevě.",
     swatches: [
       { label: "Rubínová" },
       { label: "Tmavá višeň" },
@@ -99,7 +99,7 @@ const ilRosso = {
       { label: "Region", value: "Kampánie" },
       { label: "Klasifikace", value: "Campania Rosso I.G.P." },
       { label: "Sběr", value: "Konec října, ručně" },
-      { label: "Zrání", value: "6 měsíců francouzský dub" },
+      { label: "Zrání", value: "6 měsíců ve francouzském dubu" },
     ],
     photoAlt: "Vinice nad Neapolským zálivem s výhledem na Vesuv",
     chip: { subtitle: "Kampánie · Itálie" },
@@ -153,7 +153,7 @@ const ilRosso = {
   faq: [
     {
       q: "Jak chutná Il Rosso Aglianico od Maria Maria?",
-      a: "Vtahující červené víno s výraznými tóny amareny, ostružiny a sušené švestky, s lehkým závanem sladkého koření a se závěrem s příjemně koncentrovaným ovocem.",
+      a: "Podmanivé červené víno s výraznými tóny amareny, ostružiny a sušené švestky, s lehkým závanem sladkého koření a se závěrem s příjemně koncentrovaným ovocem.",
     },
     {
       q: "Která odrůda utváří Il Rosso?",

@@ -60,8 +60,8 @@ const interviews = {
       },
 
       intro: [
-        "Některým vínům nelze porozumět jen přes odrůdu nebo etiketu. Porozumíme jim, když poznáme místo, kde vznikají – a lidi, kteří tam každý den rozhodují. Pro Danieleho Malavasiho proto příběh Lugany nezačíná ve sklenici, ale v Pozzolengu: v jílovitých morénových půdách jižně od Gardského jezera, v odrůdě Turbiana a v klimatu, které dává vínu čas rozvinout vlastní charakter.",
-        "Daniele je majitelem Cantina Malavasi v Pozzolengu. Jeho pohled spojuje každodenní práci ve vinici s dlouholetým vztahem k Maria Maria. V rozhovoru vypráví, proč je důvěra základem spolupráce, proč zůstává autenticita důležitější než jakákoli móda a proč by se Lugana měla znovu objevit jako vážný společník k jídlu.",
+        "Některým vínům nelze porozumět jen podle odrůdy nebo etikety. Porozumíme jim, když poznáme místo, kde vznikají – a lidi, kteří tam každý den rozhodují. Pro Danieleho Malavasiho proto příběh Lugany nezačíná ve sklenici, ale v Pozzolengu: v jílovitých morénových půdách jižně od Gardského jezera, v odrůdě Turbiana a v klimatu, které dává vínu čas rozvinout vlastní charakter.",
+        "Daniele je majitelem vinařství Cantina Malavasi v Pozzolengu. Jeho pohled spojuje každodenní práci ve vinici s dlouholetým vztahem k Maria Maria. V rozhovoru vypráví, proč je důvěra základem spolupráce, proč zůstává autenticita důležitější než jakákoli móda a proč by Lugana měla být znovu objevena jako vážný společník k jídlu.",
       ],
 
       sections: [
@@ -100,7 +100,7 @@ const interviews = {
             "Oblast Lugana leží jižně od Gardského jezera mezi Lombardií a Benátskem. Pozzolengo patří k obcím chráněného označení původu. Pro Danieleho vzniká zvláštní identita vína ze souhry půd, jezera a odrůdy.",
             "Jílovité půdy jsou morénového původu a utvářela je geologická historie území. Zároveň blízkost Gardského jezera ovlivňuje klima. Daniele popisuje jezero jako zásobník tepla: v létě je pohlcuje a na podzim a v zimě je zase vydává. Silné teplotní výkyvy se tím zmírňují a fáze zrání se může prodloužit.",
             "Také jíl plní důležitou funkci. Zadržuje vodu a podle Danieleho zkušenosti přispívá ke struktuře a k výrazně vnímatelnému slanému napětí ve víně. Poloha a orientace jednotlivých vinic pak ovlivňují aromatickou jemnost.",
-            "Ve středu stojí Turbiana, charakteristická odrůda Lugana DOC. Ve sklenici nehledá Daniele okamžitý efekt, ale rovnováhu: mezi kyselinou a slaným napětím, mezi čistým ovocem a suchým, přesným dojmem. Přesvědčivá Lugana pro něj nemá vyprávět nejdřív o sklepní technice, ale o svém území.",
+            "V centru stojí Turbiana, charakteristická odrůda Lugana DOC. Ve sklenici nehledá Daniele nápadný efekt, ale rovnováhu: mezi kyselinou a slaným napětím, mezi čistým ovocem a suchým, přesným dojmem. Přesvědčivá Lugana pro něj nemá vyprávět nejdřív o sklepní technice, ale o svém území.",
           ],
           list: {
             label: "Podle čeho Daniele pozná přesvědčivou Luganu",
@@ -156,9 +156,9 @@ const interviews = {
       },
 
       serving: {
-        heading: "Nejčastější chyba: podávat příliš vychlazené",
+        heading: "Nejčastější chyba: podávat víno příliš vychlazené",
         paragraphs: [
-          "Lugana může ztratit mnoho ze svého výrazu, dostane-li se do sklenice příliš studená. Daniele to označuje za jednu z nejčastějších chyb při servisu. Příliš nízká teplota uhlazuje právě ty vlastnosti, které mají víno utvářet: slané napětí, minerálně působící svěžest a aromatickou jemnost.",
+          "Lugana může ztratit mnoho ze svého výrazu, dostane-li se do sklenice příliš studená. Daniele to označuje za jednu z nejčastějších chyb při podávání. Příliš nízká teplota uhlazuje právě ty vlastnosti, které mají víno utvářet: slané napětí, minerálně působící svěžest a aromatickou jemnost.",
           "Druhá chyba z té první často přímo vyplývá: zacházet s vínem výhradně jako s aperitivem. Kdo je podává jen velmi studené a před jídlem, bere mu příležitost ukázat strukturu ve spojení se složitějšími pokrmy.",
           "Doporučení proto není pevné číslo, ale vědomý přístup: podávat chlazené, ale ne tak studené, aby víno zůstalo zavřené. Ve sklenici má dostat čas se otevřít.",
         ],
@@ -196,7 +196,7 @@ const interviews = {
         {
           id: "region",
           icon: "region",
-          title: "Region Gardské jezero",
+          title: "Region Gardského jezera",
           text: "Objevte terroir.",
           href: "/regionen#garda",
         },
@@ -231,7 +231,7 @@ const interviews = {
         eyebrow: "Hlasy z regionu · Lugana DOC",
         title: "Luganu vyprávějí skuteční lidé",
         paragraphs: [
-          "Čím je tohle bílé víno od jezera Garda tak výjimečné? Daniele Malavasi vypráví o morénových půdách, Turbianě, jezerním klimatu — a o Luganě, která se z jeho sklepa dostala do kolekce Maria Maria.",
+          "Čím je toto bílé víno od Gardského jezera tak výjimečné? Daniele Malavasi vypráví o morénových půdách, Turbianě, jezerním klimatu — a o Luganě, která se z jeho sklepa dostala do kolekce Maria Maria.",
         ],
         pull: "Víno má vyprávět spíš o místě než o technice ve sklepě.",
         ctaPrimary: "Číst rozhovor",

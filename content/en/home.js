@@ -3,7 +3,7 @@
 export const home = {
   hero: {
     eyebrow: "Italian boutique wines",
-    lede: "Hand-picked wines from small family estates – for moments chosen with intent, from the aperitivo to the long evening.",
+    lede: "Hand-picked wines from small family estates – for moments chosen with intent, from the aperitivo to the big night.",
     ctaWines: "Discover the wines",
     ctaShop: "To the shop",
     statWines: "Boutique wines",
@@ -50,7 +50,7 @@ export const home = {
     title: "Two souls,",
     titleAccent: "one name",
     paragraphs: [
-      "Maria Maria begins in Salento, in the summer of 2019 — between childhood memories and old rows of vines, a moment turned into a revelation: for us wine is not a drink, it is a catalyst for emotion.",
+      "Maria Maria begins in Salento, in the summer of 2019 — between childhood memories and old rows of vines, a moment became an epiphany: for us, wine is not a beverage but a catalyst for emotions.",
       "Since then our journey has run from the sunlit vineyards of Salento across the volcanic soils of Campania up to the southern shore of Lake Garda — every bottle a stop, every region a language of its own.",
     ],
     journey: ["Salento", "Puglia", "Campania", "Lake Garda"],
@@ -75,8 +75,8 @@ export const home = {
       kampanien: {
         name: "Campania",
         tag: "Between volcano and sea",
-        desc: "Volcanic soils, original characters.",
-        long: "Around Naples and Salerno the volcanic soils of Vesuvius shape wines of depth and originality – from Falanghina to Aglianico.",
+        desc: "Volcanic soils, elemental characters.",
+        long: "Around Naples and Salerno the volcanic soils of Vesuvius shape wines of depth and elemental character – from Falanghina to Aglianico.",
       },
       garda: {
         name: "Lake Garda / Lombardy",

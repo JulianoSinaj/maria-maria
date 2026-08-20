@@ -37,7 +37,7 @@ const primitivo155 = {
     {
       kicker: "Colour",
       title: "Ruby red with intense violet reflections",
-      text: "A deep, saturated ruby red whose violet reflections announce the youth and concentration of this wine already in the glass.",
+      text: "A deep, saturated ruby red whose violet reflections announce this wine's youth and concentration in the glass alone.",
       artwork: {
         alt: "Bottle of Primitivo di Manduria DOP 15,50 by Maria Maria — front view of the label",
         medium: "The bottle",
@@ -55,7 +55,7 @@ const primitivo155 = {
     {
       kicker: "Taste",
       title: "Full-bodied, warm and complex",
-      text: "A full-bodied wine of remarkable gustatory and aromatic density: decisive, dry, warm and complex — and intense across the whole finish.",
+      text: "A full-bodied wine of remarkable depth of flavour and aroma: decisive, dry, warm and complex — and intense right through the finish.",
       artwork: {
         alt: "Bottle of Primitivo di Manduria DOP 15,50 by Maria Maria in the winery",
         medium: "In the winery",
@@ -86,10 +86,10 @@ const primitivo155 = {
     title: "Alberello, sea and capasoni",
     paragraphs: [
       "The grapes come from the Primitivo vineyards of the municipalities of Torricella and Maruggio. The nearness of the sea is no postcard motif here but a signature: it lifts the aromas and the structure of this wine.",
-      "Training is exclusively alberello — the traditional bush vine of Puglia, without irrigation. Each stock stands on its own, each vine carries little and ripens fully for that very reason. The wine then rests for twelve months in ancient terracotta giare, the capasoni, before it goes into the bottle.",
+      "Training is exclusively alberello — the traditional bush vine of Puglia, without irrigation. Each vine stands on its own, each one bears little fruit and ripens all the more completely for it. The wine then rests for twelve months in ancient terracotta giare, the capasoni, before it goes into the bottle.",
     ],
     quote: {
-      text: "Fifteen fifty — not a wine for the side. One for the long evening, the full plate and the conversation that follows.",
+      text: "Fifteen fifty — not a wine to drink in passing. One for the long evening, the full plate and the conversation that follows.",
     },
   },
 
@@ -130,7 +130,7 @@ const primitivo155 = {
       ],
     },
     maria: {
-      text: "Not a wine for the side — one for the long evening, the full plate and the conversation that follows.",
+      text: "Not a wine to drink in passing — one for the long evening, the full plate and the conversation that follows.",
       link: { label: "Discover more" },
     },
     essence: [
@@ -155,7 +155,7 @@ const primitivo155 = {
   faq: [
     {
       q: "What does the Maria Maria Primitivo 15,5 taste like?",
-      a: "Full-bodied and of remarkable gustatory and aromatic density: decisive, dry, warm and complex, intense throughout. On the nose fine and delicate with echoes of strawberry and wild berries.",
+      a: "Full-bodied and of remarkable depth of flavour and aroma: decisive, dry, warm and complex, intense throughout. On the nose fine and delicate with echoes of strawberry and wild berries.",
     },
     {
       q: "Is the Primitivo 15,5 more powerful than the 14,5?",

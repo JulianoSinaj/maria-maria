@@ -98,7 +98,7 @@ const lugana = {
   place: {
     kicker: "The origin",
     title: "The southern shore of Lake Garda",
-    text: "Between Desenzano and Pozzolengo the vineyards lie on the moraine hills of Lake Garda. The lake tempers the temperatures, the gravelly soils drive the vines deep – and from that comes the aromatics of the Lugana.",
+    text: "Between Desenzano and Pozzolengo the vineyards lie on the moraine hills of Lake Garda. The lake moderates the temperatures and the gravelly soils drive the vines deep – and from that comes the aromatic character of the Lugana.",
     stats: [
       { label: "Region", value: "Lombardy" },
       { label: "Area", value: "Desenzano · Pozzolengo" },
@@ -132,7 +132,7 @@ const lugana = {
       ],
     },
     maria: {
-      text: "For wide evenings by the water — when the table stands outside and the lake lies in the glass: wide, warm and calm.",
+      text: "For long, open evenings by the water — when the table stands outside and the lake lies in the glass: wide, warm and calm.",
       link: { label: "Discover more" },
     },
     essence: [
@@ -170,11 +170,11 @@ const lugana = {
     },
     {
       q: "Does Lugana go with fish?",
-      a: "Yes, excellently – above all with raw and cooked fish antipasti and delicate first courses. The one thing to avoid is heavy sauces and dominant spice, so that its finesse can lead. As an aperitivo it is an elegant choice too.",
+      a: "Yes, excellently – above all with raw and cooked fish antipasti and delicate first courses. Just avoid heavy sauces and dominant spice, so that its finesse stays in the lead. As an aperitivo it is an elegant choice too.",
     },
     {
       q: "What is the difference between Lugana and Pinot Grigio?",
-      a: "Lugana is a wine bound to its origin (DOC) from the southern shore of Lake Garda, made from the Turbiana grape; Pinot Grigio, by contrast, is the name of a grape variety without that tie to an origin. Our Lugana shows itself full, warm and soft on the palate — with an intense scent of lily of the valley and hawthorn, ripe fruit and good persistence.",
+      a: "Lugana is a wine bound to its origin (DOC) from the southern shore of Lake Garda, made from the Turbiana grape; Pinot Grigio, by contrast, is the name of a grape variety without that tie to an origin. Our Lugana is full, warm and soft on the palate — with an intense scent of lily of the valley and hawthorn, ripe fruit and good persistence.",
     },
   ],
 

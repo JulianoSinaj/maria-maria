@@ -17,7 +17,7 @@ export const shop = {
 
   usps: {
     delivery: "Consegna in 1–3 giorni lavorativi",
-    packaging: "Imballaggio sicuro ed elegante",
+    packaging: "Imballaggio antiurto ed elegante",
     payment: "Pagamento sicuro",
     card: "Biglietto d'auguri su richiesta",
   },
@@ -45,11 +45,11 @@ export const shop = {
       "Maria Maria nasce nel Salento, nell'estate del 2019 – tra ricordi d'infanzia e vecchi filari, un momento è diventato un'illuminazione: per noi il vino non è una bevanda, ma un catalizzatore di emozioni.",
       "Il nome porta con sé due donne – il presente e l'origine. Ogni bottiglia unisce entrambe le anime in un carattere proprio.",
     ],
-    quote: "„Italian wine, personal selection, share the pleasure.“",
+    quote: "«Italian wine, personal selection, share the pleasure.»",
     craft: {
       amphora: {
         title: "Anfore di terracotta",
-        text: "Affinamento secondo l'artigianato tradizionale – il vino che matura in anfore di terracotta guadagna profondità e carattere.",
+        text: "Affinamento secondo la tradizione artigianale – il vino che matura in anfore di terracotta acquista profondità e carattere.",
       },
       direct: {
         title: "Collaborazione diretta",

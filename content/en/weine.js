@@ -35,7 +35,7 @@ export const weine = {
     title: "Well advised,",
     titleAccent: "well enjoyed",
     description:
-      "Knowledge and answers around your choice – from the right dish to the right origin.",
+      "Knowledge and answers to guide your choice – from the right dish to the right origin.",
     cards: {
       pairing: {
         title: "Food pairing",

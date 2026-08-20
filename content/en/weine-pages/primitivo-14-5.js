@@ -86,7 +86,7 @@ const primitivo145 = {
     title: "Alberello — the bush vine of Salento",
     paragraphs: [
       "The grapes come from the Primitivo vineyards of the municipalities of Torricella and Lizzano — sites made like few others to yield a wine of high structure with the intense scents of ripe fruit.",
-      "Training is exclusively alberello, the traditional bush vine, and without irrigation. Each stock stands on its own, carries little and has to drive its roots deep into the chalky soil — the reason for the concentration you later taste in the glass.",
+      "Training is exclusively alberello, the traditional bush vine, and without irrigation. Each vine stands on its own, bears little fruit and has to drive its roots deep into the chalky soil — the reason for the concentration you later taste in the glass.",
       "After seven to eight days on the skins and only a light pressing, the wine matures for twelve months in steel. No wood stepping in between: what remains is pure, dark fruit.",
     ],
     quote: {
@@ -160,7 +160,7 @@ const primitivo145 = {
     },
     {
       q: "Which food goes with the Primitivo 14,5?",
-      a: "With robust first courses, red meat — grilled, roasted or braised — as well as game and mature hard cheese. As a rule of thumb: the heartier the dish, the more at home it feels.",
+      a: "With robust primi, red meat — grilled, roasted or braised — as well as game and mature hard cheese. As a rule of thumb: the heartier the dish, the more at home it feels.",
     },
     {
       q: "At what temperature should the Primitivo 14,5 be served?",

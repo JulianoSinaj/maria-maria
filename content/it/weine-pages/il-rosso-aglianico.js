@@ -23,7 +23,7 @@ const ilRossoAglianico = {
     text: "Nel calice il Rosso è fitto e scuro — un vino in cui si leggono il sole della Campania e i sei mesi nel legno francese.",
     swatches: [{ label: "Rubino" }, { label: "Ciliegia scura" }, { label: "Riflesso granato" }],
     artwork: {
-      alt: "Dipinto a olio “Roses in a Bowl” di Henri Fantin-Latour: rose nei toni del rubino e del crema su fondo scurissimo",
+      alt: "Dipinto a olio «Roses in a Bowl» di Henri Fantin-Latour: rose nei toni del rubino e del crema su fondo scurissimo",
       videoTitle: "Rosso rubino nel calice",
     },
   },
@@ -69,7 +69,7 @@ const ilRossoAglianico = {
         "Macerazione sulle bucce per circa 12 giorni, fermentazione in parte con lieviti autoctoni. Fermentazione malolattica svolta interamente in rovere francese.",
     },
     { label: "Affinamento", value: "6 mesi in botti di rovere francese" },
-    { label: "Gradazione alcolica", value: "14,00% vol." },
+    { label: "Gradazione alcolica", value: "14,00 % vol." },
     { label: "Temperatura di servizio", value: "circa 16–18 °C" },
     { label: "Formato" },
     { label: "Nota", value: "Contiene solfiti" },
@@ -112,7 +112,7 @@ const ilRossoAglianico = {
   },
 
   moment: {
-    title: "Come gustare al meglio il Rosso",
+    title: "Così il Rosso dà il meglio di sé",
     serve: {
       title: "Servire e degustare",
       items: [
@@ -158,11 +158,11 @@ const ilRossoAglianico = {
     },
     {
       q: "Per quale occasione è indicato Il Rosso Aglianico?",
-      a: "“La poesia in bottiglia”: un vino per le serate lunghe, le tavole piene e le conversazioni che non vogliono finire. Ideale per una cena in compagnia e una cucina di carattere — servito tra i 16 e i 18 °C e aperto un'ora prima.",
+      a: "«La poesia in bottiglia»: un vino per le serate lunghe, le tavole piene e le conversazioni che non vogliono finire. Ideale per una cena in compagnia e una cucina di carattere — servito tra i 16 e i 18 °C e aperto un'ora prima.",
     },
     {
-      q: "Che cosa significa “Campania Rosso I.G.P.”?",
-      a: "IGP sta per “Indicazione Geografica Protetta”. “Campania Rosso I.G.P.” è la denominazione riportata in etichetta e nella scheda tecnica di questo vino.",
+      q: "Che cosa significa «Campania Rosso I.G.P.»?",
+      a: "IGP sta per «Indicazione Geografica Protetta». «Campania Rosso I.G.P.» è la denominazione riportata in etichetta e nella scheda tecnica di questo vino.",
     },
   ],
 

@@ -112,7 +112,7 @@ const falanghina = {
   pairing: {
     scene: {
       dish: "Ricciola ai Pomodorini",
-      copy: "Tender ricciola and juicy cherry tomatoes need no heavy companion. The Falanghina brings freshness, fruit and vitality to the table and leaves the delicate fish enough room. Its fresh manner picks up the juiciness of the tomatoes, while its light body accompanies the dish without covering it. A clear, Mediterranean pairing that shows its strength above all on warm days.",
+      copy: "Tender ricciola and juicy cherry tomatoes need no heavy companion. The Falanghina brings freshness, fruit and vitality to the table and leaves the delicate fish enough room. Its freshness picks up the juiciness of the tomatoes, while its light body accompanies the dish without covering it. A clear, Mediterranean pairing that shows its strength above all on warm days.",
       imageAlt:
         "Ricciola fillet with cherry tomatoes on a plate, beside it a glass of Falanghina and the opened bottle",
       regionLink: {
@@ -149,7 +149,7 @@ const falanghina = {
       {
         kicker: "Grape variety",
         title: "Falanghina",
-        text: "One of the oldest grape varieties of Campania — its name goes back to the wooden stakes of Roman times. 100 % single variety.",
+        text: "One of the oldest grape varieties of Campania — its name goes back to the wooden stakes of Roman times. A 100 % single-varietal wine.",
       },
     ],
   },

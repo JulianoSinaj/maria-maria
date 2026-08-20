@@ -12,7 +12,7 @@
 
 export const kontakt = {
   hero: {
-    eyebrow: "Kontakt · Vinné poradenství pro Düsseldorf a NRW",
+    eyebrow: "Kontakt · Poradenství při výběru vín pro Düsseldorf a NRW",
     title: "Víno pro váš okamžik.",
     titleSecond: "Vybrané osobně.",
     text: "Pro gastronomii, obchod, akce a zvláštní příležitosti. Poznejte Maria Maria a najděte společně s námi vína, která se hodí k vašemu konceptu, vašim hostům nebo vaší příležitosti.",
@@ -36,7 +36,7 @@ export const kontakt = {
       gastronomie: {
         title: "Gastronomie a lahůdky",
         text: "Chcete Maria Maria nabízet ve své restauraci, kavárně, vinárně nebo lahůdkářství? Společně najdeme výběr, který sedne vašemu konceptu, vaší kuchyni i vašim hostům.",
-        cta: "Poptávka gastronomie",
+        cta: "Poptat vína pro gastronomii",
       },
       handel: {
         title: "Obchod a další prodej",
@@ -222,7 +222,7 @@ export const kontakt = {
       {
         id: "kontakt-kaufen",
         q: "Kde mohu vína Maria Maria koupit?",
-        a: "Vína lze objednat v oficiálním obchodě Maria Maria. Na kontaktní stránce zůstává obchod druhotnou cestou, aby poptávky na poradenství, akce a B2B neodváděly pozornost od kontaktního toku.",
+        a: "Vína lze objednat v oficiálním e-shopu Maria Maria. Na kontaktní stránce zůstává e-shop druhotnou cestou, aby poptávky na poradenství, akce a spolupráci B2B zůstaly v popředí.",
         link: { label: "Do e-shopu", href: "/shop" },
       },
     ],

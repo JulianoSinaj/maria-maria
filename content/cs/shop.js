@@ -8,7 +8,7 @@
 
 export const shop = {
   hero: {
-    eyebrow: "Oficiální obchod",
+    eyebrow: "Oficiální e-shop",
     lede: "Italské víno, osobně vybrané: butiková vína v limitovaných edicích, vznikající v přímé spolupráci s místními rodinami a enology. Od 69 € doručujeme zdarma.",
     ctaDiscover: "Objevit nyní",
     ctaBundles: "Degustační balíčky",
@@ -34,7 +34,7 @@ export const shop = {
     title: "Objevte Itálii",
     titleAccent: "v balíčku",
     description:
-      "Pečlivě sestavené balíčky za zvýhodněnou cenu – nejkrásnější způsob, jak poznat Maria Maria. Velký balíček putuje k vám bez poštovného.",
+      "Pečlivě sestavené balíčky za zvýhodněnou cenu – nejkrásnější způsob, jak poznat Maria Maria. Velký balíček k vám putuje s dopravou zdarma.",
   },
 
   assortment: {
@@ -42,7 +42,7 @@ export const shop = {
     title: "Maria Maria",
     titleAccent: "Selection",
     description:
-      "Objevte celou Selection – corposo, elegante a fresco. Každá lahev je osobní volbou.",
+      "Objevte celou Selection – corposo, elegante a fresco. Každá láhev je osobní volbou.",
   },
 
   origins: {
@@ -50,7 +50,7 @@ export const shop = {
     titleAccent: "jedno jméno",
     paragraphs: [
       "Maria Maria začíná v Salentu, v létě 2019 – mezi vzpomínkami na dětství a starými řadami révy se z jednoho okamžiku stalo prozření: víno pro nás není nápoj, ale katalyzátor emocí.",
-      "Jméno v sobě nese dvě ženy – přítomnost a původ. Každá lahev spojuje obě duše v osobitý charakter.",
+      "Jméno v sobě nese dvě ženy – přítomnost a původ. Každá láhev spojuje obě duše v osobitý charakter.",
     ],
     quote: "„Italian wine, personal selection, share the pleasure.“",
     craft: {

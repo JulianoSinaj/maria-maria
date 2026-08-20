@@ -19,7 +19,7 @@ export const magazin = {
       story: "Příběh",
       pairing: "Food pairing",
       interviews: "Rozhovory",
-      events: "Události",
+      events: "Akce",
     },
     photoAlt: "Maria vybírá v cantině tři láhve Maria Maria na skleněném stole",
     headline: ["Dvě Marie.", "Jeden příběh", "požitku."],
@@ -142,7 +142,7 @@ export const magazin = {
         kicker: "Nomen est omen",
         question: "Proč se Primitivo jmenuje „Primitivo“?",
         answer:
-          "Ne proto, že by byl prvobytný — ale protože dozrává jako jeden z prvních. „Primo“: ten časný. V srpnu je hotový, zatímco ostatní ještě visí.",
+          "Ne proto, že by byl prapůvodní — ale protože dozrává jako jeden z prvních. „Primo“: ten časný. V srpnu je už hotový, zatímco ostatní ještě visí.",
       },
       temperature: {
         kicker: "Kuchyňské vědění",
@@ -174,9 +174,9 @@ export const magazin = {
   },
 
   faq: {
-    eyebrow: "Vědění o víně",
-    title: "Časté otázky z",
-    titleAccent: "vědění o víně.",
+    eyebrow: "Znalosti o víně",
+    title: "Časté otázky ze",
+    titleAccent: "znalostí o víně.",
     description:
       "Stálice kolem teploty, sklenice, skladování a stupňů původu — zodpovězeno z datových listů našich vín, bez odborného žargonu.",
     footerLabel: "Chybí vaše otázka? Napište nám",

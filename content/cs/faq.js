@@ -7,7 +7,7 @@ export const faq = {
     {
       id: "home-was-ist",
       q: "Co je Maria Maria?",
-      a: "Maria Maria znamená osobně vybíraná butiková vína z Itálie. Vybraný sortiment spojuje autentický původ, odrůdy s charakterem a italský styl života – pro všechny, kdo víno vybírají a vychutnávají vědomě.",
+      a: "Maria Maria znamená osobně vybíraná butiková vína z Itálie. Vybraný sortiment spojuje autentický původ, odrůdy s charakterem a italský styl života – pro milovníky vína i hostitele, kteří víno vybírají a vychutnávají vědomě.",
     },
     {
       id: "home-sortiment",
@@ -170,7 +170,7 @@ export const faq = {
     {
       id: "wissen-temperatur",
       q: "Jaká je ideální teplota podávání?",
-      a: "Orientačně podle našich technických karet: Lugana při 8–10 °C, Greco a Falanghina kolem 10 °C, Rosato při 12–14 °C, silná červená vína jako Primitivo a Il Rosso při 16–18 °C. V nejistotě raději podávejte chladnější — ve sklenici se víno ohřeje samo.",
+      a: "Orientačně podle našich technických karet: Lugana při 8–10 °C, Greco a Falanghina kolem 10 °C, Rosato při 12–14 °C, silná červená vína jako Primitivo a Il Rosso při 16–18 °C. V případě pochybností podávejte víno raději o něco chladnější — ve sklenici se ohřeje samo.",
     },
     {
       id: "wissen-dekantieren",

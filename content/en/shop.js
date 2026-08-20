@@ -1,4 +1,4 @@
-/* Shop page /shop — hero, USP bar, tasting bundles, assortment,
+/* Shop page /shop — hero, USP bar, tasting sets, assortment,
    Le Origini, gift moments, service and the service FAQ.
 
    Badges, edition counts and bundle descriptions do NOT live here but in
@@ -11,11 +11,11 @@ export const shop = {
     eyebrow: "The official shop",
     lede: "Italian wine, personally selected: limited-edition boutique wines, created in direct collaboration with local families and oenologists. Free shipping on orders from €69.",
     ctaDiscover: "Discover now",
-    ctaBundles: "Tasting bundles",
+    ctaBundles: "Tasting sets",
     statWines: "Boutique wines",
     statRegions: "Regions of Italy",
     statDeliveryValue: "1–3",
-    statDelivery: "Business days delivery",
+    statDelivery: "Business days to delivery",
     /* the three trust chips beside the bottle stage */
     chipShipping: "Free shipping from €69",
     chipPayment: "Secure payment",
@@ -30,11 +30,11 @@ export const shop = {
   },
 
   bundles: {
-    eyebrow: "Tasting bundles",
+    eyebrow: "Tasting sets",
     title: "Discover Italy",
     titleAccent: "by the bundle",
     description:
-      "Curated bundles at a favourable price – the most beautiful way to get to know Maria Maria. The large bundle ships free.",
+      "Curated bundles at a special price – the loveliest way to get to know Maria Maria. The large bundle ships free.",
   },
 
   assortment: {
@@ -77,7 +77,7 @@ export const shop = {
     text: "Whether a thank-you, an invitation or a special occasion – a bottle of Maria Maria is a gift with origin and history. We take care of the rest.",
     photoAlt: "Elegantly wrapped wine bottle as a gift with a greeting card",
     points: [
-      "A personal greeting card with your lines",
+      "Personal greeting card in your own words",
       "Elegant gift wrapping",
       "Shipping straight to the recipient",
     ],
@@ -88,7 +88,7 @@ export const shop = {
   service: {
     eyebrow: "Good to know",
     title: "Order with ease",
-    description: "Ordering without open questions – shipping, payment and advice at a glance.",
+    description: "Ordering with nothing left unanswered – shipping, payment and advice at a glance.",
     cards: {
       shipping: {
         title: "Shipping & delivery",
@@ -97,7 +97,7 @@ export const shop = {
       },
       payment: {
         title: "Secure payment",
-        text: "Pay conveniently and securely – all common payment methods, SSL-encrypted and without detours.",
+        text: "Pay conveniently and securely – all common payment methods, SSL-encrypted, with no unnecessary steps.",
         link: "More in the FAQ",
       },
       advice: {
@@ -118,7 +118,7 @@ export const shop = {
   },
 
   faq: {
-    eyebrow: "Frequent questions",
+    eyebrow: "Frequently asked",
     title: "Questions about",
     titleAccent: "ordering.",
     description:

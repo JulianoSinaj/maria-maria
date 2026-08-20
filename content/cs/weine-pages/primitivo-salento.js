@@ -84,7 +84,7 @@ const primitivoSalento = {
     title: "Alberello, bez závlahy",
     paragraphs: [
       "Hrozny pocházejí z vinic Primitiva v Torricelle a Lizzanu — vedených výhradně jako alberello, nízký keřový tvar jižní Itálie, a zcela bez závlahy. Réva si vodu obstará sama, hluboko v půdě.",
-      "Dlouhá macerace na slupkách je klíčem: vynáší na povrch výrazné tóny zralého ovoce, které toto víno utvářejí. Poté dvanáct měsíců v nerezu — žádné dřevo, které by vstupovalo mezi, jen samo ovoce.",
+      "Dlouhá macerace na slupkách je klíčem: vynáší na povrch výrazné tóny zralého ovoce, které toto víno utvářejí. Poté dvanáct měsíců v nerezu — žádné dřevo, které by do toho vstupovalo, jen samo ovoce.",
     ],
     quote: {
       text: "Víno, které nemusí nic skrývat: zralé ovoce, jasný původ, otevřený charakter.",
@@ -108,7 +108,7 @@ const primitivoSalento = {
   pairing: {
     scene: {
       dish: "Bombette z Valle d'Itria",
-      copy: "Bombette jsou malé závitky z vepřové krkovice plněné caciocavallem a pepřem, grilované nad dřevěným uhlím přímo v řeznictví. Sýr se uvnitř rozpouští, zvenčí maso tmavne a křupe. Pokrm bez obřadnosti — a přesně pro něj je toto Primitivo stvořené. Intenzitě obstojí, ale zůstává dost měkké, aby s ní nesoupeřilo. Slanost zrajícího sýra jasně vynese jeho tmavé ovoce dopředu.",
+      copy: "Bombette jsou malé závitky z vepřové krkovice plněné caciocavallem a pepřem, grilované nad dřevěným uhlím přímo v řeznictví. Sýr se uvnitř rozpouští, zvenčí maso tmavne a křupe. Pokrm bez obřadnosti — a přesně pro něj je toto Primitivo stvořené. Intenzitě čelí, ale zůstává dost měkké, aby s ní nesoupeřilo. Slanost zrajícího sýra jasně vynese jeho tmavé ovoce dopředu.",
       imageAlt:
         "Grilované bombette z Valle d'Itria na dřevěném prkénku, vedle sklenka Primitiva a otevřená láhev",
       regionLink: {
@@ -161,12 +161,12 @@ const primitivoSalento = {
     },
     {
       q: "Čím se liší Primitivo Salento od Primitiva di Manduria?",
-      a: "Stupněm původu: „Primitivo di Manduria D.O.P.“ je chráněné označení původu pro Primitivo z úzce vymezené oblasti kolem Manduria; „I.G.P. Salento“ zahrnuje celý poloostrov Salento. Naše Salento IGP je bezprostřednější, přístupnější interpretací — obě vína z Manduria jsou strukturovanější a koncentrovanější.",
+      a: "Stupněm původu: „Primitivo di Manduria D.O.P.“ je chráněné označení původu pro Primitivo z úzce vymezené oblasti kolem Mandurie; „I.G.P. Salento“ zahrnuje celý poloostrov Salento. Naše Salento IGP je bezprostřednější, přístupnější interpretací — obě vína z Mandurie jsou strukturovanější a koncentrovanější.",
       link: { label: "Objevte Primitivo di Manduria DOP" },
     },
     {
       q: "K jakému jídlu se hodí Primitivo Salento IGP?",
-      a: "K masu a sýrům — od pečení a grilovaných pokrmů přes zrající tvrdé sýry až po výrazné těstoviny a salumi. Jeho bezprostřední pitelnost z něj dělá přístupného společníka vydatné kuchyně, nejlépe podávaného při 16 až 18 °C ve sklenici na červené víno.",
+      a: "K masu a sýrům — od pečeně a grilovaných pokrmů přes zrající tvrdé sýry až po výrazné těstoviny a salumi. Jeho bezprostřední pitelnost z něj dělá přístupného společníka vydatné kuchyně, nejlépe podávaného při 16 až 18 °C ve sklenici na červené víno.",
     },
     {
       q: "Co znamená vedení alberello?",

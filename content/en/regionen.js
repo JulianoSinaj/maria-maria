@@ -28,7 +28,7 @@ export const regionen = {
       tag: "The heart of the south",
       alt: "Vineyards on red soil in Puglia in warm evening light",
       label: "Wines from Puglia",
-      desc: "Sun, red soils and the nearness of the sea shape winegrowing in Puglia. Primitivo above all, one of the region's most defining grape varieties, stands for ripe fruit, warmth and an expressive character. Maria Maria presents selected wines from Puglia that bring together origin and Italian living in the most pleasurable way.",
+      desc: "Sun, red soils and the nearness of the sea shape winegrowing in Puglia. Primitivo above all, one of the region's most defining grape varieties, stands for ripe fruit, warmth and an expressive character. Maria Maria presents selected wines from Puglia that bring origin and the Italian way of life together in the most pleasurable way.",
       cta: "Discover the wines of Puglia",
     },
     kampanien: {
@@ -65,7 +65,7 @@ export const regionen = {
         text: "Primitivo, Negroamaro, Greco, Falanghina, Aglianico and Turbiana in the context of their origin.",
       },
       {
-        title: "Guidance for conscious enjoyment",
+        title: "Guidance for considered enjoyment",
         text: "Taste, occasion and food pairing help you choose the right wine.",
       },
     ],
@@ -85,7 +85,7 @@ export const regionen = {
 
   /* Frame of the regions FAQ — the questions come from dict.faq.regionen */
   faq: {
-    eyebrow: "Frequent questions",
+    eyebrow: "Frequently asked",
     title: "Questions of",
     titleAccent: "origin.",
     description:

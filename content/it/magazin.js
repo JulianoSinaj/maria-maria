@@ -54,9 +54,9 @@ export const magazin = {
   pairing: {
     eyebrow: "Food Pairing · Per occasione",
     title: "Quale vino si abbina al",
-    titleAccent: "vostro momento?",
+    titleAccent: "tuo momento?",
     description:
-      "Non scegliete prima il vino, ma il momento — scegliete la vostra occasione e Maria Maria vi mostra il vino giusto.",
+      "Non scegliere prima il vino, ma il momento — scegli la tua occasione e Maria Maria ti mostra il vino giusto.",
     toWine: "Vai al vino",
     alsoFits: "Si abbinano anche",
     cards: {
@@ -131,7 +131,7 @@ export const magazin = {
     title: "Curioso, ma",
     titleAccent: "vero",
     description:
-      "Tre cose che abbiamo imparato dai vignaioli. Toccate una carta — la risposta è sul retro.",
+      "Tre cose che abbiamo imparato dai vignaioli. Tocca una carta — la risposta è sul retro.",
     flip: "Girare",
     back: "Indietro",
     closing:
@@ -140,19 +140,19 @@ export const magazin = {
     cards: {
       name: {
         kicker: "Nomen omen",
-        question: "Perché il Primitivo si chiama „Primitivo“?",
+        question: "Perché il Primitivo si chiama «Primitivo»?",
         answer:
-          "Non perché sia rustico — ma perché matura tra i primi. „Primo“: il precoce. Ad agosto è già pronto, mentre altre uve sono ancora sulla pianta.",
+          "Non perché sia rustico — ma perché matura tra i primi. «Primo»: il precoce. Ad agosto è già pronto, mentre altre uve sono ancora sulla pianta.",
       },
       temperature: {
         kicker: "Sapere di cucina",
         question: "Quanto può essere fresco un vino rosso?",
         answer:
-          "Più fresco di quanto pensiate. 16–18 °C — cantina, non salotto. Venti minuti in frigorifero prima di aprirlo, e il vino diventa improvvisamente preciso.",
+          "Più fresco di quanto pensi. 16–18 °C — cantina, non salotto. Venti minuti in frigorifero prima di aprirlo, e il vino diventa improvvisamente preciso.",
       },
       tears: {
         kicker: "Dalla cantina",
-        question: "Cosa sono le „lacrime“ sul bordo del calice?",
+        question: "Cosa sono le «lacrime» sul bordo del calice?",
         answer:
           "Gli archetti che scendono dopo la rotazione. Rivelano l'alcol, non la qualità — un buon vino non piange più bello, solo più lentamente.",
       },
@@ -169,7 +169,7 @@ export const magazin = {
     eyebrow: "Dal magazine al calice",
     title: "I vini delle nostre storie",
     description:
-      "Le bottiglie attorno a cui ruotano le nostre storie – scorrete su una foto per vedere la retroetichetta.",
+      "Le bottiglie attorno a cui ruotano le nostre storie – scorri su una foto per vedere la retroetichetta.",
     railLabel: "Degustati nel magazine",
   },
 
@@ -179,7 +179,7 @@ export const magazin = {
     titleAccent: "cultura del vino.",
     description:
       "I grandi classici su temperatura, calice, conservazione e denominazioni — con risposte tratte dalle schede tecniche dei nostri vini, senza tecnicismi.",
-    footerLabel: "Manca una domanda? Scriveteci",
+    footerLabel: "Manca una domanda? Scrivici",
   },
 };
 

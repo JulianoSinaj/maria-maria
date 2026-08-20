@@ -6,7 +6,7 @@ const lugana = {
   eyebrow: "Italská butiková vína",
   lede:
     "Z jižního břehu Gardského jezera. Z odrůdy Turbiana na štěrkovitých morénových půdách vzniká bílé víno intenzivní a komplexní vůně — plné, teplé a měkké na patře, s dlouhým aromatickým dozvukem.",
-  heroWords: ["Intenzivní.", "Měkké.", "Přetrvávající."],
+  heroWords: ["Intenzivní.", "Měkká.", "Přetrvávající."],
 
   breadcrumb: [{ label: "Domů" }, { label: "Naše vína" }, {}],
 
@@ -46,7 +46,7 @@ const lugana = {
     {
       kicker: "Vůně",
       title: "Konvalinka, hloh a zralé ovoce",
-      text: "Intenzivní a komplexní: květinové tóny konvalinky a hlohu, následované zralým ovocem, jemným pečivem a decentním tónem opékání.",
+      text: "Intenzivní a komplexní: květinové tóny konvalinky a hlohu, následované zralým ovocem, jemným pečivem a decentním praženým tónem.",
       artwork: {
         alt: "Zadní etiketa láhve Lugana DOC od Maria Maria",
         medium: "Zadní etiketa",
@@ -132,7 +132,7 @@ const lugana = {
       ],
     },
     maria: {
-      text: "Pro široké večery u vody — když je stůl prostřený venku a jezero leží ve sklenici: široké, teplé a klidné.",
+      text: "Pro dlouhé večery u vody — když je stůl prostřený venku a jezero leží ve sklenici: široké, teplé a klidné.",
       link: { label: "Objevit více" },
     },
     essence: [
@@ -162,7 +162,7 @@ const lugana = {
     },
     {
       q: "Jak chutná Lugana od Maria Maria?",
-      a: "Plná, teplá, měkká a obalující, s dobrou perzistencí a harmonickými aromatickými ozvěnami. V nose intenzivní a komplexní: konvalinka a hloh, následované zralým ovocem, jemným pečivem a decentním tónem opékání.",
+      a: "Plná, teplá, měkká a obalující, s dobrou perzistencí a harmonickými aromatickými ozvěnami. V nose intenzivní a komplexní: konvalinka a hloh, následované zralým ovocem, jemným pečivem a decentním praženým tónem.",
     },
     {
       q: "Jaká odrůda se pro Luganu používá?",

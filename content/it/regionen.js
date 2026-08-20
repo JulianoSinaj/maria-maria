@@ -8,7 +8,7 @@ export const regionen = {
     /* Unico H1 della pagina, su due righe */
     title1: "Dove i vini d'Italia",
     title2: "trovano il loro carattere",
-    text: "Tre zone d'origine, paesaggi diversi e vitigni di grande carattere: scopri come Puglia, Campania e l'area del Lugana sul Garda segnano lo stile dei vini selezionati Maria Maria.",
+    text: "Tre zone d'origine, paesaggi diversi e vitigni di grande carattere: scopri come la Puglia, la Campania e l'area del Lugana sul Garda plasmano lo stile dei vini selezionati da Maria Maria.",
     /* L'invito a scorrere: domanda + esortazione, la freccia resta nel codice */
     question: "Perché la Puglia ha un gusto diverso dal Garda?",
     questionCta: "Vai alla risposta",
@@ -35,7 +35,7 @@ export const regionen = {
       name: "Campania",
       tag: "Alture e costa",
       alt: "Vigneti terrazzati sulla costa della Campania nella luce della sera",
-      label: "Vini di Campania",
+      label: "Vini della Campania",
       desc: "Sulle alture dell'Irpinia e in altre zone di grande tradizione della Campania nascono vini di carattere da vitigni come Greco, Falanghina e Aglianico. Le diverse altitudini, i suoli calcarei e argillosi e le forti escursioni termiche donano loro freschezza, mineralità e profondità aromatica.",
       cta: "Scopri i vini della Campania",
     },

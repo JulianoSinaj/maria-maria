@@ -46,7 +46,7 @@ const grecoDiTufo = {
     {
       kicker: "Profumo",
       title: "Intenso e piacevole",
-      text: "Un bouquet di grande espressione: frutta gialla a polpa soda, scorza di agrumi e un fine tratto minerale che viene dal tufo.",
+      text: "Un bouquet di grande espressione: frutta gialla a nocciolo, scorza di agrumi e un fine tratto minerale che viene dal tufo.",
       artwork: {
         alt: "Retroetichetta della bottiglia di Greco di Tufo D.O.C.G. di Maria Maria",
         medium: "La retroetichetta",
@@ -108,7 +108,7 @@ const grecoDiTufo = {
   pairing: {
     scene: {
       dish: "Spaghetti alle Vongole",
-      copy: "Gli spaghetti alle vongole vivono di nitidezza: vongole, olio d'oliva, aglio e un soffio di aroma marino. È proprio qui che sta la forza del Greco di Tufo DOCG. La sua tensione minerale, la freschezza e la struttura precisa raccolgono l'eleganza salina del piatto senza mettersi in primo piano. Nasce così un abbinamento che rende percepibile la costa della Campania nel modo più autentico.",
+      copy: "Gli spaghetti alle vongole vivono di nitidezza: vongole, olio d'oliva, aglio e un soffio di aroma marino. È proprio qui che sta la forza del Greco di Tufo DOCG. La sua tensione minerale, la freschezza e la struttura precisa riprendono l'eleganza salina del piatto senza mettersi in primo piano. Nasce così un abbinamento che rende percepibile la costa della Campania nel modo più autentico.",
       imageAlt:
         "Spaghetti alle vongole nel piatto in trattoria, accanto un calice di Greco di Tufo e la bottiglia",
       regionLink: {
@@ -157,7 +157,7 @@ const grecoDiTufo = {
     },
     {
       q: "Che cosa significa DOCG per il Greco di Tufo?",
-      a: "D.O.C.G. sta per «Denominazione di Origine Controllata e Garantita» – il livello più alto della legislazione vinicola italiana. Il Greco di Tufo è uno dei pochi bianchi d'Italia con questa classificazione.",
+      a: "D.O.C.G. sta per «Denominazione di Origine Controllata e Garantita» – il vertice della piramide delle denominazioni d'origine italiane. Il Greco di Tufo è uno dei pochi bianchi d'Italia con questa classificazione.",
     },
     {
       q: "Il Greco di Tufo è minerale?",
@@ -165,7 +165,7 @@ const grecoDiTufo = {
     },
     {
       q: "Con quali piatti si abbina il Greco di Tufo?",
-      a: "Perfetto con piatti di pesce, frutti di mare, formaggi e risotti — sorprendente soprattutto con la mozzarella di bufala. Con la sua struttura il Greco accompagna la cucina delicata senza coprirla; servitelo ben fresco, intorno ai 10 °C, nel calice da bianco.",
+      a: "Perfetto con piatti di pesce, frutti di mare, formaggi e risotti — sorprendente soprattutto con la mozzarella di bufala. Con la sua struttura il Greco accompagna la cucina delicata senza coprirla; servilo ben fresco, intorno ai 10 °C, nel calice da bianco.",
     },
     {
       q: "Qual è la differenza con la Falanghina?",

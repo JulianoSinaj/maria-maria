@@ -21,7 +21,7 @@ const primitivo145 = {
   colorMoment: {
     kicker: "Barva",
     lines: ["Velmi intenzivní rubínová.", "S fialovými odlesky."],
-    text: "Ve sklenici stojí Primitivo hluboce a neprůhledně — fialové odlesky na okraji prozrazují mládí a sílu sluncem zalitých hroznů ze Salenta.",
+    text: "Ve sklenici je Primitivo hluboké a neprůhledné — fialové odlesky na okraji prozrazují mládí a sílu sluncem zalitých hroznů ze Salenta.",
     swatches: [
       { label: "Rubínová" },
       { label: "Tmavá ostružina" },
@@ -86,8 +86,8 @@ const primitivo145 = {
     title: "Alberello — keřový tvar Salenta",
     paragraphs: [
       "Hrozny pocházejí z vinic Primitiva v obcích Torricella a Lizzano — z poloh, které jsou jako málokteré stvořené k tomu, aby daly víno vysoké struktury s intenzivními vůněmi zralého ovoce.",
-      "Réva se vede výhradně systémem alberello, tradičním keřovým tvarem, a bez závlahy. Každý keř stojí sám za sebe, nese málo a musí zahnat kořeny hluboko do vápenité půdy — právě odtud pochází koncentrace, kterou později cítíte ve sklenici.",
-      "Po sedmi až osmi dnech na slupkách a jen lehkém lisování víno zraje dvanáct měsíců v nerezu. Žádné dřevo, které by vstupovalo mezi: zůstává čisté, tmavé ovoce.",
+      "Réva se vede výhradně systémem alberello, tradičním keřovým tvarem, a bez závlahy. Každý keř stojí sám za sebe, nese málo a musí zapustit kořeny hluboko do vápenité půdy — právě odtud pochází koncentrace, kterou později cítíte ve sklenici.",
+      "Po sedmi až osmi dnech na slupkách a jen lehkém lisování víno zraje dvanáct měsíců v nerezu. Žádné dřevo, které by do toho vstupovalo: zůstává čisté, tmavé ovoce.",
     ],
     quote: {
       text: "Víno pro dlouhé večery, plné stoly a rozhovory, které nechtějí skončit.",
@@ -164,7 +164,7 @@ const primitivo145 = {
     },
     {
       q: "Při jaké teplotě se Primitivo 14,5 podává?",
-      a: "16 až 18 °C ve sklenici na červené víno. Otevřené necelou hodinu předem nechá tmavé ovoce a měkkou texturu vystoupit nejzřetelněji.",
+      a: "16 až 18 °C ve sklenici na červené víno. Otevřete láhev necelou hodinu předem — tmavé ovoce a měkká textura pak vystoupí nejzřetelněji.",
     },
     {
       q: "Čím se liší Primitivo 14,5 od Primitiva 15,5?",
@@ -173,7 +173,7 @@ const primitivo145 = {
     },
     {
       q: "Co znamená „Primitivo di Manduria D.O.P.“?",
-      a: "DOP znamená „Denominazione di Origine Protetta“, chráněné označení původu. Umožňuje tento název pouze pro Primitivo z úzce vymezené oblasti kolem Manduria v apulském Salentu.",
+      a: "DOP znamená „Denominazione di Origine Protetta“, chráněné označení původu. Tento název smí nést pouze Primitivo z úzce vymezené oblasti kolem Mandurie v apulském Salentu.",
     },
   ],
 

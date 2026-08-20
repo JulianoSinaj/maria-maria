@@ -36,7 +36,7 @@ const primitivoSalento = {
     {
       kicker: "Colour",
       title: "Very intense ruby red",
-      text: "A dense, very intense ruby red — the colour of a wine that lay long on the skins.",
+      text: "A dense, very intense ruby red — the colour of a wine that spent a long time on its skins.",
       artwork: {
         alt: "Bottle of Primitivo IGP Salento by Maria Maria — front view of the label",
         medium: "The bottle",
@@ -153,7 +153,7 @@ const primitivoSalento = {
   faq: [
     {
       q: "What does the Maria Maria Primitivo Salento IGP taste like?",
-      a: "Intense and long-lingering in taste, with an easy drinkability and pleasantly approachable. On the nose a complex bouquet with notes of plum and dried fruit.",
+      a: "Intense and long-lingering on the palate, easy-drinking and pleasantly approachable. On the nose a complex bouquet with notes of plum and dried fruit.",
     },
     {
       q: "What does Salento IGP mean?",
@@ -166,11 +166,11 @@ const primitivoSalento = {
     },
     {
       q: "Which food goes with Primitivo Salento IGP?",
-      a: "With meat and cheese — from roasts and grilled dishes through matured hard cheese to hearty pasta dishes and salumi. Its easy drinkability makes it an approachable companion to hearty cooking, best served at 16 to 18 °C in a red wine glass.",
+      a: "With meat and cheese — from roasts and grilled dishes through mature hard cheese to hearty pasta dishes and salumi. Its easy drinkability makes it an approachable companion to hearty cooking, best served at 16 to 18 °C in a red wine glass.",
     },
     {
       q: "What does alberello training mean?",
-      a: "Alberello is the traditional bush training of southern Italy: low, free-standing stocks without a wire frame. Here it is practised exclusively and without irrigation, so that the vine draws its own water from the depths.",
+      a: "Alberello is the traditional bush training of southern Italy: low, free-standing vines without a wire trellis. Here it is practised exclusively and without irrigation, so that the vine draws its own water from the depths.",
     },
   ],
 

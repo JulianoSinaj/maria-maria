@@ -21,7 +21,7 @@ const primitivo155 = {
   colorMoment: {
     kicker: "Barva",
     lines: ["Rubínová.", "S fialovými odlesky."],
-    text: "Ve sklenici stojí Primitivo hustě a neprůhledně — rubínově červené, protkané intenzivními fialovými odlesky, jaké dají jen plně vyzrálé hrozny ze Salenta.",
+    text: "Ve sklenici je Primitivo husté a neprůhledné — rubínově červené, protkané intenzivními fialovými odlesky, jaké dokážou dát jen plně vyzrálé hrozny ze Salenta.",
     swatches: [
       { label: "Rubínová" },
       { label: "Fialový odlesk" },
@@ -89,7 +89,7 @@ const primitivo155 = {
       "Réva se vede výhradně systémem alberello — tradičním keřovým tvarem Apulie, bez závlahy. Každý keř stojí sám za sebe, každá réva nese málo a právě proto plně dozraje. Poté víno odpočívá dvanáct měsíců ve starobylých terakotových giare, capasoni, než přijde do láhve.",
     ],
     quote: {
-      text: "Patnáct padesát — ne víno jen tak mimochodem. Víno pro dlouhý večer, plný talíř a rozhovor, který následuje.",
+      text: "Patnáct padesát — žádné víno jen tak mimochodem. Víno pro dlouhý večer, plný talíř a rozhovor, který následuje.",
     },
   },
 
@@ -155,7 +155,7 @@ const primitivo155 = {
   faq: [
     {
       q: "Jak chutná Primitivo 15,5 od Maria Maria?",
-      a: "Plné a pozoruhodné chuťové i aromatické hustoty: rozhodné, suché, teplé a komplexní, přitom intenzivní po celou dobu. V nose jemné a delikátní s ozvěnami jahody a lesních plodů.",
+      a: "Plné víno pozoruhodné chuťové i aromatické hustoty: rozhodné, suché, teplé a komplexní, přitom intenzivní po celou dobu. V nose jemné a delikátní s tóny jahod a lesních plodů.",
     },
     {
       q: "Je Primitivo 15,5 silnější než 14,5?",
@@ -164,11 +164,11 @@ const primitivo155 = {
     },
     {
       q: "Mělo by se Primitivo 15,5 dekantovat?",
-      a: "Nutnost to není — trocha vzduchu mu ale prospěje. Otevřete láhev dobrou hodinu před požitkem a podávejte je při 16 až 18 °C ve velké sklenici na červené víno, aby se ovoce a koření plně rozvinuly.",
+      a: "Nutnost to není — trocha vzduchu mu ale prospěje. Otevřete láhev dobrou hodinu před podáváním a podávejte ho při 16 až 18 °C ve velké sklenici na červené víno, aby se ovoce a koření plně rozvinuly.",
     },
     {
       q: "K jakým pokrmům se hodí?",
-      a: "K prvním chodům s ragú, pečením a zvěřině, k pikantním pokrmům a ke tvrdým sýrům — výrazná aromata a koření zvládne bez námahy. S 15,5 % obj. a hustou strukturou je vínem pro výraznou kuchyni, podávané při 16 až 18 °C ve velké sklenici na červené víno.",
+      a: "K prvním chodům s ragú, k pečeni a zvěřině, k pikantním pokrmům a ke tvrdým sýrům — výrazná aromata a koření zvládne bez námahy. S 15,5 % obj. a hustou strukturou je vínem pro výraznou kuchyni, podávané při 16 až 18 °C ve velké sklenici na červené víno.",
     },
     {
       q: "Co jsou capasoni?",

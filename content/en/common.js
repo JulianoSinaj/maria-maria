@@ -252,7 +252,7 @@ export const common = {
     allWines: "All wines",
     heroCtaShop: "Discover it in the official shop",
     heroCtaTaste: "Get to know the wine",
-    faqEyebrow: "Frequent questions",
+    faqEyebrow: "Frequently asked",
     faqTitle: "Good to",
     faqTitleAccent: "know.",
     faqDescription:

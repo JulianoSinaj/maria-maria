@@ -67,7 +67,7 @@ const primitivo155 = {
     { label: "Denominazione" },
     { label: "Vitigno" },
     { label: "Provenienza", value: "Torricella e Maruggio, Puglia" },
-    { label: "Sistema di allevamento", value: "Esclusivamente alberello, senza irrigazione" },
+    { label: "Sistema di allevamento", value: "Esclusivamente ad alberello, senza irrigazione" },
     {
       label: "Vinificazione",
       value:
@@ -86,7 +86,7 @@ const primitivo155 = {
     title: "Alberello, mare e capasoni",
     paragraphs: [
       "Le uve provengono dai vigneti di Primitivo dei comuni di Torricella e Maruggio. La vicinanza al mare qui non è una cartolina, ma una firma: esalta i profumi e la struttura di questo vino.",
-      "L'allevamento è esclusivamente ad alberello — la forma tradizionale della Puglia, senza irrigazione. Ogni ceppo sta per sé, ogni vite porta poco e proprio per questo matura completamente. Poi il vino riposa dodici mesi in antiche giare di terracotta, i capasoni, prima di andare in bottiglia.",
+      "L'allevamento è esclusivamente ad alberello — la forma tradizionale della Puglia, senza irrigazione. Ogni ceppo sta a sé, ogni vite produce poco e proprio per questo matura completamente. Poi il vino riposa dodici mesi in antiche giare di terracotta, i capasoni, prima di andare in bottiglia.",
     ],
     quote: {
       text: "Quindici e cinquanta — non un vino da bere distrattamente. Uno per la sera lunga, il piatto pieno e la conversazione che segue.",
@@ -164,7 +164,7 @@ const primitivo155 = {
     },
     {
       q: "Bisogna decantare il Primitivo 15,5?",
-      a: "Non è un obbligo — ma un po' d'aria gli fa bene. Aprite la bottiglia una buona ora prima di berlo e servitelo a 16–18 °C nel calice grande da rosso, perché frutto e speziatura si esprimano appieno.",
+      a: "Non è un obbligo — ma un po' d'aria gli fa bene. Apri la bottiglia una buona ora prima di berlo e servilo a 16–18 °C nel calice grande da rosso, perché frutto e speziatura si esprimano appieno.",
     },
     {
       q: "Con quali piatti si abbina?",

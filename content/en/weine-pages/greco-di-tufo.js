@@ -168,7 +168,7 @@ const grecoDiTufo = {
       a: "Perfect with fish dishes, seafood, cheese and risotto — and surprisingly good with mozzarella di bufala. With its structure the Greco accompanies delicate cooking without drowning it; serve it well chilled at around 10 °C in a white wine glass.",
     },
     {
-      q: "What is the difference to Falanghina?",
+      q: "What is the difference between Greco di Tufo and Falanghina?",
       a: "The Greco brings structure, golden reflections and a mineral thread from the tufa soil – a white with D.O.C.G. status that seduces quietly. The Falanghina from the Beneventano is softer, brighter in fruit and more straightforward. In short: the Greco for depth, the Falanghina for a light opening.",
       link: { label: "Discover the Falanghina" },
     },

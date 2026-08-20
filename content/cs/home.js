@@ -36,7 +36,7 @@ export const home = {
       },
       guidance: {
         title: "Osobní doprovod",
-        text: "Přehledný sortiment, srozumitelná doporučení a přímý kontakt usnadňují výběr i použití – pro osobní spolupráci na rovinu.",
+        text: "Přehledný sortiment, srozumitelná doporučení a přímý kontakt usnadňují výběr i použití – pro osobní spolupráci jako rovný s rovným.",
       },
     },
     note: "Pro gastronomii, hotelnictví a výjimečné koncepty",
@@ -100,7 +100,7 @@ export const home = {
   },
 
   faq: {
-    eyebrow: "Časté dotazy",
+    eyebrow: "Časté otázky",
     title: "Maria Maria,",
     titleAccent: "krátce vysvětleno.",
     description:

@@ -120,7 +120,7 @@ export default function HomeContent({ t = {}, faq = [], souls }) {
               <SplitText text="Maria Maria" className="block" delay={0.12} />
               <SplitText
                 text="Il piacere del vino."
-                className="mt-[0.12em] block text-[0.58em] italic leading-[1.15] tracking-[0]"
+                className="mt-[0.12em] block text-[0.58em] italic leading-[1.15] tracking-[0] text-champagne"
                 delay={0.3}
               />
             </h1>

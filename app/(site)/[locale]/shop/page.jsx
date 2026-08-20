@@ -132,7 +132,7 @@ export default async function ShopPage({ params }) {
   const t = dict.shop ?? {};
 
   return (
-      <div className="relative min-h-screen">
+      <div className="relative -mb-12 min-h-screen lg:-mb-16">
         <ShopJsonLd locale={params.locale} dict={dict} wines={WINES} />
         {/* ============ HERO ============ */}
         <section className="grain relative overflow-hidden">

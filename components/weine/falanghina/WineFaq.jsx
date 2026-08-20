@@ -12,6 +12,7 @@ export default function WineFaq({ wine, t = {} }) {
 
   return (
     <FaqSection
+      className="-mb-12 lg:-mb-16"
       id="fragen"
       pageType={`wine:${wine.slug}`}
       eyebrow={t.faqEyebrow}

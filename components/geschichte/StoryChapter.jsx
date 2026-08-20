@@ -1,6 +1,4 @@
 import Link from "@/components/i18n/LocaleLink";
-import Parallax from "@/components/motion/Parallax";
-import TiltCard from "@/components/motion/TiltCard";
 import Photo from "@/components/media/Photo";
 import { Reveal } from "@/components/motion/Reveal";
 import { Arrow } from "@/components/Icons";
@@ -12,8 +10,7 @@ import { Arrow } from "@/components/Icons";
    das Zitat. Am Desktop bleibt das Zitat unter dem Kapiteltext — dafür
    spannt das Foto über beide Grid-Zeilen.
 
-   Das Foto fährt mit Parallax-Feder und kippt als 3D-Karte leicht zum
-   Cursor. `micro` liegt als italienisches Kurzwort auf dem Bild,
+  `micro` liegt als italienisches Kurzwort auf dem Bild,
    `caption` steht als Didascalia darunter. */
 
 export default function StoryChapter({ chapter, flipped = false }) {
@@ -51,11 +48,6 @@ export default function StoryChapter({ chapter, flipped = false }) {
                 {text}
               </p>
             ))}
-            {rebsorten && (
-              <p className="mt-5 text-[10.5px] font-semibold uppercase tracking-[0.26em] text-bordeaux/80">
-                {rebsorten}
-              </p>
-            )}
             {link && (
               <Link
                 href={link.href}
@@ -69,42 +61,29 @@ export default function StoryChapter({ chapter, flipped = false }) {
         </div>
 
         {/* ---- Foto: Kurzwort auf dem Bild, Didascalia darunter ---- */}
-        <Reveal className={`${photoCol} lg:row-start-1 ${quote ? "lg:row-span-2" : ""}`} y={24}>
-          <figure>
-            <TiltCard className="group" max={4} radius="rounded-card-lg">
-              <div
-                className={`${preserveFormat ? "relative" : "relative aspect-[16/10]"} overflow-hidden rounded-card-lg shadow-luxe transition-shadow duration-500 group-hover:shadow-lift`}
-              >
-                <Parallax
-                  speed={0.08}
-                  overscan
-                  className={preserveFormat ? "relative block" : "absolute inset-0"}
-                >
-                  <Photo
-                    src={img}
-                    alt={alt}
-                    sizes="(min-width: 1024px) 50vw, 100vw"
-                    className={`${preserveFormat ? "h-auto w-full" : "h-full w-full object-cover"} transition-transform duration-700 ease-out-expo group-hover:scale-[1.04]`}
-                  />
-                </Parallax>
-                <div
-                  aria-hidden="true"
-                  className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-espresso/70 via-espresso/20 to-transparent"
-                />
-                {micro && (
-                  <span className="absolute bottom-0 left-0 p-5 font-playfair text-[12.5px] italic text-ivory/85 sm:p-6">
-                    {micro}
-                  </span>
-                )}
-              </div>
-            </TiltCard>
-            {caption && (
-              <figcaption className="mt-3 px-1 text-[11.5px] italic leading-relaxed text-charcoal/55">
-                {caption}
-              </figcaption>
+        <figure className={`${photoCol} lg:row-start-1 ${quote ? "lg:row-span-2" : ""}`}>
+          <div
+            className={`${preserveFormat ? "relative" : "relative aspect-[16/10]"} overflow-hidden rounded-card-lg shadow-luxe`}
+          >
+            <div className={preserveFormat ? "relative block" : "absolute inset-0"}>
+              <Photo
+                src={img}
+                alt={alt}
+                sizes="(min-width: 1024px) 50vw, 100vw"
+                className={preserveFormat ? "h-auto w-full" : "h-full w-full object-cover"}
+              />
+            </div>
+            <div
+              aria-hidden="true"
+              className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-espresso/70 via-espresso/20 to-transparent"
+            />
+            {micro && (
+              <span className="absolute bottom-0 left-0 p-5 font-playfair text-[12.5px] italic text-ivory/85 sm:p-6">
+                {micro}
+              </span>
             )}
-          </figure>
-        </Reveal>
+          </div>
+        </figure>
 
         {/* ---- Zitat: mobil nach dem Bild, am Desktop unter dem Text ---- */}
         {quote && (

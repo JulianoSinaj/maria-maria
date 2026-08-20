@@ -1,7 +1,6 @@
 import { Fragment } from "react";
 import Link from "@/components/i18n/LocaleLink";
 import SplitText from "@/components/motion/SplitText";
-import TiltCard from "@/components/motion/TiltCard";
 import { Reveal } from "@/components/motion/Reveal";
 import Photo from "@/components/media/Photo";
 import VisionMission from "@/components/magazin/VisionMission";
@@ -100,22 +99,18 @@ export default function CoverHero({ hasInterviews = false, t = {}, vision }) {
       <div className="relative mx-auto max-w-content px-6 pb-12 pt-10 lg:px-10 lg:pt-14">
         <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-[1.05fr_1fr] lg:gap-14">
           {/* links: das Titelfoto — im Originalformat (875x823), ohne Beschnitt
-              und ohne Overscan-Zoom: die ganze Cantina bleibt im Bild, Maria
+              und ohne Bewegung: die ganze Cantina bleibt im Bild, Maria
               sitzt in der Tiefe des Raums */}
-          <Reveal y={24} delay={0.15}>
-            <TiltCard className="group" max={4} radius="rounded-card-lg">
-              <figure className="relative aspect-[875/823] w-full max-w-[875px] overflow-hidden rounded-card-lg shadow-luxe transition-shadow duration-500 group-hover:shadow-lift">
-                <Photo
-                  src="/img/magazin/cover-story.jpg"
-                  alt={t.photoAlt ?? ""}
-                  sizes="(min-width: 1024px) 50vw, 100vw"
-                  loading="eager"
-                  fetchpriority="high"
-                  className="h-full w-full object-cover transition-transform duration-700 ease-out-expo group-hover:scale-[1.03]"
-                />
-              </figure>
-            </TiltCard>
-          </Reveal>
+          <figure className="relative aspect-[875/823] w-full max-w-[875px] overflow-hidden rounded-card-lg shadow-luxe">
+            <Photo
+              src="/img/magazin/cover-story.jpg"
+              alt={t.photoAlt ?? ""}
+              sizes="(min-width: 1024px) 50vw, 100vw"
+              loading="eager"
+              fetchpriority="high"
+              className="h-full w-full object-cover"
+            />
+          </figure>
 
           {/* rechts: Rubrik, Schlagzeile, Stationen, CTA, Leitbild */}
           <div className="flex flex-col justify-center">

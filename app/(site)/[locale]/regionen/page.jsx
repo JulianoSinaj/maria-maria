@@ -164,7 +164,7 @@ export default async function RegionenPage({ params }) {
   );
 
   return (
-    <div className="relative min-h-screen">
+    <div className="relative -mb-12 min-h-screen lg:-mb-16">
       <RegionenJsonLd locale={params.locale} dict={dict} />
       {/* ============ HERO ============ */}
       <section className="grain relative overflow-hidden">
@@ -263,9 +263,20 @@ export default async function RegionenPage({ params }) {
         <GhostWord className="right-[-3vw] top-10 text-[13vw]">Terroir</GhostWord>
         <GhostWord className="left-[-2vw] top-[62%] text-[11vw]">Vigneti</GhostWord>
         <div className="relative mx-auto max-w-content px-6 py-24 lg:px-10">
-        <SectionTitle eyebrow={t.intro?.eyebrow} description={t.intro?.description}>
-          {t.intro?.title}
-        </SectionTitle>
+        {/* Der Auftakt als eigene Karte: vorher stand die Überschrift frei
+            auf der Sektionsfläche und las sich als Teil des ersten
+            Regionsporträts darunter. Die Fassung (Champagner-Haarlinie,
+            Grain, Creme-Verlauf) folgt dem Kartenidiom der Seite
+            (InterviewTeaser, CuriosityBand). */}
+        <div className="grain relative overflow-hidden rounded-card-lg border border-champagne/45 bg-gradient-to-b from-white/90 via-cream/70 to-champagne/[0.14] px-6 py-12 shadow-luxe sm:px-12 lg:py-14">
+          <span
+            aria-hidden="true"
+            className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-champagne/80 to-transparent"
+          />
+          <SectionTitle eyebrow={t.intro?.eyebrow} description={t.intro?.description}>
+            {t.intro?.title}
+          </SectionTitle>
+        </div>
 
         <div className="mt-14 lg:mt-20">
           {REGIONS.map((r, i) => {
@@ -324,11 +335,19 @@ export default async function RegionenPage({ params }) {
                 </div>
 
                 {/* Das Gespräch zu dieser Region — Handoff Seite 7: direkt
-                    unter dem Regionenblock, vor Terroir-Manifest und FAQ. */}
+                    unter dem Regionenblock, vor Terroir-Manifest und FAQ.
+                    Der Wein-CTA führt auf die Landingpage des besprochenen
+                    Weins (interview.wine.slug), nicht auf die gefilterte
+                    Übersicht des Regionen-CTAs — sonst hätten beide Knöpfe
+                    des Blocks fast dasselbe Ziel. */}
                 {interviewByRegion[r.region] && (
                   <InterviewTeaser
                     interview={interviewByRegion[r.region]}
-                    wineHref={r.cta.href}
+                    wineHref={
+                      interviewByRegion[r.region].wine?.slug
+                        ? `/unsere-weine/${interviewByRegion[r.region].wine.slug}`
+                        : r.cta.href
+                    }
                   />
                 )}
               </article>

@@ -124,7 +124,7 @@ export default async function KontaktPage({ params }) {
       <KontaktJsonLd locale={params.locale} dict={dict} />
 
       <IntentProvider>
-      <div className="bg-linen">
+      <div className="-mb-12 bg-linen lg:-mb-16">
         {/* ═══════ 01 — HERO ═══════════════════════════════════════════
             50/52 wie im Mockup: Text links auf der äußeren Kante, Foto
             rechts randlos bis zum Bildschirmrand. */}
@@ -389,7 +389,7 @@ export default async function KontaktPage({ params }) {
         </section>
 
         {/* ═══════ 06 — HÄUFIGE FRAGEN ══════════════════════════════ */}
-        <section aria-labelledby="fragen" className="pb-24 lg:pb-28">
+        <section aria-labelledby="fragen" className="pb-14 lg:pb-16">
           <div className={SHELL_WIDE}>
             <Reveal>
               <h2 id="fragen" className={SECTION_TITLE}>

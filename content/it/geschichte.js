@@ -45,7 +45,6 @@ export const geschichte = {
         "«Il vino comincia dalla sua origine – e trova il suo posto dove le persone lo condividono.»",
       alt: "Tavola apparecchiata con calici e una bottiglia originale Maria Maria",
       micro: "La tavola lunga",
-      caption: "Radici italiane, portate avanti in Germania dal 2019.",
     },
     salento: {
       label: "Salento · Lizzano",

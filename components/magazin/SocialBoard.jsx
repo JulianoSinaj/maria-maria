@@ -16,15 +16,8 @@ import {
    Espresso-Schleier mit Bildunterschrift und Hashtag über das Motiv.
    Alle Kacheln führen zum Profil. Inhalte: magazinData.SOCIAL_POSTS.
 
-   Die Wand nimmt ihr Wort ernst: jedes Foto hängt wie von Hand angepinnt —
-   minimal gedreht (unabhängige `rotate`-Eigenschaft, kollidiert nicht mit
-   dem 3D-Transform der TiltCard), mit Pinnnadel oben und ab lg leicht
-   versetzten Hängehöhen (reine Transforms, kein Layout-Sprung). Beim
-   Hover oder Tastaturfokus richtet sich das Foto gerade — als nähme man
-   es von der Wand. */
-
-/* Hängewinkel der vier Fotos — bewusst unregelmäßig, wie von Hand */
-const TILTS = [-1.7, 1.1, -0.8, 1.9];
+   Die Fotos hängen in einer geraden, bündigen Reihe — die Pinnnadel oben
+   bleibt als Zitat der Pinnwand-Metapher erhalten. */
 
 export default function SocialBoard({ className = "", headingId, t = {} }) {
   /* Bildunterschrift je Kachel aus dem Wörterbuch — Schlüssel steht in
@@ -91,7 +84,7 @@ export default function SocialBoard({ className = "", headingId, t = {} }) {
             viert. Darunter bleibt es bei zwei Spalten — bei dreien stünde die
             vierte Kachel allein in einer zweiten Reihe. */}
         <Stagger className="mt-8 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4" gap={0.06}>
-          {SOCIAL_POSTS.map((p, i) => (
+          {SOCIAL_POSTS.map((p) => (
             <StaggerItem key={p.img} className="h-full">
               <a
                 href={SOCIAL_URL}
@@ -100,14 +93,7 @@ export default function SocialBoard({ className = "", headingId, t = {} }) {
                 aria-label={(t.postAria ?? "").replace("{caption}", caption(p))}
                 className="group block h-full rounded-card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-champagne focus-visible:ring-offset-2 focus-visible:ring-offset-espresso"
               >
-                {/* Hängewinkel + versetzte Hängehöhe — richtet sich beim
-                    Hover/Fokus gerade */}
-                <div
-                  className={`will-transform transition-[rotate] duration-500 ease-out-expo group-hover:[rotate:0deg] group-focus-visible:[rotate:0deg] ${
-                    i % 2 === 1 ? "lg:translate-y-4" : ""
-                  }`}
-                  style={{ rotate: `${TILTS[i % TILTS.length]}deg` }}
-                >
+                <div>
                 <TiltCard className="h-full" max={6} radius="rounded-card">
                   <article className="relative aspect-square overflow-hidden rounded-card border border-champagne/15">
                     {/* die Pinnnadel — hängt über allen Schleiern, denn sie

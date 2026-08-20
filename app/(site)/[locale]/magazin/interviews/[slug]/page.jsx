@@ -142,7 +142,7 @@ export default async function InterviewPage({ params }) {
           jede Seite (components/StorefrontChrome.jsx). Ein zweites ergäbe
           verschachtelte Landmarks — der Handoff (Seite 22) verlangt
           ausdrücklich „un solo H1 e un solo main". */}
-      <div className="relative min-h-screen bg-ivory">
+      <div className="relative -mb-12 min-h-screen bg-ivory lg:-mb-16">
         <InterviewArticle interview={interview} ui={dict.interviews?.ui ?? {}} wine={wine} />
       </div>
     </>

@@ -1,9 +1,11 @@
+"use client";
 import { SectionTitle } from "@/components/Deco";
 import { Stagger, StaggerItem } from "@/components/motion/Reveal";
 import Atmosphere from "@/components/Atmosphere";
 import WineCard from "@/components/WineCard";
 import Button from "@/components/ui/Button";
 import { byName } from "@/components/data";
+import { useLocalizedWines } from "@/lib/i18n/context";
 
 /* „Ähnliche Weine entdecken" — drei Empfehlungen aus der Kollektion,
    wie auf der Referenzseite der Kundin. */
@@ -36,7 +38,10 @@ function describe(wines, trait, t) {
 }
 
 export default function SimilarWines({ wine, t }) {
-  const wines = wine.similar.names.map((n) => byName(n)).filter(Boolean);
+  /* byName() liefert nur die sprachneutrale Struktur — Region, Charakterworte
+     und Pairing-Satz kommen erst über useLocalizedWines() dazu. Ohne diesen
+     Schritt rendern die Karten nur Name und Pfeil (leere Region/Notes). */
+  const wines = useLocalizedWines(wine.similar.names.map((n) => byName(n)).filter(Boolean));
   const description = describe(wines, wine.similar.trait, t);
 
   return (

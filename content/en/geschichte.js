@@ -45,7 +45,6 @@ export const geschichte = {
         "“Wine begins with its origin – and finds its place wherever people share it with one another.”",
       alt: "A laid table with wine glasses and an original bottle of Maria Maria",
       micro: "La tavola lunga",
-      caption: "Italian roots, carried on in Germany since 2019.",
     },
     salento: {
       label: "Salento · Lizzano",

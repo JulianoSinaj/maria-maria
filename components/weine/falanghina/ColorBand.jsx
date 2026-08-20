@@ -19,8 +19,11 @@ import { useCommon } from "@/lib/i18n/context";
    steckt, aus dem Bild läuft. Darunter besorgt der schmalere Ausschnitt das
    Gleiche; wo er es knapp verfehlt, deckt der Schleier an der Kante zu.
 
-   Serviertemperatur und Farbtöne bleiben als schmale Zeile unter dem Text:
-   sie tragen den Inhalt des Kapitels, den das Bild allein nicht erzählt. */
+   Die Serviertemperatur bleibt als schmale Zeile unter dem Text. Die
+   Farbtöne wandern ab lg auf die rechte Seite der Bühne: dort stehen sie
+   untereinander in der Lichtinsel neben dem Glas — die Textspalte wird
+   leichter, und die leere Kante trägt wieder Inhalt. Unterhalb lg gibt es
+   diese Kante nicht; dort bleiben die Töne in der Zeile beim Text. */
 
 /* Halbes Tempo — der Guss soll fallen, nicht stürzen */
 const POUR_RATE = 0.55;
@@ -147,7 +150,7 @@ export default function ColorBand({ wine }) {
                 </span>
               )}
 
-              <span className="flex items-center gap-2.5" aria-label={winePage.tones}>
+              <span className="flex items-center gap-2.5 lg:hidden" aria-label={winePage.tones}>
                 {c.swatches.map((s) => (
                   <span key={s.hex} className="flex items-center gap-1.5">
                     <span
@@ -162,6 +165,28 @@ export default function ColorBand({ wine }) {
               </span>
             </div>
           </Reveal>
+        </div>
+
+        {/* Farbtöne an der rechten Kante — untereinander, rechtsbündig auf
+            den Schleier gesetzt, der das Bild dort ohnehin in Elfenbein
+            auslaufen lässt. Nur ab lg: darunter existiert diese Kante nicht. */}
+        <div
+          className="hidden lg:flex lg:flex-col lg:items-end lg:gap-5 lg:justify-self-end"
+          aria-label={winePage.tones}
+        >
+          {c.swatches.map((s, i) => (
+            <Reveal key={s.hex} delay={0.3 + i * 0.12} y={14} blur={false}>
+              <span className="flex items-center gap-2.5">
+                <span className="whitespace-nowrap text-[10px] font-semibold uppercase tracking-[0.16em] text-charcoal/50">
+                  {s.label}
+                </span>
+                <span
+                  className="h-4 w-4 rounded-full border border-white/70 shadow-sm"
+                  style={{ backgroundColor: s.hex }}
+                />
+              </span>
+            </Reveal>
+          ))}
         </div>
       </div>
 

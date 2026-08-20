@@ -60,7 +60,6 @@ export const geschichte = {
         "„Der Wein beginnt bei seiner Herkunft – und findet seinen Platz dort, wo Menschen ihn miteinander teilen.“",
       alt: "Gedeckter Tisch mit Weingläsern und einer originalen Maria-Maria-Weinflasche",
       micro: "La tavola lunga",
-      caption: "Italienische Wurzeln, seit 2019 in Deutschland weitergetragen.",
     },
     salento: {
       label: "Salento · Lizzano",

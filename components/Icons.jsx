@@ -40,8 +40,22 @@ export const Cart = (p) => (
   </svg>
 );
 
-/* ---- decorative grape cluster (used in section rules) ---- */
-export const Grapes = (p) => null;
+/* ---- decorative grape cluster (used in wine fact tiles and section rules) ---- */
+export const Grapes = (p) => (
+  <svg viewBox="0 0 24 24" {...S} strokeWidth={1.1} {...p}>
+    <path d="M12 4c2.5 1.2 4 3.2 4 5.5" />
+    <path d="M12 4c-1.8.2-3.3 1.1-4.4 2.7 2.2.5 3.9.1 5-1.1" />
+    <path d="M12 4v3.2" />
+    <circle cx="9" cy="10" r="1.7" />
+    <circle cx="13" cy="10" r="1.7" />
+    <circle cx="7.5" cy="13.5" r="1.7" />
+    <circle cx="11.5" cy="13.5" r="1.7" />
+    <circle cx="15.5" cy="13.5" r="1.7" />
+    <circle cx="9.5" cy="17" r="1.7" />
+    <circle cx="13.5" cy="17" r="1.7" />
+    <circle cx="11.5" cy="20" r="1.7" />
+  </svg>
+);
 
 
 /* ---- Der Maria-Moment feature icons ---- */

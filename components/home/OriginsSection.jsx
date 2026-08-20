@@ -50,15 +50,13 @@ export default function OriginsSection({ t = {}, souls }) {
 
             {/* the journey — Salento → Gardasee */}
             <Reveal delay={0.12}>
-              <ol className="mt-7 flex flex-wrap items-center gap-y-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-charcoal/60">
+              <ol className="mt-7 flex flex-wrap items-center gap-y-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-bordeaux">
                 {journey.map((stop, i) => (
                   <li key={stop} className="flex items-center">
                     {i > 0 && (
                       <span aria-hidden="true" className="mx-2.5 h-px w-[15px] bg-champagne sm:w-[21px]" />
                     )}
-                    <span className={i === 0 || i === journey.length - 1 ? "text-bordeaux" : ""}>
-                      {stop}
-                    </span>
+                    <span>{stop}</span>
                   </li>
                 ))}
               </ol>

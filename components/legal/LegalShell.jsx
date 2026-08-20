@@ -13,9 +13,9 @@ import Atmosphere from "@/components/Atmosphere";
 
 export default function LegalShell({ shell, title, intro, sections }) {
   return (
-    <div className="relative min-h-screen overflow-hidden">
+    <div className="relative -mb-12 min-h-screen overflow-hidden lg:-mb-16">
       <Atmosphere variant="warm" />
-      <div className="relative mx-auto max-w-3xl px-6 pb-24 pt-32 lg:pb-28 lg:pt-36">
+      <div className="relative mx-auto max-w-3xl px-6 pb-14 pt-32 lg:pb-16 lg:pt-36">
         <Eyebrow>{shell.eyebrow}</Eyebrow>
         <h1 className="mt-5 font-playfair text-[clamp(2.1rem,5vw,3.2rem)] leading-[1.08] text-charcoal">
           {title}

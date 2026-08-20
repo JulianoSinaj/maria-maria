@@ -89,7 +89,7 @@ export default async function WeinePage({ params }) {
   const t = dict.weine ?? {};
 
   return (
-    <div className="relative min-h-screen">
+    <div className="relative -mb-12 min-h-screen lg:-mb-16">
       <CollectionJsonLd locale={params.locale} dict={dict} wines={WINES} />
       {/* ============ HERO ============ */}
       <WeineHeroPreload />

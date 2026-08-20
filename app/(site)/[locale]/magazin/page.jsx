@@ -116,7 +116,7 @@ export default async function MagazinPage({ params }) {
     <>
       <MagazinJsonLd locale={params.locale} dict={dict} faq={dict.faq?.magazin ?? []} />
 
-      <main className="relative min-h-screen">
+      <main className="relative -mb-12 min-h-screen lg:-mb-16">
         {/* ================= CAPITOLO I: TITELSEITE, VISION & GESCHICHTE ==== */}
         <section aria-labelledby="magazin-titel" className="relative overflow-hidden">
           {/* Cremeschleier oben — die Seite hat bewusst keinen Vollbild-Hero */}
@@ -149,14 +149,14 @@ export default async function MagazinPage({ params }) {
 
         {/* ---- Schlusspunkt des Food-Pairing-Kapitels: das Tinten-Zitat ---- */}
         <InkQuote
-          className="pb-8 lg:pb-10"
+          className="pb-1 lg:pb-2"
           text="Il vino è la poesia della terra."
           translation={t.quote?.translation}
           cite="Mario Soldati"
         />
 
         {/* ================= CAPITOLO III: BACHECA SOCIAL MEDIA ============= */}
-        <ChapterBreak number="III" title="Bacheca" word="Dalla community" className="pb-6" />
+        <ChapterBreak number="III" title="Bacheca" word="Dalla community" className="-mt-3 pb-6 lg:-mt-4" />
         <div id="bacheca" className="scroll-mt-24">
           <SocialBoard headingId="magazin-bacheca" t={t.social} />
         </div>

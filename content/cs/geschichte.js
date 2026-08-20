@@ -45,7 +45,6 @@ export const geschichte = {
         "„Víno začíná u svého původu – a své místo nachází tam, kde ho lidé sdílejí.“",
       alt: "Prostřený stůl se sklenicemi vína a originální lahví Maria Maria",
       micro: "La tavola lunga",
-      caption: "Italské kořeny, od roku 2019 nesené dál v Německu.",
     },
     salento: {
       label: "Salento · Lizzano",

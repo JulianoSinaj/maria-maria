@@ -1,8 +1,6 @@
 import Link from "@/components/i18n/LocaleLink";
 import SplitText from "@/components/motion/SplitText";
 import { Reveal } from "@/components/motion/Reveal";
-import TiltCard from "@/components/motion/TiltCard";
-import Parallax from "@/components/motion/Parallax";
 import Button from "@/components/ui/Button";
 import Photo from "@/components/media/Photo";
 import { Eyebrow } from "@/components/Deco";
@@ -211,24 +209,18 @@ export default async function GeschichtePage({ params }) {
                 Priorität, alles Weitere bleibt bei der lazy-Vorgabe von
                 <Photo>. width/height sichern das Seitenverhältnis gegen
                 Layoutsprünge ab. */}
-            <Reveal y={24}>
-              <TiltCard className="group" max={4} radius="rounded-card-lg">
-                <figure className="relative aspect-[4/3] overflow-hidden rounded-card-lg shadow-luxe transition-shadow duration-500 group-hover:shadow-lift">
-                  <Parallax speed={0.08} overscan className="absolute inset-0">
-                    <Photo
-                      src="/img/magazin/tavolata.jpg"
-                      alt={hero.photoAlt ?? ""}
-                      sizes="(min-width: 1024px) 45vw, 100vw"
-                      width={915}
-                      height={686}
-                      loading="eager"
-                      fetchpriority="high"
-                      className="h-full w-full object-cover transition-transform duration-700 ease-out-expo group-hover:scale-[1.04]"
-                    />
-                  </Parallax>
-                </figure>
-              </TiltCard>
-            </Reveal>
+            <figure className="relative aspect-[4/3] overflow-hidden rounded-card-lg shadow-luxe">
+              <Photo
+                src="/img/magazin/tavolata.jpg"
+                alt={hero.photoAlt ?? ""}
+                sizes="(min-width: 1024px) 45vw, 100vw"
+                width={915}
+                height={686}
+                loading="eager"
+                fetchpriority="high"
+                className="h-full w-full object-cover"
+              />
+            </figure>
           </div>
         </div>
       </section>
@@ -307,12 +299,12 @@ export default async function GeschichtePage({ params }) {
       <section
         id={STORY_TODAY.id}
         aria-labelledby="story-auswahl"
-        className="relative scroll-mt-40 overflow-hidden"
+        className="relative -mb-12 scroll-mt-40 overflow-hidden lg:-mb-16"
       >
         <Aura tint="olive" className="-right-48 top-[10%] h-[30rem] w-[30rem]" />
         <GhostWord className="left-[-2vw] bottom-[-6%] text-[11vw]">selezione</GhostWord>
 
-        <div className="relative mx-auto max-w-content px-6 pb-4 pt-8 lg:px-10 lg:pb-5 lg:pt-10">
+        <div className="relative mx-auto max-w-content px-6 pb-2 pt-8 lg:px-10 lg:pb-3 lg:pt-10">
           <Reveal className="text-center">
             <p className="flex items-center justify-center gap-3 text-[10.5px] font-semibold uppercase tracking-[0.26em] text-champagne">
               <span className="text-bordeaux/80">{today.label}</span>

@@ -74,7 +74,7 @@ export default function HomeContent({ t = {}, faq = [], souls }) {
   const regions = REGION_SHAPE.map((r) => ({ ...r, ...(regionsCopy.items?.[r.key] ?? {}) }));
 
   return (
-    <div className="relative min-h-screen">
+    <div className="relative -mb-12 min-h-screen lg:-mb-16">
       {/* ============ HERO ============ */}
       <HomeHeroPreload />
       <section className="grain relative overflow-hidden">

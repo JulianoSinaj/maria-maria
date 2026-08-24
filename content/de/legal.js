@@ -130,7 +130,7 @@ export const legal = {
       {
         title: "§ 1 Geltungsbereich",
         body: [
-          "Diese Allgemeinen Geschäftsbedingungen gelten für alle Bestellungen über den Online-Shop der Maria Maria Wines GmbH, Elberfelder strasse 78d, 40822 Mettmann (nachfolgend „Maria Maria"), durch Verbraucher und Unternehmer.",
+          "Diese Allgemeinen Geschäftsbedingungen gelten für alle Bestellungen über den Online-Shop der Maria Maria Wines GmbH, Elberfelder strasse 78d, 40822 Mettmann (nachfolgend „Maria Maria“), durch Verbraucher und Unternehmer.",
         ],
       },
       {

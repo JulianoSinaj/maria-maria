@@ -135,7 +135,7 @@ export const legal = {
       {
         title: "§ 1 Rozsah platnosti",
         body: [
-          "Tyto všeobecné obchodní podmínky platí pro všechny objednávky učiněné prostřednictvím e-shopu společnosti Maria Maria Wines GmbH, Elberfelder strasse 78d, 40822 Mettmann (dále jen „Maria Maria"), ze strany spotřebitelů i podnikatelů.",
+          "Tyto všeobecné obchodní podmínky platí pro všechny objednávky učiněné prostřednictvím e-shopu společnosti Maria Maria Wines GmbH, Elberfelder strasse 78d, 40822 Mettmann (dále jen „Maria Maria“), ze strany spotřebitelů i podnikatelů.",
         ],
       },
       {

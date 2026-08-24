@@ -93,7 +93,7 @@ export default function Footer() {
             <div className="mt-5 space-y-2 text-[12.5px] leading-relaxed text-ivory/65">
               <p>Senso Valerio Weinhandel</p>
               <p>Valerio Caniglia</p>
-              <p>Ellerfelderstrasse 78d</p>
+              <p>Elberfelder strasse 78d</p>
               <p>40822 Mettmann</p>
               <a href="mailto:info@maria-maria.de" className="block transition-colors hover:text-champagne">
                 info@maria-maria.de

@@ -33,7 +33,7 @@ export const legal = {
         title: "Údaje podle § 5 TMG",
         body: [
           "Maria Maria Wines GmbH",
-          "Ellerfelderstrasse 78d, 40822 Mettmann, Německo",
+          "Elberfelder strasse 78d, 40822 Mettmann, Německo",
           "Zastoupena jednateli společnosti.",
         ],
       },
@@ -50,7 +50,7 @@ export const legal = {
       },
       {
         title: "Odpovědnost za obsah podle § 55 odst. 2 RStV",
-        body: ["Maria Maria Wines GmbH, Ellerfelderstrasse 78d, 40822 Mettmann."],
+        body: ["Maria Maria Wines GmbH, Elberfelder strasse 78d, 40822 Mettmann."],
       },
       {
         title: "Ochrana mladistvých",
@@ -82,7 +82,7 @@ export const legal = {
       {
         title: "1. Správce",
         body: [
-          "Správcem zpracování údajů na těchto webových stránkách je Maria Maria Wines GmbH, Ellerfelderstrasse 78d, 40822 Mettmann, Německo, e-mail: info@maria-maria.de.",
+          "Správcem zpracování údajů na těchto webových stránkách je Maria Maria Wines GmbH, Elberfelder strasse 78d, 40822 Mettmann, Německo, e-mail: info@maria-maria.de.",
         ],
       },
       {
@@ -135,7 +135,7 @@ export const legal = {
       {
         title: "§ 1 Rozsah platnosti",
         body: [
-          "Tyto všeobecné obchodní podmínky platí pro všechny objednávky učiněné prostřednictvím e-shopu společnosti Maria Maria Wines GmbH, Ellerfelderstrasse 78d, 40822 Mettmann (dále jen „Maria Maria“), ze strany spotřebitelů i podnikatelů.",
+          "Tyto všeobecné obchodní podmínky platí pro všechny objednávky učiněné prostřednictvím e-shopu společnosti Maria Maria Wines GmbH, Elberfelder strasse 78d, 40822 Mettmann (dále jen „Maria Maria"), ze strany spotřebitelů i podnikatelů.",
         ],
       },
       {

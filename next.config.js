@@ -12,6 +12,43 @@ const nextConfig = {
     return [
       { source: "/weine", destination: "/unsere-weine", permanent: true },
       { source: "/weine/:slug", destination: "/unsere-weine/:slug", permanent: true },
+
+      /* Unter dieser Domain lief bis zum Umzug eine WordPress-Installation.
+         Deren Adressen sind seit 2019 indexiert, verlinkt und weitergegeben —
+         sie dürfen nicht ins Leere laufen, nur weil darunter jetzt ein anderes
+         System steht. 308 vererbt das Ranking der alten Seite an die neue
+         Entsprechung; das ist der einzige Weg, die aufgebaute Sichtbarkeit
+         über den Systemwechsel zu retten.
+
+         Zwei alte Seiten haben keinen Eins-zu-eins-Nachfolger:
+
+         /galerie   → /geschichte. Die dreizehn Bilder der alten Bildstrecke
+                      leben in der Erzählseite weiter, dort steht dieselbe
+                      Marke in Bildern — nur mit Text darum herum.
+
+         Chiaretto  → /unsere-weine. Der Riviera del Garda Classico ist nicht
+                      mehr im Sortiment. Eine Weiterleitung auf einen ANDEREN
+                      Wein wäre eine Falschauskunft an jeden, der genau diese
+                      Flasche gesucht hat; die Kollektion ist die ehrliche
+                      Entsprechung und zeigt, was es stattdessen gibt.
+
+         Der Theme-Ballast der alten Installation (/portfolio/*, /sample-page,
+         /projects-2) bekommt bewusst KEINE Regel: Diese Seiten hatten nie
+         eigenen Inhalt und sollen als 404 aus dem Index fallen. */
+      { source: "/home", destination: "/", permanent: true },
+      { source: "/ueber-uns", destination: "/geschichte", permanent: true },
+      { source: "/vision", destination: "/geschichte", permanent: true },
+      { source: "/galerie", destination: "/geschichte", permanent: true },
+      { source: "/news", destination: "/magazin", permanent: true },
+      { source: "/primitivo-di-manduria", destination: "/regionen", permanent: true },
+      { source: "/lugana-doc", destination: "/unsere-weine/lugana", permanent: true },
+      { source: "/unsere-weine/lugana-doc", destination: "/unsere-weine/lugana", permanent: true },
+      { source: "/unsere-weine/primitivo-145-2", destination: "/unsere-weine/primitivo-14-5", permanent: true },
+      { source: "/unsere-weine/primitivo-145-2-old", destination: "/unsere-weine/primitivo-14-5", permanent: true },
+      { source: "/unsere-weine/primitivo-155", destination: "/unsere-weine/primitivo-15-5", permanent: true },
+      { source: "/unsere-weine/greco-di-tufo-d-o-c-g", destination: "/unsere-weine/greco-di-tufo", permanent: true },
+      { source: "/unsere-weine/riviera-del-garda-classico-chiaretto-dop", destination: "/unsere-weine", permanent: true },
+      { source: "/datenschutzerklaerung", destination: "/datenschutz", permanent: true },
     ];
   },
   async headers() {

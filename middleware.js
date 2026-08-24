@@ -78,7 +78,118 @@ function preferredLocale(header) {
   return null;
 }
 
-export function middleware(request) {
+/* --- Zugangsschutz fürs Backoffice ---------------------------------------
+
+   /admin und die schreibenden /api/admin-Endpunkte standen bis zum Umzug
+   offen. Auf der Testdomain war das folgenlos; unter der echten Adresse
+   heißt es: Jeder Fremde kann Bilder hochladen, den Hero austauschen und
+   Bestände löschen. `Disallow` in der robots.txt ist dagegen wirkungslos —
+   es ist eine Bitte an höfliche Crawler, keine Zugangskontrolle.
+
+   Die Prüfung sitzt bewusst HIER und nicht in den einzelnen Routen: Eine
+   neue Datei unter app/api/admin/ ist damit vom ersten Commit an geschützt,
+   ohne dass jemand daran denken muss. Vergessener Schutz ist die häufigste
+   Ursache offener Backoffice-Endpunkte — diese Stelle macht das Vergessen
+   unmöglich.
+
+   AUSNAHME: die `/file/`-Routen. Was das Backoffice hochlädt, landet in
+   data/uploads/ — also AUSSERHALB von public/ — und wird über
+   /api/admin/hero/file/…, /api/admin/gallery/file/… und
+   /api/admin/assets/<slug>/file/… wieder ausgeliefert. Genau diese Adressen
+   speichern lib/hero/store.js und lib/assets/store.js als Bildquelle der
+   ÖFFENTLICHEN Seite. Ein Schutz über alles würde Besuchern den Hero mit
+   401 beantworten. Lesender Zugriff auf eine hochgeladene Bilddatei ist
+   Website, kein Backoffice; alles andere ist Backoffice.
+
+   Ohne ADMIN_PASSWORD wird in Produktion NICHTS durchgelassen (503). Die
+   Alternative — im Zweifel offen — ist genau der Zustand, den diese
+   Funktion beseitigt: Ein Deploy ohne gesetzte Variable wäre wieder ein
+   offenes Backoffice, und niemand würde es merken. In der Entwicklung
+   bleibt der Bereich offen, dort ist er nur über localhost erreichbar.
+
+   Das Passwort wird zur LAUFZEIT gelesen: Im gebauten Middleware-Bundle
+   bleibt `process.env.ADMIN_PASSWORD` ein echter Zugriff, Next setzt hier
+   nichts zur Build-Zeit ein. Ein Wechsel im Hosting-Panel wirkt deshalb
+   nach einem Neustart des Containers, ein Rebuild ist nicht nötig. */
+
+const ADMIN_REALM = 'Basic realm="Maria Maria Backoffice", charset="UTF-8"';
+
+/* Hochgeladene Dateien werden ausgeliefert, nicht verwaltet — siehe oben. */
+const UPLOADED_FILE = /^\/api\/admin\/(?:hero|gallery|assets\/[^/]+)\/file\//;
+
+const isBackoffice = (pathname) =>
+  pathname === "/admin" ||
+  pathname.startsWith("/admin/") ||
+  (pathname.startsWith("/api/admin") && !UPLOADED_FILE.test(pathname));
+
+/* Vergleich über die SHA-256-Summe statt Zeichen für Zeichen: Ein direkter
+   String-Vergleich bricht beim ersten Unterschied ab und verrät über die
+   Antwortzeit, wie viele Zeichen stimmen — und über den Längenvergleich
+   davor auch noch die Passwortlänge. Zwei Summen sind immer 32 Byte lang
+   und werden immer vollständig durchlaufen. */
+async function digest(text) {
+  const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(text));
+  return new Uint8Array(buf);
+}
+
+async function credentialsMatch(supplied, expected) {
+  const [a, b] = await Promise.all([digest(supplied), digest(expected)]);
+  let diff = 0;
+  for (let i = 0; i < a.length; i++) diff |= a[i] ^ b[i];
+  return diff === 0;
+}
+
+function challenge() {
+  /* Der Browser zeigt daraufhin seinen eigenen Anmeldedialog. */
+  return new NextResponse("Authentifizierung erforderlich.", {
+    status: 401,
+    headers: {
+      "WWW-Authenticate": ADMIN_REALM,
+      "Cache-Control": "no-store",
+      "X-Robots-Tag": "noindex, nofollow",
+    },
+  });
+}
+
+async function guardBackoffice(request) {
+  const expectedPassword = process.env.ADMIN_PASSWORD;
+
+  if (!expectedPassword) {
+    if (process.env.NODE_ENV !== "production") return null;
+    return new NextResponse("Backoffice ist nicht konfiguriert (ADMIN_PASSWORD fehlt).", {
+      status: 503,
+      headers: { "Cache-Control": "no-store", "X-Robots-Tag": "noindex, nofollow" },
+    });
+  }
+
+  const header = request.headers.get("authorization");
+  if (!header?.startsWith("Basic ")) return challenge();
+
+  let supplied;
+  try {
+    /* atob liefert eine Kette aus Byte-Zeichen. Ein Passwort mit Umlaut käme
+       darüber als Latin-1 an und passte nie zum UTF-8-Original — genau das,
+       was charset="UTF-8" im Realm dem Browser zugesagt hat. */
+    const bytes = Uint8Array.from(atob(header.slice(6)), (c) => c.charCodeAt(0));
+    supplied = new TextDecoder().decode(bytes);
+  } catch {
+    /* Kein gültiges Base64 — dieselbe Antwort wie ein falsches Passwort. */
+    return challenge();
+  }
+
+  const expected = `${process.env.ADMIN_USER || "maria"}:${expectedPassword}`;
+  return (await credentialsMatch(supplied, expected)) ? null : challenge();
+}
+
+export async function middleware(request) {
+  /* Steht vor allem anderen: Das Backoffice kennt kein Sprach-Routing, und
+     eine ungeprüfte Anfrage soll gar nicht erst weiter nach unten laufen. */
+  if (isBackoffice(request.nextUrl.pathname)) {
+    const denied = await guardBackoffice(request);
+    if (denied) return denied;
+    return NextResponse.next();
+  }
+
   const { pathname, search } = request.nextUrl;
   const [, first = ""] = pathname.split("/");
   const crawler = isCrawler(request.headers.get("user-agent"));
@@ -169,5 +280,15 @@ export const config = {
        _next    – Build-Assets und Bilder-Optimierung
        img/video/fonts – statische Medien aus public/
        Dateien mit Endung (favicon.ico, robots.txt, sitemap.xml, *.webp …) */
-  matcher: ["/((?!api|admin|_next|img|video|fonts|.*\\.[\\w]+$).*)"],
+  matcher: [
+    /* 1. Die Storefront — alles, was umgeschrieben werden soll. */
+    "/((?!api|admin|_next|img|video|fonts|.*\\.[\\w]+$).*)",
+    /* 2./3. Backoffice und seine Endpunkte. Sie sind oben ausgeschlossen und
+       werden NICHT umgeschrieben — sie kommen nur deshalb hierher, weil der
+       Zugangsschutz sie sehen muss. Ohne diese zwei Zeilen liefe die Prüfung
+       in guardBackoffice() für genau die Pfade nie, für die sie geschrieben
+       wurde. */
+    "/admin/:path*",
+    "/api/admin/:path*",
+  ],
 };

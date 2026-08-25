@@ -181,7 +181,61 @@ async function guardBackoffice(request) {
   return (await credentialsMatch(supplied, expected)) ? null : challenge();
 }
 
+/* Anfragen, die den Proxy nie gesehen haben — der Healthcheck des Containers
+   ruft http://127.0.0.1:3000/ direkt auf. Next setzt `x-forwarded-proto` auch
+   ohne Proxy auf "http", der Healthcheck bekäme also eine 308 auf ein https,
+   das dort nicht lauscht: Der Container gölte als ungesund und würde in eine
+   Neustartschleife laufen. Weitergeleitet wird nur öffentlicher Verkehr. */
+const INTERNAL_HOST = /^(localhost|127\.0\.0\.1|\[::1\])(:\d+)?$/i;
+
 export async function middleware(request) {
+  /* --- HTTPS erzwingen ---------------------------------------------------
+
+     Diese Weiterleitung gehört in den Proxy, kann dort aber nicht zuverlässig
+     stehen: Auf dem Server laufen mehrere Projekte hinter EINEM Traefik, und
+     Traefik führt für Middlewares einen einzigen globalen Namensraum. Zwei
+     Projekte definieren darin `redirect-to-https` unterschiedlich — eines
+     zusätzlich mit `permanent=true` —, woraufhin Traefik die Middleware gar
+     nicht erst baut und JEDER Router, der sie nennt, ungeladen bleibt. Port 80
+     antwortete deshalb mit 404, statt weiterzuleiten. Ein eindeutiger Name im
+     Panel behebt das nicht dauerhaft: Coolify erzeugt die Labels bei jedem
+     Deploy neu und überschreibt ihn. Hier steht die Regel in der
+     Versionsverwaltung und ist von keinem fremden Projekt aushebelbar.
+
+     Drei Bedingungen, jede gegen einen konkreten Fehlschlag:
+
+     NODE_ENV — Next setzt `x-forwarded-proto` AUCH OHNE Proxy, der Dev-Server
+     meldet dort schlicht "http". Ohne diese Bedingung leitete die Middleware
+     http://localhost:3000 nach https://localhost weiter, wo nichts lauscht;
+     die lokale Entwicklung wäre unbenutzbar. Im Produktionsbau ersetzt Next
+     den Ausdruck durch eine Konstante, die Prüfung kostet zur Laufzeit nichts.
+
+     /.well-known/ — darüber bestätigt Let's Encrypt die Domain, ausdrücklich
+     über HTTP. Eine Weiterleitung ließe die Erneuerung scheitern, und zwar
+     erst in 60 Tagen, wenn das Zertifikat abläuft. Traefik fängt den Pfad
+     selbst ab, bevor er hier ankommt; die Zeile kostet nichts und macht die
+     Absicht unmissverständlich.
+
+     Der Zielhost kommt aus dem Kopf, NICHT aus request.nextUrl: nextUrl trägt
+     hinter einem Proxy unter Umständen den internen Namen (gemessen: die
+     Weiterleitung zeigte auf https://localhost). Den öffentlichen Namen kennt
+     nur der Proxy, und er nennt ihn in x-forwarded-host. Verkettete Werte
+     ("a, b") zählen ab dem ersten — er stammt vom äußersten Proxy.
+
+     308 statt 301: erhält die Methode und spricht dieselbe Sprache wie die
+     übrigen dauerhaften Weiterleitungen dieser Datei. */
+  const firstOf = (value) => value?.split(",")[0].trim();
+  const forwardedHost = firstOf(request.headers.get("x-forwarded-host")) || request.headers.get("host");
+  if (
+    process.env.NODE_ENV === "production" &&
+    firstOf(request.headers.get("x-forwarded-proto")) === "http" &&
+    forwardedHost && !INTERNAL_HOST.test(forwardedHost) &&
+    !request.nextUrl.pathname.startsWith("/.well-known/")
+  ) {
+    const { pathname, search } = request.nextUrl;
+    return NextResponse.redirect(`https://${forwardedHost}${pathname}${search}`, 308);
+  }
+
   /* Steht vor allem anderen: Das Backoffice kennt kein Sprach-Routing, und
      eine ungeprüfte Anfrage soll gar nicht erst weiter nach unten laufen. */
   if (isBackoffice(request.nextUrl.pathname)) {

@@ -61,7 +61,10 @@ export const home = {
     ],
     journey: ["Salento", "Apulie", "Kampánie", "Gardské jezero"],
     quote: "„Italian wine, personal selection, share the pleasure.“",
-    cta: "Magazín",
+    /* Tlačítko vede na /geschichte (příběh značky), ne do magazínu:
+       popisek pojmenovával špatný cíl a /magazin skutečně existuje —
+       kdo klikl, čekal jej. */
+    cta: "Objevit náš příběh",
   },
 
   regions: {

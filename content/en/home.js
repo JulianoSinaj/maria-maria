@@ -58,7 +58,10 @@ export const home = {
     ],
     journey: ["Salento", "Puglia", "Campania", "Lake Garda"],
     quote: "“Italian wine, personal selection, share the pleasure.”",
-    cta: "Magazine",
+    /* The button goes to /geschichte (the brand story), not the magazine:
+       the label named the wrong destination, and /magazin genuinely exists —
+       anyone clicking expected that instead. */
+    cta: "Discover our story",
   },
 
   regions: {

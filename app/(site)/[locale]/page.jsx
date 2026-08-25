@@ -73,7 +73,22 @@ function HomeJsonLd({ locale, dict }) {
         }),
         /* Die Marken-FAQ liegt in allen vier Sprachen vor — das Markup
            beschreibt damit in jeder Fassung genau das, was der Besucher
-           auf der Seite liest. */
+           auf der Seite liest.
+
+           FAQPage steht in §7 des Briefs weder unter „verwenden" noch unter
+           „nicht verwenden" — die Lücke ist hier bewusst zugunsten des
+           Markups geschlossen (Brief-Nachtrag §7a, siehe SEO-BRIEF-NACHTRAG.md):
+
+           Ein Rich Result bringt es nicht mehr. Google zeigt FAQ-Sternchen
+           seit August 2023 nur noch für Behörden- und Gesundheitsseiten; ein
+           Weinhändler bekommt dafür keine erweiterte Ergebniszeile, und wer
+           es deswegen einbaut, baut es umsonst ein.
+
+           Es bleibt trotzdem drin: Die Fragen stehen sichtbar auf der Seite,
+           das Markup behauptet also nichts Zusätzliches, und für
+           Antwortmaschinen ist ein ausgezeichnetes Frage-Antwort-Paar
+           deutlich leichter zu verwerten als derselbe Text als Fließtext.
+           Der Nutzen hat sich verlagert, er ist nicht verschwunden. */
         faqNode({ url, items: dict.faq?.home ?? [] })
       )}
     />

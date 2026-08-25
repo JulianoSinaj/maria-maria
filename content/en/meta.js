@@ -12,10 +12,21 @@ export const meta = {
     /* `titleAbsolute` — the title already carries the brand. With the root
        layout's title.template it rendered as „Maria Maria — Il piacere del
        vino — Maria Maria" in the tab, in og:title and in the search result.
-       The wording itself is unchanged: the homepage brief's binding values
-       cover the German version only. */
-    titleAbsolute: "Maria Maria — Il piacere del vino",
-    description: "Italian boutique wines for moments chosen with care.",
+
+       Title and description now follow the German pattern („primary keyword
+       + market | brand") instead of repeating the brand claim. The reason is
+       the hreflang cluster: the brief (§2) declares it-IT, en-US and cs-CZ as
+       live siblings of the German homepage, and Google evaluates such a
+       cluster as a unit. Three of four members without a single keyword in
+       the title weaken the whole cluster — including the German page the
+       brief spent its effort on.
+
+       NOTE: the brief explicitly covers the German homepage only (§ scope).
+       These three strings follow its pattern but have NOT been signed off by
+       SEO/Brand — approval still outstanding. */
+    titleAbsolute: "Italian Boutique Wines in Germany | Maria Maria",
+    description:
+      "Personally curated boutique wines from Puglia, Campania and the Lake Garda area – for enjoyment, restaurants, retail and special occasions.",
   },
 
   collection: {

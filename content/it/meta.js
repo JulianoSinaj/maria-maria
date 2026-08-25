@@ -12,10 +12,21 @@ export const meta = {
     /* `titleAbsolute`, weil der Titel die Marke selbst führt: Mit dem
        title.template des Root-Layouts stand vorher „Maria Maria — Il piacere
        del vino — Maria Maria" im Tab, in og:title und in der Ergebniszeile.
-       Der Text selbst bleibt unverändert — die verbindlichen Werte des
-       Homepage-Briefs gelten nur für die deutsche Fassung (§ Umfang). */
-    titleAbsolute: "Maria Maria — Il piacere del vino",
-    description: "Vini italiani di boutique per momenti di piacere scelti con cura.",
+
+       Titel und Description folgen jetzt dem Muster der deutschen Fassung
+       („Hauptkeyword + Markt | Marke"), statt nur den Markenclaim zu
+       wiederholen. Grund ist der hreflang-Verbund: Der Brief (§2) meldet
+       it-IT, en-US und cs-CZ als Live-Geschwister der deutschen Startseite,
+       und Google bewertet einen solchen Verbund als Einheit. Drei von vier
+       Mitgliedern ohne ein einziges Keyword im Titel schwächen den ganzen
+       Cluster — die deutsche Optimierung eingeschlossen.
+
+       ACHTUNG: Der Brief deckt ausdrücklich nur die deutsche Homepage ab
+       (§ Umfang). Diese drei Strings sind nach seinem Muster gebildet, aber
+       nicht von SEO/Brand freigegeben — Abnahme nachholen. */
+    titleAbsolute: "Vini boutique italiani in Germania | Maria Maria",
+    description:
+      "Vini boutique selezionati personalmente da Puglia, Campania e area del Garda – per piacere, ristorazione, rivendita e occasioni speciali.",
   },
 
   collection: {

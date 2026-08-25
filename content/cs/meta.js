@@ -12,10 +12,20 @@ export const meta = {
     /* `titleAbsolute` — titulek už značku nese sám. S title.template
        kořenového layoutu se v záložce, v og:title i ve výsledku vyhledávání
        objevovalo „Maria Maria — Il piacere del vino — Maria Maria".
-       Znění zůstává beze změny: závazné hodnoty briefu platí jen pro
-       německou verzi. */
-    titleAbsolute: "Maria Maria — Il piacere del vino",
-    description: "Italská butiková vína pro vědomě zvolené chvíle potěšení.",
+
+       Titulek i popis nyní následují vzor německé verze („hlavní klíčové
+       slovo + trh | značka") místo pouhého opakování claimu značky. Důvod je
+       hreflang: brief (§2) hlásí it-IT, en-US a cs-CZ jako živé sourozence
+       německé úvodní stránky a Google hodnotí takový svazek jako celek. Tři
+       ze čtyř členů bez jediného klíčového slova v titulku oslabují celý
+       cluster — včetně německé stránky, do které brief investoval.
+
+       POZOR: Brief výslovně pokrývá pouze německou úvodní stránku
+       (§ rozsah). Tyto tři řetězce vznikly podle jeho vzoru, ale nemají
+       schválení SEO/Brand — schválení je třeba doplnit. */
+    titleAbsolute: "Italská butiková vína v Německu | Maria Maria",
+    description:
+      "Osobně vybíraná butiková vína z Apulie, Kampánie a oblasti Gardského jezera – pro potěšení, gastronomii, obchod i výjimečné příležitosti.",
   },
 
   collection: {

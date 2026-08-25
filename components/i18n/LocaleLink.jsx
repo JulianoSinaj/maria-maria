@@ -3,7 +3,13 @@
 import { forwardRef } from "react";
 import NextLink from "next/link";
 import { useLocaleTools } from "@/lib/i18n/context";
-import { SHOP_ENABLED, EXTERNAL_SHOP_URL, isShopPath, isExternalHref } from "@/lib/shop/config";
+import {
+  SHOP_ENABLED,
+  EXTERNAL_SHOP_URL,
+  isShopPath,
+  isExternalHref,
+  outwardRel,
+} from "@/lib/shop/config";
 
 /* Ein `next/link`, das die aktive Sprache mitnimmt.
 
@@ -45,7 +51,7 @@ const LocaleLink = forwardRef(function LocaleLink({ href, ...rest }, ref) {
     /* Die Requisiten von next/link haben an einem <a> nichts zu suchen —
        React schriebe sie als unbekannte Attribute ins DOM. */
     const { prefetch, replace, scroll, shallow, locale, passHref, legacyBehavior, ...anchor } = rest;
-    return <a ref={ref} href={outward} target="_blank" rel="noopener noreferrer" {...anchor} />;
+    return <a ref={ref} href={outward} target="_blank" rel={outwardRel(outward)} {...anchor} />;
   }
 
   /* next/link erlaubt auch die Objektform ({ pathname, query, hash }).

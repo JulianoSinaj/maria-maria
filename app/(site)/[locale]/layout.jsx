@@ -99,6 +99,21 @@ export async function generateMetadata({ params }) {
              zwischen einer Bildkachel und einer Textzeile in Discover und der
              Bildersuche. */
           "max-image-preview": "large",
+          /* Die beiden folgenden Angaben nennt §2 nur implizit — der Brief
+             führt sie im googlebot-Tag, nicht im allgemeinen. Sie stehen
+             jetzt an beiden Stellen (Brief-Nachtrag §2a):
+
+             `max-snippet: -1` hebt die Längenbegrenzung des Textausschnitts
+             auf. Ohne die Angabe kürzen Bing, DuckDuckGo und die KI-Crawler,
+             die dieses Tag lesen, den Ausschnitt konservativ — dieselbe
+             Seite, die bei Google zwei volle Zeilen bekommt, erscheint dort
+             abgeschnitten. Es gibt keinen Grund, dem eigenen Text bei allen
+             außer einem Crawler weniger Platz zu geben.
+
+             `max-video-preview: -1` ist Vorsorge: Sobald eine Weinseite ein
+             Video trägt, gilt die Angabe bereits. */
+          "max-snippet": -1,
+          "max-video-preview": -1,
           googleBot: {
             index: true,
             follow: true,

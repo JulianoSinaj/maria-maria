@@ -2,6 +2,7 @@
 import Link from "@/components/i18n/LocaleLink";
 import { motion } from "motion/react";
 import { Arrow, ArrowUpRight } from "../Icons";
+import { outwardRel } from "@/lib/shop/config";
 
 /* Maria Maria button system — premium micro-interactions.
    
@@ -207,7 +208,7 @@ export default function Button({
 
   if (href && external) {
     return (
-      <motion.a href={href} target="_blank" rel="noopener noreferrer" {...motionProps}>
+      <motion.a href={href} target="_blank" rel={outwardRel(href)} {...motionProps}>
         {content}
       </motion.a>
     );

@@ -1,7 +1,8 @@
 "use client";
 import { useRef } from "react";
 import Link from "@/components/i18n/LocaleLink";
-import { motion, useMotionValue, useSpring, useReducedMotion } from "motion/react";
+import { motion, useMotionValue, useSpring } from "motion/react";
+import { useReducedMotionSafe } from "@/components/motion/useMediaQuery";
 import { Arrow, Plate, Mountains, Grapes } from "@/components/Icons";
 import { Reveal } from "@/components/motion/Reveal";
 
@@ -23,7 +24,7 @@ const HELP_SHAPE = [
    über Springs, niemals über rohe Cursorkoordinaten. */
 function HelpCard({ item }) {
   const ref = useRef(null);
-  const reduced = useReducedMotion();
+  const reduced = useReducedMotionSafe();
   const Icon = item.icon;
 
   const rx = useMotionValue(0);

@@ -1,5 +1,6 @@
 "use client";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
+import { useReducedMotionSafe } from "@/components/motion/useMediaQuery";
 import { Cart, Plus } from "@/components/Icons";
 import { Minus } from "./ShopIcons";
 import { useCart } from "./CartContext";
@@ -13,7 +14,7 @@ import { wineId } from "./shopData";
 const SPRING = { type: "spring", stiffness: 320, damping: 24 };
 
 export default function AddToCart({ wine, className = "" }) {
-  const reduced = useReducedMotion();
+  const reduced = useReducedMotionSafe();
   const { add, decrement, qtyOf } = useCart();
   const ui = useCommon("ui");
   const id = wineId(wine);

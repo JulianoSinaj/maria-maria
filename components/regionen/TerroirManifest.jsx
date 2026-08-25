@@ -1,7 +1,8 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useScroll, useSpring, useTransform, useReducedMotion } from "motion/react";
+import { motion, useScroll, useSpring, useTransform } from "motion/react";
+import { useReducedMotionSafe } from "@/components/motion/useMediaQuery";
 import { SCROLL_SPRING_HEAVY } from "@/components/motion/springs";
 import { Eyebrow } from "@/components/Deco";
 import { Aura, GhostWord } from "@/components/Atmosphere";
@@ -22,7 +23,7 @@ import { Aura, GhostWord } from "@/components/Atmosphere";
    (translateZ) im perspektivischen Viewport, keine Layout-Bewegung. */
 
 function Pillar({ pillar, index }) {
-  const reduced = useReducedMotion();
+  const reduced = useReducedMotionSafe();
   const { title, text } = pillar;
 
   return (
@@ -79,7 +80,7 @@ function Pillar({ pillar, index }) {
    das Wörterbuch nicht selbst laden. */
 export default function TerroirManifest({ t = {} }) {
   const ref = useRef(null);
-  const reduced = useReducedMotion();
+  const reduced = useReducedMotionSafe();
 
   /* Der Fortschrittsstrich links der Säulen folgt dem Scroll — über eine
      Feder geführt, damit er nachschwingt statt zu kleben. */

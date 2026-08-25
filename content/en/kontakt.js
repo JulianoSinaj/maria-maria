@@ -32,6 +32,8 @@ export const kontakt = {
   intents: {
     title: "Why would you like to contact us?",
     intro: "Choose the occasion that best matches what you have in mind.",
+    carouselPrev: "Previous occasion",
+    carouselNext: "Next occasion",
     items: {
       gastronomie: {
         title: "Restaurants & delicatessen",

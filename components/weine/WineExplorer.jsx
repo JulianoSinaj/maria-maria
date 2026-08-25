@@ -1,7 +1,8 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
+import { useReducedMotionSafe } from "@/components/motion/useMediaQuery";
 import WineCard from "@/components/WineCard";
 import Button from "@/components/ui/Button";
 import WineFilterBar from "@/components/weine/WineFilterBar";
@@ -42,7 +43,7 @@ const GRID_SPRING = { type: "spring", stiffness: 300, damping: 30 };
 export default function WineExplorer() {
   const allWines = useWines();
   const catalogue = useCommon("catalogue");
-  const reduced = useReducedMotion();
+  const reduced = useReducedMotionSafe();
   const params = useSearchParams();
   const art = params.get("art");
   const regionParam = params.get("region");

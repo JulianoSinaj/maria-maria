@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { motion, useReducedMotion } from "motion/react";
+import { motion } from "motion/react";
+import { useReducedMotionSafe } from "@/components/motion/useMediaQuery";
 import Bottle from "@/components/Bottle";
 import Photo from "@/components/media/Photo";
 import Button from "@/components/ui/Button";
@@ -32,7 +33,7 @@ export default function BundleCard({ bundle, className = "" }) {
   const shop = useCommon("shop");
   const ui = useCommon("ui");
   const copy = shop.bundles?.[bundle.id] ?? {};
-  const reduced = useReducedMotion();
+  const reduced = useReducedMotionSafe();
   const { add, openCart } = useCart();
   const wines = bundleWines(bundle);
   const sum = bundleSum(bundle);

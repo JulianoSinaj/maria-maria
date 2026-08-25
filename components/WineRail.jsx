@@ -2,7 +2,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "@/components/i18n/LocaleLink";
 import { useCommon, useLocalizedWines } from "@/lib/i18n/context";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
+import { useReducedMotionSafe } from "@/components/motion/useMediaQuery";
 import useMediaQuery from "@/components/motion/useMediaQuery";
 import WineCard from "./WineCard";
 import { Arrow, ChevronRight } from "./Icons";
@@ -39,7 +40,7 @@ export default function WineRail({ wines: incoming, className = "" }) {
   const wines = useLocalizedWines(incoming);
   const catalogue = useCommon("catalogue");
   const ui = useCommon("ui");
-  const reduced = useReducedMotion();
+  const reduced = useReducedMotionSafe();
   /* Dieselbe Grenze wie Tailwinds `sm` — der Server nimmt Desktop an. */
   const wide = useMediaQuery("(min-width: 640px)", true);
   const [filter, setFilter] = useState(null);

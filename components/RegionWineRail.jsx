@@ -1,7 +1,8 @@
 "use client";
 
 import { useRef, useState, useCallback, useEffect } from "react";
-import { motion, useReducedMotion } from "motion/react";
+import { motion } from "motion/react";
+import { useReducedMotionSafe } from "@/components/motion/useMediaQuery";
 import WineCard from "@/components/WineCard";
 import { ChevronRight } from "@/components/Icons";
 import { useCommon, useLocalizedWines } from "@/lib/i18n/context";
@@ -16,7 +17,7 @@ export default function RegionWineRail({ wines: incoming, label }) {
   /* siehe WineRail — die Struktur kommt als Prop, der Text aus dem Wörterbuch */
   const wines = useLocalizedWines(incoming);
   const trackRef = useRef(null);
-  const reduced = useReducedMotion();
+  const reduced = useReducedMotionSafe();
   const [atStart, setAtStart] = useState(true);
   const [atEnd, setAtEnd] = useState(false);
   const [overflowing, setOverflowing] = useState(false);

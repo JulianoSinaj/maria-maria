@@ -1,6 +1,7 @@
 "use client";
 import { useRef } from "react";
-import { motion, useMotionValue, useSpring, useMotionTemplate, useReducedMotion } from "motion/react";
+import { motion, useMotionValue, useSpring, useMotionTemplate } from "motion/react";
+import { useReducedMotionSafe } from "./useMediaQuery";
 import { useTouchDevice } from "@/components/motion/useMediaQuery";
 
 /* 3D tilt card — true perspective viewport, spring-damped rotation, and a
@@ -8,7 +9,7 @@ import { useTouchDevice } from "@/components/motion/useMediaQuery";
 
 export default function TiltCard({ children, className = "", max = 6, glare = true, lift = true, radius = "rounded-card-lg" }) {
   const ref = useRef(null);
-  const reduced = useReducedMotion();
+  const reduced = useReducedMotionSafe();
   /* whileHover hängt an pointerenter — auf Touch feuert das beim Tippen,
      aber pointerleave kommt nie: die Karte bliebe „gehoben" stehen. Tailwinds
      hoverOnlyWhenSupported schützt nur CSS-hover, nicht diesen JS-Zustand. */

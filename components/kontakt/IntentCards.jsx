@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { motion, useReducedMotion } from "motion/react";
+import { motion } from "motion/react";
+import { useReducedMotionSafe } from "@/components/motion/useMediaQuery";
 import { Arrow, ChevronRight } from "@/components/Icons";
 import { Stagger, StaggerItem } from "@/components/motion/Reveal";
 import { useIntentTarget } from "./IntentContext";
@@ -99,7 +100,7 @@ function IntentCard({ item, Icon, value, requestIntent, className = "" }) {
    beim Kartenwechsel nicht auf und ab — anders als bei einem Wechsel, der
    jeweils nur die aktive Karte rendert. */
 function IntentCarousel({ copy, requestIntent }) {
-  const reduced = useReducedMotion();
+  const reduced = useReducedMotionSafe();
   const count = INTENT_CARDS.length;
   const [[index, dir], setIndex] = useState([0, 0]);
   const timerRef = useRef(null);

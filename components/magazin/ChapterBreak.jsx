@@ -1,6 +1,7 @@
 "use client";
 import { useRef } from "react";
-import { motion, useReducedMotion, useScroll, useSpring, useTransform } from "motion/react";
+import { motion, useScroll, useSpring, useTransform } from "motion/react";
+import { useReducedMotionSafe } from "@/components/motion/useMediaQuery";
 import { Grapes } from "@/components/Icons";
 import { SCROLL_SPRING } from "@/components/motion/springs";
 
@@ -15,7 +16,7 @@ const RULE_SPRING = { type: "spring", stiffness: 70, damping: 22, mass: 1 };
 
 export default function ChapterBreak({ number, title, word, className = "" }) {
   const ref = useRef(null);
-  const reduced = useReducedMotion();
+  const reduced = useReducedMotionSafe();
 
   /* Ziffern-Drift: ±5vw über die Sichtspanne der Marke */
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });

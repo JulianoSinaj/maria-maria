@@ -3,11 +3,11 @@ import { useRef } from "react";
 import {
   motion,
   useMotionValue,
-  useReducedMotion,
   useScroll,
   useSpring,
   useTransform,
 } from "motion/react";
+import { useReducedMotionSafe } from "@/components/motion/useMediaQuery";
 import { SectionTitle } from "@/components/Deco";
 import Photo from "@/components/media/Photo";
 import { Stagger, StaggerItem } from "@/components/motion/Reveal";
@@ -72,7 +72,7 @@ function EngravedRings({ accent }) {
    Flasche. Der Packshot fährt beim Scrollen federgedämpft mit (Parallax) und
    folgt dem Cursor magnetisch; beides reine GPU-Transforms. */
 function SheetIdentity({ wine, accent, title }) {
-  const reduced = useReducedMotion();
+  const reduced = useReducedMotionSafe();
   const ref = useRef(null);
 
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });

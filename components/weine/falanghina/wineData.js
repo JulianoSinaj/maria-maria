@@ -204,6 +204,10 @@ export const FALANGHINA = {
   pairing: {
     scene: {
       dish: "Ricciola ai Pomodorini",
+      /* Kein eigenes Magazine-Motiv (kein cardKey) — im Magazin steht der
+         Wein unter „Fisch & Meer" als „Auch passend". Der Pairing-CTA öffnet
+         dort genau diese Antwort-Karte (pairingCards.js). */
+      anlassKey: "fisch-meer",
       copy: "Zarte Ricciola und saftige Kirschtomaten brauchen keinen schweren Begleiter. Die Falanghina bringt Frische, Frucht und Lebendigkeit an den Tisch und lässt dem feinen Fisch genügend Raum. Ihre frische Art greift die Saftigkeit der Tomaten auf, während ihr leichter Körper das Gericht begleitet, ohne es zu überdecken. Ein klares, mediterranes Pairing, das besonders an warmen Tagen seine Stärke zeigt.",
       image: null,
       imageAlt:

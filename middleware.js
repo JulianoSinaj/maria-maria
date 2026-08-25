@@ -58,6 +58,22 @@ const CRAWLER =
 
 const isCrawler = (userAgent) => Boolean(userAgent) && CRAWLER.test(userAgent);
 
+/* Vorab-Ladungen des App-Routers (next/link holt Ziele im Sichtfeld, bei
+   Hover und bei touchstart) sind von Punkt 4 ausgenommen.
+
+   Der Schaden war auf Telefonen täglich zu sehen: Wer auf /it steht und im
+   Sprachumschalter „Deutsch" antippt, zielt auf „/". touchstart löst die
+   Vorab-Ladung aus, BEVOR der Klick das Cookie auf „de" umschreibt — die
+   Middleware sah noch „it" und antwortete mit 307 nach /it. Der Router
+   merkte sich „/ führt nach /it" und nahm beim Klick genau diesen Eintrag:
+   Adresse und Seite blieben italienisch, nur das Cookie sagte „de". Eine
+   Vorab-Ladung ist keine Absicht des Besuchers — sie bekommt die deutsche
+   Wurzel, wie jeder Deep Link. Die echte Sprachweiche greift weiterhin bei
+   jedem Aufruf, der die Adressleiste erreicht. */
+const isRouterPrefetch = (request) =>
+  request.headers.get("next-router-prefetch") === "1" ||
+  request.headers.get("purpose") === "prefetch";
+
 /* Accept-Language: "cs-CZ,cs;q=0.9,en;q=0.8" → erste Sprache, die wir führen. */
 function preferredLocale(header) {
   if (!header) return null;
@@ -282,7 +298,7 @@ export async function middleware(request) {
      Nur für Menschen. Für Crawler und Vorschau-Dienste fällt dieser Block
      aus, sie laufen weiter nach unten in die deutsche Fassung — siehe die
      Begründung bei CRAWLER. */
-  if (pathname === "/" && !crawler) {
+  if (pathname === "/" && !crawler && !isRouterPrefetch(request)) {
     const remembered = request.cookies.get(LOCALE_COOKIE)?.value;
     const choice = isLocale(remembered) ? remembered : preferredLocale(request.headers.get("accept-language"));
     if (choice && choice !== DEFAULT_LOCALE) {

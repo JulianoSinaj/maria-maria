@@ -5,23 +5,28 @@ import {
   motion,
   useInView,
   useMotionValue,
-  useReducedMotion,
   useScroll,
   useSpring,
   useTransform,
 } from "motion/react";
+import { useReducedMotionSafe } from "@/components/motion/useMediaQuery";
 import Button from "@/components/ui/Button";
 import { useTouchDevice } from "@/components/motion/useMediaQuery";
 import { pairingBlurFor } from "@/components/weine/pairingBlur";
 import { PAIRING_PHOTO_SIZE, sceneSources } from "@/components/weine/pairingPhoto";
-import { CARD_PHOTO_SIZE, PAIRING_CARDS, cardPhotoSrc, cardSrcSet } from "@/components/magazin/pairingCards";
+import {
+  CARD_PHOTO_SIZE,
+  PAIRING_CARDS,
+  cardPhotoSrc,
+  cardSrcSet,
+  pairingMagazinHref,
+} from "@/components/magazin/pairingCards";
 import { cardBlurFor } from "@/components/magazin/pairingCardsBlur";
 import {
   pushEvent,
-  WINE_SHOP_CLICK,
+  PAIRING_MAGAZIN_CLICK,
   FOOD_PAIRING_VIEW,
   REGION_LINK_CLICK,
-  CTA_POSITION,
   pageLanguage,
 } from "@/lib/analytics";
 
@@ -270,7 +275,7 @@ function PairingPhoto({ src, srcSet, sizes, blur, alt, size, drift, animate }) {
 
 export default function PairingScene({ wine }) {
   const scene = wine.pairing?.scene;
-  const reduced = useReducedMotion();
+  const reduced = useReducedMotionSafe();
   const touch = useTouchDevice();
   const ref = useRef(null);
   const seen = useRef(false);
@@ -332,6 +337,13 @@ export default function PairingScene({ wine }) {
   const imageAlt = scene.imageAlt ?? `${wine.name} – das passende Gericht`;
   const blur = card ? cardBlurFor(card.key) : scene.image ? null : pairingBlurFor(wine.slug);
   const size = card ? CARD_PHOTO_SIZE : PAIRING_PHOTO_SIZE;
+
+  /* Ziel des primären CTAs: das Food-Pairing-Kapitel im Magazin, geöffnet
+     auf der Antwort-Karte dieses Weins. `cardKey` (Weine mit eigener
+     Magazine-Card) oder `anlassKey` (Weine, die dort unter „Auch passend"
+     stehen) bestimmen die Karte; ohne beides landet man am Kapitelanfang. */
+  const anlassKey = scene.cardKey ?? scene.anlassKey ?? null;
+  const magazinHref = pairingMagazinHref(anlassKey);
 
   return (
     <section
@@ -422,24 +434,24 @@ export default function PairingScene({ wine }) {
                   die CTA, statt beide gegeneinander zu quetschen. */}
               <div className="mt-8 flex flex-col items-stretch gap-x-5 gap-y-3 sm:flex-row sm:flex-wrap sm:items-center">
                 <Button
-                  href={wine.cta.button.href}
+                  href={magazinHref}
                   variant="primary"
                   size="md"
                   className="w-full sm:w-auto"
                   onClick={() =>
-                    pushEvent(WINE_SHOP_CLICK, {
+                    pushEvent(PAIRING_MAGAZIN_CLICK, {
                       wine_name: wine.name,
-                      cta_position: CTA_POSITION.foodPairing,
+                      anlass: anlassKey,
                       language: pageLanguage(),
                     })
                   }
                 >
-                  {/* Gekürzt von „Diesen Wein im offiziellen Shop entdecken":
-                      41 Zeichen brauchten 466 px und brachen zwischen 1024 und
-                      1130 px zweizeilig um. „Diesen Wein" trug dabei nichts —
-                      die ganze Sektion spricht über genau diesen Wein — und
-                      dieselbe Formulierung steht schon im Hero. */}
-                  Im offiziellen Shop entdecken
+                  {/* Seit 08/2026 führt der CTA ins Magazin statt in den Shop:
+                      Der Shop-Weg steht bereits im Hero und im Abschlussband;
+                      hier gehört die Fahrt zur Antwort-Karte, die genau diesen
+                      Wein empfiehlt. Kurz gehalten, damit die CTA neben dem
+                      Regionen-Link einzeilig bleibt. */}
+                  Zum Food-Pairing im Magazin
                 </Button>
 
                 {scene.regionLink && (

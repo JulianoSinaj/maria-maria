@@ -1,5 +1,6 @@
 "use client";
-import { motion, useReducedMotion } from "motion/react";
+import { motion } from "motion/react";
+import { useReducedMotionSafe } from "@/components/motion/useMediaQuery";
 
 /* Word-level masked reveal for display headlines — each word rises out of an
    overflow clip on a spring, staggered. Screen readers get the plain string. */
@@ -18,7 +19,11 @@ export default function SplitText({
   once = true,
   as: Tag = "span",
 }) {
-  const reduced = useReducedMotion();
+  /* Hydration-sicher (siehe useReducedMotionSafe): Der reduzierte Zweig
+     rendert einen anderen DOM-Baum als der Server — mit Motions eigenem
+     useReducedMotion() scheiterte die Hydration auf jedem Telefon mit
+     „Bewegung reduzieren". */
+  const reduced = useReducedMotionSafe();
   const words = String(text).split(" ");
 
   if (reduced) {

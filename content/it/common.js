@@ -8,7 +8,8 @@ export const common = {
   nav: {
     home: "Home",
     wines: "I nostri vini",
-    regions: "Regioni",
+    regions: "Regioni del vino",
+    regionsShort: "Regioni",
     magazine: "Magazine",
     contact: "Contatti",
     shop: "Vai allo shop ufficiale",

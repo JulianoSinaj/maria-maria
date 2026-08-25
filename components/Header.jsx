@@ -127,6 +127,13 @@ export default function Header() {
   const wideNav = useMediaQuery("(min-width: 1024px)", true);
   const shopLabel = wideNav ? nav.shop : nav.shopShort ?? nav.shop;
 
+  /* „Weinregionen" ist im selben Band der zweite Posten, der nicht mehr
+     passt: Die Flex-Zeile spart zuerst am Logo und staucht die Wortmarke
+     von 96 auf unter 10 px. Zwischen md und lg steht deshalb die kurze
+     Fassung; darüber und im Telefon-Menü der volle Name. */
+  const navLabel = (key) =>
+    key === "regions" && !wideNav ? nav.regionsShort ?? nav[key] : nav[key];
+
   return (
     <header className="fixed inset-x-0 top-0 z-50 pt-[env(safe-area-inset-top)]">
       {/* reading progress */}
@@ -171,7 +178,7 @@ export default function Header() {
                         : "text-charcoal/75 hover:text-bordeaux"
                   }`}
                 >
-                  {nav[item.key]}
+                  {navLabel(item.key)}
                   {active ? (
                     <motion.span
                       layoutId="nav-underline"

@@ -14,7 +14,14 @@ export const common = {
   nav: {
     home: "Home",
     wines: "Unsere Weine",
-    regions: "Regionen",
+    regions: "Weinregionen",
+    /* Nur für die Kopfzeile zwischen 768 und 1023 px (iPad hochkant) —
+       derselbe Engpass, den weiter unten schon `shopShort` löst: Mit
+       „Weinregionen" ist die Zeile in diesem Band vier Zeichen zu breit,
+       und der Flex-Zeile geht die Luft zuerst beim Logo aus. Server-
+       gerendertes HTML, Desktop und Telefon-Menü tragen die lange
+       Fassung — siehe components/Header.jsx. */
+    regionsShort: "Regionen",
     magazine: "Magazin",
     contact: "Kontakt",
     /* Der Knopf führt zum offiziellen externen Shop (Terra Vera) — und sagt

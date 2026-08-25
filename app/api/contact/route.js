@@ -1,10 +1,13 @@
 import { NextResponse } from "next/server";
+import nodemailer from "nodemailer";
 import { BUSINESS } from "@/lib/site";
 
 /* Kontakt-Endpoint — nimmt das Anfrageformular entgegen, validiert
    serverseitig und leitet die Anfrage an einen konfigurierbaren Kanal weiter:
    1. CONTACT_WEBHOOK_URL  — beliebiger Webhook (Zapier/Make/Slack/CRM), erhält JSON
    2. RESEND_API_KEY + CONTACT_TO_EMAIL — Versand als E-Mail über Resend
+   3. SMTP_HOST + SMTP_USER + SMTP_PASSWORD — Versand über ein bestehendes
+      Postfach (hier: Strato), siehe die Begründung bei deliver()
    Ohne Konfiguration wird die Anfrage im Server-Log festgehalten, damit im
    Staging nichts verloren geht.
 
@@ -119,6 +122,52 @@ async function deliver(data) {
     });
     if (!res.ok) throw new Error(`Resend antwortete mit ${res.status}`);
     return "email";
+  }
+
+  /* 3. SMTP — Versand über ein bestehendes Postfach.
+
+     Für diese Installation der vorgesehene Weg. Die Postfächer der Domain
+     liegen bei Strato, und ihr SPF-Eintrag autorisiert Stratos Mailserver
+     bereits (v=spf1 redirect=_spf.strato.com). Wer über genau diesen Server
+     versendet, besteht die SPF-Prüfung deshalb ohne eine einzige
+     DNS-Änderung — ein fremder Versanddienst kostete einen DKIM-Schlüssel
+     plus einen Umbau des SPF-Eintrags, und `redirect=` verträgt kein
+     schlichtes Anhängen.
+
+     `from` ist per Vorgabe das authentifizierte Postfach selbst. Strato
+     lehnt — wie die meisten Provider — eine Absenderadresse ab, die nicht
+     zum Konto gehört; eine frei gewählte Adresse ließe den Versand mit 550
+     scheitern. `replyTo` trägt die Adresse des Anfragenden, damit „Antworten"
+     im Postfach direkt bei ihm landet und nicht bei uns selbst.
+
+     Die drei Timeouts sind nicht dekorativ: Ohne sie hält ein stiller
+     SMTP-Server die Anfrage bis zum Server-Timeout offen, und der Besucher
+     sieht ein Formular, das sich nicht mehr rührt. */
+  const smtpHost = process.env.SMTP_HOST;
+  const smtpUser = process.env.SMTP_USER;
+  const smtpPassword = process.env.SMTP_PASSWORD;
+  if (smtpHost && smtpUser && smtpPassword && to) {
+    /* 465 spricht ab der ersten Nachricht TLS, 587 handelt es über STARTTLS
+       aus. Die Unterscheidung ist genau diese Zahl. */
+    const port = Number(process.env.SMTP_PORT) || 465;
+    const transport = nodemailer.createTransport({
+      host: smtpHost,
+      port,
+      secure: port === 465,
+      auth: { user: smtpUser, pass: smtpPassword },
+      connectionTimeout: 10_000,
+      greetingTimeout: 10_000,
+      socketTimeout: 15_000,
+    });
+
+    await transport.sendMail({
+      from: process.env.CONTACT_FROM_EMAIL || smtpUser,
+      to,
+      replyTo: data.email,
+      subject: `[${data.intentLabel || data.intent}] Anfrage von ${data.name}`,
+      text: mailBody(data),
+    });
+    return "smtp";
   }
 
   console.log("[kontakt] Anfrage erhalten (kein Versandkanal konfiguriert):", data);

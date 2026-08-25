@@ -2,17 +2,15 @@
 
 export const home = {
   hero: {
-    /* Stessa struttura di content/de/home.js (brief Homepage, 24.08.2026):
-       una sola H1 — marchio più keyword principale — con il claim italiano
-       come <p lang="it"> a parte; la seconda CTA porta alla consulenza
-       personale (/kontakt), la vecchia riga di numeri non c'è più. */
-    eyebrow: "SELEZIONE PERSONALE · DAL 2019",
-    title: "Maria Maria – vini boutique italiani",
-    claim: "Il piacere del vino.",
-    lede: "Vini selezionati a mano da piccole cantine familiari italiane – scelti personalmente per momenti di piacere consapevole in Germania, dall'aperitivo alla grande serata.",
-    ctaWines: "Scopri i nostri vini",
-    ctaContact: "Richiedi una consulenza personale",
-    photoAlt: "Bottiglia Maria Maria e calice di vino rosso davanti alle vigne con vista sulla costa mediterranea",
+    eyebrow: "Vini boutique italiani",
+    lede: "Vini selezionati a mano da piccole cantine familiari – per momenti di piacere scelti con cura, dall'aperitivo alla grande serata.",
+    ctaWines: "Scopri i vini",
+    ctaShop: "Vai allo shop",
+    statWines: "Vini boutique",
+    statRegions: "Regioni d'Italia",
+    statSince: "dalla fondazione",
+    photoAlt:
+      "Bottiglia Maria Maria e un calice di vino rosso su un muretto di pietra tra vigne e mare, dietro una donna in abito bianco che guarda la costa",
   },
 
   philosophy: {
@@ -55,7 +53,8 @@ export const home = {
     title: "Due anime,",
     titleAccent: "un solo nome",
     paragraphs: [
-      "Maria Maria nasce nel Salento, nell'estate del 2019. A un tavolo tra amici, con due donne di nome Maria e un enologo, prende forma l'idea di una selezione personale di vini italiani.",
+      "Maria Maria nasce nel Salento, nell'estate del 2019 — tra ricordi d'infanzia e vecchi filari, un momento è diventato un'illuminazione: per noi il vino non è una bevanda, ma un catalizzatore di emozioni.",
+      "Da allora il nostro viaggio va dai filari assolati del Salento ai suoli vulcanici della Campania, fino alla sponda meridionale del Lago di Garda — ogni bottiglia una tappa, ogni regione una lingua diversa.",
     ],
     journey: ["Salento", "Puglia", "Campania", "Lago di Garda"],
     quote: "«Italian wine, personal selection, share the pleasure.»",
@@ -67,58 +66,29 @@ export const home = {
 
   regions: {
     eyebrow: "Origine",
-    title: "Tre origini italiane, tre firme inconfondibili",
+    title: "Dove i nostri vini sono di casa",
     description:
-      "I nostri nove vini portano dalla Puglia alla Campania fino all'area meridionale del Lago di Garda. Ogni origine ha i suoi vitigni, i suoi paesaggi e le sue persone – selezionati personalmente per Maria Maria.",
+      "Suolo, luce e clima plasmano ogni uva – alla fine nel calice si assapora il paesaggio.",
     cta: "Tutte le regioni",
     detailCta: "Scopri di più",
     items: {
       apulien: {
         name: "Puglia",
         tag: "Il cuore del Sud",
-        long: "Vini baciati dal sole, con calore, frutto e carattere mediterraneo – tra cui la nostra selezione di Primitivo e Rosato.",
-        cta: "Scopri la Puglia",
-        alt: "Trulli e ulivi in Puglia",
+        desc: "Il sole del Sud e aromi pieni di forza.",
+        long: "Tra Salento e Gallipoli, Primitivo e Negroamaro maturano sotto il sole del Sud – vini caldi e potenti, con un'anima mediterranea.",
       },
       kampanien: {
         name: "Campania",
         tag: "Tra vulcano e mare",
-        long: "Vini minerali e di carattere dal Sud Italia – segnati da vitigni come Greco, Falanghina e Aglianico.",
-        cta: "Scopri la Campania",
-        alt: "Vigneti sulla costa campana con il Vesuvio",
+        desc: "Suoli vulcanici, caratteri originari.",
+        long: "Intorno a Napoli e Salerno i suoli vulcanici del Vesuvio danno vini di profondità e autenticità – dalla Falanghina all'Aglianico.",
       },
       garda: {
-        name: "Area del Lago di Garda (Lombardia)",
+        name: "Lago di Garda / Lombardia",
         tag: "L'eleganza del Nord",
-        long: "Vini eleganti e freschi dall'area meridionale del Lago di Garda – con il Lugana DOC come chiaro riferimento d'origine.",
-        cta: "Scopri i vini del Lago di Garda",
-        alt: "Vigneti sul Lago di Garda in Lombardia",
-      },
-    },
-  },
-
-  /* I tre segmenti di conversione — le CTA portano a /kontakt?anliegen=…
-     e preselezionano la richiesta nel modulo (components/kontakt/intents.js). */
-  segments: {
-    title: "Selezionati personalmente – per il vostro piacere, il vostro assortimento e la vostra occasione",
-    intro:
-      "Per il vostro ristorante, il vostro assortimento o un evento speciale: consigliamo personalmente e componiamo una selezione adatta a concept, ospiti e occasione.",
-    proof: "Consulenza personale da Mettmann, vicino a Düsseldorf – nel Nord Reno-Vestfalia e oltre.",
-    items: {
-      gastronomie: {
-        title: "Ristorazione & gastronomia",
-        text: "Vini italiani selezionati personalmente per ristoranti, caffè, enoteche e gastronomie – in linea con cucina, stile e ospiti.",
-        cta: "Richiedi un assortimento per la ristorazione",
-      },
-      handel: {
-        title: "Commercio & rivendita",
-        text: "Vini di carattere con origine tracciabile e consulenza personale per partner commerciali e rivenditori selezionati.",
-        cta: "Parliamo di una partnership commerciale",
-      },
-      events: {
-        title: "Eventi & degustazioni",
-        text: "Selezioni di vini su misura per feste private, eventi aziendali e degustazioni guidate a Düsseldorf, nel Nord Reno-Vestfalia e oltre.",
-        cta: "Richiedi un evento o una degustazione",
+        desc: "Eleganza, freschezza e profondità minerale.",
+        long: "Sulla sponda meridionale del Lago di Garda nasce il Lugana – un bianco di rara eleganza, sostenuto da freschezza e profondità minerale.",
       },
     },
   },

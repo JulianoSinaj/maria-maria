@@ -2,17 +2,15 @@
 
 export const home = {
   hero: {
-    /* Same structure as content/de/home.js (Homepage brief, 24.08.2026):
-       exactly one H1 — brand plus main keyword — with the Italian claim as
-       its own <p lang="it"> underneath; second CTA goes to personal advice
-       (/kontakt), the former stats row (wines · regions · since) is gone. */
-    eyebrow: "PERSONALLY CURATED · SINCE 2019",
-    title: "Maria Maria – Italian boutique wines",
-    claim: "Il piacere del vino.",
-    lede: "Hand-picked wines from small Italian family estates – personally selected for moments of conscious enjoyment in Germany, from the aperitivo to the big night.",
-    ctaWines: "Discover our wines",
-    ctaContact: "Request personal advice",
-    photoAlt: "Maria Maria wine bottle and a glass of red wine in front of vines overlooking the Mediterranean coast",
+    eyebrow: "Italian boutique wines",
+    lede: "Hand-picked wines from small family estates – for moments chosen with intent, from the aperitivo to the big night.",
+    ctaWines: "Discover the wines",
+    ctaShop: "To the shop",
+    statWines: "Boutique wines",
+    statRegions: "Italian regions",
+    statSince: "since we began",
+    photoAlt:
+      "Maria Maria bottle and a glass of red wine on a stone wall between vines and sea, behind them a woman in a white dress looking out over the coast",
   },
 
   philosophy: {
@@ -55,7 +53,8 @@ export const home = {
     title: "Two souls,",
     titleAccent: "one name",
     paragraphs: [
-      "Maria Maria begins in Salento, in the summer of 2019. At a table with friends, two women named Maria and an oenologist, the idea for a personal selection of Italian wines was born.",
+      "Maria Maria begins in Salento, in the summer of 2019 — between childhood memories and old rows of vines, a moment became an epiphany: for us, wine is not a beverage but a catalyst for emotions.",
+      "Since then our journey has run from the sunlit vineyards of Salento across the volcanic soils of Campania up to the southern shore of Lake Garda — every bottle a stop, every region a language of its own.",
     ],
     journey: ["Salento", "Puglia", "Campania", "Lake Garda"],
     quote: "“Italian wine, personal selection, share the pleasure.”",
@@ -67,58 +66,29 @@ export const home = {
 
   regions: {
     eyebrow: "Origin",
-    title: "Three Italian wine origins, three unmistakable signatures",
+    title: "Where our wines are at home",
     description:
-      "Our nine wines lead from Puglia via Campania to the southern Lake Garda area. Each origin stands for its own grape varieties, landscapes and people – personally selected for Maria Maria.",
+      "Soil, light and climate shape every grape – in the end you taste the landscape in the glass.",
     cta: "All regions",
     detailCta: "Discover more",
     items: {
       apulien: {
         name: "Puglia",
         tag: "The heart of the south",
-        long: "Sun-drenched wines with warmth, fruit and Mediterranean character – including our Primitivo and Rosato selection.",
-        cta: "Discover Puglia",
-        alt: "Trulli and olive trees in Puglia",
+        desc: "Southern sun and powerful aromas.",
+        long: "Between Salento and Gallipoli, Primitivo and Negroamaro ripen under the southern sun – warm, powerful wines with a Mediterranean soul.",
       },
       kampanien: {
         name: "Campania",
         tag: "Between volcano and sea",
-        long: "Mineral, characterful wines from southern Italy – shaped by grape varieties such as Greco, Falanghina and Aglianico.",
-        cta: "Discover Campania",
-        alt: "Vineyards on the Campanian coast with Vesuvius",
+        desc: "Volcanic soils, elemental characters.",
+        long: "Around Naples and Salerno the volcanic soils of Vesuvius shape wines of depth and elemental character – from Falanghina to Aglianico.",
       },
       garda: {
-        name: "Lake Garda area (Lombardy)",
+        name: "Lake Garda / Lombardy",
         tag: "Northern elegance",
-        long: "Elegant, fresh wines from the southern Lake Garda area – with Lugana DOC as a clear reference of origin.",
-        cta: "Discover wines from Lake Garda",
-        alt: "Vineyards on Lake Garda in Lombardy",
-      },
-    },
-  },
-
-  /* The three conversion segments — CTAs go to /kontakt?anliegen=… and
-     preselect the intent in the form (components/kontakt/intents.js). */
-  segments: {
-    title: "Personally selected – for your enjoyment, your range and your occasion",
-    intro:
-      "Whether for your restaurant, your range or a special event: we advise personally and put together a selection that suits concept, guests and occasion.",
-    proof: "Personal advice from Mettmann near Düsseldorf – in North Rhine-Westphalia and beyond.",
-    items: {
-      gastronomie: {
-        title: "Restaurants & delicatessen",
-        text: "Personally selected Italian wines for restaurants, cafés, wine bars and delicatessens – matched to cuisine, style and guests.",
-        cta: "Request a range for your restaurant",
-      },
-      handel: {
-        title: "Trade & resale",
-        text: "Characterful wines with traceable origin and personal advice for selected trade partners and resellers.",
-        cta: "Discuss a trade partnership",
-      },
-      events: {
-        title: "Events & tastings",
-        text: "Individual wine selections for private celebrations, corporate events and guided tastings in Düsseldorf, North Rhine-Westphalia and beyond.",
-        cta: "Request an event or tasting",
+        desc: "Elegance, freshness and mineral depth.",
+        long: "On the southern shore of Lake Garda, Lugana is born – a white wine of rare elegance, carried by freshness and mineral depth.",
       },
     },
   },

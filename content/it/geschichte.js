@@ -47,12 +47,14 @@ export const geschichte = {
 
   chapters: {
     anfang: {
-      label: "Oggi · Mettmann, vicino a Düsseldorf",
-      title: "Di casa in Germania. Legati personalmente all'Italia.",
+      label: "L'inizio · 2019",
+      title: "Dalla Germania. Con radici italiane.",
       paragraphs: [
-        "Da Mettmann portiamo vini selezionati di viticoltori italiani nella ristorazione e nelle enoteche – in modo personale, affidabile e con una vicinanza autentica.",
-        "Ogni ordine viene composto con cura, perché i nostri vini arrivino dove hanno il loro posto: a tavola.",
+        "Dal 2019 Maria Maria è attiva in Germania. Il marchio ha sede a Düsseldorf – le sue origini personali e culturali portano a Lizzano, nel Salento.",
+        "Dall'incontro tra due generazioni è nata una selezione in cui ogni bottiglia rappresenta un luogo, un vitigno e una scelta consapevole.",
       ],
+      quote:
+        "«Il vino comincia dalla sua origine – e trova il suo posto dove le persone lo condividono.»",
       linkLabel: "Scopri la nostra selezione di vini",
       alt: "Tavola apparecchiata con calici e una bottiglia originale Maria Maria",
       micro: "La tavola lunga",
@@ -70,13 +72,12 @@ export const geschichte = {
       caption: "Vigne, luce mediterranea e la vicinanza del Mar Ionio.",
     },
     duesseldorf: {
-      label: "L'inizio · Estate 2019",
-      title: "Alcune idee nascono a tavola.",
+      label: "Dal 2019 · Düsseldorf",
+      title: "Di casa in Germania. Con lo sguardo oltre i confini.",
       paragraphs: [
-        "Tra buon cibo, conversazioni aperte e vini speciali cresce un'idea: trovare vini che mostrino la loro origine, abbiano carattere e uniscano le persone.",
-        "Da quella sera nasce più di un ricordo – nasce Maria Maria.",
+        "Il marchio Maria Maria è attivo in Germania dal 2019 e ha sede a Düsseldorf. Da qui, vini italiani selezionati personalmente diventano accessibili alle persone in Germania e in altri Paesi.",
+        "Düsseldorf è la sede del marchio – non il confine della sua selezione. A contare restano l'origine, il carattere e la storia dietro ogni vino.",
       ],
-      quote: "«Alcune idee non hanno bisogno di un business plan. Solo del tavolo giusto.»",
       linkLabel: "Scopri la nostra selezione di vini",
       alt: "Tavola serale apparecchiata con un rosso Maria Maria al crepuscolo",
       micro: "Dall’Italia, oltre i confini",

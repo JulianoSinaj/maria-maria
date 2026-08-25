@@ -46,7 +46,10 @@ export const home = {
   collection: {
     eyebrow: "Kolekce",
     title: "Naše vína",
-    description: "Devět charakterů ze čtyř regionů – každý s vlastním příběhem.",
+    /* Tři původy, nikdy „čtyři regiony": Apulie a Kampánie jsou správní
+       regiony, Gardské jezero je vinařská oblast. Pravidlo briefu je fakt,
+       platí tedy ve všech jazycích, nejen v němčině. */
+    description: "Devět vín ze tří vybraných původů – každé s vlastním příběhem.",
   },
 
   origins: {
@@ -94,8 +97,10 @@ export const home = {
     eyebrow: "Oficiální e-shop",
     title: "Připraveni na chuť, která",
     titleAccent: "vás inspiruje?",
-    text: "Objevujte a objednávejte naše vína pohodlně online – přímo z vinařství až k vám domů.",
-    primary: "Do e-shopu",
+    /* Terra Vera je oficiální externí e-shop — žádný slib přímého
+       rozesílání z vinařství, ten kanál neprovozujeme. */
+    text: "Objevujte a objednávejte vína Maria Maria pohodlně přes náš oficiální e-shop u Terra Vera.",
+    primary: "Do oficiálního e-shopu",
     secondary: "Kontaktovat nás",
   },
 

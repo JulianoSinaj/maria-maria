@@ -11,7 +11,7 @@ export const common = {
     regions: "Regiony",
     magazine: "Magazín",
     contact: "Kontakt",
-    shop: "Do e-shopu",
+    shop: "Do oficiálního e-shopu",
     wineTypes: {
       red: "Červená vína",
       white: "Bílá vína",
@@ -36,7 +36,7 @@ export const common = {
       bestseller: { label: "Bestsellery", hint: "Co nejčastěji končí ve sklenici" },
       regions: { label: "Italské regiony", hint: "Původ a terroir" },
     },
-    shop: "Do e-shopu",
+    shop: "Do oficiálního e-shopu",
     note: "Ručně vybíraná z malých italských vinařství.",
     seeAll: "Zobrazit všech {count} vín",
   },
@@ -55,7 +55,7 @@ export const common = {
     contactHeading: "Kontakt",
     shopHeading: "Oficiální e-shop",
     shopText: "Objevte a objednejte naše vína přímo v e-shopu Maria Maria.",
-    shopLink: "Do e-shopu",
+    shopLink: "Do oficiálního e-shopu",
     legal: {
       privacy: "Ochrana osobních údajů",
       imprint: "Tiráž",
@@ -190,7 +190,7 @@ export const common = {
       },
       "paket-grande-selezione": {
         tag: "Nejoblíbenější volba",
-        desc: "Šest vín, čtyři regiony – celá rozmanitost Itálie v jednom balíčku. Doprava zdarma až k vám domů.",
+        desc: "Šest vín, tři původy – celá rozmanitost Itálie v jednom balíčku. Doprava zdarma až k vám domů.",
       },
       "paket-trio-bianco": {
         tag: "Svěžest a elegance",

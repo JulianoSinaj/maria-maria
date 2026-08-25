@@ -43,7 +43,10 @@ export const home = {
   collection: {
     eyebrow: "The collection",
     title: "Our wines",
-    description: "Nine characters from four regions – each with a story of its own.",
+    /* Three origins, never „four regions": Puglia and Campania are
+       administrative regions, Lake Garda is a wine area. The brief's rule
+       is a fact, so it holds in every language, not just German. */
+    description: "Nine wines from three selected origins – each with a story of its own.",
   },
 
   origins: {
@@ -91,8 +94,10 @@ export const home = {
     eyebrow: "The official shop",
     title: "Ready for the taste that",
     titleAccent: "inspires you?",
-    text: "Discover and order our wines online – straight from the estate to your door.",
-    primary: "To the shop",
+    /* Terra Vera is the official external shop — no promise of direct
+       shipping from the estate, which is not a channel we run. */
+    text: "Discover and order the Maria Maria wines through our official online shop at Terra Vera.",
+    primary: "To the official shop",
     secondary: "Get in touch",
   },
 

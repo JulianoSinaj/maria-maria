@@ -135,7 +135,7 @@ export const magazin = {
     flip: "Girare",
     back: "Indietro",
     closing:
-      "Nove bottiglie, quattro regioni — e con loro nove storie già scritte.",
+      "Nove bottiglie, tre origini — e con loro nove storie già scritte.",
     interviewsLabel: "Vignaioli e clienti a colloquio",
     cards: {
       name: {

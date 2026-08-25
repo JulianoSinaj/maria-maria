@@ -135,7 +135,7 @@ export const magazin = {
     flip: "Flip",
     back: "Back",
     closing:
-      "Nine bottles, four regions — and with them nine stories already written.",
+      "Nine bottles, three origins — and with them nine stories already written.",
     interviewsLabel: "Winemakers & customers in conversation",
     cards: {
       name: {

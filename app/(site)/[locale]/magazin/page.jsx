@@ -98,7 +98,10 @@ export default async function MagazinPage({ params }) {
      beiden übersetzbaren kommen aus dem Wörterbuch. */
   const MARQUEE_WORDS = [
     "Storie di vino",
-    "Quattro regioni",
+    /* „Tre origini", nicht „Quattro regioni": auch als italienisches
+       Markenwort bleibt es eine Zählung, und die Kollektion kommt aus drei
+       Herkünften (Homepage-Brief, P0: nirgends vier Regionen). */
+    "Tre origini",
     t.marquee?.boutique ?? "",
     "Food Pairing",
     "La dolce vita",

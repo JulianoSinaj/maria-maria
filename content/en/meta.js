@@ -9,7 +9,12 @@ export const meta = {
     "Personally curated Italian boutique wines from Puglia, Campania and Lake Garda.",
 
   home: {
-    title: "Maria Maria — Il piacere del vino",
+    /* `titleAbsolute` — the title already carries the brand. With the root
+       layout's title.template it rendered as „Maria Maria — Il piacere del
+       vino — Maria Maria" in the tab, in og:title and in the search result.
+       The wording itself is unchanged: the homepage brief's binding values
+       cover the German version only. */
+    titleAbsolute: "Maria Maria — Il piacere del vino",
     description: "Italian boutique wines for moments chosen with care.",
   },
 

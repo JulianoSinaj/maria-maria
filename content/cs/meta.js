@@ -9,7 +9,12 @@ export const meta = {
     "Osobně vybíraná italská butiková vína z Apulie, Kampánie a od Gardského jezera.",
 
   home: {
-    title: "Maria Maria — Il piacere del vino",
+    /* `titleAbsolute` — titulek už značku nese sám. S title.template
+       kořenového layoutu se v záložce, v og:title i ve výsledku vyhledávání
+       objevovalo „Maria Maria — Il piacere del vino — Maria Maria".
+       Znění zůstává beze změny: závazné hodnoty briefu platí jen pro
+       německou verzi. */
+    titleAbsolute: "Maria Maria — Il piacere del vino",
     description: "Italská butiková vína pro vědomě zvolené chvíle potěšení.",
   },
 

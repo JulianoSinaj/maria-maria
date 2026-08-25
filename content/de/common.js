@@ -23,8 +23,13 @@ export const common = {
     /* Nur für die Kopfzeile zwischen 768 und 1023 px (iPad hochkant): Dort
        passt die lange Pille nicht neben fünf Links und die Sprachwahl. Das
        server-gerenderte HTML, Desktop und Telefon-Menü tragen die lange
-       Fassung — siehe components/Header.jsx. */
-    shopShort: "Zum Shop",
+       Fassung — siehe components/Header.jsx.
+
+       Kurz heißt nicht „Zum Shop": Genau diese Beschriftung führt der Brief
+       (§6) als die zu ersetzende auf. In dem schmalen Band stand sie zuletzt
+       als einzige Stelle der Seite noch. „Offizieller Shop" ist vier Zeichen
+       kürzer als die lange Fassung und sagt dasselbe. */
+    shopShort: "Offizieller Shop",
     wineTypes: {
       red: "Rotweine",
       white: "Weißweine",

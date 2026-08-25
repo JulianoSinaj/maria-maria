@@ -32,8 +32,6 @@ export const kontakt = {
   intents: {
     title: "Proč nás chcete kontaktovat?",
     intro: "Vyberte příležitost, která nejlépe odpovídá vašemu záměru.",
-    carouselPrev: "Předchozí příležitost",
-    carouselNext: "Další příležitost",
     items: {
       gastronomie: {
         title: "Gastronomie a lahůdky",

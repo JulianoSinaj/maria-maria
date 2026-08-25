@@ -1,6 +1,5 @@
 "use client";
-import { AnimatePresence, motion } from "motion/react";
-import { useReducedMotionSafe } from "@/components/motion/useMediaQuery";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import ShopCard from "./ShopCard";
 import { useCommon, useWines } from "@/lib/i18n/context";
 import { pluralUnit } from "@/lib/i18n/format";
@@ -10,7 +9,7 @@ import { pluralUnit } from "@/lib/i18n/format";
 const GRID_SPRING = { type: "spring", stiffness: 300, damping: 30 };
 
 export default function ShopExplorer() {
-  const reduced = useReducedMotionSafe();
+  const reduced = useReducedMotion();
   const wines = useWines();
   const catalogue = useCommon("catalogue");
   const ui = useCommon("ui");

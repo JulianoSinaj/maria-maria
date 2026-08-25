@@ -4,16 +4,14 @@ import { WINES, wineHref } from "@/components/data";
 import { getDictionary } from "@/lib/i18n/dictionaries";
 import { pageMetadata } from "@/lib/i18n/metadata";
 import { localePath } from "@/lib/i18n/routing";
-import { absoluteUrl, DEFAULT_OG_IMAGE } from "@/lib/site";
+import { absoluteUrl } from "@/lib/site";
 import { graph, siteNodes, webPageNode, itemListNode, faqNode } from "@/lib/seo/jsonLd";
 
-/* Teaserbild der Startseite — seit 2026-08-25 die Wortmarke, schwarz auf
-   weißem Grund (public/img/og/default.jpg, erzeugt von scripts/og-images.mjs),
-   kein Foto mehr. Der Homepage-Brief (§2) nannte noch den Hero-Zuschnitt
-   „zwischen Reben und Meer" (maria-maria-boutique-weine-de.jpg); die Datei
-   bleibt im Build, wird aber nicht mehr referenziert: Wer maria-maria.de
-   weitergibt, soll in der Karte die Marke sehen, nicht ein Motiv. */
-const HOME_OG_IMAGE = DEFAULT_OG_IMAGE;
+/* Teaserbild der Startseite — 1200 × 630, erzeugt von scripts/og-images.mjs
+   aus dem Hero-Motiv „zwischen Reben und Meer". Dateiname und Maße nennt
+   der Homepage-Brief (§2); was in WhatsApp, Slack und LinkedIn aufklappt,
+   ist damit dasselbe Bild, das nach dem Klick oben auf der Seite steht. */
+const HOME_OG_IMAGE = { url: "/img/og/maria-maria-boutique-weine-de.jpg", width: 1200, height: 630 };
 
 /* Die Startseite hatte als einzige Seite der Storefront GAR KEIN
    generateMetadata. Sie fiel damit auf die Vorgaben des Root-Layouts
@@ -31,7 +29,7 @@ export async function generateMetadata({ params }) {
     locale: params.locale,
     path: "/",
     meta: dict.meta.home,
-    image: { ...HOME_OG_IMAGE, alt: dict.meta.siteTitle ?? HOME_OG_IMAGE.alt },
+    image: { ...HOME_OG_IMAGE, alt: dict.home?.hero?.photoAlt ?? dict.meta.siteTitle },
   });
 }
 
@@ -50,7 +48,7 @@ function HomeJsonLd({ locale, dict }) {
   const url = absoluteUrl(localePath(locale, "/"));
   const meta = dict.meta.home ?? {};
   const catalogue = dict?.common?.catalogue ?? {};
-  const imageAlt = dict.meta.siteTitle ?? HOME_OG_IMAGE.alt;
+  const imageAlt = dict.home?.hero?.photoAlt ?? dict.meta.siteTitle;
 
   return (
     <JsonLd

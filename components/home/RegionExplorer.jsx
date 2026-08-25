@@ -1,8 +1,7 @@
 "use client";
 
 import { useEffect, useId, useRef, useState } from "react";
-import { motion, useScroll, useSpring, useTransform } from "motion/react";
-import { useReducedMotionSafe } from "@/components/motion/useMediaQuery";
+import { motion, useReducedMotion, useScroll, useSpring, useTransform } from "motion/react";
 import Button from "@/components/ui/Button";
 import { photoSrcSet } from "@/components/media/Photo";
 import { SCROLL_SPRING } from "@/components/motion/springs";
@@ -118,7 +117,7 @@ function CardPhoto({ region, drift, active, reduced }) {
 
 export default function RegionExplorer({ regions, ctaLabel }) {
   const [open, setOpen] = useState(null); // Index der offenen Karte
-  const reduced = useReducedMotionSafe();
+  const reduced = useReducedMotion();
   const baseId = useId();
 
   // Scroll-Parallax für die Fotos — eine Bühne, ein Ref, ein Fortschritt.

@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useId, useRef, useState } from "react";
-import { AnimatePresence, motion } from "motion/react";
-import { useReducedMotionSafe } from "@/components/motion/useMediaQuery";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { pluralUnit } from "@/lib/i18n/format";
 
 /* Filterleiste der Kollektion.
@@ -247,7 +246,7 @@ export default function WineFilterBar({
   count,
   onReset,
 }) {
-  const reduced = useReducedMotionSafe();
+  const reduced = useReducedMotion();
   const dirty = type !== types[0] || region !== regions[0];
 
   return (

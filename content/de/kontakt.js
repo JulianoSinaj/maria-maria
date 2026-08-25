@@ -45,10 +45,6 @@ export const kontakt = {
   intents: {
     title: "Warum möchten Sie uns kontaktieren?",
     intro: "Wählen Sie den Anlass, der am besten zu Ihrem Vorhaben passt.",
-    /* Pfeile des mobilen Karussells — nur für Screenreader. Ohne die beiden
-       Schlüssel fiel IntentCards auf englische Labels zurück. */
-    carouselPrev: "Vorheriger Anlass",
-    carouselNext: "Nächster Anlass",
     items: {
       gastronomie: {
         title: "Gastronomie & Feinkost",

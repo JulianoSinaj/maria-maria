@@ -188,10 +188,6 @@ export const IL_BIANCO = {
   pairing: {
     scene: {
       dish: "Paccheri mit Garnelen und Zucchini",
-      /* Kein eigenes Magazine-Motiv (kein cardKey) — im Magazin steht der
-         Wein unter „Pasta-Abend" als „Auch passend". Der Pairing-CTA öffnet
-         dort genau diese Antwort-Karte (pairingCards.js). */
-      anlassKey: "pasta-abend",
       copy: "Paccheri, saftige Garnelen und feine Zucchini verbinden mediterrane Frische mit einer angenehm weichen Textur. Il Bianco begleitet genau diese Balance: frisch genug für die Garnelen, aromatisch genug für das Gemüse und mit genügend Struktur für die Pasta. Die feine Süße der Garnelen bleibt erhalten, während die Frische des Weins den Gaumen zwischen den Bissen wieder öffnet. Ein unkompliziertes, aber raffiniertes Pairing für einen italienischen Pasta-Abend.",
       image: null,
       imageAlt:

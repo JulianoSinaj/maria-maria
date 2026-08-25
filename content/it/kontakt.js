@@ -34,8 +34,6 @@ export const kontakt = {
   intents: {
     title: "Perché vuoi contattarci?",
     intro: "Scegli l'occasione che corrisponde meglio al tuo progetto.",
-    carouselPrev: "Occasione precedente",
-    carouselNext: "Occasione successiva",
     items: {
       gastronomie: {
         title: "Ristorazione & gastronomia",

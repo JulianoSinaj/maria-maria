@@ -189,10 +189,6 @@ export const PRIMITIVO_SALENTO = {
   pairing: {
     scene: {
       dish: "Bombette aus dem Valle d'Itria",
-      /* Kein eigenes Magazine-Motiv (kein cardKey) — im Magazin steht der
-         Wein unter „Grillabend" als „Auch passend". Der Pairing-CTA öffnet
-         dort genau diese Antwort-Karte (pairingCards.js). */
-      anlassKey: "grillabend",
       copy: "Bombette sind kleine Röllchen aus Schweinenacken, gefüllt mit Caciocavallo und Pfeffer, die in der Macelleria über Holzkohle gegrillt werden. Der Käse schmilzt nach innen, außen wird das Fleisch dunkel und knusprig. Ein Gericht ohne Feierlichkeit — und genau dafür ist dieser Primitivo gemacht. Er hält der Intensität stand, bleibt aber weich genug, um nicht mit ihr zu konkurrieren. Das Salz des gereiften Käses holt seine dunkle Frucht deutlich nach vorn.",
       image: null,
       imageAlt:

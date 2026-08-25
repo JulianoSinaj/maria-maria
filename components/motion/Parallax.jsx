@@ -1,8 +1,7 @@
 "use client";
 import { useRef } from "react";
-import { motion, useScroll, useTransform, useSpring } from "motion/react";
+import { motion, useScroll, useTransform, useSpring, useReducedMotion } from "motion/react";
 import { SCROLL_SPRING } from "./springs";
-import { useReducedMotionSafe } from "./useMediaQuery";
 
 /* Scroll-linked parallax. Wrap the moving layer; it drifts by ±speed of its own
    height across the viewport, smoothed through a spring so motion has weight.
@@ -10,9 +9,7 @@ import { useReducedMotionSafe } from "./useMediaQuery";
 
 export default function Parallax({ children, className = "", speed = 0.12, overscan = false }) {
   const ref = useRef(null);
-  /* Hydration-sicher: der reduzierte Zweig tauscht das motion.div gegen ein
-     nacktes div — ein anderer Baum als das Server-HTML. */
-  const reduced = useReducedMotionSafe();
+  const reduced = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
   const raw = useTransform(scrollYProgress, [0, 1], [`${speed * 100}%`, `${-speed * 100}%`]);
   const y = useSpring(raw, SCROLL_SPRING);

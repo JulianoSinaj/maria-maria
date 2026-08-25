@@ -1,7 +1,6 @@
 "use client";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { motion, useInView } from "motion/react";
-import { useReducedMotionSafe } from "@/components/motion/useMediaQuery";
+import { motion, useInView, useReducedMotion } from "motion/react";
 import { Reveal } from "@/components/motion/Reveal";
 import SplitText from "@/components/motion/SplitText";
 import { useCommon } from "@/lib/i18n/context";
@@ -48,7 +47,7 @@ const MEDIA_CLASS =
 const MEDIA_FILTER = { filter: "saturate(1.12) contrast(1.03)" };
 
 export default function ColorBand({ wine }) {
-  const reduced = useReducedMotionSafe();
+  const reduced = useReducedMotion();
   const winePage = useCommon("winePage");
   const c = wine.colorMoment;
   const art = c.artwork ?? {};

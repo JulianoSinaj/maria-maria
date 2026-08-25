@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { motion } from "motion/react";
-import { useReducedMotionSafe } from "@/components/motion/useMediaQuery";
+import { motion, useReducedMotion } from "motion/react";
 
 /* Das Kapitel-Menü der Geschichte — sechs nummerierte Stationen zwischen
    zwei Haarlinien, wie der Zeitungskopf des Magazins. Die Leiste haftet
@@ -17,7 +16,7 @@ import { useReducedMotionSafe } from "@/components/motion/useMediaQuery";
    der Seite — dieselbe Zusammenführung, aus der auch die Kapitel selbst
    rendern. Damit können Anker und Beschriftung nicht auseinanderlaufen. */
 export default function StoryChapterNav({ chapters = [], today, t = {} }) {
-  const reduced = useReducedMotionSafe();
+  const reduced = useReducedMotion();
   const [activeId, setActiveId] = useState(null);
   const stops = [...chapters, ...(today ? [today] : [])].map((c) => ({
     id: c.id,

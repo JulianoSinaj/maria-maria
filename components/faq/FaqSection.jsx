@@ -1,8 +1,7 @@
 "use client";
 import { useEffect, useId, useMemo, useState } from "react";
 import Link from "@/components/i18n/LocaleLink";
-import { motion } from "motion/react";
-import { useReducedMotionSafe } from "@/components/motion/useMediaQuery";
+import { motion, useReducedMotion } from "motion/react";
 import { Eyebrow, GoldRule } from "@/components/Deco";
 import { Reveal } from "@/components/motion/Reveal";
 import { Arrow } from "@/components/Icons";
@@ -61,7 +60,7 @@ export default function FaqSection({
   className = "",
 }) {
   const uid = useId();
-  const reduced = useReducedMotionSafe();
+  const reduced = useReducedMotion();
   const ui = useCommon("ui");
 
   /* flache Listen intern als Ein-Gruppen-Fall behandeln */

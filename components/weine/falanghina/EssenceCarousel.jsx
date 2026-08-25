@@ -1,7 +1,6 @@
 "use client";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion } from "motion/react";
-import { useReducedMotionSafe } from "@/components/motion/useMediaQuery";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { ChevronRight } from "@/components/Icons";
 import Photo from "@/components/media/Photo";
 import { WINE_ICON } from "./WineIcons";
@@ -22,7 +21,7 @@ const SPRING = { type: "spring", stiffness: 260, damping: 30, mass: 0.9 };
 const DEPTH = 3;
 
 export default function EssenceCarousel({ items, accent, backgrounds = [] }) {
-  const reduced = useReducedMotionSafe();
+  const reduced = useReducedMotion();
   const count = items.length;
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);

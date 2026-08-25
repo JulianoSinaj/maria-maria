@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { motion } from "motion/react";
-import { useReducedMotionSafe } from "@/components/motion/useMediaQuery";
+import { motion, useReducedMotion } from "motion/react";
 import Button from "@/components/ui/Button";
 import { useWines, useLocaleTools, useCommon } from "@/lib/i18n/context";
 import { shopHref } from "@/lib/shop/config";
@@ -23,7 +22,7 @@ export default function SubNav({ wine }) {
   const { price: fmtPrice } = useLocaleTools();
   const winePage = useCommon("winePage");
   const wines = useWines();
-  const reduced = useReducedMotionSafe();
+  const reduced = useReducedMotion();
   const [activeId, setActiveId] = useState(null);
   const catalog = wines.find((w) => w.name === wine.catalogName);
   const ids = wine.subnav.map((l) => l.href.slice(1));

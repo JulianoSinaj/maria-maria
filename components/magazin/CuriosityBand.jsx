@@ -1,8 +1,7 @@
 "use client";
 import { useState } from "react";
 import Link from "@/components/i18n/LocaleLink";
-import { motion } from "motion/react";
-import { useReducedMotionSafe } from "@/components/motion/useMediaQuery";
+import { motion, useReducedMotion } from "motion/react";
 import { Reveal } from "@/components/motion/Reveal";
 import { Arrow, Grapes } from "@/components/Icons";
 
@@ -75,7 +74,7 @@ const FLIP_SPRING = { type: "spring", stiffness: 260, damping: 26, mass: 0.8 };
 
 /* ---- eine umdrehbare Kuriositätenkarte ---- */
 function CuriosityCard({ item, index, labels = {} }) {
-  const reduced = useReducedMotionSafe();
+  const reduced = useReducedMotion();
   const [flipped, setFlipped] = useState(false);
   const tone = item.tone;
 

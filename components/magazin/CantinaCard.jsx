@@ -1,7 +1,6 @@
 "use client";
 import Link from "@/components/i18n/LocaleLink";
-import { motion } from "motion/react";
-import { useReducedMotionSafe } from "@/components/motion/useMediaQuery";
+import { motion, useReducedMotion } from "motion/react";
 import { Arrow } from "@/components/Icons";
 
 /* Eine Karte der Cantina-Galerie — das Food-Pairing-Foto, das auf der
@@ -26,7 +25,7 @@ import { Arrow } from "@/components/Icons";
 const LIFT_SPRING = { type: "spring", stiffness: 320, damping: 26, mass: 0.7 };
 
 export default function CantinaCard({ wine }) {
-  const reduced = useReducedMotionSafe();
+  const reduced = useReducedMotion();
 
   return (
     /* Hover-Sensorik auf dem ruhenden Wrapper, gehoben wird das Kind — sonst

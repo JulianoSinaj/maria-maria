@@ -1,7 +1,6 @@
 "use client";
 import { useRef } from "react";
-import { motion, useMotionValue, useSpring, useMotionTemplate } from "motion/react";
-import { useReducedMotionSafe } from "@/components/motion/useMediaQuery";
+import { motion, useMotionValue, useSpring, useReducedMotion, useMotionTemplate } from "motion/react";
 import { Stagger, StaggerItem, Reveal } from "@/components/motion/Reveal";
 import { Eyebrow, GoldRule } from "@/components/Deco";
 import { useCommon } from "@/lib/i18n/context";
@@ -18,7 +17,7 @@ import { ACCENT_FALLBACK } from "./accent";
 const SPRING = { stiffness: 160, damping: 22, mass: 0.6 };
 
 function FactTile({ fact, index, accent }) {
-  const reduced = useReducedMotionSafe();
+  const reduced = useReducedMotion();
   const ref = useRef(null);
   const Icon = WINE_ICON[fact.icon];
 

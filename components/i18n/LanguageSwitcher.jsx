@@ -3,8 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import NextLink from "next/link";
-import { AnimatePresence, motion } from "motion/react";
-import { useReducedMotionSafe } from "@/components/motion/useMediaQuery";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { LOCALES, LOCALE_META } from "@/lib/i18n/config";
 import { localePath, pathWithoutLocale } from "@/lib/i18n/routing";
 import { useLocale, useCommon } from "@/lib/i18n/context";
@@ -29,19 +28,7 @@ import { ChevronRight } from "@/components/Icons";
    Der Suchstring wird nicht mitgenommen. Ihn zu erhalten hieße
    useSearchParams(), und das zwingt jede Seite mit Kopfzeile aus dem
    statischen Rendering in dynamisches — ein hoher Preis dafür, dass ein
-   gesetzter Filter einen Sprachwechsel überlebt.
-
-   KEIN Prefetch für die Sprachziele (`prefetch={false}`). Der Grund ist ein
-   konkreter Fehler, auf Telefonen täglich reproduzierbar: Auf /it steht das
-   deutsche Ziel als „/" im Link. next/link holt es vorab, SOLANGE DAS COOKIE
-   NOCH „it" SAGT — und die Middleware antwortet auf „/" mit Cookie „it" per
-   307 nach /it. Der Router merkt sich also „/ führt nach /it". Der Klick auf
-   „Deutsch" schreibt zwar das Cookie um, greift dann aber auf genau diesen
-   Vorab-Eintrag zurück: Die Adresse bleibt /it, die Seite bleibt
-   italienisch, nur das Cookie sagt „de". Ohne Prefetch läuft die Anfrage
-   erst beim Klick, mit dem frisch gesetzten Cookie — und landet auf Deutsch.
-   Dass dabei drei fremdsprachige Seiten NICHT mehr vorab geladen werden,
-   spart auf Mobilfunk obendrein Daten. */
+   gesetzter Filter einen Sprachwechsel überlebt. */
 
 const LOCALE_COOKIE = "mm_locale";
 const COOKIE_MAX_AGE = 60 * 60 * 24 * 365;
@@ -60,7 +47,7 @@ export default function LanguageSwitcher({ variant = "menu", className = "", onD
   const locale = useLocale();
   const t = useCommon("language");
   const pathname = usePathname();
-  const reduced = useReducedMotionSafe();
+  const reduced = useReducedMotion();
   const [open, setOpen] = useState(false);
   const wrapRef = useRef(null);
 
@@ -93,7 +80,6 @@ export default function LanguageSwitcher({ variant = "menu", className = "", onD
               key={l}
               href={localePath(l, bare)}
               hrefLang={LOCALE_META[l].hreflang}
-              prefetch={false}
               onClick={() => rememberChoice(l)}
               aria-current={active ? "true" : undefined}
               className={`rounded-full border px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.16em] transition-colors duration-300 ${
@@ -158,7 +144,6 @@ export default function LanguageSwitcher({ variant = "menu", className = "", onD
                     <NextLink
                       href={localePath(l, bare)}
                       hrefLang={LOCALE_META[l].hreflang}
-                      prefetch={false}
                       onClick={() => {
                         rememberChoice(l);
                         setOpen(false);

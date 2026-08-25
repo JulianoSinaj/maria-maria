@@ -5,8 +5,8 @@ import {
   useScroll,
   useTransform,
   useSpring,
+  useReducedMotion,
 } from "motion/react";
-import { useReducedMotionSafe } from "@/components/motion/useMediaQuery";
 import Button from "@/components/ui/Button";
 import ShaderGradient from "@/components/motion/ShaderGradient";
 import SplitText from "@/components/motion/SplitText";
@@ -67,9 +67,7 @@ export default function FalanghinaHero({ wine, photo }) {
   const winePage = useCommon("winePage");
   const ui = useCommon("ui");
   const sectionRef = useRef(null);
-  /* Hydration-sicher: Beide reduzierten Zweige unten (Foto-Hero und
-     Standard-Hero) bauen einen anderen DOM als das Server-HTML. */
-  const reduced = useReducedMotionSafe();
+  const reduced = useReducedMotion();
   const catalog = wines.find((w) => w.name === wine.catalogName);
   const hasPhoto = Boolean(wine.images.hero);
 

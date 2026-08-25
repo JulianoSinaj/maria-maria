@@ -197,10 +197,6 @@ export const PRIMITIVO_14_5 = {
   pairing: {
     scene: {
       dish: "Orecchiette mit Braciole-Ragù",
-      /* Kein eigenes Magazine-Motiv (kein cardKey) — im Magazin steht der
-         Wein unter „Pasta-Abend" als „Auch passend". Der Pairing-CTA öffnet
-         dort genau diese Antwort-Karte (pairingCards.js). */
-      anlassKey: "pasta-abend",
       copy: "Braciole sind dünn geklopfte Rinderrouladen mit Pecorino und Petersilie, die stundenlang in der Tomatensauce schmoren, bis sie zerfallen. Das Ragù daraus ist Apuliens Sonntagsgericht, und die Orecchiette fangen es in ihren Mulden auf. Mit 14,5 % vol. bringt der Primitivo das Gewicht mit, das eine so lange geschmorte Sauce verlangt. Das Fett aus dem Fleisch bindet sein Tannin und macht es rund, während die dunkle Frucht gegen die Säure der Tomate steht.",
       image: null,
       imageAlt:

@@ -1,7 +1,6 @@
 "use client";
 import { useRef } from "react";
-import { motion, useScroll, useSpring, useTransform } from "motion/react";
-import { useReducedMotionSafe } from "@/components/motion/useMediaQuery";
+import { motion, useReducedMotion, useScroll, useSpring, useTransform } from "motion/react";
 import { Grapes } from "@/components/Icons";
 import { SCROLL_SPRING } from "@/components/motion/springs";
 
@@ -30,7 +29,7 @@ export default function InkQuote({
   className = "",
 }) {
   const ref = useRef(null);
-  const reduced = useReducedMotionSafe();
+  const reduced = useReducedMotion();
 
   const { scrollYProgress } = useScroll({
     target: ref,

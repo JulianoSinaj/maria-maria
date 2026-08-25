@@ -1,8 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import Link from "@/components/i18n/LocaleLink";
-import { AnimatePresence, motion } from "motion/react";
-import { useReducedMotionSafe } from "@/components/motion/useMediaQuery";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { wineHref } from "./data";
 import { useWines, useCommon } from "@/lib/i18n/context";
 import { Arrow, ChevronRight, Grapes } from "./Icons";
@@ -39,7 +38,7 @@ export default function WineMenu({ active, scrolled = false, onDark = false }) {
   const nav = useCommon("nav");
   const t = useCommon("wineMenu");
   const [open, setOpen] = useState(false);
-  const reduced = useReducedMotionSafe();
+  const reduced = useReducedMotion();
   const closeTimer = useRef(null);
   const wrapRef = useRef(null);
 

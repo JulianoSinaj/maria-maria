@@ -42,12 +42,7 @@ const HEIGHT = 630;
    einem Querformat wenig, bei einem Hochformat viel weg, und der Automatik
    ist der Bildinhalt egal. */
 const PAGES = [
-  /* Das Standardbild — und damit die Karte für maria-maria.de selbst — zeigt
-     seit 2026-08-25 nur noch die Wortmarke: schwarz auf weißem Grund, ohne
-     Foto. Wer den Link in WhatsApp oder LinkedIn weitergibt, soll die Marke
-     erkennen, nicht ein Motiv, das bei anderen Anlässen wechselt. `logo`
-     statt `src`: gesetzt wird komponiert, nicht zugeschnitten. */
-  { name: "default", logo: "img/logo.png" },
+  { name: "default", src: "img/home/hero.jpg", focus: "attention" },
   /* Die Startseite — Homepage-Brief §2 nennt Dateiname und Maße
      (maria-maria-boutique-weine-de.jpg, 1200 × 630). Quelle ist das
      aktuelle Hero-Motiv „zwischen Reben und Meer" (1672 × 941), nicht das
@@ -128,29 +123,6 @@ async function render(srcAbs, outAbs, focus = "attention") {
   return buffer.length;
 }
 
-/* Die Wortmarke auf weißem Grund. Das PNG liegt nur in 400 × 163 vor; auf
-   mehr als etwa das 1,4-Fache gezogen würden die Streifen weich. 560 px
-   Breite füllen knapp die Hälfte der Karte — in der Vorschau eines
-   Messengers wirkt das wie ein gesetztes Logo, nicht wie ein gedehntes
-   Bild. `kernel: lanczos3` hält die Kanten beim Hochrechnen so hart wie
-   möglich; Alpha wird auf Weiß abgeflacht, da JPEG keine Transparenz kennt. */
-async function renderLogo(logoAbs, outAbs) {
-  const logo = await sharp(logoAbs)
-    .resize({ width: 560, kernel: sharp.kernel.lanczos3 })
-    .png()
-    .toBuffer();
-
-  const buffer = await sharp({
-    create: { width: WIDTH, height: HEIGHT, channels: 3, background: "#ffffff" },
-  })
-    .composite([{ input: logo, gravity: "centre" }])
-    .jpeg({ quality: 90, mozjpeg: true, chromaSubsampling: "4:4:4" })
-    .toBuffer();
-
-  await writeFile(outAbs, buffer);
-  return buffer.length;
-}
-
 async function main() {
   await mkdir(path.join(OUT, "wines"), { recursive: true });
 
@@ -183,14 +155,6 @@ async function main() {
   let skipped = 0;
 
   for (const job of jobs) {
-    if (job.logo) {
-      const out = path.join(OUT, `${job.name}.jpg`);
-      const bytes = await renderLogo(path.join(PUBLIC, job.logo), out);
-      console.log(`  ${job.name}.jpg  ${(bytes / 1024).toFixed(0)} KB  (Wortmarke)`);
-      made += 1;
-      continue;
-    }
-
     let src = path.join(PUBLIC, job.src);
     if (!(await exists(src))) {
       src = job.fallback ? path.join(PUBLIC, job.fallback) : null;

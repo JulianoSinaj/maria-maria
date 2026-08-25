@@ -106,27 +106,6 @@ export const PAIRING_CARDS = [
   },
 ];
 
-/* Der Anlass-Schalter in /magazin lässt sich aus der Adresse vorbelegen:
-   /magazin?anlass=<key>#food-pairing öffnet das Kapitel UND die passende
-   Antwort-Karte. Ziel des Pairing-CTAs der Wein-Landingpages
-   (components/weine/PairingScene) — Muster wie /kontakt?anliegen=…,
-   d. h. einmal nach der Hydration aus window.location gelesen, ohne
-   useSearchParams (siehe components/kontakt/IntentFromQuery.jsx). */
-export const PAIRING_QUERY_PARAM = "anlass";
-export const PAIRING_ANCHOR = "food-pairing";
-
-export function pairingCardIndex(key) {
-  if (!key) return -1;
-  return PAIRING_CARDS.findIndex((c) => c.key === key);
-}
-
-export function pairingMagazinHref(key) {
-  const base = `/magazin`;
-  return pairingCardIndex(key) >= 0
-    ? `${base}?${PAIRING_QUERY_PARAM}=${key}#${PAIRING_ANCHOR}`
-    : `${base}#${PAIRING_ANCHOR}`;
-}
-
 /* Alle fünf Motive liegen 1448×1086 (4:3) vor. Die Maße stehen im Markup,
    damit beim Laden nichts springt (CLS). */
 export const CARD_PHOTO_SIZE = { width: 1448, height: 1086 };

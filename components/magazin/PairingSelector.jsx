@@ -1,9 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Link from "@/components/i18n/LocaleLink";
-import { AnimatePresence, motion } from "motion/react";
-import { useReducedMotionSafe } from "@/components/motion/useMediaQuery";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { GoldRule } from "@/components/Deco";
 import { Arrow, Glasses } from "@/components/Icons";
 import { WINES } from "@/components/data";
@@ -11,8 +10,6 @@ import {
   CARD_PHOTO_SIZE,
   CARD_SIZES,
   PAIRING_CARDS,
-  PAIRING_QUERY_PARAM,
-  pairingCardIndex,
   cardPhotoSrc,
   cardSrcSet,
 } from "@/components/magazin/pairingCards";
@@ -187,17 +184,7 @@ export default function PairingSelector({ className = "", t = {} }) {
   };
   const CARDS = PAIRING_CARDS.map(localized);
   const [active, setActive] = useState(0);
-  const reduced = useReducedMotionSafe();
-
-  /* Vorbelegung aus der Adresse: /magazin?anlass=dinner#food-pairing kommt
-     vom Pairing-CTA der Wein-Landingpage (PairingScene) und soll genau die
-     Antwort-Karte zeigen, in der dieser Wein empfohlen wird. Einmal nach
-     der Hydration gelesen — die Seite bleibt statisch vorgerendert. */
-  useEffect(() => {
-    const raw = new URLSearchParams(window.location.search).get(PAIRING_QUERY_PARAM);
-    const i = pairingCardIndex(raw);
-    if (i >= 0) setActive(i);
-  }, []);
+  const reduced = useReducedMotion();
   const card = CARDS[active];
 
   const alternatives = card.alternatives.filter((a) => WINE_NAME[a.slug]);

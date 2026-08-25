@@ -135,7 +135,7 @@ export const magazin = {
     flip: "Otočit",
     back: "Zpět",
     closing:
-      "Devět lahví, čtyři regiony — a s nimi devět příběhů, které už jsou napsané.",
+      "Devět lahví, tři původy — a s nimi devět příběhů, které už jsou napsané.",
     interviewsLabel: "Vinaři a zákazníci v rozhovoru",
     cards: {
       name: {

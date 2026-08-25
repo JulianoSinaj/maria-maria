@@ -11,7 +11,7 @@ export const common = {
     regions: "Regioni",
     magazine: "Magazine",
     contact: "Contatti",
-    shop: "Vai allo shop",
+    shop: "Vai allo shop ufficiale",
     wineTypes: {
       red: "Vini rossi",
       white: "Vini bianchi",
@@ -36,7 +36,7 @@ export const common = {
       bestseller: { label: "Bestseller", hint: "Quelli che finiscono più spesso nel calice" },
       regions: { label: "Le regioni d'Italia", hint: "Origine e terroir" },
     },
-    shop: "Vai allo shop",
+    shop: "Vai allo shop ufficiale",
     note: "Selezionati a mano da piccole cantine italiane.",
     seeAll: "Vedi tutti i {count} vini",
   },
@@ -55,7 +55,7 @@ export const common = {
     contactHeading: "Contatti",
     shopHeading: "Shop ufficiale",
     shopText: "Scopri e ordina i nostri vini direttamente nello shop Maria Maria.",
-    shopLink: "Vai allo shop",
+    shopLink: "Vai allo shop ufficiale",
     legal: {
       privacy: "Privacy",
       imprint: "Note legali",
@@ -183,7 +183,7 @@ export const common = {
       },
       "paket-grande-selezione": {
         tag: "La scelta più amata",
-        desc: "Sei vini, quattro regioni – tutta la varietà dell'Italia in una sola confezione. Spedizione gratuita a casa tua.",
+        desc: "Sei vini, tre origini – tutta la varietà dell'Italia in una sola confezione. Spedizione gratuita a casa tua.",
       },
       "paket-trio-bianco": {
         tag: "Freschezza ed eleganza",

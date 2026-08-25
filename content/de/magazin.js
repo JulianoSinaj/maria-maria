@@ -158,7 +158,7 @@ export const magazin = {
     flip: "Umdrehen",
     back: "Zurück",
     closing:
-      "Neun Flaschen, vier Regionen — und damit neun Geschichten, die schon geschrieben sind.",
+      "Neun Flaschen, drei Weinherkünfte — und damit neun Geschichten, die schon geschrieben sind.",
     interviewsLabel: "Winzer & Kunden im Gespräch",
     /* Die drei Kärtchen — Nummern-Stempel und Farbwelten stehen im Code. */
     cards: {

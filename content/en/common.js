@@ -11,7 +11,7 @@ export const common = {
     regions: "Regions",
     magazine: "Magazine",
     contact: "Contact",
-    shop: "Visit the shop",
+    shop: "Visit the official shop",
     wineTypes: {
       red: "Red wines",
       white: "White wines",
@@ -36,7 +36,7 @@ export const common = {
       bestseller: { label: "Bestsellers", hint: "What ends up in the glass most often" },
       regions: { label: "Regions of Italy", hint: "Origin and terroir" },
     },
-    shop: "Visit the shop",
+    shop: "Visit the official shop",
     note: "Hand-picked from small Italian estates.",
     seeAll: "See all {count} wines",
   },
@@ -55,7 +55,7 @@ export const common = {
     contactHeading: "Contact",
     shopHeading: "Official shop",
     shopText: "Discover and order our wines directly in the Maria Maria shop.",
-    shopLink: "Visit the shop",
+    shopLink: "Visit the official shop",
     legal: {
       privacy: "Privacy Policy",
       imprint: "Legal Notice",
@@ -183,7 +183,7 @@ export const common = {
       },
       "paket-grande-selezione": {
         tag: "Most popular choice",
-        desc: "Six wines, four regions – the whole variety of Italy in one set. Delivered to your door, shipping free.",
+        desc: "Six wines, three origins – the whole variety of Italy in one set. Delivered to your door, shipping free.",
       },
       "paket-trio-bianco": {
         tag: "Freshness & elegance",

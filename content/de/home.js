@@ -15,9 +15,10 @@
 
 export const home = {
   hero: {
-    /* Die Eyebrow-Komponente setzt Versalien per CSS — der Brief führt die
-       Zeile deshalb als „PERSÖNLICH KURATIERT · SEIT 2019". */
-    eyebrow: "Persönlich kuratiert · seit 2019",
+    /* Wörtlich wie im Brief (§3). Die Eyebrow-Komponente setzt ohnehin
+       Versalien per CSS — die Schreibweise hier ändert nichts am Bild,
+       aber die Abnahme prüft gegen genau diese Zeichenkette. */
+    eyebrow: "PERSÖNLICH KURATIERT · SEIT 2019",
     /* Genau eine H1: Marke plus Hauptkeyword. Der italienische Claim steht
        NICHT mehr in der Überschrift, sondern darunter als eigener
        <p lang="it"> — im DOM darf nie „Maria MariaIl piacere del vino."

@@ -9,7 +9,12 @@ export const meta = {
     "Vini italiani di boutique selezionati personalmente da Puglia, Campania e Lago di Garda.",
 
   home: {
-    title: "Maria Maria — Il piacere del vino",
+    /* `titleAbsolute`, weil der Titel die Marke selbst führt: Mit dem
+       title.template des Root-Layouts stand vorher „Maria Maria — Il piacere
+       del vino — Maria Maria" im Tab, in og:title und in der Ergebniszeile.
+       Der Text selbst bleibt unverändert — die verbindlichen Werte des
+       Homepage-Briefs gelten nur für die deutsche Fassung (§ Umfang). */
+    titleAbsolute: "Maria Maria — Il piacere del vino",
     description: "Vini italiani di boutique per momenti di piacere scelti con cura.",
   },
 

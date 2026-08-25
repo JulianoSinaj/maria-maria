@@ -43,7 +43,10 @@ export const home = {
   collection: {
     eyebrow: "La collezione",
     title: "I nostri vini",
-    description: "Nove caratteri da quattro regioni – ognuno con la propria storia.",
+    /* Tre origini, mai „quattro regioni": Puglia e Campania sono regioni
+       amministrative, il Garda è un'area vinicola. Regola del brief
+       vincolante in ogni lingua, non solo in tedesco. */
+    description: "Nove vini da tre origini selezionate – ognuno con la propria storia.",
   },
 
   origins: {
@@ -55,7 +58,10 @@ export const home = {
     ],
     journey: ["Salento", "Puglia", "Campania", "Lago di Garda"],
     quote: "«Italian wine, personal selection, share the pleasure.»",
-    cta: "Magazine",
+    /* Il pulsante porta a /geschichte (la storia del marchio), non al
+       magazine: l'etichetta nominava la destinazione sbagliata, e /magazin
+       esiste davvero — chi cliccava si aspettava quello. */
+    cta: "Scopri la nostra storia",
   },
 
   regions: {
@@ -91,8 +97,10 @@ export const home = {
     eyebrow: "Lo shop ufficiale",
     title: "Pronto per il gusto che",
     titleAccent: "ti ispira?",
-    text: "Scopri e ordina i nostri vini comodamente online – direttamente dalla cantina a casa tua.",
-    primary: "Vai allo shop",
+    /* Terra Vera è lo shop ufficiale esterno: nessuna promessa di
+       spedizione diretta dalla cantina — non è il canale che gestiamo. */
+    text: "Scopri e ordina i vini Maria Maria comodamente tramite il nostro shop online ufficiale su Terra Vera.",
+    primary: "Vai allo shop ufficiale",
     secondary: "Contattaci",
   },
 

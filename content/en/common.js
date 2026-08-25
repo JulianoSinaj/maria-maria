@@ -13,6 +13,8 @@ export const common = {
     magazine: "Magazine",
     contact: "Contact",
     shop: "Visit the official shop",
+    /* Short form for the narrow desktop header (see content/de/common.js). */
+    shopShort: "Official shop",
     wineTypes: {
       red: "Red wines",
       white: "White wines",
@@ -45,6 +47,8 @@ export const common = {
   footer: {
     /* aria-label des Mail-Icons in der Social-Reihe */
     mailLabel: "Email address",
+    instagramLabel: "Maria Maria on Instagram",
+    facebookLabel: "Maria Maria on Facebook",
     tagline: "Italian boutique wines for moments chosen with care.",
     exploreHeading: "Explore",
     explore: {

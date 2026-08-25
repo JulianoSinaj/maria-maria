@@ -94,9 +94,8 @@ export default function HomeContent({ t = {}, faq = [], souls }) {
 
   const regions = REGION_SHAPE.map((r) => ({ ...r, ...(regionsCopy.items?.[r.key] ?? {}) }));
 
-  /* Die Segment-Sektion gibt es nur, wo das Wörterbuch sie führt (Deutsch,
-     nach dem Brief). Die übrigen Sprachen zeigen die Seite ohne sie, statt
-     unübersetzte oder erfundene Texte zu tragen. */
+  /* Die Segment-Sektion steht seit 2026-08-25 in allen vier Sprachen; der
+     Schutz bleibt, damit ein fehlender Abschnitt die Seite nicht bricht. */
   const segmentItems = segments
     ? SEGMENT_SHAPE.map((s) => ({
         ...s,
@@ -106,9 +105,9 @@ export default function HomeContent({ t = {}, faq = [], souls }) {
       }))
     : [];
 
-  /* Die Statzeile (Weine · Herkünfte · seit …) erscheint nur, wenn die
-     Sprache ihre Beschriftungen führt — die deutsche Fassung hat sie mit dem
-     Brief abgegeben (siehe content/de/home.js). */
+  /* Die Statzeile (Weine · Herkünfte · seit …) ist mit dem Brief in allen
+     Sprachen entfallen; sie erscheint nur, wenn ein Wörterbuch statWines
+     wieder führt (siehe content/de/home.js). */
   const stats = hero.statWines
     ? [
         [`${WINES.length}`, hero.statWines],

@@ -12,6 +12,8 @@ export const common = {
     magazine: "Magazín",
     contact: "Kontakt",
     shop: "Do oficiálního e-shopu",
+    /* Short form for the narrow desktop header (see content/de/common.js). */
+    shopShort: "Oficiální e-shop",
     wineTypes: {
       red: "Červená vína",
       white: "Bílá vína",
@@ -44,6 +46,8 @@ export const common = {
   footer: {
     /* aria-label des Mail-Icons in der Social-Reihe */
     mailLabel: "E-mailová adresa",
+    instagramLabel: "Maria Maria na Instagramu",
+    facebookLabel: "Maria Maria na Facebooku",
     tagline: "Italská butiková vína pro vědomě zvolené chvíle potěšení.",
     exploreHeading: "Objevujte",
     explore: {

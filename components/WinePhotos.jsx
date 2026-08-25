@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { photoSrcSet } from "@/components/media/Photo";
+import { photoSrcSet, photoSize } from "@/components/media/Photo";
 import { useCommon } from "@/lib/i18n/context";
 
 /* Swipe-Bühne für die echten Packshots einer Weinkarte.
@@ -71,6 +71,11 @@ export default function WinePhotos({ wine, imgClass = "h-44", lift = true, class
             src={shots[side].src}
             srcSet={photoSrcSet(shots[side].src) ?? undefined}
             sizes="64px"
+            /* width/height aus dem Manifest: die Packshots sind alle 1400 px
+               hoch, aber je Flasche 346–488 px breit — das Seitenverhältnis
+               ist also je Datei ein anderes und gehört nicht als Konstante
+               hierher. Die Anzeigehöhe setzt weiter die Klasse. */
+            {...photoSize(shots[side].src)}
             alt={shots[side].alt}
             custom={dir}
             variants={variants}

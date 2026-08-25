@@ -5,49 +5,61 @@ import { getDictionary } from "@/lib/i18n/dictionaries";
 import { pageMetadata } from "@/lib/i18n/metadata";
 import { localePath } from "@/lib/i18n/routing";
 import { absoluteUrl } from "@/lib/site";
-import { graph, webPageNode, itemListNode, faqNode } from "@/lib/seo/jsonLd";
+import { graph, siteNodes, webPageNode, itemListNode, faqNode } from "@/lib/seo/jsonLd";
+
+/* Teaserbild der Startseite — 1200 × 630, erzeugt von scripts/og-images.mjs
+   aus dem Hero-Motiv „zwischen Reben und Meer". Dateiname und Maße nennt
+   der Homepage-Brief (§2); was in WhatsApp, Slack und LinkedIn aufklappt,
+   ist damit dasselbe Bild, das nach dem Klick oben auf der Seite steht. */
+const HOME_OG_IMAGE = { url: "/img/og/maria-maria-boutique-weine-de.jpg", width: 1200, height: 630 };
 
 /* Die Startseite hatte als einzige Seite der Storefront GAR KEIN
    generateMetadata. Sie fiel damit auf die Vorgaben des Root-Layouts
    zurück — Titel und Description stimmten, aber es fehlte das Teaserbild:
    ausgerechnet die meistgeteilte Adresse der Domain erschien in WhatsApp,
-   Slack und LinkedIn als grauer Kasten. */
+   Slack und LinkedIn als grauer Kasten.
+
+   Seit dem Homepage-Brief trägt meta.home auf Deutsch `titleAbsolute`
+   („… | Maria Maria"): Der Titel führt die Marke selbst, das title.template
+   des Layouts hängte sie sonst ein zweites Mal an. Die übrigen Sprachen
+   laufen weiter über `title` + Template. */
 export async function generateMetadata({ params }) {
   const dict = await getDictionary(params.locale);
   return pageMetadata({
     locale: params.locale,
     path: "/",
     meta: dict.meta.home,
-    image: {
-      url: "/img/og/default.jpg",
-      width: 1200,
-      height: 630,
-      alt: dict.meta.siteTitle,
-    },
+    image: { ...HOME_OG_IMAGE, alt: dict.home?.hero?.photoAlt ?? dict.meta.siteTitle },
   });
 }
 
-/* Die Startseite ist der Einstieg in den Katalog, und genau so beschreibt
-   sie sich: eine WebPage mit der Liste aller neun Weine und den Fragen der
-   Marken-FAQ, die weiter unten sichtbar stehen.
+/* EIN JSON-LD-Graph für die Seite (Homepage-Brief §7): Unternehmen, Marke
+   und Website (siteNodes) voran, dann die Seite selbst — eine WebPage mit
+   der Liste aller neun Weine und den Fragen der Marken-FAQ, die weiter
+   unten sichtbar stehen. Keine Breadcrumb auf der Startseite, kein
+   OnlineStore, kein LocalBusiness.
 
    Die Weinliste ist hier wichtiger als sie aussieht. Sie verkettet die
    Startseite — die Seite mit den meisten eingehenden Links — direkt mit den
    neun Produktadressen und sagt Google, dass es sich um EINE Sammlung
-   handelt, nicht um neun zufällige Links im Fließtext. */
+   handelt, nicht um neun zufällige Links im Fließtext. Alle neun sind
+   verifizierte, im Katalog geführte Produkte (components/data.js). */
 function HomeJsonLd({ locale, dict }) {
   const url = absoluteUrl(localePath(locale, "/"));
+  const meta = dict.meta.home ?? {};
   const catalogue = dict?.common?.catalogue ?? {};
+  const imageAlt = dict.home?.hero?.photoAlt ?? dict.meta.siteTitle;
 
   return (
     <JsonLd
       data={graph(
+        siteNodes({ locale, description: dict.meta?.orgDescription }),
         webPageNode({
           url,
-          name: dict.meta.siteTitle,
-          description: dict.meta.siteDescription,
+          name: meta.titleAbsolute ?? meta.title ?? dict.meta.siteTitle,
+          description: meta.description ?? dict.meta.siteDescription,
           locale,
-          image: { url: "/img/og/default.jpg", alt: dict.meta.siteTitle },
+          image: { url: HOME_OG_IMAGE.url, alt: imageAlt },
         }),
         itemListNode({
           url,

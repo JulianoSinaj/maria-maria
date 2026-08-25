@@ -8,7 +8,13 @@
    auf ~84 KB zielt statt auf das 2,2-MB-PNG-Original. */
 
 const SIZES = "100vw";
-const BASE = "/img/home/hero-mare";
+/* Dateiname nach Homepage-Brief §7 (maria-maria-boutique-wein-
+   mittelmeerkueste): dieselben drei Varianten wie hero-mare-*, unter dem
+   sprechenden Namen kopiert — ein neuer Name umgeht zugleich den
+   Tages-Cache von /img/* (next.config.js), ein Motivwechsel unter altem
+   Namen bliebe bei Wiederkehrern sonst unsichtbar. Die hero-mare-Dateien
+   liegen weiter auf der Platte (Standardwert des Backoffice-Hero-Stores). */
+const BASE = "/img/home/maria-maria-boutique-wein-mittelmeerkueste";
 
 /* Das Quellfoto ("Maria Maria zwischen Reben und Meer") ist 1672 px breit —
    mehr gibt es nicht, also endet der srcSet ehrlich bei 1672w statt bei den

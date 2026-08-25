@@ -11,7 +11,7 @@ import { getDictionary } from "@/lib/i18n/dictionaries";
 import { pageMetadata } from "@/lib/i18n/metadata";
 import { localePath } from "@/lib/i18n/routing";
 import { absoluteUrl } from "@/lib/site";
-import { graph, webPageNode, breadcrumbNode, articleNode, personNode } from "@/lib/seo/jsonLd";
+import { graph, siteNodes, webPageNode, breadcrumbNode, articleNode, personNode } from "@/lib/seo/jsonLd";
 
 /* Ein Gespräch, eine Adresse: /magazin/interviews/<slug>
 
@@ -104,6 +104,7 @@ function InterviewJsonLd({ locale, dict, interview }) {
   return (
     <JsonLd
       data={graph(
+        siteNodes({ locale, description: dict.meta?.orgDescription }),
         page,
         crumbs,
         person,

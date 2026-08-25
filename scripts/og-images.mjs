@@ -43,6 +43,16 @@ const HEIGHT = 630;
    ist der Bildinhalt egal. */
 const PAGES = [
   { name: "default", src: "img/home/hero.jpg", focus: "attention" },
+  /* Die Startseite — Homepage-Brief §2 nennt Dateiname und Maße
+     (maria-maria-boutique-weine-de.jpg, 1200 × 630). Quelle ist das
+     aktuelle Hero-Motiv „zwischen Reben und Meer" (1672 × 941), nicht das
+     alte Terrassenfoto hinter „default": Was in WhatsApp und LinkedIn
+     aufklappt, soll dasselbe Bild sein, das nach dem Klick oben steht. */
+  {
+    name: "maria-maria-boutique-weine-de",
+    src: "img/home/Maria Maria zwischen Reben und Meer.png",
+    focus: "attention",
+  },
   { name: "collection", src: "img/weine-hero.jpg", focus: "attention" },
   { name: "shop", src: "img/aperitivo-sunset.jpg", focus: "attention" },
   /* /geschichte und /magazin gaben ihr Motiv schon vorher als og:image an —

@@ -19,7 +19,7 @@ import { getDictionary } from "@/lib/i18n/dictionaries";
 import { pageMetadata } from "@/lib/i18n/metadata";
 import { localePath } from "@/lib/i18n/routing";
 import { absoluteUrl } from "@/lib/site";
-import { graph, webPageNode, breadcrumbNode, faqNode, ORG_ID } from "@/lib/seo/jsonLd";
+import { graph, siteNodes, webPageNode, breadcrumbNode, faqNode, ORG_ID } from "@/lib/seo/jsonLd";
 
 /* ============================================================================
    GESCHICHTE — die Erzählseite der Marke, Sprungziel aus Capitolo I
@@ -93,6 +93,7 @@ function GeschichteJsonLd({ locale, dict, faq = [] }) {
   return (
     <JsonLd
       data={graph(
+        siteNodes({ locale, description: dict.meta?.orgDescription }),
         {
           ...webPageNode({
             url,

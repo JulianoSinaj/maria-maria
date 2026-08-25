@@ -11,18 +11,26 @@ import HomeHeroPhoto, { HomeHeroPreload } from "@/components/home/HomeHeroPhoto"
 import HomeHeroFx from "@/components/home/HomeHeroFx";
 import OriginsSection from "@/components/home/OriginsSection";
 import RegionExplorer from "@/components/home/RegionExplorer";
+import SegmentCards from "@/components/home/SegmentCards";
 import WineRail from "@/components/WineRail";
 import FaqSection from "@/components/faq/FaqSection";
-import { Vineyard, Glasses, Plate, Conversation } from "@/components/Icons";
+import { Vineyard, Glasses, Plate, Conversation, Pin } from "@/components/Icons";
 import { WINES, REGION_COUNT } from "@/components/data";
+import { INTENT_QUERY_PARAM, intentFromQuery } from "@/components/kontakt/intents";
 import Atmosphere, { Aura, GhostWord, Vines } from "@/components/Atmosphere";
 
-/* Die Startseite — Hero, Philosophie, Origins, Weine-Rail, Regionen,
-   Shop-CTA und Magazin-Teaser.
+/* Die Startseite — Hero, Philosophie, Weine-Rail, Origins, die drei
+   Weinherkünfte, die drei Conversion-Segmente, Shop-CTA und Marken-FAQ.
 
    Der gesamte Text kommt als `t` aus content/<sprache>/home.js; hier steht
-   nur noch die Struktur — Reihenfolge, Ikonen, Bildpfade und die
-   Bildausschnitte, die zu den Motiven gehören und keine Sprache kennen. */
+   nur noch die Struktur — Reihenfolge, Ikonen, Bildpfade, Link-Ziele und die
+   Bildausschnitte, die zu den Motiven gehören und keine Sprache kennen.
+
+   Überschriften-Gliederung (Homepage-Brief §6, 24.08.2026): genau EINE H1
+   im Hero, darunter je Sektion eine H2 — Philosophie, Unsere Weine, Zwei
+   Seelen, Weinherkünfte (mit drei H3), Segmente (mit drei H3), Shop-Band,
+   FAQ. Alles davon steht im server-gerenderten HTML; die Reveal-Hüllen
+   blenden nur ein, sie fügen nichts nach. */
 
 /* Reihenfolge und Ikone je Philosophie-Karte; der Schlüssel holt Titel und
    Text aus dem Wörterbuch. */
@@ -33,30 +41,42 @@ const MOMENT_ICONS = [
   ["guidance", <Conversation className="h-7 w-7" />],
 ];
 
-/* Region-Struktur: Foto, Bildausschnitt und der Anker auf /regionen. Name,
-   Kurzzeile und Fließtext stehen je Sprache im Wörterbuch. */
+/* Herkunfts-Struktur: Foto, Bildausschnitt und der Anker auf /regionen. Name,
+   Rubrik, Fließtext, CTA und Alt-Text stehen je Sprache im Wörterbuch.
+   Die Dateinamen folgen dem Homepage-Brief §7 (weinregion-…); die alten
+   region-*.webp liegen unverändert daneben. */
 const REGION_SHAPE = [
   {
     key: "apulien",
     region: "apulien",
-    img: "/img/home/region-apulien.webp",
+    img: "/img/home/weinregion-apulien-trulli-olivenbaeume.webp",
     /* Trulli links im Bild; Crop hält die eingezeichnete Karte aus dem Schnitt */
     pos: "26% 50%",
   },
   {
     key: "kampanien",
     region: "kampanien",
-    img: "/img/home/region-kampanien.webp",
+    img: "/img/home/weinregion-kampanien-vesuv-kueste.webp",
     /* der Vesuv leicht links, damit die eingezeichnete Karte nicht anschneidet */
     pos: "40% 45%",
   },
   {
     key: "garda",
     region: "garda",
-    img: "/img/home/region-garda.webp",
+    img: "/img/home/weinregion-gardasee-lombardei.webp",
     /* See und Berge tragen das Bild; Karte bleibt außerhalb des Schnitts */
     pos: "38% 55%",
   },
+];
+
+/* Die drei Conversion-Segmente (Homepage-Brief §5). Ikone wie auf der
+   Kontaktseite; `query` ist der Wert von ?anliegen=, den die Kontaktseite
+   auf ihr Formular-Anliegen abbildet (components/kontakt/intents.js) —
+   dieselbe Tabelle, deshalb kann hier kein Ziel auseinanderlaufen. */
+const SEGMENT_SHAPE = [
+  { key: "gastronomie", icon: "Cutlery", query: "gastronomie-feinkost" },
+  { key: "handel", icon: "Bag", query: "handel-wiederverkauf" },
+  { key: "events", icon: "Cheers", query: "events-verkostungen" },
 ];
 
 /* Rebsorten im Laufband — Namen, keine Beschriftungen: bleiben in jeder
@@ -68,18 +88,44 @@ export default function HomeContent({ t = {}, faq = [], souls }) {
   const philosophy = t.philosophy ?? {};
   const collection = t.collection ?? {};
   const regionsCopy = t.regions ?? {};
+  const segments = t.segments ?? null;
   const band = t.shopBand ?? {};
   const faqCopy = t.faq ?? {};
 
   const regions = REGION_SHAPE.map((r) => ({ ...r, ...(regionsCopy.items?.[r.key] ?? {}) }));
+
+  /* Die Segment-Sektion gibt es nur, wo das Wörterbuch sie führt (Deutsch,
+     nach dem Brief). Die übrigen Sprachen zeigen die Seite ohne sie, statt
+     unübersetzte oder erfundene Texte zu tragen. */
+  const segmentItems = segments
+    ? SEGMENT_SHAPE.map((s) => ({
+        ...s,
+        ...(segments.items?.[s.key] ?? {}),
+        href: `/kontakt?${INTENT_QUERY_PARAM}=${s.query}`,
+        intent: intentFromQuery(s.query),
+      }))
+    : [];
+
+  /* Die Statzeile (Weine · Herkünfte · seit …) erscheint nur, wenn die
+     Sprache ihre Beschriftungen führt — die deutsche Fassung hat sie mit dem
+     Brief abgegeben (siehe content/de/home.js). */
+  const stats = hero.statWines
+    ? [
+        [`${WINES.length}`, hero.statWines],
+        [`${REGION_COUNT}`, hero.statRegions],
+        ["2019", hero.statSince],
+      ]
+    : null;
 
   return (
     <div className="relative -mb-12 min-h-screen lg:-mb-16">
       {/* ============ HERO ============ */}
       <HomeHeroPreload />
       <section className="grain relative overflow-hidden">
-        {/* Volle Foto-Bühne wie auf den Wein-Landingpages: das Terrassen-Foto
-            trägt den Hero, die Headline steht links im Schleierlicht. */}
+        {/* Volle Foto-Bühne wie auf den Wein-Landingpages: das Küstenfoto
+            trägt den Hero, die Headline steht links im Schleierlicht. Das
+            <picture> ist server-gerendert und per Preload das einzige
+            priorisierte Bild der Seite (LCP). */}
         <HomeHeroFx photo={<HomeHeroPhoto alt={hero.photoAlt ?? ""} />} />
 
         {/* Schleier für Lesbarkeit: mobil von unten, ab lg von links.
@@ -100,30 +146,33 @@ export default function HomeContent({ t = {}, faq = [], souls }) {
         />
 
         {/* settle into the page colour — auf dem Telefon kurz gehalten, sonst
-            läge die Statzeile mitten im Elfenbein-Verlauf und die helle Schrift
-            verlöre ihren Grund */}
+            läge die letzte Zeile mitten im Elfenbein-Verlauf und die helle
+            Schrift verlöre ihren Grund */}
         <div aria-hidden="true" className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-b from-transparent to-ivory sm:h-44" />
 
-        {/* Telefon-Budget: Eyebrow + drei Headline-Zeilen + Lede + zwei
-            gestapelte CTAs + Statzeile müssen in EIN 100svh passen — die
-            Basiswerte sind deshalb enger, ab sm gelten wieder die alten. */}
+        {/* Telefon-Budget: Eyebrow + drei Headline-Zeilen + Claim + Lede + zwei
+            gestapelte CTAs müssen in EIN 100svh passen — die Basiswerte sind
+            deshalb enger, ab sm gelten wieder die alten. */}
         <div className="relative mx-auto flex min-h-[100svh] max-w-content flex-col justify-end px-6 pb-24 pt-24 sm:pt-32 lg:justify-center lg:px-10 lg:pb-16">
           <div className="lg:max-w-xl">
             <Reveal y={18} delay={0.05}>
               <Eyebrow tone="text-champagne-light">{hero.eyebrow}</Eyebrow>
             </Reveal>
-            {/* Markenname und Claim bleiben in jeder Sprache stehen. Der Claim
-                steht eine Stufe unter dem Namen — er begleitet die Marke, er
-                ist nicht die Marke; em-basiert, damit das Verhältnis über den
-                ganzen clamp-Bereich gleich bleibt. */}
-            <h1 className="mt-4 font-playfair text-[clamp(2.8rem,6vw,4.6rem)] leading-[1.05] tracking-[-0.015em] text-ivory sm:mt-6">
-              <SplitText text="Maria Maria" className="block" delay={0.12} />
-              <SplitText
-                text="Il piacere del vino."
-                className="mt-[0.12em] block text-[0.58em] italic leading-[1.15] tracking-[0] text-champagne"
-                delay={0.3}
-              />
+            {/* Genau EINE H1 — Marke plus Hauptkeyword (Brief §3). Der
+                italienische Claim steht darunter als eigener Absatz mit
+                lang="it": zwei Knoten, damit im DOM nie „Maria MariaIl
+                piacere del vino." entsteht. Die Schriftgröße ist die der
+                zweizeiligen Wein-Hero-Titel — der alte Grad war für zwei
+                Wörter gemacht, hier stehen fünf. */}
+            <h1 className="mt-4 font-playfair text-[clamp(2.6rem,5.4vw,4.1rem)] leading-[1.06] tracking-[-0.015em] text-ivory sm:mt-6">
+              <SplitText text={hero.title ?? "Maria Maria"} className="block" delay={0.12} />
             </h1>
+            <p
+              lang="it"
+              className="mt-3 font-playfair text-[clamp(1.5rem,3.1vw,2.4rem)] italic leading-[1.15] text-champagne"
+            >
+              <SplitText text={hero.claim ?? "Il piacere del vino."} className="block" delay={0.3} />
+            </p>
             <Reveal delay={0.5} y={16}>
               {/* wie im Wein-Hero: die Zierlinie weicht auf Telefonen dem Platz */}
               <GrapeRule className="mt-6 hidden sm:flex" />
@@ -134,30 +183,36 @@ export default function HomeContent({ t = {}, faq = [], souls }) {
                 <Button href="/unsere-weine" size="lg" className="w-full sm:w-auto">
                   {hero.ctaWines}
                 </Button>
-                <Button href="/shop" variant="outline" size="lg" className="w-full sm:w-auto">
-                  {hero.ctaShop}
-                </Button>
+                {/* Zweite CTA: persönliche Beratung (Brief §3), sofern die
+                    Sprache sie führt — sonst wie bisher der Shop. */}
+                {hero.ctaContact ? (
+                  <Button href="/kontakt" variant="outline" size="lg" className="w-full sm:w-auto">
+                    {hero.ctaContact}
+                  </Button>
+                ) : (
+                  <Button href="/shop" variant="outline" size="lg" className="w-full sm:w-auto">
+                    {hero.ctaShop}
+                  </Button>
+                )}
               </div>
             </Reveal>
-            <Reveal delay={0.78} y={12}>
-              <dl className="mt-7 flex max-w-md items-center sm:mt-11">
-                {[
-                  [`${WINES.length}`, hero.statWines],
-                  [`${REGION_COUNT}`, hero.statRegions],
-                  ["2019", hero.statSince],
-                ].map(([num, label], i) => (
-                  <div key={label} className={`flex-1 ${i > 0 ? "border-l border-ivory/20 pl-6" : ""}`}>
-                    <dt className="sr-only">{label}</dt>
-                    <dd>
-                      <span className="font-playfair text-[26px] text-champagne">{num}</span>
-                      <span className="mt-0.5 block text-[10.5px] uppercase tracking-[0.14em] text-ivory/65">
-                        {label}
-                      </span>
-                    </dd>
-                  </div>
-                ))}
-              </dl>
-            </Reveal>
+            {stats && (
+              <Reveal delay={0.78} y={12}>
+                <dl className="mt-7 flex max-w-md items-center sm:mt-11">
+                  {stats.map(([num, label], i) => (
+                    <div key={label} className={`flex-1 ${i > 0 ? "border-l border-ivory/20 pl-6" : ""}`}>
+                      <dt className="sr-only">{label}</dt>
+                      <dd>
+                        <span className="font-playfair text-[26px] text-champagne">{num}</span>
+                        <span className="mt-0.5 block text-[10.5px] uppercase tracking-[0.14em] text-ivory/65">
+                          {label}
+                        </span>
+                      </dd>
+                    </div>
+                  ))}
+                </dl>
+              </Reveal>
+            )}
           </div>
         </div>
       </section>
@@ -236,7 +291,7 @@ export default function HomeContent({ t = {}, faq = [], souls }) {
       {/* ============ LE ORIGINI (Markengeschichte) ============ */}
       <OriginsSection t={t.origins} souls={souls} />
 
-      {/* ============ REGIONEN ============ */}
+      {/* ============ DIE DREI WEINHERKÜNFTE ============ */}
       <section className="relative overflow-hidden">
         <Atmosphere variant="olive" />
         <GhostWord className="right-[-3vw] top-14 text-[13vw]">Italia</GhostWord>
@@ -257,9 +312,31 @@ export default function HomeContent({ t = {}, faq = [], souls }) {
         </div>
       </section>
 
+      {/* ============ DIE DREI SEGMENTE (Conversion) ============ */}
+      {/* Zwischen Herkünften und Shop-Band, wie die Gliederung des Briefs es
+          vorsieht: erst die Weine und woher sie kommen, dann für wen. */}
+      {segments && (
+        <section className="relative overflow-hidden bg-gradient-to-b from-ivory via-cream to-ivory">
+          <Atmosphere variant="warm" className="opacity-50" />
+          <Aura tint="gold" drift={2} className="-right-40 top-10 h-[28rem] w-[28rem]" />
+          <div className="relative mx-auto max-w-content px-6 py-16 sm:py-24 lg:px-10">
+            <SectionTitle description={segments.intro}>{segments.title}</SectionTitle>
+            <SegmentCards items={segmentItems} />
+            {/* Local proof — Mettmann bei Düsseldorf, NRW und darüber hinaus */}
+            <Reveal delay={0.1} className="mt-8 flex items-start justify-center gap-2.5 sm:mt-10">
+              <Pin aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0 text-bordeaux" />
+              <p className="text-balance text-center text-[13px] leading-relaxed text-charcoal/70">
+                {segments.proof}
+              </p>
+            </Reveal>
+          </div>
+        </section>
+      )}
+
       {/* ============ SHOP CTA (liquid-glass band) ============ */}
       {/* Bauform liegt in components/ui/ShopCtaBand — dieses Band war die
-          Vorlage, die übrigen Seiten teilen sie jetzt. */}
+          Vorlage, die übrigen Seiten teilen sie jetzt. /shop führt über
+          LocaleLink zum offiziellen externen Shop (Terra Vera). */}
       <ShopCtaBand
         eyebrow={band.eyebrow}
         title={

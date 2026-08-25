@@ -14,13 +14,27 @@ const EXPLORE = [
   { key: "contact", href: "/kontakt" },
 ];
 
-/* Netzwerknamen sind Eigennamen und bleiben in jeder Sprache stehen — nur
-   „E-Mail" ist ein Wort und kommt daher aus dem Wörterbuch. */
+/* Die Icon-Links tragen ihren Namen als aria-label aus dem Wörterbuch
+   (footer.instagramLabel …, Homepage-Brief §6: „Maria Maria auf Instagram").
+   Fehlt der Schlüssel in einer Sprache, bleibt der Netzwerkname stehen —
+   ein Eigenname, der überall gleich lautet. */
 const SOCIALS = [
-  { key: "instagram", label: "Instagram", href: "https://www.instagram.com/mariamaria.wine", Icon: Instagram },
-  { key: "facebook", label: "Facebook", href: "https://www.facebook.com/mariamaria.wine", Icon: Facebook },
-  { key: "mail", label: null, href: "mailto:info@maria-maria.de", Icon: Mail },
+  { key: "instagram", labelKey: "instagramLabel", fallback: "Instagram", href: "https://www.instagram.com/mariamaria.wine", Icon: Instagram },
+  { key: "facebook", labelKey: "facebookLabel", fallback: "Facebook", href: "https://www.facebook.com/mariamaria.wine", Icon: Facebook },
+  { key: "mail", labelKey: "mailLabel", fallback: "E-Mail", href: "mailto:info@maria-maria.de", Icon: Mail },
 ];
+
+/* Spaltenüberschriften der Fußzeile — Text mit <strong>, keine Überschrift:
+   Als H4 standen sie ohne H3 darüber im Dokument und tauchten in jeder
+   Gliederung als Kapitel auf, obwohl sie nur drei Linklisten beschriften
+   (Homepage-Brief §6: „Im Footer Text/strong statt dekorativer H4"). */
+function ColumnLabel({ children }) {
+  return (
+    <p className="text-[11px] uppercase tracking-[0.22em] text-champagne">
+      <strong className="font-semibold">{children}</strong>
+    </p>
+  );
+}
 
 const LEGAL = [
   { key: "privacy", href: "/datenschutz" },
@@ -58,11 +72,11 @@ export default function Footer() {
               {t.tagline}
             </p>
             <div className="mt-6 flex items-center gap-3">
-              {SOCIALS.map(({ key, label, href, Icon }) => (
+              {SOCIALS.map(({ key, labelKey, fallback, href, Icon }) => (
                 <a
                   key={key}
                   href={href}
-                  aria-label={label ?? t.mailLabel}
+                  aria-label={t[labelKey] ?? fallback}
                   className="flex h-11 w-11 items-center justify-center rounded-full border border-ivory/15 text-ivory/75 transition-colors duration-300 hover:border-champagne hover:text-champagne"
                 >
                   <Icon className="h-[18px] w-[18px]" />
@@ -72,7 +86,7 @@ export default function Footer() {
           </StaggerItem>
 
           <StaggerItem>
-            <h4 className="text-[11px] font-semibold uppercase tracking-[0.22em] text-champagne">{t.exploreHeading}</h4>
+            <ColumnLabel>{t.exploreHeading}</ColumnLabel>
             <ul className="mt-5 space-y-3">
               {EXPLORE.map((l) => (
                 <li key={l.href}>
@@ -89,7 +103,7 @@ export default function Footer() {
           </StaggerItem>
 
           <StaggerItem>
-            <h4 className="text-[11px] font-semibold uppercase tracking-[0.22em] text-champagne">{t.contactHeading}</h4>
+            <ColumnLabel>{t.contactHeading}</ColumnLabel>
             <div className="mt-5 space-y-2 text-[12.5px] leading-relaxed text-ivory/65">
               <p>Senso Valerio Weinhandel</p>
               <p>Valerio Caniglia</p>
@@ -102,7 +116,7 @@ export default function Footer() {
           </StaggerItem>
 
           <StaggerItem>
-            <h4 className="text-[11px] font-semibold uppercase tracking-[0.22em] text-champagne">{t.shopHeading}</h4>
+            <ColumnLabel>{t.shopHeading}</ColumnLabel>
             <p className="mt-5 max-w-[220px] text-[12.5px] leading-relaxed text-ivory/65">
               {t.shopText}
             </p>
@@ -144,7 +158,12 @@ export default function Footer() {
 
             „Powered by" steht wie die Netzwerknamen weiter oben in jeder
             Sprache gleich da — eine feste Kreditzeile, kein Fließtext, und
-            deshalb nicht im Wörterbuch. */}
+            deshalb nicht im Wörterbuch.
+
+            Ohne Namen (lib/agency.js, AGENCY.name leer) entfällt die ganze
+            Zeile: Der Homepage-Brief verlangt null Platzhalter im HTML, und
+            „Powered by" ohne Wen wäre genau einer. */}
+        {AGENCY.name && (
         <div className="border-t border-ivory/10">
           <div className="mx-auto flex max-w-content flex-wrap items-center justify-center gap-x-2 gap-y-1 px-6 py-4 text-[11px] text-ivory/45 lg:px-10">
             <span>
@@ -177,6 +196,7 @@ export default function Footer() {
             )}
           </div>
         </div>
+        )}
       </div>
     </footer>
   );

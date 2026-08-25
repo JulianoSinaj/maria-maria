@@ -35,6 +35,17 @@ export function photoSrcSet(src) {
   return entry.widths.map((w) => `${entry.base}-${w}.webp ${w}w`).join(", ");
 }
 
+/* Kantenlängen der Quelldatei — für width/height am <img>, damit der
+   Browser das Seitenverhältnis kennt, bevor ein Byte geladen ist (kein
+   Layout-Sprung, Homepage-Brief §7: Packshots mit width/height). Kennt das
+   Manifest die Quelle nicht oder hat sie (noch) keine Maße, kommt null
+   zurück und das <img> bleibt ohne Attribute — nie falsche Maße. */
+export function photoSize(src) {
+  const entry = PHOTO_MANIFEST[src];
+  if (!entry || !entry.width || !entry.height) return null;
+  return { width: entry.width, height: entry.height };
+}
+
 export default function Photo({
   src,
   alt = "",

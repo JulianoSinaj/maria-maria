@@ -17,7 +17,14 @@ export const common = {
     regions: "Regionen",
     magazine: "Magazin",
     contact: "Kontakt",
-    shop: "Zum Shop",
+    /* Der Knopf führt zum offiziellen externen Shop (Terra Vera) — und sagt
+       das (Homepage-Brief §6: „Zum Shop" → „Zum offiziellen Shop"). */
+    shop: "Zum offiziellen Shop",
+    /* Nur für die Kopfzeile zwischen 768 und 1023 px (iPad hochkant): Dort
+       passt die lange Pille nicht neben fünf Links und die Sprachwahl. Das
+       server-gerenderte HTML, Desktop und Telefon-Menü tragen die lange
+       Fassung — siehe components/Header.jsx. */
+    shopShort: "Zum Shop",
     wineTypes: {
       red: "Rotweine",
       white: "Weißweine",
@@ -45,7 +52,7 @@ export const common = {
       bestseller: { label: "Bestseller", hint: "Was am häufigsten im Glas landet" },
       regions: { label: "Regionen Italiens", hint: "Herkunft und Terroir" },
     },
-    shop: "Zum Shop",
+    shop: "Zum offiziellen Shop",
     note: "Handverlesen von kleinen italienischen Weingütern.",
     /* {count} setzt die Komponente ein — die Zahl steht je nach Sprache an
        anderer Stelle im Satz. */
@@ -53,8 +60,12 @@ export const common = {
   },
 
   footer: {
-    /* aria-label des Mail-Icons in der Social-Reihe */
+    /* aria-labels der Icon-Links in der Social-Reihe — die Netzwerk-Icons
+       tragen einen Namen mit Marke (Homepage-Brief §6), nicht nur das
+       Netzwerk. */
     mailLabel: "E-Mail-Adresse",
+    instagramLabel: "Maria Maria auf Instagram",
+    facebookLabel: "Maria Maria auf Facebook",
     tagline: "Italienische Boutique-Weine für bewusst gewählte Genussmomente.",
     exploreHeading: "Entdecken",
     explore: {
@@ -66,7 +77,9 @@ export const common = {
     contactHeading: "Kontakt",
     shopHeading: "Offizieller Shop",
     shopText: "Entdecken und bestellen Sie unsere Weine direkt im Maria Maria Shop.",
-    shopLink: "Zum Shop",
+    /* Terra Vera ist der offizielle externe Shop — der Link sagt das
+       (Homepage-Brief §6: „Zum Shop" → „Zum offiziellen Shop"). */
+    shopLink: "Zum offiziellen Shop",
     legal: {
       privacy: "Datenschutz",
       imprint: "Impressum",
@@ -215,7 +228,11 @@ export const common = {
       },
       "paket-grande-selezione": {
         tag: "Beliebteste Wahl",
-        desc: "Sechs Weine, vier Regionen – die ganze Vielfalt Italiens in einem Paket. Versandkostenfrei zu Ihnen nach Hause.",
+        /* „drei Weinherkünfte", nicht „vier Regionen": Apulien und Kampanien
+           sind Regionen, der Gardasee ist eine Weinregion — und dieser
+           Abschnitt reist im Client-Bundle auf jeder Seite mit (Homepage-
+           Brief, P0: nirgends „vier Regionen"). */
+        desc: "Sechs Weine, drei Weinherkünfte – die ganze Vielfalt Italiens in einem Paket. Versandkostenfrei zu Ihnen nach Hause.",
       },
       "paket-trio-bianco": {
         tag: "Frische & Eleganz",
@@ -231,11 +248,14 @@ export const common = {
   ui: {
     discoverWine: "Wein kennenlernen",
     wineDetails: "{name} — Details ansehen",
-    bottleAlt: "Flasche {name}",
+    /* Alt-Muster der Packshots nach Homepage-Brief §7:
+       „[productName] – Weinflasche". Die Rückseite bleibt als solche
+       benannt, damit die beiden Seiten einer Flasche unterscheidbar sind. */
+    bottleAlt: "{name} – Weinflasche",
     bottleFront: "Vorderseite",
     bottleBack: "Rückseite",
-    bottleFrontAlt: "Flasche {name} – Vorderseite",
-    bottleBackAlt: "Flasche {name} – Rückseite",
+    bottleFrontAlt: "{name} – Weinflasche",
+    bottleBackAlt: "{name} – Weinflasche, Rückseite",
     showSide: "{side} zeigen",
     prevWine: "Vorheriger Wein",
     nextWine: "Nächster Wein",

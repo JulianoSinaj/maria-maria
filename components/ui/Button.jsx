@@ -153,17 +153,36 @@ export default function Button({
         }}
       />
       
-      {/* masked label roll with enhanced motion */}
+      {/* masked label roll with enhanced motion.
+
+          Die nachrückende Kopie der Beschriftung ist bei Text-Kindern KEIN
+          zweiter Textknoten mehr, sondern generierter Inhalt (::before aus
+          data-label): Ein zweiter Textknoten verdoppelte den Linktext im DOM
+          — „Zum offiziellen ShopZum offiziellen Shop" in innerText, in jedem
+          SEO-Crawl und in jeder Kopie per Strg+C —, obwohl er aria-hidden
+          war (Homepage-Brief §6: Linktexte müssen eindeutig sein).
+          Generierter Inhalt liegt außerhalb von textContent/innerText und
+          erbt Schrift, Versalien und Laufweite wie ein Textknoten; das Bild
+          ist dasselbe. Für Kinder, die kein reiner String sind (Icons,
+          Fragmente), bleibt die Kopie als Knoten stehen. */}
       <span className="relative z-10 block overflow-hidden">
         <span className="block transition-transform duration-500 ease-out-expo group-hover:-translate-y-[115%]">
           {children}
         </span>
-        <span
-          aria-hidden="true"
-          className={`absolute inset-0 block translate-y-[115%] transition-transform duration-500 ease-out-expo group-hover:translate-y-0 ${cfg.labelIn}`}
-        >
-          {children}
-        </span>
+        {typeof children === "string" ? (
+          <span
+            aria-hidden="true"
+            data-label={children}
+            className={`absolute inset-0 block translate-y-[115%] transition-transform duration-500 ease-out-expo before:content-[attr(data-label)] group-hover:translate-y-0 ${cfg.labelIn}`}
+          />
+        ) : (
+          <span
+            aria-hidden="true"
+            className={`absolute inset-0 block translate-y-[115%] transition-transform duration-500 ease-out-expo group-hover:translate-y-0 ${cfg.labelIn}`}
+          >
+            {children}
+          </span>
+        )}
       </span>
       
       {icon && iconType !== "none" && (

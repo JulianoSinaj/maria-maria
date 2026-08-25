@@ -17,7 +17,7 @@ import { getDictionary } from "@/lib/i18n/dictionaries";
 import { pageMetadata } from "@/lib/i18n/metadata";
 import { localePath } from "@/lib/i18n/routing";
 import { absoluteUrl } from "@/lib/site";
-import { graph, webPageNode, itemListNode, breadcrumbNode, faqNode } from "@/lib/seo/jsonLd";
+import { graph, siteNodes, webPageNode, itemListNode, breadcrumbNode, faqNode } from "@/lib/seo/jsonLd";
 
 /* Titel und Description je Sprache aus dem Wörterbuch; hreflang,
    Canonical und OpenGraph baut pageMetadata() daraus auf. */
@@ -64,6 +64,7 @@ function CollectionJsonLd({ locale, dict, wines }) {
   return (
     <JsonLd
       data={graph(
+        siteNodes({ locale, description: dict.meta?.orgDescription }),
         webPageNode({
           url,
           name: dict.meta.collection.title,

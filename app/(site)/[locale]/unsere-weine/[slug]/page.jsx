@@ -9,6 +9,7 @@ import { absoluteUrl } from "@/lib/site";
 import { wineSeo, wineBreadcrumb } from "@/lib/seo/wine";
 import {
   graph,
+  siteNodes,
   webPageNode,
   productNode,
   breadcrumbNode,
@@ -98,6 +99,7 @@ function WineJsonLd({ slug, locale, seo, dict }) {
   return (
     <JsonLd
       data={graph(
+        siteNodes({ locale, description: dict.meta?.orgDescription }),
         webPageNode({
           url,
           name: seo.title,

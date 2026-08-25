@@ -5,8 +5,6 @@ import SmoothScroll from "@/components/motion/SmoothScroll";
 import { MagneticRouteProvider } from "@/components/motion/MagneticContext";
 import { CartProvider } from "@/components/shop/CartContext";
 import StorefrontChrome from "@/components/StorefrontChrome";
-import JsonLd from "@/components/seo/JsonLd";
-import { graph, organizationNode, websiteNode } from "@/lib/seo/jsonLd";
 import { I18nProvider } from "@/lib/i18n/context";
 import { getDictionary } from "@/lib/i18n/dictionaries";
 import { LOCALES, LOCALE_META, isLocale } from "@/lib/i18n/config";
@@ -94,19 +92,26 @@ export async function generateMetadata({ params }) {
       ? {
           index: true,
           follow: true,
+          /* Homepage-Brief §2: „index, follow; max-image-preview:large" —
+             im allgemeinen robots-Tag, nicht nur im googlebot-Tag. Ohne die
+             Angabe entscheidet Google konservativ: kleines Vorschaubild. Für
+             eine Seite, die von Fotografie lebt, ist „large" der Unterschied
+             zwischen einer Bildkachel und einer Textzeile in Discover und der
+             Bildersuche. */
+          "max-image-preview": "large",
           googleBot: {
             index: true,
             follow: true,
-            /* Ohne diese drei Angaben entscheidet Google konservativ: kleines
-               Vorschaubild, gekürzter Textausschnitt. Für eine Seite, die von
-               Fotografie lebt, ist „large" der Unterschied zwischen einer
-               Bildkachel und einer Textzeile in Discover und der Bildersuche. */
             "max-image-preview": "large",
             "max-snippet": -1,
             "max-video-preview": -1,
           },
         }
-      : { index: false, follow: false, nocache: true },
+      : /* noindex, nofollow, NOARCHIVE — `nocache: true` stand hier vorher und
+           rendert in Next.js wörtlich als „nocache", eine Direktive, die kein
+           Crawler kennt. Den HTTP-Header X-Robots-Tag mit denselben drei
+           Werten setzt next.config.js auf jeder Antwort der Vorschau. */
+        { index: false, follow: false, noarchive: true },
     /* Dateien liegen in public/ statt als app/icon.*: Die Storefront hat mit
        (site)/[locale] und (admin) zwei Wurzeln, und ein Icon im dynamischen
        Segment käme als /de/icon.png heraus — vier Adressen für dasselbe
@@ -160,19 +165,12 @@ export default async function LocaleLayout({ children, params }) {
   return (
     <html lang={LOCALE_META[locale].htmlLang} className={`${playfair.variable} ${montserrat.variable}`}>
       <body className="font-montserrat">
-        {/* Unternehmen und Website — die beiden Knoten, an denen alles
-            andere hängt. Sie stehen im Layout und damit auf JEDER Seite:
-            Google entscheidet nicht anhand einer einzelnen Seite, welche
-            Entität hinter einer Domain steht, sondern anhand der
-            Wiederholung. Die Seiten-Knoten (Produkt, Breadcrumb, FAQ)
-            verweisen per @id hierher zurück statt Adresse und Profile
-            achtzigmal zu wiederholen. */}
-        <JsonLd
-          data={graph(
-            organizationNode({ description: dict.meta?.orgDescription }),
-            websiteNode(locale)
-          )}
-        />
+        {/* Kein JSON-LD mehr an dieser Stelle: Unternehmen, Marke und Website
+            (lib/seo/jsonLd.js, siteNodes) liefert jede Seite selbst am Anfang
+            ihres eigenen Graphen — ein Block je Seite statt zwei
+            (Homepage-Brief §7). Die Wiederholung auf jeder Seite, aus der
+            Google die Entität hinter der Domain liest, bleibt damit
+            erhalten; nur der Ort ist ein anderer. */}
         {/* Der Provider trägt nur Locale + gemeinsamen Rahmen-Text ins
             Client-Bundle. Seitentexte reichen die Server-Components als Prop —
             siehe lib/i18n/context.jsx. */}

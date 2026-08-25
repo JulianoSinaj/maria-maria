@@ -7,7 +7,7 @@
 
    Der Marken-Suffix („— Maria Maria") kommt aus dem title.template im
    Root-Layout und steht deshalb hier NICHT dabei. Ausnahme ist `absolute`
-   bei /regionen, wo der Titel die Marke schon selbst trägt. */
+   bei /, /regionen und /kontakt, wo der Titel die Marke schon selbst trägt. */
 
 export const meta = {
   siteTitle: "Maria Maria — Il piacere del vino",
@@ -18,8 +18,13 @@ export const meta = {
     "Persönlich kuratierte italienische Boutique-Weine aus Apulien, Kampanien und vom Gardasee.",
 
   home: {
-    title: "Maria Maria — Il piacere del vino",
-    description: "Italienische Boutique-Weine für bewusst gewählte Genussmomente.",
+    /* Homepage SEO – Developer Brief (24.08.2026), §2 — unverändert
+       übernehmen. `titleAbsolute`, weil der Titel die Marke selbst führt:
+       Mit dem title.template stand vorher „Maria Maria — Il piacere del
+       vino — Maria Maria" im Tab und in der Ergebniszeile. */
+    titleAbsolute: "Italienische Boutique-Weine in Deutschland | Maria Maria",
+    description:
+      "Persönlich kuratierte Boutique-Weine aus Apulien, Kampanien und dem Gardaseegebiet – für Genuss, Gastronomie, Handel und besondere Anlässe.",
   },
 
   collection: {

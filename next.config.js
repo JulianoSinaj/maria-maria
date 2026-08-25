@@ -59,9 +59,21 @@ const nextConfig = {
        stale-while-revalidate: Zweitaufrufe bleiben sofort da, Änderungen
        kommen trotzdem zeitnah an. */
     const media = { key: "Cache-Control", value: "public, max-age=86400, stale-while-revalidate=604800" };
+
+    /* Vorschau-Instanzen (Vercel-Preview, NEXT_PUBLIC_NOINDEX=1) bekommen
+       zusätzlich zum <meta name="robots"> aus dem Root-Layout den HTTP-Header
+       auf JEDER Antwort — auch auf Bildern, Sitemap und robots.txt, die
+       keinen <head> haben (Homepage-Brief §2/§7: noindex, nofollow,
+       noarchive). Dieselbe Regel wie INDEXABLE in lib/site.js; hier
+       wiederholt, weil next.config.js CommonJS ist und lib/site.js ein
+       ES-Modul. Beide Variablen stehen zur Build-Zeit fest. */
+    const preview = process.env.NEXT_PUBLIC_NOINDEX === "1" || process.env.VERCEL_ENV === "preview";
+    const noindex = { key: "X-Robots-Tag", value: "noindex, nofollow, noarchive" };
+
     return [
       { source: "/img/:path*", headers: [media] },
       { source: "/video/:path*", headers: [media] },
+      ...(preview ? [{ source: "/:path*", headers: [noindex] }] : []),
     ];
   },
   webpack(config, { dev }) {

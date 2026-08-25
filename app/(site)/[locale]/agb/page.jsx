@@ -1,4 +1,5 @@
 import LegalShell from "@/components/legal/LegalShell";
+import SiteJsonLd from "@/components/seo/SiteJsonLd";
 import { getDictionary } from "@/lib/i18n/dictionaries";
 import { pageMetadata } from "@/lib/i18n/metadata";
 
@@ -21,11 +22,17 @@ export default async function AgbPage({ params }) {
   const doc = dict.legal.agb;
 
   return (
-    <LegalShell
-      shell={dict.legal.shell}
-      title={doc.title}
-      intro={doc.intro}
-      sections={doc.sections}
-    />
+    <>
+      {/* Unternehmen, Marke, Website — kamen bis August 2026 aus dem
+          Root-Layout; seit jede Seite genau einen JSON-LD-Block trägt,
+          bringt die Rechtsseite ihn selbst mit. */}
+      <SiteJsonLd locale={params.locale} dict={dict} />
+      <LegalShell
+        shell={dict.legal.shell}
+        title={doc.title}
+        intro={doc.intro}
+        sections={doc.sections}
+      />
+    </>
   );
 }

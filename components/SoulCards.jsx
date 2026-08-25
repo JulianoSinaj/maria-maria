@@ -40,7 +40,13 @@ const CORNERS = [
 
 const SPRING = { type: "spring", stiffness: 120, damping: 18, mass: 0.9 };
 
-function SoulCard({ soul, dimmed, onEnter, onLeave, compact = false }) {
+/* `nameTag`: das Element um den Namen. Standard <h3> — auf der Startseite
+   aber <p> (OriginsSection): Beide Karten heißen „Maria", und zwei
+   gleichlautende H3 direkt unter der H2 „Zwei Seelen, ein Name" wären in
+   der Gliederung doppelte Überschriften ohne eigenen Abschnitt
+   (Homepage-Brief §6/§8). Aussehen und Bewegung sind in beiden Fällen
+   identisch; nur die Semantik wechselt. */
+function SoulCard({ soul, dimmed, onEnter, onLeave, compact = false, nameTag: NameTag = "h3" }) {
   const reduced = useReducedMotion();
   const { dark } = soul;
 
@@ -152,13 +158,13 @@ function SoulCard({ soul, dimmed, onEnter, onLeave, compact = false }) {
                     {soul.tag}
                   </p>
                 )}
-                <h3
+                <NameTag
                   className={`font-playfair leading-tight transition-transform duration-500 ease-out-expo group-hover:scale-[1.06] ${
                     compact ? "mt-1 text-[17px]" : "mt-2.5 text-[clamp(26px,2.6vw,32px)]"
                   } ${dark ? "text-ivory" : "text-charcoal"}`}
                 >
                   {soul.name}
-                </h3>
+                </NameTag>
 
                 {/* die Eigenschaften heben sich nacheinander an, statt als
                     ein Block zu springen */}
@@ -259,7 +265,7 @@ function Seal({ awake, glyph = "&", compact = false }) {
    Marias oder Vision & Mission. `compact` setzt dasselbe Etikett kleiner
    (Magazin-Spalte): engere Ränder, kleinere Schrift, kleineres Siegel —
    die Ruhelage der zwei Marias bleibt davon unberührt. */
-export function EtiquettePair({ items, seal = "&", compact = false, className = "" }) {
+export function EtiquettePair({ items, seal = "&", compact = false, nameTag = "h3", className = "" }) {
   const reduced = useReducedMotion();
   /* Welche Karte der Zeiger gerade ansteuert — die andere tritt zurück */
   const [active, setActive] = useState(null);
@@ -278,6 +284,7 @@ export function EtiquettePair({ items, seal = "&", compact = false, className = 
             key={item.key}
             soul={item}
             compact={compact}
+            nameTag={nameTag}
             dimmed={active !== null && active !== i}
             onEnter={() => setActive(i)}
             onLeave={() => setActive(null)}
@@ -290,7 +297,7 @@ export function EtiquettePair({ items, seal = "&", compact = false, className = 
   );
 }
 
-export default function SoulCards({ souls: copy }) {
+export default function SoulCards({ souls: copy, nameTag = "h3" }) {
   const souls = SOUL_SHAPE.map((s) => ({ ...s, ...(copy?.[s.key] ?? {}) }));
-  return <EtiquettePair items={souls} />;
+  return <EtiquettePair items={souls} nameTag={nameTag} />;
 }

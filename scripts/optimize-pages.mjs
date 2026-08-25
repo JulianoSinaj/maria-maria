@@ -136,6 +136,11 @@ async function run() {
          Ein Array aus fertigen URLs wäre größer im Client-Bundle. */
       base: `/img/${path.posix.join(path.posix.dirname(rel), stem)}`,
       widths: made,
+      /* Kantenlängen der Quelle — photoSize() in <Photo> baut daraus
+         width/height fürs <img>, damit das Seitenverhältnis vor dem Laden
+         feststeht (kein Layout-Sprung). */
+      width: meta.width,
+      height: meta.height,
     };
 
     before += size;

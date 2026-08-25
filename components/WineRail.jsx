@@ -3,6 +3,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "@/components/i18n/LocaleLink";
 import { useCommon, useLocalizedWines } from "@/lib/i18n/context";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import useMediaQuery from "@/components/motion/useMediaQuery";
 import WineCard from "./WineCard";
 import { Arrow, ChevronRight } from "./Icons";
 
@@ -12,7 +13,17 @@ import { Arrow, ChevronRight } from "./Icons";
    - Desktop (sm+): a horizontal rail of several cards at once; the paddles
      scroll the track a page at a time and disable at either edge.
    The filter pills (Alle / Rot / Weiß / Rosé) drive both; the active pill is
-   a shared layout element that glides between buttons. */
+   a shared layout element that glides between buttons.
+
+   Nur EINE der beiden Bauformen steht im DOM (Homepage-Brief §7: „keine
+   responsiven Klone"). Vorher lagen Pager und Rail beide im Baum und wurden
+   nur per CSS umgeschaltet — der erste Wein stand damit zweimal auf der
+   Seite: zwei H3 mit demselben Namen, zwei Packshots mit demselben Alt-Text.
+   Jetzt entscheidet die Breite im Client, welche Bauform gerendert wird;
+   der Server rendert die Rail mit allen neun Weinen (das ist die Fassung,
+   die ein Crawler ohne JavaScript lesen soll), Telefone wechseln nach der
+   Hydration zum Pager. Die CSS-Klassen (sm:hidden / hidden sm:block)
+   bleiben als Sicherheitsnetz für den Moment vor der Hydration. */
 
 /* Schlüssel statt Beschriftung: `w.type === "Rotwein"` hätte außerhalb des
    Deutschen nie getroffen und die Schiene bei jeder Auswahl leer laufen
@@ -29,6 +40,8 @@ export default function WineRail({ wines: incoming, className = "" }) {
   const catalogue = useCommon("catalogue");
   const ui = useCommon("ui");
   const reduced = useReducedMotion();
+  /* Dieselbe Grenze wie Tailwinds `sm` — der Server nimmt Desktop an. */
+  const wide = useMediaQuery("(min-width: 640px)", true);
   const [filter, setFilter] = useState(null);
   // Phone pager: index = position in the filtered list; dir = slide direction.
   const [[index, dir], setIndex] = useState([0, 0]);
@@ -166,6 +179,7 @@ export default function WineRail({ wines: incoming, className = "" }) {
       {/* ============================================================
           PHONE (<sm): single card with flanking / under paddles
           ============================================================ */}
+      {!wide && (
       <div className="sm:hidden">
         <div className="relative mx-auto mt-8 w-full max-w-[340px]">
           {/* grid-stack: entering and exiting card share the cell, so the
@@ -223,10 +237,12 @@ export default function WineRail({ wines: incoming, className = "" }) {
           {paddle({ onClick: () => go(1), label: ui.nextWine, extra: "flex" })}
         </div>
       </div>
+      )}
 
       {/* ============================================================
           DESKTOP (sm+): horizontal rail of several cards, paged
           ============================================================ */}
+      {wide && (
       <div className="hidden sm:block">
         <div className="mt-10 flex items-center justify-between">
           <p className="text-[11px] uppercase tracking-[0.22em] text-charcoal/55">
@@ -269,6 +285,7 @@ export default function WineRail({ wines: incoming, className = "" }) {
           ))}
         </div>
       </div>
+      )}
 
       <div className="mt-5 text-center sm:mt-7">
         <Link

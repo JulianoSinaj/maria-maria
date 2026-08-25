@@ -12,6 +12,7 @@ import { pathWithoutLocale } from "@/lib/i18n/routing";
 import { useLenis } from "./motion/SmoothScroll";
 import { Close, Menu, Grapes } from "./Icons";
 import { topsellerHref } from "@/lib/shop/config";
+import useMediaQuery from "@/components/motion/useMediaQuery";
 
 /* Pfad und Wörterbuch-Schlüssel gehören zusammen, die Beschriftung nicht:
    Routen sind in allen vier Sprachen identisch (/unsere-weine bleibt
@@ -115,6 +116,17 @@ export default function Header() {
      zurück. Alle anderen Seiten bleiben unberührt. */
   const onDark = here.startsWith("/regionen") && !scrolled;
 
+  /* Die Shop-Pille heißt „Zum offiziellen Shop" (Homepage-Brief §6) — auf
+     Tablet-Breiten (md bis unter lg, iPad hochkant) ist die Zeile damit
+     ~130 px zu breit: Logo, fünf Links, Sprachwahl und Pille passen nicht
+     nebeneinander. Dort steht die kurze Fassung (nav.shopShort). Per
+     Media-Query im Client statt per CSS mit zwei Spans: Zwei Spans stünden
+     beide im DOM und ergäben „Zum offiziellen ShopZum Shop" als Linktext.
+     Server-Snapshot `true`: das gerenderte HTML — und damit jeder Crawler —
+     trägt die lange Fassung; Tablets wechseln nach der Hydration. */
+  const wideNav = useMediaQuery("(min-width: 1024px)", true);
+  const shopLabel = wideNav ? nav.shop : nav.shopShort ?? nav.shop;
+
   return (
     <header className="fixed inset-x-0 top-0 z-50 pt-[env(safe-area-inset-top)]">
       {/* reading progress */}
@@ -135,7 +147,11 @@ export default function Header() {
             <Logo className={`h-auto transition-all duration-500 ease-out-expo ${scrolled ? "w-[76px]" : "w-[96px]"}`} />
           </Link>
 
-          <nav className="hidden items-center gap-8 md:flex" aria-label={a11y.mainNav}>
+          {/* gap-5 auf Tablets: seit die Shop-Pille „Zum offiziellen Shop"
+              heißt (Homepage-Brief §6), ist die Zeile zwischen 768 und
+              ~900 px eng — der engere Abstand gibt den Links die Luft, die
+              die Pille braucht; ab lg der bisherige Abstand. */}
+          <nav className="hidden items-center gap-5 md:flex lg:gap-8" aria-label={a11y.mainNav}>
             {NAV.map((item) => {
               const active = isActive(item.href);
               if (item.href === "/unsere-weine")
@@ -181,8 +197,8 @@ export default function Header() {
               {/* Nicht die Sammelseite, sondern die Topseller: der Knopf steht
                   auf jeder Seite und trifft niemanden, der schon eine Flasche
                   gewählt hat — siehe lib/shop/config. */}
-              <Button href={topsellerHref()} size="sm">
-                {nav.shop}
+              <Button href={topsellerHref()} size="sm" className="whitespace-nowrap">
+                {shopLabel}
               </Button>
             </div>
             {/* Auf Telefonen steht die Sprachwahl NEBEN dem Menü-Knopf, nicht

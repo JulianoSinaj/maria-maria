@@ -5,6 +5,7 @@ import SplitText from "@/components/motion/SplitText";
 import HomeHeroFx from "@/components/home/HomeHeroFx";
 import { Clock, Mail, Pin } from "@/components/Icons";
 import IntentProvider from "@/components/kontakt/IntentContext";
+import IntentFromQuery from "@/components/kontakt/IntentFromQuery";
 import HeroActions from "@/components/kontakt/HeroActions";
 import KontaktHeroPhoto, { KontaktHeroPreload } from "@/components/kontakt/KontaktHeroPhoto";
 import IntentCards from "@/components/kontakt/IntentCards";
@@ -19,7 +20,7 @@ import { getDictionary } from "@/lib/i18n/dictionaries";
 import { pageMetadata } from "@/lib/i18n/metadata";
 import { localePath } from "@/lib/i18n/routing";
 import { absoluteUrl } from "@/lib/site";
-import { graph, webPageNode, breadcrumbNode, faqNode, serviceNode, ORG_ID } from "@/lib/seo/jsonLd";
+import { graph, siteNodes, webPageNode, breadcrumbNode, faqNode, serviceNode, ORG_ID } from "@/lib/seo/jsonLd";
 
 /* Kontaktseite — Struktur und Texte nach dem Handoff-Dokument vom
    18.08.2026, visuelle Sprache seit dem 20.08.2026 die der Storefront:
@@ -88,6 +89,7 @@ function KontaktJsonLd({ locale, dict }) {
   return (
     <JsonLd
       data={graph(
+        siteNodes({ locale, description: dict.meta?.orgDescription }),
         {
           ...webPageNode({
             url,
@@ -141,6 +143,10 @@ export default async function KontaktPage({ params }) {
       <KontaktHeroPreload />
 
       <IntentProvider>
+      {/* Liest ?anliegen=… aus der Adresse und belegt das Formular vor —
+          der Weg von den drei Segment-Karten der Startseite hierher
+          (components/kontakt/intents.js). Rendert nichts. */}
+      <IntentFromQuery />
       {/* Kein eigener Seitengrund mehr: Die Seite liegt wie alle anderen auf
           dem Ivory des <body> (globals.css) statt auf einem eigenen Linen. */}
       <div className="-mb-12 lg:-mb-16">

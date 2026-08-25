@@ -1,5 +1,5 @@
 import JsonLd from "@/components/seo/JsonLd";
-import { graph, webPageNode, breadcrumbNode, faqNode } from "@/lib/seo/jsonLd";
+import { graph, siteNodes, webPageNode, breadcrumbNode, faqNode } from "@/lib/seo/jsonLd";
 import { localePath } from "@/lib/i18n/routing";
 import { absoluteUrl } from "@/lib/site";
 
@@ -41,6 +41,7 @@ export default function MagazinJsonLd({ locale, dict, faq = [] }) {
   return (
     <JsonLd
       data={graph(
+        siteNodes({ locale, description: dict.meta?.orgDescription }),
         webPageNode({
           url,
           name: meta.title,

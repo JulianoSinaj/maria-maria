@@ -1,23 +1,40 @@
-/* Startseite — Hero, Philosophie, Kollektions-Auftakt, Le Origini,
-   Regionen-Explorer, Shop-Band und die Marken-FAQ-Sektion.
+/* Startseite — Hero, Philosophie, Kollektions-Auftakt, Le Origini, die drei
+   Weinherkünfte, die drei Conversion-Segmente, Shop-Band und die
+   Marken-FAQ-Sektion.
 
-   Struktur (Icons, Bildpfade, Bildausschnitte, Reihenfolge) bleibt in
-   components/home/*; hier steht ausschließlich Text. Die Reben- und
-   Ortsnamen im Laufband sowie „Le Origini" bleiben unübersetzt — das sind
-   Namen, keine Beschriftungen. */
+   Struktur (Icons, Bildpfade, Bildausschnitte, Reihenfolge, Link-Ziele)
+   bleibt in components/home/*; hier steht ausschließlich Text. Die Reben-
+   und Ortsnamen im Laufband sowie „Le Origini" bleiben unübersetzt — das
+   sind Namen, keine Beschriftungen.
+
+   Die Texte folgen dem „Homepage SEO – Developer Brief" (24.08.2026):
+   Veröffentlicht ist nur, was dort als „DE – veröffentlichen" freigegeben
+   wurde. Strings nicht ohne SEO-/Brand-Freigabe ändern. Wo der Brief eine
+   Zeile nicht kennt (Eyebrows der Sektionen, Zitat, Regionen-Rubriken,
+   FAQ-Kopf), steht der bisherige Text. */
 
 export const home = {
   hero: {
-    eyebrow: "Italienische Boutique-Weine",
-    lede: "Handverlesene Weine kleiner Familienweingüter – für bewusst gewählte Genussmomente, vom Aperitivo bis zum großen Abend.",
-    ctaWines: "Weine entdecken",
-    ctaShop: "Zum Shop",
-    statWines: "Boutique-Weine",
-    statRegions: "Regionen Italiens",
-    statSince: "seit der Gründung",
-    /* Scroll-Cue unter dem Hero-Foto + Alternativtext des Fotos */
-    photoAlt:
-      "Maria-Maria-Flasche und ein Glas Rotwein auf einer Steinmauer zwischen Reben und Meer, dahinter eine Frau im weißen Kleid mit Blick auf die Küste",
+    /* Die Eyebrow-Komponente setzt Versalien per CSS — der Brief führt die
+       Zeile deshalb als „PERSÖNLICH KURATIERT · SEIT 2019". */
+    eyebrow: "Persönlich kuratiert · seit 2019",
+    /* Genau eine H1: Marke plus Hauptkeyword. Der italienische Claim steht
+       NICHT mehr in der Überschrift, sondern darunter als eigener
+       <p lang="it"> — im DOM darf nie „Maria MariaIl piacere del vino."
+       entstehen. */
+    title: "Maria Maria – italienische Boutique-Weine",
+    claim: "Il piacere del vino.",
+    lede: "Handverlesene Weine kleiner italienischer Familienweingüter – persönlich ausgewählt für bewusste Genussmomente in Deutschland, vom Aperitivo bis zum großen Abend.",
+    ctaWines: "Unsere Weine entdecken",
+    /* Die zweite CTA führt zur persönlichen Beratung (/kontakt), nicht mehr
+       zum Shop. Die frühere Statzeile (Weine · Regionen · seit 2019) ist
+       entfallen: Ihre Beschriftungen gehörten nicht zur freigegebenen Copy,
+       und „seit 2019" steht bereits in der Eyebrow. Wer sie zurückholen
+       will, trägt statWines/statRegions/statSince wieder ein — die
+       Komponente rendert die Zeile dann von selbst. */
+    ctaContact: "Persönliche Beratung anfragen",
+    /* Alternativtext des Hero-Fotos (Brief §7) */
+    photoAlt: "Maria-Maria-Weinflasche und Rotweinglas vor Reben mit Blick auf die Mittelmeerküste",
   },
 
   philosophy: {
@@ -51,48 +68,86 @@ export const home = {
   collection: {
     eyebrow: "Die Kollektion",
     title: "Unsere Weine",
-    description: "Neun Charaktere aus vier Regionen – jeder mit eigener Geschichte.",
+    /* Brief §4, „Contatore": drei Weinherkünfte — nie „vier Regionen". */
+    description: "Neun Weine aus drei ausgewählten Weinherkünften – jeder mit eigener Geschichte.",
   },
 
   origins: {
     title: "Zwei Seelen,",
     titleAccent: "ein Name",
+    /* Brief §3, „Storia breve" — ein Absatz statt der früheren zwei. */
     paragraphs: [
-      "Maria Maria beginnt im Salento, im Sommer 2019 — zwischen Kindheitserinnerungen und alten Rebzeilen wurde aus einem Moment eine Erleuchtung: Wein ist für uns kein Getränk, sondern ein Katalysator für Emotionen.",
-      "Seitdem führt unsere Reise von den sonnigen Rebzeilen des Salento über die Vulkanböden Kampaniens hinauf ans Südufer des Gardasees — jede Flasche eine Station, jede Region eine eigene Sprache.",
+      "Maria Maria beginnt im Salento, im Sommer 2019. An einem Tisch mit Freunden, zwei Frauen namens Maria und einem Önologen entstand die Idee für eine persönliche Auswahl italienischer Weine.",
     ],
     /* Ortsnamen der Reise — in allen Sprachen die jeweils gebräuchliche Form. */
     journey: ["Salento", "Apulien", "Kampanien", "Gardasee"],
     quote: "„Italian wine, personal selection, share the pleasure.“",
-    cta: "Magazin",
+    /* Brief §6: der Link auf /geschichte hieß „Magazin" — er führt aber
+       zur Markengeschichte, nicht ins Magazin. */
+    cta: "Unsere Geschichte entdecken",
   },
 
+  /* Brief §4 — die drei Weinherkünfte. Apulien und Kampanien sind
+     Verwaltungsregionen, der Gardasee ist eine Weinregion (südliches
+     Gardaseegebiet, Lombardei): deshalb „Weinherkünfte", nie „vier
+     Regionen". Je Karte genau eine H3 und ein Bild mit Alt-Text. */
   regions: {
     eyebrow: "Herkunft",
-    title: "Wo unsere Weine zuhause sind",
+    title: "Drei italienische Weinherkünfte, drei unverwechselbare Handschriften",
     description:
-      "Boden, Licht und Klima prägen jede Traube – am Ende schmeckt man die Landschaft im Glas.",
+      "Unsere neun Weine führen von Apulien über Kampanien bis in das südliche Gardaseegebiet. Jede Herkunft steht für eigene Rebsorten, Landschaften und Menschen – persönlich ausgewählt für Maria Maria.",
     cta: "Alle Regionen",
-    /* Beschriftung der Detail-Karte im Explorer */
+    /* Rückfall-Beschriftung, falls eine Karte keine eigene CTA trägt */
     detailCta: "Mehr entdecken",
     items: {
       apulien: {
         name: "Apulien",
         tag: "Das Herz des Südens",
-        desc: "Die Sonne des Südens und kraftvolle Aromen.",
-        long: "Zwischen Salento und Gallipoli reifen Primitivo und Negroamaro unter der Sonne des Südens – kraftvolle, warme Weine mit mediterraner Seele.",
+        long: "Sonnenverwöhnte Weine mit Wärme, Frucht und mediterranem Charakter – darunter unsere Primitivo- und Rosato-Auswahl.",
+        cta: "Apulien entdecken",
+        alt: "Trulli und Olivenbäume in Apulien",
       },
       kampanien: {
         name: "Kampanien",
         tag: "Zwischen Vulkan und Meer",
-        desc: "Vulkanische Böden, ursprüngliche Charaktere.",
-        long: "Rund um Napoli und Salerno prägen die vulkanischen Böden des Vesuv Weine mit Tiefe und Ursprünglichkeit – von Falanghina bis Aglianico.",
+        long: "Mineralische, charaktervolle Weine aus Süditalien – geprägt von Rebsorten wie Greco, Falanghina und Aglianico.",
+        cta: "Kampanien entdecken",
+        alt: "Weinberge an der kampanischen Küste mit Vesuv",
       },
       garda: {
-        name: "Gardasee / Lombardei",
+        name: "Gardaseegebiet (Lombardei)",
         tag: "Eleganz des Nordens",
-        desc: "Eleganz, Frische und mineralische Tiefe.",
-        long: "Am Südufer des Gardasees entsteht Lugana – ein Weißwein von seltener Eleganz, getragen von Frische und mineralischer Tiefe.",
+        long: "Elegante, frische Weine aus dem südlichen Gardaseegebiet – mit Lugana DOC als klarer Herkunftsreferenz.",
+        cta: "Weine vom Gardasee entdecken",
+        alt: "Weinberge am Gardasee in der Lombardei",
+      },
+    },
+  },
+
+  /* Brief §5 — die drei Conversion-Segmente. Die CTAs führen auf
+     /kontakt?anliegen=… und belegen dort das Anliegen im Formular vor
+     (components/kontakt/intents.js); die Ziele stehen im Code. */
+  segments: {
+    title: "Persönlich ausgewählt – für Ihren Genuss, Ihr Sortiment und Ihren Anlass",
+    intro:
+      "Ob für Ihr Restaurant, Ihr Sortiment oder eine besondere Veranstaltung: Wir beraten persönlich und stellen eine Auswahl zusammen, die zu Konzept, Gästen und Anlass passt.",
+    /* Local proof — die Zeile unter den drei Karten */
+    proof: "Persönliche Beratung aus Mettmann bei Düsseldorf – in Nordrhein-Westfalen und darüber hinaus.",
+    items: {
+      gastronomie: {
+        title: "Gastronomie & Feinkost",
+        text: "Persönlich ausgewählte italienische Weine für Restaurants, Cafés, Weinbars und Feinkostläden – passend zu Küche, Stil und Gästen.",
+        cta: "Sortiment für Gastronomie anfragen",
+      },
+      handel: {
+        title: "Handel & Wiederverkauf",
+        text: "Charaktervolle Weine mit nachvollziehbarer Herkunft und persönlicher Beratung für ausgewählte Handelspartner und Wiederverkäufer.",
+        cta: "Handelspartnerschaft besprechen",
+      },
+      events: {
+        title: "Events & Verkostungen",
+        text: "Individuelle Weinauswahl für private Feiern, Firmenevents und geführte Verkostungen in Düsseldorf, Nordrhein-Westfalen und darüber hinaus.",
+        cta: "Event oder Verkostung anfragen",
       },
     },
   },
@@ -101,8 +156,10 @@ export const home = {
     eyebrow: "Der offizielle Shop",
     title: "Bereit für den Geschmack, der",
     titleAccent: "Sie inspiriert?",
-    text: "Entdecken und bestellen Sie unsere Weine bequem online – direkt vom Weingut zu Ihnen nach Hause.",
-    primary: "Zum Shop",
+    /* Terra Vera ist der offizielle externe Shop — kein Versprechen eines
+       Direktversands vom Weingut (Brief §3). */
+    text: "Entdecken und bestellen Sie die Maria-Maria-Weine bequem über unseren offiziellen Onlineshop bei Terra Vera.",
+    primary: "Zum offiziellen Shop",
     secondary: "Kontakt aufnehmen",
   },
 

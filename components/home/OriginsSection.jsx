@@ -78,8 +78,11 @@ export default function OriginsSection({ t = {}, souls }) {
             </Reveal>
           </div>
 
-          {/* the double soul */}
-          <SoulCards souls={souls} />
+          {/* the double soul — die Namen als <p>, nicht als H3: Beide Karten
+              heißen „Maria", und zwei gleichlautende H3 unter „Zwei Seelen,
+              ein Name" wären doppelte Überschriften ohne eigenen Inhalt
+              (Homepage-Brief §6/§8). Shop und Geschichte behalten die H3. */}
+          <SoulCards souls={souls} nameTag="p" />
         </div>
       </div>
     </section>

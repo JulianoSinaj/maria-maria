@@ -13,6 +13,39 @@
 
 export const FORM_ANCHOR = "anfrage";
 
+/* Vorbelegung über die Adresse — Homepage-Brief §5 („Destinazioni CTA").
+
+   Die drei Segment-Karten der Startseite verlinken auf
+   /kontakt?anliegen=gastronomie-feinkost | handel-wiederverkauf |
+   events-verkostungen. Der Parameter wählt das Anliegen im Formular vor,
+   erzeugt aber KEINE eigene indexierbare Seite: Canonical der Kontaktseite
+   bleibt /kontakt (lib/i18n/metadata.js kennt die Query gar nicht).
+
+   Die Adresswerte sind bewusst Bindestrich-Slugs (lesbar, so wie der Brief
+   sie vorgibt) und werden hier auf die stabilen technischen Werte
+   abgebildet. „events-verkostungen" fasst zwei Anliegen zusammen — Events
+   ist die naheliegendere Vorbelegung, die Verkostung wählt der Nutzer im
+   selben Dropdown. Zusätzlich gelten die technischen Werte selbst (mit
+   Bindestrich oder Unterstrich), damit ein von Hand gebauter Link nicht ins
+   Leere läuft. */
+export const INTENT_QUERY_PARAM = "anliegen";
+
+const QUERY_INTENTS = {
+  "gastronomie-feinkost": "gastronomie_feinkost",
+  "handel-wiederverkauf": "handel_wiederverkauf",
+  "events-verkostungen": "event_feier",
+  "event-feier": "event_feier",
+  "individuelle-auswahl": "individuelle_auswahl",
+};
+
+export function intentFromQuery(raw) {
+  if (typeof raw !== "string") return null;
+  const key = raw.trim().toLowerCase();
+  if (!key) return null;
+  if (QUERY_INTENTS[key]) return QUERY_INTENTS[key];
+  return FORM_INTENTS.includes(key) ? key : null;
+}
+
 /* Die vier Karten der 2×2-Kachel — Reihenfolge wie im Mockup. */
 export const INTENT_CARDS = [
   { key: "gastronomie", value: "gastronomie_feinkost", icon: "Cutlery" },

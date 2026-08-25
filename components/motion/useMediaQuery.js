@@ -1,10 +1,16 @@
 "use client";
 import { useSyncExternalStore } from "react";
 
-/* SSR-safe media query subscription — server snapshot is `false`, the client
-   corrects itself right after hydration. */
+/* SSR-safe media query subscription — the server snapshot defaults to
+   `false`, the client corrects itself right after hydration.
 
-export default function useMediaQuery(query) {
+   `serverSnapshot` lets a caller pick what the server (and the first client
+   render during hydration) assumes. WineRail passes `true` for its
+   desktop breakpoint: the server-rendered HTML then carries the full rail of
+   nine wines — the version a crawler without JavaScript should read — and
+   phones swap to their pager as soon as they hydrate. */
+
+export default function useMediaQuery(query, serverSnapshot = false) {
   return useSyncExternalStore(
     (onChange) => {
       const mq = window.matchMedia(query);
@@ -12,7 +18,7 @@ export default function useMediaQuery(query) {
       return () => mq.removeEventListener("change", onChange);
     },
     () => window.matchMedia(query).matches,
-    () => false
+    () => serverSnapshot
   );
 }
 

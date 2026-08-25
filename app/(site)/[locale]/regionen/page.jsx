@@ -17,7 +17,7 @@ import { getDictionary } from "@/lib/i18n/dictionaries";
 import { pageMetadata } from "@/lib/i18n/metadata";
 import { localePath } from "@/lib/i18n/routing";
 import { absoluteUrl } from "@/lib/site";
-import { graph, webPageNode, breadcrumbNode, faqNode } from "@/lib/seo/jsonLd";
+import { graph, siteNodes, webPageNode, breadcrumbNode, faqNode } from "@/lib/seo/jsonLd";
 
 /* SEO-Snippet nach der Regionen-Guide (v1.0, 05.08.2026, Abschnitt 2):
    Title trägt die drei Herkünfte, die Description Rebsorten, Herkunft,
@@ -67,6 +67,7 @@ function RegionenJsonLd({ locale, dict }) {
   return (
     <JsonLd
       data={graph(
+        siteNodes({ locale, description: dict.meta?.orgDescription }),
         webPageNode({
           url,
           name: dict.meta.regionen.titleAbsolute,

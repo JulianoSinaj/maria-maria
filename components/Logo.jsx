@@ -7,13 +7,23 @@ import Photo from "@/components/media/Photo";
 
    `loading="eager"`: beide stehen über dem Falz und dürfen nicht auf den
    Lazy-Trigger warten — die Vorgabe von <Photo> ist bewusst lazy und wird
-   hier genauso bewusst überschrieben. */
+   hier genauso bewusst überschrieben.
+
+   `width`/`height` sind die Kantenlängen der Quelldatei (Homepage-Brief
+   §7: Logo eager mit width/height): Der Browser kennt so das Seitenverhältnis,
+   bevor ein Byte des Bildes da ist, und reserviert die Fläche — kein
+   Layout-Sprung im Header. Die Anzeigegröße setzt weiter die Klasse.
+
+   Eine SVG-Wortmarke (maria-maria-logo.svg), wie der Brief sie nennt, liegt
+   nicht vor — es gibt nur das PNG (400 × 163) und seine WebP-Varianten. */
 
 export default function Logo({ className = "w-[104px]" }) {
   return (
     <Photo
       src="/img/logo.png"
       alt="Maria Maria"
+      width={400}
+      height={163}
       sizes="104px"
       loading="eager"
       className={`${className} h-auto`}

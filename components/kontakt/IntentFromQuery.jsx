@@ -18,7 +18,7 @@ import { INTENT_QUERY_PARAM, intentFromQuery } from "./intents";
    Anliegen unten bereits ausgewählt, samt der passenden Zusatzfelder.
 
    Kein Analytics-Ereignis: contact_intent_click misst Klicks, und der Klick
-   ist auf der Startseite gefallen (components/home/SegmentCards.jsx). */
+   fällt auf der Seite, die den Link setzt – nicht hier. */
 export default function IntentFromQuery() {
   const { setIntent } = useIntentTarget();
 

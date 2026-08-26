@@ -1,5 +1,5 @@
 /* Startseite — Hero, Philosophie, Kollektions-Auftakt, Le Origini, die drei
-   Weinherkünfte, die drei Conversion-Segmente, Shop-Band und die
+   Weinherkünfte, Shop-Band und die
    Marken-FAQ-Sektion.
 
    Struktur (Icons, Bildpfade, Bildausschnitte, Reihenfolge, Link-Ziele)
@@ -121,34 +121,6 @@ export const home = {
         long: "Elegante, frische Weine aus dem südlichen Gardaseegebiet – mit Lugana DOC als klarer Herkunftsreferenz.",
         cta: "Weine vom Gardasee entdecken",
         alt: "Weinberge am Gardasee in der Lombardei",
-      },
-    },
-  },
-
-  /* Brief §5 — die drei Conversion-Segmente. Die CTAs führen auf
-     /kontakt?anliegen=… und belegen dort das Anliegen im Formular vor
-     (components/kontakt/intents.js); die Ziele stehen im Code. */
-  segments: {
-    title: "Persönlich ausgewählt – für Ihren Genuss, Ihr Sortiment und Ihren Anlass",
-    intro:
-      "Ob für Ihr Restaurant, Ihr Sortiment oder eine besondere Veranstaltung: Wir beraten persönlich und stellen eine Auswahl zusammen, die zu Konzept, Gästen und Anlass passt.",
-    /* Local proof — die Zeile unter den drei Karten */
-    proof: "Persönliche Beratung aus Mettmann bei Düsseldorf – in Nordrhein-Westfalen und darüber hinaus.",
-    items: {
-      gastronomie: {
-        title: "Gastronomie & Feinkost",
-        text: "Persönlich ausgewählte italienische Weine für Restaurants, Cafés, Weinbars und Feinkostläden – passend zu Küche, Stil und Gästen.",
-        cta: "Sortiment für Gastronomie anfragen",
-      },
-      handel: {
-        title: "Handel & Wiederverkauf",
-        text: "Charaktervolle Weine mit nachvollziehbarer Herkunft und persönlicher Beratung für ausgewählte Handelspartner und Wiederverkäufer.",
-        cta: "Handelspartnerschaft besprechen",
-      },
-      events: {
-        title: "Events & Verkostungen",
-        text: "Individuelle Weinauswahl für private Feiern, Firmenevents und geführte Verkostungen in Düsseldorf, Nordrhein-Westfalen und darüber hinaus.",
-        cta: "Event oder Verkostung anfragen",
       },
     },
   },

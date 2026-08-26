@@ -11,8 +11,14 @@ export const common = {
     regions: "Vinařské regiony",
     magazine: "Magazín",
     contact: "Kontakt",
+<<<<<<< Updated upstream
     shop: "Do oficiálního e-shopu",
     /* Short form for the narrow desktop header (see content/de/common.js). */
+=======
+    shop: "Oficiální e-shop",
+    /* Kurzform für die schmale Desktop-Kopfzeile (siehe content/de/common.js). */
+    shopShort: "Oficiální e-shop",
+>>>>>>> Stashed changes
     wineTypes: {
       red: "Červená vína",
       white: "Bílá vína",

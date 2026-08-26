@@ -12,7 +12,12 @@ export const common = {
     magazine: "Magazine",
     contact: "Contact",
     shop: "Visit the official shop",
+<<<<<<< Updated upstream
     /* Short form for the narrow desktop header (see content/de/common.js). */
+=======
+    /* Kurzform für die schmale Desktop-Kopfzeile (siehe content/de/common.js). */
+    shopShort: "Official shop",
+>>>>>>> Stashed changes
     wineTypes: {
       red: "Red wines",
       white: "White wines",

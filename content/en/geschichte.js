@@ -50,8 +50,13 @@ export const geschichte = {
       label: "Today · Mettmann near Düsseldorf",
       title: "At home in Germany. Personally connected to Italy.",
       paragraphs: [
+<<<<<<< Updated upstream
         "From Mettmann we bring selected wines from Italian growers to restaurants and wine bars – personally, reliably and with real closeness.",
         "Every order is put together with care, so that our wines arrive where they belong: at the table.",
+=======
+        "From Mettmann we bring selected wines from Italian winemakers to restaurants and wine bars – personally, reliably and with genuine closeness.",
+        "Every order is put together with care so that our wines arrive where they belong: at the table.",
+>>>>>>> Stashed changes
       ],
       linkLabel: "Discover our selection of wines",
       alt: "A laid table with wine glasses and an original bottle of Maria Maria",
@@ -73,8 +78,13 @@ export const geschichte = {
       label: "The beginning · Summer 2019",
       title: "Some ideas are born at the table.",
       paragraphs: [
+<<<<<<< Updated upstream
         "Between good food, open conversation and remarkable wines, an idea takes shape: to find wines that show where they come from, that have character, and that bring people together.",
         "That evening became more than a memory – it became Maria Maria.",
+=======
+        "Between good food, open conversations and special wines an idea grows: to find wines that show their origin, have character and bring people together.",
+        "That evening becomes more than a memory – it becomes Maria Maria.",
+>>>>>>> Stashed changes
       ],
       quote: "“Some ideas need no business plan. Just the right table.”",
       linkLabel: "Discover our selection of wines",

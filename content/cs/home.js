@@ -2,6 +2,7 @@
 
 export const home = {
   hero: {
+<<<<<<< Updated upstream
     eyebrow: "Italská butiková vína",
     /* Přesně jeden nadpis H1: značka a hlavní klíčové slovo. Italský claim
        už není součástí nadpisu, ale stojí pod ním jako vlastní odstavec —
@@ -18,6 +19,19 @@ export const home = {
     ctaContact: "Vyžádat osobní poradenství",
     photoAlt:
       "Láhev Maria Maria a sklenka červeného vína na kamenné zídce mezi vinicemi a mořem, za nimi žena v bílých šatech hledící na pobřeží",
+=======
+    /* Stejná struktura jako content/de/home.js (brief k úvodní stránce,
+       24.08.2026): přesně jedna H1 — značka plus hlavní klíčové slovo — s
+       italským claimem jako samostatným <p lang="it"> pod ní; druhá CTA
+       vede na osobní poradenství (/kontakt), dřívější řádek s čísly odpadl. */
+    eyebrow: "OSOBNÍ VÝBĚR · OD ROKU 2019",
+    title: "Maria Maria – italská butiková vína",
+    claim: "Il piacere del vino.",
+    lede: "Ručně vybíraná vína malých italských rodinných vinařství – osobně zvolená pro vědomé chvíle požitku v Německu, od aperitivu po velký večer.",
+    ctaWines: "Objevit naše vína",
+    ctaContact: "Požádat o osobní poradenství",
+    photoAlt: "Láhev vína Maria Maria a sklenka červeného vína před vinicemi s výhledem na středomořské pobřeží",
+>>>>>>> Stashed changes
   },
 
   philosophy: {
@@ -61,7 +75,11 @@ export const home = {
     titleAccent: "jedno jméno",
     /* Brief §3, „Storia breve“ — jediný odstavec, stejně jako v němčině. */
     paragraphs: [
+<<<<<<< Updated upstream
       "Maria Maria začíná v Salentu, v létě roku 2019. U stolu s přáteli, dvěma ženami jménem Maria a enologem, vznikla myšlenka osobního výběru italských vín.",
+=======
+      "Maria Maria začíná v Salentu, v létě 2019. U stolu s přáteli, dvěma ženami jménem Maria a enologem vznikla myšlenka osobního výběru italských vín.",
+>>>>>>> Stashed changes
     ],
     journey: ["Salento", "Apulie", "Kampánie", "Gardské jezero"],
     quote: "„Italian wine, personal selection, share the pleasure.“",
@@ -73,31 +91,40 @@ export const home = {
 
   regions: {
     eyebrow: "Původ",
-    title: "Kde jsou naše vína doma",
+    title: "Tři italské vinařské oblasti, tři nezaměnitelné rukopisy",
     description:
-      "Půda, světlo a klima utvářejí každý hrozen – nakonec je krajina cítit ve sklenici.",
+      "Našich devět vín vede z Apulie přes Kampánii až do jižní oblasti Gardského jezera. Každý původ má vlastní odrůdy, krajiny a lidi – osobně vybrané pro Maria Maria.",
     cta: "Všechny regiony",
     detailCta: "Objevit více",
     items: {
       apulien: {
         name: "Apulie",
         tag: "Srdce jihu",
+<<<<<<< Updated upstream
         desc: "Slunce jihu a plná, silná aromata.",
         long: "Mezi Salentem a Gallipoli dozrávají Primitivo a Negroamaro pod jižním sluncem – silná, teplá vína se středomořskou duší.",
+=======
+        long: "Sluncem prohřátá vína s teplem, ovocností a středomořským charakterem – včetně našeho výběru Primitiva a Rosata.",
+>>>>>>> Stashed changes
         cta: "Objevit Apulii",
         alt: "Trulli a olivovníky v Apulii",
       },
       kampanien: {
         name: "Kampánie",
         tag: "Mezi sopkou a mořem",
+<<<<<<< Updated upstream
         desc: "Sopečné půdy, původní charaktery.",
         long: "V okolí Neapole a Salerna dávají sopečné půdy Vesuvu vínům hloubku a původnost – od Falanghiny po Aglianico.",
+=======
+        long: "Minerální, charakterní vína z jižní Itálie – utvářená odrůdami jako Greco, Falanghina a Aglianico.",
+>>>>>>> Stashed changes
         cta: "Objevit Kampánii",
         alt: "Vinice na kampánském pobřeží s Vesuvem",
       },
       garda: {
-        name: "Gardské jezero / Lombardie",
+        name: "Oblast Gardského jezera (Lombardie)",
         tag: "Elegance severu",
+<<<<<<< Updated upstream
         desc: "Elegance, svěžest a minerální hloubka.",
         long: "Na jižním břehu Gardského jezera vzniká Lugana – bílé víno vzácné elegance, nesené svěžestí a minerální hloubkou.",
         cta: "Objevit vína od Gardského jezera",
@@ -130,6 +157,11 @@ export const home = {
         title: "Akce & degustace",
         text: "Individuální výběr vín pro soukromé oslavy, firemní akce a řízené degustace v Düsseldorfu, Severním Porýní-Vestfálsku i dál.",
         cta: "Poptat akci nebo degustaci",
+=======
+        long: "Elegantní, svěží vína z jižní oblasti Gardského jezera – s Lugana DOC jako jasnou referencí původu.",
+        cta: "Objevit vína od Gardského jezera",
+        alt: "Vinice u Gardského jezera v Lombardii",
+>>>>>>> Stashed changes
       },
     },
   },

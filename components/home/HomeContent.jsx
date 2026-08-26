@@ -11,16 +11,14 @@ import HomeHeroPhoto, { HomeHeroPreload } from "@/components/home/HomeHeroPhoto"
 import HomeHeroFx from "@/components/home/HomeHeroFx";
 import OriginsSection from "@/components/home/OriginsSection";
 import RegionExplorer from "@/components/home/RegionExplorer";
-import SegmentCards from "@/components/home/SegmentCards";
 import WineRail from "@/components/WineRail";
 import FaqSection from "@/components/faq/FaqSection";
-import { Vineyard, Glasses, Plate, Conversation, Pin } from "@/components/Icons";
+import { Vineyard, Glasses, Plate, Conversation } from "@/components/Icons";
 import { WINES, REGION_COUNT } from "@/components/data";
-import { INTENT_QUERY_PARAM, intentFromQuery } from "@/components/kontakt/intents";
 import Atmosphere, { Aura, GhostWord, Vines } from "@/components/Atmosphere";
 
 /* Die Startseite — Hero, Philosophie, Weine-Rail, Origins, die drei
-   Weinherkünfte, die drei Conversion-Segmente, Shop-CTA und Marken-FAQ.
+   Weinherkünfte, Shop-CTA und Marken-FAQ.
 
    Der gesamte Text kommt als `t` aus content/<sprache>/home.js; hier steht
    nur noch die Struktur — Reihenfolge, Ikonen, Bildpfade, Link-Ziele und die
@@ -28,7 +26,7 @@ import Atmosphere, { Aura, GhostWord, Vines } from "@/components/Atmosphere";
 
    Überschriften-Gliederung (Homepage-Brief §6, 24.08.2026): genau EINE H1
    im Hero, darunter je Sektion eine H2 — Philosophie, Unsere Weine, Zwei
-   Seelen, Weinherkünfte (mit drei H3), Segmente (mit drei H3), Shop-Band,
+   Seelen, Weinherkünfte (mit drei H3), Shop-Band,
    FAQ. Alles davon steht im server-gerenderten HTML; die Reveal-Hüllen
    blenden nur ein, sie fügen nichts nach. */
 
@@ -69,16 +67,6 @@ const REGION_SHAPE = [
   },
 ];
 
-/* Die drei Conversion-Segmente (Homepage-Brief §5). Ikone wie auf der
-   Kontaktseite; `query` ist der Wert von ?anliegen=, den die Kontaktseite
-   auf ihr Formular-Anliegen abbildet (components/kontakt/intents.js) —
-   dieselbe Tabelle, deshalb kann hier kein Ziel auseinanderlaufen. */
-const SEGMENT_SHAPE = [
-  { key: "gastronomie", icon: "Cutlery", query: "gastronomie-feinkost" },
-  { key: "handel", icon: "Bag", query: "handel-wiederverkauf" },
-  { key: "events", icon: "Cheers", query: "events-verkostungen" },
-];
-
 /* Rebsorten im Laufband — Namen, keine Beschriftungen: bleiben in jeder
    Sprache stehen. */
 const MARQUEE = ["Primitivo", "Lugana", "Falanghina", "Greco di Tufo", "Aglianico", "Rosato"];
@@ -88,23 +76,10 @@ export default function HomeContent({ t = {}, faq = [], souls }) {
   const philosophy = t.philosophy ?? {};
   const collection = t.collection ?? {};
   const regionsCopy = t.regions ?? {};
-  const segments = t.segments ?? null;
   const band = t.shopBand ?? {};
   const faqCopy = t.faq ?? {};
 
   const regions = REGION_SHAPE.map((r) => ({ ...r, ...(regionsCopy.items?.[r.key] ?? {}) }));
-
-  /* Die Segment-Sektion gibt es nur, wo das Wörterbuch sie führt (Deutsch,
-     nach dem Brief). Die übrigen Sprachen zeigen die Seite ohne sie, statt
-     unübersetzte oder erfundene Texte zu tragen. */
-  const segmentItems = segments
-    ? SEGMENT_SHAPE.map((s) => ({
-        ...s,
-        ...(segments.items?.[s.key] ?? {}),
-        href: `/kontakt?${INTENT_QUERY_PARAM}=${s.query}`,
-        intent: intentFromQuery(s.query),
-      }))
-    : [];
 
   /* Die Statzeile (Weine · Herkünfte · seit …) erscheint nur, wenn die
      Sprache ihre Beschriftungen führt — die deutsche Fassung hat sie mit dem
@@ -315,27 +290,6 @@ export default function HomeContent({ t = {}, faq = [], souls }) {
         </Reveal>
         </div>
       </section>
-
-      {/* ============ DIE DREI SEGMENTE (Conversion) ============ */}
-      {/* Zwischen Herkünften und Shop-Band, wie die Gliederung des Briefs es
-          vorsieht: erst die Weine und woher sie kommen, dann für wen. */}
-      {segments && (
-        <section className="relative overflow-hidden bg-gradient-to-b from-ivory via-cream to-ivory">
-          <Atmosphere variant="warm" className="opacity-50" />
-          <Aura tint="gold" drift={2} className="-right-40 top-10 h-[28rem] w-[28rem]" />
-          <div className="relative mx-auto max-w-content px-6 py-16 sm:py-24 lg:px-10">
-            <SectionTitle description={segments.intro}>{segments.title}</SectionTitle>
-            <SegmentCards items={segmentItems} />
-            {/* Local proof — Mettmann bei Düsseldorf, NRW und darüber hinaus */}
-            <Reveal delay={0.1} className="mt-8 flex items-start justify-center gap-2.5 sm:mt-10">
-              <Pin aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0 text-bordeaux" />
-              <p className="text-balance text-center text-[13px] leading-relaxed text-charcoal/70">
-                {segments.proof}
-              </p>
-            </Reveal>
-          </div>
-        </section>
-      )}
 
       {/* ============ SHOP CTA (liquid-glass band) ============ */}
       {/* Bauform liegt in components/ui/ShopCtaBand — dieses Band war die

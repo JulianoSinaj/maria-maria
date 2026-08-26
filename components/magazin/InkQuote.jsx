@@ -82,9 +82,10 @@ export default function InkQuote({
             {cite}
           </span>
         )}
-        {translation && (
-          <span className="text-[12px] italic leading-relaxed text-charcoal/45">{translation}</span>
-        )}
+        {/* Immer im DOM, auch wenn die Zeile leer bleibt (Italienisch):
+            sonst ist die Bildunterschrift dort eine Zeile kürzer als in den
+            anderen Sprachen. */}
+        <span className="text-[12px] italic leading-relaxed text-charcoal/45">{translation || "\u00A0"}</span>
       </figcaption>
     </figure>
   );

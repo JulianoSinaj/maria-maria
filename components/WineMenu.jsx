@@ -102,7 +102,7 @@ export default function WineMenu({ active, scrolled = false, onDark = false }) {
         href="/unsere-weine"
         aria-current={active ? "page" : undefined}
         aria-expanded={open}
-        className={`group relative flex items-center gap-1.5 py-2 text-[12.5px] tracking-[0.08em] transition-colors duration-300 ${
+        className={`group relative flex items-center gap-1.5 whitespace-nowrap py-2 text-[12.5px] tracking-[0.08em] transition-colors duration-300 ${
           onDark
             ? active || open
               ? "font-semibold text-white"

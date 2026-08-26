@@ -104,10 +104,27 @@ export default function WinePhotos({ wine, imgClass = "h-44", lift = true, class
       </div>
 
       {/* Seiten-Punkte: zeigen an, dass die Flasche zwei Seiten hat.
-          Unterhalb lg wächst die unsichtbare Trefferfläche per Pseudo-Element
-          auf Daumenmaß (~44px) und der Abstand hält die Flächen getrennt —
-          die sichtbaren Punkte und der Desktop bleiben unverändert. */}
-      <div className="mt-2 flex items-center gap-1.5 max-lg:gap-3">
+          Die unsichtbare Trefferfläche wächst per Pseudo-Element — unterhalb
+          lg auf Daumenmaß (~44px), ab lg auf genau 24 × 24.
+
+          Ab lg war sie vorher gar nicht da: Der Zusatz stand als `max-lg:`
+          und ließ auf dem Desktop einen nackten 16-px-Punkt zurück. Genau
+          daher rührte der Unterschied in der Lighthouse-Bewertung —
+          Barrierefreiheit 100 auf dem Telefon, 96 auf dem Desktop.
+
+          Der Irrtum dahinter ist naheliegend: „Touch-Ziel" klingt nach
+          Fingern. WCAG 2.5.8 nennt aber 24 × 24 für JEDE Zeigereingabe, und
+          gemeint sind ausdrücklich auch Mausnutzer mit eingeschränkter
+          Feinmotorik — ein 16-px-Ziel ist mit zittriger Hand am Zeiger
+          genauso schwer zu treffen wie mit dem Daumen.
+
+          Die sichtbaren Punkte ändern sich nicht, sie sind ein <span> im
+          Knopf. Nur der Abstand geht ab lg von 6 auf 8 px: Bei 16 px Knopf
+          plus 8 px Lücke liegen die Mittelpunkte 24 px auseinander, die
+          beiden 24-px-Flächen stoßen also exakt aneinander, statt sich zu
+          überlappen — überlappende Ziele fallen sonst über die
+          Abstandsprüfung derselben Richtlinie. */}
+      <div className="mt-2 flex items-center gap-3 lg:gap-2">
         {shots.map((s, i) => (
           <button
             key={i}
@@ -115,7 +132,7 @@ export default function WinePhotos({ wine, imgClass = "h-44", lift = true, class
             aria-label={(ui.showSide ?? "").replace("{side}", s.label)}
             aria-pressed={i === side}
             onClick={() => i !== side && paginate(i - side)}
-            className="group/dot relative flex h-4 w-4 items-center justify-center max-lg:before:absolute max-lg:before:-inset-x-1.5 max-lg:before:-inset-y-3.5 max-lg:before:content-['']"
+            className="group/dot relative flex h-4 w-4 items-center justify-center before:absolute before:content-[''] max-lg:before:-inset-x-1.5 max-lg:before:-inset-y-3.5 lg:before:-inset-1"
           >
             <span
               className={`h-1.5 rounded-full transition-all duration-400 ease-out-expo ${

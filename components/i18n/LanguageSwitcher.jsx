@@ -90,7 +90,34 @@ export default function LanguageSwitcher({ variant = "menu", className = "", onD
               }`}
             >
               {LOCALE_META[l].short}
-              <span className="sr-only"> — {LOCALE_META[l].native}</span>
+              {/* Systemschrift statt Montserrat — und zwar wegen ZWEI
+                  Buchstaben, die niemand sieht.
+
+                  „Čeština" trägt Č (U+010C) und š (U+0161). Beide liegen in
+                  Latin Extended, und next/font zerlegt jede Schrift nach
+                  Unicode-Bereichen: latin wird vorgeladen, latin-ext nicht.
+                  Fordert die Seite auch nur EIN Zeichen daraus an, lädt der
+                  Browser den kompletten latin-ext-Schnitt von Montserrat
+                  nach — 67 KB, geteilt über alle fünf Schnittstärken, und
+                  laut Lighthouse im kritischen Pfad vor dem LCP.
+
+                  Auf der deutschen Startseite waren genau diese zwei
+                  Zeichen die EINZIGEN aus dem Bereich — gezählt im
+                  ausgelieferten HTML. Deutsche Umlaute zählen nicht dazu,
+                  die stehen in Latin-1 und damit im vorgeladenen Schnitt.
+
+                  Der Text hier ist `sr-only`, also geclippt: Er wird
+                  gerendert (deshalb die Schriftanforderung), aber nie
+                  gesehen. Die Schriftart zu wechseln ändert optisch
+                  buchstäblich nichts und kostet Screenreader nichts.
+
+                  Die sichtbare Liste im Panel behält Montserrat. Sie steht
+                  hinter `open` und ist beim Laden gar nicht im DOM; wer sie
+                  aufklappt, hat die Seite längst. */}
+              <span className="sr-only" style={{ fontFamily: "system-ui, sans-serif" }}>
+                {" "}
+                — {LOCALE_META[l].native}
+              </span>
             </NextLink>
           );
         })}
@@ -104,7 +131,21 @@ export default function LanguageSwitcher({ variant = "menu", className = "", onD
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
-        aria-label={t.ariaLabel}
+        /* Der sichtbare Text („DE") MUSS im barrierefreien Namen vorkommen —
+           WCAG 2.5.3 „Label in Name". Vorher stand hier nur `t.ariaLabel`
+           („Sprache wählen"): Das aria-label ersetzt den Inhalt, statt ihn zu
+           ergänzen, und damit verschwand das einzige Wort, das auf dem Knopf
+           tatsächlich steht.
+
+           Wen das trifft: Wer per Sprache steuert, sagt, was er liest —
+           „Klick DE". Die Spracherkennung sucht diesen Text im
+           barrierefreien Namen, fand ihn nicht und traf den Knopf nie. Für
+           Screenreader war die alte Fassung in Ordnung, deshalb ist es nie
+           jemandem aufgefallen.
+
+           Das Kürzel steht voran, nicht hinten: Die Zuordnung soll beim
+           ersten Wort sitzen, und der Zweck folgt als Erläuterung. */
+        aria-label={`${LOCALE_META[locale].short} – ${t.ariaLabel}`}
         aria-expanded={open}
         aria-haspopup="true"
         /* h-11 unterhalb md: dort steht die Pille neben dem Menü-Knopf und

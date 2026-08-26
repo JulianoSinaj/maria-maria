@@ -7,9 +7,11 @@ import Atmosphere from "@/components/Atmosphere";
    identisch gebaut sind und auf Mobile sauber umbrechen.
 
    `shell` trägt die wiederkehrenden Beschriftungen (Kicker, „Stand:", der
-   Kontaktsatz am Fuß) in der aktiven Sprache. `shell.bindingNotice` erscheint
-   nur in den übersetzten Fassungen: Verbindlich ist die deutsche Version, und
-   das gehört sichtbar auf die Seite, nicht in einen Kommentar. */
+   Kontaktsatz am Fuß) in der aktiven Sprache. `shell.bindingNotice` steht in
+   allen vier Fassungen: Verbindlich ist die deutsche Version, und das gehört
+   sichtbar auf die Seite, nicht in einen Kommentar. Die Übersetzungen
+   verweisen auf das Original, das Original benennt sich selbst — der Kasten
+   steht dadurch in jeder Sprache an derselben Stelle. */
 
 export default function LegalShell({ shell, title, intro, sections }) {
   return (

@@ -52,9 +52,12 @@ export default function MagazinJsonLd({ locale, dict, faq = [] }) {
           breadcrumbId: crumbs?.["@id"] ?? null,
         }),
         crumbs,
-        /* Noch deutsch (I18N.md, Abschnitt 7) — Markup nur dort, wo der
-           Besucher denselben Text auch liest. */
-        locale === "de" ? faqNode({ url, items: faq }) : null
+        /* FAQ-Paare in JEDER Sprache — dieselbe Begründung wie auf
+           /geschichte: Die Fragen liegen übersetzt in allen vier
+           Wörterbüchern und stehen sichtbar auf der Seite. Die frühere
+           Einschränkung auf Deutsch stammt aus der Zeit, als sie hier noch
+           deutsch standen. */
+        faqNode({ url, items: faq })
       )}
     />
   );

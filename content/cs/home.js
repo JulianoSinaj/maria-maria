@@ -3,15 +3,19 @@
 export const home = {
   hero: {
     eyebrow: "Italská butiková vína",
+    /* Přesně jeden nadpis H1: značka a hlavní klíčové slovo. Italský claim
+       už není součástí nadpisu, ale stojí pod ním jako vlastní odstavec —
+       v DOM nesmí nikdy vzniknout „Maria MariaIl piacere del vino.“. */
+    title: "Maria Maria – italská butiková vína",
+    claim: "Il piacere del vino.",
     lede: "Ručně vybíraná vína z malých rodinných vinařství – pro vědomě zvolené chvíle, od aperitivu po velký večer.",
     ctaWines: "Objevit vína",
-    ctaShop: "Do e-shopu",
-    /* Číslovky se do popisků dosazují za běhu (9 vín, 3 regiony), takže
-       tvar musí sedět: u 9 čeština žádá genitiv množného čísla, u 3
-       nominativ. Správné tvary nese už content/cs/shop.js. */
-    statWines: "Butikových vín",
-    statRegions: "Regiony Itálie",
-    statSince: "od založení",
+    /* Druhá CTA vede na osobní poradenství (/kontakt), ne už do e-shopu.
+       Řádek s čísly (vína · regiony · od roku 2019) odešel spolu s tím
+       německým; kdo ho chce zpět, vrátí statWines, statRegions a statSince
+       a komponenta ho vykreslí sama. Správné číslovkové tvary nese
+       content/cs/shop.js. */
+    ctaContact: "Vyžádat osobní poradenství",
     photoAlt:
       "Láhev Maria Maria a sklenka červeného vína na kamenné zídce mezi vinicemi a mořem, za nimi žena v bílých šatech hledící na pobřeží",
   },
@@ -55,9 +59,9 @@ export const home = {
   origins: {
     title: "Dvě duše,",
     titleAccent: "jedno jméno",
+    /* Brief §3, „Storia breve“ — jediný odstavec, stejně jako v němčině. */
     paragraphs: [
-      "Maria Maria začíná v Salentu, v létě roku 2019 — mezi vzpomínkami z dětství a starými řadami révy se z jednoho okamžiku stalo prozření: víno pro nás není nápoj, ale katalyzátor emocí.",
-      "Od té doby vede naše cesta od slunečných řad Salenta přes sopečné půdy Kampánie až k jižnímu břehu Gardského jezera — každá láhev je zastávkou, každý region vlastní řečí.",
+      "Maria Maria začíná v Salentu, v létě roku 2019. U stolu s přáteli, dvěma ženami jménem Maria a enologem, vznikla myšlenka osobního výběru italských vín.",
     ],
     journey: ["Salento", "Apulie", "Kampánie", "Gardské jezero"],
     quote: "„Italian wine, personal selection, share the pleasure.“",
@@ -80,18 +84,52 @@ export const home = {
         tag: "Srdce jihu",
         desc: "Slunce jihu a plná, silná aromata.",
         long: "Mezi Salentem a Gallipoli dozrávají Primitivo a Negroamaro pod jižním sluncem – silná, teplá vína se středomořskou duší.",
+        cta: "Objevit Apulii",
+        alt: "Trulli a olivovníky v Apulii",
       },
       kampanien: {
         name: "Kampánie",
         tag: "Mezi sopkou a mořem",
         desc: "Sopečné půdy, původní charaktery.",
         long: "V okolí Neapole a Salerna dávají sopečné půdy Vesuvu vínům hloubku a původnost – od Falanghiny po Aglianico.",
+        cta: "Objevit Kampánii",
+        alt: "Vinice na kampánském pobřeží s Vesuvem",
       },
       garda: {
         name: "Gardské jezero / Lombardie",
         tag: "Elegance severu",
         desc: "Elegance, svěžest a minerální hloubka.",
         long: "Na jižním břehu Gardského jezera vzniká Lugana – bílé víno vzácné elegance, nesené svěžestí a minerální hloubkou.",
+        cta: "Objevit vína od Gardského jezera",
+        alt: "Vinice u Gardského jezera v Lombardii",
+      },
+    },
+  },
+
+  /* Tři konverzní segmenty mezi původy a pruhem e-shopu (brief §5). Bez
+     tohoto bloku se sekce nevykreslí vůbec — právě proto měla německá
+     úvodní stránka o jednu sekci víc než ostatní tři. */
+  segments: {
+    title: "Osobně vybráno – pro váš požitek, váš sortiment a vaši příležitost",
+    intro:
+      "Ať už jde o vaši restauraci, váš sortiment nebo výjimečnou akci: poradíme osobně a sestavíme výběr, který sedne konceptu, hostům i příležitosti.",
+    /* Místní důkaz — řádek pod třemi kartami */
+    proof: "Osobní poradenství z Mettmannu u Düsseldorfu – v Severním Porýní-Vestfálsku i dál.",
+    items: {
+      gastronomie: {
+        title: "Gastronomie & lahůdky",
+        text: "Osobně vybraná italská vína pro restaurace, kavárny, vinné bary a lahůdkářství – ladí s kuchyní, stylem i hosty.",
+        cta: "Poptat sortiment pro gastronomii",
+      },
+      handel: {
+        title: "Obchod & další prodej",
+        text: "Vína s charakterem, dohledatelným původem a osobním poradenstvím pro vybrané obchodní partnery a prodejce.",
+        cta: "Probrat obchodní partnerství",
+      },
+      events: {
+        title: "Akce & degustace",
+        text: "Individuální výběr vín pro soukromé oslavy, firemní akce a řízené degustace v Düsseldorfu, Severním Porýní-Vestfálsku i dál.",
+        cta: "Poptat akci nebo degustaci",
       },
     },
   },

@@ -47,14 +47,12 @@ export const geschichte = {
 
   chapters: {
     anfang: {
-      label: "The beginning · 2019",
-      title: "From Germany. With Italian roots.",
+      label: "Today · Mettmann near Düsseldorf",
+      title: "At home in Germany. Personally connected to Italy.",
       paragraphs: [
-        "Maria Maria has been active in Germany since 2019. The brand is based in Düsseldorf – its personal and cultural origins lead to Lizzano in Salento.",
-        "From the bond between two generations grew a selection in which every bottle stands for a place, a grape variety and a deliberate choice.",
+        "From Mettmann we bring selected wines from Italian growers to restaurants and wine bars – personally, reliably and with real closeness.",
+        "Every order is put together with care, so that our wines arrive where they belong: at the table.",
       ],
-      quote:
-        "“Wine begins with its origin – and finds its place wherever people share it with one another.”",
       linkLabel: "Discover our selection of wines",
       alt: "A laid table with wine glasses and an original bottle of Maria Maria",
       micro: "La tavola lunga",
@@ -72,13 +70,13 @@ export const geschichte = {
       caption: "Vines, Mediterranean light and the closeness of the Ionian Sea.",
     },
     duesseldorf: {
-      label: "Der Anfang · Sommer 2019",
-      title: "Manche Ideen entstehen am Tisch.",
+      label: "The beginning · Summer 2019",
+      title: "Some ideas are born at the table.",
       paragraphs: [
-        "Zwischen gutem Essen, offenen Gesprächen und besonderen Weinen wächst eine Idee: Weine zu finden, die Herkunft zeigen, Charakter haben und Menschen zusammenbringen.",
-        "Aus diesem Abend wird mehr als eine Erinnerung – es wird Maria Maria.",
+        "Between good food, open conversation and remarkable wines, an idea takes shape: to find wines that show where they come from, that have character, and that bring people together.",
+        "That evening became more than a memory – it became Maria Maria.",
       ],
-      quote: "„Manche Ideen brauchen keinen Businessplan. Nur den richtigen Tisch.“",
+      quote: "“Some ideas need no business plan. Just the right table.”",
       linkLabel: "Discover our selection of wines",
       alt: "An evening table set with Maria Maria red wine at dusk",
       micro: "Dall’Italia, oltre i confini",

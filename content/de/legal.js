@@ -4,8 +4,11 @@
    VERBINDLICHE Fassung: Die Maria Maria Wines GmbH sitzt in Mettmann, es
    gilt deutsches Recht (§ 9 AGB). Die drei anderen Sprachfassungen sind
    Übersetzungen zur Verständlichkeit und tragen deshalb einen Hinweis darauf
-   (`bindingNotice`) — im Deutschen fehlt der Schlüssel bewusst, weil das
-   Original keinen Verweis auf sich selbst braucht.
+   (`bindingNotice`). Die deutsche Fassung trägt ihn ebenfalls, nur
+   andersherum formuliert: Sie benennt sich als das Original, statt auf eines
+   zu verweisen. Vorher fehlte der Schlüssel hier — dadurch stand der Kasten
+   in drei Sprachen und in der vierten nicht, ein Sprachwechsel ließ also ein
+   sichtbares Element kommen und gehen.
 
    Wichtig für die Pflege: Ändert sich hier ein Absatz, muss er in allen vier
    Dateien nachgezogen werden. Eine veraltete Übersetzung einer
@@ -19,6 +22,8 @@ export const legal = {
     contactPre: "Fragen dazu? Schreiben Sie uns jederzeit über die",
     contactLink: "Kontaktseite",
     contactMid: "oder an",
+    bindingNotice:
+      "Dies ist die deutsche Originalfassung und damit die rechtlich verbindliche. Die italienische, englische und tschechische Fassung sind Übersetzungen zur Verständlichkeit.",
   },
 
   impressum: {

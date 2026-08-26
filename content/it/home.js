@@ -3,12 +3,18 @@
 export const home = {
   hero: {
     eyebrow: "Vini boutique italiani",
+    /* Una sola H1: marchio più parola chiave principale. Il claim italiano
+       non sta nel titolo ma sotto, come paragrafo a sé — nel DOM non deve
+       mai nascere «Maria MariaIl piacere del vino.». */
+    title: "Maria Maria – vini boutique italiani",
+    claim: "Il piacere del vino.",
     lede: "Vini selezionati a mano da piccole cantine familiari – per momenti di piacere scelti con cura, dall'aperitivo alla grande serata.",
     ctaWines: "Scopri i vini",
-    ctaShop: "Vai allo shop",
-    statWines: "Vini boutique",
-    statRegions: "Regioni d'Italia",
-    statSince: "dalla fondazione",
+    /* La seconda CTA porta alla consulenza personale (/kontakt), non più
+       allo shop. La riga di numeri (vini · regioni · dal 2019) è caduta
+       insieme a quella tedesca; chi la rivuole rimette statWines,
+       statRegions e statSince e il componente la rende da sé. */
+    ctaContact: "Richiedi una consulenza personale",
     photoAlt:
       "Bottiglia Maria Maria e un calice di vino rosso su un muretto di pietra tra vigne e mare, dietro una donna in abito bianco che guarda la costa",
   },
@@ -52,9 +58,9 @@ export const home = {
   origins: {
     title: "Due anime,",
     titleAccent: "un solo nome",
+    /* Brief §3, «Storia breve» — un solo paragrafo, come in tedesco. */
     paragraphs: [
-      "Maria Maria nasce nel Salento, nell'estate del 2019 — tra ricordi d'infanzia e vecchi filari, un momento è diventato un'illuminazione: per noi il vino non è una bevanda, ma un catalizzatore di emozioni.",
-      "Da allora il nostro viaggio va dai filari assolati del Salento ai suoli vulcanici della Campania, fino alla sponda meridionale del Lago di Garda — ogni bottiglia una tappa, ogni regione una lingua diversa.",
+      "Maria Maria nasce nel Salento, nell'estate del 2019. A un tavolo tra amici, due donne di nome Maria e un enologo, è nata l'idea di una selezione personale di vini italiani.",
     ],
     journey: ["Salento", "Puglia", "Campania", "Lago di Garda"],
     quote: "«Italian wine, personal selection, share the pleasure.»",
@@ -77,18 +83,53 @@ export const home = {
         tag: "Il cuore del Sud",
         desc: "Il sole del Sud e aromi pieni di forza.",
         long: "Tra Salento e Gallipoli, Primitivo e Negroamaro maturano sotto il sole del Sud – vini caldi e potenti, con un'anima mediterranea.",
+        cta: "Scopri la Puglia",
+        alt: "Trulli e ulivi in Puglia",
       },
       kampanien: {
         name: "Campania",
         tag: "Tra vulcano e mare",
         desc: "Suoli vulcanici, caratteri originari.",
         long: "Intorno a Napoli e Salerno i suoli vulcanici del Vesuvio danno vini di profondità e autenticità – dalla Falanghina all'Aglianico.",
+        cta: "Scopri la Campania",
+        alt: "Vigneti sulla costa campana con il Vesuvio",
       },
       garda: {
         name: "Lago di Garda / Lombardia",
         tag: "L'eleganza del Nord",
         desc: "Eleganza, freschezza e profondità minerale.",
         long: "Sulla sponda meridionale del Lago di Garda nasce il Lugana – un bianco di rara eleganza, sostenuto da freschezza e profondità minerale.",
+        cta: "Scopri i vini del Garda",
+        alt: "Vigneti sul Lago di Garda, in Lombardia",
+      },
+    },
+  },
+
+  /* I tre segmenti di conversione, tra le origini e la fascia dello shop
+     (brief §5). Senza questo blocco la sezione non viene resa affatto —
+     ed è esattamente il motivo per cui la home tedesca aveva una sezione
+     in più delle altre tre. Forma «tu», come il resto della pagina. */
+  segments: {
+    title: "Selezionati di persona – per il tuo piacere, il tuo assortimento e la tua occasione",
+    intro:
+      "Che sia per il tuo ristorante, il tuo assortimento o un evento speciale: ti consigliamo di persona e mettiamo insieme una selezione che si accorda con il concept, con gli ospiti e con l'occasione.",
+    /* Prova locale — la riga sotto le tre carte */
+    proof: "Consulenza personale da Mettmann, vicino a Düsseldorf – in Renania Settentrionale-Vestfalia e oltre.",
+    items: {
+      gastronomie: {
+        title: "Ristorazione & gastronomia",
+        text: "Vini italiani scelti di persona per ristoranti, caffè, wine bar e negozi di gastronomia – in sintonia con la cucina, con lo stile e con gli ospiti.",
+        cta: "Richiedi l'assortimento per la ristorazione",
+      },
+      handel: {
+        title: "Commercio & rivendita",
+        text: "Vini di carattere, con un'origine tracciabile e una consulenza personale, per partner commerciali e rivenditori selezionati.",
+        cta: "Parliamo di una partnership",
+      },
+      events: {
+        title: "Eventi & degustazioni",
+        text: "Selezioni su misura per feste private, eventi aziendali e degustazioni guidate a Düsseldorf, in Renania Settentrionale-Vestfalia e oltre.",
+        cta: "Richiedi un evento o una degustazione",
       },
     },
   },

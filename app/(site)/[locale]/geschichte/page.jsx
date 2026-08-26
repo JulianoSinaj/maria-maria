@@ -110,9 +110,14 @@ function GeschichteJsonLd({ locale, dict, faq = [] }) {
           mainEntity: { "@id": ORG_ID },
         },
         crumbs,
-        /* FAQ-Paare nur dort, wo der Besucher denselben Text liest — wie
-           auf /magazin noch deutsch (I18N.md, Abschnitt 7). */
-        locale === "de" ? faqNode({ url, items: faq }) : null
+        /* FAQ-Paare in JEDER Sprache. Die Bedingung stand hier einmal auf
+           `locale === "de"`, weil die Fragen damals nur deutsch vorlagen —
+           die Regel lautete: Markup nur dort, wo der Besucher denselben Text
+           auch liest. Seit der Übersetzung liegen sie in allen vier
+           Wörterbüchern (content/<sprache>/faq.js) und stehen in jeder
+           Sprachfassung sichtbar auf der Seite. Die Regel gilt also weiter,
+           ihre Einschränkung war nur noch ein Rest. */
+        faqNode({ url, items: faq })
       )}
     />
   );

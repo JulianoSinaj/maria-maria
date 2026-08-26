@@ -47,14 +47,12 @@ export const geschichte = {
 
   chapters: {
     anfang: {
-      label: "Začátek · 2019",
-      title: "Z Německa. S italskými kořeny.",
+      label: "Dnes · Mettmann u Düsseldorfu",
+      title: "Doma v Německu. S Itálií spojeni osobně.",
       paragraphs: [
-        "Od roku 2019 působí Maria Maria v Německu. Značka sídlí v Düsseldorfu – její osobní a kulturní původ vede do Lizzana v Salentu.",
-        "Ze spojení dvou generací vznikl výběr, v němž každá láhev představuje jedno místo, jednu odrůdu a jedno vědomé rozhodnutí.",
+        "Z Mettmannu přinášíme vybraná vína italských vinařů do restaurací a vinných barů – osobně, spolehlivě a se skutečnou blízkostí.",
+        "Každá objednávka se sestavuje s péčí, aby naše vína dorazila tam, kam patří: na stůl.",
       ],
-      quote:
-        "„Víno začíná u svého původu – a své místo nachází tam, kde ho lidé sdílejí.“",
       linkLabel: "Objevit náš výběr vín",
       alt: "Prostřený stůl se sklenicemi vína a originální lahví Maria Maria",
       micro: "La tavola lunga",
@@ -72,12 +70,13 @@ export const geschichte = {
       caption: "Réva, středomořské světlo a blízkost Jónského moře.",
     },
     duesseldorf: {
-      label: "Od roku 2019 · Düsseldorf",
-      title: "Doma v Německu. S pohledem za hranice.",
+      label: "Začátek · léto 2019",
+      title: "Některé nápady vznikají u stolu.",
       paragraphs: [
-        "Značka Maria Maria působí v Německu od roku 2019 a sídlí v Düsseldorfu. Odtud se osobně vybíraná italská vína dostávají k lidem v Německu i v dalších zemích.",
-        "Düsseldorf je sídlem značky – ne hranicí jejího výběru. Rozhodující zůstávají původ, charakter a příběh za každým vínem.",
+        "Mezi dobrým jídlem, otevřenými hovory a výjimečnými víny se rodí myšlenka: najít vína, která ukazují svůj původ, mají charakter a spojují lidi.",
+        "Z toho večera zůstane víc než vzpomínka – vznikne Maria Maria.",
       ],
+      quote: "„Některé nápady nepotřebují podnikatelský plán. Jen ten správný stůl.“",
       linkLabel: "Objevit náš výběr vín",
       alt: "Prostřený večerní stůl s červeným vínem Maria Maria za soumraku",
       micro: "Dall’Italia, oltre i confini",

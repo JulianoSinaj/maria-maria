@@ -84,7 +84,7 @@ export const meta = {
 
   regionen: {
     /* trägt die Marke selbst — wird als `title.absolute` gesetzt */
-    titleAbsolute: "Italienische Weinregionen: Apulien, Kampanien & Lugana | Maria Maria",
+    titleAbsolute: "Weinregionen: Apulien, Kampanien & Lugana | Maria Maria",
     description:
       "Entdecken Sie ausgewählte Weine aus Apulien, Kampanien und dem Lugana-Gebiet am Gardasee – mit Rebsorten, Herkunft, Geschmack und Food-Pairing-Tipps.",
   },
@@ -101,7 +101,7 @@ export const meta = {
        „— Maria Maria“ an. 67 Zeichen: Google schneidet im Zweifel hinten den
        Markennamen ab, und das ist die richtige Stelle dafür — die Suchwörter
        stehen alle in den ersten 53. */
-    titleAbsolute: "Kontakt | Italienische Weine für Gastronomie & Events | Maria Maria",
+    titleAbsolute: "Kontakt: Italienische Weine für Gastronomie | Maria Maria",
     description:
       /* Die alte Description stammte aus der Zeit vor dem Relaunch und nannte
          nur Verkostungen und Händleranfragen — Gastronomie, Feinkost und
@@ -138,8 +138,12 @@ export const meta = {
        Zeile abschneidet, fällt hinten der Markenname weg statt vorn der
        Name des Weins. */
     title: "{name} {year} · {type} · {region}",
-    description:
-      "{name} ({year}) — {type}, {region}. {notes}. {pairing} Für {price} bei Maria Maria.",
+    description: "{name} ({year}) — {type}, {region}. {notes}. {pairing}",
+    /* Der Preissatz ist ABTRENNBAR: lib/seo/wine.js hängt ihn nur an, wenn
+       die Description damit im Budget bleibt. Er fällt als Erstes, weil der
+       Preis ohnehin im Offer-Markup steht — anders als Charakter und
+       Speiseempfehlung, die es nirgendwo sonst gibt. */
+    descriptionPrice: "Für {price} bei Maria Maria.",
     ogImageAlt: "Flasche {name} von Maria Maria — {type}, {region}",
   },
 

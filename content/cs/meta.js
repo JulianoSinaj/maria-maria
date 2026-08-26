@@ -74,7 +74,7 @@ export const meta = {
   },
 
   regionen: {
-    titleAbsolute: "Italské vinařské regiony: Apulie, Kampánie a Lugana | Maria Maria",
+    titleAbsolute: "Vinařské regiony: Apulie, Kampánie a Lugana | Maria Maria",
     description:
       "Objevte vybraná vína z Apulie, Kampánie a oblasti Lugana u Gardského jezera – odrůdy, původ, chuť a tipy na snoubení s jídlem.",
   },
@@ -107,8 +107,12 @@ export const meta = {
      title.template v layoutu. */
   wine: {
     title: "{name} {year} · {type} · {region}",
-    description:
-      "{name} ({year}) — {type}, {region}. {notes}. {pairing} Za {price} u Maria Maria.",
+    description: "{name} ({year}) — {type}, {region}. {notes}. {pairing}",
+    /* Věta s cenou je ODDĚLITELNÁ: lib/seo/wine.js ji připojí jen tehdy,
+       když popis zůstane v rozpočtu. Padá jako první, protože cena stejně je
+       v Offer markupu — na rozdíl od charakteristiky a snoubení, které jinde
+       nejsou. */
+    descriptionPrice: "Za {price} u Maria Maria.",
     ogImageAlt: "Láhev {name} od Maria Maria — {type}, {region}",
   },
 

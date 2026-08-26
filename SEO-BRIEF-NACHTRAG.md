@@ -13,7 +13,9 @@ Jeder Abschnitt trägt die Nummer der Brief-Stelle, die er ergänzt, plus einen
 Buchstaben. Dieselben Kürzel stehen als Verweis im Code.
 
 **Offen:** §7a und §4a betreffen verbindliche Inhalte und brauchen Abnahme
-durch SEO/Brand, bevor sie als endgültig gelten.
+durch SEO/Brand, bevor sie als endgültig gelten. §9c ist eine
+Deployment-Einstellung, die niemand im Code sehen kann — sie muss vor
+Go-live in Coolify geprüft werden.
 
 ---
 
@@ -178,6 +180,53 @@ Zusätzlich, weil der Brief es an anderer Stelle voraussetzt:
 Zahlen sind die Standard-Grenzwerte der Core Web Vitals — sie sind das, was
 Google selbst als „gut" wertet, und damit die einzige Schwelle, die sich
 gegenüber Dritten begründen lässt.
+
+---
+
+## §9 — Befunde außerhalb des Briefs
+
+Aus einer Prüfung aller 80 gerenderten Seiten. Der Brief deckt die deutsche
+Startseite ab; diese drei Punkte betreffen den Rest der Domain und waren
+deshalb nirgends geregelt.
+
+### 9a — Längenbudget für die Weinseiten-Descriptions · behoben
+
+Zwanzig der sechsunddreißig Weinseiten trugen Descriptions von 162–174
+Zeichen. Google schneidet bei rund 160 ab — gekappt wurde mitten im letzten
+Satz, genau dort, wo der Preis steht.
+
+Der Preissatz ist jetzt aus der Vorlage herausgelöst (`descriptionPrice` in
+`content/<sprache>/meta.js`) und wird nur angehängt, wenn er ins Budget
+passt. Er fällt als Erstes, weil der Preis ohnehin im Offer-Knoten steht;
+Charakter und Speiseempfehlung gibt es nirgendwo sonst. **Ergebnis: keine
+Seite mehr über 160.**
+
+### 9b — Titel von /regionen und /kontakt · behoben
+
+Sieben Titel lagen über der Abschneidegrenze, am längsten `de/regionen` mit
+68 und `de/kontakt` mit 67 Zeichen. Beide führen jetzt 55–57.
+
+Bei `/regionen` ist das Qualifikationswort („Italienische") gewichen, nicht
+eine der drei Herkünfte: Die Dreizahl ist eine P0-Regel des Briefs, und die
+Kopfzeile nennt den Punkt seit dem iPad-Umbau ohnehin „Weinregionen".
+
+Nicht angefasst: die neun Weinseiten-Titel bei 61–62 Zeichen. Sie stammen
+aus `TITLE_BUDGET = 48` in `lib/seo/wine.js`, einer bewussten Setzung — und
+Google schneidet nach Pixelbreite, nicht nach Zeichenzahl. In diesem Bereich
+ist der Unterschied theoretisch.
+
+### 9c — Vorschau-noindex hängt an einer Umgebungsvariable · OFFEN
+
+`INDEXABLE` in `lib/site.js` ist richtig gebaut und lässt im Zweifel
+indexieren — die sichere Voreinstellung. Die Auslieferung läuft aber über
+Coolify (`nixpacks.toml`), nicht über Vercel: Der Zweig
+`VERCEL_ENV !== "preview"` greift dort nie.
+
+**P0 Nr. 1 des Briefs („Preview nicht indexierbar") hängt damit allein
+daran, dass `NEXT_PUBLIC_NOINDEX=1` auf der Vorschau-Instanz gesetzt ist.**
+Das ist eine Deployment-Einstellung, im Repository nicht sichtbar und durch
+keinen Test zu belegen. Ist sie nicht gesetzt, ist die Vorschau indexierbar,
+während der Code vollkommen korrekt aussieht. Vor Go-live in Coolify prüfen.
 
 ---
 

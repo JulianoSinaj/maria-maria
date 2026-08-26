@@ -75,13 +75,13 @@ export const meta = {
   },
 
   regionen: {
-    titleAbsolute: "Regioni vinicole italiane: Puglia, Campania e Lugana | Maria Maria",
+    titleAbsolute: "Regioni vinicole: Puglia, Campania e Lugana | Maria Maria",
     description:
       "Scopri vini selezionati dalla Puglia, dalla Campania e dalla zona del Lugana sul Lago di Garda – vitigni, origine, gusto e consigli di abbinamento.",
   },
 
   kontakt: {
-    titleAbsolute: "Contatti | Vini italiani per ristorazione ed eventi | Maria Maria",
+    titleAbsolute: "Contatti: vini italiani per la ristorazione | Maria Maria",
     description:
       "Vini boutique italiani per ristorazione, gastronomia, distribuzione, eventi e degustazioni a Düsseldorf e in NRW. Consulenza personale e selezione su misura.",
   },
@@ -108,8 +108,12 @@ export const meta = {
      title.template del layout. */
   wine: {
     title: "{name} {year} · {type} · {region}",
-    description:
-      "{name} ({year}) — {type}, {region}. {notes}. {pairing} A {price} da Maria Maria.",
+    description: "{name} ({year}) — {type}, {region}. {notes}. {pairing}",
+    /* La frase sul prezzo è STACCABILE: lib/seo/wine.js la aggiunge solo se
+       la description resta nel budget. È la prima a cadere perché il prezzo è
+       comunque nel markup Offer — a differenza di note e abbinamento, che non
+       esistono altrove. */
+    descriptionPrice: "A {price} da Maria Maria.",
     ogImageAlt: "Bottiglia {name} di Maria Maria — {type}, {region}",
   },
 

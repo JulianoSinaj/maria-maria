@@ -75,13 +75,13 @@ export const meta = {
   },
 
   regionen: {
-    titleAbsolute: "Italian Wine Regions: Puglia, Campania & Lugana | Maria Maria",
+    titleAbsolute: "Wine Regions: Puglia, Campania & Lugana | Maria Maria",
     description:
       "Discover selected wines from Puglia, Campania and the Lugana area on Lake Garda – grape varieties, origin, taste and food pairing tips.",
   },
 
   kontakt: {
-    titleAbsolute: "Contact | Italian Wines for Restaurants & Events | Maria Maria",
+    titleAbsolute: "Contact: Italian Wines for Restaurants | Maria Maria",
     description:
       "Italian boutique wines for restaurants, delicatessens, retail, events and tastings in Düsseldorf & NRW. Personal advice and an individual wine selection.",
   },
@@ -108,8 +108,12 @@ export const meta = {
      belong here; the layout's title.template appends it. */
   wine: {
     title: "{name} {year} · {type} · {region}",
-    description:
-      "{name} ({year}) — {type}, {region}. {notes}. {pairing} {price} at Maria Maria.",
+    description: "{name} ({year}) — {type}, {region}. {notes}. {pairing}",
+    /* The price sentence is DETACHABLE: lib/seo/wine.js appends it only when
+       the description stays within budget. It is dropped first because the
+       price is carried in the Offer markup anyway — unlike the tasting notes
+       and pairing, which exist nowhere else. */
+    descriptionPrice: "{price} at Maria Maria.",
     ogImageAlt: "Bottle of {name} by Maria Maria — {type}, {region}",
   },
 

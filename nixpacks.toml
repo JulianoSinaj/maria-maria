@@ -1,8 +1,19 @@
 # Nixpacks configuration for Coolify deployment
 # Build pack: Nixpacks | Port: 3000
 
+# THIS FILE DECIDES THE NODE VERSION — not NIXPACKS_NODE_VERSION.
+#
+# An explicit [phases.setup] nixPkgs replaces the setup phase that Nixpacks
+# would otherwise generate itself, and NIXPACKS_NODE_VERSION only ever feeds
+# that generated phase. Setting the variable while this line exists changes
+# nothing: the environment asked for 22 while every build actually shipped
+# Node 20, and nothing in the build log says so.
+#
+# Keep the two in agreement, or drop the variable in Coolify so there is only
+# one place to look. Node 22 is the current LTS; Node 20 left security
+# maintenance in April 2026.
 [phases.setup]
-nixPkgs = ["nodejs_20"]
+nixPkgs = ["nodejs_22"]
 
 [phases.install]
 cmds = ["npm ci"]

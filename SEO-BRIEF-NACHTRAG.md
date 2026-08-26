@@ -215,18 +215,27 @@ aus `TITLE_BUDGET = 48` in `lib/seo/wine.js`, einer bewussten Setzung — und
 Google schneidet nach Pixelbreite, nicht nach Zeichenzahl. In diesem Bereich
 ist der Unterschied theoretisch.
 
-### 9c — Vorschau-noindex hängt an einer Umgebungsvariable · OFFEN
+### 9c — Vorschau-noindex · geprüft, derzeit gegenstandslos
+
+**Stand:** Es gibt nur die Produktionsinstanz. Deren Coolify-Umgebung setzt
+`NEXT_PUBLIC_NOINDEX` nicht — das ist richtig so, die Produktion soll
+indexiert werden. Eine Staging-Instanz existiert nicht; sie steht in den
+Projektnotizen als späterer Härtungsschritt.
+
+**Wenn eine zweite Instanz dazukommt** (Staging, Vorschau, Testdomain), muss
+dort `NEXT_PUBLIC_NOINDEX=1` gesetzt werden — und zwar von Hand. Der Grund
+steht unten; die Falle ist, dass der Code dabei völlig korrekt aussieht.
+
+### Warum das eine Handarbeit bleibt
 
 `INDEXABLE` in `lib/site.js` ist richtig gebaut und lässt im Zweifel
 indexieren — die sichere Voreinstellung. Die Auslieferung läuft aber über
 Coolify (`nixpacks.toml`), nicht über Vercel: Der Zweig
 `VERCEL_ENV !== "preview"` greift dort nie.
 
-**P0 Nr. 1 des Briefs („Preview nicht indexierbar") hängt damit allein
-daran, dass `NEXT_PUBLIC_NOINDEX=1` auf der Vorschau-Instanz gesetzt ist.**
-Das ist eine Deployment-Einstellung, im Repository nicht sichtbar und durch
-keinen Test zu belegen. Ist sie nicht gesetzt, ist die Vorschau indexierbar,
-während der Code vollkommen korrekt aussieht. Vor Go-live in Coolify prüfen.
+P0 Nr. 1 des Briefs („Preview nicht indexierbar") hinge damit allein daran,
+dass jemand die Variable setzt. Es gibt keinen Test, der das Versäumnis
+auffängt: Das Repository sieht in beiden Fällen identisch aus.
 
 ---
 

@@ -19,8 +19,29 @@ const BASE = "/img/home/maria-maria-boutique-wein-mittelmeerkueste";
 /* Das Quellfoto ("Maria Maria zwischen Reben und Meer") ist 1672 px breit —
    mehr gibt es nicht, also endet der srcSet ehrlich bei 1672w statt bei den
    1920w der Wein-Heroes. */
+/* Die Zwischenstufen 768 und 960 sind kein Schönheitsfehler, sondern die
+   Lücke, in die jedes Android-Telefon fiel.
+
+   Der srcSet sprang von 640 auf 1280. Ein Moto G Power — Lighthouses
+   Referenzgerät — hat 412 CSS-Pixel bei DPR 1,75, braucht also 721 echte
+   Pixel und nahm damit die 1280er Datei: 83,6 KB für einen Bedarf von 768.
+   Bei DPR 2 (412 → 824) dasselbe. Und das für das LCP-Element der
+   Startseite, gemessen bei 4,1–4,6 s.
+
+   Jetzt greift dieselbe Anfrage zu 768w (36,1 KB) bzw. 960w (50,3 KB) —
+   47,5 KB weniger auf dem kritischen Pfad, ohne einen sichtbaren Unterschied:
+   Die Datei ist breiter als das Gerät sie darstellt.
+
+   Erzeugt aus der 1672er Fassung, nicht aus dem Original (das liegt nicht
+   mehr im Repo). Beim Herunterskalieren mitteln sich die Artefakte der
+   ersten WebP-Runde weg; ein sichtbarer Generationsverlust entsteht erst
+   beim Vergrößern oder beim erneuten Kodieren in gleicher Größe.
+
+   iPhones mit DPR 3 (390 → 1170) bleiben unverändert bei 1280w. */
 const WEBP_SRCSET = [
   `${BASE}-640.webp 640w`,
+  `${BASE}-768.webp 768w`,
+  `${BASE}-960.webp 960w`,
   `${BASE}-1280.webp 1280w`,
   `${BASE}-1672.webp 1672w`,
 ].join(", ");

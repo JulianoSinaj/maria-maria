@@ -190,6 +190,7 @@ export const PHOTO_MANIFEST = {
     "base": "/img/logo",
     "widths": [
       160,
+      192,
       320,
       400
     ],

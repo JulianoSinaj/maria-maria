@@ -38,6 +38,21 @@ const MANIFEST_OUT = path.join(ROOT, "components", "media", "photoManifest.js");
 const WIDTHS = [160, 320, 640, 1024, 1600];
 const QUALITY = 72;
 
+/* Zusätzliche Stufen für einzelne Dateien, wo die gemeinsame Leiter eine
+   teure Lücke lässt.
+
+   logo.png: Die Wortmarke steht in der Kopfzeile JEDER Seite, über dem Falz
+   und mit `loading="eager"` — sie konkurriert also mit dem Hero um die erste
+   Netzwerk-Runde. Dargestellt wird sie mit 96 px (76 beim Scrollen). Ein
+   Telefon mit DPR 1,75 braucht 168 echte Pixel, eines mit DPR 2 genau 192 —
+   beide lagen über der 160er Stufe und griffen deshalb zur 320er Datei:
+   15,9 KB statt der 7,3 KB, die eine 192er Fassung kostet.
+
+   Die Lücke schließt hier und nicht in WIDTHS: Eine 192er Stufe für ALLE
+   Bilder erzeugte gut fünfzig weitere Dateien, von denen keine je gewählt
+   würde — die übrigen Motive stehen in breiten Slots. */
+const EXTRA_WIDTHS = { "logo.png": [192] };
+
 /* Unter diesem Gewicht lohnt die Variantenbildung nicht: der zusätzliche
    Request kostet mehr als die gesparten Bytes. */
 const MIN_BYTES = 20 * 1024;
@@ -105,7 +120,9 @@ async function run() {
        deklarieren, die in Wahrheit nur 391 px breit ist: der Browser glaubt
        dem srcSet und wählte dann für einen 500-px-Slot ein zu kleines Bild.
        Deshalb heißt die oberste Stufe immer nach ihrer echten Breite. */
-    const steps = WIDTHS.filter((w) => w < meta.width);
+    const steps = [...WIDTHS, ...(EXTRA_WIDTHS[rel] ?? [])]
+      .filter((w) => w < meta.width)
+      .sort((a, b) => a - b);
     if (!steps.includes(meta.width)) steps.push(meta.width);
 
     /* Marken- und Grafikdateien (Logo, Stemma, Jubiläumssiegel) sind PNGs mit

@@ -48,17 +48,10 @@ export const geschichte = {
   chapters: {
     anfang: {
       label: "Dnes · Mettmann u Düsseldorfu",
-<<<<<<< Updated upstream
       title: "Doma v Německu. S Itálií spojeni osobně.",
       paragraphs: [
         "Z Mettmannu přinášíme vybraná vína italských vinařů do restaurací a vinných barů – osobně, spolehlivě a se skutečnou blízkostí.",
         "Každá objednávka se sestavuje s péčí, aby naše vína dorazila tam, kam patří: na stůl.",
-=======
-      title: "Doma v Německu. Osobně spjati s Itálií.",
-      paragraphs: [
-        "Z Mettmannu přinášíme vybraná vína italských vinařů do gastronomie a vinných barů – osobně, spolehlivě a s opravdovou blízkostí.",
-        "Každou objednávku sestavujeme s péčí, aby naše vína dorazila tam, kam patří: na stůl.",
->>>>>>> Stashed changes
       ],
       linkLabel: "Objevit náš výběr vín",
       alt: "Prostřený stůl se sklenicemi vína a originální lahví Maria Maria",
@@ -77,7 +70,6 @@ export const geschichte = {
       caption: "Réva, středomořské světlo a blízkost Jónského moře.",
     },
     duesseldorf: {
-<<<<<<< Updated upstream
       label: "Začátek · léto 2019",
       title: "Některé nápady vznikají u stolu.",
       paragraphs: [
@@ -85,15 +77,6 @@ export const geschichte = {
         "Z toho večera zůstane víc než vzpomínka – vznikne Maria Maria.",
       ],
       quote: "„Některé nápady nepotřebují podnikatelský plán. Jen ten správný stůl.“",
-=======
-      label: "Začátek · Léto 2019",
-      title: "Některé nápady vznikají u stolu.",
-      paragraphs: [
-        "Mezi dobrým jídlem, otevřenými rozhovory a výjimečnými víny roste myšlenka: najít vína, která ukazují svůj původ, mají charakter a sbližují lidi.",
-        "Z toho večera se stává víc než vzpomínka – stává se z něj Maria Maria.",
-      ],
-      quote: "„Některé nápady nepotřebují byznys plán. Jen ten správný stůl.“",
->>>>>>> Stashed changes
       linkLabel: "Objevit náš výběr vín",
       alt: "Prostřený večerní stůl s červeným vínem Maria Maria za soumraku",
       micro: "Dall’Italia, oltre i confini",

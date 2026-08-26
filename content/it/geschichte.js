@@ -48,15 +48,9 @@ export const geschichte = {
   chapters: {
     anfang: {
       label: "Oggi · Mettmann, vicino a Düsseldorf",
-<<<<<<< Updated upstream
       title: "Di casa in Germania. Legati all'Italia di persona.",
       paragraphs: [
         "Da Mettmann portiamo vini selezionati di vignaioli italiani nella ristorazione e nei wine bar – di persona, con affidabilità e con una vicinanza reale.",
-=======
-      title: "Di casa in Germania. Legati personalmente all'Italia.",
-      paragraphs: [
-        "Da Mettmann portiamo vini selezionati di viticoltori italiani nella ristorazione e nelle enoteche – in modo personale, affidabile e con una vicinanza autentica.",
->>>>>>> Stashed changes
         "Ogni ordine viene composto con cura, perché i nostri vini arrivino dove hanno il loro posto: a tavola.",
       ],
       linkLabel: "Scopri la nostra selezione di vini",
@@ -77,21 +71,12 @@ export const geschichte = {
     },
     duesseldorf: {
       label: "L'inizio · Estate 2019",
-<<<<<<< Updated upstream
       title: "Certe idee nascono a tavola.",
       paragraphs: [
         "Tra buon cibo, conversazioni aperte e vini speciali prende forma un'idea: trovare vini che mostrino la propria origine, abbiano carattere e sappiano unire le persone.",
         "Da quella sera nasce più di un ricordo – nasce Maria Maria.",
       ],
       quote: "«Certe idee non hanno bisogno di un business plan. Solo del tavolo giusto.»",
-=======
-      title: "Alcune idee nascono a tavola.",
-      paragraphs: [
-        "Tra buon cibo, conversazioni aperte e vini speciali cresce un'idea: trovare vini che mostrino la loro origine, abbiano carattere e uniscano le persone.",
-        "Da quella sera nasce più di un ricordo – nasce Maria Maria.",
-      ],
-      quote: "«Alcune idee non hanno bisogno di un business plan. Solo del tavolo giusto.»",
->>>>>>> Stashed changes
       linkLabel: "Scopri la nostra selezione di vini",
       alt: "Tavola serale apparecchiata con un rosso Maria Maria al crepuscolo",
       micro: "Dall’Italia, oltre i confini",

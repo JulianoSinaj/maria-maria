@@ -164,7 +164,7 @@ export default async function GeschichtePage({ params }) {
           <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
             {/* ---- links: der Kanon der Marke ---- */}
             <div>
-              <Reveal y={12} blur={false}>
+              <Reveal priority y={12} blur={false}>
                 <Eyebrow>{hero.eyebrow}</Eyebrow>
               </Reveal>
               <h1
@@ -172,7 +172,7 @@ export default async function GeschichtePage({ params }) {
                 className="mt-4 text-balance font-playfair text-[clamp(2.1rem,4.4vw,3.3rem)] leading-[1.08] text-charcoal"
               >
                 {(hero.titleLines ?? []).map((line, i) => (
-                  <SplitText
+                  <SplitText priority
                     key={line}
                     as="span"
                     className="block"
@@ -181,7 +181,7 @@ export default async function GeschichtePage({ params }) {
                   />
                 ))}
               </h1>
-              <Reveal delay={0.35} y={16}>
+              <Reveal priority delay={0.35} y={16}>
                 {(hero.paragraphs ?? []).map((p, i) => (
                   <p
                     key={i}
@@ -193,7 +193,7 @@ export default async function GeschichtePage({ params }) {
               </Reveal>
 
               {/* die beiden Ausgänge: zum Namen, in die Auswahl */}
-              <Reveal delay={0.45}>
+              <Reveal priority delay={0.45}>
                 <div className="mt-8 flex flex-wrap items-center gap-x-7 gap-y-4">
                   <Button href="#der-name" variant="primary" size="md" iconType="none">
                     {hero.ctaStory}
@@ -209,7 +209,7 @@ export default async function GeschichtePage({ params }) {
               </Reveal>
 
               {/* die Eckdaten der Marke — als stille Zeile unter den CTAs */}
-              <Reveal delay={0.52}>
+              <Reveal priority delay={0.52}>
                 <ol className="mt-7 flex flex-wrap items-center gap-y-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-charcoal/55">
                   {(hero.journey ?? []).map((stop, i) => (
                     <li key={stop} className="flex items-center">

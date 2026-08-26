@@ -50,7 +50,7 @@ const badgeChips = (badge) =>
    (WCAG 2.2, 2.5.8). */
 function Crumbs({ interview, ui }) {
   return (
-    <Reveal y={10} blur={false}>
+    <Reveal priority y={10} blur={false}>
       <nav
         aria-label={ui.interviews}
         className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-charcoal/45"
@@ -92,14 +92,14 @@ function Masthead({ interview, ui, headingId }) {
 
   return (
     <div className="lg:pt-3">
-      <Reveal y={12} delay={0.04}>
+      <Reveal priority y={12} delay={0.04}>
         <Eyebrow tone="text-bordeaux">{interview.eyebrow}</Eyebrow>
       </Reveal>
 
       {chips.length > 0 && (
-        <Stagger className="mt-5 flex flex-wrap gap-2" gap={0.06} delay={0.08}>
+        <Stagger priority className="mt-5 flex flex-wrap gap-2" gap={0.06} delay={0.08}>
           {chips.map((chip) => (
-            <StaggerItem key={chip} y={10}>
+            <StaggerItem priority key={chip} y={10}>
               <span className="inline-flex rounded-full border border-champagne/70 bg-white/60 px-3.5 py-1.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-charcoal/60">
                 {chip}
               </span>
@@ -112,7 +112,7 @@ function Masthead({ interview, ui, headingId }) {
           Phrasing-Content erlaubt — deshalb animieren beide Zeilen über
           SplitText (Spans), nicht über Reveal (ein <div>). */}
       <h1 id={headingId} className="mt-6 text-charcoal">
-        <SplitText
+        <SplitText priority
           text={interview.name}
           as="span"
           className="block text-[12px] font-semibold uppercase tracking-[0.32em] text-charcoal/60"
@@ -120,7 +120,7 @@ function Masthead({ interview, ui, headingId }) {
           stagger={0.06}
         />
         <span className="sr-only">: </span>
-        <SplitText
+        <SplitText priority
           text={interview.headline}
           as="span"
           className="mt-4 block font-playfair text-[clamp(2.1rem,4.6vw,3.55rem)] leading-[1.06]"
@@ -129,14 +129,14 @@ function Masthead({ interview, ui, headingId }) {
         />
       </h1>
 
-      <Reveal y={14} delay={0.22}>
+      <Reveal priority y={14} delay={0.22}>
         <p className="mt-6 max-w-[58ch] text-[16.5px] leading-[1.65] text-charcoal/75">
           {interview.deck}
         </p>
       </Reveal>
 
       {bylineParts.length > 0 && (
-        <Reveal y={12} delay={0.28} blur={false}>
+        <Reveal priority y={12} delay={0.28} blur={false}>
           <p className="mt-8 flex flex-wrap items-center gap-x-2.5 gap-y-1.5 border-y border-champagne/35 py-3.5 text-[11.5px] text-charcoal/55">
             {bylineParts.map((part, i) => (
               <span key={i} className="inline-flex items-center gap-2.5">

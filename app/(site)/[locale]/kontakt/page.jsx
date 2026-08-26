@@ -185,24 +185,24 @@ export default async function KontaktPage({ params }) {
               des alten Hero-Einzugs. */}
           <div className={`${SHELL_WIDE} relative flex min-h-[100svh] flex-col justify-end pb-24 pt-32 lg:justify-center lg:pb-16`}>
             <div className="lg:max-w-2xl">
-              <Reveal y={18} delay={0.05}>
+              <Reveal priority y={18} delay={0.05}>
                 <Eyebrow>{t.hero.eyebrow}</Eyebrow>
               </Reveal>
               <h1 className="mt-6 font-playfair text-[clamp(2.4rem,4.8vw,3.6rem)] leading-[1.06] tracking-[-0.015em] text-charcoal">
-                <SplitText text={t.hero.title} className="block" delay={0.12} />
-                <SplitText
+                <SplitText priority text={t.hero.title} className="block" delay={0.12} />
+                <SplitText priority
                   text={t.hero.titleSecond}
                   className="block italic"
                   wordClassName="bg-gradient-to-r from-bordeaux via-wine to-bordeaux bg-clip-text text-transparent"
                   delay={0.3}
                 />
               </h1>
-              <Reveal delay={0.5} y={16}>
+              <Reveal priority delay={0.5} y={16}>
                 <GrapeRule className="mt-6 hidden sm:flex" />
                 <p className="mt-5 max-w-md text-[15px] leading-relaxed text-charcoal/75">{t.hero.text}</p>
               </Reveal>
 
-              <Reveal y={16} delay={0.62}>
+              <Reveal priority y={16} delay={0.62}>
                 <HeroActions primary={t.hero.ctaPrimary} secondary={t.hero.ctaSecondary} />
               </Reveal>
 
@@ -210,7 +210,7 @@ export default async function KontaktPage({ params }) {
                   Handoff falsch und darf nicht erscheinen — bis die
                   richtige bestätigt ist, stehen hier zwei Angaben statt
                   drei, nicht ein Platzhalter. */}
-              <Reveal y={12} delay={0.78}>
+              <Reveal priority y={12} delay={0.78}>
                 <dl className="mt-9 flex max-w-md flex-wrap gap-x-14 gap-y-6 sm:mt-11">
                   <div>
                     <dt className="flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-charcoal/55">

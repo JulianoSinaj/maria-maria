@@ -117,8 +117,8 @@ export default function FalanghinaHero({ wine, photo }) {
         <Eyebrow>{wine.eyebrow}</Eyebrow>
       </div>
       <h1 className="mt-4 font-playfair text-[clamp(2.4rem,5.6vw,4.4rem)] leading-[1.05] text-charcoal">
-        <SplitText text={wine.heroTitle[0]} className="block" delay={0.12} />
-        <SplitText
+        <SplitText priority text={wine.heroTitle[0]} className="block" delay={0.12} />
+        <SplitText priority
           text={wine.heroTitle[1]}
           className="block italic"
           wordClassName={`bg-gradient-to-r bg-clip-text text-transparent ${

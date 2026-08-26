@@ -197,7 +197,7 @@ export default async function RegionenPage({ params }) {
 
         <div className="relative mx-auto flex min-h-[100svh] max-w-content flex-col justify-center px-6 pb-24 pt-32 lg:px-10 lg:pt-36">
           <div className="max-w-2xl">
-            <Reveal y={18} delay={0.05}>
+            <Reveal priority y={18} delay={0.05}>
               <span className="inline-flex items-center gap-4 text-[10.5px] font-semibold uppercase tracking-[0.3em] text-ivory/90">
                 <span aria-hidden="true" className="h-px w-10 bg-champagne" />
                 {t.hero?.eyebrow}
@@ -205,10 +205,10 @@ export default async function RegionenPage({ params }) {
             </Reveal>
             {/* Einziges H1 der Seite (Guide Abschnitt 2 und 9) */}
             <h1 className="mt-6 font-playfair text-[clamp(2.6rem,5.5vw,4.2rem)] leading-[1.1] text-ivory">
-              <SplitText text={t.hero?.title1 ?? ""} className="block" delay={0.12} />
-              <SplitText text={t.hero?.title2 ?? ""} className="block" delay={0.28} />
+              <SplitText priority text={t.hero?.title1 ?? ""} className="block" delay={0.12} />
+              <SplitText priority text={t.hero?.title2 ?? ""} className="block" delay={0.28} />
             </h1>
-            <Reveal delay={0.45} y={14}>
+            <Reveal priority delay={0.45} y={14}>
               <p className="mt-6 max-w-xl text-[15px] leading-relaxed text-ivory/80">
                 {t.hero?.text}
               </p>
@@ -223,7 +223,7 @@ export default async function RegionenPage({ params }) {
                 (Tropfen an der Linie, `animate-cue`) zeigt, wo die Antwort
                 steht. Wer prefers-reduced-motion gesetzt hat, sieht die
                 Linie ruhig — motion-reduce schaltet den Tropfen ab. */}
-            <Reveal delay={0.6} y={14}>
+            <Reveal priority delay={0.6} y={14}>
               <a
                 href="#apulien"
                 className="group mt-10 inline-flex min-h-[48px] items-start gap-5 rounded-card py-1 text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-champagne lg:min-h-[44px]"

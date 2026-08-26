@@ -143,12 +143,12 @@ export default async function ShopPage({ params }) {
 
           <div className="relative mx-auto grid max-w-content grid-cols-1 items-center gap-14 px-6 pb-24 pt-32 lg:grid-cols-[1.05fr_0.95fr] lg:px-10 lg:pt-36">
             <div>
-              <Reveal y={18} delay={0.05}>
+              <Reveal priority y={18} delay={0.05}>
                 <Eyebrow>{t.hero?.eyebrow}</Eyebrow>
               </Reveal>
               <h1 className="mt-6 font-playfair text-[clamp(2.6rem,5.4vw,4.1rem)] leading-[1.06] tracking-[-0.015em] text-charcoal">
-                <SplitText text="Enoteca Maria Maria" className="block" delay={0.12} />
-                <SplitText
+                <SplitText priority text="Enoteca Maria Maria" className="block" delay={0.12} />
+                <SplitText priority
                   text="Share the pleasure."
                   className="block italic"
                   /* Gradient muss pro Wort liegen – der äußere Wrapper malt nicht
@@ -157,13 +157,13 @@ export default async function ShopPage({ params }) {
                   delay={0.3}
                 />
               </h1>
-              <Reveal delay={0.5} y={16}>
+              <Reveal priority delay={0.5} y={16}>
                 <GrapeRule className="mt-6" />
                 <p className="mt-5 max-w-md text-[15px] leading-relaxed text-charcoal/75">
                   {t.hero?.lede}
                 </p>
               </Reveal>
-              <Reveal delay={0.62} y={16}>
+              <Reveal priority delay={0.62} y={16}>
                 {/* CTAs gestapelt – gleiche Breite, eine vertikale Achse mit
                     Eyebrow, Titel und Textblock */}
                 <div className="mt-7 flex w-full max-w-[17.5rem] flex-col items-stretch gap-2.5 sm:mt-8">
@@ -175,7 +175,7 @@ export default async function ShopPage({ params }) {
                   </Button>
                 </div>
               </Reveal>
-              <Reveal delay={0.78} y={12}>
+              <Reveal priority delay={0.78} y={12}>
                 <dl className="mt-9 flex max-w-md items-center sm:mt-11">
                   {[
                     [`${WINES.length}`, t.hero?.statWines],
@@ -198,7 +198,7 @@ export default async function ShopPage({ params }) {
                   unterhalb lg existiert die Bühne nicht, und mit ihr verschwanden
                   Versand-, Zahlungs- und Verpackungsversprechen komplett. Hier
                   stehen sie deshalb als kompakte Zeile unter den Statzahlen. */}
-              <Reveal delay={0.9} y={10} className="lg:hidden">
+              <Reveal priority delay={0.9} y={10} className="lg:hidden">
                 <ul className="mt-7 flex flex-wrap gap-2">
                   {HERO_CHIPS.map(({ key, icon: Icon }) => (
                     <li
@@ -213,7 +213,7 @@ export default async function ShopPage({ params }) {
             </div>
 
             {/* boutique still — 3D stage with floating trust chips */}
-            <Reveal delay={0.35} y={26} className="hidden lg:block">
+            <Reveal priority delay={0.35} y={26} className="hidden lg:block">
               <TiltCard className="group" max={6} radius="rounded-card-lg">
                 <div className="ring-hairline relative h-[440px] overflow-hidden rounded-card-lg bg-gradient-to-b from-white/80 via-cream to-champagne-light/40 shadow-luxe">
                   <Aura tint="gold" className="-right-24 -top-24 h-80 w-80" />

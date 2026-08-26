@@ -117,23 +117,23 @@ export default async function WeinePage({ params }) {
 
         <div className="relative mx-auto flex min-h-[100svh] max-w-content flex-col justify-end px-6 pb-24 pt-32 lg:justify-center lg:px-10 lg:pb-16">
           <div className="lg:max-w-xl">
-            <Reveal y={18} delay={0.05}>
+            <Reveal priority y={18} delay={0.05}>
               <Eyebrow>{t.hero?.eyebrow}</Eyebrow>
             </Reveal>
             <h1 className="mt-6 font-playfair text-[clamp(2.6rem,5.4vw,4.1rem)] leading-[1.06] tracking-[-0.015em] text-charcoal">
-              <SplitText text={t.hero?.title ?? ""} className="block" delay={0.12} />
-              <SplitText
+              <SplitText priority text={t.hero?.title ?? ""} className="block" delay={0.12} />
+              <SplitText priority
                 text={t.hero?.titleAccent ?? ""}
                 className="block italic"
                 wordClassName="bg-gradient-to-r from-bordeaux via-wine to-bordeaux bg-clip-text text-transparent"
                 delay={0.3}
               />
             </h1>
-            <Reveal delay={0.5} y={16}>
+            <Reveal priority delay={0.5} y={16}>
               <GrapeRule className="mt-6" />
               <p className="mt-5 max-w-md text-[15px] leading-relaxed text-charcoal/75">{t.hero?.lede}</p>
             </Reveal>
-            <Reveal delay={0.62} y={16}>
+            <Reveal priority delay={0.62} y={16}>
               {/* CTAs gestapelt – gleiche Breite, eine vertikale Achse mit
                   Eyebrow, Titel und Textblock */}
               <div className="mt-7 flex w-full max-w-[17.5rem] flex-col items-stretch gap-2.5 sm:mt-8">
@@ -145,7 +145,7 @@ export default async function WeinePage({ params }) {
                 </Button>
               </div>
             </Reveal>
-            <Reveal delay={0.78} y={12}>
+            <Reveal priority delay={0.78} y={12}>
               <dl className="mt-9 flex max-w-md items-start sm:mt-11">
                 {[
                   [`${WINES.length}`, t.hero?.statWines],

@@ -179,6 +179,27 @@ export default async function LocaleLayout({ children, params }) {
 
   return (
     <html lang={LOCALE_META[locale].htmlLang} className={`${playfair.variable} ${montserrat.variable}`}>
+      <head>
+        {/* Rettungsnetz ohne JavaScript.
+
+            Alles, was mit `data-reveal` markiert ist, steht im
+            server-gerenderten HTML auf `opacity: 0` und wird erst von Motion
+            sichtbar gemacht — beim Scrollen, per IntersectionObserver. Lädt
+            das Bundle nicht (Netzfehler, blockiertes Script, abgeschaltetes
+            JavaScript), bliebe der halbe Seiteninhalt dauerhaft unsichtbar.
+
+            Die Regel muss `!important` tragen: Sie überschreibt einen
+            Inline-Style, und der gewinnt sonst gegen jedes Stylesheet.
+            Dieselbe Rettung liegt in globals.css unter
+            `prefers-reduced-motion` — dort für Besucher MIT JavaScript, die
+            keine Bewegung wollen. Hier für den Fall, dass gar keins läuft.
+
+            Bewusst als <noscript> und nicht in globals.css: CSS allein kann
+            nicht sehen, ob JavaScript läuft. */}
+        <noscript>
+          <style>{`[data-reveal]{opacity:1!important;filter:none!important;transform:none!important}`}</style>
+        </noscript>
+      </head>
       <body className="font-montserrat">
         {/* Kein JSON-LD mehr an dieser Stelle: Unternehmen, Marke und Website
             (lib/seo/jsonLd.js, siteNodes) liefert jede Seite selbst am Anfang

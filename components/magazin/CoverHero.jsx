@@ -42,7 +42,7 @@ export default function CoverHero({ hasInterviews = false, t = {}, vision }) {
       {/* ---- 1. Masthead: Dachzeile, Schlagzeile, Untertitel ---- */}
       <div className="relative mx-auto max-w-content px-6 pt-24 lg:px-10 lg:pt-28">
         <div className="mx-auto max-w-3xl text-center">
-          <Reveal y={12} blur={false}>
+          <Reveal priority y={12} blur={false}>
             <p className="text-[10.5px] font-semibold uppercase tracking-[0.32em] text-bordeaux/80">
               Maria Maria Magazin
             </p>
@@ -51,9 +51,9 @@ export default function CoverHero({ hasInterviews = false, t = {}, vision }) {
             id="magazin-titel"
             className="mx-auto mt-5 max-w-[16ch] font-playfair text-[clamp(2.6rem,5.4vw,4.4rem)] leading-[1.06] text-charcoal"
           >
-            <SplitText text={t.title ?? ""} delay={0.12} />
+            <SplitText priority text={t.title ?? ""} delay={0.12} />
           </h1>
-          <Reveal delay={0.45} y={14}>
+          <Reveal priority delay={0.45} y={14}>
             <p className="mx-auto mt-6 max-w-xl text-[14px] leading-relaxed text-charcoal/70">
               {t.subline}
             </p>
@@ -62,7 +62,7 @@ export default function CoverHero({ hasInterviews = false, t = {}, vision }) {
       </div>
 
       {/* ---- 2. Rubrikenleiste zwischen zwei Haarlinien ---- */}
-      <Reveal delay={0.55} y={10} blur={false}>
+      <Reveal priority delay={0.55} y={10} blur={false}>
         <nav
           aria-label={t.rubricsAria}
           className="mt-10 border-y border-charcoal/10 bg-white/30"

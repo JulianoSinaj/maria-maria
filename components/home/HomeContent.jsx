@@ -155,7 +155,11 @@ export default function HomeContent({ t = {}, faq = [], souls }) {
             deshalb enger, ab sm gelten wieder die alten. */}
         <div className="relative mx-auto flex min-h-[100svh] max-w-content flex-col justify-end px-6 pb-24 pt-24 sm:pt-32 lg:justify-center lg:px-10 lg:pb-16">
           <div className="lg:max-w-xl">
-            <Reveal y={18} delay={0.05}>
+            {/* Der Hero steht beim Laden im Bild — `priority` liefert ihn beim
+                ersten Aufbau fertig aus, statt ihn einzublenden (siehe
+                components/motion/Reveal.jsx). Ab der ersten internen
+                Navigation läuft die Choreografie wie gehabt. */}
+            <Reveal priority y={18} delay={0.05}>
               <Eyebrow tone="text-champagne-light">{hero.eyebrow}</Eyebrow>
             </Reveal>
             {/* Genau EINE H1 — Marke plus Hauptkeyword (Brief §3). Der
@@ -165,20 +169,20 @@ export default function HomeContent({ t = {}, faq = [], souls }) {
                 zweizeiligen Wein-Hero-Titel — der alte Grad war für zwei
                 Wörter gemacht, hier stehen fünf. */}
             <h1 className="mt-4 font-playfair text-[clamp(2.6rem,5.4vw,4.1rem)] leading-[1.06] tracking-[-0.015em] text-ivory sm:mt-6">
-              <SplitText text={hero.title ?? "Maria Maria"} className="block" delay={0.12} />
+              <SplitText priority text={hero.title ?? "Maria Maria"} className="block" delay={0.12} />
             </h1>
             <p
               lang="it"
               className="mt-3 font-playfair text-[clamp(1.5rem,3.1vw,2.4rem)] italic leading-[1.15] text-champagne"
             >
-              <SplitText text={hero.claim ?? "Il piacere del vino."} className="block" delay={0.3} />
+              <SplitText priority text={hero.claim ?? "Il piacere del vino."} className="block" delay={0.3} />
             </p>
-            <Reveal delay={0.5} y={16}>
+            <Reveal priority delay={0.5} y={16}>
               {/* wie im Wein-Hero: die Zierlinie weicht auf Telefonen dem Platz */}
               <GrapeRule className="mt-6 hidden sm:flex" />
               <p className="mt-5 max-w-md text-[15px] leading-relaxed text-ivory/80">{hero.lede}</p>
             </Reveal>
-            <Reveal delay={0.62} y={16}>
+            <Reveal priority delay={0.62} y={16}>
               <div className="mt-6 flex flex-col items-stretch gap-3 sm:mt-9 sm:flex-row sm:items-center sm:gap-3.5">
                 <Button href="/unsere-weine" size="lg" className="w-full sm:w-auto">
                   {hero.ctaWines}
@@ -197,7 +201,7 @@ export default function HomeContent({ t = {}, faq = [], souls }) {
               </div>
             </Reveal>
             {stats && (
-              <Reveal delay={0.78} y={12}>
+              <Reveal priority delay={0.78} y={12}>
                 <dl className="mt-7 flex max-w-md items-center sm:mt-11">
                   {stats.map(([num, label], i) => (
                     <div key={label} className={`flex-1 ${i > 0 ? "border-l border-ivory/20 pl-6" : ""}`}>

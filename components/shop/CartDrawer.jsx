@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion, useDragControls, useReducedMotion } from "motion/react";
+import { AnimatePresence, motion, useDragControls } from "motion/react";
+import { useReducedMotionSafe } from "@/components/motion/useMediaQuery";
 import Bottle from "@/components/Bottle";
 import Photo from "@/components/media/Photo";
 import Button from "@/components/ui/Button";
@@ -117,7 +118,7 @@ const itemLabel = (t, count) =>
 export default function CartDrawer() {
   const { price: fmtPrice } = useLocaleTools();
   const t = useCommon("cart");
-  const reduced = useReducedMotion();
+  const reduced = useReducedMotionSafe();
   const lenisRef = useLenis();
   /* below sm the drawer becomes a bottom sheet — the natural cart shape
      for one-handed use on a phone */

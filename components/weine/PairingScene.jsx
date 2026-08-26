@@ -1,15 +1,8 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import Link from "@/components/i18n/LocaleLink";
-import {
-  motion,
-  useInView,
-  useMotionValue,
-  useReducedMotion,
-  useScroll,
-  useSpring,
-  useTransform,
-} from "motion/react";
+import { motion, useInView, useMotionValue, useScroll, useSpring, useTransform } from "motion/react";
+import { useReducedMotionSafe } from "@/components/motion/useMediaQuery";
 import Button from "@/components/ui/Button";
 import { useTouchDevice } from "@/components/motion/useMediaQuery";
 import { pairingBlurFor } from "@/components/weine/pairingBlur";
@@ -270,7 +263,7 @@ function PairingPhoto({ src, srcSet, sizes, blur, alt, size, drift, animate }) {
 
 export default function PairingScene({ wine }) {
   const scene = wine.pairing?.scene;
-  const reduced = useReducedMotion();
+  const reduced = useReducedMotionSafe();
   const touch = useTouchDevice();
   const ref = useRef(null);
   const seen = useRef(false);

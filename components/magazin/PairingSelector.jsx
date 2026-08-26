@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import Link from "@/components/i18n/LocaleLink";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
+import { useReducedMotionSafe } from "@/components/motion/useMediaQuery";
 import { GoldRule } from "@/components/Deco";
 import { Arrow, Glasses } from "@/components/Icons";
 import { WINES } from "@/components/data";
@@ -184,7 +185,7 @@ export default function PairingSelector({ className = "", t = {} }) {
   };
   const CARDS = PAIRING_CARDS.map(localized);
   const [active, setActive] = useState(0);
-  const reduced = useReducedMotion();
+  const reduced = useReducedMotionSafe();
   const card = CARDS[active];
 
   const alternatives = card.alternatives.filter((a) => WINE_NAME[a.slug]);

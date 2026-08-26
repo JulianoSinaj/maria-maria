@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
+import { useReducedMotionSafe } from "@/components/motion/useMediaQuery";
 import { photoSrcSet, photoSize } from "@/components/media/Photo";
 import { useCommon } from "@/lib/i18n/context";
 
@@ -21,7 +22,7 @@ import { useCommon } from "@/lib/i18n/context";
 const SPRING = { type: "spring", stiffness: 300, damping: 30 };
 
 export default function WinePhotos({ wine, imgClass = "h-44", lift = true, className = "" }) {
-  const reduced = useReducedMotion();
+  const reduced = useReducedMotionSafe();
   const ui = useCommon("ui");
   // side = 0 Vorderseite / 1 Rückseite; dir = Blätterrichtung für die Animation
   const [[side, dir], setSide] = useState([0, 0]);

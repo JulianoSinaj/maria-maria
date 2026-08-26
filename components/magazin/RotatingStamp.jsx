@@ -1,5 +1,6 @@
 "use client";
-import { motion, useReducedMotion, useScroll, useSpring, useTransform } from "motion/react";
+import { motion, useScroll, useSpring, useTransform } from "motion/react";
+import { useReducedMotionSafe } from "@/components/motion/useMediaQuery";
 import { Grapes } from "@/components/Icons";
 import { SCROLL_SPRING_HEAVY } from "@/components/motion/springs";
 
@@ -9,7 +10,7 @@ import { SCROLL_SPRING_HEAVY } from "@/components/motion/springs";
    Bewegung steht die Marke still. */
 
 export default function RotatingStamp({ className = "" }) {
-  const reduced = useReducedMotion();
+  const reduced = useReducedMotionSafe();
   const { scrollY } = useScroll();
   const rotate = useSpring(useTransform(scrollY, [0, 2200], [0, 200]), SCROLL_SPRING_HEAVY);
 

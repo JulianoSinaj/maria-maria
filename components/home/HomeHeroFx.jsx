@@ -1,7 +1,8 @@
 "use client";
 import { useRef } from "react";
-import { motion, useScroll, useTransform, useSpring, useReducedMotion } from "motion/react";
+import { motion, useScroll, useTransform, useSpring } from "motion/react";
 import { SCROLL_SPRING_HEAVY } from "@/components/motion/springs";
+import { useReducedMotionSafe } from "@/components/motion/useMediaQuery";
 
 /* Foto-Bühne des Home-Heros — die Client-Schicht über dem
    server-gerenderten <picture> (siehe HomeHeroPhoto, children-Prop-Trick wie
@@ -15,7 +16,10 @@ const SPRING = SCROLL_SPRING_HEAVY;
 
 export default function HomeHeroFx({ photo }) {
   const ref = useRef(null);
-  const reduced = useReducedMotion();
+  /* Hydration-sicher: `style` hängt am Wert, der Server rendert
+     scale(1.04) — Motions useReducedMotion() lieferte auf Telefonen mit
+     „Bewegung reduzieren" schon beim ersten Client-Render `true`. */
+  const reduced = useReducedMotionSafe();
 
   const { scrollYProgress } = useScroll({
     target: ref,

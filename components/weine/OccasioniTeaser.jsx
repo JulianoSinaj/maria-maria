@@ -2,7 +2,8 @@
 
 import { useRef, useState, useEffect } from "react";
 import Link from "@/components/i18n/LocaleLink";
-import { motion, useReducedMotion, useScroll, useSpring, useTransform } from "motion/react";
+import { motion, useScroll, useSpring, useTransform } from "motion/react";
+import { useReducedMotionSafe } from "@/components/motion/useMediaQuery";
 import TiltCard from "@/components/motion/TiltCard";
 import SplitText from "@/components/motion/SplitText";
 import { Reveal } from "@/components/motion/Reveal";
@@ -27,7 +28,7 @@ import Button from "@/components/ui/Button";
 const EASE = [0.4, 0, 0.2, 1];
 
 export default function OccasioniTeaser({ t = {}, moments, href, headingId, className = "" }) {
-  const reduced = useReducedMotion();
+  const reduced = useReducedMotionSafe();
   const [displayIndex, setDisplayIndex] = useState(0);
 
   /* Scroll-Parallax für die Karte.

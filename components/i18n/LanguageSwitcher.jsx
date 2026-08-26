@@ -3,7 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import NextLink from "next/link";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
+import { useReducedMotionSafe } from "@/components/motion/useMediaQuery";
 import { LOCALES, LOCALE_META } from "@/lib/i18n/config";
 import { localePath, pathWithoutLocale } from "@/lib/i18n/routing";
 import { useLocale, useCommon } from "@/lib/i18n/context";
@@ -47,7 +48,7 @@ export default function LanguageSwitcher({ variant = "menu", className = "", onD
   const locale = useLocale();
   const t = useCommon("language");
   const pathname = usePathname();
-  const reduced = useReducedMotion();
+  const reduced = useReducedMotionSafe();
   const [open, setOpen] = useState(false);
   const wrapRef = useRef(null);
 

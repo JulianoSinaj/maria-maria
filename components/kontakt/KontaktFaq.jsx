@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useId, useState } from "react";
-import { motion, useReducedMotion } from "motion/react";
+import { motion } from "motion/react";
+import { useReducedMotionSafe } from "@/components/motion/useMediaQuery";
 import Link from "@/components/i18n/LocaleLink";
 import { Arrow } from "@/components/Icons";
 import { useLenis } from "@/components/motion/SmoothScroll";
@@ -133,7 +134,7 @@ function Row({ item, open, onToggle, uid, reduced }) {
 
 export default function KontaktFaq({ copy }) {
   const uid = useId().replace(/:/g, "");
-  const reduced = useReducedMotion();
+  const reduced = useReducedMotionSafe();
   const lenis = useLenis();
   const [open, setOpen] = useState(null);
   const [expanded, setExpanded] = useState(false);

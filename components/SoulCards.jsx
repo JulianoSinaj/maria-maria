@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
-import { motion, useReducedMotion } from "motion/react";
+import { motion } from "motion/react";
+import { useReducedMotionSafe } from "@/components/motion/useMediaQuery";
 import TiltCard from "@/components/motion/TiltCard";
 import { Aura } from "@/components/Atmosphere";
 
@@ -47,7 +48,7 @@ const SPRING = { type: "spring", stiffness: 120, damping: 18, mass: 0.9 };
    (Homepage-Brief §6/§8). Aussehen und Bewegung sind in beiden Fällen
    identisch; nur die Semantik wechselt. */
 function SoulCard({ soul, dimmed, onEnter, onLeave, compact = false, nameTag: NameTag = "h3" }) {
-  const reduced = useReducedMotion();
+  const reduced = useReducedMotionSafe();
   const { dark } = soul;
 
   return (
@@ -212,7 +213,7 @@ function SoulCard({ soul, dimmed, onEnter, onLeave, compact = false, nameTag: Na
 /* Das Siegel zwischen den beiden Karten — ein langsam kreisender Ring aus
    Champagner-Strichen, der beim Hover einer Karte kurz aufatmet. */
 function Seal({ awake, glyph = "&", compact = false }) {
-  const reduced = useReducedMotion();
+  const reduced = useReducedMotionSafe();
   return (
     <span
       aria-hidden="true"
@@ -266,7 +267,7 @@ function Seal({ awake, glyph = "&", compact = false }) {
    (Magazin-Spalte): engere Ränder, kleinere Schrift, kleineres Siegel —
    die Ruhelage der zwei Marias bleibt davon unberührt. */
 export function EtiquettePair({ items, seal = "&", compact = false, nameTag = "h3", className = "" }) {
-  const reduced = useReducedMotion();
+  const reduced = useReducedMotionSafe();
   /* Welche Karte der Zeiger gerade ansteuert — die andere tritt zurück */
   const [active, setActive] = useState(null);
 

@@ -15,28 +15,11 @@ export const common = {
     home: "Home",
     wines: "Unsere Weine",
     regions: "Weinregionen",
-    /* Nur für die Kopfzeile zwischen 768 und 1023 px (iPad hochkant) —
-       derselbe Engpass, den weiter unten schon `shopShort` löst: Mit
-       „Weinregionen" ist die Zeile in diesem Band vier Zeichen zu breit,
-       und der Flex-Zeile geht die Luft zuerst beim Logo aus. Server-
-       gerendertes HTML, Desktop und Telefon-Menü tragen die lange
-       Fassung — siehe components/Header.jsx. */
-    regionsShort: "Regionen",
     magazine: "Magazin",
     contact: "Kontakt",
     /* Der Knopf führt zum offiziellen externen Shop (Terra Vera) — und sagt
        das (Homepage-Brief §6: „Zum Shop" → „Zum offiziellen Shop"). */
     shop: "Zum offiziellen Shop",
-    /* Nur für die Kopfzeile zwischen 768 und 1023 px (iPad hochkant): Dort
-       passt die lange Pille nicht neben fünf Links und die Sprachwahl. Das
-       server-gerenderte HTML, Desktop und Telefon-Menü tragen die lange
-       Fassung — siehe components/Header.jsx.
-
-       Kurz heißt nicht „Zum Shop": Genau diese Beschriftung führt der Brief
-       (§6) als die zu ersetzende auf. In dem schmalen Band stand sie zuletzt
-       als einzige Stelle der Seite noch. „Offizieller Shop" ist vier Zeichen
-       kürzer als die lange Fassung und sagt dasselbe. */
-    shopShort: "Offizieller Shop",
     wineTypes: {
       red: "Rotweine",
       white: "Weißweine",

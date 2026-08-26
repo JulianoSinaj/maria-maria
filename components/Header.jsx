@@ -116,23 +116,19 @@ export default function Header() {
      zurück. Alle anderen Seiten bleiben unberührt. */
   const onDark = here.startsWith("/regionen") && !scrolled;
 
-  /* Die Shop-Pille heißt „Zum offiziellen Shop" (Homepage-Brief §6) — auf
-     Tablet-Breiten (md bis unter lg, iPad hochkant) ist die Zeile damit
-     ~130 px zu breit: Logo, fünf Links, Sprachwahl und Pille passen nicht
-     nebeneinander. Dort steht die kurze Fassung (nav.shopShort). Per
-     Media-Query im Client statt per CSS mit zwei Spans: Zwei Spans stünden
-     beide im DOM und ergäben „Zum offiziellen ShopZum Shop" als Linktext.
-     Server-Snapshot `true`: das gerenderte HTML — und damit jeder Crawler —
-     trägt die lange Fassung; Tablets wechseln nach der Hydration. */
+  /* Ab lg steht die Linkleiste, darunter der Menü-Knopf. Server-Snapshot
+     `true`: Das gerenderte HTML zeigt die Desktop-Fassung, schmale Geräte
+     korrigieren sich unmittelbar nach der Hydration. */
   const wideNav = useMediaQuery("(min-width: 1024px)", true);
-  const shopLabel = wideNav ? nav.shop : nav.shopShort ?? nav.shop;
 
-  /* „Weinregionen" ist im selben Band der zweite Posten, der nicht mehr
-     passt: Die Flex-Zeile spart zuerst am Logo und staucht die Wortmarke
-     von 96 auf unter 10 px. Zwischen md und lg steht deshalb die kurze
-     Fassung; darüber und im Telefon-Menü der volle Name. */
-  const navLabel = (key) =>
-    key === "regions" && !wideNav ? nav.regionsShort ?? nav[key] : nav[key];
+  /* Beim Wechsel ins Desktop-Layout das Menü schließen. Ab lg blendet CSS
+     das Overlay aus, `open` bliebe aber true — und mit ihm die Scroll-Sperre
+     auf <html> und die Tastaturfalle, beide an einem Dialog hängend, den
+     niemand mehr sieht. Ein iPad, das aus dem Hoch- ins Querformat dreht,
+     überquert genau diese Grenze. */
+  useEffect(() => {
+    if (wideNav) setOpen(false);
+  }, [wideNav]);
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 pt-[env(safe-area-inset-top)]">
@@ -150,15 +146,40 @@ export default function Header() {
               : "h-20 max-w-content bg-transparent px-6 lg:h-24 lg:px-10"
             }`}
         >
-          <Link href="/" aria-label={a11y.homeLink} className="block">
+          {/* shrink-0: Die Wortmarke ist keine Verhandlungsmasse. Ohne die
+              Angabe ist der Logo-Link das erste Flex-Kind, das nachgibt,
+              sobald die Zeile zu voll wird — das Bild trug seine 96 px in der
+              Klasse und wurde trotzdem auf 39 px gequetscht. Reißt die Zeile
+              künftig doch wieder, soll sie sichtbar reißen und nicht heimlich
+              am Logo sparen. */}
+          <Link href="/" aria-label={a11y.homeLink} className="block shrink-0">
             <Logo className={`h-auto transition-all duration-500 ease-out-expo ${scrolled ? "w-[76px]" : "w-[96px]"}`} />
           </Link>
 
-          {/* gap-5 auf Tablets: seit die Shop-Pille „Zum offiziellen Shop"
-              heißt (Homepage-Brief §6), ist die Zeile zwischen 768 und
-              ~900 px eng — der engere Abstand gibt den Links die Luft, die
-              die Pille braucht; ab lg der bisherige Abstand. */}
-          <nav className="hidden items-center gap-5 md:flex lg:gap-8" aria-label={a11y.mainNav}>
+          {/* Die Linkleiste steht erst ab lg, nicht schon ab md.
+
+              Zwischen 768 und 1023 px passte sie nie: Logo (96), fünf Links
+              (379 auf Deutsch), Sprachwahl (64) und Shop-Pille (212) wollen
+              rund 762 px, das Inhaltsfeld eines iPads hochkant bietet 705.
+              Die Flex-Zeile hat die Differenz still am Logo abgezogen — die
+              Wortmarke stand dort 39 px breit, auf Tschechisch 7 px.
+
+              Voriger Stand war, an den Beschriftungen zu sparen (kurze
+              Fassungen für Shop und Regionen). Das verschob die Grenze um
+              wenige Pixel und band jede künftige Textänderung an die Breite
+              der Kopfzeile. In diesem Band trägt jetzt der Menü-Knopf die
+              Navigation — dieselbe Lösung wie auf dem Telefon, dessen
+              Overlay die fünf Ziele ohnehin schon in voller Länge zeigt.
+
+              gap-6 bis xl: Direkt an der Grenze — 1024 px, iPad Pro quer —
+              füllen Logo, Leiste, Sprachwahl und Pille das Inhaltsfeld auf
+              Italienisch exakt aus, ohne ein Pixel Rest. Die Beschriftungen
+              sind seit „Regioni del vino" länger geworden; der engere
+              Abstand gibt in diesem Band die 32 px zurück, die das auffängt.
+              Ab xl steht wieder der ursprüngliche Abstand. Bewusst am
+              Abstand gespart und nicht am Seitenrand: Der Rand hält die
+              Kopfzeile bündig mit dem Inhalt darunter. */}
+          <nav className="hidden items-center gap-6 lg:flex xl:gap-8" aria-label={a11y.mainNav}>
             {NAV.map((item) => {
               const active = isActive(item.href);
               if (item.href === "/unsere-weine")
@@ -178,7 +199,7 @@ export default function Header() {
                         : "text-charcoal/75 hover:text-bordeaux"
                   }`}
                 >
-                  {navLabel(item.key)}
+                  {nav[item.key]}
                   {active ? (
                     <motion.span
                       layoutId="nav-underline"
@@ -205,7 +226,7 @@ export default function Header() {
                   auf jeder Seite und trifft niemanden, der schon eine Flasche
                   gewählt hat — siehe lib/shop/config. */}
               <Button href={topsellerHref()} size="sm" className="whitespace-nowrap">
-                {shopLabel}
+                {nav.shop}
               </Button>
             </div>
             {/* Auf Telefonen steht die Sprachwahl NEBEN dem Menü-Knopf, nicht
@@ -221,7 +242,7 @@ export default function Header() {
               aria-label={a11y.openMenu}
               aria-expanded={open}
               aria-controls="mobile-menu"
-              className={`flex h-11 w-11 items-center justify-center rounded-full border transition-colors md:hidden ${
+              className={`flex h-11 w-11 items-center justify-center rounded-full border transition-colors lg:hidden ${
                 onDark
                   ? "border-white/30 text-white hover:border-champagne hover:text-champagne-light"
                   : "border-charcoal/15 text-charcoal hover:border-champagne hover:text-bordeaux"
@@ -243,7 +264,7 @@ export default function Header() {
             aria-modal="true"
             aria-label={a11y.menuDialog}
             data-lenis-prevent
-            className="grain fixed inset-0 z-[60] flex flex-col overflow-y-auto overscroll-contain bg-gradient-to-b from-bordeaux-deep via-[#33080e] to-espresso pt-[env(safe-area-inset-top)] md:hidden"
+            className="grain fixed inset-0 z-[60] flex flex-col overflow-y-auto overscroll-contain bg-gradient-to-b from-bordeaux-deep via-[#33080e] to-espresso pt-[env(safe-area-inset-top)] lg:hidden"
             initial={{ opacity: 0, clipPath: "inset(0 0 100% 0)" }}
             animate={{ opacity: 1, clipPath: "inset(0 0 0% 0)" }}
             exit={{ opacity: 0, clipPath: "inset(0 0 100% 0)" }}

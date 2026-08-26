@@ -9,12 +9,10 @@ export const common = {
     home: "Home",
     wines: "I nostri vini",
     regions: "Regioni del vino",
-    regionsShort: "Regioni",
     magazine: "Magazine",
     contact: "Contatti",
     shop: "Vai allo shop ufficiale",
     /* Short form for the narrow desktop header (see content/de/common.js). */
-    shopShort: "Shop ufficiale",
     wineTypes: {
       red: "Vini rossi",
       white: "Vini bianchi",

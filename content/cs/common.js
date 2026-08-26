@@ -9,12 +9,10 @@ export const common = {
     home: "Domů",
     wines: "Naše vína",
     regions: "Vinařské regiony",
-    regionsShort: "Regiony",
     magazine: "Magazín",
     contact: "Kontakt",
     shop: "Do oficiálního e-shopu",
     /* Short form for the narrow desktop header (see content/de/common.js). */
-    shopShort: "Oficiální e-shop",
     wineTypes: {
       red: "Červená vína",
       white: "Bílá vína",

@@ -14,6 +14,25 @@ export default function SmoothScroll({ children }) {
 
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+    /* Auf Touch-Geräten läuft Lenis NICHT.
+
+       Das Trägheits-Scrollen von iOS und Android ist nativ, läuft im
+       Compositor und damit unabhängig vom Haupt-Thread. Lenis ersetzt es
+       durch eine JavaScript-Schleife, die bei JEDEM Frame die
+       Scroll-Position schreibt — auf dem Telefon also genau die Arbeit, die
+       das Betriebssystem ohnehin besser erledigt, nur teurer und auf dem
+       Thread, auf dem gleichzeitig React hydriert.
+
+       Gemessen an der Produktionsseite (Lighthouse mobil, 4× CPU-Drossel):
+       420–450 ms Total Blocking Time bei 1,4 s Skriptauswertung. Die
+       Dauerschleife ist daran beteiligt und bringt auf dem Gerät, das sie am
+       meisten kostet, den geringsten Gewinn — Finger folgen dem Inhalt
+       ohnehin 1:1, die weiche Nachführung fällt gar nicht auf.
+
+       Auf dem Zeigergerät bleibt sie: Dort ersetzt sie das ruckhafte
+       Rad-Scrollen, dort ist sie der Effekt, für den sie eingebaut wurde. */
+    const coarse = window.matchMedia("(hover: none) and (pointer: coarse)");
     let tick = null;
 
     const start = () => {
@@ -59,12 +78,17 @@ export default function SmoothScroll({ children }) {
 
     /* auf Änderungen der OS-Einstellung reagieren — nicht nur beim Mount:
        wer Reduced Motion einschaltet, bekommt sofort natives Scrollen */
-    const sync = () => (mq.matches ? stop() : start());
+    const sync = () => (mq.matches || coarse.matches ? stop() : start());
     sync();
     mq.addEventListener("change", sync);
+    /* Ein iPad am Trackpad meldet einen feinen Zeiger, dasselbe Gerät per
+       Finger einen groben — die Abfrage kann sich also im laufenden Betrieb
+       ändern und muss beobachtet werden, nicht nur beim Mount. */
+    coarse.addEventListener("change", sync);
 
     return () => {
       mq.removeEventListener("change", sync);
+      coarse.removeEventListener("change", sync);
       stop();
     };
   }, []);

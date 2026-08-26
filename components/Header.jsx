@@ -189,7 +189,7 @@ export default function Header() {
                   key={item.href}
                   href={item.href}
                   aria-current={active ? "page" : undefined}
-                  className={`group relative whitespace-nowrap py-2 text-[12.5px] tracking-[0.08em] transition-colors duration-300 ${
+                  className={`group relative lg:whitespace-nowrap py-2 text-[12.5px] tracking-[0.08em] transition-colors duration-300 ${
                     onDark
                       ? active
                         ? "font-semibold text-white"

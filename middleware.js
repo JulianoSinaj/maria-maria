@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { DEFAULT_LOCALE, isLocale } from "@/lib/i18n/config";
 import { internalPath } from "@/lib/i18n/routing";
 import { SHOP_ENABLED, EXTERNAL_SHOP_URL, isShopPath } from "@/lib/shop/config";
+import { SITE_URL } from "@/lib/site";
 
 /* Sprach-Routing.
 
@@ -188,6 +189,27 @@ async function guardBackoffice(request) {
    Neustartschleife laufen. Weitergeleitet wird nur öffentlicher Verkehr. */
 const INTERNAL_HOST = /^(localhost|127\.0\.0\.1|\[::1\])(:\d+)?$/i;
 
+/* --- Die eine offizielle Schreibweise der Domain -------------------------
+
+   Beide Formen — mit und ohne www — beantworteten dieselbe Anfrage mit 200.
+   Für Google sind das zwei Websites mit identischem Inhalt: Der Ranking-Wert
+   eingehender Links verteilt sich auf beide, und welche der beiden im Index
+   landet, entscheidet der Crawler selbst. Die Entscheidung gehört uns, und
+   sie lautet www (Absprache mit Maria Pia, August 2026).
+
+   Beide Konstanten kommen aus SITE_URL, damit sie nicht gegen die Canonicals
+   driften können: Ein Umzug ändert eine Umgebungsvariable, und Weiterleitung
+   und Canonical wandern gemeinsam mit. Führt SITE_URL kein www (Vorschau
+   unter einer Testdomain, späterer Beschluss zugunsten der nackten Form),
+   bleibt APEX_HOST null und dieser ganze Block fällt aus — dann leitet
+   nichts irgendwohin, statt in die falsche Richtung zu leiten. */
+const CANONICAL_HOST = new URL(SITE_URL).host;
+const APEX_HOST = CANONICAL_HOST.startsWith("www.") ? CANONICAL_HOST.slice(4) : null;
+
+/* Der Port gehört nicht zum Namen — "maria-maria.de:8080" ist dieselbe
+   Domain wie "maria-maria.de". */
+const bareHost = (host) => host.replace(/:\d+$/, "").toLowerCase();
+
 export async function middleware(request) {
   /* --- HTTPS erzwingen ---------------------------------------------------
 
@@ -223,17 +245,53 @@ export async function middleware(request) {
      ("a, b") zählen ab dem ersten — er stammt vom äußersten Proxy.
 
      308 statt 301: erhält die Methode und spricht dieselbe Sprache wie die
-     übrigen dauerhaften Weiterleitungen dieser Datei. */
+     übrigen dauerhaften Weiterleitungen dieser Datei. Für Google sind 308 und
+     301 gleichwertig — beide vererben das Ranking vollständig.
+
+     --- …und dabei gleich die www-Form ---
+
+     Protokoll und Host werden in EINEM Schritt geradegezogen, nicht in zwei.
+     Der Unterschied ist messbar: „http://maria-maria.de/geschichte" käme über
+     zwei getrennte Regeln erst auf https, dann auf www — eine Redirect-Kette,
+     die Screaming Frog meldet und die jedem Besucher eine zusätzliche
+     Rundreise kostet. Ein Ziel, ein Sprung.
+
+     Der Pfad bleibt unangetastet, wie vereinbart: /geschichte landet auf
+     /geschichte, nicht auf der Startseite. Eine Weiterleitung, die den Pfad
+     verliert, ist für das Ranking der Einzelseite dasselbe wie ein 404.
+
+     Die /.well-known/-Ausnahme oben wiegt hier schwerer als beim reinen
+     HTTPS-Zwang: Über diesen Pfad bestätigt Let's Encrypt die Domain, und die
+     nackte Domain braucht ein eigenes gültiges Zertifikat — sonst scheitert
+     der Aufruf schon an der TLS-Warnung, bevor die Weiterleitung greifen
+     kann. Die Anfrage darf also gerade NICHT nach www umgebogen werden. */
   const firstOf = (value) => value?.split(",")[0].trim();
   const forwardedHost = firstOf(request.headers.get("x-forwarded-host")) || request.headers.get("host");
+  const insecure = firstOf(request.headers.get("x-forwarded-proto")) === "http";
+  const wrongHost = Boolean(APEX_HOST && forwardedHost && bareHost(forwardedHost) === APEX_HOST);
+
   if (
     process.env.NODE_ENV === "production" &&
-    firstOf(request.headers.get("x-forwarded-proto")) === "http" &&
+    (insecure || wrongHost) &&
     forwardedHost && !INTERNAL_HOST.test(forwardedHost) &&
     !request.nextUrl.pathname.startsWith("/.well-known/")
   ) {
     const { pathname, search } = request.nextUrl;
-    return NextResponse.redirect(`https://${forwardedHost}${pathname}${search}`, 308);
+    const host = wrongHost ? `www.${forwardedHost}` : forwardedHost;
+    return NextResponse.redirect(`https://${host}${pathname}${search}`, 308);
+  }
+
+  /* robots.txt und sitemap.xml laufen NUR wegen der Host-Regel oben durch
+     diese Datei — der Matcher schließt Adressen mit Dateiendung sonst aus.
+     Ohne www-Regel hätten die beiden Dateien unter der nackten Domain
+     weiterhin mit 200 geantwortet: ausgerechnet die zwei Adressen, mit denen
+     jeder Crawler und jedes Audit-Werkzeug beginnt.
+
+     Ab hier wären sie am falschen Platz: Sie kennen kein Sprach-Routing, und
+     Regel 1 weiter unten schriebe sie nach /de/robots.txt um — ein 404 für
+     die Sitemap-Angabe der gesamten Domain. Deshalb hier hinaus. */
+  if (request.nextUrl.pathname === "/robots.txt" || request.nextUrl.pathname === "/sitemap.xml") {
+    return NextResponse.next();
   }
 
   /* Steht vor allem anderen: Das Backoffice kennt kein Sprach-Routing, und
@@ -344,5 +402,10 @@ export const config = {
        wurde. */
     "/admin/:path*",
     "/api/admin/:path*",
+    /* 4./5. Zwei Dateiendungen, die Regel 1 ausschließt — hier ausdrücklich
+       wieder hereingeholt, damit die www-Weiterleitung auch für sie gilt.
+       Sie werden ebenfalls nicht umgeschrieben, siehe oben. */
+    "/robots.txt",
+    "/sitemap.xml",
   ],
 };

@@ -13,7 +13,7 @@ import { SITE_URL } from "@/lib/site";
 
    1. "/shop"      → intern nach "/de/shop" umgeschrieben (URL bleibt "/shop")
    2. "/it/shop"   → unverändert, das Segment ist schon da
-   3. "/de/shop"   → 308 auf "/shop", sonst wäre jede deutsche Seite unter zwei
+   3. "/de/shop"   → 301 auf "/shop", sonst wäre jede deutsche Seite unter zwei
                      Adressen erreichbar (Duplicate Content)
    4. "/"          → beim allerersten Besuch eines MENSCHEN: Accept-Language
                      entscheidet, ob auf /it, /en oder /cs weitergeleitet wird
@@ -191,7 +191,7 @@ async function guardBackoffice(request) {
 
 /* Anfragen, die den Proxy nie gesehen haben — der Healthcheck des Containers
    ruft http://127.0.0.1:3000/ direkt auf. Next setzt `x-forwarded-proto` auch
-   ohne Proxy auf "http", der Healthcheck bekäme also eine 308 auf ein https,
+   ohne Proxy auf "http", der Healthcheck bekäme also eine 301 auf ein https,
    das dort nicht lauscht: Der Container gölte als ungesund und würde in eine
    Neustartschleife laufen. Weitergeleitet wird nur öffentlicher Verkehr. */
 const INTERNAL_HOST = /^(localhost|127\.0\.0\.1|\[::1\])(:\d+)?$/i;
@@ -217,6 +217,26 @@ const APEX_HOST = CANONICAL_HOST.startsWith("www.") ? CANONICAL_HOST.slice(4) : 
    Domain wie "maria-maria.de". */
 const bareHost = (host) => host.replace(/:\d+$/, "").toLowerCase();
 
+/* Der Code für eine dauerhafte Weiterleitung.
+
+   301, wie im SEO-Audit vom August 2026 ausdrücklich angefordert. Für
+   Suchmaschinen sind 301 und 308 gleichwertig — beide vererben das Ranking
+   vollständig —, aber 301 ist der Code, den Audit-Werkzeuge und
+   Dokumentationen erwarten, und ein Bericht, in dem an dieser Stelle „308"
+   steht, kostet eine Rückfrage.
+
+   MIT EINER AUSNAHME, und die ist kein Formalismus: 301 erlaubt dem Client
+   ausdrücklich, die Anfrage danach als GET zu wiederholen — der Körper einer
+   POST-Anfrage geht dabei verloren. Genau das trifft die schreibenden
+   Backoffice-Endpunkte unter /api/admin, die über den Matcher hier
+   durchlaufen: Ein Upload, der die nackte Domain erwischt, käme ohne Datei
+   an, und zwar ohne Fehlermeldung. Anfragen mit Körper behalten deshalb 308,
+   das die Methode garantiert erhält.
+
+   Crawler und Browser fordern Seiten mit GET oder HEAD an — im Bericht steht
+   also durchgehend 301. */
+const permanentCode = (method) => (method === "GET" || method === "HEAD" ? 301 : 308);
+
 /* --- Adressen aus der Zeit vor diesem System ----------------------------
 
    Diese Tabelle stand bis August 2026 als `redirects()` in next.config.js.
@@ -234,9 +254,9 @@ const bareHost = (host) => host.replace(/:\d+$/, "").toLowerCase();
 
    Der Inhalt ist unverändert. Unter dieser Domain lief bis zum Umzug eine
    WordPress-Installation; deren Adressen sind seit 2019 indexiert, verlinkt
-   und weitergegeben. 308 vererbt das Ranking der alten Seite an die neue
-   Entsprechung — der einzige Weg, die aufgebaute Sichtbarkeit über den
-   Systemwechsel zu retten.
+   und weitergegeben. Die dauerhafte Weiterleitung vererbt das Ranking der
+   alten Seite an die neue Entsprechung — der einzige Weg, die aufgebaute
+   Sichtbarkeit über den Systemwechsel zu retten.
 
    Zwei alte Seiten haben keinen Eins-zu-eins-Nachfolger:
 
@@ -327,7 +347,7 @@ export async function middleware(request) {
      hinaus — zwei Sprünge auf eine Adresse, die am Ende ohnehin niemandem
      von uns gehört. Von hier ist es einer.
 
-     307, nicht 308: Die Weiterleitung beschreibt einen Zustand („die Kasse
+     307, nicht 301: Die Weiterleitung beschreibt einen Zustand („die Kasse
      läuft noch nicht"), keinen Umzug. Ein permanenter Code würde sich in
      Browser-Caches und bei Google festsetzen — der eigene Shop wäre nach dem
      Wiederanschalten für Wiederkehrer unerreichbar, ohne dass irgendwer den
@@ -369,9 +389,7 @@ export async function middleware(request) {
      nur der Proxy, und er nennt ihn in x-forwarded-host. Verkettete Werte
      ("a, b") zählen ab dem ersten — er stammt vom äußersten Proxy.
 
-     308 statt 301: erhält die Methode und spricht dieselbe Sprache wie die
-     übrigen dauerhaften Weiterleitungen dieser Datei. Für Google sind 308 und
-     301 gleichwertig — beide vererben das Ranking vollständig.
+     Der Statuscode kommt aus permanentCode() — 301 für Seitenaufrufe.
 
      --- …und dabei gleich die www-Form ---
 
@@ -423,7 +441,7 @@ export async function middleware(request) {
        trüge die Antwort unter Umständen den internen Containernamen. */
     if (insecure || wrongHost || target !== pathname) {
       const host = wrongHost ? `www.${forwardedHost}` : forwardedHost;
-      return NextResponse.redirect(`https://${host}${target}${search}`, 308);
+      return NextResponse.redirect(`https://${host}${target}${search}`, permanentCode(request.method));
     }
   } else if (target !== pathname) {
     /* Entwicklung und interne Aufrufe: Es gibt keinen öffentlichen Namen, an
@@ -432,7 +450,7 @@ export async function middleware(request) {
        nicht auf die Live-Domain. Alt-Adressen und /de-Präfix müssen auch
        hier weiterleiten, sonst prüft niemand je lokal nach, was ein Besucher
        von außen erlebt. */
-    return NextResponse.redirect(new URL(`${target}${search}`, request.url), 308);
+    return NextResponse.redirect(new URL(`${target}${search}`, request.url), permanentCode(request.method));
   }
 
   /* robots.txt und sitemap.xml laufen NUR wegen der Host-Regel oben durch
@@ -474,7 +492,7 @@ export async function middleware(request) {
     const remembered = request.cookies.get(LOCALE_COOKIE)?.value;
     const choice = isLocale(remembered) ? remembered : preferredLocale(request.headers.get("accept-language"));
     if (choice && choice !== DEFAULT_LOCALE) {
-      /* 307, nicht 308: Die Wahl hängt an Cookie und Browsersprache und darf
+      /* 307, nicht 301: Die Wahl hängt an Cookie und Browsersprache und darf
          niemals im Browser-Cache oder bei einem Proxy festbrennen. */
       return NextResponse.redirect(new URL(`/${choice}${search}`, request.url), 307);
     }

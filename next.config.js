@@ -4,53 +4,40 @@ const nextConfig = {
      never contend with dev servers writing .next — this machine tends to run
      several (IDE-supervised + sessions). Unset, everything behaves as stock. */
   ...(process.env.MM_DIST_DIR ? { distDir: process.env.MM_DIST_DIR } : {}),
-  /* Die Kollektion liegt seit dem Route-Umzug unter /unsere-weine (vorher
-     /weine). Alte Links — Lesezeichen, Suchmaschinen-Index, gedruckte QR-Codes
-     — dürfen nicht ins Leere laufen: 308 (permanent) leitet Übersicht und alle
-     neun Produktseiten dauerhaft weiter und vererbt das Ranking mit. */
-  async redirects() {
-    return [
-      { source: "/weine", destination: "/unsere-weine", permanent: true },
-      { source: "/weine/:slug", destination: "/unsere-weine/:slug", permanent: true },
+  /* Den Schrägstrich am Ende räumt die Middleware weg, nicht Next.js.
 
-      /* Unter dieser Domain lief bis zum Umzug eine WordPress-Installation.
-         Deren Adressen sind seit 2019 indexiert, verlinkt und weitergegeben —
-         sie dürfen nicht ins Leere laufen, nur weil darunter jetzt ein anderes
-         System steht. 308 vererbt das Ranking der alten Seite an die neue
-         Entsprechung; das ist der einzige Weg, die aufgebaute Sichtbarkeit
-         über den Systemwechsel zu retten.
+     Next.js normalisiert ihn sonst selbst — und zwar VOR der Middleware.
+     Genau das erzeugte eine Kette an der Stelle, an der sie am teuersten
+     ist: WordPress hängt in seiner Standard-Einstellung an JEDE Adresse
+     einen Schrägstrich, die seit 2019 indexierten Alt-Adressen lauten also
+     „/galerie/" und nicht „/galerie".
 
-         Zwei alte Seiten haben keinen Eins-zu-eins-Nachfolger:
+       https://maria-maria.de/galerie/
+         → 308 → /galerie              (Next, noch auf der nackten Domain)
+         → 308 → www/geschichte        (erst jetzt Middleware)
 
-         /galerie   → /geschichte. Die dreizehn Bilder der alten Bildstrecke
-                      leben in der Erzählseite weiter, dort steht dieselbe
-                      Marke in Bildern — nur mit Text darum herum.
+     Mit diesem Schalter sieht die Middleware den Schrägstrich selbst und
+     rechnet ihn in canonicalPath() zusammen mit Präfix, Alt-Adresse und Host
+     in EIN Ziel. Aus zwei Sprüngen wird einer.
 
-         Chiaretto  → /unsere-weine. Der Riviera del Garda Classico ist nicht
-                      mehr im Sortiment. Eine Weiterleitung auf einen ANDEREN
-                      Wein wäre eine Falschauskunft an jeden, der genau diese
-                      Flasche gesucht hat; die Kollektion ist die ehrliche
-                      Entsprechung und zeigt, was es stattdessen gibt.
+     Das Verhalten nach außen ändert sich nicht: Adressen mit Schrägstrich
+     leiten weiterhin dauerhaft auf die Fassung ohne — nur eben an einer
+     Stelle, die auch den Host kennt. */
+  skipTrailingSlashRedirect: true,
+  /* KEINE redirects() mehr an dieser Stelle.
 
-         Der Theme-Ballast der alten Installation (/portfolio/*, /sample-page,
-         /projects-2) bekommt bewusst KEINE Regel: Diese Seiten hatten nie
-         eigenen Inhalt und sollen als 404 aus dem Index fallen. */
-      { source: "/home", destination: "/", permanent: true },
-      { source: "/ueber-uns", destination: "/geschichte", permanent: true },
-      { source: "/vision", destination: "/geschichte", permanent: true },
-      { source: "/galerie", destination: "/geschichte", permanent: true },
-      { source: "/news", destination: "/magazin", permanent: true },
-      { source: "/primitivo-di-manduria", destination: "/regionen", permanent: true },
-      { source: "/lugana-doc", destination: "/unsere-weine/lugana", permanent: true },
-      { source: "/unsere-weine/lugana-doc", destination: "/unsere-weine/lugana", permanent: true },
-      { source: "/unsere-weine/primitivo-145-2", destination: "/unsere-weine/primitivo-14-5", permanent: true },
-      { source: "/unsere-weine/primitivo-145-2-old", destination: "/unsere-weine/primitivo-14-5", permanent: true },
-      { source: "/unsere-weine/primitivo-155", destination: "/unsere-weine/primitivo-15-5", permanent: true },
-      { source: "/unsere-weine/greco-di-tufo-d-o-c-g", destination: "/unsere-weine/greco-di-tufo", permanent: true },
-      { source: "/unsere-weine/riviera-del-garda-classico-chiaretto-dop", destination: "/unsere-weine", permanent: true },
-      { source: "/datenschutzerklaerung", destination: "/datenschutz", permanent: true },
-    ];
-  },
+     Die Weiterleitungen der alten WordPress-Adressen standen bis August 2026
+     hier. Next.js wertet sie VOR der Middleware aus — und genau daraus
+     entstanden die Redirect-Ketten, die der Screaming-Frog-Lauf gemeldet hat:
+     Die Konfiguration korrigierte den Pfad, ohne den Host zu kennen, und die
+     Middleware korrigierte anschliessend den Host ein zweites Mal.
+
+     Deklarativ war das nicht zu beheben. Beide Regeln stehen deshalb jetzt
+     gemeinsam in middleware.js (LEGACY_PATHS, canonicalPath) und ergeben ein
+     einziges Ziel in einer einzigen Antwort.
+
+     Wer hier wieder eine Regel einträgt, baut die Kette neu auf. Neue
+     Weiterleitungen gehören in die Tabelle in middleware.js. */
   async headers() {
     /* Die Dateinamen unter /img und /video sind NICHT content-gehasht
        (hero-1280.webp bleibt hero-1280.webp, auch wenn das Motiv wechselt).

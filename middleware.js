@@ -18,6 +18,13 @@ import { SITE_URL } from "@/lib/site";
    4. "/"          → beim allerersten Besuch eines MENSCHEN: Accept-Language
                      entscheidet, ob auf /it, /en oder /cs weitergeleitet wird
 
+   Dazu kommen seit August 2026 zwei Dinge, die vorher woanders standen: die
+   offizielle Schreibweise der Domain (www, mit HTTPS) und die Alt-Adressen
+   der WordPress-Installation (früher `redirects()` in next.config.js). Beide
+   sind hierher gewandert, weil sie sonst NACHEINANDER greifen und damit
+   Redirect-Ketten erzeugen — siehe LEGACY_PATHS und canonicalPath(). Jede
+   Anfrage bekommt genau eine Antwort mit genau einem Endziel.
+
    Punkt 4 gilt bewusst nur für die Wurzel und nur ohne gesetztes Cookie. Wer
    einen Deep Link bekommt, landet auf genau der Seite, die im Link steht —
    eine Weiterleitung nach Browsersprache würde geteilte Links umbiegen und
@@ -210,7 +217,125 @@ const APEX_HOST = CANONICAL_HOST.startsWith("www.") ? CANONICAL_HOST.slice(4) : 
    Domain wie "maria-maria.de". */
 const bareHost = (host) => host.replace(/:\d+$/, "").toLowerCase();
 
+/* --- Adressen aus der Zeit vor diesem System ----------------------------
+
+   Diese Tabelle stand bis August 2026 als `redirects()` in next.config.js.
+   Sie ist hierher gewandert, weil Next.js die Weiterleitungen aus der
+   Konfiguration VOR der Middleware auswertet — und genau diese Reihenfolge
+   erzeugte die Ketten:
+
+     https://maria-maria.de/galerie
+       → 308 → /geschichte        (noch auf der nackten Domain)
+       → 308 → www/geschichte     (erst hier greift die Host-Regel)
+
+   Deklarativ ist das nicht auflösbar: Die Konfiguration kennt den Host
+   nicht, und die Middleware kommt zu spät. Steht beides an EINER Stelle,
+   lässt sich das Endziel in einem Rutsch ausrechnen — ein Sprung.
+
+   Der Inhalt ist unverändert. Unter dieser Domain lief bis zum Umzug eine
+   WordPress-Installation; deren Adressen sind seit 2019 indexiert, verlinkt
+   und weitergegeben. 308 vererbt das Ranking der alten Seite an die neue
+   Entsprechung — der einzige Weg, die aufgebaute Sichtbarkeit über den
+   Systemwechsel zu retten.
+
+   Zwei alte Seiten haben keinen Eins-zu-eins-Nachfolger:
+
+     /galerie   → /geschichte. Die dreizehn Bilder der alten Bildstrecke
+                  leben in der Erzählseite weiter, dort steht dieselbe Marke
+                  in Bildern — nur mit Text darum herum.
+     Chiaretto  → /unsere-weine. Der Riviera del Garda Classico ist nicht
+                  mehr im Sortiment. Eine Weiterleitung auf einen ANDEREN
+                  Wein wäre eine Falschauskunft an jeden, der genau diese
+                  Flasche gesucht hat; die Kollektion ist die ehrliche
+                  Entsprechung und zeigt, was es stattdessen gibt.
+
+   Der Theme-Ballast der alten Installation (/portfolio/*, /sample-page,
+   /projects-2) bekommt bewusst KEINE Regel: Diese Seiten hatten nie eigenen
+   Inhalt und sollen als 404 aus dem Index fallen. */
+const LEGACY_PATHS = new Map([
+  ["/home", "/"],
+  ["/ueber-uns", "/geschichte"],
+  ["/vision", "/geschichte"],
+  ["/galerie", "/geschichte"],
+  ["/news", "/magazin"],
+  ["/primitivo-di-manduria", "/regionen"],
+  ["/lugana-doc", "/unsere-weine/lugana"],
+  ["/unsere-weine/lugana-doc", "/unsere-weine/lugana"],
+  ["/unsere-weine/primitivo-145-2", "/unsere-weine/primitivo-14-5"],
+  ["/unsere-weine/primitivo-145-2-old", "/unsere-weine/primitivo-14-5"],
+  ["/unsere-weine/primitivo-155", "/unsere-weine/primitivo-15-5"],
+  ["/unsere-weine/greco-di-tufo-d-o-c-g", "/unsere-weine/greco-di-tufo"],
+  ["/unsere-weine/riviera-del-garda-classico-chiaretto-dop", "/unsere-weine"],
+  ["/datenschutzerklaerung", "/datenschutz"],
+]);
+
+/* Die Kollektion liegt seit dem Route-Umzug unter /unsere-weine (vorher
+   /weine) — Übersicht und alle neun Produktseiten. Als Präfixregel, weil
+   der Slug beliebig ist. */
+function legacyTarget(path) {
+  const exact = LEGACY_PATHS.get(path);
+  if (exact) return exact;
+  if (path === "/weine") return "/unsere-weine";
+  if (path.startsWith("/weine/")) return `/unsere-weine${path.slice("/weine".length)}`;
+  return null;
+}
+
+/* Der Pfad, auf dem diese Anfrage am Ende landen soll — in einem Schritt,
+   nicht in dreien.
+
+   Drei Umformungen, jede für sich harmlos, in Reihe aber eine Kette:
+
+   1. Schrägstrich am Ende. Next.js normalisiert ihn selbst und zwar VOR der
+      Middleware; die Zeile ist reine Absicherung für den Fall, dass eine
+      Anfrage doch mit "/galerie/" hier ankommt.
+   2. Das /de-Präfix ist redundant — Deutsch steht ohne Segment an der
+      Wurzel, sonst wäre jede deutsche Seite unter zwei Adressen erreichbar.
+   3. Die Alt-Adressen von oben.
+
+   Die Schleife läuft bis zum Fixpunkt, weil Regel 3 auf sich selbst zeigen
+   kann: "/weine/lugana-doc" wird erst zu "/unsere-weine/lugana-doc" und
+   DANN zu "/unsere-weine/lugana". Über zwei getrennte Regeln in
+   next.config.js waren das zwei Sprünge; hier ist es einer. Die Obergrenze
+   ist ein Schleifenschutz — trüge die Tabelle je einen Zyklus, bliebe die
+   Seite sonst hängen, statt eine Adresse zu weit zu springen. */
+function canonicalPath(pathname) {
+  let path = pathname.length > 1 ? pathname.replace(/\/+$/, "") || "/" : pathname;
+
+  const [, first = ""] = path.split("/");
+  if (first === DEFAULT_LOCALE) path = path.slice(DEFAULT_LOCALE.length + 1) || "/";
+
+  for (let round = 0; round < 4; round++) {
+    const next = legacyTarget(path);
+    if (!next || next === path) break;
+    path = next;
+  }
+  return path;
+}
+
 export async function middleware(request) {
+  const { pathname, search } = request.nextUrl;
+
+  /* --- 0. Der eigene Shop ist stillgelegt: zum Partner-Shop ---
+
+     Steht VOR allen Sprach- UND Host-Regeln, damit jede Schreibweise
+     dasselbe Ziel bekommt: /shop, /de/shop, /it/shop, /shop#pakete,
+     /shop?sort=bestseller.
+
+     Vor der Host-Regel steht er, weil das Ziel eine FREMDE Domain ist. Der
+     Umweg über die eigene www-Form wäre reiner Selbstzweck: „maria-maria.de/
+     shop" käme sonst erst auf „www.maria-maria.de/shop" und von dort erst
+     hinaus — zwei Sprünge auf eine Adresse, die am Ende ohnehin niemandem
+     von uns gehört. Von hier ist es einer.
+
+     307, nicht 308: Die Weiterleitung beschreibt einen Zustand („die Kasse
+     läuft noch nicht"), keinen Umzug. Ein permanenter Code würde sich in
+     Browser-Caches und bei Google festsetzen — der eigene Shop wäre nach dem
+     Wiederanschalten für Wiederkehrer unerreichbar, ohne dass irgendwer den
+     Fehler sähe. Siehe lib/shop/config.js. */
+  if (!SHOP_ENABLED && isShopPath(pathname)) {
+    return NextResponse.redirect(new URL(EXTERNAL_SHOP_URL), 307);
+  }
+
   /* --- HTTPS erzwingen ---------------------------------------------------
 
      Diese Weiterleitung gehört in den Proxy, kann dort aber nicht zuverlässig
@@ -264,21 +389,50 @@ export async function middleware(request) {
      HTTPS-Zwang: Über diesen Pfad bestätigt Let's Encrypt die Domain, und die
      nackte Domain braucht ein eigenes gültiges Zertifikat — sonst scheitert
      der Aufruf schon an der TLS-Warnung, bevor die Weiterleitung greifen
-     kann. Die Anfrage darf also gerade NICHT nach www umgebogen werden. */
+     kann. Die Anfrage darf also gerade NICHT nach www umgebogen werden.
+
+     --- …und dabei gleich den endgültigen Pfad ---
+
+     canonicalPath() rechnet aus, wo die Anfrage am Ende hingehört: ohne
+     /de-Präfix, ohne Schrägstrich am Ende, Alt-Adresse aufgelöst. Protokoll,
+     Host UND Pfad stehen damit in einer einzigen Antwort. Der bisher
+     schlimmste Fall
+
+       http://maria-maria.de/de/weine/lugana-doc
+
+     brauchte über getrennte Regeln vier Sprünge (https, www, /de weg, zwei
+     Alt-Regeln nacheinander) und braucht jetzt einen. */
   const firstOf = (value) => value?.split(",")[0].trim();
   const forwardedHost = firstOf(request.headers.get("x-forwarded-host")) || request.headers.get("host");
   const insecure = firstOf(request.headers.get("x-forwarded-proto")) === "http";
   const wrongHost = Boolean(APEX_HOST && forwardedHost && bareHost(forwardedHost) === APEX_HOST);
 
-  if (
+  /* pathname/search stehen oben, gleich beim Eintritt. */
+  const target = canonicalPath(pathname);
+
+  const publicRequest =
     process.env.NODE_ENV === "production" &&
-    (insecure || wrongHost) &&
-    forwardedHost && !INTERNAL_HOST.test(forwardedHost) &&
-    !request.nextUrl.pathname.startsWith("/.well-known/")
-  ) {
-    const { pathname, search } = request.nextUrl;
-    const host = wrongHost ? `www.${forwardedHost}` : forwardedHost;
-    return NextResponse.redirect(`https://${host}${pathname}${search}`, 308);
+    forwardedHost &&
+    !INTERNAL_HOST.test(forwardedHost) &&
+    !pathname.startsWith("/.well-known/");
+
+  if (publicRequest) {
+    /* Ein Ziel für alle drei Abweichungen. Der Host kommt AUSSCHLIESSLICH
+       aus dem Kopf — die Warnung oben gilt für jede Weiterleitung dieser
+       Datei, nicht nur für die HTTPS-Regel: Würde hier request.url benutzt,
+       trüge die Antwort unter Umständen den internen Containernamen. */
+    if (insecure || wrongHost || target !== pathname) {
+      const host = wrongHost ? `www.${forwardedHost}` : forwardedHost;
+      return NextResponse.redirect(`https://${host}${target}${search}`, 308);
+    }
+  } else if (target !== pathname) {
+    /* Entwicklung und interne Aufrufe: Es gibt keinen öffentlichen Namen, an
+       dem man sich orientieren könnte, also bleibt die Weiterleitung relativ
+       zum tatsächlich aufgerufenen Host — localhost zeigt auf localhost und
+       nicht auf die Live-Domain. Alt-Adressen und /de-Präfix müssen auch
+       hier weiterleiten, sonst prüft niemand je lokal nach, was ein Besucher
+       von außen erlebt. */
+    return NextResponse.redirect(new URL(`${target}${search}`, request.url), 308);
   }
 
   /* robots.txt und sitemap.xml laufen NUR wegen der Host-Regel oben durch
@@ -302,32 +456,8 @@ export async function middleware(request) {
     return NextResponse.next();
   }
 
-  const { pathname, search } = request.nextUrl;
   const [, first = ""] = pathname.split("/");
   const crawler = isCrawler(request.headers.get("user-agent"));
-
-  /* --- 0. Der eigene Shop ist stillgelegt: zum Partner-Shop ---
-
-     Steht VOR allen Sprachregeln, damit jede Schreibweise dasselbe Ziel
-     bekommt: /shop, /de/shop, /it/shop, /shop#pakete, /shop?sort=bestseller.
-
-     307, nicht 308: Die Weiterleitung beschreibt einen Zustand („die Kasse
-     läuft noch nicht"), keinen Umzug. Ein permanenter Code würde sich in
-     Browser-Caches und bei Google festsetzen — der eigene Shop wäre nach dem
-     Wiederanschalten für Wiederkehrer unerreichbar, ohne dass irgendwer den
-     Fehler sähe. Siehe lib/shop/config.js. */
-  if (!SHOP_ENABLED && isShopPath(pathname)) {
-    return NextResponse.redirect(new URL(EXTERNAL_SHOP_URL), 307);
-  }
-
-  /* --- 3. Das Default-Präfix ist redundant: dauerhaft auf die kurze URL --- */
-  if (first === DEFAULT_LOCALE) {
-    const stripped = pathname.slice(DEFAULT_LOCALE.length + 1) || "/";
-    const url = new URL(`${stripped}${search}`, request.url);
-    /* 308 statt 301: erhält die Methode, und die Redirects in next.config.js
-       für /weine → /unsere-weine sprechen dieselbe Sprache. */
-    return NextResponse.redirect(url, 308);
-  }
 
   /* --- 2. Bereits eine der drei präfigierten Sprachen: durchlassen --- */
   if (isLocale(first)) {

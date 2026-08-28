@@ -51,7 +51,7 @@ const interviews = {
     eyebrow: "Interviews · Im Gespräch",
     title: "Menschen hinter dem Wein",
     description:
-      "Winzerinnen, Kellermeister und Erzeuger erzählen von ihrer Region, ihrem Handwerk und davon, was einen Wein wirklich ausmacht.",
+      "Winzer, Weinexperten und Menschen aus den Regionen erzählen von Herkunft, Handwerk und davon, was einen Wein wirklich ausmacht.",
   },
 
   /* Beschriftungen der Artikelseite. */

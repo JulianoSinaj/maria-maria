@@ -16,7 +16,7 @@ const interviews = {
     eyebrow: "Interviews · In conversation",
     title: "The people behind the wine",
     description:
-      "Winemakers, cellar masters and growers talk about their region, their craft and what really makes a wine.",
+      "Winemakers, wine experts and people from the regions talk about origin, craft and what really makes a wine.",
   },
 
   ui: {

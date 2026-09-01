@@ -16,7 +16,7 @@ const interviews = {
     eyebrow: "Rozhovory · V dialogu",
     title: "Lidé za vínem",
     description:
-      "Vinaři, sklepmistři a pěstitelé vyprávějí o svém kraji, o svém řemesle a o tom, co víno skutečně utváří.",
+      "Vinaři, znalci vína a lidé z jednotlivých krajů vyprávějí o původu, řemesle a o tom, co víno skutečně utváří.",
   },
 
   ui: {

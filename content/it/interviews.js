@@ -16,7 +16,7 @@ const interviews = {
     eyebrow: "Interviste · In dialogo",
     title: "Le persone dietro il vino",
     description:
-      "Vignaioli, cantinieri e produttori raccontano il loro territorio, il loro mestiere e ciò che davvero fa un vino.",
+      "Vignaioli, esperti di vino e persone dei territori raccontano origine, mestiere e ciò che davvero fa un vino.",
   },
 
   ui: {

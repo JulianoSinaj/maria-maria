@@ -1,5 +1,6 @@
 "use client";
-import { motion } from "motion/react";
+import { useRef } from "react";
+import { motion, useInView } from "motion/react";
 import { useReducedMotionSafe } from "@/components/motion/useMediaQuery";
 import useFirstLoad from "@/components/motion/useFirstLoad";
 
@@ -34,6 +35,39 @@ export default function SplitText({
      „Bewegung reduzieren". */
   const reduced = useReducedMotionSafe();
   const firstLoad = useFirstLoad();
+
+  /* Der Beobachter sitzt auf der ZEILE, nicht auf den einzelnen Wörtern.
+     Das ist keine Stilfrage, sondern die Reparatur eines Fehlers, bei dem
+     kurze Wörter dauerhaft unsichtbar blieben — „Francesco DE Stefano"
+     verlor sein „De".
+
+     WARUM. Mit `whileInView` hängt an jedem Wort-Span ein eigener
+     IntersectionObserver. Diese Spans starten aber auf `y: 112%` INNERHALB
+     eines overflow-hidden-Elternteils, sind also aus ihrem eigenen Kasten
+     herausgeschoben — und ein IntersectionObserver rechnet die
+     Überlappung erst NACH dem Zuschnitt durch alle Vorfahren. Die
+     Rettung war bisher reiner Rechenzufall:
+
+       Überschuss nach unten   = 0.12 × Zeilenhöhe
+       Luft im Elternteil      = 0.12em (pb-[0.12em])
+
+     Bei Zeilenhöhe 1.5 (die Rubrikzeile der Gesprächsseite: 12px/18px)
+     schiebt der Überschuss 2.16px, die Luft misst 1.44px — der Span liegt
+     also 0.72px KOMPLETT außerhalb des Zuschnitts. Sichtbar wurden Wörter
+     nur, weil `rotate: 2.5` ihren achsenparallelen Rahmen um
+     Breite × sin(2.5°) aufbläht: „Francesco" (120px) gewinnt 2.6px und
+     ragt wieder herein, „Stefano" (86px) 1.9px — „De" (34px) aber nur
+     0.73px und verfehlt die Schwelle. Der Observer feuerte nie, das Wort
+     blieb für immer unter seinem Deckel.
+
+     Die Zeile selbst steht dagegen ungeschnitten im Fluss. Ein Beobachter
+     dort trifft immer zu, unabhängig von Wortbreite, Zeilenhöhe und
+     Drehwinkel — und er ist ohnehin der richtige Auslöser: Der Stagger
+     will die Zeile als Ganzes einlaufen lassen, nicht Wort für Wort neu
+     entscheiden. */
+  const ref = useRef(null);
+  const inView = useInView(ref, { once });
+
   const words = String(text).split(" ");
 
   if (reduced || (priority && firstLoad)) {
@@ -41,7 +75,7 @@ export default function SplitText({
   }
 
   return (
-    <Tag className={className} aria-label={text}>
+    <Tag ref={ref} className={className} aria-label={text}>
       {words.map((word, i) => (
         <span
           key={`${word}-${i}`}
@@ -57,8 +91,7 @@ export default function SplitText({
             className={`inline-block will-transform ${wordClassName}`}
             style={wordStyle}
             initial={{ y: "112%", rotate: 2.5 }}
-            whileInView={{ y: "0%", rotate: 0 }}
-            viewport={{ once }}
+            animate={inView ? { y: "0%", rotate: 0 } : { y: "112%", rotate: 2.5 }}
             transition={{
               type: "spring",
               stiffness: 110,

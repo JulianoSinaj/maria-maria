@@ -18,7 +18,10 @@
    gepflegt ist. Fehlt er in einer, rendert diese Sprachfassung eine leere
    Seite statt 404 — und genau das soll nicht passieren. */
 
-export const INTERVIEW_SLUGS = ["daniele-malavasi-lugana-doc"];
+export const INTERVIEW_SLUGS = [
+  "daniele-malavasi-lugana-doc",
+  "francesco-de-stefano-irpinien-weissweine",
+];
 
 /* Basispfad an einer Stelle: der Handoff (Seite 10) legt
    /magazin/interviews/<slug> als kanonische Adresse fest, und beide Teaser

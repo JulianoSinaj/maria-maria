@@ -40,16 +40,22 @@ import { interviewPath } from "@/components/magazin/interviewRegistry";
 
 /* Eigenes Teaserbild statt `interview.portrait`. Das Artikelbild zeigt
    Daniele in Ganzfigur samt Hund; in einer 18rem breiten Hochformat-Spalte
-   wird er darin winzig. Dieses Motiv ist nah genug, dass Gesicht und Glas
-   die Fläche tragen. Bleibt hier lokal, weil es allein zu diesem Block
-   gehört — Artikelseite und Magazin-Karte nutzen weiter `portrait`. */
-const TEASER_PORTRAIT = "/img/daniele222.jpeg";
+   wird er darin winzig. Gebraucht wird ein nahes Motiv, in dem Gesicht und
+   Glas die Fläche tragen.
+
+   Die Zuordnung stand bis zum zweiten Gespräch als Konstante hier — mit
+   der Folge, dass JEDER Regionenblock Danieles Gesicht getragen hätte,
+   auch der kampanische. Sie gehört deshalb ins Wörterbuch, direkt neben
+   die übrigen Felder des Teasers (`teaserRegion.portrait`). Fehlt sie,
+   fällt der Block still auf das Artikelbild zurück; fehlt auch das,
+   bleibt die Bildspalte weg statt einen leeren Rahmen zu zeigen. */
 
 export default function InterviewTeaser({ interview, wineHref = "/unsere-weine/lugana" }) {
   const t = interview?.teaserRegion;
   if (!t) return null;
 
   const role = interview.profile?.role;
+  const teaserPortrait = t.portrait?.src ?? interview.portrait?.src ?? null;
 
   return (
     <Reveal y={22} className="relative mt-6 lg:mt-7">
@@ -157,13 +163,13 @@ export default function InterviewTeaser({ interview, wineHref = "/unsere-weine/l
               Knöpfe schließen ab. Ab lg gilt wieder Text links, Bild
               rechts. */}
           <div className="order-first w-full max-w-[13rem] shrink-0 lg:order-none lg:w-[13.5rem] lg:max-w-none">
-            {TEASER_PORTRAIT && (
+            {teaserPortrait && (
               <div
                 aria-hidden="true"
                 className="relative aspect-[4/5] overflow-hidden rounded-card border border-champagne/60 bg-cream shadow-luxe"
               >
                 <Photo
-                  src={TEASER_PORTRAIT}
+                  src={teaserPortrait}
                   alt=""
                   sizes="(min-width: 1024px) 216px, 100vw"
                   className="absolute inset-0 h-full w-full object-cover object-top transition-transform duration-700 ease-out-expo group-hover/teaser:scale-[1.04] motion-reduce:transition-none"

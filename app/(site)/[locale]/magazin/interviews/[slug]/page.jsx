@@ -11,7 +11,15 @@ import { getDictionary } from "@/lib/i18n/dictionaries";
 import { pageMetadata } from "@/lib/i18n/metadata";
 import { localePath } from "@/lib/i18n/routing";
 import { absoluteUrl } from "@/lib/site";
-import { graph, siteNodes, webPageNode, breadcrumbNode, articleNode, personNode } from "@/lib/seo/jsonLd";
+import {
+  graph,
+  siteNodes,
+  webPageNode,
+  breadcrumbNode,
+  articleNode,
+  personNode,
+  faqNode,
+} from "@/lib/seo/jsonLd";
 
 /* Ein Gespräch, eine Adresse: /magazin/interviews/<slug>
 
@@ -90,13 +98,19 @@ function InterviewJsonLd({ locale, dict, interview }) {
     breadcrumbId: crumbs?.["@id"] ?? null,
   });
 
+  /* Nur bestätigte Angaben. `jobTitle` und `worksFor` kommen aus dem
+     Wörterbuch und fehlen, solange sie dort fehlen — personNode() lässt
+     leere Felder still weg. Die Master-Source verlangt das ausdrücklich
+     („Person solo con dati verificati"): Francescos Berufsbezeichnung ist
+     bis zur Bestätigung offen, und er führt keine eigene Kellerei.
+
+     Ein Arbeitgeber ist ein fremdes Unternehmen — er bekommt hier nur einen
+     Namen, keinen @id-Verweis auf unsere Organisation. */
   const person = personNode({
     url,
     name: interview.profile?.name ?? interview.name,
     jobTitle: interview.profile?.role,
-    /* Die Cantina ist ein fremdes Unternehmen — sie bekommt hier nur einen
-       Namen, keinen @id-Verweis auf unsere Organisation. */
-    worksFor: "Cantina Malavasi",
+    worksFor: interview.profile?.worksFor,
     sameAs: interview.profile?.link?.href,
     image: interview.portrait?.src,
   });
@@ -121,7 +135,12 @@ function InterviewJsonLd({ locale, dict, interview }) {
           section: ui.interviews,
           keywords: interview.badge?.split("·").map((k) => k.trim()),
           webPageId: page["@id"],
-        })
+        }),
+        /* Die Fragen am Fuß des Stücks. Sie stehen nur hier vollständig —
+           kein anderer Ort der Domain beantwortet sie —, deshalb trägt
+           dieses Dokument den FAQPage-Knoten. Fehlt der Block, liefert
+           faqNode() null und graph() lässt ihn weg. */
+        faqNode({ url, items: interview.faq?.items ?? [] })
       )}
     />
   );

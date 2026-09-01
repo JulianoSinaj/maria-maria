@@ -57,6 +57,7 @@ const interviews = {
       portrait: {
         src: "/img/magazin/daniele-solo.jpeg",
         alt: "Daniele Malavasi se sklenkou Lugany a se svým psem mezi řadami révy ve vinici v Pozzolengu",
+        position: "object-top",
       },
 
       intro: [
@@ -177,6 +178,7 @@ const interviews = {
       profile: {
         name: "Daniele Malavasi",
         role: "Majitel Cantina Malavasi, Pozzolengo",
+        worksFor: "Cantina Malavasi",
         text: "Vinařství leží v oblasti Lugana, s vinicemi mezi Pozzolengem a Desenzano del Garda.",
         link: { label: "Cantina Malavasi", href: "https://www.malavasivini.com/it/azienda" },
       },
@@ -228,6 +230,7 @@ const interviews = {
 
       teaserRegion: {
         region: "garda",
+        portrait: { src: "/img/daniele222.jpeg" },
         eyebrow: "Hlasy z regionu · Lugana DOC",
         title: "Luganu vyprávějí skuteční lidé",
         paragraphs: [
@@ -236,6 +239,235 @@ const interviews = {
         pull: "Víno má vyprávět spíš o místě než o technice ve sklepě.",
         ctaPrimary: "Číst rozhovor",
         ctaSecondary: "Objevit Luganu",
+      },
+    },
+
+    {
+      slug: "francesco-de-stefano-irpinien-weissweine",
+      draft: false,
+
+      /* Slug zůstává ve všech čtyřech jazycích německý — jazyk stojí
+         v prefixu, nikdy ve slugu, jinak by se skupina hreflang rozpadla. */
+
+      eyebrow: "Maria Maria × Kampánie · V dialogu",
+      badge: "Greco di Tufo DOCG · Fiano di Avellino DOCG · Falanghina",
+      name: "Francesco De Stefano",
+      headline: "Tři bílá vína, tři charaktery – čím je Irpinie výjimečná",
+      deck: "Z irpinských výšin až ke stolu: Francesco De Stefano vypráví o Greco di Tufo, Fiano di Avellino a Falanghině – a o tom, proč původ, charakter a food pairing patří při výběru vína dohromady.",
+
+      ghost: "Irpinia",
+
+      seo: {
+        title: "Francesco De Stefano o Irpinii a kampánských bílých vínech",
+        description:
+          "Greco di Tufo, Fiano di Avellino a Falanghina: Francesco De Stefano o Irpinii, food pairingu a vědomém výběru vína.",
+      },
+
+      byline: {
+        interview: "Maria Pia Tolo",
+        editorial: "Maria Maria",
+        date: null,
+        readingTime: "6 min čtení",
+      },
+
+      portrait: {
+        src: "/img/magazin/interviews/francesco-de-stefano.jpg",
+        alt: "Francesco De Stefano nalévá ve večerním světle bílé víno Maria Maria do sklenky",
+        position: "object-top",
+      },
+
+      intro: [
+        "Kdo chce vínu skutečně porozumět, nevystačí si s odrůdou. Původ, styl, způsob servírování i pokrm na stole mění to, jak víno vnímáme. Pro Francesca De Stefana je právě tento vědomý výběr rozhodující.",
+        "V rozhovoru s Maria Maria provází Kampánií a především Irpinií. V centru stojí Greco di Tufo, Fiano di Avellino a Falanghina – tři bílá vína, která mají pro Francesca odlišný charakter i odlišné chvíle u stolu.",
+      ],
+
+      sections: [
+        {
+          id: "gemeinsame-werte",
+          heading: "Spolupráce, která začíná společnými hodnotami",
+          paragraphs: [
+            "Na projektu Maria Maria Francesca přesvědčili především lidé, kteří za ním stojí. Jako rozhodující důvody, proč je ochoten projekt doprovázet, uvádí oddanost projektu, serióznost Valeria a Marie a jejich odbornost.",
+            "K tomu se přidává společný postoj: stejná vášeň a stejné hledání kvality, které podle Francescových slov utvářejí i jeho vlastní práci.",
+          ],
+          quote:
+            "Nejvíc mě zaujala oddanost projektu a serióznost, kterou Valerio a Maria projevují.",
+        },
+        {
+          id: "irpinien",
+          heading: "Irpinie: tři DOCG v jediné provincii",
+          paragraphs: [
+            "Kampánie je pro Francesca odjakživa symbolickým územím italského vinařství, zvláště na jihu Itálie. Odkazuje na vinařskou tradici sahající až do doby římské a v rámci regionu vyzdvihuje především Irpinii.",
+            "To, že se právě tato provincie může pyšnit třemi apelacemi DOCG, je pro něj důležitým znamením významu území a jeho mimořádné vinařské způsobilosti. K nim se přidává Aglianico del Taburno, další DOCG na Beneventsku.",
+          ],
+        },
+        {
+          id: "hoehe-und-klima",
+          heading: "Co ve sklence mění nadmořská výška a klima",
+          /* CHYBÍ FOTOGRAFIE: odpovídající kapitola rozhovoru s Danielem nese
+             krajinný snímek. Pro Irpinii zatím žádný není. */
+          paragraphs: [
+            "Charakter vín odvozuje Francesco především od klimatu a nadmořské výšky. Oba faktory podle jeho vysvětlení přispívají k vyšší kyselině. Výsledkem jsou vína s větší strukturou a rozhodnějším charakterem.",
+            "Právě pro publikum, které kampánská bílá vína teprve objevuje, je tento pohled užitečný: ne každé bílé víno z jihu Itálie je měkké a nekomplikované.",
+          ],
+        },
+        {
+          id: "drei-charaktere",
+          heading: "Greco, Fiano a Falanghina: tři odlišné charaktery",
+          paragraphs: [
+            "Francesco nepovažuje Greco di Tufo, Fiano di Avellino a Falanghinu za zaměnitelné varianty. Greco di Tufo popisuje ve srovnání jako výrazněji minerální.",
+            "Fiano na něj působí měkčeji a všestranněji a byl by jeho doporučením pro ty, kdo tyto styly objevují poprvé. Falanghina vykazuje v jeho srovnání sušší tendenci a nachází přirozené místo u aperitivu.",
+          ],
+          list: {
+            label: "Jak Francesco tři vína rozlišuje",
+            items: [
+              "Greco di Tufo — ve srovnání výrazněji minerální",
+              "Fiano di Avellino — měkčí a všestrannější, jeho návrh pro začátek",
+              "Falanghina — sušší tendence, s přirozeným místem u aperitivu",
+            ],
+          },
+        },
+      ],
+
+      pairing: {
+        heading: "Kampánská bílá vína u stolu",
+        /* CHYBÍ FOTOGRAFIE — viz kapitola o nadmořské výšce a klimatu. */
+        paragraphs: [
+          "Fiano di Avellino by Francesco podával k ne příliš výraznému rybímu pokrmu, například ke krevetám nebo pstruhovi.",
+          "Greco di Tufo má pro něj výraznější minerální složku, a může proto doprovodit poněkud složitější rybí pokrmy nebo bílé maso. Zvlášť vyzdvihuje Greco di Tufo s buvolí mozzarellou.",
+          "Falanghinu vidí i u aperitivu, například k frisselle s rajčaty San Marzano.",
+        ],
+        items: [
+          { icon: "fish", title: "Fiano di Avellino", text: "Ke krevetám nebo pstruhovi." },
+          {
+            icon: "stockfish",
+            title: "Greco di Tufo",
+            text: "Ke složitějším rybím pokrmům a bílému masu.",
+          },
+          {
+            icon: "plate",
+            title: "Buvolí mozzarella",
+            text: "Kombinace, kterou Francesco vyzdvihuje zvlášť.",
+          },
+          {
+            icon: "glasses",
+            title: "Falanghina k aperitivu",
+            text: "Například k frisselle s rajčaty San Marzano.",
+          },
+        ],
+      },
+
+      serving: {
+        heading: "Nejčastější chyba začíná u teploty",
+        paragraphs: [
+          "Častá chyba leží pro Francesca už v servírování. Bílé víno může do sklenky přijít příliš studené, ale i příliš teplé. Konkrétní počet stupňů neuvádí.",
+          "Totéž platí pro kombinace s jídlem: kdo přehlíží výraznější mineralitu Greca nebo větší měkkost Fiana, zachází s velmi odlišnými víny, jako by byla stejná.",
+        ],
+      },
+
+      outro: {
+        heading: "Proč výběr vína nikdy není banální",
+        paragraphs: [
+          "Nakonec Francesco všechna témata převádí na jednu myšlenku: výběr vína nikdy není banální. Původ, styl, pokrm a způsob servírování se navzájem ovlivňují.",
+          "Svou roli v Maria Maria vidí Francesco v tom, že stávající odbornost Valeria a Marie doplní o vlastní zkušenost, a přispěje tak k dalšímu rozvoji projektu.",
+        ],
+        quote: "Výběr vína nikdy není banální.",
+      },
+
+      faq: {
+        eyebrow: "Časté otázky",
+        title: "Kampánská bílá vína —",
+        titleAccent: "krátce zodpovězeno.",
+        description:
+          "Kde začít, čím se tři vína liší, jak je kombinovat a proč záleží na teplotě: pět otázek, které po tomto rozhovoru nejčastěji zůstávají otevřené.",
+        items: [
+          {
+            id: "francesco-einsteiger",
+            q: "Které kampánské bílé víno se hodí pro začátečníky?",
+            a: "Francesco by doporučil Fiano. Popisuje ho jako měkčí a všestrannější než Greco di Tufo a jako méně suše působící než Falanghina.",
+          },
+          {
+            id: "francesco-unterschied",
+            q: "Jaký je rozdíl mezi Greco di Tufo, Fianem a Falanghinou?",
+            a: "Greco na Francesca působí výrazněji minerálně, Fiano měkčeji a všestranněji a Falanghina vykazuje ve srovnání sušší tendenci.",
+          },
+          {
+            id: "francesco-greco-pairing",
+            q: "Co se hodí ke Greco di Tufo?",
+            a: "Poněkud složitější rybí pokrmy, bílé maso a především buvolí mozzarella.",
+          },
+          {
+            id: "francesco-fisch",
+            q: "Které kampánské bílé víno se hodí k rybě?",
+            a: "K lehčím rybím pokrmům uvádí Francesco Fiano di Avellino; Greco di Tufo může doprovodit i strukturovanější přípravy.",
+          },
+          {
+            id: "francesco-temperatur",
+            q: "Proč je teplota servírování důležitá?",
+            a: "Příliš nízká i příliš vysoká teplota patří pro Francesca k nejčastějším chybám. Konkrétní počet stupňů neuvádí.",
+          },
+        ],
+      },
+
+      profile: {
+        name: "Francesco De Stefano",
+        /* OTEVŘENÉ: master source uvádí profesní označení jako „doplnit až po
+           potvrzení". Dokud chybí, pole zůstává stranou. */
+        text: "Francesco doprovází Maria Maria svou zkušeností a znalostí kampánského vinařského světa.",
+      },
+
+      wine: {
+        slug: "greco-di-tufo",
+        href: "/unsere-weine?region=kampanien",
+        heading: "Objevte kampánská bílá vína u Maria Maria",
+        text: "Greco di Tufo, Fiano di Avellino a Falanghina — kampánská bílá vína z kolekce, každé s charakterem, o kterém Francesco v rozhovoru vypráví.",
+        cta: "Objevit kampánská vína",
+      },
+
+      paths: [
+        {
+          id: "region",
+          icon: "region",
+          title: "Region Kampánie",
+          text: "Objevte terroir.",
+          href: "/regionen#kampanien",
+        },
+        {
+          id: "pairing",
+          icon: "pairing",
+          title: "Food pairing",
+          text: "Inspirace pro stůl.",
+          href: "/magazin#food-pairing",
+        },
+        {
+          id: "interviews",
+          icon: "interviews",
+          title: "Další rozhovory",
+          text: "Přečtěte si všechny rozhovory.",
+          href: "/magazin#interviste",
+        },
+      ],
+
+      teaserMagazin: {
+        eyebrow: "Rozhovory · V dialogu",
+        badge: "Irpinie · Kampánie",
+        title: "Tři bílá vína, tři charaktery: čím je Irpinie výjimečná",
+        teaser:
+          "O Greco di Tufo, Fiano di Avellino a Falanghině – a o tom, proč původ, food pairing a vědomý výběr vína patří dohromady.",
+        meta: "Rozhovor · 6 min čtení",
+        cta: "Číst rozhovor",
+      },
+
+      teaserRegion: {
+        region: "kampanien",
+        portrait: { src: "/img/magazin/interviews/francesco-de-stefano.jpg" },
+        eyebrow: "Hlasy z regionu · Irpinie",
+        title: "Kampánii vyprávějí skuteční lidé",
+        paragraphs: [
+          "Čím se bílá vína Kampánie tak liší? Francesco De Stefano vypráví o Irpinii, Greco di Tufo, Fiano di Avellino a Falanghině — a o tom, proč původ, charakter a správný food pairing patří při výběru vína dohromady.",
+        ],
+        pull: "Výběr vína nikdy není banální.",
+        ctaPrimary: "Číst rozhovor",
+        ctaSecondary: "Objevit Greco di Tufo",
       },
     },
   ],

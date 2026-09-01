@@ -25,6 +25,7 @@
 import sharp from "sharp";
 import { readdir, writeFile, stat } from "node:fs/promises";
 import path from "node:path";
+import { pathToFileURL } from "node:url";
 
 const ROOT = process.cwd();
 const IMG_DIR = path.join(ROOT, "public", "img");
@@ -165,6 +166,36 @@ async function run() {
     console.log(`✓ ${rel}: ${meta.width}px/${kb(size)} → ${report.join(" ")}`);
   }
 
+  /* Die uebersprungenen Verzeichnisse aus dem bestehenden Manifest
+     uebernehmen.
+
+     SKIP_DIRS haelt Ordner heraus, deren Varianten eine ANDERE Pipeline
+     erzeugt (food-pairing, kontakt) — ihre Dateien liegen also laengst auf
+     der Platte, nur baut dieser Lauf sie nicht. Bis hierher schrieb das
+     Skript das Manifest trotzdem komplett neu und loeschte die Eintraege
+     dieser Ordner dabei still mit: Nach jedem `npm run optimize:pages`
+     lieferte die Kontaktseite ihre drei Hero-Motive wieder in voller Groesse
+     aus, weil <Photo> sie im Manifest nicht mehr fand. Kein 404, keine
+     Fehlermeldung — nur ein paar hundert Kilobyte mehr, jedes Mal.
+
+     Deshalb: bestehende Eintraege lesen und die aus den uebersprungenen
+     Ordnern unveraendert weiterreichen. Alles Uebrige kommt weiterhin aus
+     diesem Lauf. */
+  const carried = [];
+  try {
+    const { PHOTO_MANIFEST: previous } = await import(pathToFileURL(MANIFEST_OUT).href);
+    for (const [key, entry] of Object.entries(previous)) {
+      if (manifest[key]) continue;
+      /* "/img/kontakt/foo.webp" → "kontakt" */
+      const top = key.split("/")[2];
+      if (!SKIP_DIRS.has(top)) continue;
+      manifest[key] = entry;
+      carried.push(key);
+    }
+  } catch {
+    /* Erster Lauf, noch kein Manifest — dann gibt es nichts zu retten. */
+  }
+
   const file = `/* AUTOGENERIERT von scripts/optimize-pages.mjs — nicht von Hand bearbeiten.
 
    Welche WebP-Breiten es je Quellbild wirklich gibt. <Photo> baut daraus den
@@ -180,6 +211,9 @@ export const PHOTO_MANIFEST = ${JSON.stringify(manifest, null, 2)};
   await writeFile(MANIFEST_OUT, file, "utf8");
 
   console.log(`\n→ ${path.relative(ROOT, MANIFEST_OUT)} geschrieben (${touched} Bilder)`);
+  if (carried.length) {
+    console.log(`\u2192 ${carried.length} Eintraege fremder Pipelines uebernommen: ${carried.join(", ")}`);
+  }
   console.log(`→ Originale ${kb(before)} → Varianten ${kb(after)} (alle Breiten zusammen)`);
 }
 

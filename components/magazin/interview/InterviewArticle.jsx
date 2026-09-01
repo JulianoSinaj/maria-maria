@@ -4,6 +4,7 @@ import Parallax from "@/components/motion/Parallax";
 import { Reveal } from "@/components/motion/Reveal";
 import { Aura, GhostWord } from "@/components/Atmosphere";
 import InterviewHero from "@/components/magazin/interview/InterviewHero";
+import FaqSection from "@/components/faq/FaqSection";
 import {
   ArrowUpRight,
   Fish,
@@ -12,6 +13,7 @@ import {
   Poultry,
   Thermometer,
   Plate,
+  Glasses,
   Pin,
 } from "@/components/Icons";
 import { interviewPath } from "@/components/magazin/interviewRegistry";
@@ -38,7 +40,19 @@ import { interviewPath } from "@/components/magazin/interviewRegistry";
    Seiten. Bis die Marke sich global umentscheidet, bleibt es beim Bestand;
    Hierarchie, Größenstaffel und Zeilenlängen folgen dagegen dem Handoff. */
 
-const PAIRING_ICONS = { fish: Fish, risotto: Risotto, stockfish: Stockfish, poultry: Poultry };
+/* Die Speisenkarten des Gesprächs. Jedes Gespräch bringt seine eigenen
+   Empfehlungen mit; die Karte nennt das Motiv, nicht die Datei. `plate` und
+   `glasses` kamen mit Francesco dazu — für einen Käse und für den Aperitivo
+   gab es bis dahin kein Zeichen, und ein zweites Fischsymbol hätte beides
+   falsch benannt. Unbekannte Schlüssel fallen auf `Plate` zurück. */
+const PAIRING_ICONS = {
+  fish: Fish,
+  risotto: Risotto,
+  stockfish: Stockfish,
+  poultry: Poultry,
+  plate: Plate,
+  glasses: Glasses,
+};
 
 /* Volle Container-Breite: die Lesespalte fluchtet mit der Kapitelleiste
    des Aufmachers (beide leben im selben max-w-content-Rahmen). */
@@ -134,7 +148,7 @@ function SectionMedia({ media, priority = false }) {
 }
 
 export default function InterviewArticle({ interview, ui = {}, wine = null, headingId = "interview-titel" }) {
-  const { portrait = {}, profile = {}, pairing, serving, outro } = interview;
+  const { portrait = {}, profile = {}, pairing, serving, outro, faq } = interview;
 
   /* Die Kapitelleiste des Aufmachers. Sie entsteht HIER und nicht im Hero,
      weil dieser Artikel die Kapitel samt IDs rendert — „pairing",
@@ -151,7 +165,12 @@ export default function InterviewArticle({ interview, ui = {}, wine = null, head
     <article className="relative overflow-hidden">
       <Aura tint="gold" className="-left-56 top-20 h-[36rem] w-[36rem]" />
       <Aura tint="olive" drift={2} className="-right-56 top-[38%] h-[34rem] w-[34rem]" />
-      <GhostWord className="left-[-2vw] top-[52%] text-[11vw]">Terroir</GhostWord>
+      {/* Das Geisterwort gehört dem Stück, nicht der Komponente: Danieles
+          Gespräch handelt vom Terroir, Francescos von Irpinien. Fehlt die
+          Angabe, bleibt es beim alten Wort. */}
+      <GhostWord className="left-[-2vw] top-[52%] text-[11vw]">
+        {interview.ghost ?? "Terroir"}
+      </GhostWord>
 
       {/* ================= AUFMACHER =================
           Die gesamte Landing lebt in InterviewHero — Brotkrume, Bühne,
@@ -326,8 +345,46 @@ export default function InterviewArticle({ interview, ui = {}, wine = null, head
                 <Paragraphs items={outro.paragraphs ?? []} />
               </div>
             </Reveal>
+            {/* Das Schlusszitat. Bis zum zweiten Gespräch trug nur ein
+                Kapitel (`sections[].quote`) eine Auszeichnung — Francescos
+                zweites Zitat („Die Wahl eines Weines ist nie banal") steht
+                aber im Fazit und beschließt das Stück. Zwei Zitate bleiben
+                das Maximum (Handoff Seite 9); dieses Feld verschiebt nur,
+                wo das zweite stehen darf. */}
+            {outro.quote && <PullQuote>{outro.quote}</PullQuote>}
           </Prose>
         </section>
+      )}
+
+      {/* ================= FAQ =================
+          Die Master-Source (Seite 6/10) setzt die Fragen zwischen Fazit und
+          Profil, vor dem kommerziellen Band. Sie leben im Wörterbuch NEBEN
+          dem Gespräch und nicht in content/<sprache>/faq.js: Das dortige
+          Verzeichnis führt Seiten-FAQs, die Fragen eines Gesprächs gehören
+          dagegen zum Gespräch — dieselbe Trennung, die die Wein-FAQs bei
+          ihrem Datenblatt hält.
+
+          Zweispaltig wie die Magazin-FAQ, nicht `layout="single"`: die
+          Antworten sollen dieselbe Spaltenbreite führen wie der Fließtext
+          darüber, sonst springt der Satzspiegel am Fuß des Stücks. */}
+      {faq?.items?.length > 0 && (
+        <FaqSection
+          id="faq"
+          className="relative"
+          pageType="interview"
+          eyebrow={faq.eyebrow}
+          title={
+            faq.titleAccent ? (
+              <>
+                {faq.title} <span className="italic text-bordeaux">{faq.titleAccent}</span>
+              </>
+            ) : (
+              faq.title
+            )
+          }
+          description={faq.description}
+          items={faq.items}
+        />
       )}
 
       {/* ================= PROFIL DES GESPRÄCHSPARTNERS ================= */}
@@ -360,10 +417,16 @@ export default function InterviewArticle({ interview, ui = {}, wine = null, head
                     <p className="font-playfair text-[20px] leading-snug text-charcoal">
                       {profile.name}
                     </p>
-                    <p className="mt-1 inline-flex items-center gap-1.5 text-[12px] uppercase tracking-[0.14em] text-charcoal/50">
-                      <Pin aria-hidden="true" className="h-3.5 w-3.5 text-champagne" />
-                      {profile.role}
-                    </p>
+                    {/* Ohne Berufsbezeichnung entfällt die Zeile ganz — ein
+                        Ortsnadel-Symbol ohne Text stünde sonst allein unter
+                        dem Namen. Die Master-Source hält Francescos
+                        Qualifikation bis zur Bestätigung ausdrücklich offen. */}
+                    {profile.role && (
+                      <p className="mt-1 inline-flex items-center gap-1.5 text-[12px] uppercase tracking-[0.14em] text-charcoal/50">
+                        <Pin aria-hidden="true" className="h-3.5 w-3.5 text-champagne" />
+                        {profile.role}
+                      </p>
+                    )}
                     <p className="mt-4 max-w-[52ch] text-[14.5px] leading-relaxed text-charcoal/75">
                       {profile.text}
                     </p>
@@ -462,8 +525,14 @@ export default function InterviewArticle({ interview, ui = {}, wine = null, head
                 <p className="mt-4 max-w-[46ch] text-[15px] leading-relaxed text-charcoal/70">
                   {interview.wine.text}
                 </p>
+                {/* Ziel der einzigen kommerziellen CTA. Normalfall ist die
+                    Seite des besprochenen Weins; führt ein Gespräch mehrere
+                    Weine derselben Herkunft zusammen (Francesco spricht über
+                    Greco, Fiano UND Falanghina), zeigt `wine.href` stattdessen
+                    auf die gefilterte Kollektion — dieselbe Adresse, die auch
+                    der Regionen-Knopf ansteuert. */}
                 <Button
-                  href={`/unsere-weine/${interview.wine.slug}`}
+                  href={interview.wine.href ?? `/unsere-weine/${interview.wine.slug}`}
                   variant="primary"
                   size="md"
                   className="mt-7"

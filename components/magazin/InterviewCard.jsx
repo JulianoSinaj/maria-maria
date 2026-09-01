@@ -67,8 +67,12 @@ export default function InterviewCard({ interview, featured = false, delay = 0 }
     <p className="text-[11px] uppercase tracking-[0.16em] text-charcoal/45">{t.meta}</p>
   );
 
-  const portraitPosition =
-    interview.slug === "daniele-malavasi-lugana-doc" ? "object-top" : "object-center";
+  /* Wo das Portrait im Kartenausschnitt hängt. Hochformatige Aufnahmen
+     brauchen `object-top`, sonst steht im 3:2-Beschnitt der Bauch statt des
+     Kopfs; die Angabe stand bis zum zweiten Gespräch als Slug-Vergleich hier
+     und gehört zum Bild, also ins Wörterbuch. `object-center` bleibt der
+     Rückfall für Motive, die von sich aus mittig sitzen. */
+  const portraitPosition = interview.portrait?.position ?? "object-center";
 
   const photo = (
     <Photo

@@ -30,8 +30,13 @@ import { Pin } from "@/components/Icons";
 
 /* Eigenes Aufmacherfoto — gilt NUR für die Artikelseite. Magazin-Karte,
    Regionen-Teaser, OG-Bild und JSON-LD greifen weiter auf `portrait` im
-   Wörterbuch zu, damit dort nichts kippt. Deshalb steht die Zuordnung hier
-   lokal und nach Slug, statt im Content. */
+   Wörterbuch zu, damit dort nichts kippt.
+
+   Danieles Zuordnung steht weiterhin hier: Sein Aufmacher ist ein anderes
+   Negativ als das Kartenbild, und die Wahl war eine Bildredaktion, keine
+   Redaktionsentscheidung. Neue Gespräche geben ihr Aufmacherfoto dagegen
+   als `portrait.article` im Wörterbuch an — dann steht die Zuordnung neben
+   dem Alt-Text, der sie beschreibt, statt zwei Dateien auseinander. */
 const ARTICLE_PORTRAITS = {
   "daniele-malavasi-lugana-doc": "/img/magazin/interviews/daniele-malavasi.jpg",
 };
@@ -158,7 +163,7 @@ function Masthead({ interview, ui, headingId }) {
 /* ---- 2b. Aufmacherfoto ------------------------------------------------- */
 function PortraitFigure({ interview }) {
   const { portrait = {}, profile = {} } = interview;
-  const src = ARTICLE_PORTRAITS[interview.slug] ?? portrait.src;
+  const src = portrait.article ?? ARTICLE_PORTRAITS[interview.slug] ?? portrait.src;
 
   return (
     <figure className="relative lg:mt-14">

@@ -57,6 +57,7 @@ const interviews = {
       portrait: {
         src: "/img/magazin/daniele-solo.jpeg",
         alt: "Daniele Malavasi con un calice di Lugana e il suo cane tra i filari del vigneto di Pozzolengo",
+        position: "object-top",
       },
 
       intro: [
@@ -178,6 +179,7 @@ const interviews = {
       profile: {
         name: "Daniele Malavasi",
         role: "Titolare della Cantina Malavasi, Pozzolengo",
+        worksFor: "Cantina Malavasi",
         text: "La cantina si trova nel territorio del Lugana, con vigneti tra Pozzolengo e Desenzano del Garda.",
         link: { label: "Cantina Malavasi", href: "https://www.malavasivini.com/it/azienda" },
       },
@@ -229,6 +231,7 @@ const interviews = {
 
       teaserRegion: {
         region: "garda",
+        portrait: { src: "/img/daniele222.jpeg" },
         eyebrow: "Voci dal territorio · Lugana DOC",
         title: "Il Lugana raccontato da chi lo vive",
         paragraphs: [
@@ -237,6 +240,240 @@ const interviews = {
         pull: "Il vino deve raccontare il luogo più della tecnica di cantina.",
         ctaPrimary: "Leggi la conversazione",
         ctaSecondary: "Scopri il Lugana",
+      },
+    },
+
+    {
+      slug: "francesco-de-stefano-irpinien-weissweine",
+      draft: false,
+
+      /* Lo slug resta quello tedesco anche qui. La master source (pagina 11)
+         indica per l'italiano un percorso tradotto
+         (/it/magazin/interviste/…-irpinia-vini-bianchi): sarebbe un secondo
+         schema di indirizzi accanto a quello di tutte le altre pagine, dove
+         la lingua sta nel prefisso e mai nello slug. */
+
+      eyebrow: "Maria Maria × Campania · In dialogo",
+      badge: "Greco di Tufo DOCG · Fiano di Avellino DOCG · Falanghina",
+      name: "Francesco De Stefano",
+      headline: "Tre bianchi, tre caratteri – cosa rende speciale l’Irpinia",
+      deck: "Dalle alture dell’Irpinia alla tavola: Francesco De Stefano racconta Greco di Tufo, Fiano di Avellino e Falanghina e spiega perché origine, carattere e abbinamento devono essere considerati insieme quando si sceglie un vino.",
+
+      ghost: "Irpinia",
+
+      seo: {
+        title: "Francesco De Stefano: Irpinia e vini bianchi campani",
+        description:
+          "Greco di Tufo, Fiano di Avellino e Falanghina: Francesco De Stefano racconta l’Irpinia, gli abbinamenti e come scegliere un bianco campano.",
+      },
+
+      byline: {
+        interview: "Maria Pia Tolo",
+        editorial: "Maria Maria",
+        date: null,
+        readingTime: "6 min di lettura",
+      },
+
+      portrait: {
+        src: "/img/magazin/interviews/francesco-de-stefano.jpg",
+        alt: "Francesco De Stefano versa un vino bianco di Maria Maria in un calice nella luce della sera",
+        position: "object-top",
+      },
+
+      intro: [
+        "Per capire davvero un vino non basta guardare il vitigno. Origine, stile, servizio e piatto cambiano il modo in cui lo percepiamo. Per Francesco De Stefano è proprio questa scelta consapevole a fare la differenza.",
+        "Nell’intervista con Maria Maria ci accompagna in Campania e soprattutto in Irpinia. Al centro della conversazione ci sono Greco di Tufo, Fiano di Avellino e Falanghina: tre bianchi con caratteri e momenti di consumo differenti.",
+      ],
+
+      sections: [
+        {
+          id: "gemeinsame-werte",
+          heading: "Una collaborazione che nasce da valori condivisi",
+          paragraphs: [
+            "A convincere Francesco del progetto Maria Maria sono state innanzitutto le persone. Indica la dedizione al progetto, la serietà dimostrata da Valerio e Maria e la loro competenza come i motivi principali che lo hanno portato ad accompagnare il progetto.",
+            "A questi elementi si aggiunge una visione condivisa: la stessa passione e la stessa ricerca della qualità che, nelle parole di Francesco, caratterizzano anche il suo lavoro.",
+          ],
+          quote:
+            "Quello che mi ha colpito maggiormente è stata la dedizione al progetto e la serietà dimostrata da Valerio e Maria.",
+        },
+        {
+          id: "irpinien",
+          heading: "Irpinia: tre DOCG in una sola provincia",
+          paragraphs: [
+            "Per Francesco la Campania è da sempre un territorio simbolo della viticoltura italiana e, in particolare, del Sud. Ricorda una tradizione che risale già all’epoca romana e pone l’attenzione soprattutto sull’Irpinia.",
+            "Il fatto che questa provincia possa vantare tre DOCG rappresenta per lui un segnale importante dell’autenticità e della vocazione vinicola del territorio. A queste si aggiunge l’Aglianico del Taburno, DOCG del territorio beneventano.",
+          ],
+        },
+        {
+          id: "hoehe-und-klima",
+          heading: "Cosa cambiano clima e altitudine nel bicchiere",
+          /* MEDIA MANCANTE: il capitolo corrispondente dell’intervista con
+             Daniele porta una fotografia di paesaggio. Per l’Irpinia non è
+             ancora disponibile. */
+          paragraphs: [
+            "Francesco lega il carattere dei vini soprattutto a clima e altitudine. Secondo la sua spiegazione, questi fattori contribuiscono a una maggiore acidità e permettono di ottenere vini con più struttura e un carattere più deciso.",
+            "È un passaggio utile anche per chi associa automaticamente il Sud Italia a vini morbidi e immediati.",
+          ],
+        },
+        {
+          id: "drei-charaktere",
+          heading: "Greco, Fiano e Falanghina: tre caratteri diversi",
+          paragraphs: [
+            "Per Francesco Greco di Tufo, Fiano di Avellino e Falanghina non sono tre varianti intercambiabili. Del Greco sottolinea una componente minerale più marcata.",
+            "Il Fiano è più morbido e versatile ed è il vino che consiglierebbe a chi scopre per la prima volta questi bianchi. La Falanghina presenta, nel confronto proposto da Francesco, una tendenza più secca e trova un momento naturale anche nell’aperitivo.",
+          ],
+          list: {
+            label: "Come Francesco distingue i tre vini",
+            items: [
+              "Greco di Tufo — nel confronto, la componente minerale più marcata",
+              "Fiano di Avellino — più morbido e versatile, la sua proposta per iniziare",
+              "Falanghina — tendenza più secca, con un momento naturale nell’aperitivo",
+            ],
+          },
+        },
+      ],
+
+      pairing: {
+        heading: "I bianchi campani a tavola",
+        /* MEDIA MANCANTE — vedi il capitolo su clima e altitudine. */
+        paragraphs: [
+          "Il Fiano di Avellino lo accompagnerebbe a un piatto di pesce non troppo impegnativo, per esempio gamberi o trota.",
+          "Il Greco di Tufo può accompagnare piatti di pesce leggermente più elaborati o carni bianche. Francesco sottolinea in modo particolare l’abbinamento tra Greco di Tufo e mozzarella di bufala.",
+          "La Falanghina la vede bene anche per l’aperitivo, per esempio con una frisella e pomodorini San Marzano.",
+        ],
+        items: [
+          { icon: "fish", title: "Fiano di Avellino", text: "Con gamberi o trota." },
+          {
+            icon: "stockfish",
+            title: "Greco di Tufo",
+            text: "Con piatti di pesce più elaborati e carni bianche.",
+          },
+          {
+            icon: "plate",
+            title: "Mozzarella di bufala",
+            text: "L’abbinamento che Francesco sottolinea in modo particolare.",
+          },
+          {
+            icon: "glasses",
+            title: "Falanghina per l’aperitivo",
+            text: "Per esempio con una frisella e pomodorini San Marzano.",
+          },
+        ],
+      },
+
+      serving: {
+        heading: "L’errore più comune comincia dalla temperatura",
+        paragraphs: [
+          "Uno degli errori più frequenti, secondo Francesco, riguarda già il servizio. Un bianco può essere servito troppo freddo oppure troppo caldo. Nell’intervista non indica una temperatura precisa.",
+          "Anche nell’abbinamento è importante non trattare Greco, Fiano e Falanghina come vini equivalenti.",
+        ],
+      },
+
+      outro: {
+        heading: "Perché la scelta di un vino non è mai banale",
+        paragraphs: [
+          "Alla fine Francesco riporta tutto a un principio semplice: la scelta di un vino non è mai banale. Origine, caratteristiche del vino, piatto e servizio devono essere considerati insieme.",
+          "Nel futuro di Maria Maria spera che la sua esperienza possa completare e valorizzare la competenza di Valerio e Maria e contribuire a migliorare ulteriormente il progetto.",
+        ],
+        quote: "La scelta di un vino non è mai banale.",
+      },
+
+      faq: {
+        eyebrow: "Domande frequenti",
+        title: "I bianchi campani —",
+        titleAccent: "in breve.",
+        description:
+          "Da dove iniziare, che cosa cambia tra i tre vini, come abbinarli e perché la temperatura conta: le cinque domande che restano più spesso aperte dopo questa conversazione.",
+        items: [
+          {
+            id: "francesco-einsteiger",
+            q: "Quale bianco campano scegliere per iniziare?",
+            a: "Francesco consiglierebbe il Fiano: più morbido e versatile del Greco di Tufo e con una tendenza meno secca rispetto alla Falanghina.",
+          },
+          {
+            id: "francesco-unterschied",
+            q: "Che differenza c’è tra Greco di Tufo, Fiano e Falanghina?",
+            a: "Francesco evidenzia maggiore mineralità nel Greco, maggiore morbidezza e versatilità nel Fiano e una tendenza più secca nella Falanghina.",
+          },
+          {
+            id: "francesco-greco-pairing",
+            q: "Cosa abbinare al Greco di Tufo?",
+            a: "Piatti di pesce più elaborati, carni bianche e soprattutto mozzarella di bufala.",
+          },
+          {
+            id: "francesco-fisch",
+            q: "Quale bianco campano scegliere con il pesce?",
+            a: "Fiano per piatti più leggeri come gamberi o trota; Greco di Tufo anche per preparazioni più strutturate.",
+          },
+          {
+            id: "francesco-temperatur",
+            q: "Perché la temperatura di servizio è importante?",
+            a: "Una temperatura troppo bassa o troppo alta è per Francesco uno degli errori più comuni. Non indica una gradazione precisa.",
+          },
+        ],
+      },
+
+      profile: {
+        name: "Francesco De Stefano",
+        /* APERTO: la master source lascia la qualifica «solo dopo conferma».
+           Finché manca, il campo resta fuori — l'articolo salta la riga e il
+           nodo Person non porta jobTitle. */
+        text: "Francesco accompagna Maria Maria con la propria esperienza e conoscenza del mondo del vino campano.",
+      },
+
+      wine: {
+        slug: "greco-di-tufo",
+        href: "/unsere-weine?region=kampanien",
+        heading: "Scopri i bianchi campani selezionati da Maria Maria",
+        text: "Greco di Tufo, Fiano di Avellino e Falanghina — i bianchi campani della collezione, ognuno con il carattere di cui Francesco racconta nell’intervista.",
+        cta: "Scopri i vini campani",
+      },
+
+      paths: [
+        {
+          id: "region",
+          icon: "region",
+          title: "Regione Campania",
+          text: "Scopri il terroir.",
+          href: "/regionen#kampanien",
+        },
+        {
+          id: "pairing",
+          icon: "pairing",
+          title: "Food Pairing",
+          text: "Ispirazioni per la tavola.",
+          href: "/magazin#food-pairing",
+        },
+        {
+          id: "interviews",
+          icon: "interviews",
+          title: "Altre interviste",
+          text: "Leggi tutte le conversazioni.",
+          href: "/magazin#interviste",
+        },
+      ],
+
+      teaserMagazin: {
+        eyebrow: "Interviste · In dialogo",
+        badge: "Irpinia · Campania",
+        title: "Tre bianchi, tre caratteri: cosa rende speciale l’Irpinia",
+        teaser:
+          "Greco di Tufo, Fiano di Avellino e Falanghina: una conversazione su origine, abbinamenti e scelta consapevole del vino.",
+        meta: "Intervista · 6 min di lettura",
+        cta: "Leggi l’intervista",
+      },
+
+      teaserRegion: {
+        region: "kampanien",
+        portrait: { src: "/img/magazin/interviews/francesco-de-stefano.jpg" },
+        eyebrow: "Voci dal territorio · Irpinia",
+        title: "Persone autentiche raccontano la Campania",
+        paragraphs: [
+          "Che cosa rende così diversi i bianchi della Campania? Francesco De Stefano racconta l’Irpinia, il Greco di Tufo, il Fiano di Avellino e la Falanghina, spiegando perché origine, carattere e giusto abbinamento devono essere considerati insieme quando si sceglie un vino.",
+        ],
+        pull: "La scelta di un vino non è mai banale.",
+        ctaPrimary: "Leggi l’intervista",
+        ctaSecondary: "Scopri il Greco di Tufo",
       },
     },
   ],

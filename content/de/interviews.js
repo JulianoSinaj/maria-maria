@@ -100,6 +100,10 @@ const interviews = {
       portrait: {
         src: "/img/magazin/daniele-solo.jpeg",
         alt: "Daniele Malavasi mit einem Glas Lugana und seinem Hund zwischen den Rebzeilen seines Weinbergs in Pozzolengo",
+        /* Ganzfigur: im 3:2-Ausschnitt der Magazin-Karte muss der Kopf oben
+           hängen bleiben. Stand bis zum zweiten Gespräch als Slug-Vergleich
+           in InterviewCard. */
+        position: "object-top",
       },
 
       intro: [
@@ -231,6 +235,9 @@ const interviews = {
       profile: {
         name: "Daniele Malavasi",
         role: "Inhaber der Cantina Malavasi, Pozzolengo",
+        /* Für den Person-Knoten der Seite. Ein fremdes Unternehmen — es
+           trägt hier nur seinen Namen. */
+        worksFor: "Cantina Malavasi",
         text: "Die Kellerei liegt im Gebiet des Lugana, mit Weinbergen zwischen Pozzolengo und Desenzano del Garda.",
         link: { label: "Cantina Malavasi", href: "https://www.malavasivini.com/it/azienda" },
       },
@@ -292,6 +299,11 @@ const interviews = {
          Person; die zweite CTA führt bewusst NICHT zum Artikel. */
       teaserRegion: {
         region: "garda",
+        /* Eigenes Bild für die Leiste auf /regionen: das Artikelfoto zeigt
+           Daniele in Ganzfigur und wird in der schmalen Hochformat-Spalte
+           winzig. Stand bis zum zweiten Gespräch als Konstante in
+           InterviewTeaser. */
+        portrait: { src: "/img/daniele222.jpeg" },
         eyebrow: "Stimmen aus der Region · Lugana DOC",
         title: "Echte Menschen erzählen Lugana",
         paragraphs: [
@@ -300,6 +312,274 @@ const interviews = {
         pull: "Der Wein soll eher vom Ort erzählen als von der Technik im Keller.",
         ctaPrimary: "Das Gespräch lesen",
         ctaSecondary: "Lugana entdecken",
+      },
+    },
+
+    {
+      slug: "francesco-de-stefano-irpinien-weissweine",
+      draft: false,
+
+      /* Der Slug bleibt in allen vier Sprachen der deutsche. Die
+         Master-Source (Seite 11) nennt für Italienisch zusätzlich einen
+         übersetzten Pfad (/it/magazin/interviste/…-irpinia-vini-bianchi).
+         Das wäre ein zweites Adressschema neben dem der übrigen Seiten:
+         Hier steht die Sprache im Präfix, nie im Slug — sonst zerfiele die
+         hreflang-Gruppe in vier unverbundene Adressen. Bis die Marke sich
+         global umentscheidet, bleibt es beim Bestand; dieselbe Abwägung wie
+         beim Schriftpaar des ersten Handoffs. */
+
+      eyebrow: "Maria Maria × Kampanien · Im Gespräch",
+      badge: "Greco di Tufo DOCG · Fiano di Avellino DOCG · Falanghina",
+      name: "Francesco De Stefano",
+      headline: "Drei Weißweine, drei Charaktere – was Irpinien so besonders macht",
+      deck: "Von den Höhenlagen Irpiniens bis zum gedeckten Tisch: Francesco De Stefano spricht über Greco di Tufo, Fiano di Avellino und Falanghina – und darüber, warum Herkunft, Charakter und Food Pairing bei der Wahl eines Weines zusammengehören.",
+
+      /* Das Geisterwort dieses Stücks. Danieles Gespräch handelt vom
+         Terroir, dieses von einer Landschaft mit Namen. */
+      ghost: "Irpinia",
+
+      seo: {
+        title: "Francesco De Stefano über Irpinien & kampanische Weißweine",
+        description:
+          "Greco di Tufo, Fiano di Avellino und Falanghina: Francesco De Stefano spricht über Irpinien, Food Pairing und die bewusste Wahl des Weins.",
+      },
+
+      byline: {
+        interview: "Maria Pia Tolo",
+        editorial: "Maria Maria",
+        /* Die Master-Source nennt kein Datum. Bleibt null, bis die Redaktion
+           eines setzt — die Byline blendet den Punkt dann still aus. */
+        date: null,
+        readingTime: "6 Min. Lesezeit",
+      },
+
+      portrait: {
+        src: "/img/magazin/interviews/francesco-de-stefano.jpg",
+        alt: "Francesco De Stefano schenkt im Abendlicht einen Weißwein von Maria Maria in ein Glas ein",
+        position: "object-top",
+      },
+
+      intro: [
+        "Wer einen Wein verstehen möchte, muss nicht nur auf die Rebsorte schauen. Herkunft, Stil, Servierweise und das Gericht am Tisch verändern, wie wir einen Wein wahrnehmen. Für Francesco De Stefano ist genau diese bewusste Auswahl entscheidend.",
+        "Im Gespräch mit Maria Maria führt er durch Kampanien und besonders Irpinien. Im Mittelpunkt stehen Greco di Tufo, Fiano di Avellino und Falanghina – drei Weißweine, die für Francesco unterschiedliche Charaktere und unterschiedliche Momente am Tisch besitzen.",
+      ],
+
+      sections: [
+        {
+          id: "gemeinsame-werte",
+          heading: "Eine Zusammenarbeit, die mit gemeinsamen Werten beginnt",
+          paragraphs: [
+            "Was Francesco am Projekt Maria Maria überzeugt hat, sind zunächst die Menschen dahinter. Er nennt die Hingabe an das Projekt, die Ernsthaftigkeit von Valerio und Maria und ihre Kompetenz als entscheidende Gründe für seine Bereitschaft, den Weg von Maria Maria zu begleiten.",
+            "Dazu kommt eine gemeinsame Haltung: dieselbe Leidenschaft und dieselbe Suche nach Qualität, die nach Francescos Worten auch seine eigene Arbeit prägen.",
+          ],
+          /* Zitat 1 von zwei. Das zweite steht im Fazit. */
+          quote:
+            "Mich haben vor allem die Hingabe an das Projekt und die Ernsthaftigkeit beeindruckt, die Valerio und Maria zeigen.",
+        },
+        {
+          id: "irpinien",
+          heading: "Irpinien: drei DOCG in einer Provinz",
+          paragraphs: [
+            "Kampanien ist für Francesco seit jeher ein Symbolgebiet des italienischen Weinbaus, insbesondere im Süden Italiens. Er verweist auf eine Weintradition, die bis in die römische Zeit zurückreicht, und hebt innerhalb der Region besonders Irpinien hervor.",
+            "Dass allein diese Provinz drei DOCG-Herkünfte vorweisen kann, ist für ihn ein wichtiges Zeichen für die Bedeutung und die besondere Weinbau-Eignung des Gebiets. Hinzu kommt mit Aglianico del Taburno eine weitere DOCG im Gebiet von Benevento.",
+          ],
+        },
+        {
+          id: "hoehe-und-klima",
+          heading: "Was Höhe und Klima im Glas verändern",
+          /* MEDIA FEHLT: Das Kapitel trägt bei Daniele ein Landschaftsfoto —
+             die Master-Source verlangt denselben Bildrhythmus. Für Irpinien
+             liegt noch keines vor; sobald es da ist, kommt hier ein
+             `media`-Block nach dem Muster des Lugana-Stücks hinein. */
+          paragraphs: [
+            "Francesco führt den Charakter der Weine vor allem auf Klima und Höhenlage zurück. Beide Faktoren tragen nach seiner Erklärung zu einer höheren Säure bei. Das Ergebnis sind Weine mit mehr Struktur und einem entschiedeneren Charakter.",
+            "Gerade für ein Publikum, das kampanische Weißweine neu entdeckt, ist diese Perspektive hilfreich: Nicht alle Weißweine aus dem Süden Italiens sind weich oder unkompliziert.",
+          ],
+        },
+        {
+          id: "drei-charaktere",
+          heading: "Greco, Fiano und Falanghina: drei unterschiedliche Charaktere",
+          paragraphs: [
+            "Francesco betrachtet Greco di Tufo, Fiano di Avellino und Falanghina nicht als austauschbare Varianten. Greco di Tufo beschreibt er im Vergleich als stärker mineralisch.",
+            "Fiano wirkt für ihn weicher und vielseitiger und wäre seine Empfehlung für Menschen, die diese Weinstile zum ersten Mal entdecken. Falanghina zeigt in seinem Vergleich eine trockenere Tendenz und findet einen natürlichen Platz beim Aperitivo.",
+          ],
+          /* Wie bei Daniele kein zusätzlicher Inhalt, sondern die Merkzeile
+             zum Absatz darüber. Drei Weine, drei Zeilen. */
+          list: {
+            label: "Wie Francesco die drei Weine unterscheidet",
+            items: [
+              "Greco di Tufo — im Vergleich stärker mineralisch",
+              "Fiano di Avellino — weicher und vielseitiger, sein Vorschlag für den Einstieg",
+              "Falanghina — trockenere Tendenz, mit einem natürlichen Platz beim Aperitivo",
+            ],
+          },
+        },
+      ],
+
+      pairing: {
+        heading: "Kampanische Weißweine am Tisch",
+        /* MEDIA FEHLT — siehe Kapitel „Was Höhe und Klima im Glas
+           verändern". Ein Tischmotiv aus Kampanien steht noch aus. */
+        paragraphs: [
+          "Fiano di Avellino würde Francesco zu einem nicht zu kräftigen Fischgericht servieren, zum Beispiel zu Garnelen oder Forelle.",
+          "Greco di Tufo besitzt für ihn eine ausgeprägtere mineralische Komponente und kann deshalb etwas komplexere Fischgerichte oder weißes Fleisch begleiten. Besonders hebt er Greco di Tufo mit Mozzarella di Bufala hervor.",
+          "Falanghina sieht er auch zum Aperitivo, beispielsweise zu einer Frisella mit San-Marzano-Tomaten.",
+        ],
+        items: [
+          { icon: "fish", title: "Fiano di Avellino", text: "Zu Garnelen oder Forelle." },
+          {
+            icon: "stockfish",
+            title: "Greco di Tufo",
+            text: "Zu komplexeren Fischgerichten und weißem Fleisch.",
+          },
+          {
+            icon: "plate",
+            title: "Mozzarella di Bufala",
+            text: "Die Empfehlung, die Francesco besonders hervorhebt.",
+          },
+          {
+            icon: "glasses",
+            title: "Falanghina zum Aperitivo",
+            text: "Zum Beispiel zu einer Frisella mit San-Marzano-Tomaten.",
+          },
+        ],
+      },
+
+      serving: {
+        heading: "Der häufigste Fehler beginnt bei der Temperatur",
+        paragraphs: [
+          "Ein häufiger Fehler liegt für Francesco bereits beim Servieren. Weißwein kann zu kalt, aber auch zu warm ins Glas kommen. Eine konkrete Gradzahl nennt er nicht.",
+          "Dasselbe gilt für das Pairing: Wer die stärkere Mineralität des Greco oder die größere Weichheit des Fiano ignoriert, behandelt sehr unterschiedliche Weine, als wären sie gleich.",
+        ],
+      },
+
+      outro: {
+        heading: "Warum die Wahl eines Weines nie banal ist",
+        paragraphs: [
+          "Am Ende führt Francesco alle Themen auf einen Gedanken zurück: Die Wahl eines Weines ist nie banal. Herkunft, Stil, Gericht und Servierweise beeinflussen sich gegenseitig.",
+          "Für Maria Maria sieht Francesco seine Rolle darin, die vorhandene Kompetenz von Valerio und Maria mit seiner Erfahrung zu ergänzen und so zur weiteren Entwicklung des Projekts beizutragen.",
+        ],
+        /* Zitat 2 von zwei — es beschließt das Stück und ist zugleich die
+           Zeile, die der Regionen-Teaser trägt. */
+        quote: "Die Wahl eines Weines ist nie banal.",
+      },
+
+      /* Die fünf Fragen der Master-Source (Seite 7). Jede Antwort bleibt an
+         das gebunden, was Francesco im Gespräch gesagt hat — auch dort, wo
+         eine Gradzahl die bequemere Antwort wäre. */
+      faq: {
+        eyebrow: "Häufige Fragen",
+        title: "Kampanische Weißweine —",
+        titleAccent: "kurz beantwortet.",
+        description:
+          "Einstieg, Unterschiede, Abbinamenti und Temperatur: die fünf Fragen, die nach diesem Gespräch am häufigsten offenbleiben.",
+        items: [
+          {
+            id: "francesco-einsteiger",
+            q: "Welcher kampanische Weißwein eignet sich für Einsteiger?",
+            a: "Francesco würde Fiano empfehlen. Er beschreibt ihn als weicher und vielseitiger als Greco di Tufo und weniger trocken wirkend als Falanghina.",
+          },
+          {
+            id: "francesco-unterschied",
+            q: "Was ist der Unterschied zwischen Greco di Tufo, Fiano und Falanghina?",
+            a: "Greco wirkt für Francesco stärker mineralisch, Fiano weicher und vielseitiger und Falanghina zeigt im Vergleich eine trockenere Tendenz.",
+          },
+          {
+            id: "francesco-greco-pairing",
+            q: "Was passt zu Greco di Tufo?",
+            a: "Etwas komplexere Fischgerichte, weißes Fleisch und besonders Mozzarella di Bufala.",
+          },
+          {
+            id: "francesco-fisch",
+            q: "Welcher kampanische Weißwein passt zu Fisch?",
+            a: "Für leichtere Fischgerichte nennt Francesco Fiano di Avellino; Greco di Tufo kann auch strukturiertere Fischgerichte begleiten.",
+          },
+          {
+            id: "francesco-temperatur",
+            q: "Warum ist die Serviertemperatur wichtig?",
+            a: "Zu niedrige oder zu hohe Temperaturen gehören für Francesco zu den häufigsten Fehlern. Eine konkrete Gradzahl nennt er nicht.",
+          },
+        ],
+      },
+
+      profile: {
+        name: "Francesco De Stefano",
+        /* OFFEN: Die Master-Source führt die Berufsbezeichnung viermal als
+           „[erst nach Bestätigung ergänzen]". Solange sie fehlt, bleibt das
+           Feld weg — der Artikel blendet die Zeile dann aus und der
+           Person-Knoten trägt kein jobTitle. Dasselbe gilt für `worksFor`:
+           Francesco führt keine eigene Kellerei. Eine ausführlichere
+           Biografie darf erst ergänzt werden, wenn die Angaben verifiziert
+           sind. */
+        text: "Francesco begleitet Maria Maria mit seiner Erfahrung und seiner Kenntnis der kampanischen Weinwelt.",
+      },
+
+      /* Das Abschlussband. Anders als bei Daniele steht am Ende KEIN
+         einzelner Wein: Das Gespräch führt drei kampanische Weiße zusammen,
+         und die Master-Source (Seite 7) verlangt ausdrücklich, nur
+         tatsächlich verfügbare kampanische Weine zu verlinken und nicht zu
+         suggerieren, Francesco sei deren Produzent. Deshalb zeigt die
+         Flasche den Greco di Tufo — den Wein, den das Gespräch am
+         häufigsten nennt —, während die CTA auf die nach Herkunft
+         gefilterte Kollektion führt: dieselbe Adresse, die auch der
+         Kampanien-Knopf auf /regionen ansteuert. */
+      wine: {
+        slug: "greco-di-tufo",
+        href: "/unsere-weine?region=kampanien",
+        heading: "Kampaniens Weißweine bei Maria Maria entdecken",
+        text: "Greco di Tufo, Fiano di Avellino und Falanghina — die kampanischen Weißweine der Kollektion, jeder mit dem eigenen Charakter, von dem Francesco im Gespräch erzählt.",
+        cta: "Kampaniens Weine entdecken",
+      },
+
+      paths: [
+        {
+          id: "region",
+          icon: "region",
+          title: "Region Kampanien",
+          text: "Entdecken Sie das Terroir.",
+          href: "/regionen#kampanien",
+        },
+        {
+          id: "pairing",
+          icon: "pairing",
+          title: "Food Pairing",
+          text: "Inspirationen für den Tisch.",
+          href: "/magazin#food-pairing",
+        },
+        {
+          id: "interviews",
+          icon: "interviews",
+          title: "Weitere Interviews",
+          text: "Alle Gespräche lesen.",
+          href: "/magazin#interviste",
+        },
+      ],
+
+      /* ---- Teaser 1: Karte im Magazin (Master-Source Seite 4) ---- */
+      teaserMagazin: {
+        eyebrow: "Interviews · Im Gespräch",
+        badge: "Irpinien · Kampanien",
+        title: "Drei Weißweine, drei Charaktere: Was Irpinien so besonders macht",
+        teaser:
+          "Über Greco di Tufo, Fiano di Avellino und Falanghina – und darüber, warum Herkunft, Food Pairing und die bewusste Wahl des Weines zusammengehören.",
+        meta: "Interview · 6 Min. Lesezeit",
+        cta: "Gespräch lesen",
+      },
+
+      /* ---- Teaser 2: Box auf /regionen unter dem Kampanien-Block ----
+         Master-Source Seite 3. Der Text setzt beim Gebiet an, nicht bei der
+         Person; die zweite CTA führt bewusst NICHT zum Artikel. */
+      teaserRegion: {
+        region: "kampanien",
+        portrait: { src: "/img/magazin/interviews/francesco-de-stefano.jpg" },
+        eyebrow: "Stimmen aus der Region · Irpinien",
+        title: "Echte Menschen erzählen Kampanien",
+        paragraphs: [
+          "Was macht die Weißweine Kampaniens so unterschiedlich? Francesco De Stefano erzählt von Irpinien, Greco di Tufo, Fiano di Avellino und Falanghina — und davon, warum Herkunft, Charakter und das richtige Food Pairing bei der Wahl eines Weines zusammengehören.",
+        ],
+        pull: "Die Wahl eines Weines ist nie banal.",
+        ctaPrimary: "Das Gespräch lesen",
+        ctaSecondary: "Greco di Tufo entdecken",
       },
     },
   ],

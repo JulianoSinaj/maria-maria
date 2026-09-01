@@ -57,6 +57,7 @@ const interviews = {
       portrait: {
         src: "/img/magazin/daniele-solo.jpeg",
         alt: "Daniele Malavasi with a glass of Lugana and his dog among the vine rows of his vineyard in Pozzolengo",
+        position: "object-top",
       },
 
       intro: [
@@ -174,6 +175,7 @@ const interviews = {
       profile: {
         name: "Daniele Malavasi",
         role: "Owner of Cantina Malavasi, Pozzolengo",
+        worksFor: "Cantina Malavasi",
         text: "The winery lies within the Lugana area, with vineyards between Pozzolengo and Desenzano del Garda.",
         link: { label: "Cantina Malavasi", href: "https://www.malavasivini.com/it/azienda" },
       },
@@ -225,6 +227,7 @@ const interviews = {
 
       teaserRegion: {
         region: "garda",
+        portrait: { src: "/img/daniele222.jpeg" },
         eyebrow: "Voices from the region · Lugana DOC",
         title: "Real people tell the story of Lugana",
         paragraphs: [
@@ -233,6 +236,235 @@ const interviews = {
         pull: "The wine should tell of its place rather than of the technique in the cellar.",
         ctaPrimary: "Read the conversation",
         ctaSecondary: "Discover the Lugana",
+      },
+    },
+
+    {
+      slug: "francesco-de-stefano-irpinien-weissweine",
+      draft: false,
+
+      /* The slug stays German in every language — the locale lives in the
+         prefix, never in the slug, or the hreflang group falls apart. */
+
+      eyebrow: "Maria Maria × Campania · In conversation",
+      badge: "Greco di Tufo DOCG · Fiano di Avellino DOCG · Falanghina",
+      name: "Francesco De Stefano",
+      headline: "Three white wines, three characters – what makes Irpinia special",
+      deck: "From the high ground of Irpinia to the dinner table: Francesco De Stefano talks about Greco di Tufo, Fiano di Avellino and Falanghina – and why origin, character and food pairing belong together when you choose a wine.",
+
+      ghost: "Irpinia",
+
+      seo: {
+        title: "Francesco De Stefano on Irpinia & Campanian white wines",
+        description:
+          "Greco di Tufo, Fiano di Avellino and Falanghina: Francesco De Stefano on Irpinia, food pairing and choosing a wine deliberately.",
+      },
+
+      byline: {
+        interview: "Maria Pia Tolo",
+        editorial: "Maria Maria",
+        date: null,
+        readingTime: "6 min read",
+      },
+
+      portrait: {
+        src: "/img/magazin/interviews/francesco-de-stefano.jpg",
+        alt: "Francesco De Stefano pouring a Maria Maria white wine into a glass in the evening light",
+        position: "object-top",
+      },
+
+      intro: [
+        "Understanding a wine takes more than looking at the grape. Origin, style, how it is served and what sits on the plate all change the way we perceive it. For Francesco De Stefano, that deliberate choice is what makes the difference.",
+        "In conversation with Maria Maria he leads through Campania and above all through Irpinia. At the centre are Greco di Tufo, Fiano di Avellino and Falanghina – three white wines that, for Francesco, have different characters and belong to different moments at the table.",
+      ],
+
+      sections: [
+        {
+          id: "gemeinsame-werte",
+          heading: "A collaboration that begins with shared values",
+          paragraphs: [
+            "What convinced Francesco about the Maria Maria project was, first of all, the people behind it. He names the dedication to the project, the seriousness Valerio and Maria bring to it and their expertise as the decisive reasons for accompanying Maria Maria on its way.",
+            "Added to that is a shared attitude: the same passion and the same search for quality that, in Francesco's words, also shape his own work.",
+          ],
+          quote:
+            "What impressed me most was the dedication to the project and the seriousness that Valerio and Maria show.",
+        },
+        {
+          id: "irpinien",
+          heading: "Irpinia: three DOCGs in a single province",
+          paragraphs: [
+            "For Francesco, Campania has always been a symbolic region of Italian winegrowing, particularly in the south of the country. He points to a wine tradition reaching back to Roman times and singles out Irpinia within the region.",
+            "That this province alone can claim three DOCG appellations is for him an important sign of the area's standing and its particular suitability for viticulture. Aglianico del Taburno adds a further DOCG in the Benevento area.",
+          ],
+        },
+        {
+          id: "hoehe-und-klima",
+          heading: "What altitude and climate change in the glass",
+          /* MEDIA MISSING: the matching chapter of the Daniele piece carries a
+             landscape photograph. None exists for Irpinia yet. */
+          paragraphs: [
+            "Francesco traces the character of the wines above all to climate and altitude. Both factors, as he explains it, contribute to higher acidity. The result is wine with more structure and a more decided character.",
+            "For an audience discovering Campanian whites for the first time, that perspective helps: not every white wine from southern Italy is soft or easy-going.",
+          ],
+        },
+        {
+          id: "drei-charaktere",
+          heading: "Greco, Fiano and Falanghina: three different characters",
+          paragraphs: [
+            "Francesco does not see Greco di Tufo, Fiano di Avellino and Falanghina as interchangeable variants. Greco di Tufo he describes, by comparison, as more strongly mineral.",
+            "Fiano strikes him as softer and more versatile, and would be his recommendation for anyone discovering these styles for the first time. Falanghina, in his comparison, shows a drier tendency and finds a natural place at the aperitivo.",
+          ],
+          list: {
+            label: "How Francesco tells the three wines apart",
+            items: [
+              "Greco di Tufo — more strongly mineral by comparison",
+              "Fiano di Avellino — softer and more versatile, his suggestion for starting out",
+              "Falanghina — a drier tendency, with a natural place at the aperitivo",
+            ],
+          },
+        },
+      ],
+
+      pairing: {
+        heading: "Campanian white wines at the table",
+        /* MEDIA MISSING — see the chapter on altitude and climate. */
+        paragraphs: [
+          "Francesco would serve Fiano di Avellino with a fish dish that is not too assertive, prawns or trout for instance.",
+          "Greco di Tufo has, for him, a more pronounced mineral component and can therefore accompany slightly more complex fish dishes or white meat. He singles out Greco di Tufo with mozzarella di bufala in particular.",
+          "Falanghina he also sees at the aperitivo, for example with a frisella and San Marzano tomatoes.",
+        ],
+        items: [
+          { icon: "fish", title: "Fiano di Avellino", text: "With prawns or trout." },
+          {
+            icon: "stockfish",
+            title: "Greco di Tufo",
+            text: "With more complex fish dishes and white meat.",
+          },
+          {
+            icon: "plate",
+            title: "Mozzarella di bufala",
+            text: "The pairing Francesco singles out in particular.",
+          },
+          {
+            icon: "glasses",
+            title: "Falanghina at the aperitivo",
+            text: "For example with a frisella and San Marzano tomatoes.",
+          },
+        ],
+      },
+
+      serving: {
+        heading: "The most common mistake starts with temperature",
+        paragraphs: [
+          "For Francesco a common mistake lies in the serving itself. A white wine can reach the glass too cold, but also too warm. He does not name a specific temperature.",
+          "The same applies to pairing: ignoring the stronger minerality of the Greco or the greater softness of the Fiano means treating very different wines as though they were the same.",
+        ],
+      },
+
+      outro: {
+        heading: "Why choosing a wine is never trivial",
+        paragraphs: [
+          "In the end Francesco brings every topic back to one thought: choosing a wine is never trivial. Origin, style, dish and service all influence one another.",
+          "For Maria Maria, Francesco sees his role as complementing the expertise Valerio and Maria already have with his own experience, and so contributing to the project's further development.",
+        ],
+        quote: "Choosing a wine is never trivial.",
+      },
+
+      faq: {
+        eyebrow: "Frequently asked",
+        title: "Campanian whites —",
+        titleAccent: "briefly answered.",
+        description:
+          "Where to start, what separates the three wines, how to pair them and why temperature matters: the five questions this conversation leaves open most often.",
+        items: [
+          {
+            id: "francesco-einsteiger",
+            q: "Which Campanian white wine suits a beginner?",
+            a: "Francesco would recommend Fiano. He describes it as softer and more versatile than Greco di Tufo, and as coming across less dry than Falanghina.",
+          },
+          {
+            id: "francesco-unterschied",
+            q: "What is the difference between Greco di Tufo, Fiano and Falanghina?",
+            a: "For Francesco, Greco comes across as more strongly mineral, Fiano as softer and more versatile, and Falanghina shows a drier tendency by comparison.",
+          },
+          {
+            id: "francesco-greco-pairing",
+            q: "What goes with Greco di Tufo?",
+            a: "Slightly more complex fish dishes, white meat and above all mozzarella di bufala.",
+          },
+          {
+            id: "francesco-fisch",
+            q: "Which Campanian white wine goes with fish?",
+            a: "For lighter fish dishes Francesco names Fiano di Avellino; Greco di Tufo can also accompany more structured preparations.",
+          },
+          {
+            id: "francesco-temperatur",
+            q: "Why does serving temperature matter?",
+            a: "Temperatures that are too low or too high are, for Francesco, among the most common mistakes. He does not name a specific figure.",
+          },
+        ],
+      },
+
+      profile: {
+        name: "Francesco De Stefano",
+        /* OPEN: the master source keeps the job title as "only once
+           confirmed". While it is missing the field stays out. */
+        text: "Francesco accompanies Maria Maria with his experience and his knowledge of the Campanian wine world.",
+      },
+
+      wine: {
+        slug: "greco-di-tufo",
+        href: "/unsere-weine?region=kampanien",
+        heading: "Discover Campania's white wines at Maria Maria",
+        text: "Greco di Tufo, Fiano di Avellino and Falanghina — the Campanian whites in the collection, each with the character Francesco describes in the conversation.",
+        cta: "Discover Campania's wines",
+      },
+
+      paths: [
+        {
+          id: "region",
+          icon: "region",
+          title: "Campania region",
+          text: "Discover the terroir.",
+          href: "/regionen#kampanien",
+        },
+        {
+          id: "pairing",
+          icon: "pairing",
+          title: "Food pairing",
+          text: "Inspiration for the table.",
+          href: "/magazin#food-pairing",
+        },
+        {
+          id: "interviews",
+          icon: "interviews",
+          title: "More interviews",
+          text: "Read every conversation.",
+          href: "/magazin#interviste",
+        },
+      ],
+
+      teaserMagazin: {
+        eyebrow: "Interviews · In conversation",
+        badge: "Irpinia · Campania",
+        title: "Three white wines, three characters: what makes Irpinia special",
+        teaser:
+          "On Greco di Tufo, Fiano di Avellino and Falanghina – and why origin, food pairing and a deliberate choice of wine belong together.",
+        meta: "Interview · 6 min read",
+        cta: "Read the conversation",
+      },
+
+      teaserRegion: {
+        region: "kampanien",
+        portrait: { src: "/img/magazin/interviews/francesco-de-stefano.jpg" },
+        eyebrow: "Voices from the region · Irpinia",
+        title: "Real people tell the story of Campania",
+        paragraphs: [
+          "What makes Campania's white wines so different from one another? Francesco De Stefano talks about Irpinia, Greco di Tufo, Fiano di Avellino and Falanghina — and about why origin, character and the right food pairing belong together when you choose a wine.",
+        ],
+        pull: "Choosing a wine is never trivial.",
+        ctaPrimary: "Read the conversation",
+        ctaSecondary: "Discover Greco di Tufo",
       },
     },
   ],

@@ -93,6 +93,17 @@ const PAGES = [
     src: "img/magazin/interviews/terroir-pozzolengo.jpg",
     focus: "attention",
   },
+  /* Interview Francesco De Stefano — dieselbe Regel, derselbe Grund fuer die
+     Quelle: Das gelieferte Portrait ist hochkant (1215 x 1295) und wuerde
+     bei 1200 x 630 auf einen Streifen zusammenschrumpfen. Bis ein
+     Irpinien-Motiv vorliegt, traegt die Teaserkarte das vorhandene
+     Kampanien-Panorama des Magazins. Dann ist hier nur der `src` zu
+     tauschen. */
+  {
+    name: "interview-francesco-de-stefano-irpinien-weissweine",
+    src: "img/magazin/campagnia1.jpg",
+    focus: "attention",
+  },
 ];
 
 async function exists(file) {

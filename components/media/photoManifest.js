@@ -42,6 +42,18 @@ export const PHOTO_MANIFEST = {
     "width": 1200,
     "height": 900
   },
+  "/img/daniele222.jpeg": {
+    "base": "/img/daniele222",
+    "widths": [
+      160,
+      320,
+      640,
+      1024,
+      1179
+    ],
+    "width": 1179,
+    "height": 1418
+  },
   "/img/dinner.webp": {
     "base": "/img/dinner",
     "widths": [
@@ -79,42 +91,6 @@ export const PHOTO_MANIFEST = {
     "width": 1448,
     "height": 1086
   },
-  "/img/home/weinregion-apulien-trulli-olivenbaeume.webp": {
-    "base": "/img/home/weinregion-apulien-trulli-olivenbaeume",
-    "widths": [
-      160,
-      320,
-      640,
-      1024,
-      1600
-    ],
-    "width": 1600,
-    "height": 900
-  },
-  "/img/home/weinregion-kampanien-vesuv-kueste.webp": {
-    "base": "/img/home/weinregion-kampanien-vesuv-kueste",
-    "widths": [
-      160,
-      320,
-      640,
-      1024,
-      1600
-    ],
-    "width": 1600,
-    "height": 900
-  },
-  "/img/home/weinregion-gardasee-lombardei.webp": {
-    "base": "/img/home/weinregion-gardasee-lombardei",
-    "widths": [
-      160,
-      320,
-      640,
-      1024,
-      1600
-    ],
-    "width": 1600,
-    "height": 900
-  },
   "/img/home/region-apulien.webp": {
     "base": "/img/home/region-apulien",
     "widths": [
@@ -151,40 +127,41 @@ export const PHOTO_MANIFEST = {
     "width": 1600,
     "height": 900
   },
-  "/img/kontakt/kontakt-hero-375ml.webp": {
-    "base": "/img/kontakt/kontakt-hero-375ml",
+  "/img/home/weinregion-apulien-trulli-olivenbaeume.webp": {
+    "base": "/img/home/weinregion-apulien-trulli-olivenbaeume",
     "widths": [
+      160,
       320,
       640,
       1024,
-      1600,
-      1672
+      1600
     ],
-    "width": 1672,
-    "height": 941
+    "width": 1600,
+    "height": 900
   },
-  "/img/kontakt/kontakt-momente.webp": {
-    "base": "/img/kontakt/kontakt-momente",
+  "/img/home/weinregion-gardasee-lombardei.webp": {
+    "base": "/img/home/weinregion-gardasee-lombardei",
     "widths": [
+      160,
       320,
       640,
       1024,
-      1600,
-      1942
+      1600
     ],
-    "width": 1942,
-    "height": 809
+    "width": 1600,
+    "height": 900
   },
-  "/img/kontakt/kontakt-weinberatung.webp": {
-    "base": "/img/kontakt/kontakt-weinberatung",
+  "/img/home/weinregion-kampanien-vesuv-kueste.webp": {
+    "base": "/img/home/weinregion-kampanien-vesuv-kueste",
     "widths": [
+      160,
       320,
       640,
       1024,
-      1448
+      1600
     ],
-    "width": 1448,
-    "height": 1086
+    "width": 1600,
+    "height": 900
   },
   "/img/logo.png": {
     "base": "/img/logo",
@@ -232,6 +209,29 @@ export const PHOTO_MANIFEST = {
     "width": 875,
     "height": 823
   },
+  "/img/magazin/daniele-solo.jpeg": {
+    "base": "/img/magazin/daniele-solo",
+    "widths": [
+      160,
+      320,
+      640
+    ],
+    "width": 640,
+    "height": 800
+  },
+  "/img/magazin/eleganca.jpg": {
+    "base": "/img/magazin/eleganca",
+    "widths": [
+      160,
+      320,
+      640,
+      1024,
+      1600,
+      2412
+    ],
+    "width": 2412,
+    "height": 1760
+  },
   "/img/magazin/handverlesen.jpg": {
     "base": "/img/magazin/handverlesen",
     "widths": [
@@ -265,6 +265,18 @@ export const PHOTO_MANIFEST = {
     "width": 652,
     "height": 819
   },
+  "/img/magazin/interviews/francesco-de-stefano.jpg": {
+    "base": "/img/magazin/interviews/francesco-de-stefano",
+    "widths": [
+      160,
+      320,
+      640,
+      1024,
+      1215
+    ],
+    "width": 1215,
+    "height": 1295
+  },
   "/img/magazin/interviews/lugana-risotto.jpg": {
     "base": "/img/magazin/interviews/lugana-risotto",
     "widths": [
@@ -276,6 +288,28 @@ export const PHOTO_MANIFEST = {
     ],
     "width": 1448,
     "height": 1086
+  },
+  "/img/magazin/interviews/lugana-vino-bianco-magazine-cutout.png": {
+    "base": "/img/magazin/interviews/lugana-vino-bianco-magazine-cutout",
+    "widths": [
+      160,
+      320,
+      368
+    ],
+    "width": 368,
+    "height": 1336
+  },
+  "/img/magazin/interviews/lugana-vino-bianco-magazine.jpeg": {
+    "base": "/img/magazin/interviews/lugana-vino-bianco-magazine",
+    "widths": [
+      160,
+      320,
+      640,
+      1024,
+      1067
+    ],
+    "width": 1067,
+    "height": 1600
   },
   "/img/magazin/interviews/terroir-pozzolengo.jpg": {
     "base": "/img/magazin/interviews/terroir-pozzolengo",
@@ -312,6 +346,18 @@ export const PHOTO_MANIFEST = {
     ],
     "width": 1536,
     "height": 1024
+  },
+  "/img/magazin/leave.jpeg": {
+    "base": "/img/magazin/leave",
+    "widths": [
+      160,
+      320,
+      640,
+      1024,
+      1461
+    ],
+    "width": 1461,
+    "height": 961
   },
   "/img/magazin/pranzo.jpg": {
     "base": "/img/magazin/pranzo",
@@ -358,6 +404,17 @@ export const PHOTO_MANIFEST = {
     "width": 555,
     "height": 515
   },
+  "/img/magazin/valerino.jpeg": {
+    "base": "/img/magazin/valerino",
+    "widths": [
+      160,
+      320,
+      640,
+      1024
+    ],
+    "width": 1024,
+    "height": 724
+  },
   "/img/magazin/weinkeller.jpg": {
     "base": "/img/magazin/weinkeller",
     "widths": [
@@ -379,6 +436,28 @@ export const PHOTO_MANIFEST = {
     ],
     "width": 677,
     "height": 525
+  },
+  "/img/maria-con-vino.jpeg": {
+    "base": "/img/maria-con-vino",
+    "widths": [
+      160,
+      320,
+      640,
+      900
+    ],
+    "width": 900,
+    "height": 685
+  },
+  "/img/maria1-con-vino.jpeg": {
+    "base": "/img/maria1-con-vino",
+    "widths": [
+      160,
+      320,
+      640,
+      900
+    ],
+    "width": 900,
+    "height": 1225
   },
   "/img/og/collection.jpg": {
     "base": "/img/og/collection",
@@ -416,8 +495,56 @@ export const PHOTO_MANIFEST = {
     "width": 1200,
     "height": 630
   },
+  "/img/og/interview-daniele-malavasi-lugana-doc.jpg": {
+    "base": "/img/og/interview-daniele-malavasi-lugana-doc",
+    "widths": [
+      160,
+      320,
+      640,
+      1024,
+      1200
+    ],
+    "width": 1200,
+    "height": 630
+  },
+  "/img/og/interview-francesco-de-stefano-irpinien-weissweine.jpg": {
+    "base": "/img/og/interview-francesco-de-stefano-irpinien-weissweine",
+    "widths": [
+      160,
+      320,
+      640,
+      1024,
+      1200
+    ],
+    "width": 1200,
+    "height": 630
+  },
+  "/img/og/kontakt.jpg": {
+    "base": "/img/og/kontakt",
+    "widths": [
+      160,
+      320,
+      640,
+      1024,
+      1200
+    ],
+    "width": 1200,
+    "height": 630
+  },
   "/img/og/magazin.jpg": {
     "base": "/img/og/magazin",
+    "widths": [
+      160,
+      320,
+      640,
+      1024,
+      1200
+    ],
+    "width": 1200,
+    "height": 630
+  },
+  "/img/og/maria-maria-boutique-weine-de.jpg": {
+    "base": "/img/og/maria-maria-boutique-weine-de",
     "widths": [
       160,
       320,
@@ -639,6 +766,18 @@ export const PHOTO_MANIFEST = {
     "width": 700,
     "height": 676
   },
+  "/img/weine/moment-aperitivo.jpg": {
+    "base": "/img/weine/moment-aperitivo",
+    "widths": [
+      160,
+      320,
+      640,
+      1024,
+      1200
+    ],
+    "width": 1200,
+    "height": 900
+  },
   "/img/weine-hero.jpg": {
     "base": "/img/weine-hero",
     "widths": [
@@ -651,18 +790,6 @@ export const PHOTO_MANIFEST = {
     ],
     "width": 3076,
     "height": 1088
-  },
-  "/img/weine/moment-aperitivo.jpg": {
-    "base": "/img/weine/moment-aperitivo",
-    "widths": [
-      160,
-      320,
-      640,
-      1024,
-      1200
-    ],
-    "width": 1200,
-    "height": 900
   },
   "/img/wines/falanghina/back.jpg": {
     "base": "/img/wines/falanghina/back",
@@ -1161,5 +1288,40 @@ export const PHOTO_MANIFEST = {
     ],
     "width": 1920,
     "height": 1920
+  },
+  "/img/kontakt/kontakt-hero-375ml.webp": {
+    "base": "/img/kontakt/kontakt-hero-375ml",
+    "widths": [
+      320,
+      640,
+      1024,
+      1600,
+      1672
+    ],
+    "width": 1672,
+    "height": 941
+  },
+  "/img/kontakt/kontakt-momente.webp": {
+    "base": "/img/kontakt/kontakt-momente",
+    "widths": [
+      320,
+      640,
+      1024,
+      1600,
+      1942
+    ],
+    "width": 1942,
+    "height": 809
+  },
+  "/img/kontakt/kontakt-weinberatung.webp": {
+    "base": "/img/kontakt/kontakt-weinberatung",
+    "widths": [
+      320,
+      640,
+      1024,
+      1448
+    ],
+    "width": 1448,
+    "height": 1086
   }
 };

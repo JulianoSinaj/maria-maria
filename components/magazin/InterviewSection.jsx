@@ -46,6 +46,12 @@ function EmptyState({ t = {} }) {
 export default function InterviewSection({ interviews = [], section = {}, empty, headingId }) {
   const featured = interviews.length === 1;
 
+  /* Das Raster zählt mit. Bei drei Karten stehen sie zu dritt, bei zwei zu
+     zweit — eine dritte, leere Spalte neben zwei Karten liest sich als
+     Lücke, nicht als Ordnung. Erst ab drei Gesprächen greift `lg:grid-cols-3`,
+     das der Handoff für die geplante Vollbesetzung vorsieht. */
+  const columns = interviews.length === 2 ? "md:grid-cols-2" : "md:grid-cols-2 lg:grid-cols-3";
+
   return (
     <section className="relative mt-20">
       <SectionTitle
@@ -61,9 +67,7 @@ export default function InterviewSection({ interviews = [], section = {}, empty,
         <EmptyState t={empty} />
       ) : (
         <div
-          className={`mt-10 ${
-            featured ? "" : "grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3"
-          }`}
+          className={`mt-10 ${featured ? "" : `grid grid-cols-1 gap-6 ${columns}`}`}
         >
           {interviews.map((interview, i) => (
             <InterviewCard

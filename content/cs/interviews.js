@@ -356,14 +356,6 @@ const interviews = {
         ],
       },
 
-      serving: {
-        heading: "Nejčastější chyba začíná u teploty",
-        paragraphs: [
-          "Častá chyba leží pro Francesca už v servírování. Bílé víno může do sklenky přijít příliš studené, ale i příliš teplé. Konkrétní počet stupňů neuvádí.",
-          "Totéž platí pro kombinace s jídlem: kdo přehlíží výraznější mineralitu Greca nebo větší měkkost Fiana, zachází s velmi odlišnými víny, jako by byla stejná.",
-        ],
-      },
-
       outro: {
         heading: "Proč výběr vína nikdy není banální",
         paragraphs: [
@@ -378,7 +370,7 @@ const interviews = {
         title: "Kampánská bílá vína —",
         titleAccent: "krátce zodpovězeno.",
         description:
-          "Kde začít, čím se tři vína liší, jak je kombinovat a proč záleží na teplotě: pět otázek, které po tomto rozhovoru nejčastěji zůstávají otevřené.",
+          "Kde začít, čím se tři vína liší a jak je kombinovat: čtyři otázky, které po tomto rozhovoru nejčastěji zůstávají otevřené.",
         items: [
           {
             id: "francesco-einsteiger",
@@ -399,11 +391,6 @@ const interviews = {
             id: "francesco-fisch",
             q: "Které kampánské bílé víno se hodí k rybě?",
             a: "K lehčím rybím pokrmům uvádí Francesco Fiano di Avellino; Greco di Tufo může doprovodit i strukturovanější přípravy.",
-          },
-          {
-            id: "francesco-temperatur",
-            q: "Proč je teplota servírování důležitá?",
-            a: "Příliš nízká i příliš vysoká teplota patří pro Francesca k nejčastějším chybám. Konkrétní počet stupňů neuvádí.",
           },
         ],
       },

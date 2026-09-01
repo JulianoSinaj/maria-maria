@@ -361,14 +361,6 @@ const interviews = {
         ],
       },
 
-      serving: {
-        heading: "L’errore più comune comincia dalla temperatura",
-        paragraphs: [
-          "Uno degli errori più frequenti, secondo Francesco, riguarda già il servizio. Un bianco può essere servito troppo freddo oppure troppo caldo. Nell’intervista non indica una temperatura precisa.",
-          "Anche nell’abbinamento è importante non trattare Greco, Fiano e Falanghina come vini equivalenti.",
-        ],
-      },
-
       outro: {
         heading: "Perché la scelta di un vino non è mai banale",
         paragraphs: [
@@ -383,7 +375,7 @@ const interviews = {
         title: "I bianchi campani —",
         titleAccent: "in breve.",
         description:
-          "Da dove iniziare, che cosa cambia tra i tre vini, come abbinarli e perché la temperatura conta: le cinque domande che restano più spesso aperte dopo questa conversazione.",
+          "Da dove iniziare, che cosa cambia tra i tre vini e come abbinarli: le quattro domande che restano più spesso aperte dopo questa conversazione.",
         items: [
           {
             id: "francesco-einsteiger",
@@ -404,11 +396,6 @@ const interviews = {
             id: "francesco-fisch",
             q: "Quale bianco campano scegliere con il pesce?",
             a: "Fiano per piatti più leggeri come gamberi o trota; Greco di Tufo anche per preparazioni più strutturate.",
-          },
-          {
-            id: "francesco-temperatur",
-            q: "Perché la temperatura di servizio è importante?",
-            a: "Una temperatura troppo bassa o troppo alta è per Francesco uno degli errori più comuni. Non indica una gradazione precisa.",
           },
         ],
       },

@@ -445,14 +445,6 @@ const interviews = {
         ],
       },
 
-      serving: {
-        heading: "Der häufigste Fehler beginnt bei der Temperatur",
-        paragraphs: [
-          "Ein häufiger Fehler liegt für Francesco bereits beim Servieren. Weißwein kann zu kalt, aber auch zu warm ins Glas kommen. Eine konkrete Gradzahl nennt er nicht.",
-          "Dasselbe gilt für das Pairing: Wer die stärkere Mineralität des Greco oder die größere Weichheit des Fiano ignoriert, behandelt sehr unterschiedliche Weine, als wären sie gleich.",
-        ],
-      },
-
       outro: {
         heading: "Warum die Wahl eines Weines nie banal ist",
         paragraphs: [
@@ -472,7 +464,7 @@ const interviews = {
         title: "Kampanische Weißweine —",
         titleAccent: "kurz beantwortet.",
         description:
-          "Einstieg, Unterschiede, Abbinamenti und Temperatur: die fünf Fragen, die nach diesem Gespräch am häufigsten offenbleiben.",
+          "Einstieg, Unterschiede und Abbinamenti: die vier Fragen, die nach diesem Gespräch am häufigsten offenbleiben.",
         items: [
           {
             id: "francesco-einsteiger",
@@ -493,11 +485,6 @@ const interviews = {
             id: "francesco-fisch",
             q: "Welcher kampanische Weißwein passt zu Fisch?",
             a: "Für leichtere Fischgerichte nennt Francesco Fiano di Avellino; Greco di Tufo kann auch strukturiertere Fischgerichte begleiten.",
-          },
-          {
-            id: "francesco-temperatur",
-            q: "Warum ist die Serviertemperatur wichtig?",
-            a: "Zu niedrige oder zu hohe Temperaturen gehören für Francesco zu den häufigsten Fehlern. Eine konkrete Gradzahl nennt er nicht.",
           },
         ],
       },

@@ -353,14 +353,6 @@ const interviews = {
         ],
       },
 
-      serving: {
-        heading: "The most common mistake starts with temperature",
-        paragraphs: [
-          "For Francesco a common mistake lies in the serving itself. A white wine can reach the glass too cold, but also too warm. He does not name a specific temperature.",
-          "The same applies to pairing: ignoring the stronger minerality of the Greco or the greater softness of the Fiano means treating very different wines as though they were the same.",
-        ],
-      },
-
       outro: {
         heading: "Why choosing a wine is never trivial",
         paragraphs: [
@@ -375,7 +367,7 @@ const interviews = {
         title: "Campanian whites —",
         titleAccent: "briefly answered.",
         description:
-          "Where to start, what separates the three wines, how to pair them and why temperature matters: the five questions this conversation leaves open most often.",
+          "Where to start, what separates the three wines, and how to pair them: the four questions this conversation leaves open most often.",
         items: [
           {
             id: "francesco-einsteiger",
@@ -396,11 +388,6 @@ const interviews = {
             id: "francesco-fisch",
             q: "Which Campanian white wine goes with fish?",
             a: "For lighter fish dishes Francesco names Fiano di Avellino; Greco di Tufo can also accompany more structured preparations.",
-          },
-          {
-            id: "francesco-temperatur",
-            q: "Why does serving temperature matter?",
-            a: "Temperatures that are too low or too high are, for Francesco, among the most common mistakes. He does not name a specific figure.",
           },
         ],
       },

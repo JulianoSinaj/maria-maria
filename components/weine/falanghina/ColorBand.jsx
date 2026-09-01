@@ -31,6 +31,23 @@ import { useCommon } from "@/lib/i18n/context";
 
 /* Halbes Tempo — der Guss soll fallen, nicht stürzen */
 const POUR_RATE = 0.55;
+
+/* Beide Clips (rot wie weiß) zeigen erst 1,35 s lang ein leeres Glas, bevor
+   der erste Tropfen fällt — bei POUR_RATE sind das 2,5 s Wanduhr. Weil das
+   Video bisher schon beim Mounten lief (700 px vor der Sektion), stand der
+   Guss außerdem in beliebiger Phase, wenn die Bühne endlich im Bild war:
+   mal mitten im Einschenken, mal vor leerem Glas mit zwei Sekunden Warten.
+
+   Darum ist der Guss jetzt an den Blick gebunden. Das Video wird weiterhin
+   früh geladen, steht aber angehalten am Stichwort und läuft erst an, wenn
+   die Bühne selbst im Bild ist — CUE_LEAD davor, damit das Auge das leere
+   Glas eine Viertelsekunde sieht, ehe der Wein einläuft. Verlässt die Bühne
+   das Bild, hält der Clip an und spult zurück: jeder Blick beginnt mit dem
+   Guss, nicht mit Warten. */
+const POUR_CUE = 1.35;
+const CUE_LEAD = 0.22;
+const POUR_START = POUR_CUE - CUE_LEAD;
+
 /* Der Clip beginnt mit leerem und endet mit vollem Glas. Am Schnitt würde
    das Glas hart zurückspringen. Darum liegt das Standbild (= letztes Bild
    des Clips, volles Glas) dauerhaft UNTER dem Video: kurz vor dem Schnitt
@@ -56,8 +73,20 @@ export default function ColorBand({ wine }) {
      sonst lädt jede Weinseite ihn schon beim Seitenaufruf. Bis dahin und bei
      Reduced Motion steht das Standbild aus demselben Material. */
   const sectionRef = useRef(null);
+  const stageRef = useRef(null);
   const videoRef = useRef(null);
   const nearView = useInView(sectionRef, { once: true, margin: "0px 0px 700px 0px" });
+  /* Der Guss hängt an der Bühne, nicht an der Sektion: unterhalb lg steht
+     das Glas unter dem Text, und die Sektion wäre längst „im Bild", während
+     vom Glas noch nichts zu sehen ist.
+
+     0.4 ist ein Kompromiss nach oben wie nach unten: tiefer, und der Guss
+     liefe an, während das Glas noch unter der Kante steht — der Wein wäre
+     schon drin, wenn man es sieht. Höher, und die Schwelle wird riskant:
+     der Anteil bezieht sich auf die HÖHE DER BÜHNE, und ab lg ist die
+     Bühne die ganze Sektion. In einem kurzen Fenster (Zoom, Laptop quer)
+     käme ein hoher Anteil nie zustande — das Video liefe dann nie an. */
+  const stageInView = useInView(stageRef, { amount: 0.4 });
   const hasVideo = Boolean(art.video) && !reduced && nearView;
   const [atSeam, setAtSeam] = useState(false);
 
@@ -69,21 +98,51 @@ export default function ColorBand({ wine }) {
   const poster = art.videoPoster;
 
   /* playbackRate überlebt keinen Quellenwechsel und steht vor dem Laden der
-     Metadaten noch nicht — darum bei jedem Start neu setzen. */
+     Metadaten noch nicht — darum bei jedem Start neu setzen. Vor den
+     Metadaten ist auch currentTime nicht setzbar (readyState 0); das
+     Stichwort holt dann onLoadedMetadata nach. Das Spulen lädt die Stelle
+     zugleich vor — beim Eintritt steht das erste Bild des Gusses schon. */
   const slowDown = useCallback(() => {
     const v = videoRef.current;
     if (v) v.playbackRate = POUR_RATE;
   }, []);
 
+  const cueUp = useCallback(() => {
+    const v = videoRef.current;
+    if (!v) return;
+    v.playbackRate = POUR_RATE;
+    if (v.readyState > 0 && v.currentTime < POUR_START) v.currentTime = POUR_START;
+  }, []);
+
   useEffect(() => {
-    if (hasVideo) slowDown();
-  }, [hasVideo, slowDown]);
+    if (hasVideo) cueUp();
+  }, [hasVideo, cueUp]);
+
+  /* Der Guss folgt dem Blick: anlaufen, sobald die Bühne im Bild steht —
+     anhalten und ans Stichwort zurückspulen, sobald sie es verlässt. */
+  useEffect(() => {
+    if (!hasVideo) return;
+    const v = videoRef.current;
+    if (!v) return;
+    if (stageInView) {
+      v.playbackRate = POUR_RATE;
+      /* Autoplay-Sperren greifen bei stumm/playsInline nicht, ein
+         abgewiesenes Versprechen darf trotzdem nicht durchschlagen — dann
+         bleibt schlicht das Standbild stehen. */
+      v.play()?.catch(() => {});
+    } else {
+      v.pause();
+      if (v.readyState > 0) v.currentTime = POUR_START;
+      setAtSeam(false);
+    }
+  }, [hasVideo, stageInView]);
 
   /* timeupdate feuert nur ~4×/s — zu grob, die Naht ruckte sichtbar. Ein
      rAF-Wächter liest die Abspielzeit bildgenau; setState greift nur am
-     Zustandswechsel, dazwischen rendert nichts neu. */
+     Zustandswechsel, dazwischen rendert nichts neu. Er läuft nur, solange
+     die Bühne im Bild ist — angehalten gibt es keine Naht zu bewachen. */
   useEffect(() => {
-    if (!hasVideo) return;
+    if (!hasVideo || !stageInView) return;
     let raf;
     const tick = () => {
       const v = videoRef.current;
@@ -92,7 +151,7 @@ export default function ColorBand({ wine }) {
     };
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
-  }, [hasVideo]);
+  }, [hasVideo, stageInView]);
 
   return (
     <section
@@ -214,7 +273,10 @@ export default function ColorBand({ wine }) {
           gab einen grauen Streifen hinter den Tönen und eine harte Kante am
           Beginn der Bühne. Ab lg liegt die Bühne in der Sektion, die ohnehin
           schneidet — dort bleibt alles, wie es war. */}
-      <div className="relative z-0 aspect-[4/5] w-full overflow-hidden sm:aspect-[3/2] lg:absolute lg:inset-0 lg:aspect-auto lg:h-full lg:overflow-visible">
+      <div
+        ref={stageRef}
+        className="relative z-0 aspect-[4/5] w-full overflow-hidden sm:aspect-[3/2] lg:absolute lg:inset-0 lg:aspect-auto lg:h-full lg:overflow-visible"
+      >
         <motion.div
           className="absolute inset-0"
           initial={reduced ? false : { scale: 1.06 }}
@@ -238,12 +300,11 @@ export default function ColorBand({ wine }) {
               ref={videoRef}
               src={art.video}
               poster={poster}
-              autoPlay
               muted
               loop
               playsInline
               preload="auto"
-              onLoadedMetadata={slowDown}
+              onLoadedMetadata={cueUp}
               onPlay={slowDown}
               aria-label={art.videoTitle ?? `${wine.name} wird eingeschenkt`}
               className={`absolute inset-0 ${MEDIA_CLASS} transition-opacity ease-out will-change-[opacity] ${

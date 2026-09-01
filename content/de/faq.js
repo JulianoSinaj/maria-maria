@@ -138,7 +138,7 @@ export const faq = {
     },
     {
       key: "garda",
-      label: "Lugana am Gardasee",
+      label: "Lombardei, Gardasee",
       items: [
         {
           id: "reg-garda-gebiet",

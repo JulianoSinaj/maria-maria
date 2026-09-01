@@ -8,7 +8,7 @@ export const regionen = {
     /* Jediný H1 stránky, sázený na dva řádky */
     title1: "Kde italská vína",
     title2: "nacházejí svůj charakter",
-    text: "Tři oblasti původu, rozdílné krajiny a odrůdy plné charakteru: objevte, jak Apulie, Kampánie a oblast Lugana u Gardského jezera utvářejí styl vybraných vín Maria Maria.",
+    text: "Tři oblasti původu, rozdílné krajiny a odrůdy plné charakteru: objevte, jak Apulie, Kampánie a Lombardie u Gardského jezera utvářejí styl vybraných vín Maria Maria.",
     /* Pobídka k prolistování: otázka + výzva, šipka zůstává v kódu */
     question: "Proč chutná Apulie jinak než Gardské jezero?",
     questionCta: "Za odpovědí",
@@ -19,7 +19,7 @@ export const regionen = {
     eyebrow: "Tři oblasti původu",
     title: "Objevte naše regiony",
     description:
-      "Apulie, Kampánie a Lugana u Gardského jezera – každý původ s vlastními půdami, odrůdami a vlastním stylem ve sklenici.",
+      "Apulie, Kampánie a Lombardie u Gardského jezera – každý původ s vlastními půdami, odrůdami a vlastním stylem ve sklenici.",
   },
 
   regions: {
@@ -40,10 +40,10 @@ export const regionen = {
       cta: "Objevte vína Kampánie",
     },
     garda: {
-      name: "Lugana u Gardského jezera",
+      name: "Lombardie, Gardské jezero",
       tag: "Mezi Lombardií a Benátskem",
       alt: "Vinice a mírné kopce jižně od Gardského jezera",
-      label: "Lugana u Gardského jezera",
+      label: "Lombardie, Gardské jezero",
       desc: "Jižně od Gardského jezera, mezi Lombardií a Benátskem, leží vinařská oblast Lugana DOC. Odrůda Turbiana a jílovité půdy utvářejí bílá vína se svěžestí, jemnou mineralitou a elegantním charakterem – ideální k aperitivu, lehké kuchyni a výjimečným chvílím požitku.",
       cta: "Objevte vína od Gardského jezera",
     },

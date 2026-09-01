@@ -124,7 +124,7 @@ export const faq = {
     },
     {
       key: "garda",
-      label: "Lugana sul Lago di Garda",
+      label: "Regione Lombardia, Lago di Garda",
       items: [
         {
           id: "reg-garda-gebiet",

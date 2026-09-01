@@ -124,7 +124,7 @@ export const faq = {
     },
     {
       key: "garda",
-      label: "Lugana u Gardského jezera",
+      label: "Lombardie, Gardské jezero",
       items: [
         {
           id: "reg-garda-gebiet",

@@ -76,7 +76,7 @@ export const meta = {
   regionen: {
     titleAbsolute: "Vinařské regiony: Apulie, Kampánie a Lugana | Maria Maria",
     description:
-      "Objevte vybraná vína z Apulie, Kampánie a oblasti Lugana u Gardského jezera – odrůdy, původ, chuť a tipy na snoubení s jídlem.",
+      "Objevte vybraná vína z Apulie, Kampánie a Lombardie u Gardského jezera – odrůdy, původ, chuť a tipy na snoubení s jídlem.",
   },
 
   kontakt: {

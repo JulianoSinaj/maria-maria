@@ -77,7 +77,7 @@ export const meta = {
   regionen: {
     titleAbsolute: "Regioni vinicole: Puglia, Campania e Lugana | Maria Maria",
     description:
-      "Scopri vini selezionati dalla Puglia, dalla Campania e dalla zona del Lugana sul Lago di Garda – vitigni, origine, gusto e consigli di abbinamento.",
+      "Scopri vini selezionati dalla Puglia, dalla Campania e dalla Lombardia sul Lago di Garda – vitigni, origine, gusto e consigli di abbinamento.",
   },
 
   kontakt: {

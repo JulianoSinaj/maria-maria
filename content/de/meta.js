@@ -86,7 +86,7 @@ export const meta = {
     /* trägt die Marke selbst — wird als `title.absolute` gesetzt */
     titleAbsolute: "Weinregionen: Apulien, Kampanien & Lugana | Maria Maria",
     description:
-      "Entdecken Sie ausgewählte Weine aus Apulien, Kampanien und dem Lugana-Gebiet am Gardasee – mit Rebsorten, Herkunft, Geschmack und Food-Pairing-Tipps.",
+      "Entdecken Sie ausgewählte Weine aus Apulien, Kampanien und der Lombardei am Gardasee – mit Rebsorten, Herkunft, Geschmack und Food-Pairing-Tipps.",
   },
 
   kontakt: {

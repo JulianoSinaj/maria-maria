@@ -116,7 +116,7 @@ const lugana = {
       imageAlt:
         "Risotto di pesce con limone ed erbe su una terrazza sopra il Lago di Garda, accanto un calice di Lugana DOC e la bottiglia",
       regionLink: {
-        label: "Scopri la zona del Lugana sul Garda",
+        label: "Scopri la Lombardia sul Lago di Garda",
       },
     },
   },
@@ -158,7 +158,7 @@ const lugana = {
     {
       q: "Che cos'è il vino Lugana?",
       a: "Il Lugana è una piccola e rinomata denominazione di vino bianco (DOC) sulla sponda meridionale del Lago di Garda, ottenuta dal vitigno Turbiana. Il nostro Lugana proviene dai vigneti di Desenzano e Pozzolengo.",
-      link: { label: "Scopri la zona del Lugana sul Garda" },
+      link: { label: "Scopri la Lombardia sul Lago di Garda" },
     },
     {
       q: "Che gusto ha il Lugana di Maria Maria?",

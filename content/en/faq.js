@@ -124,7 +124,7 @@ export const faq = {
     },
     {
       key: "garda",
-      label: "Lugana on Lake Garda",
+      label: "Lombardy, Lake Garda",
       items: [
         {
           id: "reg-garda-gebiet",

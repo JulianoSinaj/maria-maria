@@ -14,7 +14,7 @@ export const regionen = {
     /* Einziges H1 der Seite, in zwei Zeilen gesetzt */
     title1: "Wo Italiens Weine",
     title2: "ihren Charakter finden",
-    text: "Drei Herkunftsgebiete, unterschiedliche Landschaften und charaktervolle Rebsorten: Entdecken Sie, wie Apulien, Kampanien und das Lugana-Gebiet am Gardasee den Stil der ausgewählten Maria-Maria-Weine prägen.",
+    text: "Drei Herkunftsgebiete, unterschiedliche Landschaften und charaktervolle Rebsorten: Entdecken Sie, wie Apulien, Kampanien und die Lombardei am Gardasee den Stil der ausgewählten Maria-Maria-Weine prägen.",
     /* Der Blätterhinweis: Frage + Aufforderung, der Pfeil bleibt im Code */
     question: "Warum schmeckt Apulien anders als der Gardasee?",
     questionCta: "Der Antwort folgen",
@@ -25,7 +25,7 @@ export const regionen = {
     eyebrow: "Drei Herkunftsgebiete",
     title: "Entdecken Sie unsere Regionen",
     description:
-      "Apulien, Kampanien und Lugana am Gardasee – jede Herkunft mit eigenen Böden, Rebsorten und einem eigenen Stil im Glas.",
+      "Apulien, Kampanien und die Lombardei am Gardasee – jede Herkunft mit eigenen Böden, Rebsorten und einem eigenen Stil im Glas.",
   },
 
   regions: {
@@ -46,10 +46,10 @@ export const regionen = {
       cta: "Kampaniens Weine entdecken",
     },
     garda: {
-      name: "Lugana am Gardasee",
+      name: "Lombardei, Gardasee",
       tag: "Zwischen Lombardei und Venetien",
       alt: "Weinberge und sanfte Hügel südlich des Gardasees",
-      label: "Lugana am Gardasee",
+      label: "Lombardei, Gardasee",
       desc: "Südlich des Gardasees, zwischen Lombardei und Venetien, liegt das Anbaugebiet Lugana DOC. Die Rebsorte Turbiana und die tonreichen Böden prägen Weißweine mit Frische, feiner Mineralität und elegantem Charakter – ideal für Aperitivo, leichte Küche und besondere Genussmomente.",
       cta: "Weine vom Gardasee entdecken",
     },

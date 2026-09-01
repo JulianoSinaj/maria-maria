@@ -116,7 +116,7 @@ const lugana = {
       imageAlt:
         "Fish risotto with lemon and herbs on a terrace above Lake Garda, beside it a glass of Lugana DOC and the bottle",
       regionLink: {
-        label: "Discover the Lugana area on Lake Garda",
+        label: "Discover Lombardy on Lake Garda",
       },
     },
   },
@@ -158,7 +158,7 @@ const lugana = {
     {
       q: "What is Lugana wine?",
       a: "Lugana is a small, renowned white wine denomination (DOC) on the southern shore of Lake Garda, made from the Turbiana grape. Our Lugana comes from the sites of Desenzano and Pozzolengo.",
-      link: { label: "Discover the Lugana area on Lake Garda" },
+      link: { label: "Discover Lombardy on Lake Garda" },
     },
     {
       q: "What does the Maria Maria Lugana taste like?",

@@ -8,7 +8,7 @@ export const regionen = {
     /* Unico H1 della pagina, su due righe */
     title1: "Dove i vini d'Italia",
     title2: "trovano il loro carattere",
-    text: "Tre zone d'origine, paesaggi diversi e vitigni di grande carattere: scopri come la Puglia, la Campania e l'area del Lugana sul Garda plasmano lo stile dei vini selezionati da Maria Maria.",
+    text: "Tre zone d'origine, paesaggi diversi e vitigni di grande carattere: scopri come la Puglia, la Campania e la Lombardia sul Lago di Garda plasmano lo stile dei vini selezionati da Maria Maria.",
     /* L'invito a scorrere: domanda + esortazione, la freccia resta nel codice */
     question: "Perché la Puglia ha un gusto diverso dal Garda?",
     questionCta: "Vai alla risposta",
@@ -19,7 +19,7 @@ export const regionen = {
     eyebrow: "Tre zone d'origine",
     title: "Scopri le nostre regioni",
     description:
-      "Puglia, Campania e Lugana sul Garda – ogni origine con i propri suoli, i propri vitigni e uno stile tutto suo nel calice.",
+      "Puglia, Campania e Lombardia sul Lago di Garda – ogni origine con i propri suoli, i propri vitigni e uno stile tutto suo nel calice.",
   },
 
   regions: {
@@ -40,10 +40,10 @@ export const regionen = {
       cta: "Scopri i vini della Campania",
     },
     garda: {
-      name: "Lugana sul Garda",
+      name: "Regione Lombardia, Lago di Garda",
       tag: "Tra Lombardia e Veneto",
       alt: "Vigneti e dolci colline a sud del Lago di Garda",
-      label: "Lugana sul Garda",
+      label: "Regione Lombardia, Lago di Garda",
       desc: "A sud del Lago di Garda, tra Lombardia e Veneto, si estende la zona del Lugana DOC. Il vitigno Turbiana e i suoli ricchi di argilla danno vita a vini bianchi freschi, finemente minerali e di carattere elegante – ideali per l'aperitivo, la cucina leggera e le occasioni di piacere più speciali.",
       cta: "Scopri i vini del Garda",
     },

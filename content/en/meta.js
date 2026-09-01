@@ -77,7 +77,7 @@ export const meta = {
   regionen: {
     titleAbsolute: "Wine Regions: Puglia, Campania & Lugana | Maria Maria",
     description:
-      "Discover selected wines from Puglia, Campania and the Lugana area on Lake Garda – grape varieties, origin, taste and food pairing tips.",
+      "Discover selected wines from Puglia, Campania and Lombardy on Lake Garda – grape varieties, origin, taste and food pairing tips.",
   },
 
   kontakt: {

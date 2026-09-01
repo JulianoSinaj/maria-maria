@@ -116,7 +116,7 @@ const lugana = {
       imageAlt:
         "Rybí rizoto s citronem a bylinkami na terase nad Gardským jezerem, vedle sklenka Lugana DOC a láhev",
       regionLink: {
-        label: "Objevte oblast Lugana u Gardského jezera",
+        label: "Objevte Lombardii u Gardského jezera",
       },
     },
   },
@@ -158,7 +158,7 @@ const lugana = {
     {
       q: "Co je víno Lugana?",
       a: "Lugana je malá, uznávaná apelace bílého vína (DOC) na jižním břehu Gardského jezera, vyráběná z odrůdy Turbiana. Naše Lugana pochází z poloh Desenzano a Pozzolengo.",
-      link: { label: "Objevte oblast Lugana u Gardského jezera" },
+      link: { label: "Objevte Lombardii u Gardského jezera" },
     },
     {
       q: "Jak chutná Lugana od Maria Maria?",

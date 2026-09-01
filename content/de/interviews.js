@@ -504,14 +504,21 @@ const interviews = {
 
       profile: {
         name: "Francesco De Stefano",
-        /* OFFEN: Die Master-Source führt die Berufsbezeichnung viermal als
-           „[erst nach Bestätigung ergänzen]". Solange sie fehlt, bleibt das
-           Feld weg — der Artikel blendet die Zeile dann aus und der
-           Person-Knoten trägt kein jobTitle. Dasselbe gilt für `worksFor`:
-           Francesco führt keine eigene Kellerei. Eine ausführlichere
-           Biografie darf erst ergänzt werden, wenn die Angaben verifiziert
-           sind. */
+        /* Die Master-Source führte die Berufsbezeichnung viermal als
+           „[erst nach Bestätigung ergänzen]". Die Bestätigung liegt vor: Die
+           Kellerei nennt sich auf ihrer eigenen Seite „Cantina Moras di
+           Francesco De Stefano" und führt ihn als Gründer. Damit stehen
+           `role` und `worksFor` auf belegten Angaben — die Zeile unter dem
+           Namen erscheint, der Person-Knoten trägt jobTitle und worksFor.
+           Eine ausführlichere Biografie bleibt draußen, solange sie nicht
+           ebenso belegt ist. */
+        role: "Gründer der Cantine Moras, Solofra",
+        worksFor: "Cantine Moras",
         text: "Francesco begleitet Maria Maria mit seiner Erfahrung und seiner Kenntnis der kampanischen Weinwelt.",
+        /* Wie bei Daniele ist der Link zugleich das `sameAs` des
+           Person-Knotens. Ziel bleibt die italienische Seite der Kellerei —
+           eine deutsche Fassung gibt es dort nicht. */
+        link: { label: "Cantine Moras", href: "https://www.cantinemoras.it/moras-campania/" },
       },
 
       /* Das Abschlussband. Anders als bei Daniele steht am Ende KEIN

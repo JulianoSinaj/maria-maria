@@ -415,10 +415,15 @@ const interviews = {
 
       profile: {
         name: "Francesco De Stefano",
-        /* APERTO: la master source lascia la qualifica «solo dopo conferma».
-           Finché manca, il campo resta fuori — l'articolo salta la riga e il
-           nodo Person non porta jobTitle. */
+        /* La master source lasciava la qualifica «solo dopo conferma». La
+           conferma c'è: la cantina si presenta sul proprio sito come
+           «Cantina Moras di Francesco De Stefano» e lo indica come
+           fondatore. Una biografia più ampia resta fuori finché non è
+           documentata allo stesso modo. */
+        role: "Fondatore delle Cantine Moras, Solofra",
+        worksFor: "Cantine Moras",
         text: "Francesco accompagna Maria Maria con la propria esperienza e conoscenza del mondo del vino campano.",
+        link: { label: "Cantine Moras", href: "https://www.cantinemoras.it/moras-campania/" },
       },
 
       wine: {

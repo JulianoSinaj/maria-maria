@@ -407,9 +407,14 @@ const interviews = {
 
       profile: {
         name: "Francesco De Stefano",
-        /* OPEN: the master source keeps the job title as "only once
-           confirmed". While it is missing the field stays out. */
+        /* The master source kept the job title as "only once confirmed".
+           It is confirmed now: the winery's own site calls itself "Cantina
+           Moras di Francesco De Stefano" and names him as its founder. A
+           fuller biography stays out until it is documented just as well. */
+        role: "Founder of Cantine Moras, Solofra",
+        worksFor: "Cantine Moras",
         text: "Francesco accompanies Maria Maria with his experience and his knowledge of the Campanian wine world.",
+        link: { label: "Cantine Moras", href: "https://www.cantinemoras.it/moras-campania/" },
       },
 
       wine: {

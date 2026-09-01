@@ -101,8 +101,9 @@ function InterviewJsonLd({ locale, dict, interview }) {
   /* Nur bestätigte Angaben. `jobTitle` und `worksFor` kommen aus dem
      Wörterbuch und fehlen, solange sie dort fehlen — personNode() lässt
      leere Felder still weg. Die Master-Source verlangt das ausdrücklich
-     („Person solo con dati verificati"): Francescos Berufsbezeichnung ist
-     bis zur Bestätigung offen, und er führt keine eigene Kellerei.
+     („Person solo con dati verificati"): Was hier steht, ist belegt — bei
+     Daniele die Cantina Malavasi, bei Francesco die Cantine Moras, beide
+     über die eigene Firmenseite der Kellerei.
 
      Ein Arbeitgeber ist ein fremdes Unternehmen — er bekommt hier nur einen
      Namen, keinen @id-Verweis auf unsere Organisation. */

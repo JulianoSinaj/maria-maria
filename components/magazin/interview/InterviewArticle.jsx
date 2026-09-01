@@ -419,8 +419,8 @@ export default function InterviewArticle({ interview, ui = {}, wine = null, head
                     </p>
                     {/* Ohne Berufsbezeichnung entfällt die Zeile ganz — ein
                         Ortsnadel-Symbol ohne Text stünde sonst allein unter
-                        dem Namen. Die Master-Source hält Francescos
-                        Qualifikation bis zur Bestätigung ausdrücklich offen. */}
+                        dem Namen. Die Master-Source lässt Qualifikationen
+                        offen, bis sie belegt sind; das Feld bleibt dann leer. */}
                     {profile.role && (
                       <p className="mt-1 inline-flex items-center gap-1.5 text-[12px] uppercase tracking-[0.14em] text-charcoal/50">
                         <Pin aria-hidden="true" className="h-3.5 w-3.5 text-champagne" />

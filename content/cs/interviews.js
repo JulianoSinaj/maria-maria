@@ -410,9 +410,15 @@ const interviews = {
 
       profile: {
         name: "Francesco De Stefano",
-        /* OTEVŘENÉ: master source uvádí profesní označení jako „doplnit až po
-           potvrzení". Dokud chybí, pole zůstává stranou. */
+        /* Master source uváděl profesní označení jako „doplnit až po
+           potvrzení". Potvrzení je k dispozici: vinařství se na vlastním webu
+           představuje jako „Cantina Moras di Francesco De Stefano" a uvádí ho
+           jako zakladatele. Podrobnější životopis zůstává stranou, dokud
+           nebude doložen stejně tak. */
+        role: "Zakladatel Cantine Moras, Solofra",
+        worksFor: "Cantine Moras",
         text: "Francesco doprovází Maria Maria svou zkušeností a znalostí kampánského vinařského světa.",
+        link: { label: "Cantine Moras", href: "https://www.cantinemoras.it/moras-campania/" },
       },
 
       wine: {

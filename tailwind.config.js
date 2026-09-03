@@ -33,6 +33,19 @@ module.exports = {
         vine: "#55683F",
         /* Flaschenglas: die dunkle Stufe von `vine`, trägt helle Schrift */
         "vine-deep": "#3D4B2D",
+        /* Backoffice-Farbschema (hell / dunkel / automatisch). Nur die
+           Komponenten unter components/admin und app/(admin) benutzen diese
+           Tokens; ihre Werte stehen in app/(admin)/admin.css. Die Storefront
+           erzeugt aus diesen Einträgen keine einzige CSS-Zeile. */
+        "a-canvas": "rgb(var(--a-canvas) / <alpha-value>)",
+        "a-surface": "rgb(var(--a-surface) / <alpha-value>)",
+        "a-ink": "rgb(var(--a-ink) / <alpha-value>)",
+        "a-accent": "rgb(var(--a-accent) / <alpha-value>)",
+        "a-accent-deep": "rgb(var(--a-accent-deep) / <alpha-value>)",
+        "a-fill": "rgb(var(--a-fill) / <alpha-value>)",
+        "a-fill-2": "rgb(var(--a-fill-2) / <alpha-value>)",
+        "a-gold": "rgb(var(--a-gold) / <alpha-value>)",
+        "a-amber": "rgb(var(--a-amber) / <alpha-value>)",
         /* Die Terrakotta-/Sand-/Linen-Palette der Kontaktseite (Mockup
            „landing page contatti.png") ist seit dem Angleich vom 20.08.2026
            entfernt — /kontakt spricht Bordeaux/Champagner/Stone wie der Rest

@@ -3,27 +3,25 @@ import PageShell from "@/components/admin/PageShell";
 import Placeholder from "@/components/admin/Placeholder";
 import Button from "@/components/ui/Button";
 import { Orders } from "@/components/admin/AdminIcons";
+import { useAdminI18n } from "@/components/admin/i18n/AdminI18n";
 
 export default function BestellungenPage() {
+  const { t } = useAdminI18n();
+
   return (
     <PageShell
-      title="Bestellungen"
-      lede="Aufträge begleiten: von der Zahlung über die Kommissionierung bis zum Versand."
+      title={t("ordersPage.title")}
+      lede={t("ordersPage.lede")}
       actions={
         <Button size="sm" variant="outline" iconType="none">
-          Export
+          {t("ordersPage.export")}
         </Button>
       }
     >
       <Placeholder
         icon={Orders}
-        title="Auftragsabwicklung"
-        items={[
-          "Auftragsliste mit Status, Zahlungsart und Lieferland",
-          "Detailansicht mit Positionen, Adressen und Rechnungsdokument",
-          "Versandetiketten und Sendungsverfolgung",
-          "Retouren und Gutschriften",
-        ]}
+        title={t("ordersPage.placeholderTitle")}
+        items={t("ordersPage.items")}
       />
     </PageShell>
   );

@@ -49,7 +49,7 @@ export default function AdminShell({ children }) {
   const isActive = (item) => item.href === active?.href;
 
   return (
-    <div className="flex h-[100dvh] overflow-hidden bg-cream text-charcoal">
+    <div className="flex h-[100dvh] overflow-hidden bg-a-canvas text-a-ink">
       <AdminSidebar collapsed={collapsed} isActive={isActive} />
 
       <AdminMobileNav
@@ -63,7 +63,7 @@ export default function AdminShell({ children }) {
         {/* ambient warmth behind the workspace — purely decorative */}
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
           <div className="absolute -left-32 -top-40 h-[420px] w-[420px] rounded-full bg-champagne/18 blur-3xl" />
-          <div className="absolute -right-40 top-1/3 h-[380px] w-[380px] rounded-full bg-bordeaux/[0.07] blur-3xl" />
+          <div className="absolute -right-40 top-1/3 h-[380px] w-[380px] rounded-full bg-a-accent/[0.07] blur-3xl" />
         </div>
 
         <AdminHeader

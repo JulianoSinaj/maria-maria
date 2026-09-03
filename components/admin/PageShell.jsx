@@ -14,14 +14,14 @@ export default function PageShell({ title, lede, actions, children }) {
         initial={reduced ? false : { opacity: 0, y: 14 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ type: "spring", stiffness: 140, damping: 22 }}
-        className="flex flex-wrap items-end justify-between gap-5 border-b border-charcoal/[0.08] pb-7"
+        className="flex flex-wrap items-end justify-between gap-5 border-b border-a-ink/[0.08] pb-7"
       >
         <div className="min-w-0 flex-1 basis-[34ch] md:max-w-[58ch]">
-          <h2 className="font-playfair text-[26px] leading-tight text-charcoal sm:text-[31px]">
+          <h2 className="font-playfair text-[26px] leading-tight text-a-ink sm:text-[31px]">
             {title}
           </h2>
           {lede && (
-            <p className="mt-2.5 text-[13.5px] leading-relaxed text-charcoal/60">{lede}</p>
+            <p className="mt-2.5 text-[13.5px] leading-relaxed text-a-ink/60">{lede}</p>
           )}
         </div>
         {actions && <div className="flex shrink-0 flex-wrap items-center gap-3">{actions}</div>}

@@ -5,6 +5,7 @@ import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import Logo from "@/components/Logo";
 import { ADMIN_SECTIONS } from "./nav";
 import { ICONS } from "./AdminIcons";
+import { useAdminI18n } from "./i18n/AdminI18n";
 
 /* Desktop rail. The active pill is a single shared element (layoutId) that
    springs between items instead of one fading in per link — the highlight
@@ -19,6 +20,7 @@ const RAIL_SPRING = { type: "spring", stiffness: 320, damping: 34, mass: 0.8 };
 export default function AdminSidebar({ collapsed = false, isActive }) {
   const pathname = usePathname();
   const reduced = useReducedMotion();
+  const { t } = useAdminI18n();
 
   return (
     <motion.aside
@@ -34,7 +36,7 @@ export default function AdminSidebar({ collapsed = false, isActive }) {
       />
 
       <div className={`flex h-20 items-center ${collapsed ? "justify-center px-0" : "px-7"}`}>
-        <Link href="/admin" aria-label="Maria Maria Admin — Übersicht" className="block shrink-0">
+        <Link href="/admin" aria-label={t("nav.logoAria")} className="block shrink-0">
           {collapsed ? (
             <span className="font-playfair text-[22px] italic leading-none text-champagne">M</span>
           ) : (
@@ -46,22 +48,24 @@ export default function AdminSidebar({ collapsed = false, isActive }) {
 
       {!collapsed && (
         <p className="px-7 pb-6 text-[10px] font-semibold uppercase tracking-[0.28em] text-champagne/60">
-          Redaktion
+          {t("nav.eyebrow")}
         </p>
       )}
 
       <nav
-        aria-label="Admin-Navigation"
+        aria-label={t("nav.aria")}
         className="flex flex-1 flex-col gap-1 px-3 pb-6"
       >
         {ADMIN_SECTIONS.map((item) => {
           const Icon = ICONS[item.icon];
           const active = isActive(item);
+          const label = t(`nav.${item.key}.label`);
+          const hint = t(`nav.${item.key}.hint`);
           return (
             <Link
               key={item.href}
               href={item.href}
-              title={collapsed ? item.label : undefined}
+              title={collapsed ? label : undefined}
               aria-current={active ? "page" : undefined}
               className={`group relative flex items-center rounded-2xl outline-offset-4 transition-colors duration-300 ${
                 collapsed ? "justify-center px-0 py-3" : "gap-3.5 px-4 py-3"
@@ -100,14 +104,14 @@ export default function AdminSidebar({ collapsed = false, isActive }) {
                     className="relative z-10 min-w-0 flex-1"
                   >
                     <span className="block truncate text-[13px] font-medium tracking-[0.02em]">
-                      {item.label}
+                      {label}
                     </span>
                     <span
                       className={`block truncate text-[10.5px] tracking-[0.06em] transition-colors duration-300 ${
                         active ? "text-champagne/80" : "text-ivory/50"
                       }`}
                     >
-                      {item.hint}
+                      {hint}
                     </span>
                   </motion.span>
                 )}
@@ -126,9 +130,9 @@ export default function AdminSidebar({ collapsed = false, isActive }) {
             transition={{ duration: reduced ? 0 : 0.25 }}
             className="border-t border-ivory/10 px-7 py-6"
           >
-            <p className="font-playfair text-[15px] italic text-champagne/90">Il piacere del vino</p>
+            <p className="font-playfair text-[15px] italic text-champagne/90">{t("nav.tagline")}</p>
             <p className="mt-1 text-[10.5px] tracking-[0.08em] text-ivory/40">
-              Maria&nbsp;Maria — Redaktionssystem
+              {t("nav.system")}
             </p>
           </motion.div>
         )}

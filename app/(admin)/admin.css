@@ -1,0 +1,84 @@
+/* Admin colour scheme — light / dark / auto.
+   ------------------------------------------------------------------
+   Only the backoffice root layout imports this file, so nothing here reaches
+   the storefront. The admin components speak in semantic tokens (a-canvas,
+   a-surface, a-ink, a-accent, a-fill …) declared in tailwind.config.js as
+   rgb(var(--a-*) / <alpha-value>); this file gives the variables their
+   values per scheme.
+
+   Resolution order:
+     1. html[data-admin-theme="light|dark"] — an explicit editor choice,
+        stamped by the server layout from the mm-admin-theme cookie so the
+        first paint is already right, then kept in step by AdminTheme.jsx.
+     2. No attribute ("auto") — the device decides via prefers-color-scheme.
+
+   The espresso rail, the drawer and photo overlays keep the raw palette
+   (ivory / champagne / espresso) on purpose: they are dark surfaces in both
+   schemes. */
+
+:root {
+  --a-canvas: 251 249 244;      /* cream    #FBF9F4 */
+  --a-surface: 247 244 239;     /* ivory    #F7F4EF */
+  --a-ink: 27 27 27;            /* charcoal #1B1B1B */
+  --a-accent: 107 15 26;        /* bordeaux #6B0F1A */
+  --a-accent-deep: 67 9 15;     /* bordeaux-deep #43090F */
+  --a-fill: 107 15 26;          /* bordeaux fill */
+  --a-fill-2: 138 43 47;        /* wine #8A2B2F */
+  --a-gold: 122 100 32;         /* #7a6420 — text on champagne tints */
+  --a-amber: 122 78 51;         /* #7a4e33 — text on amphora tints */
+  color-scheme: light;
+}
+
+html[data-admin-theme="dark"] {
+  --a-canvas: 20 17 16;         /* #141110 */
+  --a-surface: 31 26 24;        /* #1F1A18 */
+  --a-ink: 241 236 227;         /* #F1ECE3 */
+  --a-accent: 217 138 145;      /* #D98A91 — bordeaux lifted for dark ground */
+  --a-accent-deep: 237 179 184; /* #EDB3B8 */
+  --a-fill: 138 43 47;          /* wine */
+  --a-fill-2: 168 57 63;        /* #A8393F */
+  --a-gold: 227 217 184;        /* champagne-light */
+  --a-amber: 217 176 140;       /* #D9B08C */
+  color-scheme: dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  html:not([data-admin-theme="light"]) {
+    --a-canvas: 20 17 16;
+    --a-surface: 31 26 24;
+    --a-ink: 241 236 227;
+    --a-accent: 217 138 145;
+    --a-accent-deep: 237 179 184;
+    --a-fill: 138 43 47;
+    --a-fill-2: 168 57 63;
+    --a-gold: 227 217 184;
+    --a-amber: 217 176 140;
+    color-scheme: dark;
+  }
+}
+
+/* globals.css paints the body in fixed ivory/charcoal — the admin follows
+   its tokens instead */
+body {
+  background: rgb(var(--a-canvas));
+  color: rgb(var(--a-ink));
+}
+
+/* the frosted-glass shadows carry a white inset highlight that reads as a
+   hard hairline on dark ground, and the ivory focus halo would bloom there */
+html[data-admin-theme="dark"] .shadow-glass,
+html[data-admin-theme="dark"] .shadow-chip {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 20px 50px -20px rgba(0, 0, 0, 0.6);
+}
+html[data-admin-theme="dark"] :focus-visible {
+  box-shadow: 0 0 0 6px rgb(var(--a-canvas) / 0.8);
+}
+@media (prefers-color-scheme: dark) {
+  html:not([data-admin-theme="light"]) .shadow-glass,
+  html:not([data-admin-theme="light"]) .shadow-chip {
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 20px 50px -20px rgba(0, 0, 0, 0.6);
+  }
+  html:not([data-admin-theme="light"]) :focus-visible {
+    box-shadow: 0 0 0 6px rgb(var(--a-canvas) / 0.8);
+  }
+}

@@ -4,6 +4,7 @@ import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import { Close } from "@/components/Icons";
 import { WINES } from "@/components/data";
 import { GALLERY_CATEGORIES } from "@/lib/gallery/categories";
+import { useAdminI18n } from "../i18n/AdminI18n";
 
 /* Media & Asset Gallery.
    The library view over every image the project actually holds — scanned
@@ -11,15 +12,19 @@ import { GALLERY_CATEGORIES } from "@/lib/gallery/categories";
    card carries the three quick actions: copy the path, open the
    full-resolution lightbox, or assign the asset to the hero section / a
    wine's mockup slot (both go through the existing admin APIs, so all their
-   validation still applies — a foreign wine's packshot is still refused). */
+   validation still applies — a foreign wine's packshot is still refused).
 
-const TABS = [{ key: "all", label: "Alle", hint: "Gesamte Bibliothek" }, ...GALLERY_CATEGORIES];
+   Tab labels come from the admin dictionary keyed on the category key, so
+   lib/gallery/categories.js stays the single list of what exists. */
+
+const TAB_KEYS = ["all", ...GALLERY_CATEGORIES.map((c) => c.key)];
 
 const fmtSize = (b) =>
   b >= 1024 * 1024 ? `${(b / 1024 / 1024).toFixed(1)} MB` : `${Math.round(b / 1024)} KB`;
 
 export default function AssetGallery() {
   const reduced = useReducedMotion();
+  const { t } = useAdminI18n();
   const fileRef = useRef(null);
   const [assets, setAssets] = useState([]);
   const [counts, setCounts] = useState({});
@@ -30,6 +35,8 @@ export default function AssetGallery() {
   const [assignFor, setAssignFor] = useState(null); // asset | null
   const [assignWine, setAssignWine] = useState(WINES[0]?.slug ?? "");
   const [toast, setToast] = useState(null);
+
+  const tabLabel = (key) => t(`gallery.${key}.label`);
 
   const flash = (message, tone = "ok") => {
     setToast({ message, tone });
@@ -80,7 +87,7 @@ export default function AssetGallery() {
       document.execCommand("copy");
       ta.remove();
     }
-    flash(`Pfad kopiert: ${asset.path}`);
+    flash(t("gallery.pathCopied", { path: asset.path }));
   };
 
   const assignHero = async (asset) => {
@@ -90,12 +97,12 @@ export default function AssetGallery() {
       body: JSON.stringify({ image: { src: asset.path } }),
     });
     const body = await res.json().catch(() => null);
-    if (!res.ok) return flash(body?.error ?? "Zuweisung fehlgeschlagen", "error");
+    if (!res.ok) return flash(body?.error ?? t("common.assignFailed"), "error");
     setAssignFor(null);
     /* the Hero Manager sits on the same page — tell it to refetch so its
        preview shows the newly assigned background immediately */
     window.dispatchEvent(new CustomEvent("mm:hero-config-changed"));
-    flash(`„${asset.name}" ist jetzt Hero-Hintergrund.`);
+    flash(t("gallery.heroAssigned", { name: asset.name }));
   };
 
   const assignWineMockup = async (asset, slug) => {
@@ -105,10 +112,10 @@ export default function AssetGallery() {
       body: JSON.stringify({ asset: asset.path }),
     });
     const body = await res.json().catch(() => null);
-    if (!res.ok) return flash(body?.error ?? "Zuweisung fehlgeschlagen", "error");
+    if (!res.ok) return flash(body?.error ?? t("common.assignFailed"), "error");
     setAssignFor(null);
     const wine = WINES.find((w) => w.slug === slug);
-    flash(`„${asset.name}" ist jetzt Mockup von ${wine?.name ?? slug}.`);
+    flash(t("gallery.mockupAssigned", { name: asset.name, wine: wine?.name ?? slug }));
   };
 
   const pickUpload = async (file) => {
@@ -126,8 +133,8 @@ export default function AssetGallery() {
       body: JSON.stringify({ category, name: file.name, dataUrl }),
     });
     const body = await res.json().catch(() => null);
-    if (!res.ok) return flash(body?.error ?? "Upload fehlgeschlagen", "error");
-    flash(`„${body.data.name}" hochgeladen (${TABS.find((t) => t.key === category)?.label}).`);
+    if (!res.ok) return flash(body?.error ?? t("common.uploadFailed"), "error");
+    flash(t("gallery.uploaded", { name: body.data.name, category: tabLabel(category) }));
     load();
   };
 
@@ -135,39 +142,39 @@ export default function AssetGallery() {
     "rounded-lg px-2 py-1.5 text-[10px] font-medium tracking-[0.04em] transition-colors duration-300";
 
   return (
-    <section aria-label="Media & Asset-Galerie" className="flex flex-col gap-4">
+    <section aria-label={t("gallery.sectionAria")} className="flex flex-col gap-4">
       {/* ---- tabs + upload ---- */}
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <div role="tablist" aria-label="Asset-Kategorien" className="no-scrollbar -mx-1 flex gap-1.5 overflow-x-auto px-1 pb-1">
-          {TABS.map((t) => {
-            const active = tab === t.key;
+        <div role="tablist" aria-label={t("gallery.tabsAria")} className="no-scrollbar -mx-1 flex gap-1.5 overflow-x-auto px-1 pb-1">
+          {TAB_KEYS.map((key) => {
+            const active = tab === key;
             return (
               <button
-                key={t.key}
+                key={key}
                 role="tab"
                 type="button"
                 aria-selected={active}
-                title={t.hint}
-                onClick={() => setTab(t.key)}
+                title={t(`gallery.${key}.hint`)}
+                onClick={() => setTab(key)}
                 className={`relative shrink-0 rounded-full px-4 py-2 transition-colors duration-300 ${
-                  active ? "text-ivory" : "text-charcoal/60 hover:text-bordeaux"
+                  active ? "text-ivory" : "text-a-ink/60 hover:text-a-accent"
                 }`}
               >
                 {active && (
                   <motion.span
                     layoutId="gallery-tab-pill"
                     aria-hidden="true"
-                    className="absolute inset-0 rounded-full bg-gradient-to-br from-bordeaux to-wine"
+                    className="absolute inset-0 rounded-full bg-gradient-to-br from-a-fill to-a-fill-2"
                     transition={reduced ? { duration: 0 } : { type: "spring", stiffness: 340, damping: 32 }}
                   />
                 )}
                 {!active && (
-                  <span aria-hidden="true" className="absolute inset-0 rounded-full border border-charcoal/12" />
+                  <span aria-hidden="true" className="absolute inset-0 rounded-full border border-a-ink/12" />
                 )}
                 <span className="relative z-10 flex items-baseline gap-1.5 whitespace-nowrap text-[12px]">
-                  {t.label}
-                  <span className={`text-[10px] tabular-nums ${active ? "text-ivory/65" : "text-charcoal/35"}`}>
-                    {counts[t.key] ?? "–"}
+                  {tabLabel(key)}
+                  <span className={`text-[10px] tabular-nums ${active ? "text-ivory/65" : "text-a-ink/35"}`}>
+                    {counts[key] ?? "–"}
                   </span>
                 </span>
               </button>
@@ -178,9 +185,9 @@ export default function AssetGallery() {
         <button
           type="button"
           onClick={() => fileRef.current?.click()}
-          className="shrink-0 rounded-full border border-charcoal/12 px-4 py-2 text-[11.5px] text-charcoal/60 transition-colors hover:border-champagne hover:text-bordeaux"
+          className="shrink-0 rounded-full border border-a-ink/12 px-4 py-2 text-[11.5px] text-a-ink/60 transition-colors hover:border-champagne hover:text-a-accent"
         >
-          Hochladen + {tab !== "all" && `(${TABS.find((t) => t.key === tab)?.label})`}
+          {t("common.upload")} {tab !== "all" && `(${tabLabel(tab)})`}
         </button>
         <input
           ref={fileRef}
@@ -195,8 +202,8 @@ export default function AssetGallery() {
       </div>
 
       {error && (
-        <p role="alert" className="rounded-xl bg-bordeaux/10 px-4 py-3 text-[12px] text-bordeaux">
-          Galerie konnte nicht geladen werden: {error.message}
+        <p role="alert" className="rounded-xl bg-a-accent/10 px-4 py-3 text-[12px] text-a-accent">
+          {t("gallery.loadError", { message: error.message })}
         </p>
       )}
 
@@ -204,16 +211,14 @@ export default function AssetGallery() {
       {loading ? (
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-5">
           {[...Array(10)].map((_, i) => (
-            <div key={i} className="aspect-square animate-pulse rounded-card bg-charcoal/[0.05]" />
+            <div key={i} className="aspect-square animate-pulse rounded-card bg-a-ink/[0.05]" />
           ))}
         </div>
       ) : visible.length === 0 ? (
-        <div className="rounded-card-lg border border-dashed border-charcoal/15 bg-ivory/40 px-8 py-12 text-center">
-          <p className="font-playfair text-[18px] text-charcoal">Noch keine Assets in dieser Kategorie</p>
-          <p className="mx-auto mt-2 max-w-[44ch] text-[12.5px] leading-relaxed text-charcoal/50">
-            {tab === "bundle"
-              ? "Es existieren noch keine 9er-Showcase-Kompositionen — die erste lässt sich direkt hier hochladen."
-              : "Über „Hochladen +” landet ein Bild direkt in diesem Tab."}
+        <div className="rounded-card-lg border border-dashed border-a-ink/15 bg-a-surface/40 px-8 py-12 text-center">
+          <p className="font-playfair text-[18px] text-a-ink">{t("gallery.emptyTitle")}</p>
+          <p className="mx-auto mt-2 max-w-[44ch] text-[12.5px] leading-relaxed text-a-ink/50">
+            {tab === "bundle" ? t("gallery.emptyBundle") : t("gallery.emptyOther")}
           </p>
         </div>
       ) : (
@@ -222,9 +227,9 @@ export default function AssetGallery() {
             <div
               key={a.path}
               data-asset={a.path}
-              className="group relative overflow-hidden rounded-card border border-charcoal/[0.08] bg-ivory/60"
+              className="group relative overflow-hidden rounded-card border border-a-ink/[0.08] bg-a-surface/60"
             >
-              <div className="relative aspect-square overflow-hidden bg-cream">
+              <div className="relative aspect-square overflow-hidden bg-a-canvas">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={a.path}
@@ -236,27 +241,27 @@ export default function AssetGallery() {
                 />
                 {/* hover action bar */}
                 <div className="absolute inset-x-0 bottom-0 flex items-center justify-center gap-1 bg-gradient-to-t from-espresso/85 to-transparent p-2 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-within:opacity-100">
-                  <button type="button" onClick={() => copyPath(a)} title="Pfad kopieren"
+                  <button type="button" onClick={() => copyPath(a)} title={t("gallery.copyPathTitle")}
                     className={`${actionBtn} bg-ivory/15 text-ivory hover:bg-ivory hover:text-charcoal`}>
-                    Pfad
+                    {t("gallery.path")}
                   </button>
-                  <button type="button" onClick={() => setLightbox(a)} title="Vollbild-Vorschau"
+                  <button type="button" onClick={() => setLightbox(a)} title={t("gallery.fullscreenTitle")}
                     className={`${actionBtn} bg-ivory/15 text-ivory hover:bg-ivory hover:text-charcoal`}>
-                    Vollbild
+                    {t("gallery.fullscreen")}
                   </button>
                   <button type="button" onClick={() => { setAssignFor(a); setAssignWine(a.wine ?? WINES[0]?.slug); }}
-                    title="Hero oder Wein zuweisen"
+                    title={t("gallery.assignTitle")}
                     className={`${actionBtn} bg-champagne/90 text-espresso hover:bg-champagne`}>
-                    Zuweisen
+                    {t("gallery.assign")}
                   </button>
                 </div>
               </div>
               <div className="flex items-baseline justify-between gap-2 px-2.5 py-2">
-                <span className="min-w-0 truncate text-[10.5px] text-charcoal/70">
+                <span className="min-w-0 truncate text-[10.5px] text-a-ink/70">
                   {a.uploaded ? "▲ " : ""}
                   {a.name}
                 </span>
-                <span className="shrink-0 text-[9.5px] text-charcoal/35">
+                <span className="shrink-0 text-[9.5px] text-a-ink/35">
                   {a.wine ?? fmtSize(a.size)}
                 </span>
               </div>
@@ -277,17 +282,17 @@ export default function AssetGallery() {
             className="fixed inset-0 z-[95] flex flex-col bg-espresso/92 backdrop-blur-sm"
             role="dialog"
             aria-modal="true"
-            aria-label={`Vollbild: ${lightbox.name}`}
+            aria-label={t("gallery.lightboxAria", { name: lightbox.name })}
           >
             <button
               type="button"
-              aria-label="Vorschau schließen"
+              aria-label={t("gallery.closePreview")}
               onClick={() => setLightbox(null)}
               className="absolute right-5 top-5 z-10 flex h-11 w-11 items-center justify-center rounded-full border border-ivory/25 text-ivory transition-colors hover:border-champagne hover:text-champagne"
             >
               <Close className="h-5 w-5" />
             </button>
-            <button type="button" aria-label="Schließen" onClick={() => setLightbox(null)}
+            <button type="button" aria-label={t("common.close")} onClick={() => setLightbox(null)}
               className="flex min-h-0 flex-1 cursor-zoom-out items-center justify-center p-8">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={lightbox.path} alt={lightbox.name} className="max-h-full max-w-full rounded-lg object-contain" />
@@ -302,7 +307,7 @@ export default function AssetGallery() {
               </div>
               <button type="button" onClick={() => copyPath(lightbox)}
                 className="shrink-0 rounded-full bg-ivory/10 px-4 py-2 text-[11px] text-ivory transition-colors hover:bg-ivory hover:text-charcoal">
-                Pfad kopieren
+                {t("gallery.copyPath")}
               </button>
             </div>
           </motion.div>
@@ -320,53 +325,55 @@ export default function AssetGallery() {
             className="fixed inset-0 z-[96] grid place-items-center bg-espresso/50 p-6 backdrop-blur-sm"
             role="dialog"
             aria-modal="true"
-            aria-label={`Zuweisen: ${assignFor.name}`}
+            aria-label={t("gallery.assignAria", { name: assignFor.name })}
           >
             <motion.div
               data-assign-dialog
               initial={reduced ? false : { y: 16, scale: 0.98 }}
               animate={{ y: 0, scale: 1 }}
               transition={{ type: "spring", stiffness: 300, damping: 28 }}
-              className="w-full max-w-[400px] rounded-card-lg bg-cream p-5 shadow-glass"
+              className="w-full max-w-[400px] rounded-card-lg bg-a-canvas p-5 shadow-glass"
             >
               <div className="flex items-start justify-between gap-3">
                 <div className="min-w-0">
-                  <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-bordeaux/55">Zuweisen</p>
-                  <p className="mt-1 truncate font-playfair text-[17px] text-charcoal">{assignFor.name}</p>
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-a-accent/55">
+                    {t("gallery.assign")}
+                  </p>
+                  <p className="mt-1 truncate font-playfair text-[17px] text-a-ink">{assignFor.name}</p>
                 </div>
-                <button type="button" onClick={() => setAssignFor(null)} aria-label="Schließen"
-                  className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-charcoal/12 text-charcoal/60 hover:border-champagne hover:text-bordeaux">
+                <button type="button" onClick={() => setAssignFor(null)} aria-label={t("common.close")}
+                  className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-a-ink/12 text-a-ink/60 hover:border-champagne hover:text-a-accent">
                   <Close className="h-4 w-4" />
                 </button>
               </div>
 
               <button type="button" onClick={() => assignHero(assignFor)}
-                className="mt-4 w-full rounded-xl bg-gradient-to-br from-bordeaux to-wine px-4 py-3 text-left text-[12.5px] font-medium text-ivory transition-opacity hover:opacity-90">
-                Als Hero-Hintergrund der Startseite
+                className="mt-4 w-full rounded-xl bg-gradient-to-br from-a-fill to-a-fill-2 px-4 py-3 text-left text-[12.5px] font-medium text-ivory transition-opacity hover:opacity-90">
+                {t("gallery.asHero")}
               </button>
 
-              <div className="mt-3 rounded-xl border border-charcoal/[0.08] bg-ivory/50 p-3">
-                <p className="mb-2 text-[10.5px] font-semibold uppercase tracking-[0.14em] text-charcoal/50">
-                  Als Wein-Mockup
+              <div className="mt-3 rounded-xl border border-a-ink/[0.08] bg-a-surface/50 p-3">
+                <p className="mb-2 text-[10.5px] font-semibold uppercase tracking-[0.14em] text-a-ink/50">
+                  {t("gallery.asMockup")}
                 </p>
                 <div className="flex gap-2">
                   <select
                     value={assignWine}
                     onChange={(e) => setAssignWine(e.target.value)}
-                    aria-label="Ziel-Wein"
-                    className="h-10 min-w-0 flex-1 rounded-xl border border-charcoal/12 bg-cream px-2.5 text-[12px] text-charcoal focus:border-champagne focus:outline-none"
+                    aria-label={t("gallery.targetWine")}
+                    className="h-10 min-w-0 flex-1 rounded-xl border border-a-ink/12 bg-a-canvas px-2.5 text-[12px] text-a-ink focus:border-champagne focus:outline-none"
                   >
                     {WINES.map((w) => (
                       <option key={w.slug} value={w.slug}>{w.name}</option>
                     ))}
                   </select>
                   <button type="button" onClick={() => assignWineMockup(assignFor, assignWine)}
-                    className="shrink-0 rounded-xl border border-bordeaux px-4 text-[11.5px] font-medium text-bordeaux transition-colors hover:bg-bordeaux hover:text-ivory">
-                    Zuweisen
+                    className="shrink-0 rounded-xl border border-a-accent px-4 text-[11.5px] font-medium text-a-accent transition-colors hover:bg-a-fill hover:text-ivory">
+                    {t("gallery.assign")}
                   </button>
                 </div>
-                <p className="mt-2 text-[10px] leading-relaxed text-charcoal/40">
-                  Packshots eines anderen Weins lehnt die Prüfung ab — Galerie-Uploads sind frei zuweisbar.
+                <p className="mt-2 text-[10px] leading-relaxed text-a-ink/40">
+                  {t("gallery.assignNote")}
                 </p>
               </div>
             </motion.div>
@@ -385,7 +392,7 @@ export default function AssetGallery() {
             exit={{ opacity: 0, y: 16 }}
             transition={{ type: "spring", stiffness: 260, damping: 26 }}
             className={`fixed bottom-6 left-1/2 z-[97] max-w-[90vw] -translate-x-1/2 truncate rounded-full px-6 py-3.5 text-[12.5px] shadow-glass ${
-              toast.tone === "error" ? "bg-bordeaux text-ivory" : "bg-espresso text-ivory"
+              toast.tone === "error" ? "bg-a-fill text-ivory" : "bg-espresso text-ivory"
             }`}
           >
             {toast.message}

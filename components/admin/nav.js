@@ -1,37 +1,35 @@
 /* Single source of truth for the admin sidebar, the header breadcrumb and the
-   mobile drawer. Order here is the order in the UI. */
+   mobile drawer. Order here is the order in the UI.
+
+   `key` addresses the dictionary (components/admin/i18n/dictionary.js):
+   label = t(`nav.${key}.label`), hint = t(`nav.${key}.hint`). */
 
 export const ADMIN_NAV = [
   {
     href: "/admin",
-    label: "Übersicht",
-    hint: "Kennzahlen & Aktivität",
+    key: "overview",
     icon: "overview",
     /* only /admin itself — every other section would match a prefix test */
     exact: true,
   },
   {
     href: "/admin/portfolio",
-    label: "Weinportfolio",
-    hint: "Kollektion & Bestand",
+    key: "portfolio",
     icon: "bottle",
   },
   {
     href: "/admin/regionen",
-    label: "Regionen-Storytelling",
-    hint: "Herkunft & Erzählung",
+    key: "regions",
     icon: "map",
   },
   {
     href: "/admin/media",
-    label: "Hero & Media",
-    hint: "Bildwelten & Video",
+    key: "media",
     icon: "media",
   },
   {
     href: "/admin/bestellungen",
-    label: "Bestellungen",
-    hint: "Aufträge & Versand",
+    key: "orders",
     icon: "orders",
   },
   {

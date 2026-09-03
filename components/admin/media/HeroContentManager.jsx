@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import { HERO_LIMITS, VEIL_RANGES, veilGradient } from "@/lib/hero/store";
+import { useAdminI18n } from "../i18n/AdminI18n";
 
 /* Hero Section Content Manager.
    Left: a live miniature of the landing hero — the chosen photo under the
@@ -16,43 +17,45 @@ import { HERO_LIMITS, VEIL_RANGES, veilGradient } from "@/lib/hero/store";
 
 const Toggle = ({ on, onChange, label }) => (
   <button type="button" role="switch" aria-checked={on} onClick={() => onChange(!on)} className="flex items-center gap-2.5">
-    <span className={`relative h-6 w-10 shrink-0 rounded-full transition-colors duration-300 ${on ? "bg-bordeaux" : "bg-charcoal/15"}`}>
+    <span className={`relative h-6 w-10 shrink-0 rounded-full transition-colors duration-300 ${on ? "bg-a-fill" : "bg-a-ink/15"}`}>
       <motion.span
         className="absolute top-0.5 h-5 w-5 rounded-full bg-ivory shadow-chip"
         animate={{ left: on ? 18 : 2 }}
         transition={{ type: "spring", stiffness: 400, damping: 28 }}
       />
     </span>
-    <span className="text-[12px] text-charcoal/70">{label}</span>
+    <span className="text-[12px] text-a-ink/70">{label}</span>
   </button>
 );
 
 const Count = ({ value, max }) => (
   <span
     className={`text-[10px] tabular-nums ${
-      value.length > max * 0.9 ? "text-bordeaux/80" : "text-charcoal/35"
+      value.length > max * 0.9 ? "text-a-accent/80" : "text-a-ink/35"
     }`}
   >
     {value.length}/{max}
   </span>
 );
 
-const sectionCls = "rounded-2xl border border-charcoal/[0.08] bg-ivory/50 p-4";
-const legendCls = "mb-3 text-[11px] font-semibold uppercase tracking-[0.14em] text-charcoal/55";
+const sectionCls = "rounded-2xl border border-a-ink/[0.08] bg-a-surface/50 p-4";
+const legendCls = "mb-3 text-[11px] font-semibold uppercase tracking-[0.14em] text-a-ink/55";
 const inputCls =
-  "h-10 w-full rounded-xl border border-charcoal/12 bg-cream px-3 text-[12.5px] text-charcoal transition-colors duration-300 placeholder:text-charcoal/30 focus:border-champagne focus:outline-none";
+  "h-10 w-full rounded-xl border border-a-ink/12 bg-a-canvas px-3 text-[12.5px] text-a-ink transition-colors duration-300 placeholder:text-a-ink/30 focus:border-champagne focus:outline-none";
 
+/* copy fields — `label` addresses the admin dictionary */
 const FIELDS = [
-  { key: "eyebrow", label: "Eyebrow" },
-  { key: "titleLine1", label: "Titel — Zeile 1" },
-  { key: "titleLine2", label: "Titel — Zeile 2 (kursiv)" },
-  { key: "lede", label: "Markenbotschaft", textarea: true },
-  { key: "ctaPrimary", label: "Primärer Button" },
-  { key: "ctaSecondary", label: "Sekundärer Button" },
+  { key: "eyebrow", label: "hero.fieldEyebrow" },
+  { key: "titleLine1", label: "hero.fieldTitle1" },
+  { key: "titleLine2", label: "hero.fieldTitle2" },
+  { key: "lede", label: "hero.fieldLede", textarea: true },
+  { key: "ctaPrimary", label: "hero.fieldCtaPrimary" },
+  { key: "ctaSecondary", label: "hero.fieldCtaSecondary" },
 ];
 
 export default function HeroContentManager() {
   const reduced = useReducedMotion();
+  const { t } = useAdminI18n();
   const stageRef = useRef(null);
   const fileRef = useRef(null);
   const [cfg, setCfg] = useState(null);
@@ -110,7 +113,7 @@ export default function HeroContentManager() {
     });
     const body = await res.json().catch(() => null);
     if (!res.ok) {
-      setError(new Error(body?.error ?? "Upload fehlgeschlagen"));
+      setError(new Error(body?.error ?? t("common.uploadFailed")));
       return;
     }
     setImages((a) => [...a, body.data]);
@@ -127,7 +130,7 @@ export default function HeroContentManager() {
         body: JSON.stringify(cfg),
       });
       const body = await res.json().catch(() => null);
-      if (!res.ok) throw new Error(body?.error ?? `Speichern fehlgeschlagen (${res.status})`);
+      if (!res.ok) throw new Error(body?.error ?? t("common.saveFailed", { status: res.status }));
       setSavedAt(Date.now());
       window.setTimeout(() => setSavedAt(null), 2800);
     } catch (e) {
@@ -145,8 +148,8 @@ export default function HeroContentManager() {
 
   if (!cfg) {
     return (
-      <div className="rounded-card-lg border border-charcoal/[0.08] bg-ivory/50 p-10 text-center text-[12.5px] text-charcoal/45">
-        {error ? `Hero konnte nicht geladen werden: ${error.message}` : "Hero-Konfiguration wird geladen …"}
+      <div className="rounded-card-lg border border-a-ink/[0.08] bg-a-surface/50 p-10 text-center text-[12.5px] text-a-ink/45">
+        {error ? t("hero.loadError", { message: error.message }) : t("hero.loading")}
       </div>
     );
   }
@@ -155,8 +158,35 @@ export default function HeroContentManager() {
   /* a dark shadow veil flips the copy to ivory, as the storefront would */
   const darkVeil = cfg.veil.enabled && cfg.veil.tone === "espresso";
 
+  const sliders = [
+    {
+      key: "opacity",
+      label: t("hero.opacity"),
+      min: 0, max: 100, step: 5,
+      toUi: (v) => Math.round(v * 100),
+      fromUi: (v) => v / 100,
+      unit: "%",
+    },
+    {
+      key: "softness",
+      label: t("hero.softness"),
+      min: VEIL_RANGES.softness.min * 10, max: VEIL_RANGES.softness.max * 10, step: 1,
+      toUi: (v) => Math.round(v * 10),
+      fromUi: (v) => v / 10,
+      unit: "", hint: t("hero.softnessHint"),
+    },
+    {
+      key: "distance",
+      label: t("hero.distance"),
+      min: VEIL_RANGES.distance.min, max: VEIL_RANGES.distance.max, step: 5,
+      toUi: (v) => v,
+      fromUi: (v) => v,
+      unit: "%", hint: t("hero.distanceHint"),
+    },
+  ];
+
   return (
-    <section aria-label="Hero-Inhalte" className="grid gap-5 xl:grid-cols-[1.45fr_1fr]">
+    <section aria-label={t("hero.sectionAria")} className="grid gap-5 xl:grid-cols-[1.45fr_1fr]">
       {/* ---------------- live hero preview ---------------- */}
       <motion.div
         initial={reduced ? false : { opacity: 0, y: 16 }}
@@ -169,15 +199,15 @@ export default function HeroContentManager() {
           type="button"
           data-hero-preview
           onClick={onStageClick}
-          title="Klick setzt den Bildanker"
-          className="group relative block aspect-[16/9] w-full cursor-crosshair overflow-hidden rounded-card-lg border border-charcoal/[0.08] bg-espresso text-left"
+          title={t("hero.stageTitle")}
+          className="group relative block aspect-[16/9] w-full cursor-crosshair overflow-hidden rounded-card-lg border border-a-ink/[0.08] bg-espresso text-left"
         >
           {cfg.image.src && (
             /* eslint-disable-next-line @next/next/no-img-element */
             <img
               data-hero-img
               src={cfg.image.src}
-              alt="Hero-Hintergrund Vorschau"
+              alt={t("hero.imgAlt")}
               className="absolute inset-0 h-full w-full object-cover"
               style={{ objectPosition: `${focus.x}% ${focus.y}%` }}
             />
@@ -231,9 +261,8 @@ export default function HeroContentManager() {
           </span>
         </button>
 
-        <p className="text-[10.5px] text-charcoal/40" data-focus-readout>
-          Bildanker: {focus.x} % / {focus.y} % — Klick auf die Vorschau verschiebt ihn.
-          Schleier und Textspalte entsprechen dem Live-Hero.
+        <p className="text-[10.5px] text-a-ink/40" data-focus-readout>
+          {t("hero.readout", { x: focus.x, y: focus.y })}
         </p>
       </motion.div>
 
@@ -245,20 +274,20 @@ export default function HeroContentManager() {
         className="flex flex-col gap-4"
       >
         {error && (
-          <p role="alert" className="rounded-xl bg-bordeaux/10 px-4 py-3 text-[12px] text-bordeaux">
+          <p role="alert" className="rounded-xl bg-a-accent/10 px-4 py-3 text-[12px] text-a-accent">
             {error.message}
           </p>
         )}
 
         <div className={sectionCls}>
           <div className="mb-3 flex items-center justify-between">
-            <p className={`${legendCls} mb-0`}>Hintergrundbild</p>
+            <p className={`${legendCls} mb-0`}>{t("hero.background")}</p>
             <button
               type="button"
               onClick={() => fileRef.current?.click()}
-              className="text-[11.5px] font-medium text-bordeaux transition-colors hover:text-bordeaux-deep"
+              className="text-[11.5px] font-medium text-a-accent transition-colors hover:text-a-accent-deep"
             >
-              Hochladen +
+              {t("common.upload")}
             </button>
             <input
               ref={fileRef}
@@ -276,15 +305,15 @@ export default function HeroContentManager() {
                 title={img.name}
                 aria-pressed={cfg.image.src === img.path}
                 onClick={() => setImage({ src: img.path })}
-                className={`group relative overflow-hidden rounded-xl border bg-cream p-1 transition-colors duration-300 ${
+                className={`group relative overflow-hidden rounded-xl border bg-a-canvas p-1 transition-colors duration-300 ${
                   cfg.image.src === img.path
-                    ? "border-bordeaux ring-1 ring-bordeaux"
-                    : "border-charcoal/[0.08] hover:border-champagne"
+                    ? "border-a-accent ring-1 ring-a-accent"
+                    : "border-a-ink/[0.08] hover:border-champagne"
                 }`}
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={img.path} alt={img.name} loading="lazy" className="h-14 w-full rounded-lg object-cover" />
-                <span className="mt-1 block truncate text-center text-[8.5px] text-charcoal/45">
+                <span className="mt-1 block truncate text-center text-[8.5px] text-a-ink/45">
                   {img.uploaded ? "▲ " : ""}
                   {img.name}
                 </span>
@@ -294,72 +323,47 @@ export default function HeroContentManager() {
         </div>
 
         <div className={sectionCls}>
-          <p className={legendCls}>Schleier & Schatten</p>
+          <p className={legendCls}>{t("hero.veil")}</p>
           <Toggle
             on={cfg.veil.enabled}
             onChange={(v) => setVeil({ enabled: v })}
-            label={cfg.veil.enabled ? "Farbfläche links aktiv" : "Farbfläche links entfernt"}
+            label={cfg.veil.enabled ? t("hero.veilOn") : t("hero.veilOff")}
           />
 
           <div className={`mt-3 flex flex-col gap-3 transition-opacity ${cfg.veil.enabled ? "" : "pointer-events-none opacity-40"}`}>
-            <div className="grid grid-cols-2 gap-2" role="radiogroup" aria-label="Schleierton">
+            <div className="grid grid-cols-2 gap-2" role="radiogroup" aria-label={t("hero.toneAria")}>
               {[
-                { key: "ivory", label: "Hell (Ivory)", hint: "wie der Live-Hero" },
-                { key: "espresso", label: "Schatten", hint: "dunkles Overlay" },
-              ].map((t) => (
+                { key: "ivory", label: t("hero.toneIvory.label"), hint: t("hero.toneIvory.hint") },
+                { key: "espresso", label: t("hero.toneEspresso.label"), hint: t("hero.toneEspresso.hint") },
+              ].map((tone) => (
                 <button
-                  key={t.key}
+                  key={tone.key}
                   type="button"
                   role="radio"
-                  aria-checked={cfg.veil.tone === t.key}
-                  onClick={() => setVeil({ tone: t.key })}
+                  aria-checked={cfg.veil.tone === tone.key}
+                  onClick={() => setVeil({ tone: tone.key })}
                   className={`rounded-xl border px-3 py-2 text-left transition-colors duration-300 ${
-                    cfg.veil.tone === t.key
-                      ? "border-bordeaux bg-bordeaux text-ivory"
-                      : "border-charcoal/12 text-charcoal/60 hover:border-champagne"
+                    cfg.veil.tone === tone.key
+                      ? "border-a-accent bg-a-fill text-ivory"
+                      : "border-a-ink/12 text-a-ink/60 hover:border-champagne"
                   }`}
                 >
-                  <span className="block text-[11.5px] font-medium">{t.label}</span>
-                  <span className={`block text-[9.5px] ${cfg.veil.tone === t.key ? "text-ivory/60" : "text-charcoal/35"}`}>
-                    {t.hint}
+                  <span className="block text-[11.5px] font-medium">{tone.label}</span>
+                  <span className={`block text-[9.5px] ${cfg.veil.tone === tone.key ? "text-ivory/60" : "text-a-ink/35"}`}>
+                    {tone.hint}
                   </span>
                 </button>
               ))}
             </div>
 
-            {[
-              {
-                key: "opacity",
-                label: "Deckkraft",
-                min: 0, max: 100, step: 5,
-                toUi: (v) => Math.round(v * 100),
-                fromUi: (v) => v / 100,
-                unit: "%",
-              },
-              {
-                key: "softness",
-                label: "Weichheit",
-                min: VEIL_RANGES.softness.min * 10, max: VEIL_RANGES.softness.max * 10, step: 1,
-                toUi: (v) => Math.round(v * 10),
-                fromUi: (v) => v / 10,
-                unit: "", hint: "höher = weicherer Verlauf",
-              },
-              {
-                key: "distance",
-                label: "Übergangsdistanz",
-                min: VEIL_RANGES.distance.min, max: VEIL_RANGES.distance.max, step: 5,
-                toUi: (v) => v,
-                fromUi: (v) => v,
-                unit: "%", hint: "wie weit der Verlauf ins Bild reicht",
-              },
-            ].map((s) => (
+            {sliders.map((s) => (
               <label key={s.key} className="block">
                 <span className="mb-1 flex items-baseline justify-between">
-                  <span className="text-[10.5px] text-charcoal/50">
+                  <span className="text-[10.5px] text-a-ink/50">
                     {s.label}
-                    {s.hint && <span className="ml-1.5 text-charcoal/30">· {s.hint}</span>}
+                    {s.hint && <span className="ml-1.5 text-a-ink/30">· {s.hint}</span>}
                   </span>
-                  <span className="text-[10.5px] text-charcoal/45 tabular-nums">
+                  <span className="text-[10.5px] text-a-ink/45 tabular-nums">
                     {s.toUi(cfg.veil[s.key])}{s.unit}
                   </span>
                 </span>
@@ -371,7 +375,7 @@ export default function HeroContentManager() {
                   value={s.toUi(cfg.veil[s.key])}
                   onChange={(e) => setVeil({ [s.key]: s.fromUi(Number(e.target.value)) })}
                   aria-label={s.label}
-                  className="w-full accent-bordeaux"
+                  className="w-full accent-a-accent"
                 />
               </label>
             ))}
@@ -379,34 +383,37 @@ export default function HeroContentManager() {
         </div>
 
         <div className={sectionCls}>
-          <p className={legendCls}>Markenbotschaft</p>
+          <p className={legendCls}>{t("hero.copy")}</p>
           <div className="flex flex-col gap-3">
-            {FIELDS.map((f) => (
-              <label key={f.key} className="block">
-                <span className="mb-1 flex items-baseline justify-between">
-                  <span className="text-[10.5px] text-charcoal/50">{f.label}</span>
-                  <Count value={cfg.copy[f.key]} max={HERO_LIMITS[f.key]} />
-                </span>
-                {f.textarea ? (
-                  <textarea
-                    className={`${inputCls} h-auto py-2`}
-                    rows={3}
-                    maxLength={HERO_LIMITS[f.key]}
-                    value={cfg.copy[f.key]}
-                    onChange={(e) => setCopy(f.key, e.target.value)}
-                    aria-label={f.label}
-                  />
-                ) : (
-                  <input
-                    className={inputCls}
-                    maxLength={HERO_LIMITS[f.key]}
-                    value={cfg.copy[f.key]}
-                    onChange={(e) => setCopy(f.key, e.target.value)}
-                    aria-label={f.label}
-                  />
-                )}
-              </label>
-            ))}
+            {FIELDS.map((f) => {
+              const label = t(f.label);
+              return (
+                <label key={f.key} className="block">
+                  <span className="mb-1 flex items-baseline justify-between">
+                    <span className="text-[10.5px] text-a-ink/50">{label}</span>
+                    <Count value={cfg.copy[f.key]} max={HERO_LIMITS[f.key]} />
+                  </span>
+                  {f.textarea ? (
+                    <textarea
+                      className={`${inputCls} h-auto py-2`}
+                      rows={3}
+                      maxLength={HERO_LIMITS[f.key]}
+                      value={cfg.copy[f.key]}
+                      onChange={(e) => setCopy(f.key, e.target.value)}
+                      aria-label={label}
+                    />
+                  ) : (
+                    <input
+                      className={inputCls}
+                      maxLength={HERO_LIMITS[f.key]}
+                      value={cfg.copy[f.key]}
+                      onChange={(e) => setCopy(f.key, e.target.value)}
+                      aria-label={label}
+                    />
+                  )}
+                </label>
+              );
+            })}
           </div>
         </div>
 
@@ -414,9 +421,9 @@ export default function HeroContentManager() {
           <button
             type="button"
             onClick={reset}
-            className="rounded-full px-4 py-2.5 text-[12px] tracking-[0.06em] text-charcoal/55 transition-colors hover:text-bordeaux"
+            className="rounded-full px-4 py-2.5 text-[12px] tracking-[0.06em] text-a-ink/55 transition-colors hover:text-a-accent"
           >
-            Zurücksetzen
+            {t("common.reset")}
           </button>
           <div className="flex items-center gap-3">
             <AnimatePresence>
@@ -428,7 +435,7 @@ export default function HeroContentManager() {
                   exit={{ opacity: 0 }}
                   className="text-[11.5px] font-medium text-vine"
                 >
-                  Gespeichert ✓
+                  {t("common.saved")}
                 </motion.span>
               )}
             </AnimatePresence>
@@ -438,9 +445,9 @@ export default function HeroContentManager() {
               onClick={save}
               whileTap={{ scale: 0.96 }}
               transition={{ type: "spring", stiffness: 400, damping: 22 }}
-              className="rounded-full bg-gradient-to-br from-bordeaux to-wine px-7 py-3 text-[12px] font-medium uppercase tracking-[0.14em] text-ivory transition-opacity disabled:opacity-50"
+              className="rounded-full bg-gradient-to-br from-a-fill to-a-fill-2 px-7 py-3 text-[12px] font-medium uppercase tracking-[0.14em] text-ivory transition-opacity disabled:opacity-50"
             >
-              {saving ? "Speichert …" : "Speichern"}
+              {saving ? t("common.saving") : t("common.save")}
             </motion.button>
           </div>
         </div>

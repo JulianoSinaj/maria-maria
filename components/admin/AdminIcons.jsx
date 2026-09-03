@@ -67,6 +67,7 @@ export const Sidebar = (p) => (
   </svg>
 );
 
+<<<<<<< Updated upstream
 export const Lock = (p) => (
   <svg {...base} {...p}>
     <rect x="4.5" y="10" width="15" height="10.5" rx="2.5" />
@@ -96,6 +97,27 @@ export const Logout = (p) => (
     <path d="M14.5 4.5h3.5a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2h-3.5" />
     <path d="M10 8.5 6.5 12l3.5 3.5" />
     <path d="M6.5 12H15" />
+=======
+/* colour-scheme switcher: light / dark / follow the device */
+export const Sun = (p) => (
+  <svg {...base} {...p}>
+    <circle cx="12" cy="12" r="4" />
+    <path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8" />
+  </svg>
+);
+
+export const Moon = (p) => (
+  <svg {...base} {...p}>
+    <path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5Z" />
+  </svg>
+);
+
+export const Auto = (p) => (
+  <svg {...base} {...p}>
+    <rect x="2.5" y="4" width="19" height="13" rx="2.5" />
+    <path d="M8.5 20.5h7M12 17v3.5" />
+    <path d="M12 6.5v8a4 4 0 0 0 0-8Z" fill="currentColor" stroke="none" />
+>>>>>>> Stashed changes
   </svg>
 );
 

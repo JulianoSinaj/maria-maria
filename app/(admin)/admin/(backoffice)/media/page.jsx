@@ -4,33 +4,28 @@ import Placeholder from "@/components/admin/Placeholder";
 import HeroContentManager from "@/components/admin/media/HeroContentManager";
 import AssetGallery from "@/components/admin/media/AssetGallery";
 import { Media } from "@/components/admin/AdminIcons";
+import { useAdminI18n } from "@/components/admin/i18n/AdminI18n";
 
 export default function MediaPage() {
+  const { t } = useAdminI18n();
+
   return (
-    <PageShell
-      title="Hero & Media Manager"
-      lede="Den Auftritt der Startseite pflegen: Hero-Motiv, Bildanker und Markenbotschaft."
-    >
-      <h3 className="mb-4 text-[11px] font-semibold uppercase tracking-[0.2em] text-bordeaux/55">
-        Startseiten-Hero — Bild & Botschaft
+    <PageShell title={t("mediaPage.title")} lede={t("mediaPage.lede")}>
+      <h3 className="mb-4 text-[11px] font-semibold uppercase tracking-[0.2em] text-a-accent/55">
+        {t("mediaPage.heroHeading")}
       </h3>
       <HeroContentManager />
 
-      <h3 className="mb-4 mt-10 text-[11px] font-semibold uppercase tracking-[0.2em] text-bordeaux/55">
-        Media & Asset-Galerie
+      <h3 className="mb-4 mt-10 text-[11px] font-semibold uppercase tracking-[0.2em] text-a-accent/55">
+        {t("mediaPage.galleryHeading")}
       </h3>
       <AssetGallery />
 
       <div className="mt-8">
         <Placeholder
           icon={Media}
-          title="Weitere Bildwelten"
-          items={[
-            "Hero-Slots der Unterseiten mit Bildausschnitt und Fokuspunkt",
-            "Video-Loops für die Regionsköpfe inklusive Poster-Frame",
-            "Alternativtexte und Bildrechte je Asset",
-            "Automatische Ableitungen in AVIF und WebP für alle Breakpoints",
-          ]}
+          title={t("mediaPage.placeholderTitle")}
+          items={t("mediaPage.items")}
         />
       </div>
     </PageShell>

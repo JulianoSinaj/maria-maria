@@ -16,7 +16,7 @@ export function MetricCard({ eyebrow, title, aside, children, delay = 0, classNa
       initial={reduced ? false : { opacity: 0, y: 18 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ type: "spring", stiffness: 150, damping: 24, delay: reduced ? 0 : delay }}
-      className={`group relative flex flex-col overflow-hidden rounded-card-lg border border-charcoal/[0.08] bg-ivory/70 p-6 sm:p-7 ${className}`}
+      className={`group relative flex flex-col overflow-hidden rounded-card-lg border border-a-ink/[0.08] bg-a-surface/70 p-6 sm:p-7 ${className}`}
     >
       {/* champagne hairline wipes in on hover */}
       <span
@@ -25,10 +25,10 @@ export function MetricCard({ eyebrow, title, aside, children, delay = 0, classNa
       />
       <header className="flex items-start justify-between gap-4">
         <div className="min-w-0">
-          <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-bordeaux/55">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-a-accent/55">
             {eyebrow}
           </p>
-          <h3 className="mt-1.5 font-playfair text-[19px] leading-tight text-charcoal">{title}</h3>
+          <h3 className="mt-1.5 font-playfair text-[19px] leading-tight text-a-ink">{title}</h3>
         </div>
         {aside && <div className="shrink-0 text-right">{aside}</div>}
       </header>
@@ -91,7 +91,7 @@ export function Meter({ value, tone = "#6B0F1A", delay = 0, className = "" }) {
     <span
       ref={ref}
       aria-hidden="true"
-      className={`block h-1.5 overflow-hidden rounded-full bg-charcoal/[0.07] ${className}`}
+      className={`block h-1.5 overflow-hidden rounded-full bg-a-ink/[0.07] ${className}`}
     >
       {/* the outer span owns the width, the inner owns the transform — so the
           fill animates on the GPU and the track never reflows mid-transition */}

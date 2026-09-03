@@ -8,6 +8,7 @@ import {
   GROW_MIN,
   GROW_MAX,
 } from "@/lib/showcase/store";
+import { useAdminI18n } from "../i18n/AdminI18n";
 
 /* Regional-Showcase layout configurator.
    Preview left, controls + copy editors right. The desktop preview replays
@@ -25,27 +26,27 @@ const SWAP_MS = 560; // storefront RegionExplorer's clock
 
 const Toggle = ({ on, onChange, label }) => (
   <button type="button" role="switch" aria-checked={on} onClick={() => onChange(!on)} className="flex items-center gap-2.5">
-    <span className={`relative h-6 w-10 shrink-0 rounded-full transition-colors duration-300 ${on ? "bg-bordeaux" : "bg-charcoal/15"}`}>
+    <span className={`relative h-6 w-10 shrink-0 rounded-full transition-colors duration-300 ${on ? "bg-a-fill" : "bg-a-ink/15"}`}>
       <motion.span
         className="absolute top-0.5 h-5 w-5 rounded-full bg-ivory shadow-chip"
         animate={{ left: on ? 18 : 2 }}
         transition={{ type: "spring", stiffness: 400, damping: 28 }}
       />
     </span>
-    <span className="text-[12px] text-charcoal/70">{label}</span>
+    <span className="text-[12px] text-a-ink/70">{label}</span>
   </button>
 );
 
-const sectionCls = "rounded-2xl border border-charcoal/[0.08] bg-ivory/50 p-4";
-const legendCls = "mb-3 text-[11px] font-semibold uppercase tracking-[0.14em] text-charcoal/55";
+const sectionCls = "rounded-2xl border border-a-ink/[0.08] bg-a-surface/50 p-4";
+const legendCls = "mb-3 text-[11px] font-semibold uppercase tracking-[0.14em] text-a-ink/55";
 const inputCls =
-  "h-10 w-full rounded-xl border border-charcoal/12 bg-cream px-3 text-[12.5px] text-charcoal transition-colors duration-300 placeholder:text-charcoal/30 focus:border-champagne focus:outline-none";
+  "h-10 w-full rounded-xl border border-a-ink/12 bg-a-canvas px-3 text-[12.5px] text-a-ink transition-colors duration-300 placeholder:text-a-ink/30 focus:border-champagne focus:outline-none";
 
 /* character counter that warns as the limit nears */
 const Count = ({ value, max }) => (
   <span
     className={`text-[10px] tabular-nums ${
-      value.length > max * 0.9 ? "text-bordeaux/80" : "text-charcoal/35"
+      value.length > max * 0.9 ? "text-a-accent/80" : "text-a-ink/35"
     }`}
   >
     {value.length}/{max}
@@ -54,6 +55,7 @@ const Count = ({ value, max }) => (
 
 export default function ShowcaseConfigurator() {
   const reduced = useReducedMotion();
+  const { t } = useAdminI18n();
   const [cfg, setCfg] = useState(null);
   const [view, setView] = useState("desktop"); // which preview is shown
   const [hovered, setHovered] = useState(null); // desktop preview column
@@ -85,7 +87,7 @@ export default function ShowcaseConfigurator() {
         body: JSON.stringify(cfg),
       });
       const body = await res.json().catch(() => null);
-      if (!res.ok) throw new Error(body?.error ?? `Speichern fehlgeschlagen (${res.status})`);
+      if (!res.ok) throw new Error(body?.error ?? t("common.saveFailed", { status: res.status }));
       setSavedAt(Date.now());
       window.setTimeout(() => setSavedAt(null), 2800);
     } catch (e) {
@@ -103,8 +105,8 @@ export default function ShowcaseConfigurator() {
 
   if (!cfg) {
     return (
-      <div className="rounded-card-lg border border-charcoal/[0.08] bg-ivory/50 p-10 text-center text-[12.5px] text-charcoal/45">
-        {error ? `Konfiguration konnte nicht geladen werden: ${error.message}` : "Showcase-Konfiguration wird geladen …"}
+      <div className="rounded-card-lg border border-a-ink/[0.08] bg-a-surface/50 p-10 text-center text-[12.5px] text-a-ink/45">
+        {error ? t("showcase.loadError", { message: error.message }) : t("showcase.loading")}
       </div>
     );
   }
@@ -113,7 +115,7 @@ export default function ShowcaseConfigurator() {
   const variant = cfg.layout.mobile.variant;
 
   return (
-    <section aria-label="Regional-Showcase Layout" className="grid gap-5 lg:grid-cols-[1.35fr_1fr]">
+    <section aria-label={t("showcase.sectionAria")} className="grid gap-5 lg:grid-cols-[1.35fr_1fr]">
       {/* ---------------- preview ---------------- */}
       <motion.div
         initial={reduced ? false : { opacity: 0, y: 16 }}
@@ -123,10 +125,10 @@ export default function ShowcaseConfigurator() {
       >
         {/* viewport switch */}
         <div className="flex items-center justify-between">
-          <div className="grid grid-cols-2 gap-1 rounded-full border border-charcoal/12 p-1" role="tablist" aria-label="Vorschau-Viewport">
+          <div className="grid grid-cols-2 gap-1 rounded-full border border-a-ink/12 p-1" role="tablist" aria-label={t("showcase.viewportAria")}>
             {[
-              { key: "desktop", label: "Desktop" },
-              { key: "mobile", label: "Mobil" },
+              { key: "desktop", label: t("showcase.desktop") },
+              { key: "mobile", label: t("showcase.mobile") },
             ].map((v) => (
               <button
                 key={v.key}
@@ -135,14 +137,14 @@ export default function ShowcaseConfigurator() {
                 aria-selected={view === v.key}
                 onClick={() => setView(v.key)}
                 className={`relative rounded-full px-4 py-1.5 text-[11.5px] transition-colors duration-300 ${
-                  view === v.key ? "text-ivory" : "text-charcoal/55 hover:text-bordeaux"
+                  view === v.key ? "text-ivory" : "text-a-ink/55 hover:text-a-accent"
                 }`}
               >
                 {view === v.key && (
                   <motion.span
                     layoutId="showcase-view-pill"
                     aria-hidden="true"
-                    className="absolute inset-0 rounded-full bg-gradient-to-br from-bordeaux to-wine"
+                    className="absolute inset-0 rounded-full bg-gradient-to-br from-a-fill to-a-fill-2"
                     transition={reduced ? { duration: 0 } : { type: "spring", stiffness: 340, damping: 32 }}
                   />
                 )}
@@ -150,14 +152,14 @@ export default function ShowcaseConfigurator() {
               </button>
             ))}
           </div>
-          <span className="text-[10.5px] text-charcoal/40">
+          <span className="text-[10.5px] text-a-ink/40">
             {view === "desktop"
               ? hoverExpand
-                ? "Vertikale Fenster — Hover öffnet das Territorium"
-                : "Vertikale Fenster — Ausdehnung deaktiviert"
+                ? t("showcase.captionHoverOn")
+                : t("showcase.captionHoverOff")
               : variant === "rail"
-                ? "Horizontale Schiene — seitlich wischen"
-                : "Gestapelte Karten — Tippen klappt auf"}
+                ? t("showcase.captionRail")
+                : t("showcase.captionStack")}
           </span>
         </div>
 
@@ -238,10 +240,10 @@ export default function ShowcaseConfigurator() {
           </div>
         ) : (
           /* ---- mobile: phone frame, stack vs. horizontal snap rail ---- */
-          <div className="mx-auto w-[340px] max-w-full rounded-[28px] border border-charcoal/12 bg-espresso p-2.5 shadow-glass">
-            <div className="overflow-hidden rounded-[20px] bg-cream">
+          <div className="mx-auto w-[340px] max-w-full rounded-[28px] border border-a-ink/12 bg-espresso p-2.5 shadow-glass">
+            <div className="overflow-hidden rounded-[20px] bg-a-canvas">
               <div className="flex h-8 items-center justify-center">
-                <span className="h-1 w-16 rounded-full bg-charcoal/15" />
+                <span className="h-1 w-16 rounded-full bg-a-ink/15" />
               </div>
               {variant === "rail" ? (
                 <div
@@ -294,7 +296,7 @@ export default function ShowcaseConfigurator() {
                             <p className="truncate text-[8.5px] uppercase tracking-[0.2em] text-champagne-light">{r.tag}</p>
                             <h4 className="truncate font-playfair text-[16px] text-ivory">{r.name}</h4>
                           </div>
-                          <span className="glass grid h-7 w-7 shrink-0 place-items-center rounded-full text-[13px] text-charcoal/80">
+                          <span className="glass grid h-7 w-7 shrink-0 place-items-center rounded-full text-[13px] text-a-ink/80">
                             +
                           </span>
                         </div>
@@ -316,20 +318,20 @@ export default function ShowcaseConfigurator() {
         className="flex flex-col gap-4"
       >
         {error && (
-          <p role="alert" className="rounded-xl bg-bordeaux/10 px-4 py-3 text-[12px] text-bordeaux">
+          <p role="alert" className="rounded-xl bg-a-accent/10 px-4 py-3 text-[12px] text-a-accent">
             {error.message}
           </p>
         )}
 
         <div className={sectionCls}>
-          <p className={legendCls}>Desktop — vertikale Fenster</p>
+          <p className={legendCls}>{t("showcase.desktopLegend")}</p>
           <Toggle
             on={hoverExpand}
             onChange={(v) => setDesktop({ hoverExpand: v })}
-            label="Hover öffnet das Regionalfenster"
+            label={t("showcase.hoverToggle")}
           />
           <div className={`mt-3 flex items-center gap-3 transition-opacity ${hoverExpand ? "" : "pointer-events-none opacity-40"}`}>
-            <span className="text-[11px] text-charcoal/50">Ausdehnung</span>
+            <span className="text-[11px] text-a-ink/50">{t("showcase.grow")}</span>
             <input
               type="range"
               min={GROW_MIN}
@@ -337,19 +339,19 @@ export default function ShowcaseConfigurator() {
               step="0.5"
               value={grow}
               onChange={(e) => setDesktop({ grow: Number(e.target.value) })}
-              aria-label="Ausdehnung des geöffneten Fensters"
-              className="flex-1 accent-bordeaux"
+              aria-label={t("showcase.growAria")}
+              className="flex-1 accent-a-accent"
             />
-            <span className="w-9 text-right text-[11px] text-charcoal/50 tabular-nums">{grow}×</span>
+            <span className="w-9 text-right text-[11px] text-a-ink/50 tabular-nums">{grow}×</span>
           </div>
         </div>
 
         <div className={sectionCls}>
-          <p className={legendCls}>Mobil — Touch-Layout</p>
-          <div className="grid grid-cols-2 gap-2" role="radiogroup" aria-label="Mobile Layout-Variante">
+          <p className={legendCls}>{t("showcase.mobileLegend")}</p>
+          <div className="grid grid-cols-2 gap-2" role="radiogroup" aria-label={t("showcase.variantAria")}>
             {[
-              { key: "stack", label: "Gestapelt", hint: "Tippen klappt auf" },
-              { key: "rail", label: "Horizontale Schiene", hint: "seitlich wischen" },
+              { key: "stack", label: t("showcase.stack.label"), hint: t("showcase.stack.hint") },
+              { key: "rail", label: t("showcase.rail.label"), hint: t("showcase.rail.hint") },
             ].map((v) => (
               <button
                 key={v.key}
@@ -362,12 +364,12 @@ export default function ShowcaseConfigurator() {
                 }}
                 className={`rounded-xl border px-3 py-2.5 text-left transition-colors duration-300 ${
                   variant === v.key
-                    ? "border-bordeaux bg-bordeaux text-ivory"
-                    : "border-charcoal/12 text-charcoal/60 hover:border-champagne"
+                    ? "border-a-accent bg-a-fill text-ivory"
+                    : "border-a-ink/12 text-a-ink/60 hover:border-champagne"
                 }`}
               >
                 <span className="block text-[12px] font-medium">{v.label}</span>
-                <span className={`block text-[10px] ${variant === v.key ? "text-ivory/60" : "text-charcoal/35"}`}>
+                <span className={`block text-[10px] ${variant === v.key ? "text-ivory/60" : "text-a-ink/35"}`}>
                   {v.hint}
                 </span>
               </button>
@@ -376,19 +378,19 @@ export default function ShowcaseConfigurator() {
         </div>
 
         <div className={sectionCls}>
-          <p className={legendCls}>Regionale Texte</p>
+          <p className={legendCls}>{t("showcase.texts")}</p>
           <div className="flex flex-col gap-5">
             {SHOWCASE_REGION_KEYS.map((key) => {
               const r = cfg.regions[key];
               return (
-                <fieldset key={key} className="rounded-xl border border-charcoal/[0.07] bg-cream/60 p-3">
-                  <legend className="px-1 text-[10.5px] font-semibold uppercase tracking-[0.14em] text-bordeaux/60">
+                <fieldset key={key} className="rounded-xl border border-a-ink/[0.07] bg-a-canvas/60 p-3">
+                  <legend className="px-1 text-[10.5px] font-semibold uppercase tracking-[0.14em] text-a-accent/60">
                     {r.name}
                   </legend>
                   <div className="flex flex-col gap-2.5">
                     <label className="block">
                       <span className="mb-1 flex items-baseline justify-between">
-                        <span className="text-[10.5px] text-charcoal/50">Titel</span>
+                        <span className="text-[10.5px] text-a-ink/50">{t("showcase.fieldTitle")}</span>
                         <Count value={r.name} max={LIMITS.name} />
                       </span>
                       <input
@@ -396,12 +398,12 @@ export default function ShowcaseConfigurator() {
                         maxLength={LIMITS.name}
                         value={r.name}
                         onChange={(e) => setRegion(key, { name: e.target.value })}
-                        aria-label={`Titel ${key}`}
+                        aria-label={t("showcase.ariaTitle", { key })}
                       />
                     </label>
                     <label className="block">
                       <span className="mb-1 flex items-baseline justify-between">
-                        <span className="text-[10.5px] text-charcoal/50">Unterzeile</span>
+                        <span className="text-[10.5px] text-a-ink/50">{t("showcase.fieldTag")}</span>
                         <Count value={r.tag} max={LIMITS.tag} />
                       </span>
                       <input
@@ -409,12 +411,12 @@ export default function ShowcaseConfigurator() {
                         maxLength={LIMITS.tag}
                         value={r.tag}
                         onChange={(e) => setRegion(key, { tag: e.target.value })}
-                        aria-label={`Unterzeile ${key}`}
+                        aria-label={t("showcase.ariaTag", { key })}
                       />
                     </label>
                     <label className="block">
                       <span className="mb-1 flex items-baseline justify-between">
-                        <span className="text-[10.5px] text-charcoal/50">Kurzbeschreibung (mobil)</span>
+                        <span className="text-[10.5px] text-a-ink/50">{t("showcase.fieldDesc")}</span>
                         <Count value={r.desc} max={LIMITS.desc} />
                       </span>
                       <input
@@ -422,12 +424,12 @@ export default function ShowcaseConfigurator() {
                         maxLength={LIMITS.desc}
                         value={r.desc}
                         onChange={(e) => setRegion(key, { desc: e.target.value })}
-                        aria-label={`Kurzbeschreibung ${key}`}
+                        aria-label={t("showcase.ariaDesc", { key })}
                       />
                     </label>
                     <label className="block">
                       <span className="mb-1 flex items-baseline justify-between">
-                        <span className="text-[10.5px] text-charcoal/50">Territorium (Detail)</span>
+                        <span className="text-[10.5px] text-a-ink/50">{t("showcase.fieldLong")}</span>
                         <Count value={r.long} max={LIMITS.long} />
                       </span>
                       <textarea
@@ -436,7 +438,7 @@ export default function ShowcaseConfigurator() {
                         maxLength={LIMITS.long}
                         value={r.long}
                         onChange={(e) => setRegion(key, { long: e.target.value })}
-                        aria-label={`Territoriumsbeschreibung ${key}`}
+                        aria-label={t("showcase.ariaLong", { key })}
                       />
                     </label>
                   </div>
@@ -450,9 +452,9 @@ export default function ShowcaseConfigurator() {
           <button
             type="button"
             onClick={reset}
-            className="rounded-full px-4 py-2.5 text-[12px] tracking-[0.06em] text-charcoal/55 transition-colors hover:text-bordeaux"
+            className="rounded-full px-4 py-2.5 text-[12px] tracking-[0.06em] text-a-ink/55 transition-colors hover:text-a-accent"
           >
-            Zurücksetzen
+            {t("common.reset")}
           </button>
           <div className="flex items-center gap-3">
             <AnimatePresence>
@@ -464,7 +466,7 @@ export default function ShowcaseConfigurator() {
                   exit={{ opacity: 0 }}
                   className="text-[11.5px] font-medium text-vine"
                 >
-                  Gespeichert ✓
+                  {t("common.saved")}
                 </motion.span>
               )}
             </AnimatePresence>
@@ -474,9 +476,9 @@ export default function ShowcaseConfigurator() {
               onClick={save}
               whileTap={{ scale: 0.96 }}
               transition={{ type: "spring", stiffness: 400, damping: 22 }}
-              className="rounded-full bg-gradient-to-br from-bordeaux to-wine px-7 py-3 text-[12px] font-medium uppercase tracking-[0.14em] text-ivory transition-opacity disabled:opacity-50"
+              className="rounded-full bg-gradient-to-br from-a-fill to-a-fill-2 px-7 py-3 text-[12px] font-medium uppercase tracking-[0.14em] text-ivory transition-opacity disabled:opacity-50"
             >
-              {saving ? "Speichert …" : "Speichern"}
+              {saving ? t("common.saving") : t("common.save")}
             </motion.button>
           </div>
         </div>

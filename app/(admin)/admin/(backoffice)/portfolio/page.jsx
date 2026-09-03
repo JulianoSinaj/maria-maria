@@ -7,6 +7,7 @@ import WineTable from "@/components/admin/portfolio/WineTable";
 import WineSlideOver from "@/components/admin/portfolio/WineSlideOver";
 import AssetConfigurator from "@/components/admin/portfolio/AssetConfigurator";
 import { Search } from "@/components/admin/AdminIcons";
+import { useAdminI18n } from "@/components/admin/i18n/AdminI18n";
 import {
   useInventory,
   createWine,
@@ -23,6 +24,7 @@ import { CATEGORY } from "@/lib/inventory/schema";
 
 export default function PortfolioPage() {
   const reduced = useReducedMotion();
+  const { t } = useAdminI18n();
   const [category, setCategory] = useState(CATEGORY.ALL);
   const [search, setSearch] = useState("");
   const [showArchived, setShowArchived] = useState(false);
@@ -72,10 +74,10 @@ export default function PortfolioPage() {
     try {
       if (panel.mode === "create") {
         await createWine(payload);
-        flash(`„${payload.name}" angelegt.`);
+        flash(t("portfolio.created", { name: payload.name }));
       } else {
         await updateWine(panel.item.id, payload);
-        flash(`„${payload.name}" gespeichert.`);
+        flash(t("portfolio.saved", { name: payload.name }));
       }
       closePanel();
       refetch();
@@ -90,7 +92,7 @@ export default function PortfolioPage() {
   const handleArchive = async (wine) => {
     try {
       await archiveWine(wine.id);
-      flash(`„${wine.name}" archiviert.`);
+      flash(t("portfolio.archived", { name: wine.name }));
       refetch();
     } catch (err) {
       flash(err.message, "error");
@@ -100,7 +102,7 @@ export default function PortfolioPage() {
   const handleRestore = async (wine) => {
     try {
       await restoreWine(wine.id);
-      flash(`„${wine.name}" wiederhergestellt.`);
+      flash(t("portfolio.restored", { name: wine.name }));
       refetch();
     } catch (err) {
       flash(err.message, "error");
@@ -109,17 +111,17 @@ export default function PortfolioPage() {
 
   return (
     <PageShell
-      title="Weinportfolio"
-      lede="Die Kollektion pflegen: Jahrgänge, Herkunft, Kontingente und Preise."
+      title={t("portfolio.title")}
+      lede={t("portfolio.lede")}
       actions={
         <motion.button
           type="button"
           onClick={() => openPanel("create")}
           whileTap={{ scale: 0.96 }}
           transition={{ type: "spring", stiffness: 400, damping: 22 }}
-          className="rounded-full bg-gradient-to-br from-bordeaux to-wine px-6 py-3 text-[12px] font-medium uppercase tracking-[0.14em] text-ivory"
+          className="rounded-full bg-gradient-to-br from-a-fill to-a-fill-2 px-6 py-3 text-[12px] font-medium uppercase tracking-[0.14em] text-ivory"
         >
-          Wein anlegen
+          {t("portfolio.addWine")}
         </motion.button>
       }
     >
@@ -129,20 +131,22 @@ export default function PortfolioPage() {
 
         <div className="flex flex-wrap items-center justify-between gap-3">
           <label className="relative min-w-[220px] flex-1 sm:max-w-[320px]">
-            <span className="sr-only">Weine durchsuchen</span>
-            <Search className="pointer-events-none absolute left-3.5 top-1/2 h-[17px] w-[17px] -translate-y-1/2 text-charcoal/35" />
+            <span className="sr-only">{t("portfolio.searchSr")}</span>
+            <Search className="pointer-events-none absolute left-3.5 top-1/2 h-[17px] w-[17px] -translate-y-1/2 text-a-ink/35" />
             <input
               type="search"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              placeholder="Name, Herkunft oder Bezeichnung …"
-              className="h-11 w-full rounded-full border border-charcoal/12 bg-ivory/70 pl-10 pr-4 text-[12.5px] text-charcoal transition-colors duration-300 placeholder:text-charcoal/35 focus:border-champagne focus:outline-none"
+              placeholder={t("portfolio.searchPlaceholder")}
+              className="h-11 w-full rounded-full border border-a-ink/12 bg-a-surface/70 pl-10 pr-4 text-[12.5px] text-a-ink transition-colors duration-300 placeholder:text-a-ink/35 focus:border-champagne focus:outline-none"
             />
           </label>
 
           <div className="flex items-center gap-4">
-            <span className="text-[11.5px] text-charcoal/45 tabular-nums">
-              {loading ? "lädt …" : `${meta.count ?? items.length} Weine`}
+            <span className="text-[11.5px] text-a-ink/45 tabular-nums">
+              {loading
+                ? t("portfolio.loading")
+                : t("portfolio.count", { n: meta.count ?? items.length })}
             </span>
             {meta.archived > 0 && (
               <button
@@ -151,11 +155,11 @@ export default function PortfolioPage() {
                 aria-pressed={showArchived}
                 className={`rounded-full border px-4 py-2 text-[11.5px] transition-colors duration-300 ${
                   showArchived
-                    ? "border-bordeaux/30 bg-bordeaux/10 text-bordeaux"
-                    : "border-charcoal/12 text-charcoal/55 hover:border-champagne"
+                    ? "border-a-accent/30 bg-a-accent/10 text-a-accent"
+                    : "border-a-ink/12 text-a-ink/55 hover:border-champagne"
                 }`}
               >
-                Archiv ({meta.archived})
+                {t("portfolio.archive", { n: meta.archived })}
               </button>
             )}
           </div>
@@ -163,8 +167,8 @@ export default function PortfolioPage() {
       </div>
 
       {error && (
-        <p role="alert" className="mt-5 rounded-xl bg-bordeaux/10 px-4 py-3 text-[12.5px] text-bordeaux">
-          Portfolio konnte nicht geladen werden: {error.message}
+        <p role="alert" className="mt-5 rounded-xl bg-a-accent/10 px-4 py-3 text-[12.5px] text-a-accent">
+          {t("portfolio.loadError", { message: error.message })}
         </p>
       )}
 
@@ -196,7 +200,7 @@ export default function PortfolioPage() {
         open={assetPanel.open}
         wine={assetPanel.wine}
         onClose={() => setAssetPanel((p) => ({ ...p, open: false }))}
-        onSaved={(w) => flash(`Assets für „${w.name}" gespeichert.`)}
+        onSaved={(w) => flash(t("portfolio.assetsSaved", { name: w.name }))}
       />
 
       {/* ---- toast ---- */}
@@ -211,7 +215,7 @@ export default function PortfolioPage() {
             transition={{ type: "spring", stiffness: 260, damping: 26 }}
             className={`fixed bottom-6 left-1/2 z-[95] -translate-x-1/2 rounded-full px-6 py-3.5 text-[12.5px] shadow-glass ${
               toast.tone === "error"
-                ? "bg-bordeaux text-ivory"
+                ? "bg-a-fill text-ivory"
                 : "bg-espresso text-ivory"
             }`}
           >

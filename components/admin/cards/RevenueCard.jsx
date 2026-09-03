@@ -1,23 +1,26 @@
 "use client";
 import { MetricCard, Counter, Meter } from "../MetricCard";
-import { REVENUE, fmtEur, fmtNum } from "../analyticsData";
+import { REVENUE } from "../analyticsData";
+import { useAdminI18n } from "../i18n/AdminI18n";
 
 /* Card 2 — revenue by wine type.
    Share bars rather than a pie: four series compared against each other read
    faster as aligned lengths, and it degrades gracefully to one column. */
 
 export default function RevenueCard({ delay = 0 }) {
+  const { t, tm, fmtEur, fmtNum } = useAdminI18n();
+
   return (
     <MetricCard
-      eyebrow="Umsatz nach Weinart"
-      title="Erlös der Kollektion"
+      eyebrow={t("revenue.eyebrow")}
+      title={t("revenue.title")}
       delay={delay}
       aside={
         <>
-          <span className="block text-[11px] uppercase tracking-[0.12em] text-charcoal/40">
-            Flaschen
+          <span className="block text-[11px] uppercase tracking-[0.12em] text-a-ink/40">
+            {t("revenue.bottles")}
           </span>
-          <span className="mt-1 block font-playfair text-[17px] leading-none text-charcoal tabular-nums">
+          <span className="mt-1 block font-playfair text-[17px] leading-none text-a-ink tabular-nums">
             {fmtNum(REVENUE.bottles)}
           </span>
         </>
@@ -26,7 +29,7 @@ export default function RevenueCard({ delay = 0 }) {
       <Counter
         value={REVENUE.total}
         format={(n) => fmtEur(n)}
-        className="font-playfair text-[38px] leading-none text-charcoal"
+        className="font-playfair text-[38px] leading-none text-a-ink"
       />
 
       <ul className="mt-7 flex flex-1 flex-col justify-end gap-4">
@@ -39,13 +42,13 @@ export default function RevenueCard({ delay = 0 }) {
                   className="h-2 w-2 shrink-0 rounded-full"
                   style={{ background: r.tone }}
                 />
-                <span className="truncate text-[12.5px] font-medium text-charcoal/85">
-                  {r.label}
+                <span className="truncate text-[12.5px] font-medium text-a-ink/85">
+                  {tm("wineType", r.label)}
                 </span>
               </span>
-              <span className="shrink-0 text-[11.5px] text-charcoal/50 tabular-nums">
+              <span className="shrink-0 text-[11.5px] text-a-ink/50 tabular-nums">
                 {fmtEur(r.revenue)}
-                <span className="ml-2 text-charcoal/35">
+                <span className="ml-2 text-a-ink/35">
                   {Math.round(r.share * 100)}%
                 </span>
               </span>
@@ -55,9 +58,8 @@ export default function RevenueCard({ delay = 0 }) {
         ))}
       </ul>
 
-      <p className="mt-6 border-t border-charcoal/[0.07] pt-4 text-[10.5px] leading-relaxed text-charcoal/40">
-        Die Amphore-Serie wird separat geführt — Primitivo 15,5 aus der
-        Terrakotta-Amphore, nicht in Rotwein enthalten.
+      <p className="mt-6 border-t border-a-ink/[0.07] pt-4 text-[10.5px] leading-relaxed text-a-ink/40">
+        {t("revenue.note")}
       </p>
     </MetricCard>
   );

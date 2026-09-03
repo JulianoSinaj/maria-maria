@@ -10,6 +10,7 @@ import {
 import { Close } from "@/components/Icons";
 import { WINES } from "@/components/data";
 import { ACCENT_META, WORDMARK } from "@/lib/inventory/schema";
+import { useAdminI18n } from "../i18n/AdminI18n";
 
 /* Bottle Asset Configurator.
    ==================================================================
@@ -77,7 +78,7 @@ const Toggle = ({ on, onChange, label }) => (
   >
     <span
       className={`relative h-6 w-10 rounded-full transition-colors duration-300 ${
-        on ? "bg-bordeaux" : "bg-charcoal/15"
+        on ? "bg-a-fill" : "bg-a-ink/15"
       }`}
     >
       <motion.span
@@ -86,16 +87,17 @@ const Toggle = ({ on, onChange, label }) => (
         transition={{ type: "spring", stiffness: 400, damping: 28 }}
       />
     </span>
-    <span className="text-[12px] text-charcoal/70">{label}</span>
+    <span className="text-[12px] text-a-ink/70">{label}</span>
   </button>
 );
 
-const sectionCls = "rounded-2xl border border-charcoal/[0.08] bg-ivory/50 p-4";
+const sectionCls = "rounded-2xl border border-a-ink/[0.08] bg-a-surface/50 p-4";
 const legendCls =
-  "mb-3 text-[11px] font-semibold uppercase tracking-[0.14em] text-charcoal/55";
+  "mb-3 text-[11px] font-semibold uppercase tracking-[0.14em] text-a-ink/55";
 
 export default function AssetConfigurator({ open, wine, onClose, onSaved }) {
   const reduced = useReducedMotion();
+  const { t, tm } = useAdminI18n();
   const panelRef = useRef(null);
   const closeRef = useRef(null);
   const stageRef = useRef(null);
@@ -154,7 +156,7 @@ export default function AssetConfigurator({ open, wine, onClose, onSaved }) {
     fetch(`/api/admin/assets/${wine.slug}`)
       .then((res) => res.json().then((b) => ({ ok: res.ok, b })))
       .then(({ ok, b }) => {
-        if (!ok) throw new Error(b?.error ?? "Assets konnten nicht geladen werden");
+        if (!ok) throw new Error(b?.error ?? t("assetCfg.loadFailed"));
         setCfg(b.data.config);
         setAssets(b.data.assets);
         /* stage exists after this render tick */
@@ -264,7 +266,7 @@ export default function AssetConfigurator({ open, wine, onClose, onSaved }) {
     });
     const body = await res.json().catch(() => null);
     if (!res.ok) {
-      setError(new Error(body?.error ?? "Upload fehlgeschlagen"));
+      setError(new Error(body?.error ?? t("common.uploadFailed")));
       return;
     }
     setAssets((a) => [...a, { ...body.data, uploaded: true }]);
@@ -286,7 +288,7 @@ export default function AssetConfigurator({ open, wine, onClose, onSaved }) {
         }),
       });
       const body = await res.json().catch(() => null);
-      if (!res.ok) throw new Error(body?.error ?? `Speichern fehlgeschlagen (${res.status})`);
+      if (!res.ok) throw new Error(body?.error ?? t("common.saveFailed", { status: res.status }));
       onSaved?.(wine);
       onClose();
     } catch (err) {
@@ -308,6 +310,7 @@ export default function AssetConfigurator({ open, wine, onClose, onSaved }) {
   };
 
   const single = cfg?.mode === "single";
+  const accentName = wine?.label?.accent ? tm("accent", wine.label.accent) : null;
 
   return (
     <AnimatePresence>
@@ -315,7 +318,7 @@ export default function AssetConfigurator({ open, wine, onClose, onSaved }) {
         <div className="fixed inset-0 z-[90]">
           <motion.button
             type="button"
-            aria-label="Schließen"
+            aria-label={t("common.close")}
             onClick={onClose}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -328,7 +331,7 @@ export default function AssetConfigurator({ open, wine, onClose, onSaved }) {
             ref={panelRef}
             role="dialog"
             aria-modal="true"
-            aria-label={`${wine.name} — Flaschen-Assets`}
+            aria-label={t("assetCfg.ariaTitle", { name: wine.name })}
             data-lenis-prevent
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
@@ -336,26 +339,26 @@ export default function AssetConfigurator({ open, wine, onClose, onSaved }) {
             transition={
               reduced ? { duration: 0 } : { type: "spring", stiffness: 250, damping: 34, mass: 0.9 }
             }
-            className="absolute inset-y-0 right-0 flex w-full max-w-[1020px] flex-col bg-cream will-transform"
+            className="absolute inset-y-0 right-0 flex w-full max-w-[1020px] flex-col bg-a-canvas will-transform"
           >
-            <header className="flex items-start justify-between gap-4 border-b border-charcoal/[0.08] px-6 py-5">
+            <header className="flex items-start justify-between gap-4 border-b border-a-ink/[0.08] px-6 py-5">
               <div className="min-w-0">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-bordeaux/55">
-                  Flaschen-Assets
+                <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-a-accent/55">
+                  {t("assetCfg.eyebrow")}
                 </p>
-                <h2 className="mt-1 truncate font-playfair text-[21px] leading-tight text-charcoal">
+                <h2 className="mt-1 truncate font-playfair text-[21px] leading-tight text-a-ink">
                   {wine.name}
                 </h2>
-                <p className="mt-0.5 truncate text-[11.5px] text-charcoal/45">
-                  Mockup, Komposition, Akzent & Öffner-Position
+                <p className="mt-0.5 truncate text-[11.5px] text-a-ink/45">
+                  {t("assetCfg.sub")}
                 </p>
               </div>
               <button
                 ref={closeRef}
                 type="button"
                 onClick={onClose}
-                aria-label="Schließen"
-                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-charcoal/12 text-charcoal/70 transition-colors hover:border-champagne hover:text-bordeaux"
+                aria-label={t("common.close")}
+                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-a-ink/12 text-a-ink/70 transition-colors hover:border-champagne hover:text-a-accent"
               >
                 <Close className="h-[18px] w-[18px]" />
               </button>
@@ -371,8 +374,8 @@ export default function AssetConfigurator({ open, wine, onClose, onSaved }) {
                   style={{ width: STAGE_W, height: STAGE_H, maxWidth: "100%" }}
                 >
                   {loading ? (
-                    <div className="absolute inset-0 grid place-items-center text-[12px] text-charcoal/40">
-                      Assets werden geladen …
+                    <div className="absolute inset-0 grid place-items-center text-[12px] text-a-ink/40">
+                      {t("assetCfg.loading")}
                     </div>
                   ) : single ? (
                     <>
@@ -380,7 +383,7 @@ export default function AssetConfigurator({ open, wine, onClose, onSaved }) {
                         /* eslint-disable-next-line @next/next/no-img-element */
                         <img
                           src={cfg.asset}
-                          alt={`${wine.name} — Mockup-Vorschau`}
+                          alt={t("assetCfg.mockupAlt", { name: wine.name })}
                           className="absolute left-1/2 top-1/2 max-h-[92%] max-w-[88%] -translate-x-1/2 -translate-y-1/2 object-contain drop-shadow-[0_24px_40px_rgba(33,21,17,0.28)]"
                         />
                       )}
@@ -409,7 +412,7 @@ export default function AssetConfigurator({ open, wine, onClose, onSaved }) {
                           aria-hidden="true"
                           data-zone
                           className={`pointer-events-none absolute rounded-lg border-2 border-dashed transition-colors duration-300 ${
-                            overlap ? "border-bordeaux bg-bordeaux/15" : "border-champagne/80 bg-champagne/10"
+                            overlap ? "border-a-accent bg-a-accent/15" : "border-champagne/80 bg-champagne/10"
                           }`}
                           style={{
                             left: `${zone.x}%`,
@@ -420,10 +423,10 @@ export default function AssetConfigurator({ open, wine, onClose, onSaved }) {
                         >
                           <span
                             className={`absolute -top-5 left-0 text-[9px] font-semibold uppercase tracking-[0.14em] ${
-                              overlap ? "text-bordeaux" : "text-charcoal/45"
+                              overlap ? "text-a-accent" : "text-a-ink/45"
                             }`}
                           >
-                            Logo-Zone
+                            {t("assetCfg.logoZone")}
                           </span>
                         </div>
                       )}
@@ -433,7 +436,7 @@ export default function AssetConfigurator({ open, wine, onClose, onSaved }) {
                         <motion.div
                           data-opener
                           role="slider"
-                          aria-label="Weinöffner positionieren"
+                          aria-label={t("assetCfg.openerAria")}
                           aria-valuetext={`${cfg.opener.x} % / ${cfg.opener.y} %`}
                           tabIndex={0}
                           onPointerDown={onPointerDown}
@@ -468,31 +471,36 @@ export default function AssetConfigurator({ open, wine, onClose, onSaved }) {
                   )}
                 </div>
 
-                <p className="text-[10.5px] text-charcoal/40">
+                <p className="text-[10.5px] text-a-ink/40">
                   {single
                     ? overlap
-                      ? "Der Öffner verdeckt das Logo — beim Loslassen weicht er automatisch aus."
-                      : `Öffner: ${cfg?.opener?.x ?? "–"} % / ${cfg?.opener?.y ?? "–"} % · Zone: ${
-                          wine.label?.wordmark === WORDMARK.TINTED ? "Rosato (tief)" : "Schriftband"
-                        }`
-                    : "Grande Selezione — Anordnung aller neun Flaschen, gewählter Wein hervorgehoben."}
+                      ? t("assetCfg.overlapNote")
+                      : t("assetCfg.readout", {
+                          x: cfg?.opener?.x ?? "–",
+                          y: cfg?.opener?.y ?? "–",
+                          zone:
+                            wine.label?.wordmark === WORDMARK.TINTED
+                              ? t("assetCfg.zoneRosato")
+                              : t("assetCfg.zoneBand"),
+                        })
+                    : t("assetCfg.bundleNote")}
                 </p>
               </div>
 
               {/* ---------------- controls ---------------- */}
               <div className="flex w-full shrink-0 flex-col gap-4 lg:w-[320px] lg:overflow-y-auto">
                 {error && (
-                  <p role="alert" className="rounded-xl bg-bordeaux/10 px-4 py-3 text-[12px] text-bordeaux">
+                  <p role="alert" className="rounded-xl bg-a-accent/10 px-4 py-3 text-[12px] text-a-accent">
                     {error.message}
                   </p>
                 )}
 
                 <div className={sectionCls}>
-                  <p className={legendCls}>Vorschau-Modus</p>
+                  <p className={legendCls}>{t("assetCfg.previewMode")}</p>
                   <div className="grid grid-cols-2 gap-2">
                     {[
-                      { key: "single", label: "Einzelflasche" },
-                      { key: "bundle", label: "9er-Paket" },
+                      { key: "single", label: t("assetCfg.single") },
+                      { key: "bundle", label: t("assetCfg.bundle") },
                     ].map((m) => (
                       <button
                         key={m.key}
@@ -501,8 +509,8 @@ export default function AssetConfigurator({ open, wine, onClose, onSaved }) {
                         onClick={() => setCfg((c) => ({ ...c, mode: m.key }))}
                         className={`rounded-xl border px-3 py-2.5 text-[12px] transition-colors duration-300 ${
                           cfg?.mode === m.key
-                            ? "border-bordeaux bg-bordeaux text-ivory"
-                            : "border-charcoal/12 text-charcoal/60 hover:border-champagne"
+                            ? "border-a-accent bg-a-fill text-ivory"
+                            : "border-a-ink/12 text-a-ink/60 hover:border-champagne"
                         }`}
                       >
                         {m.label}
@@ -513,13 +521,13 @@ export default function AssetConfigurator({ open, wine, onClose, onSaved }) {
 
                 <div className={sectionCls}>
                   <div className="mb-3 flex items-center justify-between">
-                    <p className={`${legendCls} mb-0`}>Mockup wählen</p>
+                    <p className={`${legendCls} mb-0`}>{t("assetCfg.chooseMockup")}</p>
                     <button
                       type="button"
                       onClick={() => fileRef.current?.click()}
-                      className="text-[11.5px] font-medium text-bordeaux transition-colors hover:text-bordeaux-deep"
+                      className="text-[11.5px] font-medium text-a-accent transition-colors hover:text-a-accent-deep"
                     >
-                      Hochladen +
+                      {t("common.upload")}
                     </button>
                     <input
                       ref={fileRef}
@@ -537,10 +545,10 @@ export default function AssetConfigurator({ open, wine, onClose, onSaved }) {
                         title={a.name}
                         aria-pressed={cfg?.asset === a.path}
                         onClick={() => setCfg((c) => ({ ...c, asset: a.path }))}
-                        className={`group relative overflow-hidden rounded-xl border bg-cream p-1 transition-colors duration-300 ${
+                        className={`group relative overflow-hidden rounded-xl border bg-a-canvas p-1 transition-colors duration-300 ${
                           cfg?.asset === a.path
-                            ? "border-bordeaux ring-1 ring-bordeaux"
-                            : "border-charcoal/[0.08] hover:border-champagne"
+                            ? "border-a-accent ring-1 ring-a-accent"
+                            : "border-a-ink/[0.08] hover:border-champagne"
                         }`}
                       >
                         {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -550,7 +558,7 @@ export default function AssetConfigurator({ open, wine, onClose, onSaved }) {
                           loading="lazy"
                           className="h-16 w-full object-contain"
                         />
-                        <span className="mt-1 block truncate text-center text-[8.5px] text-charcoal/45">
+                        <span className="mt-1 block truncate text-center text-[8.5px] text-a-ink/45">
                           {a.uploaded ? "▲ " : ""}
                           {a.name.replace("uploads/", "")}
                         </span>
@@ -563,11 +571,13 @@ export default function AssetConfigurator({ open, wine, onClose, onSaved }) {
                   className={`${sectionCls} transition-opacity ${single ? "" : "pointer-events-none opacity-40"}`}
                   aria-disabled={!single}
                 >
-                  <p className={legendCls}>Akzent-Overlay</p>
+                  <p className={legendCls}>{t("assetCfg.accentOverlay")}</p>
                   <Toggle
                     on={!!cfg?.accent?.enabled}
                     onChange={(v) => setCfg((c) => ({ ...c, accent: { ...c.accent, enabled: v } }))}
-                    label={`${ACCENT_META[wine.label?.accent]?.label ?? "Akzent"}-Glanz aufs Etikett`}
+                    label={t("assetCfg.accentGlow", {
+                      accent: accentName ?? t("assetCfg.accentFallback"),
+                    })}
                   />
                   <div className="mt-3 flex items-center gap-3">
                     <input
@@ -585,9 +595,9 @@ export default function AssetConfigurator({ open, wine, onClose, onSaved }) {
                       }
                       className="flex-1"
                       style={{ accentColor: accentHex }}
-                      aria-label="Intensität des Akzent-Overlays"
+                      aria-label={t("assetCfg.intensity")}
                     />
-                    <span className="w-10 text-right text-[11px] text-charcoal/50 tabular-nums">
+                    <span className="w-10 text-right text-[11px] text-a-ink/50 tabular-nums">
                       {Math.round((cfg?.accent?.opacity ?? 0) * 100)} %
                     </span>
                   </div>
@@ -597,38 +607,37 @@ export default function AssetConfigurator({ open, wine, onClose, onSaved }) {
                   className={`${sectionCls} transition-opacity ${single ? "" : "pointer-events-none opacity-40"}`}
                   aria-disabled={!single}
                 >
-                  <p className={legendCls}>Weinöffner</p>
+                  <p className={legendCls}>{t("assetCfg.opener")}</p>
                   <Toggle
                     on={!!cfg?.opener?.visible}
                     onChange={(v) => setCfg((c) => ({ ...c, opener: { ...c.opener, visible: v } }))}
-                    label="Öffner im Bild zeigen"
+                    label={t("assetCfg.showOpener")}
                   />
                   <div className="mt-3">
-                    <Toggle on={showZone} onChange={setShowZone} label="Logo-Schutzzone anzeigen" />
+                    <Toggle on={showZone} onChange={setShowZone} label={t("assetCfg.showZone")} />
                   </div>
-                  <p className="mt-3 text-[10.5px] leading-relaxed text-charcoal/40">
-                    Frei ziehbar — landet er auf dem MARIA-MARIA-Schriftzug, federt er
-                    beim Loslassen automatisch in die nächste freie Position.
+                  <p className="mt-3 text-[10.5px] leading-relaxed text-a-ink/40">
+                    {t("assetCfg.dragNote")}
                   </p>
                 </div>
               </div>
             </div>
 
-            <footer className="flex items-center justify-between gap-3 border-t border-charcoal/[0.08] bg-cream px-6 py-4">
+            <footer className="flex items-center justify-between gap-3 border-t border-a-ink/[0.08] bg-a-canvas px-6 py-4">
               <button
                 type="button"
                 onClick={resetDefaults}
-                className="rounded-full px-4 py-2.5 text-[12px] tracking-[0.06em] text-charcoal/55 transition-colors hover:text-bordeaux"
+                className="rounded-full px-4 py-2.5 text-[12px] tracking-[0.06em] text-a-ink/55 transition-colors hover:text-a-accent"
               >
-                Zurücksetzen
+                {t("common.reset")}
               </button>
               <div className="flex items-center gap-3">
                 <button
                   type="button"
                   onClick={onClose}
-                  className="rounded-full px-4 py-2.5 text-[12px] tracking-[0.06em] text-charcoal/55 transition-colors hover:text-bordeaux"
+                  className="rounded-full px-4 py-2.5 text-[12px] tracking-[0.06em] text-a-ink/55 transition-colors hover:text-a-accent"
                 >
-                  Abbrechen
+                  {t("common.cancel")}
                 </button>
                 <motion.button
                   type="button"
@@ -636,9 +645,9 @@ export default function AssetConfigurator({ open, wine, onClose, onSaved }) {
                   onClick={save}
                   whileTap={{ scale: 0.96 }}
                   transition={{ type: "spring", stiffness: 400, damping: 22 }}
-                  className="rounded-full bg-gradient-to-br from-bordeaux to-wine px-7 py-3 text-[12px] font-medium uppercase tracking-[0.14em] text-ivory transition-opacity disabled:opacity-50"
+                  className="rounded-full bg-gradient-to-br from-a-fill to-a-fill-2 px-7 py-3 text-[12px] font-medium uppercase tracking-[0.14em] text-ivory transition-opacity disabled:opacity-50"
                 >
-                  {saving ? "Speichert …" : "Speichern"}
+                  {saving ? t("common.saving") : t("common.save")}
                 </motion.button>
               </div>
             </footer>

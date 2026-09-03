@@ -5,12 +5,16 @@ import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import { Close } from "@/components/Icons";
 import { ADMIN_SECTIONS } from "./nav";
 import { ICONS } from "./AdminIcons";
+import AdminLanguageSwitcher from "./AdminLanguageSwitcher";
+import AdminThemeSwitcher from "./AdminThemeSwitcher";
+import { useAdminI18n } from "./i18n/AdminI18n";
 
 /* Mobile/tablet drawer. Mirrors the storefront menu's conventions: focus moves
    in on open, Tab is trapped, Escape closes, focus returns to the trigger. */
 
 export default function AdminMobileNav({ open, onClose, isActive, triggerRef }) {
   const reduced = useReducedMotion();
+  const { t } = useAdminI18n();
   const panelRef = useRef(null);
   const closeRef = useRef(null);
 
@@ -58,7 +62,7 @@ export default function AdminMobileNav({ open, onClose, isActive, triggerRef }) 
         <div className="fixed inset-0 z-[80] lg:hidden">
           <motion.button
             type="button"
-            aria-label="Navigation schließen"
+            aria-label={t("nav.closeNav")}
             onClick={onClose}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -70,7 +74,7 @@ export default function AdminMobileNav({ open, onClose, isActive, triggerRef }) 
             ref={panelRef}
             role="dialog"
             aria-modal="true"
-            aria-label="Admin-Navigation"
+            aria-label={t("nav.aria")}
             data-lenis-prevent
             initial={{ x: "-100%" }}
             animate={{ x: 0 }}
@@ -83,20 +87,25 @@ export default function AdminMobileNav({ open, onClose, isActive, triggerRef }) 
             className="grain absolute inset-y-0 left-0 flex w-[86%] max-w-[330px] flex-col overflow-y-auto overscroll-contain bg-gradient-to-b from-espresso via-[#2a1a15] to-bordeaux-deep pt-[env(safe-area-inset-top)] will-transform"
           >
             <div className="flex h-20 items-center justify-between px-6">
-              <span className="font-playfair text-[19px] italic text-champagne">Maria Maria</span>
+              <span className="font-playfair text-[19px] italic text-champagne">{t("nav.brand")}</span>
               <button
                 ref={closeRef}
                 type="button"
                 onClick={onClose}
-                aria-label="Navigation schließen"
+                aria-label={t("nav.closeNav")}
                 className="flex h-11 w-11 items-center justify-center rounded-full border border-ivory/25 text-ivory transition-colors hover:border-champagne hover:text-champagne"
               >
                 <Close className="h-5 w-5" />
               </button>
             </div>
 
+<<<<<<< Updated upstream
             <nav aria-label="Admin-Navigation mobil" className="flex flex-1 flex-col gap-1.5 px-4 py-4">
               {ADMIN_SECTIONS.map((item, i) => {
+=======
+            <nav aria-label={t("nav.ariaMobile")} className="flex flex-1 flex-col gap-1.5 px-4 py-4">
+              {ADMIN_NAV.map((item, i) => {
+>>>>>>> Stashed changes
                 const Icon = ICONS[item.icon];
                 const active = isActive(item);
                 return (
@@ -125,13 +134,15 @@ export default function AdminMobileNav({ open, onClose, isActive, triggerRef }) 
                         className={`h-[19px] w-[19px] shrink-0 ${active ? "text-champagne" : ""}`}
                       />
                       <span className="min-w-0">
-                        <span className="block truncate text-[13.5px] font-medium">{item.label}</span>
+                        <span className="block truncate text-[13.5px] font-medium">
+                          {t(`nav.${item.key}.label`)}
+                        </span>
                         <span
                           className={`block truncate text-[10.5px] tracking-[0.06em] ${
                             active ? "text-champagne/80" : "text-ivory/50"
                           }`}
                         >
-                          {item.hint}
+                          {t(`nav.${item.key}.hint`)}
                         </span>
                       </span>
                     </Link>
@@ -141,11 +152,23 @@ export default function AdminMobileNav({ open, onClose, isActive, triggerRef }) 
             </nav>
 
             <div className="border-t border-ivory/10 px-6 pb-[calc(1.5rem+env(safe-area-inset-bottom))] pt-5">
+              {/* language switch for phones — the header hides its own below sm */}
+              <p className="mb-2.5 text-[10px] font-semibold uppercase tracking-[0.22em] text-champagne/60">
+                {t("language.label")}
+              </p>
+              <AdminLanguageSwitcher tone="dark" className="w-fit" />
+
+              {/* colour scheme for phones — the header hides its own below sm */}
+              <p className="mb-2.5 mt-4 text-[10px] font-semibold uppercase tracking-[0.22em] text-champagne/60">
+                {t("theme.label")}
+              </p>
+              <AdminThemeSwitcher tone="dark" className="w-fit" />
+
               <Link
                 href="/"
-                className="text-[11.5px] tracking-[0.08em] text-ivory/50 transition-colors hover:text-champagne"
+                className="mt-5 block text-[11.5px] tracking-[0.08em] text-ivory/50 transition-colors hover:text-champagne"
               >
-                ← Zur Website
+                {t("nav.toSite")}
               </Link>
             </div>
           </motion.div>

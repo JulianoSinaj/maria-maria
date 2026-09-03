@@ -4,16 +4,14 @@ import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import { Close } from "@/components/Icons";
 import {
   AGING,
-  AGING_LABEL,
   STYLE,
-  STYLE_LABEL,
   TIER,
   PAIRING,
-  PAIRING_LABEL,
   ACCENT,
   ACCENT_META,
   WORDMARK,
 } from "@/lib/inventory/schema";
+import { useAdminI18n } from "../i18n/AdminI18n";
 
 /* Slide-over editor for a single wine.
    Two modes: "quick" (allocation + price only — the frequent job) and "full"
@@ -47,21 +45,22 @@ const BLANK = {
 const Field = ({ label, hint, error, children }) => (
   <label className="block">
     <span className="mb-1.5 flex items-baseline justify-between gap-2">
-      <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-charcoal/55">
+      <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-a-ink/55">
         {label}
       </span>
-      {hint && <span className="text-[10.5px] text-charcoal/35">{hint}</span>}
+      {hint && <span className="text-[10.5px] text-a-ink/35">{hint}</span>}
     </span>
     {children}
-    {error && <span className="mt-1 block text-[10.5px] text-bordeaux">{error}</span>}
+    {error && <span className="mt-1 block text-[10.5px] text-a-accent">{error}</span>}
   </label>
 );
 
 const inputCls =
-  "h-11 w-full rounded-xl border border-charcoal/12 bg-ivory/70 px-3.5 text-[13px] text-charcoal transition-colors duration-300 placeholder:text-charcoal/30 focus:border-champagne focus:outline-none";
+  "h-11 w-full rounded-xl border border-a-ink/12 bg-a-surface/70 px-3.5 text-[13px] text-a-ink transition-colors duration-300 placeholder:text-a-ink/30 focus:border-champagne focus:outline-none";
 
 export default function WineSlideOver({ open, mode, item, onClose, onSave, onFull, saving, error }) {
   const reduced = useReducedMotion();
+  const { t, tm, intl } = useAdminI18n();
   const panelRef = useRef(null);
   const closeRef = useRef(null);
   const [draft, setDraft] = useState(BLANK);
@@ -155,8 +154,10 @@ export default function WineSlideOver({ open, mode, item, onClose, onSave, onFul
 
   /* accessible name for the dialog — the visible heading is the wine itself */
   const title = isCreate
-    ? "Wein anlegen"
-    : `${draft.name || "Wein"} ${isQuick ? "— Bestand & Preis" : "bearbeiten"}`;
+    ? t("editor.createTitle")
+    : `${draft.name || t("editor.wineFallback")} ${
+        isQuick ? t("editor.quickSuffix") : t("editor.editSuffix")
+      }`;
 
   return (
     <AnimatePresence>
@@ -164,7 +165,7 @@ export default function WineSlideOver({ open, mode, item, onClose, onSave, onFul
         <div className="fixed inset-0 z-[90]">
           <motion.button
             type="button"
-            aria-label="Schließen"
+            aria-label={t("common.close")}
             onClick={onClose}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -185,21 +186,25 @@ export default function WineSlideOver({ open, mode, item, onClose, onSave, onFul
             transition={
               reduced ? { duration: 0 } : { type: "spring", stiffness: 260, damping: 34, mass: 0.9 }
             }
-            className="absolute inset-y-0 right-0 flex w-full max-w-[520px] flex-col bg-cream will-transform"
+            className="absolute inset-y-0 right-0 flex w-full max-w-[520px] flex-col bg-a-canvas will-transform"
           >
-            <header className="flex items-start justify-between gap-4 border-b border-charcoal/[0.08] px-6 py-5">
+            <header className="flex items-start justify-between gap-4 border-b border-a-ink/[0.08] px-6 py-5">
               <div className="min-w-0">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-bordeaux/55">
-                  {isQuick ? "Bestand & Preis" : isCreate ? "Neuer Eintrag" : "Weindaten"}
+                <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-a-accent/55">
+                  {isQuick
+                    ? t("editor.eyebrowQuick")
+                    : isCreate
+                      ? t("editor.eyebrowCreate")
+                      : t("editor.eyebrowEdit")}
                 </p>
                 {/* the wine's own name is the heading — in quick mode the mode
                     label moves to the eyebrow, so it is always clear WHICH
                     bottle is being edited */}
-                <h2 className="mt-1 truncate font-playfair text-[21px] leading-tight text-charcoal">
-                  {isCreate ? "Wein anlegen" : draft.name || "Wein bearbeiten"}
+                <h2 className="mt-1 truncate font-playfair text-[21px] leading-tight text-a-ink">
+                  {isCreate ? t("editor.createTitle") : draft.name || t("editor.editTitle")}
                 </h2>
                 {!isCreate && draft.appellation?.name && (
-                  <p className="mt-0.5 truncate text-[11.5px] text-charcoal/45">
+                  <p className="mt-0.5 truncate text-[11.5px] text-a-ink/45">
                     {draft.vintage} · {draft.appellation.name}
                   </p>
                 )}
@@ -208,8 +213,8 @@ export default function WineSlideOver({ open, mode, item, onClose, onSave, onFul
                 ref={closeRef}
                 type="button"
                 onClick={onClose}
-                aria-label="Schließen"
-                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-charcoal/12 text-charcoal/70 transition-colors hover:border-champagne hover:text-bordeaux"
+                aria-label={t("common.close")}
+                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-a-ink/12 text-a-ink/70 transition-colors hover:border-champagne hover:text-a-accent"
               >
                 <Close className="h-[18px] w-[18px]" />
               </button>
@@ -218,14 +223,14 @@ export default function WineSlideOver({ open, mode, item, onClose, onSave, onFul
             <form onSubmit={submit} className="flex min-h-0 flex-1 flex-col">
               <div className="min-h-0 flex-1 space-y-5 overflow-y-auto overscroll-contain px-6 py-6">
                 {error && !Object.keys(fieldErrors).length && (
-                  <p role="alert" className="rounded-xl bg-bordeaux/10 px-4 py-3 text-[12px] text-bordeaux">
+                  <p role="alert" className="rounded-xl bg-a-accent/10 px-4 py-3 text-[12px] text-a-accent">
                     {error.message}
                   </p>
                 )}
 
                 {/* ---- always shown: the quick-edit fields ---- */}
                 <div className="grid grid-cols-2 gap-4">
-                  <Field label="Preis" hint="€ / Flasche" error={fieldErrors.price}>
+                  <Field label={t("editor.price")} hint={t("editor.priceHint")} error={fieldErrors.price}>
                     <input
                       className={inputCls}
                       type="number"
@@ -236,7 +241,7 @@ export default function WineSlideOver({ open, mode, item, onClose, onSave, onFul
                       onChange={(e) => set("price", e.target.value)}
                     />
                   </Field>
-                  <Field label="Jahrgang" error={fieldErrors.vintage}>
+                  <Field label={t("editor.vintage")} error={fieldErrors.vintage}>
                     <input
                       className={inputCls}
                       type="number"
@@ -249,12 +254,16 @@ export default function WineSlideOver({ open, mode, item, onClose, onSave, onFul
                   </Field>
                 </div>
 
-                <fieldset className="rounded-2xl border border-charcoal/[0.08] bg-ivory/50 p-4">
-                  <legend className="px-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-charcoal/55">
-                    Kontingent
+                <fieldset className="rounded-2xl border border-a-ink/[0.08] bg-a-surface/50 p-4">
+                  <legend className="px-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-a-ink/55">
+                    {t("editor.allocation")}
                   </legend>
                   <div className="grid grid-cols-2 gap-4">
-                    <Field label="Auflage" hint="leer = offen" error={fieldErrors["batch.size"]}>
+                    <Field
+                      label={t("editor.batchSize")}
+                      hint={t("editor.batchHint")}
+                      error={fieldErrors["batch.size"]}
+                    >
                       <input
                         className={inputCls}
                         type="number"
@@ -266,7 +275,7 @@ export default function WineSlideOver({ open, mode, item, onClose, onSave, onFul
                         }
                       />
                     </Field>
-                    <Field label="Zugeteilt" error={fieldErrors["batch.committed"]}>
+                    <Field label={t("editor.committed")} error={fieldErrors["batch.committed"]}>
                       <input
                         className={inputCls}
                         type="number"
@@ -282,7 +291,7 @@ export default function WineSlideOver({ open, mode, item, onClose, onSave, onFul
                   {remaining != null && draft.batch?.size > 0 && (
                     <span
                       aria-hidden="true"
-                      className="mt-3 block h-1.5 overflow-hidden rounded-full bg-charcoal/[0.07]"
+                      className="mt-3 block h-1.5 overflow-hidden rounded-full bg-a-ink/[0.07]"
                     >
                       <span
                         className="block h-full rounded-full transition-[width,background-color] duration-500 ease-out-expo"
@@ -293,39 +302,37 @@ export default function WineSlideOver({ open, mode, item, onClose, onSave, onFul
                       />
                     </span>
                   )}
-                  <p className="mt-3 text-[11.5px] text-charcoal/50">
+                  <p className="mt-3 text-[11.5px] text-a-ink/50">
                     {remaining == null ? (
-                      "Ohne feste Auflage — kein Kontingent, laufende Produktion."
+                      t("editor.noBatch")
                     ) : (
                       <>
-                        Verfügbar:{" "}
+                        {t("editor.available")}{" "}
                         <span
                           className={`font-semibold tabular-nums ${
-                            remaining < 0 ? "text-bordeaux" : "text-charcoal/70"
+                            remaining < 0 ? "text-a-accent" : "text-a-ink/70"
                           }`}
                         >
-                          {remaining.toLocaleString("de-DE")}
+                          {remaining.toLocaleString(intl)}
                         </span>{" "}
-                        Flaschen
-                        {remaining < 0 && " — mehr zugeteilt als produziert"}
+                        {t("editor.bottles")}
+                        {remaining < 0 && t("editor.overCommitted")}
                       </>
                     )}
                   </p>
                 </fieldset>
 
                 {isQuick && (
-                  <div className="rounded-2xl border border-charcoal/[0.08] bg-ivory/40 px-4 py-3.5">
-                    <p className="text-[11.5px] leading-relaxed text-charcoal/45">
-                      Schnellbearbeitung ändert nur Preis, Jahrgang und Kontingent.
-                      Herkunft, Ausbau, Etikett und Notizen liegen im vollständigen
-                      Formular.
+                  <div className="rounded-2xl border border-a-ink/[0.08] bg-a-surface/40 px-4 py-3.5">
+                    <p className="text-[11.5px] leading-relaxed text-a-ink/45">
+                      {t("editor.quickNote")}
                     </p>
                     <button
                       type="button"
                       onClick={onFull}
-                      className="mt-2 text-[11.5px] font-medium text-bordeaux transition-colors hover:text-bordeaux-deep"
+                      className="mt-2 text-[11.5px] font-medium text-a-accent transition-colors hover:text-a-accent-deep"
                     >
-                      Alle Felder bearbeiten →
+                      {t("editor.allFields")}
                     </button>
                   </div>
                 )}
@@ -333,7 +340,7 @@ export default function WineSlideOver({ open, mode, item, onClose, onSave, onFul
                 {/* ---- full form only ---- */}
                 {!isQuick && (
                   <>
-                    <Field label="Name" error={fieldErrors.name}>
+                    <Field label={t("editor.name")} error={fieldErrors.name}>
                       <input
                         className={inputCls}
                         required
@@ -343,18 +350,18 @@ export default function WineSlideOver({ open, mode, item, onClose, onSave, onFul
                     </Field>
 
                     {isCreate && (
-                      <Field label="Slug" hint="URL-Kennung" error={fieldErrors.slug}>
+                      <Field label={t("editor.slug")} hint={t("editor.slugHint")} error={fieldErrors.slug}>
                         <input
                           className={inputCls}
                           required
-                          placeholder="z. B. primitivo-riserva"
+                          placeholder={t("editor.slugPlaceholder")}
                           value={draft.slug}
                           onChange={(e) => set("slug", e.target.value)}
                         />
                       </Field>
                     )}
 
-                    <Field label="Vollständiger Name" hint="wie auf dem Etikett">
+                    <Field label={t("editor.fullName")} hint={t("editor.fullNameHint")}>
                       <input
                         className={inputCls}
                         value={draft.fullName ?? ""}
@@ -363,7 +370,7 @@ export default function WineSlideOver({ open, mode, item, onClose, onSave, onFul
                     </Field>
 
                     <div className="grid grid-cols-2 gap-4">
-                      <Field label="Art">
+                      <Field label={t("editor.style")}>
                         <select
                           className={inputCls}
                           value={draft.style}
@@ -371,12 +378,12 @@ export default function WineSlideOver({ open, mode, item, onClose, onSave, onFul
                         >
                           {Object.values(STYLE).map((s) => (
                             <option key={s} value={s}>
-                              {STYLE_LABEL[s]}
+                              {tm("style", s)}
                             </option>
                           ))}
                         </select>
                       </Field>
-                      <Field label="Ausbau">
+                      <Field label={t("editor.aging")}>
                         <select
                           className={inputCls}
                           value={draft.aging?.vessel}
@@ -384,7 +391,7 @@ export default function WineSlideOver({ open, mode, item, onClose, onSave, onFul
                         >
                           {Object.values(AGING).map((a) => (
                             <option key={a} value={a}>
-                              {AGING_LABEL[a]}
+                              {tm("aging", a)}
                             </option>
                           ))}
                         </select>
@@ -392,7 +399,11 @@ export default function WineSlideOver({ open, mode, item, onClose, onSave, onFul
                     </div>
 
                     <div className="grid grid-cols-2 gap-4">
-                      <Field label="Reifedauer" hint="Monate" error={fieldErrors["aging.months"]}>
+                      <Field
+                        label={t("editor.months")}
+                        hint={t("editor.monthsHint")}
+                        error={fieldErrors["aging.months"]}
+                      >
                         <input
                           className={inputCls}
                           type="number"
@@ -401,7 +412,7 @@ export default function WineSlideOver({ open, mode, item, onClose, onSave, onFul
                           onChange={(e) => set("aging.months", e.target.value)}
                         />
                       </Field>
-                      <Field label="Alkohol" hint="% vol.">
+                      <Field label={t("editor.abv")} hint={t("editor.abvHint")}>
                         <input
                           className={inputCls}
                           type="number"
@@ -413,35 +424,35 @@ export default function WineSlideOver({ open, mode, item, onClose, onSave, onFul
                       </Field>
                     </div>
 
-                    <fieldset className="rounded-2xl border border-charcoal/[0.08] bg-ivory/50 p-4">
-                      <legend className="px-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-charcoal/55">
-                        Herkunft
+                    <fieldset className="rounded-2xl border border-a-ink/[0.08] bg-a-surface/50 p-4">
+                      <legend className="px-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-a-ink/55">
+                        {t("editor.origin")}
                       </legend>
                       <div className="space-y-4">
-                        <Field label="Bezeichnung" error={fieldErrors["appellation.name"]}>
+                        <Field label={t("editor.appellation")} error={fieldErrors["appellation.name"]}>
                           <input
                             className={inputCls}
                             required
-                            placeholder="z. B. Primitivo di Manduria D.O.P."
+                            placeholder={t("editor.appellationPlaceholder")}
                             value={draft.appellation?.name ?? ""}
                             onChange={(e) => set("appellation.name", e.target.value)}
                           />
                         </Field>
                         <div className="grid grid-cols-3 gap-3">
-                          <Field label="Stufe">
+                          <Field label={t("editor.tier")}>
                             <select
                               className={inputCls}
                               value={draft.appellation?.tier}
                               onChange={(e) => set("appellation.tier", e.target.value)}
                             >
-                              {Object.values(TIER).map((t) => (
-                                <option key={t} value={t}>
-                                  {t}
+                              {Object.values(TIER).map((tier) => (
+                                <option key={tier} value={tier}>
+                                  {tier}
                                 </option>
                               ))}
                             </select>
                           </Field>
-                          <Field label="Region" error={fieldErrors["appellation.region"]}>
+                          <Field label={t("editor.region")} error={fieldErrors["appellation.region"]}>
                             <input
                               className={inputCls}
                               required
@@ -449,7 +460,7 @@ export default function WineSlideOver({ open, mode, item, onClose, onSave, onFul
                               onChange={(e) => set("appellation.region", e.target.value)}
                             />
                           </Field>
-                          <Field label="Zone">
+                          <Field label={t("editor.zone")}>
                             <input
                               className={inputCls}
                               value={draft.appellation?.zone ?? ""}
@@ -460,7 +471,11 @@ export default function WineSlideOver({ open, mode, item, onClose, onSave, onFul
                       </div>
                     </fieldset>
 
-                    <Field label="Speiseempfehlung" hint="Kategorien" error={fieldErrors.pairings}>
+                    <Field
+                      label={t("editor.pairings")}
+                      hint={t("editor.pairingsHint")}
+                      error={fieldErrors.pairings}
+                    >
                       <div className="flex flex-wrap gap-2">
                         {Object.values(PAIRING).map((p) => {
                           const on = draft.pairings?.includes(p);
@@ -479,18 +494,18 @@ export default function WineSlideOver({ open, mode, item, onClose, onSave, onFul
                               }
                               className={`rounded-full border px-3.5 py-2 text-[11.5px] transition-colors duration-300 ${
                                 on
-                                  ? "border-bordeaux bg-bordeaux text-ivory"
-                                  : "border-charcoal/12 text-charcoal/60 hover:border-champagne"
+                                  ? "border-a-accent bg-a-fill text-ivory"
+                                  : "border-a-ink/12 text-a-ink/60 hover:border-champagne"
                               }`}
                             >
-                              {PAIRING_LABEL[p]}
+                              {tm("pairing", p)}
                             </button>
                           );
                         })}
                       </div>
                     </Field>
 
-                    <Field label="Pairing-Notiz">
+                    <Field label={t("editor.pairingNotes")}>
                       <textarea
                         className={`${inputCls} h-auto py-2.5`}
                         rows={2}
@@ -500,13 +515,13 @@ export default function WineSlideOver({ open, mode, item, onClose, onSave, onFul
                     </Field>
 
                     <Field
-                      label="Verkostungsnotizen"
-                      hint="mit Komma trennen"
+                      label={t("editor.tasting")}
+                      hint={t("editor.tastingHint")}
                       error={fieldErrors.tastingNotes}
                     >
                       <input
                         className={inputCls}
-                        placeholder="intensiv, kraftvoll, ausgewogen"
+                        placeholder={t("editor.tastingPlaceholder")}
                         value={
                           Array.isArray(draft.tastingNotes)
                             ? draft.tastingNotes.join(", ")
@@ -516,23 +531,25 @@ export default function WineSlideOver({ open, mode, item, onClose, onSave, onFul
                       />
                     </Field>
 
-                    <fieldset className="rounded-2xl border border-charcoal/[0.08] bg-ivory/50 p-4">
-                      <legend className="px-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-charcoal/55">
-                        Etikett
+                    <fieldset className="rounded-2xl border border-a-ink/[0.08] bg-a-surface/50 p-4">
+                      <legend className="px-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-a-ink/55">
+                        {t("editor.label")}
                       </legend>
                       <div className="grid grid-cols-2 gap-4">
-                        <Field label="Schriftzug">
+                        <Field label={t("editor.wordmark")}>
                           <select
                             className={inputCls}
                             value={draft.label?.wordmark}
                             onChange={(e) => set("label.wordmark", e.target.value)}
                           >
-                            <option value={WORDMARK.BANDED}>Weiß auf schwarzem Band</option>
-                            <option value={WORDMARK.TINTED}>Linienschrift in Akzentfarbe</option>
-                            <option value={WORDMARK.BLACK_ON_WHITE}>Schwarz auf Weiß</option>
+                            {Object.values(WORDMARK).map((w) => (
+                              <option key={w} value={w}>
+                                {tm("wordmark", w)}
+                              </option>
+                            ))}
                           </select>
                         </Field>
-                        <Field label="Akzent">
+                        <Field label={t("editor.accent")}>
                           <select
                             className={inputCls}
                             value={draft.label?.accent}
@@ -540,7 +557,7 @@ export default function WineSlideOver({ open, mode, item, onClose, onSave, onFul
                           >
                             {Object.values(ACCENT).map((a) => (
                               <option key={a} value={a}>
-                                {ACCENT_META[a].label}
+                                {tm("accent", a)}
                               </option>
                             ))}
                           </select>
@@ -549,13 +566,13 @@ export default function WineSlideOver({ open, mode, item, onClose, onSave, onFul
                       <div className="mt-3 flex items-center gap-2.5">
                         <span
                           aria-hidden="true"
-                          className="h-5 w-5 rounded-full ring-1 ring-charcoal/10"
+                          className="h-5 w-5 rounded-full ring-1 ring-a-ink/10"
                           style={{ background: ACCENT_META[draft.label?.accent]?.hex }}
                         />
-                        <span className="text-[11.5px] text-charcoal/50">
+                        <span className="text-[11.5px] text-a-ink/50">
                           {draft.label?.accent === ACCENT.RED
-                            ? "Rotakzent — Hausstandard"
-                            : `${ACCENT_META[draft.label?.accent]?.label}-Akzent`}
+                            ? t("editor.redAccent")
+                            : t("editor.accentSuffix", { accent: tm("accent", draft.label?.accent) })}
                         </span>
                       </div>
                     </fieldset>
@@ -563,22 +580,22 @@ export default function WineSlideOver({ open, mode, item, onClose, onSave, onFul
                 )}
               </div>
 
-              <footer className="flex items-center justify-between gap-3 border-t border-charcoal/[0.08] bg-cream px-6 py-4">
+              <footer className="flex items-center justify-between gap-3 border-t border-a-ink/[0.08] bg-a-canvas px-6 py-4">
                 <button
                   type="button"
                   onClick={onClose}
-                  className="rounded-full px-4 py-2.5 text-[12px] tracking-[0.06em] text-charcoal/55 transition-colors hover:text-bordeaux"
+                  className="rounded-full px-4 py-2.5 text-[12px] tracking-[0.06em] text-a-ink/55 transition-colors hover:text-a-accent"
                 >
-                  Abbrechen
+                  {t("common.cancel")}
                 </button>
                 <motion.button
                   type="submit"
                   disabled={saving}
                   whileTap={{ scale: 0.96 }}
                   transition={{ type: "spring", stiffness: 400, damping: 22 }}
-                  className="rounded-full bg-gradient-to-br from-bordeaux to-wine px-7 py-3 text-[12px] font-medium uppercase tracking-[0.14em] text-ivory transition-opacity disabled:opacity-50"
+                  className="rounded-full bg-gradient-to-br from-a-fill to-a-fill-2 px-7 py-3 text-[12px] font-medium uppercase tracking-[0.14em] text-ivory transition-opacity disabled:opacity-50"
                 >
-                  {saving ? "Speichert …" : isCreate ? "Anlegen" : "Speichern"}
+                  {saving ? t("common.saving") : isCreate ? t("common.create") : t("common.save")}
                 </motion.button>
               </footer>
             </form>

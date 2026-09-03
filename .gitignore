@@ -39,3 +39,6 @@ data/uploads/
 
 # isolated verification builds
 .next-verify/
+
+.vercel
+.env*

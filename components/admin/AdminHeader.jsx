@@ -2,15 +2,11 @@
 import Link from "next/link";
 import { motion, useReducedMotion } from "motion/react";
 import { Menu } from "@/components/Icons";
-<<<<<<< Updated upstream
 import { Search, Bell, Sidebar, Logout } from "./AdminIcons";
 import { signOut } from "@/lib/admin/actions";
-=======
-import { Search, Bell, Sidebar } from "./AdminIcons";
 import AdminLanguageSwitcher from "./AdminLanguageSwitcher";
 import AdminThemeSwitcher from "./AdminThemeSwitcher";
 import { useAdminI18n } from "./i18n/AdminI18n";
->>>>>>> Stashed changes
 
 /* Sticky header for the content column. Title/eyebrow are driven by the active
    nav item so a new section never needs to re-declare its own header. */
@@ -107,34 +103,22 @@ export default function AdminHeader({
             className="hidden h-7 w-px bg-a-ink/10 sm:block"
           />
 
-<<<<<<< Updated upstream
           {/* The chip was a button that did nothing. It is now the way to the
               one page that belongs to the person rather than to the site. */}
           <Link
             href="/admin/passwort"
-            title="Zugang & Passwort"
-            className="group flex items-center gap-2.5 rounded-full border border-charcoal/12 py-1 pl-1 pr-1 transition-colors hover:border-champagne sm:pr-4">
-            <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-gradient-to-br from-bordeaux to-wine font-playfair text-[13px] italic text-ivory">
-=======
-          <button
-            type="button"
+            title={t("header.account")}
             className="group flex items-center gap-2.5 rounded-full border border-a-ink/12 py-1 pl-1 pr-1 transition-colors hover:border-champagne sm:pr-4"
           >
             <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-gradient-to-br from-a-fill to-a-fill-2 font-playfair text-[13px] italic text-ivory">
->>>>>>> Stashed changes
               A
             </span>
             <span className="hidden text-left sm:block">
               <span className="block text-[12px] font-medium leading-tight text-a-ink">
                 {t("header.userName")}
               </span>
-<<<<<<< Updated upstream
-              <span className="block text-[10px] leading-tight tracking-[0.06em] text-charcoal/45">
-                Zugang & Passwort
-=======
               <span className="block text-[10px] leading-tight tracking-[0.06em] text-a-ink/45">
-                {t("header.userRole")}
->>>>>>> Stashed changes
+                {t("header.account")}
               </span>
             </span>
           </Link>
@@ -145,9 +129,9 @@ export default function AdminHeader({
           <form action={signOut}>
             <button
               type="submit"
-              aria-label="Abmelden"
-              title="Abmelden"
-              className="flex h-10 w-10 items-center justify-center rounded-xl border border-charcoal/12 text-charcoal/70 transition-colors hover:border-champagne hover:text-bordeaux"
+              aria-label={t("header.signOut")}
+              title={t("header.signOut")}
+              className="flex h-10 w-10 items-center justify-center rounded-xl border border-a-ink/12 text-a-ink/70 transition-colors hover:border-champagne hover:text-a-accent"
             >
               <Logout className="h-[18px] w-[18px]" />
             </button>

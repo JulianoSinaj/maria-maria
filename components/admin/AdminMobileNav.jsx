@@ -99,13 +99,8 @@ export default function AdminMobileNav({ open, onClose, isActive, triggerRef }) 
               </button>
             </div>
 
-<<<<<<< Updated upstream
-            <nav aria-label="Admin-Navigation mobil" className="flex flex-1 flex-col gap-1.5 px-4 py-4">
-              {ADMIN_SECTIONS.map((item, i) => {
-=======
             <nav aria-label={t("nav.ariaMobile")} className="flex flex-1 flex-col gap-1.5 px-4 py-4">
-              {ADMIN_NAV.map((item, i) => {
->>>>>>> Stashed changes
+              {ADMIN_SECTIONS.map((item, i) => {
                 const Icon = ICONS[item.icon];
                 const active = isActive(item);
                 return (

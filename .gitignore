@@ -34,12 +34,25 @@ review_*.png
 WhatsApp Image*.jpeg
 WhatsApp Image*.jpg
 
-# admin mock uploads (Bottle Asset Configurator)
-data/uploads/
+# ---- runtime state written by the backoffice ----
+# Uploads (Bottle Asset Configurator) and, since the client owns her own
+# password, data/admin/credentials.json. None of it is source, and the
+# credentials file must never be in a repository. On the server this whole
+# directory has to be a persistent volume — otherwise a deploy wipes the
+# client's password and the handover credential silently takes over again.
+data/
 
 # isolated verification builds
 .next-verify/
 
 .vercel
+
+# ---- credentials ----
+# `.env*` only catches files that START with a dot. prod.env walked straight
+# past it and sat in the repository with ADMIN_PASSWORD and a VERCEL_OIDC_TOKEN
+# inside (commit 9830e43, taken back out 2026-09-03). The second pattern
+# catches every spelling: .env, .env.local, prod.env, staging.env — and so
+# replaces the explicit `prod.env` line from 63dd59f, which it already covers.
+# prod.env.example is not matched — it documents the names, never the values.
 .env*
-prod.env
+*.env

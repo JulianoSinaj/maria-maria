@@ -42,3 +42,4 @@ data/uploads/
 
 .vercel
 .env*
+prod.env

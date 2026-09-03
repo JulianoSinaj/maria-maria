@@ -3,7 +3,7 @@ import { useEffect, useRef } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import { Close } from "@/components/Icons";
-import { ADMIN_NAV } from "./nav";
+import { ADMIN_SECTIONS } from "./nav";
 import { ICONS } from "./AdminIcons";
 
 /* Mobile/tablet drawer. Mirrors the storefront menu's conventions: focus moves
@@ -96,7 +96,7 @@ export default function AdminMobileNav({ open, onClose, isActive, triggerRef }) 
             </div>
 
             <nav aria-label="Admin-Navigation mobil" className="flex flex-1 flex-col gap-1.5 px-4 py-4">
-              {ADMIN_NAV.map((item, i) => {
+              {ADMIN_SECTIONS.map((item, i) => {
                 const Icon = ICONS[item.icon];
                 const active = isActive(item);
                 return (

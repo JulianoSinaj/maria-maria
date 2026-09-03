@@ -3,7 +3,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import Logo from "@/components/Logo";
-import { ADMIN_NAV } from "./nav";
+import { ADMIN_SECTIONS } from "./nav";
 import { ICONS } from "./AdminIcons";
 
 /* Desktop rail. The active pill is a single shared element (layoutId) that
@@ -54,7 +54,7 @@ export default function AdminSidebar({ collapsed = false, isActive }) {
         aria-label="Admin-Navigation"
         className="flex flex-1 flex-col gap-1 px-3 pb-6"
       >
-        {ADMIN_NAV.map((item) => {
+        {ADMIN_SECTIONS.map((item) => {
           const Icon = ICONS[item.icon];
           const active = isActive(item);
           return (

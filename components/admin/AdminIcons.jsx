@@ -67,6 +67,38 @@ export const Sidebar = (p) => (
   </svg>
 );
 
+export const Lock = (p) => (
+  <svg {...base} {...p}>
+    <rect x="4.5" y="10" width="15" height="10.5" rx="2.5" />
+    <path d="M8 10V7.5a4 4 0 0 1 8 0V10" />
+    <path d="M12 14v2.5" />
+  </svg>
+);
+
+export const Eye = (p) => (
+  <svg {...base} {...p}>
+    <path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6" />
+    <circle cx="12" cy="12" r="2.75" />
+  </svg>
+);
+
+export const EyeOff = (p) => (
+  <svg {...base} {...p}>
+    <path d="M4 4.5 20 20" />
+    <path d="M9.9 5.2A9.6 9.6 0 0 1 12 5c6 0 9.5 6 9.5 6a17 17 0 0 1-3.2 3.8" />
+    <path d="M6.2 7.3A16.6 16.6 0 0 0 2.5 11s3.5 6 9.5 6a9.9 9.9 0 0 0 3.6-.66" />
+    <path d="M9.9 10a2.75 2.75 0 0 0 3.8 3.85" />
+  </svg>
+);
+
+export const Logout = (p) => (
+  <svg {...base} {...p}>
+    <path d="M14.5 4.5h3.5a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2h-3.5" />
+    <path d="M10 8.5 6.5 12l3.5 3.5" />
+    <path d="M6.5 12H15" />
+  </svg>
+);
+
 export const ICONS = {
   overview: Overview,
   bottle: Bottle,

@@ -3,6 +3,7 @@ import { DEFAULT_LOCALE, isLocale } from "@/lib/i18n/config";
 import { internalPath } from "@/lib/i18n/routing";
 import { SHOP_ENABLED, EXTERNAL_SHOP_URL, isShopPath } from "@/lib/shop/config";
 import { SITE_URL } from "@/lib/site";
+import { SESSION_COOKIE, sessionSecret, verifySession } from "@/lib/admin/session";
 
 /* Sprach-Routing.
 
@@ -120,73 +121,118 @@ function preferredLocale(header) {
    nichts zur Build-Zeit ein. Ein Wechsel im Hosting-Panel wirkt deshalb
    nach einem Neustart des Containers, ein Rebuild ist nicht nötig. */
 
-const ADMIN_REALM = 'Basic realm="Maria Maria Backoffice", charset="UTF-8"';
+/* --- From the browser dialog to a sign-in page of our own ---------------
+
+   Since September 2026 the credentials no longer travel in an Authorization
+   header on every single request. They are typed once into /admin/login, and
+   what the browser carries from then on is a signed, short-lived cookie —
+   lib/admin/session.js holds the token format and the reasoning.
+
+   The Basic dialog could not be styled, could not say why an attempt failed,
+   and could not be dismissed — signing out meant closing the browser. A form
+   can do all three.
+
+   BASIC AUTH IS NO LONGER ACCEPTED, and that is not a simplification: it
+   could only ever check ADMIN_PASSWORD from the environment, and the whole
+   point of the client owning her password (lib/admin/credentials.js) is that
+   the environment credential stops working once she has set her own. A header
+   that keeps letting the old, known password through would make the change
+   cosmetic. Scripts that used `curl -u` therefore stop working; there are
+   none in this repository — the API tests run against a dev server, which is
+   open anyway.
+
+   What this file checks is now ONE thing: the signature on the session
+   cookie. It cannot check a password at all, and it does not need to — the
+   password lives in a file the Edge runtime cannot read (no fs), and it is
+   the login page, running in Node, that compares it. The middleware stays the
+   chokepoint; only the question it asks got smaller. */
+
+/* The one path inside /admin that may be seen without credentials. Both the
+   page and the sign-in POST land on it — Next posts a server action back to
+   the URL of the page it came from, so one exemption covers both. */
+const LOGIN_PATH = "/admin/login";
 
 /* Hochgeladene Dateien werden ausgeliefert, nicht verwaltet — siehe oben. */
 const UPLOADED_FILE = /^\/api\/admin\/(?:hero|gallery|assets\/[^/]+)\/file\//;
 
+/* Everything that belongs to the backoffice — the login page included. The
+   exemption for it is made where the guard is called, NOT here: a path that
+   drops out of this predicate falls through to the storefront rules further
+   down and gets rewritten to /de/admin/login, which is a 404. (Measured, not
+   feared — that was the first thing the login page did.) */
 const isBackoffice = (pathname) =>
   pathname === "/admin" ||
   pathname.startsWith("/admin/") ||
   (pathname.startsWith("/api/admin") && !UPLOADED_FILE.test(pathname));
 
-/* Vergleich über die SHA-256-Summe statt Zeichen für Zeichen: Ein direkter
-   String-Vergleich bricht beim ersten Unterschied ab und verrät über die
-   Antwortzeit, wie viele Zeichen stimmen — und über den Längenvergleich
-   davor auch noch die Passwortlänge. Zwei Summen sind immer 32 Byte lang
-   und werden immer vollständig durchlaufen. */
-async function digest(text) {
-  const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(text));
-  return new Uint8Array(buf);
-}
+/* What an unauthenticated request gets back — and it depends on who is
+   asking, because a person and a fetch() need different answers. */
+function deny(request) {
+  const { pathname, search } = request.nextUrl;
 
-async function credentialsMatch(supplied, expected) {
-  const [a, b] = await Promise.all([digest(supplied), digest(expected)]);
-  let diff = 0;
-  for (let i = 0; i < a.length; i++) diff |= a[i] ^ b[i];
-  return diff === 0;
-}
-
-function challenge() {
-  /* Der Browser zeigt daraufhin seinen eigenen Anmeldedialog. */
-  return new NextResponse("Authentifizierung erforderlich.", {
-    status: 401,
-    headers: {
-      "WWW-Authenticate": ADMIN_REALM,
-      "Cache-Control": "no-store",
-      "X-Robots-Tag": "noindex, nofollow",
-    },
-  });
-}
-
-async function guardBackoffice(request) {
-  const expectedPassword = process.env.ADMIN_PASSWORD;
-
-  if (!expectedPassword) {
-    if (process.env.NODE_ENV !== "production") return null;
-    return new NextResponse("Backoffice ist nicht konfiguriert (ADMIN_PASSWORD fehlt).", {
-      status: 503,
-      headers: { "Cache-Control": "no-store", "X-Robots-Tag": "noindex, nofollow" },
+  /* An endpoint answers with JSON. Deliberately WITHOUT `WWW-Authenticate`:
+     that header makes the browser raise its own Basic dialog on top of a
+     fetch() from an open admin page — the very dialog the login page exists
+     to replace. Scripts are unaffected; they send their header unprompted. */
+  if (pathname.startsWith("/api/")) {
+    return new NextResponse(JSON.stringify({ error: "Nicht angemeldet." }), {
+      status: 401,
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        "Cache-Control": "no-store",
+        "X-Robots-Tag": "noindex, nofollow",
+      },
     });
   }
 
-  const header = request.headers.get("authorization");
-  if (!header?.startsWith("Basic ")) return challenge();
+  /* A person gets the form, and the address they wanted is carried along so
+     the sign-in lands where they were headed instead of on the dashboard.
+     `/admin` itself is not worth a parameter — it is the default anyway. */
+  const url = new URL(LOGIN_PATH, request.url);
+  if (pathname !== "/admin") url.searchParams.set("next", `${pathname}${search}`);
 
-  let supplied;
-  try {
-    /* atob liefert eine Kette aus Byte-Zeichen. Ein Passwort mit Umlaut käme
-       darüber als Latin-1 an und passte nie zum UTF-8-Original — genau das,
-       was charset="UTF-8" im Realm dem Browser zugesagt hat. */
-    const bytes = Uint8Array.from(atob(header.slice(6)), (c) => c.charCodeAt(0));
-    supplied = new TextDecoder().decode(bytes);
-  } catch {
-    /* Kein gültiges Base64 — dieselbe Antwort wie ein falsches Passwort. */
-    return challenge();
+  /* 303, not the default 307: 307 preserves the method, so a POST into an
+     expired session — any server action of the backoffice — would be replayed
+     against the login page, which has no such action and would answer with an
+     error instead of a form. 303 turns it into a GET, which is exactly what
+     an expired session should look like. */
+  const response = NextResponse.redirect(url, 303);
+  response.headers.set("Cache-Control", "no-store");
+  response.headers.set("X-Robots-Tag", "noindex, nofollow");
+  return response;
+}
+
+async function guardBackoffice(request) {
+  /* "Configured" now means a SIGNING KEY, not a password.
+
+     ADMIN_SESSION_SECRET or, as long as it is still set, ADMIN_PASSWORD —
+     sessionSecret() prefers the first. The distinction is what lets the
+     backoffice be handed over completely: once the client has set a password
+     of her own, ADMIN_PASSWORD can be deleted from the panel and the
+     deployment stays configured, with nobody outside the house holding a
+     credential that signs in.
+
+     Without any key, production lets NOTHING through. The alternative — open
+     when in doubt — is exactly the state this function exists to prevent: a
+     deploy that forgot a variable would stand wide open and nobody would
+     notice. In development the area stays open; there it is only reachable
+     over localhost. */
+  if (!sessionSecret()) {
+    if (process.env.NODE_ENV !== "production") return null;
+    return new NextResponse(
+      "Backoffice ist nicht konfiguriert (ADMIN_SESSION_SECRET bzw. ADMIN_PASSWORD fehlt).",
+      {
+        status: 503,
+        headers: { "Cache-Control": "no-store", "X-Robots-Tag": "noindex, nofollow" },
+      },
+    );
   }
 
-  const expected = `${process.env.ADMIN_USER || "maria"}:${expectedPassword}`;
-  return (await credentialsMatch(supplied, expected)) ? null : challenge();
+  if (await verifySession(request.cookies.get(SESSION_COOKIE)?.value, sessionSecret())) {
+    return null;
+  }
+
+  return deny(request);
 }
 
 /* Anfragen, die den Proxy nie gesehen haben — der Healthcheck des Containers
@@ -469,8 +515,14 @@ export async function middleware(request) {
   /* Steht vor allem anderen: Das Backoffice kennt kein Sprach-Routing, und
      eine ungeprüfte Anfrage soll gar nicht erst weiter nach unten laufen. */
   if (isBackoffice(request.nextUrl.pathname)) {
-    const denied = await guardBackoffice(request);
-    if (denied) return denied;
+    /* The login page is the one address in here that may be seen without
+       credentials — the sign-in POST lands on it too, because Next posts a
+       server action back to the URL of the page it came from. It still runs
+       through this branch so it reaches the router untouched. */
+    if (request.nextUrl.pathname !== LOGIN_PATH) {
+      const denied = await guardBackoffice(request);
+      if (denied) return denied;
+    }
     return NextResponse.next();
   }
 

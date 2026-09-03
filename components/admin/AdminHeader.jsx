@@ -1,7 +1,9 @@
 "use client";
+import Link from "next/link";
 import { motion, useReducedMotion } from "motion/react";
 import { Menu } from "@/components/Icons";
-import { Search, Bell, Sidebar } from "./AdminIcons";
+import { Search, Bell, Sidebar, Logout } from "./AdminIcons";
+import { signOut } from "@/lib/admin/actions";
 
 /* Sticky header for the content column. Title/eyebrow are driven by the active
    nav item so a new section never needs to re-declare its own header. */
@@ -90,10 +92,12 @@ export default function AdminHeader({
             className="hidden h-7 w-px bg-charcoal/10 sm:block"
           />
 
-          <button
-            type="button"
-            className="group flex items-center gap-2.5 rounded-full border border-charcoal/12 py-1 pl-1 pr-1 transition-colors hover:border-champagne sm:pr-4"
-          >
+          {/* The chip was a button that did nothing. It is now the way to the
+              one page that belongs to the person rather than to the site. */}
+          <Link
+            href="/admin/passwort"
+            title="Zugang & Passwort"
+            className="group flex items-center gap-2.5 rounded-full border border-charcoal/12 py-1 pl-1 pr-1 transition-colors hover:border-champagne sm:pr-4">
             <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-gradient-to-br from-bordeaux to-wine font-playfair text-[13px] italic text-ivory">
               A
             </span>
@@ -102,10 +106,24 @@ export default function AdminHeader({
                 Admin
               </span>
               <span className="block text-[10px] leading-tight tracking-[0.06em] text-charcoal/45">
-                Redaktion
+                Zugang & Passwort
               </span>
             </span>
-          </button>
+          </Link>
+
+          {/* Sign out. A form and not a link, because a GET that ends a
+              session can be triggered by any <img src> on a foreign page —
+              and because without JavaScript a button still posts. */}
+          <form action={signOut}>
+            <button
+              type="submit"
+              aria-label="Abmelden"
+              title="Abmelden"
+              className="flex h-10 w-10 items-center justify-center rounded-xl border border-charcoal/12 text-charcoal/70 transition-colors hover:border-champagne hover:text-bordeaux"
+            >
+              <Logout className="h-[18px] w-[18px]" />
+            </button>
+          </form>
         </div>
       </div>
     </header>

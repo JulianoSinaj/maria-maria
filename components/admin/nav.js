@@ -34,7 +34,21 @@ export const ADMIN_NAV = [
     hint: "Aufträge & Versand",
     icon: "orders",
   },
+  {
+    href: "/admin/passwort",
+    label: "Passwort",
+    hint: "Zugang & Sicherheit",
+    icon: "overview",
+    /* Not in the rail: the rail lists what the site is made of, and an
+       account setting is not a part of the website. It is reached from the
+       user chip in the header — but it still belongs in this list, so the
+       header knows what to call itself while the page is open. */
+    hidden: true,
+  },
 ];
+
+/* What the rail and the drawer actually show. */
+export const ADMIN_SECTIONS = ADMIN_NAV.filter((item) => !item.hidden);
 
 /* Longest-prefix match so /admin/portfolio/[slug] still lights up its section
    while /admin stays exact. */

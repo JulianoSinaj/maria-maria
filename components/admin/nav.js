@@ -23,20 +23,51 @@ export const ADMIN_NAV = [
     icon: "map",
   },
   {
+    href: "/admin/faq",
+    key: "faq",
+    icon: "faq",
+  },
+  {
     href: "/admin/media",
     key: "media",
     icon: "media",
   },
   {
-    href: "/admin/bestellungen",
-    key: "orders",
-    icon: "orders",
+    href: "/admin/magazin",
+    key: "magazine",
+    icon: "magazine",
+  },
+  {
+    href: "/admin/rechtstexte",
+    key: "legal",
+    icon: "legal",
+  },
+  {
+    href: "/admin/anfragen",
+    key: "inquiries",
+    icon: "inbox",
+  },
+  {
+    href: "/admin/benutzer",
+    key: "users",
+    icon: "users",
+    /* Hidden for the same reason as the password: the rail lists what the
+       WEBSITE is made of, and a colleague is not a part of the website. Both
+       are reached from the account menu in the header — but they still belong
+       in this list, so the header knows what to call itself while the page is
+       open. Only owners ever see them; the middleware turns everyone else
+       away (OWNER_ONLY in middleware.js). */
+    hidden: true,
+  },
+  {
+    href: "/admin/einstellungen",
+    key: "settings",
+    icon: "settings",
   },
   {
     href: "/admin/passwort",
-    label: "Passwort",
-    hint: "Zugang & Sicherheit",
-    icon: "overview",
+    key: "password",
+    icon: "lock",
     /* Not in the rail: the rail lists what the site is made of, and an
        account setting is not a part of the website. It is reached from the
        user chip in the header — but it still belongs in this list, so the

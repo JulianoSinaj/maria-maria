@@ -19,6 +19,7 @@ export const legal = {
     eyebrow: "Právní informace",
     updatedLabel: "Stav:",
     updated: "Červenec 2026",
+    reviewedLabel: "Naposledy zkontrolováno:",
     contactPre: "Máte k tomu dotaz? Napište nám kdykoli přes",
     contactLink: "kontaktní stránku",
     contactMid: "nebo na",

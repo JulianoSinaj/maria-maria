@@ -7,6 +7,7 @@ import {
   ADMIN_LOCALE_COOKIE,
   isAdminLocale,
 } from "./dictionary";
+import { ADMIN_MEDIA_DICTIONARY } from "./media";
 
 /* Admin-only language context.
    ------------------------------------------------------------------
@@ -22,6 +23,31 @@ import {
 /* re-exported for client callers; the server layout imports them from
    ./dictionary directly (see the note there) */
 export { ADMIN_LOCALE_COOKIE, isAdminLocale };
+
+/* Core vocabulary plus the section modules, merged once at module load.
+
+   dictionary.js holds what the whole backoffice says; a section that grows
+   its own vocabulary — the media manager is the first — brings it along in
+   its own file. The merge is deep, so a section may add keys to an existing
+   block (mediaPage) without restating the block, and per language, so a
+   missing Italian section still falls back key by key like everything else. */
+function deepMerge(base, extra) {
+  const merged = { ...base };
+  for (const [key, value] of Object.entries(extra)) {
+    const mergeable =
+      value && typeof value === "object" && !Array.isArray(value) &&
+      merged[key] && typeof merged[key] === "object" && !Array.isArray(merged[key]);
+    merged[key] = mergeable ? deepMerge(merged[key], value) : value;
+  }
+  return merged;
+}
+
+const DICTIONARY = Object.fromEntries(
+  Object.entries(ADMIN_DICTIONARY).map(([locale, entries]) => [
+    locale,
+    deepMerge(entries, ADMIN_MEDIA_DICTIONARY[locale] ?? {}),
+  ]),
+);
 
 const STORAGE_KEY = "mm-admin-locale";
 const COOKIE_MAX_AGE = 60 * 60 * 24 * 365;
@@ -82,11 +108,11 @@ export function AdminI18nProvider({ initialLocale, children }) {
   }, []);
 
   const value = useMemo(() => {
-    const dict = ADMIN_DICTIONARY[locale] ?? ADMIN_DICTIONARY[ADMIN_DEFAULT_LOCALE];
-    const base = ADMIN_DICTIONARY[ADMIN_DEFAULT_LOCALE];
+    const dict = DICTIONARY[locale] ?? DICTIONARY[ADMIN_DEFAULT_LOCALE];
+    const base = DICTIONARY[ADMIN_DEFAULT_LOCALE];
     const meta = ADMIN_LOCALE_META[locale] ?? ADMIN_LOCALE_META[ADMIN_DEFAULT_LOCALE];
 
-    /* t("table.colWine") → string; t("ordersPage.items") → array.
+    /* t("table.colWine") → string; t("mediaPage.items") → array.
        Missing keys fall back to German, then to the key itself so a typo is
        visible on screen instead of rendering nothing. */
     const t = (path, vars) => {
@@ -94,7 +120,7 @@ export function AdminI18nProvider({ initialLocale, children }) {
       return hit === undefined ? path : interpolate(hit, vars);
     };
 
-    /* tm("orderStatus", "versandbereit") → translated, or the raw value when
+    /* tm("inquiryStatus", "neu") → translated, or the raw value when
        the group has no entry for it (proper nouns, unexpected data). */
     const tm = (group, raw) => {
       if (raw == null) return raw;
@@ -133,7 +159,7 @@ export function AdminI18nProvider({ initialLocale, children }) {
 let fallback = null;
 function buildFallback() {
   if (fallback) return fallback;
-  const dict = ADMIN_DICTIONARY[ADMIN_DEFAULT_LOCALE];
+  const dict = DICTIONARY[ADMIN_DEFAULT_LOCALE];
   const meta = ADMIN_LOCALE_META[ADMIN_DEFAULT_LOCALE];
   const nf = new Intl.NumberFormat(meta.intl);
   const eur0 = new Intl.NumberFormat(meta.intl, {

@@ -1,4 +1,5 @@
 import AdminShell from "@/components/admin/AdminShell";
+import { currentActor } from "@/lib/admin/actor";
 
 /* Everything behind the door.
 
@@ -13,6 +14,11 @@ export const metadata = {
   robots: { index: false, follow: false },
 };
 
-export default function AdminLayout({ children }) {
-  return <AdminShell>{children}</AdminShell>;
+/* The header greets a person by name, so the frame has to know who signed
+   in. It is read HERE and not in the shell: the session lives in an httpOnly
+   cookie, which is exactly the kind of thing a client component cannot see —
+   and should not. */
+export default async function AdminLayout({ children }) {
+  const user = await currentActor();
+  return <AdminShell user={user}>{children}</AdminShell>;
 }

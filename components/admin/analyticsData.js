@@ -1,191 +1,217 @@
-/* Analytics layer for the admin overview.
+"use client";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { bySlug } from "@/components/data";
+import { INQUIRY_INTENTS } from "@/lib/inquiries/schema";
+import { LOCALES, LOCALE_META } from "@/lib/i18n/config";
+import { SHOP_GENERIC_KEYS } from "@/lib/insights/model";
+
+/* Data layer of the Übersicht.
    ------------------------------------------------------------------
-   Structure is real: wine names, types, regions and the two production
-   editions (18.000 / 12.000 Flaschen) all derive from the shared catalogue
-   in components/data.js and the merchandising meta in shop/shopData.js, so
-   this view can never drift from the portfolio.
+   This file used to hold invented sales figures — bottles sold, revenue by
+   wine type, an order book — under a note that called them Beispieldaten.
+   They described a shop this site does not run: since the hand-off,
+   customers buy at Terra Vera, and revenue, orders and allocation are
+   Terra Vera's numbers, not ours. A backoffice that shows a made-up figure
+   next to a real one teaches the reader to trust neither.
 
-   The MOVEMENT figures — bottles sold, revenue, order rows — are seeded
-   specimens. There is no orders backend yet; they exist so the layout can be
-   judged at realistic magnitudes. Every consumer surfaces them as
-   "Beispieldaten". Replace `seed` + `ORDERS` with real queries and the
-   derived aggregates below keep working unchanged. */
+   What replaced them is measured, and every number below can be traced to
+   the request that produced it:
 
-import { WINES as CATALOGUE_STRUCTURE } from "@/components/data";
-import { localizeWines } from "@/lib/i18n/catalogue";
-import deCommon from "@/content/de/common";
-import { WINE_META } from "@/components/shop/shopData";
+     Anfragen   the inbox the /kontakt form writes to      (lib/inquiries)
+     Klicks     the pass-through every shop button takes   (/api/out/shop)
+     Gelesen    articles read to the end                   (/api/beacon)
+     Sprachen   page opens per language                    (/api/beacon)
+     Inhalt     drafts, missing translations, dead links   (lib/insights)
 
-/* Seit der Mehrsprachigkeit trägt components/data.js nur noch die Struktur;
-   „Rotwein" und „Apulien" stehen in den Wörterbüchern. Das Backoffice ist
-   bewusst einsprachig deutsch (es liegt außerhalb von app/(site)/[locale]/),
-   greift also fest auf das deutsche zu. Die Gruppierungen unten schlüsseln
-   weiter auf den deutschen Bezeichnungen — sie sind hier Anzeigenamen UND
-   Gruppierungsschlüssel, und beides bleibt in einer Sprache konsistent. */
-const WINES = localizeWines(deCommon.catalogue, CATALOGUE_STRUCTURE);
+   One request feeds all of them (/api/admin/overview): four cards
+   describing one week must not be able to disagree about which week that
+   is. The page owns the hook and hands each card its slice. */
 
-/* ---------- allocation ----------
-   Only two wines carry a published edition size. Anything else is stocked
-   from the winery's open production, so it has no batch to track against —
-   `batch: null` marks that rather than faking a denominator. */
+const ENDPOINT = "/api/admin/overview";
 
-const VESSEL = {
-  "Primitivo di Manduria D.O.C. 14,5": { vessel: "Stahltank", short: "Steel" },
-  "Primitivo di Manduria D.O.C. 15,5": { vessel: "Terrakotta-Amphore", short: "Amphore" },
+/* Windows the desk can choose between. Seven days is the default because
+   the question on a Monday is "what happened last week"; thirty smooths a
+   quiet week out of the picture when judging a trend. */
+export const WINDOWS = Object.freeze([7, 30, 90]);
+export const DEFAULT_WINDOW = 7;
+
+/** The whole overview, refetched when the window changes. */
+export function useOverview({ days = DEFAULT_WINDOW } = {}) {
+  const [data, setData] = useState(null);
+  const [meta, setMeta] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [checking, setChecking] = useState(false);
+  const [tick, setTick] = useState(0);
+  const abortRef = useRef(null);
+
+  useEffect(() => {
+    abortRef.current?.abort();
+    const ctrl = new AbortController();
+    abortRef.current = ctrl;
+    setLoading(true);
+
+    fetch(`${ENDPOINT}?days=${days}`, { signal: ctrl.signal })
+      .then(async (res) => {
+        const body = await res.json().catch(() => null);
+        if (!res.ok) throw new Error(body?.error ?? `Request failed (${res.status})`);
+        setData(body?.data ?? null);
+        setMeta(body?.meta ?? null);
+        setError(null);
+      })
+      .catch((err) => {
+        if (err.name !== "AbortError") setError(err);
+      })
+      .finally(() => {
+        if (!ctrl.signal.aborted) setLoading(false);
+      });
+
+    return () => ctrl.abort();
+  }, [days, tick]);
+
+  const refetch = useCallback(() => setTick((t) => t + 1), []);
+
+  /* The link check reaches a foreign server, so it is a button rather than
+     something that happens while the page loads. Its result is merged in
+     place — re-running the whole overview for it would throw away a window
+     the reader has just chosen. */
+  const checkLinks = useCallback(async () => {
+    setChecking(true);
+    try {
+      const res = await fetch(ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: "check-links" }),
+      });
+      const body = await res.json().catch(() => null);
+      if (!res.ok) throw new Error(body?.error ?? `Request failed (${res.status})`);
+      setData((prev) =>
+        prev ? { ...prev, links: body.data.links, content: body.data.content } : prev,
+      );
+      setError(null);
+      return body.data.links;
+    } catch (err) {
+      setError(err);
+      return null;
+    } finally {
+      setChecking(false);
+    }
+  }, []);
+
+  return { data, meta, loading, error, refetch, checkLinks, checking };
+}
+
+/* ------------------------------------------------------------ shaping ---- */
+
+/* Every derivation below turns a bare tally into rows a card can render:
+   sorted, named, and with a share of the largest so the meters compare
+   against each other rather than against an invisible maximum. */
+
+const withShare = (rows) => {
+  const top = Math.max(0, ...rows.map((r) => r.count));
+  return rows.map((r) => ({ ...r, share: top ? r.count / top : 0 }));
 };
 
-/* bottles already committed (sold + allocated to trade) per edition wine */
-const COMMITTED = {
-  "Primitivo di Manduria D.O.C. 14,5": 11_480,
-  "Primitivo di Manduria D.O.C. 15,5": 9_260,
-};
+const GENERIC = new Set(SHOP_GENERIC_KEYS);
 
-/* `edition` war früher der fertige String „18.000 Flaschen" und musste hier
-   wieder zur Zahl zurückgerechnet werden. Seit der Mehrsprachigkeit steht in
-   shopData bereits die reine Zahl — das Substantiv und der Tausenderpunkt
-   entstehen erst beim Rendern in der jeweiligen Sprache. Der Parser entfällt
-   damit ersatzlos. */
-export const ALLOCATION = Object.keys(VESSEL).map((name) => {
-  const batch = WINE_META[name]?.edition ?? null;
-  const committed = COMMITTED[name] ?? 0;
-  const remaining = batch == null ? null : batch - committed;
-  return {
-    name,
-    ...VESSEL[name],
-    batch,
-    committed,
-    remaining,
-    /* share of the batch still available */
-    pct: batch ? Math.round((remaining / batch) * 100) : null,
-  };
-});
-
-export const ALLOCATION_TOTALS = ALLOCATION.reduce(
-  (acc, a) => ({
-    batch: acc.batch + (a.batch ?? 0),
-    remaining: acc.remaining + (a.remaining ?? 0),
-  }),
-  { batch: 0, remaining: 0 },
-);
-
-/* ---------- revenue by wine type ----------
-   Grouped by the catalogue's own `type`, plus the Amphore edition broken out
-   as its own line: it is a vessel, not a wine type, but it is merchandised
-   and reported separately, so the board wants to see it on its own. */
-
-const SOLD = {
-  "Primitivo di Manduria D.O.C. 14,5": 4_120,
-  "Primitivo di Manduria D.O.C. 15,5": 2_980,
-  "Primitivo Salento IGP": 3_240,
-  "Lugana D.O.P.": 2_760,
-  "Greco di Tufo D.O.C.G.": 1_180,
-  "Falanghina I.G.P.": 2_410,
-  "Rosato Puglia": 2_050,
-  "Il Rosso – Aglianico": 1_090,
-  "Il Bianco – Greco Cuvée": 1_460,
-};
-
-const AMPHORA_WINE = "Primitivo di Manduria D.O.C. 15,5";
-
-const TYPE_STYLE = {
-  Rotwein: { label: "Rotwein", tone: "#6B0F1A" },
-  Weißwein: { label: "Weißwein", tone: "#C8B77A" },
-  Roséwein: { label: "Rosato", tone: "#c67f78" },
-  Amphore: { label: "Amphore-Serie", tone: "#8A5A3B" },
-};
-
-function buildRevenue() {
-  const groups = new Map();
-  const add = (key, wine, bottles) => {
-    const g = groups.get(key) ?? { key, bottles: 0, revenue: 0, wines: 0 };
-    g.bottles += bottles;
-    g.revenue += bottles * wine.price;
-    g.wines += 1;
-    groups.set(key, g);
-  };
-
-  for (const w of WINES) {
-    const bottles = SOLD[w.name] ?? 0;
-    /* the amphora edition reports on its own line, not under Rotwein */
-    add(w.name === AMPHORA_WINE ? "Amphore" : w.type, w, bottles);
-  }
-
-  const rows = [...groups.values()].map((g) => ({
-    ...g,
-    ...TYPE_STYLE[g.key],
+/**
+ * Outbound clicks per target. Wines first and named; the two targets that
+ * do not name a bottle (the collection page, the header's topseller button)
+ * follow, flagged, because "somebody went to the shop front" is different
+ * news from "somebody went to the Lugana".
+ */
+export function shopClickRows(traffic) {
+  const byKey = traffic?.shopClicks?.byKey ?? {};
+  const rows = Object.entries(byKey).map(([key, count]) => ({
+    key,
+    count,
+    generic: GENERIC.has(key),
+    name: bySlug(key)?.name ?? null,
+    tone: bySlug(key)?.dot ?? "#7A6B63",
   }));
-  const total = rows.reduce((s, r) => s + r.revenue, 0);
-  return {
-    rows: rows
-      .map((r) => ({ ...r, share: total ? r.revenue / total : 0 }))
-      .sort((a, b) => b.revenue - a.revenue),
-    total,
-    bottles: rows.reduce((s, r) => s + r.bottles, 0),
-  };
+
+  return withShare(
+    rows.sort((a, b) => Number(a.generic) - Number(b.generic) || b.count - a.count),
+  );
 }
 
-export const REVENUE = buildRevenue();
-
-/* ---------- regional performance ----------
-   Keyed on the catalogue's `region` values. Salento is an Apulian sub-zone,
-   so it appears as Apulien's detail line rather than as a peer region —
-   the same relationship Sirmione has to the Gardasee. */
-
-const REGION_META = {
-  Apulien: { detail: "Salento · Manduria D.O.P.", trend: +12.4 },
-  Kampanien: { detail: "Irpinia · Tufo · Aglianico", trend: +8.1 },
-  Gardasee: { detail: "Sirmione · Lugana D.O.C.", trend: +5.6 },
-};
-
-function buildRegions() {
-  const groups = new Map();
-  for (const w of WINES) {
-    const bottles = SOLD[w.name] ?? 0;
-    const g = groups.get(w.region) ?? { region: w.region, bottles: 0, revenue: 0, wines: [] };
-    g.bottles += bottles;
-    g.revenue += bottles * w.price;
-    g.wines.push(w.name);
-    groups.set(w.region, g);
-  }
-  const rows = [...groups.values()].map((g) => ({ ...g, ...REGION_META[g.region] }));
-  const top = Math.max(...rows.map((r) => r.revenue));
-  return rows
-    .map((r) => ({ ...r, index: top ? r.revenue / top : 0 }))
-    .sort((a, b) => b.revenue - a.revenue);
+/** Inquiries in the window, by Anliegen. Intents with none are kept: a zero
+    is an answer ("no trade inquiries this week"), an absent row is not. */
+export function intentRows(inquiries) {
+  const byIntent = inquiries?.byIntent ?? {};
+  return withShare(
+    INQUIRY_INTENTS.map((intent) => ({ intent, count: byIntent[intent] ?? 0 })).sort(
+      (a, b) => b.count - a.count,
+    ),
+  );
 }
 
-export const REGIONS = buildRegions();
+/** Page opens per language, strongest first. */
+export function languageRows(traffic) {
+  const byLocale = traffic?.pageviews?.byLocale ?? {};
+  return withShare(
+    LOCALES.map((locale) => ({
+      locale,
+      label: LOCALE_META[locale]?.native ?? locale,
+      short: LOCALE_META[locale]?.short ?? locale.toUpperCase(),
+      count: byLocale[locale] ?? 0,
+    })).sort((a, b) => b.count - a.count),
+  );
+}
 
-/* ---------- orders & inquiries ---------- */
+/** Interviews read to the end, joined with their titles from the content
+    report so the card shows a person rather than a slug. */
+export function readRows(traffic, interviews = []) {
+  const byKey = traffic?.reads?.byKey ?? {};
+  const titles = new Map(interviews.map((i) => [i.slug, i.title]));
 
-export const ORDERS = [
-  { ref: "#2481", who: "Enoteca Bellini, Düsseldorf", kind: "order", status: "versandbereit", items: 24, total: 486.4, when: "vor 40 Min." },
-  { ref: "#2480", who: "Ristorante Al Porto, Köln", kind: "order", status: "in Bearbeitung", items: 12, total: 214.8, when: "vor 2 Std." },
-  { ref: "ANF-118", who: "Hotel Vier Jahreszeiten", kind: "inquiry", status: "Angebot offen", items: null, total: null, when: "vor 3 Std." },
-  { ref: "#2479", who: "L. Hoffmann (Privat)", kind: "order", status: "bezahlt", items: 6, total: 79.9, when: "vor 5 Std." },
-  { ref: "ANF-117", who: "Weinhandel Sørensen, DK", kind: "inquiry", status: "Export-Anfrage", items: null, total: null, when: "gestern" },
-  { ref: "#2478", who: "Trattoria da Enzo, Neuss", kind: "order", status: "versandt", items: 18, total: 342.2, when: "gestern" },
-];
+  return withShare(
+    Object.keys(byKey)
+      .concat(interviews.map((i) => i.slug))
+      .filter((slug, i, all) => all.indexOf(slug) === i)
+      .map((slug) => ({ slug, title: titles.get(slug) ?? slug, count: byKey[slug] ?? 0 }))
+      .sort((a, b) => b.count - a.count),
+  );
+}
 
-export const ORDER_SUMMARY = {
-  open: ORDERS.filter((o) => o.kind === "order" && o.status !== "versandt").length,
-  inquiries: ORDERS.filter((o) => o.kind === "inquiry").length,
-  value: ORDERS.reduce((s, o) => s + (o.total ?? 0), 0),
-};
+/* ------------------------------------------------------------- trends ---- */
 
-/* ---------- formatters ---------- */
+/**
+ * Change against the window before this one, as a fraction. Returns null
+ * where a percentage would lie: against a previous zero, any number at all
+ * is "infinitely more", and the card says "neu" instead.
+ */
+export function trend(current, previous) {
+  if (!Number.isFinite(current) || !Number.isFinite(previous)) return null;
+  if (previous === 0) return null;
+  return (current - previous) / previous;
+}
 
-const nf = new Intl.NumberFormat("de-DE");
-export const fmtNum = (n) => nf.format(n);
+/** Has anything ever been counted? Distinguishes a quiet week from a
+    counter that started yesterday — the difference between "nobody came"
+    and "we have not been looking yet". */
+export function measuringSince(traffic) {
+  return traffic?.firstDay ?? null;
+}
 
-export const fmtEur = (n) =>
-  new Intl.NumberFormat("de-DE", {
-    style: "currency",
-    currency: "EUR",
-    maximumFractionDigits: 0,
-  }).format(n);
+/* --------------------------------------------------------------- dates ---- */
 
-export const fmtEurExact = (n) =>
-  new Intl.NumberFormat("de-DE", { style: "currency", currency: "EUR" }).format(n);
+/** "3.9." — the compact axis label under a sparkline. */
+export function shortDay(dayKey, intl) {
+  const [y, m, d] = dayKey.split("-").map(Number);
+  return new Intl.DateTimeFormat(intl, { day: "numeric", month: "numeric" }).format(
+    new Date(Date.UTC(y, m - 1, d, 12)),
+  );
+}
 
-export const fmtPct = (n) => `${n > 0 ? "+" : ""}${n.toLocaleString("de-DE")} %`;
+/** A window as "27.8. – 3.9." for the card caption. */
+export function windowLabel(window, intl) {
+  if (!window?.from || !window?.to) return "";
+  return `${shortDay(window.from, intl)} – ${shortDay(window.to, intl)}`;
+}
+
+/** Memo-friendly identity for the window selector. */
+export function useWindow(initial = DEFAULT_WINDOW) {
+  const [days, setDays] = useState(initial);
+  return useMemo(() => ({ days, setDays }), [days]);
+}

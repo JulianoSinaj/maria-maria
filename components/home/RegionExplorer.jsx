@@ -116,10 +116,27 @@ function CardPhoto({ region, drift, active, reduced }) {
   );
 }
 
-export default function RegionExplorer({ regions, ctaLabel }) {
+/* Bauform und Bewegung kommen aus dem Backoffice (lib/showcase/store.js,
+   Regionen-Panel). Die Vorgaben hier sind exakt das, was die Seite vorher
+   fest verdrahtet hatte — ohne Konfiguration ändert sich also nichts.
+
+   `hoverExpand: false` nimmt dem Zeiger das Öffnen. Damit der Text und der
+   CTA am Desktop dann nicht unerreichbar werden, trägt die Kopfzeile in
+   diesem Fall ihren Aufklapp-Knopf auf ALLEN Breiten — sonst gäbe es ab md
+   keinen Weg mehr hinein. Fokus öffnet weiterhin: eine Tastaturbedienung
+   darf eine Einstellung des Panels nicht kosten.
+
+   `mobileVariant: "rail"` legt die Karten unter md in eine waagerechte
+   Schiene mit Scroll-Rastern statt sie zu stapeln — dasselbe DOM, andere
+   Klassen. Ab md ist beides identisch. */
+export default function RegionExplorer({ regions, ctaLabel, layout }) {
   const [open, setOpen] = useState(null); // Index der offenen Karte
   const reduced = useReducedMotionSafe();
   const baseId = useId();
+
+  const hoverExpand = layout?.hoverExpand ?? true;
+  const growWeight = layout?.grow ?? GROW;
+  const rail = layout?.mobileVariant === "rail";
 
   // Scroll-Parallax für die Fotos — eine Bühne, ein Ref, ein Fortschritt.
   const stageRef = useRef(null);
@@ -132,14 +149,18 @@ export default function RegionExplorer({ regions, ctaLabel }) {
   const drift = useSpring(driftRaw, SCROLL_SPRING);
 
   const mouseOnly = (e, next) => {
-    if (e.pointerType === "mouse") setOpen(next);
+    if (hoverExpand && e.pointerType === "mouse") setOpen(next);
   };
 
   return (
     <div
       ref={stageRef}
       onPointerLeave={(e) => mouseOnly(e, null)}
-      className="flex flex-col gap-3.5 md:aspect-[2.2/1] md:flex-row md:gap-4 lg:gap-5"
+      className={`flex gap-3.5 md:aspect-[2.2/1] md:flex-row md:gap-4 lg:gap-5 ${
+        rail
+          ? "no-scrollbar snap-x snap-mandatory overflow-x-auto md:snap-none md:overflow-visible"
+          : "flex-col"
+      }`}
     >
       {regions.map((r, i) => {
         const isOpen = open === i;
@@ -156,11 +177,13 @@ export default function RegionExplorer({ regions, ctaLabel }) {
             /* flex-grow trägt nur in der Reihe (ab md); im Stapel hat der
                Wert keine Wirkung, weil der Container keine feste Höhe hat. */
             style={{
-              flexGrow: isOpen ? GROW : 1,
+              flexGrow: isOpen ? growWeight : 1,
               transition: `flex-grow ${SWAP_MS}ms cubic-bezier(0.4, 0, 0.2, 1)`,
               willChange: "flex-grow",
             }}
-            className="group relative overflow-hidden rounded-card-lg bg-espresso shadow-luxe outline-none transition-shadow duration-500 focus-visible:ring-2 focus-visible:ring-champagne/80 focus-visible:ring-offset-2 focus-visible:ring-offset-ivory md:min-w-0 md:basis-0"
+            className={`group relative overflow-hidden rounded-card-lg bg-espresso shadow-luxe outline-none transition-shadow duration-500 focus-visible:ring-2 focus-visible:ring-champagne/80 focus-visible:ring-offset-2 focus-visible:ring-offset-ivory md:w-auto md:min-w-0 md:basis-0 ${
+              rail ? "w-[82%] shrink-0 snap-center md:shrink" : ""
+            }`}
           >
             <CardPhoto region={r} drift={drift} active={isOpen} reduced={reduced} />
 
@@ -199,7 +222,15 @@ export default function RegionExplorer({ regions, ctaLabel }) {
                   bleibt außerhalb des Knopfs, weil ein <button> keine
                   Überschrift enthalten darf). Ab md gibt es keinen Knopf:
                   dort öffnen Hover und Fokus. */}
-              <div className="relative flex items-end justify-between gap-4 px-5 pb-4 pt-20 md:block md:px-6 md:pb-4 md:pt-5 lg:px-7">
+              {/* Ohne Hover-Öffnen bleibt die Kopfzeile auch ab md eine
+                  Reihe — der Knopf steht dann rechts neben dem Titel statt
+                  als Block darunter. Mit Hover (Vorgabe) ist die Klassenwahl
+                  exakt die alte. */}
+              <div
+                className={`relative flex items-end justify-between gap-4 px-5 pb-4 pt-20 md:px-6 md:pb-4 md:pt-5 lg:px-7 ${
+                  hoverExpand ? "md:block" : ""
+                }`}
+              >
                 <div className="min-w-0">
                   <p className="truncate text-[10px] uppercase tracking-[0.22em] text-champagne-light">{r.tag}</p>
                   <h3 className="mt-1 truncate font-playfair text-[22px] text-ivory md:text-[24px] lg:text-[26px]">
@@ -212,7 +243,9 @@ export default function RegionExplorer({ regions, ctaLabel }) {
                   aria-controls={panelId}
                   aria-label={r.name}
                   onClick={() => setOpen(isOpen ? null : i)}
-                  className="shrink-0 outline-none before:absolute before:inset-0 before:content-[''] md:hidden"
+                  className={`shrink-0 outline-none before:absolute before:inset-0 before:content-[''] ${
+                    hoverExpand ? "md:hidden" : ""
+                  }`}
                 >
                   {/* Plus → Minus als Aufklapp-Zeichen */}
                   <span

@@ -1,28 +1,29 @@
 "use client";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "motion/react";
-import {
-  SHOWCASE_REGION_KEYS,
-  SHOWCASE_META,
-  LIMITS,
-  GROW_MIN,
-  GROW_MAX,
-} from "@/lib/showcase/store";
+import { SHOWCASE_META, GROW_MIN, GROW_MAX } from "@/lib/showcase/schema";
 import { useAdminI18n } from "../i18n/AdminI18n";
 
-/* Regional-Showcase layout configurator.
-   Preview left, controls + copy editors right. The desktop preview replays
-   the storefront's exact motion contract — the hovered column grows on the
-   same 560ms cubic-bezier the RegionExplorer uses, revealing the glass
-   detail bar — with the photos the real section renders. The mobile preview
-   sits in a phone frame and switches between today's stacked accordion and
-   the horizontal snap rail.
+/* Regional-Showcase — Bauform und Bewegung des Regionen-Explorers.
+   Vorschau links, Regler rechts. Die Desktop-Vorschau spielt den
+   Bewegungsvertrag der Storefront nach — die Karte unter dem Cursor wächst
+   auf derselben 560-ms-Kurve wie im RegionExplorer und legt die Glasleiste
+   frei — mit den Fotos, die die echte Sektion rendert. Die mobile Vorschau
+   sitzt in einem Telefonrahmen und wechselt zwischen dem gestapelten
+   Akkordeon von heute und der waagerechten Schiene.
 
-   Copy edited here is the same name/tag/desc/long the storefront REGIONS
-   array carries; defaults ARE that array, served by /api/admin/showcase. */
+   DER TEXT WIRD HIER NICHT BEARBEITET. Er kommt aus content/<sprache>/ und
+   wird im Seiten-Editor gepflegt — die Vorschau liest ihn über
+   /api/admin/regions und zeigt damit, was die Seite zeigen wird, in jeder
+   der vier Sprachen. Genau dafür ist die Sprachumschaltung über der
+   Vorschau da: Ob eine tschechische Rubrik die Karte sprengt, sieht man
+   nur, wenn man sie ansieht.
+
+   Herkünfte, die im Panel auf Entwurf oder auf einen Termin stehen, fehlen
+   in der Vorschau — so wie sie auf der Startseite fehlen werden. */
 
 const EASE = "cubic-bezier(0.4, 0, 0.2, 1)";
-const SWAP_MS = 560; // storefront RegionExplorer's clock
+const SWAP_MS = 560; // die Uhr des storefront-seitigen RegionExplorer
 
 const Toggle = ({ on, onChange, label }) => (
   <button type="button" role="switch" aria-checked={on} onClick={() => onChange(!on)} className="flex items-center gap-2.5">
@@ -39,26 +40,16 @@ const Toggle = ({ on, onChange, label }) => (
 
 const sectionCls = "rounded-2xl border border-a-ink/[0.08] bg-a-surface/50 p-4";
 const legendCls = "mb-3 text-[11px] font-semibold uppercase tracking-[0.14em] text-a-ink/55";
-const inputCls =
-  "h-10 w-full rounded-xl border border-a-ink/12 bg-a-canvas px-3 text-[12.5px] text-a-ink transition-colors duration-300 placeholder:text-a-ink/30 focus:border-champagne focus:outline-none";
-
-/* character counter that warns as the limit nears */
-const Count = ({ value, max }) => (
-  <span
-    className={`text-[10px] tabular-nums ${
-      value.length > max * 0.9 ? "text-a-accent/80" : "text-a-ink/35"
-    }`}
-  >
-    {value.length}/{max}
-  </span>
-);
 
 export default function ShowcaseConfigurator() {
   const reduced = useReducedMotion();
   const { t } = useAdminI18n();
   const [cfg, setCfg] = useState(null);
-  const [view, setView] = useState("desktop"); // which preview is shown
-  const [hovered, setHovered] = useState(null); // desktop preview column
+  const [regions, setRegions] = useState(null);
+  const [locales, setLocales] = useState(["de"]);
+  const [preview, setPreview] = useState("de"); // Sprache der Vorschau
+  const [view, setView] = useState("desktop"); // Vorschau-Viewport
+  const [hovered, setHovered] = useState(null); // Spalte der Desktop-Vorschau
   const [saving, setSaving] = useState(false);
   const [savedAt, setSavedAt] = useState(null);
   const [error, setError] = useState(null);
@@ -67,11 +58,21 @@ export default function ShowcaseConfigurator() {
     fetch("/api/admin/showcase")
       .then((r) => r.json())
       .then((b) => setCfg(b.data.config))
-      .catch((e) => setError(e));
+      .catch(setError);
   }, []);
 
-  const setRegion = (key, patch) =>
-    setCfg((c) => ({ ...c, regions: { ...c.regions, [key]: { ...c.regions[key], ...patch } } }));
+  /* Text und Sichtbarkeit gehören dem Regionen-Store; die Vorschau liest
+     sie mit, statt eine zweite Fassung zu führen. */
+  useEffect(() => {
+    fetch("/api/admin/regions")
+      .then((r) => r.json())
+      .then((b) => {
+        setRegions(b.data.regions);
+        setLocales(b.data.locales);
+      })
+      .catch(setError);
+  }, []);
+
   const setDesktop = (patch) =>
     setCfg((c) => ({ ...c, layout: { ...c.layout, desktop: { ...c.layout.desktop, ...patch } } }));
   const setMobile = (patch) =>
@@ -103,7 +104,7 @@ export default function ShowcaseConfigurator() {
     if (res.ok) setCfg(body.data.config);
   };
 
-  if (!cfg) {
+  if (!cfg || !regions) {
     return (
       <div className="rounded-card-lg border border-a-ink/[0.08] bg-a-surface/50 p-10 text-center text-[12.5px] text-a-ink/45">
         {error ? t("showcase.loadError", { message: error.message }) : t("showcase.loading")}
@@ -113,18 +114,20 @@ export default function ShowcaseConfigurator() {
 
   const { hoverExpand, grow } = cfg.layout.desktop;
   const variant = cfg.layout.mobile.variant;
+  const shown = regions.filter((r) => r.visible);
+  const copyOf = (region) => region.copy[preview] ?? region.copy.de;
 
   return (
     <section aria-label={t("showcase.sectionAria")} className="grid gap-5 lg:grid-cols-[1.35fr_1fr]">
-      {/* ---------------- preview ---------------- */}
+      {/* ---------------- Vorschau ---------------- */}
       <motion.div
         initial={reduced ? false : { opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ type: "spring", stiffness: 150, damping: 24 }}
         className="flex flex-col gap-3"
       >
-        {/* viewport switch */}
-        <div className="flex items-center justify-between">
+        {/* Viewport- und Sprachumschaltung */}
+        <div className="flex flex-wrap items-center justify-between gap-2">
           <div className="grid grid-cols-2 gap-1 rounded-full border border-a-ink/12 p-1" role="tablist" aria-label={t("showcase.viewportAria")}>
             {[
               { key: "desktop", label: t("showcase.desktop") },
@@ -152,32 +155,67 @@ export default function ShowcaseConfigurator() {
               </button>
             ))}
           </div>
-          <span className="text-[10.5px] text-a-ink/40">
-            {view === "desktop"
-              ? hoverExpand
-                ? t("showcase.captionHoverOn")
-                : t("showcase.captionHoverOff")
-              : variant === "rail"
-                ? t("showcase.captionRail")
-                : t("showcase.captionStack")}
-          </span>
+
+          {/* Die vier Sprachen der Storefront — nicht die drei des Panels */}
+          <div
+            className="flex gap-1 rounded-full border border-a-ink/12 p-1"
+            role="tablist"
+            aria-label={t("showcase.previewLocaleAria")}
+          >
+            {locales.map((code) => (
+              <button
+                key={code}
+                role="tab"
+                type="button"
+                aria-selected={preview === code}
+                onClick={() => setPreview(code)}
+                className={`relative rounded-full px-2.5 py-1.5 text-[10.5px] uppercase tracking-[0.1em] transition-colors duration-300 ${
+                  preview === code ? "text-ivory" : "text-a-ink/50 hover:text-a-accent"
+                }`}
+              >
+                {preview === code && (
+                  <motion.span
+                    layoutId="showcase-locale-pill"
+                    aria-hidden="true"
+                    className="absolute inset-0 rounded-full bg-gradient-to-br from-a-fill to-a-fill-2"
+                    transition={reduced ? { duration: 0 } : { type: "spring", stiffness: 340, damping: 32 }}
+                  />
+                )}
+                <span className="relative z-10">{code}</span>
+              </button>
+            ))}
+          </div>
         </div>
 
-        {view === "desktop" ? (
-          /* ---- desktop: vertical windows, hover-grow on the 560ms clock ---- */
+        <span className="text-[10.5px] text-a-ink/40">
+          {view === "desktop"
+            ? hoverExpand
+              ? t("showcase.captionHoverOn")
+              : t("showcase.captionHoverOff")
+            : variant === "rail"
+              ? t("showcase.captionRail")
+              : t("showcase.captionStack")}
+        </span>
+
+        {shown.length === 0 ? (
+          <div className="rounded-card-lg border border-dashed border-a-ink/15 bg-a-surface/40 px-8 py-14 text-center text-[12.5px] text-a-ink/50">
+            {t("showcase.allHidden")}
+          </div>
+        ) : view === "desktop" ? (
+          /* ---- Desktop: senkrechte Fenster, Hover-Wachstum auf der 560ms-Uhr ---- */
           <div
             data-preview-desktop
             onMouseLeave={() => setHovered(null)}
             className="flex aspect-[2.2/1] gap-2.5 overflow-hidden rounded-card-lg"
           >
-            {SHOWCASE_REGION_KEYS.map((key, i) => {
-              const r = cfg.regions[key];
+            {shown.map((region, i) => {
+              const c = copyOf(region);
               const active = hoverExpand && hovered === i;
               const dimmed = hoverExpand && hovered !== null && !active;
               return (
                 <div
-                  key={key}
-                  data-card={key}
+                  key={region.key}
+                  data-card={region.key}
                   tabIndex={0}
                   onMouseEnter={() => setHovered(i)}
                   onFocus={() => setHovered(i)}
@@ -190,11 +228,11 @@ export default function ShowcaseConfigurator() {
                 >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
-                    src={SHOWCASE_META[key].img}
+                    src={SHOWCASE_META[region.key].img}
                     alt=""
                     className="absolute inset-0 h-full w-full object-cover"
                     style={{
-                      objectPosition: active ? "50% 50%" : SHOWCASE_META[key].pos,
+                      objectPosition: active ? "50% 50%" : SHOWCASE_META[region.key].pos,
                       transform: active ? "scale(1.02)" : "scale(1.1)",
                       transition: reduced ? "none" : `transform ${SWAP_MS}ms ${EASE}, object-position ${SWAP_MS}ms ${EASE}`,
                     }}
@@ -209,18 +247,18 @@ export default function ShowcaseConfigurator() {
                     style={{ opacity: dimmed ? 1 : 0, transitionDuration: `${SWAP_MS}ms` }}
                   />
 
-                  {/* resting title */}
+                  {/* Ruhende Beschriftung */}
                   <div
                     className="pointer-events-none absolute inset-x-0 bottom-0 p-4 transition-opacity"
                     style={{ opacity: active || dimmed ? 0 : 1, transitionDuration: "180ms" }}
                   >
-                    <p className="truncate text-[8.5px] uppercase tracking-[0.2em] text-champagne-light">{r.tag}</p>
-                    <h4 className="mt-0.5 truncate font-playfair text-[17px] text-ivory">{r.name}</h4>
+                    <p className="truncate text-[8.5px] uppercase tracking-[0.2em] text-champagne-light">{c.home.tag}</p>
+                    <h4 className="mt-0.5 truncate font-playfair text-[17px] text-ivory">{c.home.name}</h4>
                   </div>
 
-                  {/* territory detail — the reveal the hover pays for */}
+                  {/* Das Territorium — der Gewinn des Hovers */}
                   <div
-                    data-detail={key}
+                    data-detail={region.key}
                     className="absolute inset-x-2.5 bottom-2.5 transition-opacity"
                     style={{
                       opacity: active ? 1 : 0,
@@ -229,9 +267,11 @@ export default function ShowcaseConfigurator() {
                     }}
                   >
                     <div className="glass-dark relative overflow-hidden rounded-2xl px-4 py-3">
-                      <p className="text-[8.5px] uppercase tracking-[0.22em] text-champagne-light">{r.tag}</p>
-                      <h4 className="mt-0.5 font-playfair text-[16px] text-ivory">{r.name}</h4>
-                      <p className="mt-1 line-clamp-2 text-[10.5px] leading-relaxed text-ivory/75">{r.long}</p>
+                      <p className="text-[8.5px] uppercase tracking-[0.22em] text-champagne-light">{c.home.tag}</p>
+                      <h4 className="mt-0.5 font-playfair text-[16px] text-ivory">{c.home.name}</h4>
+                      <p className="mt-1 line-clamp-2 text-[10.5px] leading-relaxed text-ivory/75">
+                        {c.home.long || c.home.desc}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -239,7 +279,7 @@ export default function ShowcaseConfigurator() {
             })}
           </div>
         ) : (
-          /* ---- mobile: phone frame, stack vs. horizontal snap rail ---- */
+          /* ---- Mobil: Telefonrahmen, Stapel gegen waagerechte Schiene ---- */
           <div className="mx-auto w-[340px] max-w-full rounded-[28px] border border-a-ink/12 bg-espresso p-2.5 shadow-glass">
             <div className="overflow-hidden rounded-[20px] bg-a-canvas">
               <div className="flex h-8 items-center justify-center">
@@ -250,27 +290,29 @@ export default function ShowcaseConfigurator() {
                   data-preview-rail
                   className="no-scrollbar flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-5"
                 >
-                  {SHOWCASE_REGION_KEYS.map((key) => {
-                    const r = cfg.regions[key];
+                  {shown.map((region) => {
+                    const c = copyOf(region);
                     return (
                       <div
-                        key={key}
-                        data-rail-card={key}
+                        key={region.key}
+                        data-rail-card={region.key}
                         className="relative w-[76%] shrink-0 snap-center overflow-hidden rounded-card bg-espresso"
                       >
                         <div className="relative aspect-[4/5]">
                           {/* eslint-disable-next-line @next/next/no-img-element */}
                           <img
-                            src={SHOWCASE_META[key].img}
+                            src={SHOWCASE_META[region.key].img}
                             alt=""
                             className="absolute inset-0 h-full w-full object-cover"
-                            style={{ objectPosition: SHOWCASE_META[key].pos }}
+                            style={{ objectPosition: SHOWCASE_META[region.key].pos }}
                           />
                           <div className="absolute inset-0 bg-gradient-to-t from-espresso/90 via-espresso/25 to-transparent" />
                           <div className="absolute inset-x-0 bottom-0 p-4">
-                            <p className="text-[8.5px] uppercase tracking-[0.2em] text-champagne-light">{r.tag}</p>
-                            <h4 className="mt-0.5 font-playfair text-[18px] text-ivory">{r.name}</h4>
-                            <p className="mt-1 text-[10.5px] leading-relaxed text-ivory/75">{r.desc}</p>
+                            <p className="text-[8.5px] uppercase tracking-[0.2em] text-champagne-light">{c.home.tag}</p>
+                            <h4 className="mt-0.5 font-playfair text-[18px] text-ivory">{c.home.name}</h4>
+                            <p className="mt-1 text-[10.5px] leading-relaxed text-ivory/75">
+                              {c.home.desc || c.home.long}
+                            </p>
                           </div>
                         </div>
                       </div>
@@ -279,22 +321,22 @@ export default function ShowcaseConfigurator() {
                 </div>
               ) : (
                 <div data-preview-stack className="space-y-2.5 px-3.5 pb-5">
-                  {SHOWCASE_REGION_KEYS.map((key) => {
-                    const r = cfg.regions[key];
+                  {shown.map((region) => {
+                    const c = copyOf(region);
                     return (
-                      <div key={key} className="relative h-24 overflow-hidden rounded-card bg-espresso">
+                      <div key={region.key} className="relative h-24 overflow-hidden rounded-card bg-espresso">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
-                          src={SHOWCASE_META[key].img}
+                          src={SHOWCASE_META[region.key].img}
                           alt=""
                           className="absolute inset-0 h-full w-full object-cover"
-                          style={{ objectPosition: SHOWCASE_META[key].pos }}
+                          style={{ objectPosition: SHOWCASE_META[region.key].pos }}
                         />
                         <div className="absolute inset-0 bg-gradient-to-r from-espresso/75 via-espresso/30 to-transparent" />
                         <div className="absolute inset-x-0 bottom-0 flex items-end justify-between p-3.5">
                           <div className="min-w-0">
-                            <p className="truncate text-[8.5px] uppercase tracking-[0.2em] text-champagne-light">{r.tag}</p>
-                            <h4 className="truncate font-playfair text-[16px] text-ivory">{r.name}</h4>
+                            <p className="truncate text-[8.5px] uppercase tracking-[0.2em] text-champagne-light">{c.home.tag}</p>
+                            <h4 className="truncate font-playfair text-[16px] text-ivory">{c.home.name}</h4>
                           </div>
                           <span className="glass grid h-7 w-7 shrink-0 place-items-center rounded-full text-[13px] text-a-ink/80">
                             +
@@ -310,7 +352,7 @@ export default function ShowcaseConfigurator() {
         )}
       </motion.div>
 
-      {/* ---------------- controls + editors ---------------- */}
+      {/* ---------------- Regler ---------------- */}
       <motion.div
         initial={reduced ? false : { opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
@@ -377,75 +419,17 @@ export default function ShowcaseConfigurator() {
           </div>
         </div>
 
+        {/* Wo der Text zu Hause ist */}
         <div className={sectionCls}>
           <p className={legendCls}>{t("showcase.texts")}</p>
-          <div className="flex flex-col gap-5">
-            {SHOWCASE_REGION_KEYS.map((key) => {
-              const r = cfg.regions[key];
-              return (
-                <fieldset key={key} className="rounded-xl border border-a-ink/[0.07] bg-a-canvas/60 p-3">
-                  <legend className="px-1 text-[10.5px] font-semibold uppercase tracking-[0.14em] text-a-accent/60">
-                    {r.name}
-                  </legend>
-                  <div className="flex flex-col gap-2.5">
-                    <label className="block">
-                      <span className="mb-1 flex items-baseline justify-between">
-                        <span className="text-[10.5px] text-a-ink/50">{t("showcase.fieldTitle")}</span>
-                        <Count value={r.name} max={LIMITS.name} />
-                      </span>
-                      <input
-                        className={inputCls}
-                        maxLength={LIMITS.name}
-                        value={r.name}
-                        onChange={(e) => setRegion(key, { name: e.target.value })}
-                        aria-label={t("showcase.ariaTitle", { key })}
-                      />
-                    </label>
-                    <label className="block">
-                      <span className="mb-1 flex items-baseline justify-between">
-                        <span className="text-[10.5px] text-a-ink/50">{t("showcase.fieldTag")}</span>
-                        <Count value={r.tag} max={LIMITS.tag} />
-                      </span>
-                      <input
-                        className={inputCls}
-                        maxLength={LIMITS.tag}
-                        value={r.tag}
-                        onChange={(e) => setRegion(key, { tag: e.target.value })}
-                        aria-label={t("showcase.ariaTag", { key })}
-                      />
-                    </label>
-                    <label className="block">
-                      <span className="mb-1 flex items-baseline justify-between">
-                        <span className="text-[10.5px] text-a-ink/50">{t("showcase.fieldDesc")}</span>
-                        <Count value={r.desc} max={LIMITS.desc} />
-                      </span>
-                      <input
-                        className={inputCls}
-                        maxLength={LIMITS.desc}
-                        value={r.desc}
-                        onChange={(e) => setRegion(key, { desc: e.target.value })}
-                        aria-label={t("showcase.ariaDesc", { key })}
-                      />
-                    </label>
-                    <label className="block">
-                      <span className="mb-1 flex items-baseline justify-between">
-                        <span className="text-[10.5px] text-a-ink/50">{t("showcase.fieldLong")}</span>
-                        <Count value={r.long} max={LIMITS.long} />
-                      </span>
-                      <textarea
-                        className={`${inputCls} h-auto py-2`}
-                        rows={3}
-                        maxLength={LIMITS.long}
-                        value={r.long}
-                        onChange={(e) => setRegion(key, { long: e.target.value })}
-                        aria-label={t("showcase.ariaLong", { key })}
-                      />
-                    </label>
-                  </div>
-                </fieldset>
-              );
-            })}
-          </div>
+          <p className="text-[12px] leading-relaxed text-a-ink/60">{t("showcase.textsMoved")}</p>
+          <a
+            href="/admin/seiten?page=home&block=regions"
+            className="mt-3 inline-flex items-center gap-1.5 text-[12px] text-a-accent transition-colors hover:text-a-accent-deep"
+          >
+            {t("showcase.textsLink")}
+            <span aria-hidden="true">→</span>
+          </a>
         </div>
 
         <div className="flex items-center justify-between gap-3 pt-1">

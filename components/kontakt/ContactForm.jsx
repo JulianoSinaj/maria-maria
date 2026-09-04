@@ -133,6 +133,12 @@ export default function ContactForm({ copy }) {
   const [status, setStatus] = useState("idle"); // idle | sending | sent
   const [submitError, setSubmitError] = useState("");
 
+  /* Honeypot gegen Formular-Skripte: ein Feld, das kein Mensch sieht und
+     kein Mensch ausfüllt. Steht beim Absenden etwas darin, wirft der
+     Endpunkt die Einsendung stillschweigend weg (app/api/contact/route.js).
+     Im Formularzustand, nicht in BASE — es ist kein Feld der Anfrage. */
+  const [trap, setTrap] = useState("");
+
   const conditional = CONDITIONAL_FIELDS[intent] ?? [];
 
   const all = useMemo(() => ({ ...values, intent }), [values, intent]);
@@ -226,6 +232,11 @@ export default function ContactForm({ copy }) {
           phone: values.phone,
           message: values.message,
           details,
+          /* Sprache der Seite, von der die Anfrage kommt — im Backoffice
+             steht sie neben der Nachricht, damit in derselben Sprache
+             geantwortet wird. Gleicher Wert wie im generate_lead-Event. */
+          language: pageLanguage(),
+          website: trap,
         }),
       });
       const data = await res.json().catch(() => ({}));
@@ -249,6 +260,7 @@ export default function ContactForm({ copy }) {
     setValues(BASE);
     setExtra({});
     setErrors({});
+    setTrap("");
     setIntent("");
     setStatus("idle");
     setSubmitError("");
@@ -322,6 +334,27 @@ export default function ContactForm({ copy }) {
             transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
             className="grid grid-cols-1 gap-x-6 gap-y-5 sm:grid-cols-2"
           >
+            {/* Honeypot (siehe `trap` oben). Aus dem Sichtfeld geschoben statt
+                display:none, weil Skripte unsichtbare Felder erkennen und
+                auslassen; für Tastatur und Screenreader über tabIndex und
+                aria-hidden ausgeblendet. Absolut positioniert — nimmt im
+                Raster keinen Platz ein, das Layout bleibt unverändert. */}
+            <div
+              aria-hidden="true"
+              className="absolute left-[-9999px] top-0 h-px w-px overflow-hidden"
+            >
+              <label htmlFor="kf-website">Website</label>
+              <input
+                id="kf-website"
+                name="website"
+                type="text"
+                tabIndex={-1}
+                autoComplete="off"
+                value={trap}
+                onChange={(e) => setTrap(e.target.value)}
+              />
+            </div>
+
             {/* Zeile 1 — Anliegen und Name */}
             <div>
               <label htmlFor="kf-intent" className={FIELD_LABEL}>

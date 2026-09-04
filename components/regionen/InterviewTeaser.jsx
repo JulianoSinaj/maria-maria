@@ -2,7 +2,7 @@ import Link from "@/components/i18n/LocaleLink";
 import Photo from "@/components/media/Photo";
 import { Reveal } from "@/components/motion/Reveal";
 import { Arrow } from "@/components/Icons";
-import { interviewPath } from "@/components/magazin/interviewRegistry";
+import { interviewPath } from "@/components/magazin/interviewPath";
 
 /* Die Stimmen-Leiste unter einem Regionenblock — Teaser 2 von zwei.
 

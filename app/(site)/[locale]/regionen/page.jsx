@@ -18,6 +18,7 @@ import { pageMetadata } from "@/lib/i18n/metadata";
 import { localePath } from "@/lib/i18n/routing";
 import { absoluteUrl } from "@/lib/site";
 import { graph, siteNodes, webPageNode, breadcrumbNode, faqNode } from "@/lib/seo/jsonLd";
+import { withRegionState } from "@/lib/regions/content";
 
 /* SEO-Snippet nach der Regionen-Guide (v1.0, 05.08.2026, Abschnitt 2):
    Title trägt die drei Herkünfte, die Description Rebsorten, Herkunft,
@@ -139,9 +140,15 @@ export default async function RegionenPage({ params }) {
   const dict = await getDictionary(params.locale);
   const t = dict.regionen ?? {};
 
-  /* Struktur + Sprache zusammenführen — dieselbe Ordnung wie im Code, der
-     Text kommt über den Schlüssel aus dem Wörterbuch. */
-  const REGIONS = REGION_SHAPE.map((r) => {
+  /* Struktur + Zustand + Sprache zusammenführen — dieselbe Ordnung wie im
+     Code, der Text kommt über den Schlüssel aus dem Wörterbuch.
+
+     Welche Herkünfte überhaupt erscheinen, entscheidet das Backoffice
+     (/admin/regionen): Eine Herkunft auf Entwurf oder mit einem Termin in
+     der Zukunft fehlt hier vollständig — samt Anker, Porträt und
+     Gesprächs-Teaser. `wines` trägt die zugeordneten Weine; ist eine
+     Herkunft leer, entfällt ihr CTA, statt in eine leere Auswahl zu führen. */
+  const REGIONS = (await withRegionState(REGION_SHAPE)).map((r) => {
     const copy = t.regions?.[r.key] ?? {};
     return {
       ...r,
@@ -159,7 +166,7 @@ export default async function RegionenPage({ params }) {
      Steht kein Interview zu einer Region an, bleibt der Platz leer statt
      einen Platzhalter zu zeigen. */
   const interviewByRegion = Object.fromEntries(
-    publishedInterviews(dict)
+    (await publishedInterviews(dict, params.locale))
       .filter((i) => i.teaserRegion?.region)
       .map((i) => [i.teaserRegion.region, i])
   );
@@ -223,9 +230,15 @@ export default async function RegionenPage({ params }) {
                 (Tropfen an der Linie, `animate-cue`) zeigt, wo die Antwort
                 steht. Wer prefers-reduced-motion gesetzt hat, sieht die
                 Linie ruhig — motion-reduce schaltet den Tropfen ab. */}
+            {/* Der Blätterhinweis zeigt auf die ERSTE sichtbare Herkunft:
+                steht Apulien im Backoffice auf Entwurf, führte „#apulien"
+                sonst auf einen Anker, den die Seite nicht mehr trägt. Ist
+                keine Herkunft sichtbar, entfällt der Hinweis — er verspräche
+                eine Antwort, die unten nicht mehr steht. */}
+            {REGIONS.length > 0 && (
             <Reveal priority delay={0.6} y={14}>
               <a
-                href="#apulien"
+                href={`#${REGIONS[0].anchor}`}
                 className="group mt-10 inline-flex min-h-[48px] items-start gap-5 rounded-card py-1 text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-champagne lg:min-h-[44px]"
               >
                 {/* Die Linie mit dem wandernden Tropfen */}
@@ -252,6 +265,7 @@ export default async function RegionenPage({ params }) {
                 </span>
               </a>
             </Reveal>
+            )}
           </div>
         </div>
       </section>
@@ -351,17 +365,22 @@ export default async function RegionenPage({ params }) {
                     </TiltCard>
                   </Reveal>
 
-                  <Reveal
-                    delay={0.12}
-                    className={`lg:row-start-4 ${flipped ? "lg:col-start-1" : "lg:col-start-2"}`}
-                  >
-                    <RegionCta
-                      region={r.name}
-                      label={r.cta.label}
-                      href={r.cta.href}
-                      destinationType={r.cta.type}
-                    />
-                  </Reveal>
+                  {/* Der Knopf führt in die auf diese Herkunft gefilterte
+                      Kollektion. Ist ihr kein Wein zugeordnet, führt er ins
+                      Leere — dann steht er gar nicht erst da. */}
+                  {r.wines.length > 0 && (
+                    <Reveal
+                      delay={0.12}
+                      className={`lg:row-start-4 ${flipped ? "lg:col-start-1" : "lg:col-start-2"}`}
+                    >
+                      <RegionCta
+                        region={r.name}
+                        label={r.cta.label}
+                        href={r.cta.href}
+                        destinationType={r.cta.type}
+                      />
+                    </Reveal>
+                  )}
                 </div>
 
                 {/* Das Gespräch zu dieser Region — Handoff Seite 7: direkt

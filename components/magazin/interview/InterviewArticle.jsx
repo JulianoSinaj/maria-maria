@@ -16,7 +16,7 @@ import {
   Glasses,
   Pin,
 } from "@/components/Icons";
-import { interviewPath } from "@/components/magazin/interviewRegistry";
+import { interviewPath } from "@/components/magazin/interviewPath";
 
 /* Die Artikelstrecke eines Gesprächs — der kanonische Ort des Textes.
 

@@ -7,6 +7,7 @@ import {
   categoryCounts,
   archivedCount,
 } from "@/lib/inventory/store";
+import { revalidateWinePages } from "@/lib/shop/revalidate";
 
 /* Mock inventory API — collection endpoints.
    The store is an in-memory singleton, so this must never be statically
@@ -61,7 +62,11 @@ export async function POST(request) {
   }
 
   try {
-    return NextResponse.json({ data: create(body) }, { status: 201 });
+    const item = create(body);
+    /* a new wine that already carries a shop handle changes what the
+       storefront links to — see the note in [id]/route.js */
+    if (item.shop?.handle) revalidateWinePages();
+    return NextResponse.json({ data: item }, { status: 201 });
   } catch (err) {
     if (err.code === "VALIDATION") {
       return NextResponse.json({ error: err.message, details: err.details }, { status: 422 });

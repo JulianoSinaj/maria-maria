@@ -1,4 +1,4 @@
-import { SEO_ROUTES } from "@/lib/seo/routes";
+import { seoRoutes } from "@/lib/seo/routes";
 import { LOCALES, LOCALE_META, DEFAULT_LOCALE } from "@/lib/i18n/config";
 import { localePath } from "@/lib/i18n/routing";
 import { absoluteUrl } from "@/lib/site";
@@ -26,11 +26,17 @@ import { absoluteUrl } from "@/lib/site";
    als eine unglaubwürdige. Sobald Seiteninhalte aus einem CMS mit echtem
    Änderungsdatum kommen, gehört das Feld wieder hinein.
 
+   Die Gespräche kommen seit dem Redaktionssystem aus einer Abfrage (Sprach-
+   dateien + Speicher) — daher async. Das Veröffentlichen im Backoffice ruft
+   revalidatePath("/sitemap.xml") auf, damit die Datei nicht bis zum
+   nächsten Deploy den alten Stand meldet.
+
    Nicht enthalten: /admin und /api (kein öffentlicher Inhalt, in robots.txt
    gesperrt), 404 und die Fehlerseite (nichts, was indexiert werden soll). */
 
-export default function sitemap() {
-  return SEO_ROUTES.flatMap(({ path, priority, changeFrequency }) => {
+export default async function sitemap() {
+  const routes = await seoRoutes();
+  return routes.flatMap(({ path, priority, changeFrequency }) => {
     /* Einmal pro Seite gebaut und von allen vier Sprachzeilen geteilt —
        die Alternates einer Seite sind in jeder Sprache dieselbe Menge. */
     const languages = {

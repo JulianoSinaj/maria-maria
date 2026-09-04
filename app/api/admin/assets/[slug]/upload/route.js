@@ -1,6 +1,7 @@
 import { promises as fs } from "fs";
 import path from "path";
 import { NextResponse } from "next/server";
+import { buildDerivatives, derivativeSummary } from "@/lib/media/derivatives";
 
 /* Mockup upload — writes into data/uploads/<slug>/ (OUTSIDE public/, because
    `next start` snapshots public/ at build time and would 404 anything added
@@ -68,13 +69,20 @@ export async function POST(request, { params }) {
   }
   await fs.writeFile(path.join(uploads, file), buf);
 
+  /* Responsive WebP + AVIF beside the original, with the settings the build
+     scripts use — see lib/media/derivatives.js. */
+  const webBase = `/api/admin/assets/${slug}/file`;
+  const assetPath = `${webBase}/${file}`;
+  const derivatives = await buildDerivatives({ dir: uploads, file, webBase, assetPath });
+
   return NextResponse.json(
     {
       data: {
         name: file,
-        path: `/api/admin/assets/${slug}/file/${file}`,
+        path: assetPath,
         size: buf.length,
         uploaded: true,
+        derivatives: derivativeSummary(derivatives),
       },
     },
     { status: 201 },

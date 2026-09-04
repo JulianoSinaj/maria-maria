@@ -181,7 +181,9 @@ export default function InquiryPanel({ open, item, onClose, onPatch, busy }) {
                     ? t("inquiriesPage.deliveryFailed")
                     : item.delivery === "pending"
                       ? t("inquiriesPage.deliveryPending")
-                      : t("inquiriesPage.deliveredVia", { channel: item.delivery })}
+                      : item.delivery === "inbox"
+                        ? t("inquiriesPage.deliveryInboxOnly")
+                        : t("inquiriesPage.deliveredVia", { channel: item.delivery })}
                 </p>
                 {item.delivery === "failed" && (
                   <p role="note" className="mt-2 text-[11.5px] leading-snug text-a-accent">

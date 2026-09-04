@@ -99,6 +99,8 @@ export default function AdminMobileNav({ open, onClose, isActive, triggerRef }) 
               </button>
             </div>
 
+            {/* ADMIN_SECTIONS, not ADMIN_NAV: the hidden account entry is
+                addressed from the header chip, never from the drawer. */}
             <nav aria-label={t("nav.ariaMobile")} className="flex flex-1 flex-col gap-1.5 px-4 py-4">
               {ADMIN_SECTIONS.map((item, i) => {
                 const Icon = ICONS[item.icon];

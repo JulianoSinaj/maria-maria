@@ -71,7 +71,7 @@ const REGION_SHAPE = [
    Sprache stehen. */
 const MARQUEE = ["Primitivo", "Lugana", "Falanghina", "Greco di Tufo", "Aglianico", "Rosato"];
 
-export default function HomeContent({ t = {}, faq = [], souls }) {
+export default function HomeContent({ t = {}, faq = [], souls, regionState, regionLayout }) {
   const hero = t.hero ?? {};
   const philosophy = t.philosophy ?? {};
   const collection = t.collection ?? {};
@@ -79,7 +79,18 @@ export default function HomeContent({ t = {}, faq = [], souls }) {
   const band = t.shopBand ?? {};
   const faqCopy = t.faq ?? {};
 
-  const regions = REGION_SHAPE.map((r) => ({ ...r, ...(regionsCopy.items?.[r.key] ?? {}) }));
+  /* Struktur (Foto, Ausschnitt, Anker) + Text der Sprache. Welche Herkünfte
+     überhaupt erscheinen, entscheidet das Backoffice: `regionState` kommt
+     als Prop von der Seite und trägt nur die öffentlich sichtbaren — eine
+     Herkunft auf Entwurf oder mit Termin in der Zukunft fehlt hier, so wie
+     sie auf /regionen fehlt. Ohne Prop (Vorschau, Tests) gilt die volle
+     Struktur wie bisher. */
+  const shape = regionState
+    ? regionState
+        .map((state) => REGION_SHAPE.find((r) => r.key === state.key))
+        .filter(Boolean)
+    : REGION_SHAPE;
+  const regions = shape.map((r) => ({ ...r, ...(regionsCopy.items?.[r.key] ?? {}) }));
 
   /* Die Statzeile (Weine · Herkünfte · seit …) erscheint nur, wenn die
      Sprache ihre Beschriftungen führt — die deutsche Fassung hat sie mit dem
@@ -271,6 +282,10 @@ export default function HomeContent({ t = {}, faq = [], souls }) {
       <OriginsSection t={t.origins} souls={souls} />
 
       {/* ============ DIE DREI WEINHERKÜNFTE ============ */}
+      {/* Sind alle Herkünfte im Backoffice verborgen, entfällt die Sektion
+          samt Überschrift: „Drei italienische Weinherkünfte" über einer
+          leeren Fläche wäre ein Versprechen, das die Seite nicht hält. */}
+      {regions.length > 0 && (
       <section className="relative overflow-hidden">
         <Atmosphere variant="olive" />
         <GhostWord className="right-[-3vw] top-14 text-[13vw]">Italia</GhostWord>
@@ -286,10 +301,11 @@ export default function HomeContent({ t = {}, faq = [], souls }) {
           </Reveal>
         </div>
         <Reveal delay={0.12} className="mt-10 sm:mt-12">
-          <RegionExplorer regions={regions} ctaLabel={regionsCopy.detailCta} />
+          <RegionExplorer regions={regions} ctaLabel={regionsCopy.detailCta} layout={regionLayout} />
         </Reveal>
         </div>
       </section>
+      )}
 
       {/* ============ SHOP CTA (liquid-glass band) ============ */}
       {/* Bauform liegt in components/ui/ShopCtaBand — dieses Band war die

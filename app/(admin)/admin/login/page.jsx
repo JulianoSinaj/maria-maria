@@ -5,6 +5,7 @@ import { Grapes } from "@/components/Icons";
 import { Stemma } from "@/components/Logo";
 import { SESSION_COOKIE, sessionSecret, verifySession } from "@/lib/admin/session";
 import { credentialExists } from "@/lib/admin/credentials";
+import { hasUsers } from "@/lib/admin/users";
 import LoginForm from "./LoginForm";
 
 /* The door to the backoffice.
@@ -16,10 +17,13 @@ import LoginForm from "./LoginForm";
    group is the whole reason the other admin routes moved one folder down —
    see (backoffice)/layout.jsx.
 
-   The middleware lets this one path through unchecked (LOGIN_PATH in
+   The middleware lets this whole area through unchecked (LOGIN_PATH in
    middleware.js). Everything the page shows is therefore public by
    definition, which is why it says nothing about who may sign in, whether a
-   user exists, or what the password looks like. */
+   particular address is on the list, or what the password looks like. The
+   two doors it offers are decided by what the deployment HAS, never by who
+   is looking: an address on the allowlist means links can be sent, a stored
+   or handover password means the password form is worth showing. */
 
 export const metadata = {
   title: "Anmeldung — Maria Maria",
@@ -34,12 +38,12 @@ export default async function AdminLoginPage({ searchParams }) {
 
        no secret      – ADMIN_SESSION_SECRET and ADMIN_PASSWORD both missing;
                         the middleware is already answering 503 everywhere else
-       no credential  – a signing key, but nothing to check a password against:
-                        the stored credential file is gone (a deploy without a
-                        persistent data volume) and ADMIN_PASSWORD was removed
-                        after the handover */
+       no way in      – a signing key, but neither a password to check nor a
+                        single address that could be sent a link: the data
+                        volume is gone (a deploy without a persistent one) and
+                        ADMIN_PASSWORD was removed after the handover */
   const secret = sessionSecret();
-  const hasCredential = await credentialExists();
+  const [hasCredential, someoneListed] = await Promise.all([credentialExists(), hasUsers()]);
 
   /* Already signed in: skip the form. Reached by anyone who bookmarked the
      login page, or who lands here through a stale ?next link. */
@@ -48,7 +52,7 @@ export default async function AdminLoginPage({ searchParams }) {
     redirect("/admin");
   }
 
-  const configured = Boolean(secret) && hasCredential;
+  const configured = Boolean(secret) && (hasCredential || someoneListed);
 
   const next = typeof searchParams?.next === "string" ? searchParams.next : "";
 
@@ -112,7 +116,7 @@ export default async function AdminLoginPage({ searchParams }) {
           </p>
 
           {configured ? (
-            <LoginForm next={next} />
+            <LoginForm next={next} canLink={someoneListed} canPassword={hasCredential} />
           ) : (
             <p
               role="alert"
@@ -120,10 +124,14 @@ export default async function AdminLoginPage({ searchParams }) {
             >
               {secret ? (
                 <>
-                  Für dieses Backoffice ist kein Passwort hinterlegt. Es ist
-                  keine Anmeldung möglich, bis in der Umgebung wieder ein
+                  Für dieses Backoffice ist weder ein Passwort hinterlegt noch
+                  eine Adresse eingetragen, an die ein Anmeldelink gehen
+                  könnte. Eine Anmeldung ist erst wieder möglich, wenn in der
+                  Umgebung ein
                   <code className="mx-1 font-montserrat text-[12px]">ADMIN_PASSWORD</code>
-                  als Startpasswort gesetzt wird.
+                  als Startpasswort oder eine
+                  <code className="mx-1 font-montserrat text-[12px]">ADMIN_ALLOWLIST</code>
+                  gesetzt wird.
                 </>
               ) : (
                 <>

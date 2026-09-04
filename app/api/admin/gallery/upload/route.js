@@ -1,6 +1,7 @@
 import { promises as fs } from "fs";
 import path from "path";
 import { NextResponse } from "next/server";
+import { buildDerivatives, derivativeSummary } from "@/lib/media/derivatives";
 import { GALLERY_KEYS } from "@/lib/gallery/categories";
 
 /* Gallery upload — lands in data/uploads/gallery/<category>/ (outside
@@ -58,14 +59,21 @@ export async function POST(request) {
   }
   await fs.writeFile(path.join(dir, file), buf);
 
+  /* Responsive WebP + AVIF beside the original, with the settings the build
+     scripts use — see lib/media/derivatives.js. */
+  const webBase = `/api/admin/gallery/file/${category}`;
+  const assetPath = `${webBase}/${file}`;
+  const derivatives = await buildDerivatives({ dir, file, webBase, assetPath });
+
   return NextResponse.json(
     {
       data: {
         name: file,
-        path: `/api/admin/gallery/file/${category}/${file}`,
+        path: assetPath,
         category,
         size: buf.length,
         uploaded: true,
+        derivatives: derivativeSummary(derivatives),
       },
     },
     { status: 201 },

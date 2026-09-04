@@ -39,10 +39,21 @@ export const Media = (p) => (
   </svg>
 );
 
-export const Orders = (p) => (
+/* inbox tray — the Anfragen section */
+export const Inbox = (p) => (
   <svg {...base} {...p}>
-    <path d="m12 2.75 8 4v10.5l-8 4-8-4V6.75z" />
-    <path d="m4 6.75 8 4 8-4M12 10.75v10.5" />
+    <path d="M3.5 13.5V17a2.5 2.5 0 0 0 2.5 2.5h12a2.5 2.5 0 0 0 2.5-2.5v-3.5" />
+    <path d="M3.5 13.5h4.3l1.4 2.6h5.6l1.4-2.6h4.3" />
+    <path d="m5.4 13.5 2.2-7.3A2 2 0 0 1 9.5 4.8h5a2 2 0 0 1 1.9 1.4l2.2 7.3" />
+  </svg>
+);
+
+/* the magazine: an open spread with a folded corner — the editorial section */
+export const Magazine = (p) => (
+  <svg {...base} {...p}>
+    <path d="M4 5.5h6.5a2 2 0 0 1 1.5.7 2 2 0 0 1 1.5-.7H20v13h-6.5a1.5 1.5 0 0 0-1.5.8 1.5 1.5 0 0 0-1.5-.8H4z" />
+    <path d="M12 6.2v12.3" />
+    <path d="M6.5 9h3M6.5 12h3M14.5 9h3M14.5 12h3" />
   </svg>
 );
 
@@ -67,6 +78,7 @@ export const Sidebar = (p) => (
   </svg>
 );
 
+/* sign-in / password page */
 export const Lock = (p) => (
   <svg {...base} {...p}>
     <rect x="4.5" y="10" width="15" height="10.5" rx="2.5" />
@@ -121,10 +133,107 @@ export const Auto = (p) => (
   </svg>
 );
 
+/* interview editor: language completeness, external preview, block actions */
+export const ExternalLink = (p) => (
+  <svg {...base} {...p}>
+    <path d="M14 4.5h5.5V10" />
+    <path d="M19.5 4.5 11 13" />
+    <path d="M17 13.5v4a2 2 0 0 1-2 2H6.5a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h4" />
+  </svg>
+);
+
+export const Plus = (p) => (
+  <svg {...base} {...p}>
+    <path d="M12 5v14M5 12h14" />
+  </svg>
+);
+
+export const Trash = (p) => (
+  <svg {...base} {...p}>
+    <path d="M4.5 7h15M9.5 7V4.75h5V7M6.5 7l.8 12.5h9.4L17.5 7" />
+    <path d="M10 10.5v6M14 10.5v6" />
+  </svg>
+);
+
+export const ArrowUp = (p) => (
+  <svg {...base} {...p}>
+    <path d="M12 19V5M5.5 11.5 12 5l6.5 6.5" />
+  </svg>
+);
+
+export const ArrowDown = (p) => (
+  <svg {...base} {...p}>
+    <path d="M12 5v14M5.5 12.5 12 19l6.5-6.5" />
+  </svg>
+);
+
+export const Image = (p) => (
+  <svg {...base} {...p}>
+    <rect x="3" y="5" width="18" height="14" rx="2.5" />
+    <circle cx="8.5" cy="10" r="1.6" />
+    <path d="m4 17 4.6-4c.7-.6 1.7-.6 2.4.1l2.7 2.9 2-1.8c.7-.6 1.8-.6 2.5.1L20 16" />
+  </svg>
+);
+
+/* FAQ: the question mark in a speech bubble — the section is about what
+   the site answers, not about a document. */
+export const Faq = (p) => (
+  <svg {...base} {...p}>
+    <path d="M20.5 13.5a7.5 7.5 0 0 1-7.5 7.5H8l-4.5 2.5.9-4.2A7.5 7.5 0 0 1 13 6h0a7.5 7.5 0 0 1 7.5 7.5Z" />
+    <path d="M10.4 11.2a2.1 2.1 0 1 1 2.9 2c-.5.3-.8.8-.8 1.4v.4" />
+    <path d="M12.5 17.4h.01" />
+  </svg>
+);
+
+/* Benutzer: two people, because one is an account and two are a list. */
+export const Users = (p) => (
+  <svg {...base} {...p}>
+    <circle cx="9.5" cy="8.5" r="3.5" />
+    <path d="M3 19.5c0-3 2.9-5 6.5-5s6.5 2 6.5 5" />
+    <path d="M16.5 5.6a3.2 3.2 0 0 1 0 6.1" />
+    <path d="M18.2 14.9c1.8.7 2.8 2 2.8 3.8" />
+  </svg>
+);
+
+/* Protokoll: a clock that has been wound backwards. */
+export const History = (p) => (
+  <svg {...base} {...p}>
+    <path d="M3.6 9.2A8.5 8.5 0 1 1 3.5 12" />
+    <path d="M3.5 4.5v4.7h4.7" />
+    <path d="M12 7.8V12l2.8 1.8" />
+  </svg>
+);
+
+/* Rechtstexte: ein Bogen mit umgeschlagener Ecke — ein Dokument, das man
+   unterschreibt. Das Fragezeichen war schon an die FAQ vergeben. */
+export const Legal = (p) => (
+  <svg {...base} {...p}>
+    <path d="M13.8 2.75H7a2 2 0 0 0-2 2v14.5a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7.95z" />
+    <path d="M13.8 2.75v5.2H19" />
+    <path d="M8.5 12.5h7M8.5 16h4.5" />
+  </svg>
+);
+
+/* Einstellungen: drei Schieberegler */
+export const Settings = (p) => (
+  <svg {...base} {...p}>
+    <path d="M3.5 7h8.5M16.5 7h4M3.5 12h3M10.5 12h10M3.5 17h11M18.5 17h2" />
+    <circle cx="14" cy="7" r="2.25" />
+    <circle cx="8" cy="12" r="2.25" />
+    <circle cx="16.5" cy="17" r="2.25" />
+  </svg>
+);
+
 export const ICONS = {
   overview: Overview,
   bottle: Bottle,
   map: MapPin,
   media: Media,
-  orders: Orders,
+  faq: Faq,
+  inbox: Inbox,
+  magazine: Magazine,
+  legal: Legal,
+  lock: Lock,
+  users: Users,
+  settings: Settings,
 };

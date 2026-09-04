@@ -7,6 +7,7 @@ import {
   archive,
   restore,
 } from "@/lib/inventory/store";
+import { revalidateWinePages } from "@/lib/shop/revalidate";
 
 /* Mock inventory API — single-item endpoints. */
 export const dynamic = "force-dynamic";
@@ -42,6 +43,11 @@ export async function PATCH(request, { params }) {
       return item ? NextResponse.json({ data: item }) : notFound(params.id);
     }
     const item = update(params.id, body);
+    /* The shop handle is the one field on this record that the PUBLIC site
+       reads: it is the address behind "Im Shop entdecken". The wine pages
+       are statically rendered, so a corrected handle would sit in the store
+       without reaching a single visitor until the next deploy. */
+    if (item && body.shop && "handle" in body.shop) revalidateWinePages();
     return item ? NextResponse.json({ data: item }) : notFound(params.id);
   } catch (err) {
     if (err.code === "VALIDATION") {

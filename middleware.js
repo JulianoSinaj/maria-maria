@@ -4,6 +4,7 @@ import { internalPath } from "@/lib/i18n/routing";
 import { SHOP_ENABLED, EXTERNAL_SHOP_URL, isShopPath } from "@/lib/shop/config";
 import { SITE_URL } from "@/lib/site";
 import { SESSION_COOKIE, sessionSecret, verifySession } from "@/lib/admin/session";
+import { canManageUsers, canWrite } from "@/lib/admin/roles";
 
 /* Sprach-Routing.
 
@@ -147,13 +148,32 @@ function preferredLocale(header) {
    the login page, running in Node, that compares it. The middleware stays the
    chokepoint; only the question it asks got smaller. */
 
-/* The one path inside /admin that may be seen without credentials. Both the
-   page and the sign-in POST land on it — Next posts a server action back to
-   the URL of the page it came from, so one exemption covers both. */
+/* The one AREA inside /admin that may be seen without credentials: the form
+   itself and the page that spends a sign-in link. The sign-in POSTs land on
+   them too — Next posts a server action back to the URL of the page it came
+   from, so one exemption covers form and submission alike.
+
+   It is a prefix and not a single path because the link in an e-mail has to
+   arrive somewhere: /admin/login/bestaetigen?token=… is opened by a person
+   who is by definition not signed in yet. */
 const LOGIN_PATH = "/admin/login";
+const isLoginPath = (pathname) =>
+  pathname === LOGIN_PATH || pathname.startsWith(`${LOGIN_PATH}/`);
+
+/* The two addresses that belong to the ACCESS rather than to the website:
+   who may sign in, and the password of the house. Both are the owner's
+   business alone — an editor manages wines, not colleagues. */
+const OWNER_ONLY = ["/admin/benutzer", "/admin/passwort"];
+const isOwnerOnly = (pathname) =>
+  OWNER_ONLY.some((p) => pathname === p || pathname.startsWith(`${p}/`));
+
+/* A write, as far as the edge can tell. It cannot know what a route does, but
+   it knows that GET does not change anything — and that is the distinction a
+   read-only role turns on. */
+const isWrite = (method) => method !== "GET" && method !== "HEAD" && method !== "OPTIONS";
 
 /* Hochgeladene Dateien werden ausgeliefert, nicht verwaltet — siehe oben. */
-const UPLOADED_FILE = /^\/api\/admin\/(?:hero|gallery|assets\/[^/]+)\/file\//;
+const UPLOADED_FILE = /^\/api\/admin\/(?:hero|gallery|interviews|assets\/[^/]+)\/file\//;
 
 /* Everything that belongs to the backoffice — the login page included. The
    exemption for it is made where the guard is called, NOT here: a path that
@@ -202,6 +222,30 @@ function deny(request) {
   return response;
 }
 
+/* Signed in, but not for this. Distinct from deny(): sending someone back to
+   the login form when their session is perfectly valid would tell them the
+   wrong thing and invite them to try the same door again. */
+function forbidden(request, message) {
+  if (request.nextUrl.pathname.startsWith("/api/")) {
+    return new NextResponse(JSON.stringify({ error: message }), {
+      status: 403,
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        "Cache-Control": "no-store",
+        "X-Robots-Tag": "noindex, nofollow",
+      },
+    });
+  }
+
+  /* A person who typed an address they may not have goes back to the part of
+     the backoffice that is theirs. 303 so a posted server action does not get
+     replayed against the overview. */
+  const response = NextResponse.redirect(new URL("/admin", request.url), 303);
+  response.headers.set("Cache-Control", "no-store");
+  response.headers.set("X-Robots-Tag", "noindex, nofollow");
+  return response;
+}
+
 async function guardBackoffice(request) {
   /* "Configured" now means a SIGNING KEY, not a password.
 
@@ -228,11 +272,34 @@ async function guardBackoffice(request) {
     );
   }
 
-  if (await verifySession(request.cookies.get(SESSION_COOKIE)?.value, sessionSecret())) {
-    return null;
+  /* verifySession returns the identity the cookie carries — e-mail, name,
+     role, and which door it came through — or null. The role is IN the token
+     and signed with it, which is the only reason a check like the two below
+     can happen out here at all: the Edge runtime has no filesystem, so it can
+     never read the allowlist itself. The price is stated where it belongs
+     (lib/admin/session.js): a role change takes effect at the next sign-in,
+     and removing someone does not end the session they already hold. */
+  const who = await verifySession(request.cookies.get(SESSION_COOKIE)?.value, sessionSecret());
+  if (!who) return deny(request);
+
+  const { pathname } = request.nextUrl;
+
+  /* A viewer reads. Their write dies here, before a single route file is
+     loaded — the same argument that put the login check in this file: a new
+     endpoint under app/api/admin/ is covered from its first commit, without
+     anyone having to remember. The routes check again (lib/admin/guard.js),
+     because one check in one deployment's configuration is not a property of
+     the endpoint. */
+  if (pathname.startsWith("/api/admin") && isWrite(request.method) && !canWrite(who.role)) {
+    return forbidden(request, "Dieser Zugang darf nur lesen.");
   }
 
-  return deny(request);
+  /* Who may sign in, and the password of the house: owners only. */
+  if (isOwnerOnly(pathname) && !canManageUsers(who.role)) {
+    return forbidden(request, "Das dürfen nur Zugänge mit der Rolle Leitung.");
+  }
+
+  return null;
 }
 
 /* Anfragen, die den Proxy nie gesehen haben — der Healthcheck des Containers
@@ -515,11 +582,12 @@ export async function middleware(request) {
   /* Steht vor allem anderen: Das Backoffice kennt kein Sprach-Routing, und
      eine ungeprüfte Anfrage soll gar nicht erst weiter nach unten laufen. */
   if (isBackoffice(request.nextUrl.pathname)) {
-    /* The login page is the one address in here that may be seen without
-       credentials — the sign-in POST lands on it too, because Next posts a
-       server action back to the URL of the page it came from. It still runs
-       through this branch so it reaches the router untouched. */
-    if (request.nextUrl.pathname !== LOGIN_PATH) {
+    /* The login area is the one part of this that may be seen without
+       credentials — the form, the page that spends a link from an e-mail, and
+       the POSTs of both, because Next posts a server action back to the URL of
+       the page it came from. It still runs through this branch so it reaches
+       the router untouched. */
+    if (!isLoginPath(request.nextUrl.pathname)) {
       const denied = await guardBackoffice(request);
       if (denied) return denied;
     }

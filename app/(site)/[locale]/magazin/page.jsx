@@ -112,7 +112,7 @@ export default async function MagazinPage({ params }) {
      Gespräch veröffentlicht ist — sonst zeigte die Fußzeile von Kapitel IV auf
      eine Platzhalterkarte. Die Texte kommen aus dem Wörterbuch der jeweiligen
      Sprache (content/<sprache>/interviews.js). */
-  const interviews = publishedInterviews(dict);
+  const interviews = await publishedInterviews(dict, params.locale);
   const hasInterviews = interviews.length > 0;
 
   return (

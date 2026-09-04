@@ -6,6 +6,14 @@ import { pageMetadata } from "@/lib/i18n/metadata";
 import { localePath } from "@/lib/i18n/routing";
 import { absoluteUrl } from "@/lib/site";
 import { graph, siteNodes, webPageNode, itemListNode, faqNode } from "@/lib/seo/jsonLd";
+import { withRegionState } from "@/lib/regions/content";
+import { getShowcaseConfig } from "@/lib/showcase/store";
+
+/* Die drei Herkünfte des Regionen-Explorers — dieselben Schlüssel, unter
+   denen HomeContent Foto und Ausschnitt führt und das Backoffice ihre
+   Sichtbarkeit verwaltet. Hier steht nur die Reihenfolge; Text kommt aus
+   dem Wörterbuch, Zustand aus dem Store. */
+const HOME_REGIONS = [{ key: "apulien" }, { key: "kampanien" }, { key: "garda" }];
 
 /* Teaserbild der Startseite — 1200 × 630, erzeugt von scripts/og-images.mjs
    aus dem Hero-Motiv „zwischen Reben und Meer". Dateiname und Maße nennt
@@ -96,10 +104,28 @@ function HomeJsonLd({ locale, dict }) {
 export default async function HomePage({ params }) {
   const dict = await getDictionary(params.locale);
 
+  /* Sichtbarkeit je Herkunft und die Bauform des Explorers kommen aus dem
+     Backoffice. Beide Vorgaben bilden die Seite von heute ab — ohne
+     Konfiguration ändert sich nichts. Nach jedem Speichern stößt
+     /api/admin/regions bzw. der Showcase-Store diese Seite über
+     revalidatePath neu an; sie bleibt also statisch vorgerendert. */
+  const regionState = await withRegionState(HOME_REGIONS);
+  const { layout } = await getShowcaseConfig();
+
   return (
     <>
       <HomeJsonLd locale={params.locale} dict={dict} />
-      <HomeContent t={dict.home} faq={dict.faq?.home ?? []} souls={dict.common?.souls} />
+      <HomeContent
+        t={dict.home}
+        faq={dict.faq?.home ?? []}
+        souls={dict.common?.souls}
+        regionState={regionState}
+        regionLayout={{
+          hoverExpand: layout.desktop.hoverExpand,
+          grow: layout.desktop.grow,
+          mobileVariant: layout.mobile.variant,
+        }}
+      />
     </>
   );
 }

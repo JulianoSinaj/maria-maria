@@ -7,13 +7,23 @@ import Atmosphere from "@/components/Atmosphere";
    identisch gebaut sind und auf Mobile sauber umbrechen.
 
    `shell` trägt die wiederkehrenden Beschriftungen (Kicker, „Stand:", der
-   Kontaktsatz am Fuß) in der aktiven Sprache. `shell.bindingNotice` steht in
-   allen vier Fassungen: Verbindlich ist die deutsche Version, und das gehört
+   Kontaktsatz am Fuß) in der aktiven Sprache. `updated` und `reviewed`
+   kommen aus dem Rechtstext-Archiv (lib/legal/storefront) und sind der
+   Normalfall NICHT gesetzt: Dann steht dort weiterhin wörtlich das Datum
+   aus der Inhaltsdatei. Erst wenn ein Text im Backoffice bearbeitet oder
+   geprüft wurde, tragen die beiden das echte Datum — ein „Stand: Juli
+   2026" über einem im September geänderten Absatz wäre schlimmer als gar
+   keine Angabe.
+
+   `shell.bindingNotice` steht in allen vier Fassungen: Verbindlich ist die deutsche Version, und das gehört
    sichtbar auf die Seite, nicht in einen Kommentar. Die Übersetzungen
    verweisen auf das Original, das Original benennt sich selbst — der Kasten
    steht dadurch in jeder Sprache an derselben Stelle. */
 
-export default function LegalShell({ shell, title, intro, sections }) {
+export default function LegalShell({ shell, title, intro, sections, updated, reviewed }) {
+  /* Der gepflegte Stand schlägt den statischen aus der Inhaltsdatei. */
+  const stand = updated ?? shell.updated;
+
   return (
     <div className="relative -mb-12 min-h-screen overflow-hidden lg:-mb-16">
       <Atmosphere variant="warm" />
@@ -23,10 +33,27 @@ export default function LegalShell({ shell, title, intro, sections }) {
           {title}
         </h1>
         <GrapeRule className="mt-6" />
-        {shell.updated && (
-          <p className="mt-5 text-[11px] uppercase tracking-[0.16em] text-charcoal/50">
-            {shell.updatedLabel} {shell.updated}
-          </p>
+        {(stand || reviewed) && (
+          <div className="mt-5 flex flex-wrap items-baseline gap-x-4 gap-y-1.5 text-[11px] uppercase tracking-[0.16em] text-charcoal/50">
+            {stand && (
+              <p>
+                {shell.updatedLabel} {stand}
+              </p>
+            )}
+            {/* Die Prüfung steht neben dem Stand, nicht an seiner Stelle:
+                „zuletzt geändert" und „zuletzt geprüft" sind zwei Aussagen,
+                und die zweite ist genau dann interessant, wenn sie jünger
+                ist als die erste. */}
+            {reviewed && shell.reviewedLabel && (
+              <p className="flex items-baseline gap-2">
+                <span
+                  aria-hidden="true"
+                  className="h-1 w-1 shrink-0 translate-y-[-2px] rounded-full bg-champagne"
+                />
+                {shell.reviewedLabel} {reviewed}
+              </p>
+            )}
+          </div>
         )}
 
         {shell.bindingNotice && (

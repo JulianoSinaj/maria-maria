@@ -19,6 +19,7 @@ export const legal = {
     eyebrow: "Legal",
     updatedLabel: "Last updated:",
     updated: "July 2026",
+    reviewedLabel: "Last reviewed:",
     contactPre: "Questions about this? Write to us any time via the",
     contactLink: "contact page",
     contactMid: "or at",

@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import AdminSidebar from "./AdminSidebar";
 import AdminMobileNav from "./AdminMobileNav";
 import AdminHeader from "./AdminHeader";
+import { AdminUserProvider } from "./AdminUser";
 import { activeNavItem } from "./nav";
 
 /* The admin frame: fixed-height viewport with an independently scrolling
@@ -14,7 +15,7 @@ import { activeNavItem } from "./nav";
 
 const COLLAPSE_KEY = "mm-admin-rail-collapsed";
 
-export default function AdminShell({ children }) {
+export default function AdminShell({ user = null, children }) {
   const pathname = usePathname();
   const [collapsed, setCollapsed] = useState(false);
   const [navOpen, setNavOpen] = useState(false);
@@ -72,8 +73,13 @@ export default function AdminShell({ children }) {
           onToggleCollapse={toggleCollapse}
           onOpenNav={() => setNavOpen(true)}
           navTriggerRef={navTriggerRef}
-          /* the portfolio has its own search over the inventory */
-          hideSearch={pathname.startsWith("/admin/portfolio")}
+          /* resolved on the server from the session cookie — the shell is a
+             client component and cannot read an httpOnly cookie itself */
+          user={user}
+          /* portfolio and inquiries carry their own search boxes */
+          hideSearch={
+            pathname.startsWith("/admin/portfolio") || pathname.startsWith("/admin/anfragen")
+          }
         />
 
         {/* data-lenis-prevent: the storefront's smooth scroll must not hijack
@@ -83,7 +89,9 @@ export default function AdminShell({ children }) {
           data-lenis-prevent
           className="relative flex-1 overflow-y-auto overscroll-contain px-5 pb-14 pt-7 sm:px-7 lg:px-9"
         >
-          {children}
+          {/* the signed-in person, once, for every card that wants to know
+              what to offer — see components/admin/AdminUser.jsx */}
+          <AdminUserProvider user={user}>{children}</AdminUserProvider>
         </main>
       </div>
     </div>

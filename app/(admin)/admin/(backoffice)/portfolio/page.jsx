@@ -38,6 +38,18 @@ export default function PortfolioPage() {
     return () => window.clearTimeout(t);
   }, [search]);
 
+  /* Hand-off from the header search: /admin/portfolio?q=Lugana lands here
+     with the box already filled. Read off the address after mount, like the
+     inbox reads ?id=, so this page needs no Suspense boundary. The debounced
+     value is set along with it — a hand-off should show its result at once,
+     not a quarter of a second later. */
+  useEffect(() => {
+    const q = new URLSearchParams(window.location.search).get("q");
+    if (!q) return;
+    setSearch(q);
+    setDebouncedSearch(q);
+  }, []);
+
   const [panel, setPanel] = useState({ open: false, mode: "edit", item: null });
   const [assetPanel, setAssetPanel] = useState({ open: false, wine: null });
   const [saving, setSaving] = useState(false);

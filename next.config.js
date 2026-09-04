@@ -24,6 +24,14 @@ const nextConfig = {
      leiten weiterhin dauerhaft auf die Fassung ohne — nur eben an einer
      Stelle, die auch den Host kennt. */
   skipTrailingSlashRedirect: true,
+  /* instrumentation.js — läuft einmal beim Start des Serverprozesses und
+     erledigt zwei Dinge des Shop-Abgleichs: die gepflegten Produkt-Handles
+     in die Auflösung von shopHref() hängen und den nächtlichen Lauf stellen.
+     In Next 14 steht der Aufruf noch hinter diesem Schalter; ab Next 15 ist
+     er Standard und die Zeile kann ersatzlos weg. */
+  experimental: {
+    instrumentationHook: true,
+  },
   /* KEINE redirects() mehr an dieser Stelle.
 
      Die Weiterleitungen der alten WordPress-Adressen standen bis August 2026

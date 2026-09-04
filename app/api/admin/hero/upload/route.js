@@ -1,6 +1,7 @@
 import { promises as fs } from "fs";
 import path from "path";
 import { NextResponse } from "next/server";
+import { buildDerivatives, derivativeSummary } from "@/lib/media/derivatives";
 
 /* Hero background upload — same contract as the bottle-asset upload:
    base64 data URL in, file lands in data/uploads/hero/ (outside public/),
@@ -51,8 +52,30 @@ export async function POST(request) {
   }
   await fs.writeFile(path.join(uploads, file), buf);
 
+  /* The storefront never serves an original — every tracked photo goes out as
+     a WebP of roughly the width it is shown at. Uploads used to be the one
+     exception: a 4 MB phone photo assigned as a hero background reached
+     visitors as a 4 MB phone photo. Now the same ladder the build scripts
+     produce is written beside the file, plus AVIF. Details and the graceful
+     path when sharp is missing: lib/media/derivatives.js. */
+  const assetPath = `/api/admin/hero/file/${file}`;
+  const derivatives = await buildDerivatives({
+    dir: uploads,
+    file,
+    webBase: "/api/admin/hero/file",
+    assetPath,
+  });
+
   return NextResponse.json(
-    { data: { name: file, path: `/api/admin/hero/file/${file}`, size: buf.length, uploaded: true } },
+    {
+      data: {
+        name: file,
+        path: assetPath,
+        size: buf.length,
+        uploaded: true,
+        derivatives: derivativeSummary(derivatives),
+      },
+    },
     { status: 201 },
   );
 }

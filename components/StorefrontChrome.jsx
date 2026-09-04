@@ -3,6 +3,7 @@ import Header from "./Header";
 import Footer from "./Footer";
 import CartDrawer from "./shop/CartDrawer";
 import { AmbientBackdrop } from "./Atmosphere";
+import Beacon from "./insights/Beacon";
 import { useCommon } from "@/lib/i18n/context";
 import { SHOP_ENABLED } from "@/lib/shop/config";
 
@@ -20,6 +21,10 @@ export default function StorefrontChrome({ children }) {
 
   return (
     <>
+      {/* Zählt den Seitenaufruf — anonym, ohne Cookie, ohne Kennung.
+          Liegt hier und nicht im Layout, weil dieser Rahmen ohnehin um
+          jede Seite der Storefront liegt und die Sprache bereits kennt. */}
+      <Beacon />
       <AmbientBackdrop />
       <a
         href="#main"

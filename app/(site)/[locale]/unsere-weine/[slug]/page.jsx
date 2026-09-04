@@ -135,7 +135,12 @@ export default async function WinePage({ params }) {
   /* Der sichtbare Seitentext in der aktiven Sprache: das Text-Overlay aus
      content/<sprache>/weine-pages/<slug> legt sich über die deutsche Basis.
      Für Deutsch gibt es kein Overlay — `wine` ist dann `base`. */
-  const wine = localizeWinePage(base, dict.weinePages?.[params.slug]);
+  const localized = localizeWinePage(base, dict.weinePages?.[params.slug]);
+  /* Die Fragen unter der Seite kommen aus dem FAQ-Editor (lib/faq/store),
+     der sie in allen vier Sprachen führt — ohne Eintrag dort bleibt die
+     Liste aus wineData.js stehen. */
+  const storeFaq = dict.faqWines?.[params.slug];
+  const wine = storeFaq ? { ...localized, faq: storeFaq } : localized;
   const seo = wineSeo(params.slug, params.locale, dict);
 
   return (

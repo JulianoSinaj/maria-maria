@@ -2,11 +2,7 @@ import { notFound } from "next/navigation";
 import { draftMode } from "next/headers";
 import InterviewArticle from "@/components/magazin/interview/InterviewArticle";
 import JsonLd from "@/components/seo/JsonLd";
-import {
-  listInterviewSlugs,
-  findInterview,
-  interviewPath,
-} from "@/components/magazin/interviewRegistry";
+import { findInterview, interviewPath } from "@/components/magazin/interviewRegistry";
 import { ogExists, ogPath } from "@/lib/interviews/og";
 import { bySlug } from "@/components/data";
 import { getDictionary } from "@/lib/i18n/dictionaries";
@@ -37,19 +33,33 @@ import {
 
    Seit dem Redaktionssystem kommen die Gespräche aus zwei Quellen (siehe
    components/magazin/interviewRegistry.js): den Sprachdateien und dem
-   Speicher der Redaktion. Ein Stück, das nach dem Build veröffentlicht
-   wird, hat zur Bauzeit keinen statischen Pfad — deshalb `dynamicParams =
-   true`: Die Seite entsteht beim ersten Aufruf und wird dann wie die
-   gebauten gecacht; das Veröffentlichen im Backoffice ruft revalidatePath
-   auf (lib/interviews/revalidate.js). Unbekannte Slugs bleiben 404. */
+   Speicher der Redaktion. Ein im Backoffice veröffentlichtes Stück soll
+   ohne Deploy erreichbar sein — und genau das verhindert eine statische
+   Seite in Next 14 strukturell: Das übergeordnete Layout
+   ((site)/[locale]/layout.jsx) setzt `dynamicParams = false`, damit ein
+   unbekanntes Sprachsegment (/xx/shop) 404 liefert statt eine leere fünfte
+   Sprachversion zu rendern. Next prüft diesen Schalter aber NICHT pro
+   Segment, sondern für die gesamte Route — ein Slug, der bei generateStatic­
+   Params() der Kindroute fehlte, würde trotz eigenem `dynamicParams = true`
+   dort ebenfalls 404 liefern, gebaut oder nicht (siehe next/dist/build/
+   utils.js, buildAppStaticPaths: `hadAllParamsGenerated` ist eine einzige
+   Prüfung über die ganze Kette). Verifiziert am 2026-09-05: eine im
+   Backoffice frisch veröffentlichte Seite blieb 404, bis dieser Kommentar
+   und die Zeilen darunter geschrieben wurden.
 
-/* Nur die Slugs — die Sprachen erzeugt bereits das Layout darüber. */
-export async function generateStaticParams() {
-  const slugs = await listInterviewSlugs();
-  return slugs.map((slug) => ({ slug }));
-}
+   Die Seite rendert deshalb dynamisch (kein generateStaticParams, kein
+   `dynamicParams`) — wie /admin bereits. Der Slug wird bei jeder Anfrage
+   gegen die Registry geprüft; ein unbekannter bleibt 404. Für Traffic
+   reicht das: Next cacht die Antwort trotzdem in seinem Data Cache über
+   `revalidate` unten, und ein Veröffentlichen im Backoffice ruft zusätzlich
+   revalidatePath auf (lib/interviews/revalidate.js), damit eine bereits
+   aufgerufene Adresse ihre alte Fassung nicht bis zum Fensterende zeigt. */
 
-export const dynamicParams = true;
+/* Fünf Minuten Cache zwischen zwei Aufrufen derselben Adresse — lang genug,
+   um wiederholte Aufrufe (Crawler, mehrere Leser) nicht bei jedem einzeln
+   den Speicher lesen zu lassen, kurz genug, dass eine vergessene
+   revalidatePath-Anfrage trotzdem irgendwann von selbst heilt. */
+export const revalidate = 300;
 
 /* Das Teaserbild fürs Teilen — erzeugt von scripts/og-images.mjs (Code-
    Stücke) bzw. lib/interviews/og.js beim Veröffentlichen, benannt nach

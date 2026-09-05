@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { draftMode } from "next/headers";
 import InterviewArticle from "@/components/magazin/interview/InterviewArticle";
+import ReadBeacon from "@/components/insights/ReadBeacon";
 import JsonLd from "@/components/seo/JsonLd";
 import { findInterview, interviewPath } from "@/components/magazin/interviewRegistry";
 import { ogExists, ogPath } from "@/lib/interviews/og";
@@ -228,6 +229,12 @@ export default async function InterviewPage({ params }) {
           ausdrücklich „un solo H1 e un solo main". */}
       <div className="relative -mb-12 min-h-screen bg-ivory lg:-mb-16">
         <InterviewArticle interview={interview} ui={dict.interviews?.ui ?? {}} wine={wine} />
+        {/* Am Fuß des Stücks: meldet ein GELESENES Gespräch, nicht ein
+            geöffnetes — erst wenn diese Stelle wirklich auf dem Schirm
+            stand. Nicht in der Vorschau: Die Redaktion, die ihren eigenen
+            Entwurf liest, ist kein Publikum.
+            Siehe components/insights/ReadBeacon. */}
+        {!preview && <ReadBeacon slug={interview.slug} />}
       </div>
       {preview && <PreviewBar draft={interview.draft} slug={interview.slug} />}
     </>

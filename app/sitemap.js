@@ -28,11 +28,26 @@ import { absoluteUrl } from "@/lib/site";
 
    Die Gespräche kommen seit dem Redaktionssystem aus einer Abfrage (Sprach-
    dateien + Speicher) — daher async. Das Veröffentlichen im Backoffice ruft
-   revalidatePath("/sitemap.xml") auf, damit die Datei nicht bis zum
-   nächsten Deploy den alten Stand meldet.
+   zusätzlich revalidatePath("/sitemap.xml") auf, aber bei einer
+   MetadataRoute-Datei wie dieser wirkt das anders als bei einer normalen
+   Seite: Next generiert `sitemap.js` beim Build als vollstatische Route
+   OHNE eigenen `revalidate`-Export komplett einmalig, und ein
+   revalidatePath auf eine rein statische MetadataRoute-Datei setzt zwar das
+   Cache-Tag zurück, ohne dass beim nächsten Aufruf neu gerendert wird —
+   verifiziert am 2026-09-05, als eine frisch veröffentlichte Adresse in der
+   Sitemap fehlte, obwohl die Artikelseite selbst schon erreichbar war. Der
+   `revalidate`-Export unten macht daraus zeitbasiertes ISR: Der erste
+   Aufruf nach Ablauf des Fensters baut die Datei serverseitig neu, jeder
+   Aufruf innerhalb des Fensters bekommt die zwischengespeicherte Antwort.
+   Fünf Minuten sind für eine Sitemap großzügig kurz — ein Crawler liest sie
+   ohnehin nur gelegentlich — und lang genug, dass wiederholte Aufrufe
+   (mehrere Crawler, ein Browser-Refresh) nicht jedes Mal alle Register neu
+   abfragen.
 
    Nicht enthalten: /admin und /api (kein öffentlicher Inhalt, in robots.txt
    gesperrt), 404 und die Fehlerseite (nichts, was indexiert werden soll). */
+
+export const revalidate = 300;
 
 export default async function sitemap() {
   const routes = await seoRoutes();

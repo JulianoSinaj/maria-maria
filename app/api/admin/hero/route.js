@@ -7,6 +7,7 @@ import {
   defaultHeroConfig,
   validateHeroPatch,
 } from "@/lib/hero/store";
+import { audited } from "@/lib/admin/audited";
 
 /* Hero content API — config plus the background images available to the
    landing hero: the tracked photos in public/img/home/ and any mock uploads
@@ -75,8 +76,12 @@ export async function GET(request) {
   return NextResponse.json({ data: { config: await resolveConfig(images, { fresh }), images } });
 }
 
-/** PUT /api/admin/hero — partial config update. */
-export async function PUT(request) {
+/** PUT /api/admin/hero — partial config update.
+
+    Wrapped: the wrapper checks that this session may write at all and files
+    the receipt afterwards; the handler says what changed, because only it
+    knows what the config looked like a moment ago. */
+export const PUT = audited("hero.update", async (request, { audit }) => {
   let patch;
   try {
     patch = await request.json();
@@ -98,5 +103,11 @@ export async function PUT(request) {
   }
 
   const images = await listImages();
-  return NextResponse.json({ data: { config: putHeroConfig(patch), images } });
-}
+  /* read the state BEFORE the write, or the diff compares a thing with
+     itself: putHeroConfig merges into the same stored object */
+  const before = structuredClone(getHeroConfig());
+  const config = putHeroConfig(patch);
+  audit({ target: "Hero", before, after: config });
+
+  return NextResponse.json({ data: { config, images } });
+});

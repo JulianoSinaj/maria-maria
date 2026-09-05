@@ -6,6 +6,7 @@ import {
   putShowcaseConfig,
   isPersisted,
 } from "@/lib/showcase/store";
+import { audited } from "@/lib/admin/audited";
 import { defaultShowcaseConfig, validateShowcasePatch } from "@/lib/showcase/schema";
 
 /* Regional-Showcase — Layout-API des Regionen-Explorers. */
@@ -38,7 +39,7 @@ export async function GET(request) {
 }
 
 /** PUT /api/admin/showcase — partial config update. */
-export async function PUT(request) {
+export const PUT = audited("showcase.update", async (request, { audit }) => {
   let patch;
   try {
     patch = await request.json();
@@ -51,7 +52,12 @@ export async function PUT(request) {
     return NextResponse.json({ error: errs.join("; "), details: errs }, { status: 422 });
   }
 
+  /* read before the write: the store merges into what it already holds,
+     so a diff taken afterwards would compare the new state with itself */
+  const before = structuredClone(await getShowcaseConfig());
   const config = await putShowcaseConfig(patch);
+  audit({ target: "Regionen-Showcase", before, after: config });
+
   revalidateHome();
   return NextResponse.json({ data: { config, persisted: isPersisted() } });
-}
+});

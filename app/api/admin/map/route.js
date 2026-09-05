@@ -6,6 +6,7 @@ import {
   validateMapPatch,
   labelBalance,
 } from "@/lib/map/store";
+import { audited } from "@/lib/admin/audited";
 
 /* Italy-map overlay config API. `balance` rides along with every response so
    the UI's balance indicator can never disagree with the stored state. */
@@ -20,7 +21,7 @@ export async function GET(request) {
 }
 
 /** PUT /api/admin/map — partial config update. */
-export async function PUT(request) {
+export const PUT = audited("map.update", async (request, { audit }) => {
   let patch;
   try {
     patch = await request.json();
@@ -33,5 +34,9 @@ export async function PUT(request) {
     return NextResponse.json({ error: errs.join("; "), details: errs }, { status: 422 });
   }
 
-  return NextResponse.json(envelope(putMapConfig(patch)));
-}
+  const before = structuredClone(getMapConfig());
+  const config = putMapConfig(patch);
+  audit({ target: "Italien-Karte", before, after: config });
+
+  return NextResponse.json(envelope(config));
+});

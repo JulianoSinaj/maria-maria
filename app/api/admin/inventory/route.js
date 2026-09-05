@@ -8,6 +8,7 @@ import {
   archivedCount,
 } from "@/lib/inventory/store";
 import { revalidateWinePages } from "@/lib/shop/revalidate";
+import { audited } from "@/lib/admin/audited";
 
 /* Mock inventory API — collection endpoints.
    The store is an in-memory singleton, so this must never be statically
@@ -53,7 +54,7 @@ export async function GET(request) {
 }
 
 /** POST /api/admin/inventory — create an item. */
-export async function POST(request) {
+export const POST = audited("inventory.create", async (request, { audit }) => {
   let body;
   try {
     body = await request.json();
@@ -63,6 +64,7 @@ export async function POST(request) {
 
   try {
     const item = create(body);
+    audit({ target: item.name ?? item.slug ?? item.id, after: item });
     /* a new wine that already carries a shop handle changes what the
        storefront links to — see the note in [id]/route.js */
     if (item.shop?.handle) revalidateWinePages();
@@ -76,4 +78,4 @@ export async function POST(request) {
     }
     throw err;
   }
-}
+});

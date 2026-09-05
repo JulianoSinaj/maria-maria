@@ -2,6 +2,7 @@ import { promises as fs } from "fs";
 import path from "path";
 import { NextResponse } from "next/server";
 import { getConfig, putConfig, defaultConfig, validatePatch } from "@/lib/assets/store";
+import { audited } from "@/lib/admin/audited";
 
 /* Bottle-asset API — config + available mockup files for one wine.
    Files are enumerated from public/img/wines/<slug>/ on every request, so an
@@ -67,7 +68,7 @@ export async function GET(request, { params }) {
 }
 
 /** PUT /api/admin/assets/:slug — partial config update. */
-export async function PUT(request, { params }) {
+export const PUT = audited("asset.update", async (request, { params, audit }) => {
   const { slug } = params;
   if (!SLUG_RE.test(slug)) {
     return NextResponse.json({ error: "Invalid slug" }, { status: 400 });
@@ -104,6 +105,10 @@ export async function PUT(request, { params }) {
     }
   }
 
-  const config = putConfig(slug, patch, resolveConfig(slug, assets));
+  const base = resolveConfig(slug, assets);
+  const before = structuredClone(base);
+  const config = putConfig(slug, patch, base);
+  audit({ target: slug, before, after: config });
+
   return NextResponse.json({ data: { config, assets } });
-}
+});

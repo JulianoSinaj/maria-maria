@@ -23,6 +23,11 @@ export const ADMIN_NAV = [
     icon: "map",
   },
   {
+    href: "/admin/seiten",
+    key: "pages",
+    icon: "pages",
+  },
+  {
     href: "/admin/faq",
     key: "faq",
     icon: "faq",

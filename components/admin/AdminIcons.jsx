@@ -206,6 +206,17 @@ export const History = (p) => (
 
 /* Rechtstexte: ein Bogen mit umgeschlagener Ecke — ein Dokument, das man
    unterschreibt. Das Fragezeichen war schon an die FAQ vergeben. */
+/* Seiten: a page divided into its blocks — a hero band over two text rows.
+   Deliberately not the document glyph of `legal`: that one is a text FILE,
+   this one is a laid-out page. */
+export const Pages = (p) => (
+  <svg {...base} {...p}>
+    <rect x="3" y="3.5" width="18" height="17" rx="2.5" />
+    <path d="M3 9.5h18" />
+    <path d="M6.5 13.5h11M6.5 16.9h7" />
+  </svg>
+);
+
 export const Legal = (p) => (
   <svg {...base} {...p}>
     <path d="M13.8 2.75H7a2 2 0 0 0-2 2v14.5a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7.95z" />
@@ -230,6 +241,7 @@ export const ICONS = {
   map: MapPin,
   media: Media,
   faq: Faq,
+  pages: Pages,
   inbox: Inbox,
   magazine: Magazine,
   legal: Legal,

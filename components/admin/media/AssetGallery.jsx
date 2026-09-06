@@ -5,6 +5,7 @@ import { Close } from "@/components/Icons";
 import { WINES } from "@/components/data";
 import { GALLERY_CATEGORIES } from "@/lib/gallery/categories";
 import { useAdminI18n } from "../i18n/AdminI18n";
+import AssetMetaDrawer from "./AssetMetaDrawer";
 
 /* Media & Asset Gallery.
    The library view over every image the project actually holds — scanned
@@ -33,6 +34,7 @@ export default function AssetGallery() {
   const [error, setError] = useState(null);
   const [lightbox, setLightbox] = useState(null); // asset | null
   const [assignFor, setAssignFor] = useState(null); // asset | null
+  const [details, setDetails] = useState(null); // asset | null
   const [assignWine, setAssignWine] = useState(WINES[0]?.slug ?? "");
   const [toast, setToast] = useState(null);
 
@@ -45,17 +47,27 @@ export default function AssetGallery() {
 
   const load = () => {
     setLoading(true);
-    fetch("/api/admin/gallery")
+    return fetch("/api/admin/gallery")
       .then((r) => r.json())
       .then((b) => {
         setAssets(b.data.assets);
         setCounts(b.data.counts);
         setError(null);
+        /* The drawer holds the row it was opened with; after a save the fresh
+           one has to replace it, or its badges would argue with the grid. */
+        setDetails((current) =>
+          current ? b.data.assets.find((a) => a.path === current.path) ?? current : null,
+        );
       })
       .catch((e) => setError(e))
       .finally(() => setLoading(false));
   };
-  useEffect(load, []);
+  /* A body, not `useEffect(load, [])`: load() returns its promise so a save
+     can await the refresh, and React would take that promise for a cleanup
+     function. */
+  useEffect(() => {
+    load();
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const visible = useMemo(
     () => (tab === "all" ? assets : assets.filter((a) => a.category === tab)),
@@ -239,6 +251,25 @@ export default function AssetGallery() {
                     a.category === "bottle" || a.category === "logo" ? "object-contain p-2" : "object-cover"
                   }`}
                 />
+                {/* What the file still owes, legible without hovering. The
+                    strip sits over the image rather than under it: a row that
+                    changes height when an alt text is saved would make the
+                    whole grid jump. */}
+                {(!a.state?.described || a.state?.expiry === "expired") && (
+                  <div className="pointer-events-none absolute left-1.5 top-1.5 flex flex-col items-start gap-1">
+                    {!a.state?.described && (
+                      <span className="rounded-md bg-espresso/80 px-1.5 py-0.5 text-[8.5px] font-medium uppercase tracking-[0.1em] text-champagne-light">
+                        {t("assetMeta.missingAlt")}
+                      </span>
+                    )}
+                    {a.state?.expiry === "expired" && (
+                      <span className="rounded-md bg-a-fill px-1.5 py-0.5 text-[8.5px] font-medium uppercase tracking-[0.1em] text-ivory">
+                        {t("assetMeta.expiryExpired")}
+                      </span>
+                    )}
+                  </div>
+                )}
+
                 {/* hover action bar */}
                 <div className="absolute inset-x-0 bottom-0 flex items-center justify-center gap-1 bg-gradient-to-t from-espresso/85 to-transparent p-2 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-within:opacity-100">
                   <button type="button" onClick={() => copyPath(a)} title={t("gallery.copyPathTitle")}
@@ -248,6 +279,10 @@ export default function AssetGallery() {
                   <button type="button" onClick={() => setLightbox(a)} title={t("gallery.fullscreenTitle")}
                     className={`${actionBtn} bg-ivory/15 text-ivory hover:bg-ivory hover:text-charcoal`}>
                     {t("gallery.fullscreen")}
+                  </button>
+                  <button type="button" onClick={() => setDetails(a)} title={t("assetMeta.openTitle")}
+                    className={`${actionBtn} bg-ivory/15 text-ivory hover:bg-ivory hover:text-charcoal`}>
+                    {t("assetMeta.open")}
                   </button>
                   <button type="button" onClick={() => { setAssignFor(a); setAssignWine(a.wine ?? WINES[0]?.slug); }}
                     title={t("gallery.assignTitle")}
@@ -380,6 +415,8 @@ export default function AssetGallery() {
           </motion.div>
         )}
       </AnimatePresence>
+
+      <AssetMetaDrawer asset={details} onClose={() => setDetails(null)} onSaved={load} />
 
       {/* ---- toast ---- */}
       <AnimatePresence>

@@ -22,6 +22,13 @@ export const ADMIN_MEDIA_DICTIONARY = {
 
     pageHero: {
       loading: "Hero-Bühnen werden geladen …",
+      names: {
+        home: "Startseite",
+        weine: "Unsere Weine",
+        kontakt: "Kontakt",
+        geschichte: "Geschichte",
+        magazin: "Magazin",
+      },
       loadError: "Hero-Bühnen konnten nicht geladen werden: {message}",
       sectionAria: "Hero-Bühnen der Unterseiten",
       listAria: "Seite wählen",
@@ -52,6 +59,11 @@ export const ADMIN_MEDIA_DICTIONARY = {
 
     videoLoop: {
       loading: "Video-Loops werden geladen …",
+      names: {
+        regionen: "Regionen-Hero",
+        "pour-red": "Einschenken — Rotwein",
+        "pour-white": "Einschenken — Weißwein",
+      },
       loadError: "Video-Loops konnten nicht geladen werden: {message}",
       sectionAria: "Video-Loops und Poster-Frames",
       video: "Videodatei",
@@ -142,6 +154,13 @@ export const ADMIN_MEDIA_DICTIONARY = {
 
     pageHero: {
       loading: "Caricamento degli hero …",
+      names: {
+        home: "Home page",
+        weine: "I nostri vini",
+        kontakt: "Contatti",
+        geschichte: "Storia",
+        magazin: "Magazine",
+      },
       loadError: "Impossibile caricare gli hero: {message}",
       sectionAria: "Hero delle sottopagine",
       listAria: "Scegli la pagina",
@@ -172,6 +191,11 @@ export const ADMIN_MEDIA_DICTIONARY = {
 
     videoLoop: {
       loading: "Caricamento dei loop video …",
+      names: {
+        regionen: "Hero delle regioni",
+        "pour-red": "Mescita — vino rosso",
+        "pour-white": "Mescita — vino bianco",
+      },
       loadError: "Impossibile caricare i loop video: {message}",
       sectionAria: "Loop video e poster frame",
       video: "File video",
@@ -262,6 +286,13 @@ export const ADMIN_MEDIA_DICTIONARY = {
 
     pageHero: {
       loading: "Loading hero stages …",
+      names: {
+        home: "Homepage",
+        weine: "Our wines",
+        kontakt: "Contact",
+        geschichte: "Story",
+        magazin: "Magazine",
+      },
       loadError: "The hero stages could not be loaded: {message}",
       sectionAria: "Hero stages of the subpages",
       listAria: "Choose a page",
@@ -292,6 +323,11 @@ export const ADMIN_MEDIA_DICTIONARY = {
 
     videoLoop: {
       loading: "Loading video loops …",
+      names: {
+        regionen: "Regions hero",
+        "pour-red": "Pouring — red",
+        "pour-white": "Pouring — white",
+      },
       loadError: "The video loops could not be loaded: {message}",
       sectionAria: "Video loops and poster frames",
       video: "Video file",

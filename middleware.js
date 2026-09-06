@@ -173,17 +173,28 @@ const isOwnerOnly = (pathname) =>
 const isWrite = (method) => method !== "GET" && method !== "HEAD" && method !== "OPTIONS";
 
 /* Hochgeladene Dateien werden ausgeliefert, nicht verwaltet — siehe oben. */
-const UPLOADED_FILE = /^\/api\/admin\/(?:hero|gallery|interviews|assets\/[^/]+)\/file\//;
+const UPLOADED_FILE = /^\/api\/admin\/(?:hero|gallery|video|interviews|assets\/[^/]+)\/file\//;
 
 /* Everything that belongs to the backoffice — the login page included. The
    exemption for it is made where the guard is called, NOT here: a path that
    drops out of this predicate falls through to the storefront rules further
    down and gets rewritten to /de/admin/login, which is a 404. (Measured, not
-   feared — that was the first thing the login page did.) */
+   feared — that was the first thing the login page did.)
+
+   The uploaded files used to drop out of it in exactly that way, and cost
+   exactly that. UPLOADED_FILE belongs in the guard — an uploaded image is
+   served to visitors, so it must not need a session — but taking those paths
+   out of THIS predicate sent them past the backoffice branch and into the
+   language rewrite below: /api/admin/gallery/file/… became
+   /de/api/admin/gallery/file/…, which no route answers. Every image the
+   backoffice had ever uploaded was a 404, including the hero background the
+   homepage would have rendered.
+
+   So the predicate covers the whole of /api/admin again, and the exemption
+   moved to where the login page already keeps its own: at the call site,
+   around the guard alone. */
 const isBackoffice = (pathname) =>
-  pathname === "/admin" ||
-  pathname.startsWith("/admin/") ||
-  (pathname.startsWith("/api/admin") && !UPLOADED_FILE.test(pathname));
+  pathname === "/admin" || pathname.startsWith("/admin/") || pathname.startsWith("/api/admin");
 
 /* What an unauthenticated request gets back — and it depends on who is
    asking, because a person and a fetch() need different answers. */
@@ -587,7 +598,14 @@ export async function middleware(request) {
        the POSTs of both, because Next posts a server action back to the URL of
        the page it came from. It still runs through this branch so it reaches
        the router untouched. */
-    if (!isLoginPath(request.nextUrl.pathname)) {
+    /* An uploaded file is website, not backoffice: the hero background of
+       the public homepage may live in data/uploads, and answering a visitor
+       with 401 would blank the page. Reading one needs no session; managing
+       anything else does. */
+    if (
+      !isLoginPath(request.nextUrl.pathname) &&
+      !UPLOADED_FILE.test(request.nextUrl.pathname)
+    ) {
       const denied = await guardBackoffice(request);
       if (denied) return denied;
     }

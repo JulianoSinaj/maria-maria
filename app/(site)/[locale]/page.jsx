@@ -15,6 +15,21 @@ import { getShowcaseConfig } from "@/lib/showcase/store";
    dem Wörterbuch, Zustand aus dem Store. */
 const HOME_REGIONS = [{ key: "apulien" }, { key: "kampanien" }, { key: "garda" }];
 
+/* Die Startseite wird nicht mehr vorgerendert, seit der Regionen-Explorer
+   Sichtbarkeit und Bauform aus dem Backoffice liest.
+
+   Das ist der teuerste Punkt dieser Änderung und deshalb ausdrücklich
+   notiert: Die meistbesuchte Adresse der Domain rendert jetzt je Anfrage.
+   Der statische Weg wäre revalidatePath() nach dem Speichern — der auf
+   dieser Route aber eine dauerhafte 404 erzeugt, weil das Sprach-Layout
+   `dynamicParams = false` setzt (gemessen am 2026-09-06, siehe
+   lib/regions/revalidate.js). Die Alternative wäre gewesen, die Startseite
+   statisch zu lassen und eine auf „Entwurf" gesetzte Herkunft trotzdem
+   öffentlich im Explorer stehen zu lassen, bis jemand deployt. Zwischen
+   „langsamer" und „zeigt, was nicht gezeigt werden soll" fiel die Wahl
+   leicht — rückgängig zu machen ist sie, sobald dynamicParams gelöst ist. */
+export const dynamic = "force-dynamic";
+
 /* Teaserbild der Startseite — 1200 × 630, erzeugt von scripts/og-images.mjs
    aus dem Hero-Motiv „zwischen Reben und Meer". Dateiname und Maße nennt
    der Homepage-Brief (§2); was in WhatsApp, Slack und LinkedIn aufklappt,

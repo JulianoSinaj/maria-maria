@@ -20,6 +20,19 @@ import { absoluteUrl } from "@/lib/site";
 import { graph, siteNodes, webPageNode, breadcrumbNode, faqNode } from "@/lib/seo/jsonLd";
 import { withRegionState } from "@/lib/regions/content";
 
+/* Die Seite wird nicht mehr vorgerendert, seit die Sichtbarkeit der
+   Herkünfte aus dem Backoffice kommt.
+
+   Der übliche Weg — statisch bleiben und nach dem Speichern
+   revalidatePath() rufen — ist hier verbaut: app/(site)/[locale]/layout.jsx
+   setzt `dynamicParams = false`, und Next prüft das für die ganze Route.
+   Ein entwerteter Eintrag ließe sich dann nicht neu erzeugen; übrig bliebe
+   eine dauerhafte 404 in allen vier Sprachen (gemessen am 2026-09-06 für
+   /agb, siehe lib/legal/revalidate.js). Ohne Vorrendern gibt es keinen
+   Eintrag, der entwertet werden müsste: Ein Entwurf ist sofort weg, ein
+   fälliger Termin sofort da. Siehe lib/regions/revalidate.js. */
+export const dynamic = "force-dynamic";
+
 /* SEO-Snippet nach der Regionen-Guide (v1.0, 05.08.2026, Abschnitt 2):
    Title trägt die drei Herkünfte, die Description Rebsorten, Herkunft,
    Geschmack und Food Pairing. Ein einziges H1 („Italiens Weinregionen

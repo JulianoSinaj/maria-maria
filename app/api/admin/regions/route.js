@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import { revalidatePath } from "next/cache";
 import { getDictionary } from "@/lib/i18n/dictionaries";
 import { LOCALES } from "@/lib/i18n/config";
 import { getBySlug } from "@/lib/inventory/store";
@@ -15,6 +14,8 @@ import {
   unassignedWines,
   validateRegionsPatch,
 } from "@/lib/regions/schema";
+import { revalidateRegionPages } from "@/lib/regions/revalidate";
+import { audited } from "@/lib/admin/audited";
 import {
   getRegionsConfig,
   putRegionsConfig,
@@ -37,34 +38,6 @@ import {
    dass diese Route davon wissen muss. */
 export const dynamic = "force-dynamic";
 
-/* Die beiden Seiten, auf denen eine Herkunft erscheint. Beide sind statisch
-   vorgerendert; ohne diesen Anstoß bliebe ein Entwurf bis zum nächsten
-   Deploy sichtbar — also genau so lange, wie er es nicht sein soll.
-   Muster UND konkrete Pfade, weil Deutsch präfixlos an der Wurzel liegt und
-   intern auf /de/… umgeschrieben wird. */
-const ROUTES = ["/[locale]", "/[locale]/regionen"];
-
-function revalidateRegions() {
-  for (const route of ROUTES) {
-    try {
-      revalidatePath(route, "page");
-    } catch {
-      /* außerhalb eines Request-Kontexts (Tests importieren die Route nicht) */
-    }
-    for (const locale of LOCALES) {
-      try {
-        revalidatePath(route.replace("[locale]", locale));
-      } catch {
-        /* dito */
-      }
-    }
-    try {
-      revalidatePath(route.replace("/[locale]", "") || "/");
-    } catch {
-      /* dito */
-    }
-  }
-}
 
 /* Anzeigetexte je Sprache — read-only, siehe Kopf. */
 async function copyByLocale() {
@@ -145,7 +118,7 @@ export async function GET(request) {
   return NextResponse.json({ data: payload(config, await copyByLocale()) });
 }
 
-export async function PUT(request) {
+export const PUT = audited("regions.update", async (request, { audit }) => {
   let patch;
   try {
     patch = await request.json();
@@ -158,13 +131,21 @@ export async function PUT(request) {
     return NextResponse.json({ error: errs.join("; "), details: errs }, { status: 422 });
   }
 
+  /* vor dem Schreiben lesen: der Store mischt in das, was er schon hält —
+     ein Diff danach vergläche den neuen Zustand mit sich selbst */
+  const before = await getRegionsConfig();
   const config = await putRegionsConfig(patch);
-  revalidateRegions();
-  return NextResponse.json({ data: payload(config, await copyByLocale()) });
-}
+  audit({ target: "Herkünfte", before, after: config });
 
-export async function DELETE() {
-  const config = await resetRegionsConfig();
-  revalidateRegions();
+  revalidateRegionPages();
   return NextResponse.json({ data: payload(config, await copyByLocale()) });
-}
+});
+
+export const DELETE = audited("regions.reset", async (_request, { audit }) => {
+  const before = await getRegionsConfig();
+  const config = await resetRegionsConfig();
+  audit({ target: "Herkünfte", before, after: config });
+
+  revalidateRegionPages();
+  return NextResponse.json({ data: payload(config, await copyByLocale()) });
+});

@@ -2,6 +2,7 @@
 import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import { AGING, STATUS, ACCENT_META } from "@/lib/inventory/schema";
 import { useAdminI18n } from "../i18n/AdminI18n";
+import { relativeTime, shopState } from "./shopMeta";
 
 /* Portfolio table.
    A real <table> so it stays semantic and keyboard/screen-reader navigable;
@@ -11,7 +12,13 @@ import { useAdminI18n } from "../i18n/AdminI18n";
    deserve one click each.
 
    Enum labels (style, aging, status, accent) come from the admin dictionary
-   keyed on the schema's enum values — the schema itself stays untouched. */
+   keyed on the schema's enum values — the schema itself stays untouched.
+
+   The "Shop" column is the one thing here that describes a system we do not
+   own. It carries a warning rather than a value because that is the failure
+   it exists for: when Terra Vera renames a product, the wine page goes on
+   rendering its button and the button goes on answering 404. Nothing else
+   in this backoffice would ever say so. */
 
 const STATUS_CHIP = {
   [STATUS.ACTIVE]: "bg-vine/12 text-vine",
@@ -24,7 +31,17 @@ const STATUS_CHIP = {
 const th = "px-4 py-3 text-left text-[10px] font-semibold uppercase tracking-[0.14em] text-a-ink/45";
 const td = "px-4 py-3.5 align-middle";
 
-export default function WineTable({ items, loading, onQuickEdit, onEdit, onAssets, onArchive, onRestore }) {
+export default function WineTable({
+  items,
+  loading,
+  onQuickEdit,
+  onEdit,
+  onAssets,
+  onArchive,
+  onRestore,
+  onSyncShop,
+  syncingId,
+}) {
   const reduced = useReducedMotion();
   const { t, tm, intl, fmtEurExact } = useAdminI18n();
 
@@ -67,7 +84,7 @@ export default function WineTable({ items, loading, onQuickEdit, onEdit, onAsset
     <div className="overflow-hidden rounded-card-lg border border-a-ink/[0.08] bg-a-surface/60">
       {/* the scroll lives here, so the page body never moves sideways */}
       <div className="overflow-x-auto">
-        <table className="w-full min-w-[920px] border-collapse">
+        <table className="w-full min-w-[1080px] border-collapse">
           <caption className="sr-only">{t("table.caption")}</caption>
           <thead>
             <tr className="border-b border-a-ink/[0.08]">
@@ -77,6 +94,7 @@ export default function WineTable({ items, loading, onQuickEdit, onEdit, onAsset
               <th scope="col" className={th}>{t("table.colAging")}</th>
               <th scope="col" className={`${th} text-right`}>{t("table.colStock")}</th>
               <th scope="col" className={`${th} text-right`}>{t("table.colPrice")}</th>
+              <th scope="col" className={th}>{t("table.colShop")}</th>
               <th scope="col" className={th}>{t("table.colLabel")}</th>
               <th scope="col" className={th}>{t("table.colStatus")}</th>
               <th scope="col" className={`${th} text-right`}>
@@ -89,6 +107,8 @@ export default function WineTable({ items, loading, onQuickEdit, onEdit, onAsset
               {items.map((w, i) => {
                 const archived = w.status === STATUS.ARCHIVED;
                 const accent = ACCENT_META[w.label?.accent];
+                const shop = shopState(w);
+                const syncing = syncingId === w.id;
                 return (
                   <motion.tr
                     key={w.id}
@@ -172,6 +192,74 @@ export default function WineTable({ items, loading, onQuickEdit, onEdit, onAsset
 
                     <td className={`${td} text-right text-[12.5px] text-a-ink/80 tabular-nums`}>
                       {fmtEurExact(w.price)}
+                    </td>
+
+                    <td className={`${td} w-[210px]`}>
+                      {!shop.handle ? (
+                        <span
+                          title={t("shop.noHandleHint")}
+                          className="text-[11.5px] text-a-ink/35"
+                        >
+                          {t("shop.noHandle")}
+                        </span>
+                      ) : (
+                        <span className="flex w-[186px] items-start gap-2">
+                          {/* the dot carries the state; its accessible name
+                              is the state, so a screen reader does not read
+                              out a decorative circle */}
+                          <span
+                            className={`mt-1 h-2 w-2 shrink-0 rounded-full ${shop.tone.dot}`}
+                            role="img"
+                            aria-label={tm("shopStatus", shop.statusKey)}
+                          />
+                          <span className="min-w-0 flex-1">
+                            <button
+                              type="button"
+                              onClick={() => onSyncShop?.(w)}
+                              disabled={syncing || archived}
+                              title={t("shop.syncNow")}
+                              className={`block w-full truncate text-left text-[11.5px] transition-colors disabled:opacity-60 ${shop.tone.text} hover:underline`}
+                            >
+                              {syncing ? t("shop.syncing") : tm("shopStatus", shop.statusKey)}
+                            </button>
+                            <span className="block truncate text-[10px] text-a-ink/40">
+                              {shop.warning === "missing"
+                                ? shop.handle
+                                : shop.synced
+                                  ? `${fmtEurExact(shop.shop.price)}${
+                                      shop.shop.available === false ? ` · ${t("shop.availableNo")}` : ""
+                                    }`
+                                  : shop.handle}
+                            </span>
+                            {/* the warning is spelled out, not colour-coded
+                                only: colour alone is not a message */}
+                            {shop.warning && (
+                              <span
+                                title={shop.warning === "error" ? (shop.shop.error ?? "") : undefined}
+                                className={`mt-0.5 block truncate text-[10px] ${shop.tone.text}`}
+                              >
+                                {shop.warning === "missing"
+                                  ? "404 · " + tm("shopStatus", "missing")
+                                  : shop.warning === "drift"
+                                    ? t("shop.warnDrift", {
+                                        shop: fmtEurExact(shop.shop.price),
+                                        own: fmtEurExact(w.price),
+                                      })
+                                    : shop.warning === "unavailable"
+                                      ? t("shop.availableNo")
+                                      : t("shop.warnError", { error: shop.shop.error ?? "" })}
+                              </span>
+                            )}
+                            {!shop.warning && shop.shop.syncedAt && (
+                              <span className="block truncate text-[10px] text-a-ink/30">
+                                {t("shop.lastSync", {
+                                  when: relativeTime(shop.shop.syncedAt, intl, t("shop.justNow")),
+                                })}
+                              </span>
+                            )}
+                          </span>
+                        </span>
+                      )}
                     </td>
 
                     <td className={td}>

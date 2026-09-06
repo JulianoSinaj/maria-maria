@@ -10,8 +10,11 @@ import {
   ACCENT,
   ACCENT_META,
   WORDMARK,
+  EMPTY_SHOP,
 } from "@/lib/inventory/schema";
+import { handleFromInput, productUrl } from "@/lib/shop/handles";
 import { useAdminI18n } from "../i18n/AdminI18n";
+import { relativeTime, shopState } from "./shopMeta";
 
 /* Slide-over editor for a single wine.
    Two modes: "quick" (allocation + price only — the frequent job) and "full"
@@ -39,6 +42,7 @@ const BLANK = {
   tastingNotes: [],
   tastingText: "",
   label: { wordmark: WORDMARK.BANDED, accent: ACCENT.RED, redAccent: true, ground: "" },
+  shop: { ...EMPTY_SHOP },
   status: "active",
 };
 
@@ -58,12 +62,31 @@ const Field = ({ label, hint, error, children }) => (
 const inputCls =
   "h-11 w-full rounded-xl border border-a-ink/12 bg-a-surface/70 px-3.5 text-[13px] text-a-ink transition-colors duration-300 placeholder:text-a-ink/30 focus:border-champagne focus:outline-none";
 
-export default function WineSlideOver({ open, mode, item, onClose, onSave, onFull, saving, error }) {
+export default function WineSlideOver({
+  open,
+  mode,
+  item,
+  onClose,
+  onSave,
+  onFull,
+  saving,
+  error,
+  onSyncShop,
+  syncing,
+  syncResult,
+}) {
   const reduced = useReducedMotion();
-  const { t, tm, intl } = useAdminI18n();
+  const { t, tm, intl, fmtEurExact } = useAdminI18n();
   const panelRef = useRef(null);
   const closeRef = useRef(null);
   const [draft, setDraft] = useState(BLANK);
+
+  /* The handle field is typed text, not the stored value: editors paste
+     whole addresses ("…/products/lugana-doc-maria-maria-0-7?variant=52…").
+     Normalising on every keystroke would fight the cursor, so the raw text
+     lives here and handleFromInput() runs on change — the DRAFT only ever
+     receives a clean handle or null. */
+  const [handleText, setHandleText] = useState("");
 
   const isCreate = mode === "create";
   const isQuick = mode === "quick";
@@ -71,8 +94,19 @@ export default function WineSlideOver({ open, mode, item, onClose, onSave, onFul
   /* reseed whenever a different record opens */
   useEffect(() => {
     if (!open) return;
-    setDraft(isCreate ? { ...BLANK } : structuredClone(item ?? BLANK));
+    const next = isCreate ? { ...BLANK } : structuredClone(item ?? BLANK);
+    setDraft(next);
+    setHandleText(next.shop?.handle ?? "");
   }, [open, item, isCreate]);
+
+  /* the panel stays open across a sync, so the freshly synced numbers have
+     to land in the draft — otherwise saving afterwards would write the old
+     ones back */
+  useEffect(() => {
+    if (syncResult?.item?.id && syncResult.item.id === item?.id) {
+      setDraft((d) => ({ ...d, shop: syncResult.item.shop }));
+    }
+  }, [syncResult, item?.id]);
 
   /* focus in, trap Tab, Escape closes, focus returns to the trigger */
   useEffect(() => {
@@ -129,6 +163,10 @@ export default function WineSlideOver({ open, mode, item, onClose, onSave, onFul
   const remaining =
     draft.batch?.size == null ? null : draft.batch.size - (draft.batch.committed ?? 0);
 
+  /* Drift is measured against the price IN THE FORM, not the saved one, so
+     typing a corrected price makes the warning disappear as you type. */
+  const shopView = shopState({ ...draft, price: Number(draft.price) || 0 });
+
   const submit = (e) => {
     e.preventDefault();
     /* coerce the numeric text inputs before they reach the schema */
@@ -149,6 +187,12 @@ export default function WineSlideOver({ open, mode, item, onClose, onSave, onFul
         .filter(Boolean);
     }
     payload.label.redAccent = payload.label.accent === ACCENT.RED;
+
+    /* Only the handle is editorial. Price, availability, timestamp and the
+       sync state belong to the last sync — sending them back would let a
+       stale panel overwrite a newer sync, and the server would believe it. */
+    payload.shop = { handle: draft.shop?.handle ?? null };
+
     onSave(payload);
   };
 
@@ -321,6 +365,18 @@ export default function WineSlideOver({ open, mode, item, onClose, onSave, onFul
                     )}
                   </p>
                 </fieldset>
+
+                {/* Quick edit changes the price — so this is exactly where a
+                    divergence from the shop's price has to be visible, even
+                    though the shop fields themselves live in the full form. */}
+                {isQuick && shopView.warning === "drift" && (
+                  <p className={`rounded-2xl px-4 py-3 text-[11.5px] leading-relaxed ${shopView.tone.chip}`}>
+                    {t("shop.warnDrift", {
+                      shop: fmtEurExact(shopView.shop.price),
+                      own: fmtEurExact(Number(draft.price) || 0),
+                    })}
+                  </p>
+                )}
 
                 {isQuick && (
                   <div className="rounded-2xl border border-a-ink/[0.08] bg-a-surface/40 px-4 py-3.5">
@@ -575,6 +631,132 @@ export default function WineSlideOver({ open, mode, item, onClose, onSave, onFul
                             : t("editor.accentSuffix", { accent: tm("accent", draft.label?.accent) })}
                         </span>
                       </div>
+                    </fieldset>
+
+                    {/* ---- partner shop ----
+                        The one field on this record that the public site
+                        reads: it is the address behind "Im Shop entdecken".
+                        Everything below the input is read-only, because it
+                        is what the shop said, not what we decided. */}
+                    <fieldset className="rounded-2xl border border-a-ink/[0.08] bg-a-surface/50 p-4">
+                      <legend className="px-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-a-ink/55">
+                        {t("shop.legend")}
+                      </legend>
+
+                      <Field
+                        label={t("shop.handle")}
+                        hint={t("shop.handleHint")}
+                        error={
+                          handleText.trim() && !draft.shop?.handle
+                            ? t("shop.handleInvalid")
+                            : fieldErrors["shop.handle"]
+                        }
+                      >
+                        <input
+                          className={inputCls}
+                          placeholder={t("shop.handlePlaceholder")}
+                          value={handleText}
+                          onChange={(e) => {
+                            setHandleText(e.target.value);
+                            set("shop.handle", handleFromInput(e.target.value));
+                          }}
+                        />
+                      </Field>
+                      <p className="mt-1.5 text-[10.5px] text-a-ink/40">{t("shop.handleHelp")}</p>
+
+                      {draft.shop?.handle && (
+                        <a
+                          href={productUrl(draft.shop.handle)}
+                          target="_blank"
+                          rel="noopener"
+                          className="mt-2 inline-block max-w-full truncate text-[11.5px] text-a-accent transition-colors hover:text-a-accent-deep"
+                        >
+                          {t("shop.open")} ↗
+                        </a>
+                      )}
+
+                      {shopView.warning && (
+                        <p
+                          role="status"
+                          className={`mt-3 rounded-xl px-3.5 py-2.5 text-[11.5px] leading-relaxed ${shopView.tone.chip}`}
+                        >
+                          {shopView.warning === "missing"
+                            ? t("shop.warnMissing")
+                            : shopView.warning === "drift"
+                              ? t("shop.warnDrift", {
+                                  shop: fmtEurExact(shopView.shop.price),
+                                  own: fmtEurExact(Number(draft.price) || 0),
+                                })
+                              : shopView.warning === "unavailable"
+                                ? t("shop.warnUnavailable")
+                                : t("shop.warnError", { error: shopView.shop.error ?? "" })}
+                        </p>
+                      )}
+
+                      {/* A rename shows up as a redirect, and the shop names
+                          the new handle. Offering it as one click is the
+                          difference between a repair and a search. */}
+                      {syncResult?.resolvedHandle && (
+                        <p className="mt-3 rounded-xl bg-champagne/25 px-3.5 py-2.5 text-[11.5px] leading-relaxed text-a-gold">
+                          {t("shop.renamed", { handle: syncResult.resolvedHandle })}{" "}
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setHandleText(syncResult.resolvedHandle);
+                              set("shop.handle", syncResult.resolvedHandle);
+                            }}
+                            className="font-medium underline"
+                          >
+                            {t("shop.renamedApply")}
+                          </button>
+                        </p>
+                      )}
+
+                      <div className="mt-3 flex flex-wrap items-center justify-between gap-3">
+                        <span className="text-[11.5px] text-a-ink/50">
+                          {shopView.synced ? (
+                            <>
+                              <span className="font-semibold tabular-nums text-a-ink/70">
+                                {fmtEurExact(shopView.shop.price)}
+                              </span>
+                              {" · "}
+                              {shopView.shop.available === true
+                                ? t("shop.availableYes")
+                                : shopView.shop.available === false
+                                  ? t("shop.availableNo")
+                                  : t("shop.availableUnknown")}
+                              {shopView.shop.syncedAt && (
+                                <span className="text-a-ink/35">
+                                  {" · "}
+                                  {t("shop.lastSync", {
+                                    when: relativeTime(shopView.shop.syncedAt, intl, t("shop.justNow")),
+                                  })}
+                                </span>
+                              )}
+                            </>
+                          ) : (
+                            t("shop.never")
+                          )}
+                        </span>
+
+                        <motion.button
+                          type="button"
+                          onClick={() => onSyncShop?.(draft.shop?.handle)}
+                          disabled={syncing || isCreate || !draft.shop?.handle}
+                          whileTap={{ scale: 0.96 }}
+                          transition={{ type: "spring", stiffness: 400, damping: 22 }}
+                          title={isCreate ? t("shop.saveFirst") : t("shop.syncNow")}
+                          className="rounded-full border border-a-ink/12 px-4 py-2 text-[11.5px] text-a-ink/70 transition-colors hover:border-champagne hover:text-a-accent disabled:opacity-45"
+                        >
+                          {syncing ? t("shop.syncing") : t("shop.syncNow")}
+                        </motion.button>
+                      </div>
+
+                      {shopView.shop.title && (
+                        <p className="mt-2 truncate text-[10.5px] text-a-ink/35" title={shopView.shop.title}>
+                          {t("shop.shopTitle")}: {shopView.shop.title}
+                        </p>
+                      )}
                     </fieldset>
                   </>
                 )}

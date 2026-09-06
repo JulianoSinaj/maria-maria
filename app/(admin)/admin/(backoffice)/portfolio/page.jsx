@@ -14,6 +14,8 @@ import {
   updateWine,
   archiveWine,
   restoreWine,
+  syncWineShop,
+  syncAllShops,
 } from "@/lib/inventory/useInventory";
 import { CATEGORY } from "@/lib/inventory/schema";
 
@@ -56,6 +58,13 @@ export default function PortfolioPage() {
   const [saveError, setSaveError] = useState(null);
   const [toast, setToast] = useState(null);
 
+  /* Which row is talking to Terra Vera right now, and what the last single
+     sync came back with. The id doubles as the busy flag: two rows can never
+     be syncing at once, so one value says both which and whether. */
+  const [syncingId, setSyncingId] = useState(null);
+  const [syncResult, setSyncResult] = useState(null);
+  const [syncingAll, setSyncingAll] = useState(false);
+
   /* memoised so a fresh object literal per render doesn't refetch in a loop */
   const filters = useMemo(
     () => ({
@@ -76,6 +85,7 @@ export default function PortfolioPage() {
 
   const openPanel = (mode, item = null) => {
     setSaveError(null);
+    setSyncResult(null);
     setPanel({ open: true, mode, item });
   };
   const closePanel = () => setPanel((p) => ({ ...p, open: false }));
@@ -121,20 +131,90 @@ export default function PortfolioPage() {
     }
   };
 
+  /* ---- partner shop ----
+
+     The sync is the only action on this page that leaves the building, so it
+     is also the only one that can take a visible moment. Everything it
+     touches (price, availability, timestamp, 404 state) is written by the
+     server; the page just asks and refetches. */
+  const handleSyncShop = async (wine) => {
+    if (!wine?.id) return;
+    setSyncingId(wine.id);
+    setSyncResult(null);
+    try {
+      const body = await syncWineShop(wine.id);
+      setSyncResult({ item: body.data, ...(body.meta?.result ?? {}) });
+
+      const state = body.meta?.result;
+      if (state?.sync === "ok") {
+        flash(t("shop.syncedOne", { name: wine.name }));
+      } else {
+        /* A 404 is a finding, not a failure — it is reported in the row and
+           in the panel, and the toast should not claim the sync broke. */
+        flash(
+          state?.sync === "missing"
+            ? t("shop.warnMissing")
+            : t("shop.warnError", { error: state?.error ?? "" }),
+          "error",
+        );
+      }
+      refetch();
+    } catch (err) {
+      flash(t("shop.syncFailed", { message: err.message }), "error");
+    } finally {
+      setSyncingId(null);
+    }
+  };
+
+  const handleSyncAll = async () => {
+    setSyncingAll(true);
+    try {
+      const body = await syncAllShops();
+      const run = body.meta?.run ?? {};
+      flash(
+        t("shop.syncedAll", {
+          checked: run.checked ?? 0,
+          ok: run.ok ?? 0,
+          missing: run.missing ?? 0,
+          error: run.error ?? 0,
+        }),
+        run.missing || run.error ? "error" : "ok",
+      );
+      refetch();
+    } catch (err) {
+      flash(t("shop.syncFailed", { message: err.message }), "error");
+    } finally {
+      setSyncingAll(false);
+    }
+  };
+
   return (
     <PageShell
       title={t("portfolio.title")}
       lede={t("portfolio.lede")}
       actions={
-        <motion.button
-          type="button"
-          onClick={() => openPanel("create")}
-          whileTap={{ scale: 0.96 }}
-          transition={{ type: "spring", stiffness: 400, damping: 22 }}
-          className="rounded-full bg-gradient-to-br from-a-fill to-a-fill-2 px-6 py-3 text-[12px] font-medium uppercase tracking-[0.14em] text-ivory"
-        >
-          {t("portfolio.addWine")}
-        </motion.button>
+        <>
+          <motion.button
+            type="button"
+            onClick={handleSyncAll}
+            disabled={syncingAll}
+            whileTap={{ scale: 0.96 }}
+            transition={{ type: "spring", stiffness: 400, damping: 22 }}
+            title={t("shop.syncAllTitle")}
+            className="rounded-full border border-a-ink/12 px-5 py-3 text-[12px] tracking-[0.06em] text-a-ink/70 transition-colors hover:border-champagne hover:text-a-accent disabled:opacity-50"
+          >
+            {syncingAll ? t("shop.syncing") : t("shop.syncAll")}
+          </motion.button>
+          <motion.button
+            type="button"
+            onClick={() => openPanel("create")}
+            whileTap={{ scale: 0.96 }}
+            transition={{ type: "spring", stiffness: 400, damping: 22 }}
+            className="rounded-full bg-gradient-to-br from-a-fill to-a-fill-2 px-6 py-3 text-[12px] font-medium uppercase tracking-[0.14em] text-ivory"
+          >
+            {t("portfolio.addWine")}
+          </motion.button>
+        </>
       }
     >
       {/* ---- filter bar ---- */}
@@ -193,6 +273,8 @@ export default function PortfolioPage() {
           onAssets={(w) => setAssetPanel({ open: true, wine: w })}
           onArchive={handleArchive}
           onRestore={handleRestore}
+          onSyncShop={handleSyncShop}
+          syncingId={syncingId}
         />
       </div>
 
@@ -206,6 +288,9 @@ export default function PortfolioPage() {
         onSave={handleSave}
         /* escalate from quick edit to the full form without losing the record */
         onFull={() => setPanel((p) => ({ ...p, mode: "edit" }))}
+        onSyncShop={() => handleSyncShop(panel.item)}
+        syncing={Boolean(panel.item && syncingId === panel.item.id)}
+        syncResult={syncResult}
       />
 
       <AssetConfigurator
